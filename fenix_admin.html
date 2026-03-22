@@ -1,0 +1,851 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fênix Nefrologia — Painel Administrativo</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;600;700&family=Inter:wght@300;400;500;600&display=swap');
+
+:root {
+  --gold:       #BE9664;
+  --gold-dark:  #8B6914;
+  --gold-light: #E8D5B0;
+  --gold-pale:  #F7F0E4;
+  --navy:       #1B2A4A;
+  --navy-mid:   #243357;
+  --navy-light: #2D4270;
+  --blue-muted: #8AAAD4;
+  --ok:         #2D6A4F;
+  --ok-bg:      #D8F3DC;
+  --bad:        #A32D2D;
+  --bad-bg:     #FCEBEB;
+  --text:       #1c1c1e;
+  --muted:      #6B4E24;
+  --border:     #E8D5B0;
+  --bg:         #F5EFE6;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Inter', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+}
+
+/* ── LOGIN ── */
+#login-screen {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, var(--navy) 0%, #0D1A30 100%);
+}
+
+.login-card {
+  background: #fff;
+  border-radius: 20px;
+  padding: 48px 44px;
+  width: 420px;
+  box-shadow: 0 24px 60px rgba(0,0,0,0.3);
+}
+
+.login-logo {
+  font-family: 'Raleway', sans-serif;
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--gold-dark);
+  letter-spacing: .08em;
+  margin-bottom: 4px;
+}
+
+.login-sub {
+  font-size: 13px;
+  color: var(--muted);
+  margin-bottom: 36px;
+  font-weight: 300;
+}
+
+.login-card label {
+  display: block;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: .05em;
+  margin-bottom: 6px;
+  margin-top: 18px;
+}
+
+.login-card input {
+  width: 100%;
+  border: 1.5px solid var(--border);
+  border-radius: 10px;
+  padding: 11px 14px;
+  font-size: 14px;
+  font-family: 'Inter', sans-serif;
+  color: var(--text);
+  background: var(--gold-pale);
+  outline: none;
+  transition: border-color .2s;
+}
+
+.login-card input:focus { border-color: var(--gold); }
+
+.btn-login {
+  width: 100%;
+  margin-top: 28px;
+  background: var(--gold-dark);
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  padding: 13px;
+  font-size: 14px;
+  font-weight: 600;
+  font-family: 'Inter', sans-serif;
+  cursor: pointer;
+  letter-spacing: .04em;
+  transition: background .2s;
+}
+
+.btn-login:hover { background: var(--gold); }
+
+/* ── BARRA DE NAVEGAÇÃO PORTAL ── */
+.portal-nav {
+  background: #0D1B35;
+  border-bottom: 1px solid rgba(212,168,71,0.15);
+  padding: 0 32px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  position: sticky;
+  top: 0;
+  z-index: 200;
+}
+.portal-nav-logo {
+  font-family: 'Raleway', Georgia, serif;
+  font-size: 14px;
+  font-weight: 700;
+  color: #D4A847;
+  letter-spacing: 6px;
+  margin-right: 16px;
+  text-decoration: none;
+}
+.portal-nav-sep { width: 1px; height: 20px; background: rgba(212,168,71,0.2); margin: 0 8px; }
+.portal-nav-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 14px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  text-decoration: none;
+  cursor: pointer;
+  border: none;
+  transition: all .2s;
+  font-family: 'Inter', sans-serif;
+}
+.portal-nav-btn.active {
+  background: rgba(212,168,71,0.15);
+  color: #D4A847;
+  border: 1px solid rgba(212,168,71,0.3);
+}
+.portal-nav-btn.inactive {
+  background: transparent;
+  color: rgba(212,168,71,0.4);
+  border: 1px solid transparent;
+}
+.portal-nav-btn.inactive:hover {
+  color: #D4A847;
+  border-color: rgba(212,168,71,0.2);
+}
+.portal-nav-back {
+  margin-left: auto;
+  font-size: 11px;
+  color: rgba(212,168,71,0.4);
+  text-decoration: none;
+  font-family: 'Inter', sans-serif;
+  letter-spacing: 1px;
+  transition: color .2s;
+}
+.portal-nav-back:hover { color: #D4A847; }
+
+.login-err { font-size: 12px; color: var(--bad); margin-top: 10px; text-align: center; min-height: 18px; }
+
+/* ── APP SHELL ── */
+#app { display: none; }
+
+.topbar {
+  background: var(--navy);
+  border-bottom: 3px solid var(--gold);
+  padding: 0 32px;
+  display: flex;
+  align-items: center;
+  height: 58px;
+  gap: 24px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.topbar-logo {
+  font-family: 'Raleway', sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--gold);
+  letter-spacing: .08em;
+  margin-right: 8px;
+}
+
+.topbar-tag {
+  font-size: 10px;
+  background: var(--navy-light);
+  color: var(--blue-muted);
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-weight: 500;
+  letter-spacing: .04em;
+}
+
+.topbar-spacer { flex: 1; }
+
+.topbar-user {
+  font-size: 12px;
+  color: var(--blue-muted);
+}
+
+.btn-logout {
+  background: transparent;
+  border: 1px solid var(--navy-light);
+  color: var(--blue-muted);
+  border-radius: 8px;
+  padding: 5px 14px;
+  font-size: 11px;
+  cursor: pointer;
+  font-family: 'Inter', sans-serif;
+  transition: all .2s;
+}
+
+.btn-logout:hover { border-color: var(--gold); color: var(--gold); }
+
+.main { max-width: 1300px; margin: 0 auto; padding: 28px 32px; }
+
+/* ── PAGE HEADER ── */
+.page-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 28px;
+}
+
+.page-title { font-size: 22px; font-weight: 600; color: var(--gold-dark); font-family: 'Raleway', sans-serif; }
+.page-sub   { font-size: 13px; color: var(--muted); margin-top: 2px; }
+
+.mes-selector {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.mes-selector label { font-size: 11px; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: .04em; }
+
+.mes-selector select {
+  border: 1.5px solid var(--gold);
+  border-radius: 8px;
+  padding: 6px 14px;
+  font-size: 13px;
+  color: var(--gold-dark);
+  font-weight: 600;
+  background: var(--gold-pale);
+  cursor: pointer;
+  outline: none;
+  font-family: 'Inter', sans-serif;
+}
+
+/* ── STATUS BAR ── */
+.status-bar {
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 12px 20px;
+  margin-bottom: 24px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  font-size: 13px;
+}
+
+.status-dot { width: 8px; height: 8px; border-radius: 50%; background: #ccc; flex-shrink: 0; }
+.status-dot.ok  { background: var(--ok); }
+.status-dot.bad { background: var(--bad); }
+.status-dot.loading { background: var(--gold); animation: pulse 1s infinite; }
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.4} }
+
+.btn-save {
+  margin-left: auto;
+  background: var(--gold-dark);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 22px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: 'Inter', sans-serif;
+  transition: background .2s;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.btn-save:hover { background: var(--gold); }
+.btn-save:disabled { background: #D4B896; cursor: not-allowed; }
+
+.btn-new-mes {
+  background: transparent;
+  color: var(--gold-dark);
+  border: 1.5px solid var(--gold);
+  border-radius: 8px;
+  padding: 8px 18px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: 'Inter', sans-serif;
+  transition: all .2s;
+}
+
+.btn-new-mes:hover { background: var(--gold-pale); }
+
+/* ── FORM SECTIONS ── */
+.form-section {
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 20px 24px;
+  margin-bottom: 20px;
+}
+
+.fs-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 18px;
+  padding-bottom: 12px;
+  border-bottom: 2px solid var(--gold);
+  cursor: pointer;
+  user-select: none;
+}
+
+.fs-title { font-size: 13px; font-weight: 600; color: var(--gold-dark); text-transform: uppercase; letter-spacing: .06em; }
+.fs-toggle { margin-left: auto; font-size: 14px; color: var(--gold); transition: transform .2s; }
+.fs-toggle.collapsed { transform: rotate(-90deg); }
+.fs-body { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 12px; }
+.fs-body.hidden { display: none; }
+
+.field { display: flex; flex-direction: column; gap: 5px; }
+
+.field label {
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: .04em;
+}
+
+.field input {
+  border: 1.5px solid var(--border);
+  border-radius: 8px;
+  padding: 8px 12px;
+  font-size: 14px;
+  font-family: 'Inter', sans-serif;
+  color: var(--text);
+  background: var(--gold-pale);
+  outline: none;
+  transition: border-color .2s;
+}
+
+.field input:focus { border-color: var(--gold); background: #fff; }
+.field input.changed { border-color: #D4A847; background: #FFFBF0; }
+.field .unit { font-size: 9px; color: #9C7A4A; }
+
+.field-group-label {
+  grid-column: 1 / -1;
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--blue-muted);
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  padding: 6px 0 2px;
+  border-top: 1px dashed var(--border);
+  margin-top: 4px;
+}
+
+/* ── TOAST ── */
+.toast {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  background: var(--navy);
+  color: #fff;
+  padding: 12px 20px;
+  border-radius: 10px;
+  font-size: 13px;
+  font-weight: 500;
+  border-left: 4px solid var(--gold);
+  transform: translateY(80px);
+  opacity: 0;
+  transition: all .3s;
+  z-index: 999;
+}
+.toast.show { transform: translateY(0); opacity: 1; }
+.toast.success { border-left-color: #2D6A4F; }
+.toast.error   { border-left-color: var(--bad); }
+</style>
+</head>
+<body>
+
+<!-- BARRA NAVEGAÇÃO PORTAL -->
+<div class="portal-nav">
+  <a href="portal_gestor.html" class="portal-nav-logo">APEX</a>
+  <div class="portal-nav-sep"></div>
+  <a href="dashboard_fenix_C-Espacoso.html" class="portal-nav-btn inactive">▦ Dashboard</a>
+  <a href="fenix_admin.html" class="portal-nav-btn active">✎ Lançamento Mensal</a>
+  <a href="portal_gestor.html" class="portal-nav-back">← Portal Gestor</a>
+</div>
+
+<!-- LOGIN -->
+<div id="login-screen">
+  <div class="login-card">
+    <div class="login-logo">FÊNIX nefrologia</div>
+    <div class="login-sub">Painel Administrativo · Acesso restrito</div>
+    <label>E-mail</label>
+    <input type="email" id="email" placeholder="seu@email.com" />
+    <label>Senha</label>
+    <input type="password" id="senha" placeholder="••••••••" onkeydown="if(event.key==='Enter')login()" />
+    <button class="btn-login" onclick="login()">Entrar</button>
+    <div class="login-err" id="login-err"></div>
+  </div>
+</div>
+
+<!-- APP -->
+<div id="app">
+
+  <div class="topbar">
+    <div class="topbar-logo">FÊNIX nefrologia</div>
+    <div class="topbar-tag">Admin</div>
+    <div class="topbar-spacer"></div>
+    <div class="topbar-user" id="user-email"></div>
+    <button class="btn-logout" onclick="logout()">Sair</button>
+  </div>
+
+  <div class="main">
+
+    <div class="page-header">
+      <div>
+        <div class="page-title">Dados Mensais</div>
+        <div class="page-sub">Preencha os indicadores clínicos do mês selecionado</div>
+      </div>
+      <div class="mes-selector">
+        <label>Mês</label>
+        <select id="mes-sel" onchange="carregarMes()">
+          <option value="0">Janeiro 2026</option>
+          <option value="1">Fevereiro 2026</option>
+          <option value="2">Março 2026</option>
+          <option value="3">Abril 2026</option>
+          <option value="4">Maio 2026</option>
+          <option value="5">Junho 2026</option>
+          <option value="6">Julho 2026</option>
+          <option value="7">Agosto 2026</option>
+          <option value="8">Setembro 2026</option>
+          <option value="9">Outubro 2026</option>
+          <option value="10">Novembro 2026</option>
+          <option value="11">Dezembro 2026</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="status-bar">
+      <div class="status-dot" id="status-dot"></div>
+      <span id="status-txt">Carregando dados...</span>
+      <button class="btn-new-mes" onclick="novoMes()">+ Novo mês</button>
+      <button class="btn-save" id="btn-save" onclick="salvar()">💾 Salvar alterações</button>
+    </div>
+
+    <!-- VOLUMETRIA -->
+    <div class="form-section">
+      <div class="fs-header" onclick="toggle(this)">
+        <span class="fs-title">📊 Volumetria</span>
+        <span class="fs-toggle">▼</span>
+      </div>
+      <div class="fs-body">
+        <div class="field-group-label">Pacientes por unidade</div>
+        <div class="field"><label>RL</label><input type="number" id="pac_rl" oninput="markChanged(this)"><span class="unit">pacientes</span></div>
+        <div class="field"><label>Santos</label><input type="number" id="pac_santos" oninput="markChanged(this)"></div>
+        <div class="field"><label>Tatuapé</label><input type="number" id="pac_tatuape" oninput="markChanged(this)"></div>
+        <div class="field"><label>Rede total</label><input type="number" id="pac_rede" oninput="markChanged(this)"></div>
+        <div class="field-group-label">Sessões por unidade</div>
+        <div class="field"><label>RL</label><input type="number" id="ses_rl" oninput="markChanged(this)"></div>
+        <div class="field"><label>Santos</label><input type="number" id="ses_santos" oninput="markChanged(this)"></div>
+        <div class="field"><label>Tatuapé</label><input type="number" id="ses_tatuape" oninput="markChanged(this)"></div>
+        <div class="field"><label>Rede total</label><input type="number" id="ses_rede" oninput="markChanged(this)"></div>
+        <div class="field-group-label">Outros indicadores</div>
+        <div class="field"><label>Admissões</label><input type="number" id="admissoes" oninput="markChanged(this)"></div>
+        <div class="field"><label>Saídas</label><input type="number" id="saidas" oninput="markChanged(this)"></div>
+        <div class="field"><label>Sessões extras</label><input type="number" id="ses_extras" oninput="markChanged(this)"></div>
+        <div class="field"><label>Cons. especialista</label><input type="number" id="cons_esp" oninput="markChanged(this)"></div>
+        <div class="field"><label>Cons. nefro</label><input type="number" id="cons_nefro" oninput="markChanged(this)"></div>
+      </div>
+    </div>
+
+    <!-- DESFECHOS -->
+    <div class="form-section">
+      <div class="fs-header" onclick="toggle(this)">
+        <span class="fs-title">🏥 Desfechos Clínicos</span>
+        <span class="fs-toggle">▼</span>
+      </div>
+      <div class="fs-body">
+        <div class="field"><label>Evento Adverso Grave</label><input type="number" id="eag" oninput="markChanged(this)"></div>
+        <div class="field"><label>Risco Suicídio</label><input type="number" id="sui" oninput="markChanged(this)"></div>
+        <div class="field"><label>Óbito (nº)</label><input type="number" id="obi" oninput="markChanged(this)"></div>
+        <div class="field"><label>Óbito %</label><input type="number" step="0.01" id="obi_pct" oninput="markChanged(this)"><span class="unit">%</span></div>
+        <div class="field"><label>Nº Faltas</label><input type="number" id="fal" oninput="markChanged(this)"></div>
+        <div class="field"><label>Faltas %</label><input type="number" step="0.01" id="fal_pct" oninput="markChanged(this)"><span class="unit">%</span></div>
+        <div class="field"><label>Inscrição Tx Renal %</label><input type="number" id="tx" oninput="markChanged(this)"><span class="unit">%</span></div>
+        <div class="field"><label>Infecção Corrente Sang.</label><input type="number" id="ics" oninput="markChanged(this)"></div>
+        <div class="field"><label>Infecção Cateter/FAV</label><input type="number" id="icf" oninput="markChanged(this)"></div>
+        <div class="field"><label>Queda Interna</label><input type="number" id="que" oninput="markChanged(this)"></div>
+        <div class="field"><label>Taxa Internação %</label><input type="number" step="0.1" id="int_pct" oninput="markChanged(this)"><span class="unit">%</span></div>
+        <div class="field-group-label">Causas de internação (%)</div>
+        <div class="field"><label>Metabólica</label><input type="number" step="0.1" id="causas_metabolica" oninput="markChanged(this)"></div>
+        <div class="field"><label>Infecção</label><input type="number" step="0.1" id="causas_infeccao" oninput="markChanged(this)"></div>
+        <div class="field"><label>Acesso Vascular</label><input type="number" step="0.1" id="causas_vascular" oninput="markChanged(this)"></div>
+        <div class="field"><label>Cardiovascular</label><input type="number" step="0.1" id="causas_cardio" oninput="markChanged(this)"></div>
+        <div class="field"><label>Queda</label><input type="number" step="0.1" id="causas_queda" oninput="markChanged(this)"></div>
+        <div class="field"><label>Outros</label><input type="number" step="0.1" id="causas_outros" oninput="markChanged(this)"></div>
+      </div>
+    </div>
+
+    <!-- NUTRICIONAL -->
+    <div class="form-section">
+      <div class="fs-header" onclick="toggle(this)">
+        <span class="fs-title">🥗 Avaliação Nutricional</span>
+        <span class="fs-toggle">▼</span>
+      </div>
+      <div class="fs-body">
+        <div class="field-group-label">Fósforo ≤5,5 mg/dl (%)</div>
+        <div class="field"><label>RL</label><input type="number" step="0.1" id="fos_rl" oninput="markChanged(this)"></div>
+        <div class="field"><label>Santos</label><input type="number" step="0.1" id="fos_santos" oninput="markChanged(this)"></div>
+        <div class="field"><label>Tatuapé</label><input type="number" step="0.1" id="fos_tatuape" oninput="markChanged(this)"></div>
+        <div class="field"><label>Rede</label><input type="number" step="0.1" id="fos_rede" oninput="markChanged(this)"></div>
+        <div class="field-group-label">Potássio &lt;6,0 mmol/L (%)</div>
+        <div class="field"><label>RL</label><input type="number" step="0.1" id="pot_rl" oninput="markChanged(this)"></div>
+        <div class="field"><label>Santos</label><input type="number" step="0.1" id="pot_santos" oninput="markChanged(this)"></div>
+        <div class="field"><label>Tatuapé</label><input type="number" step="0.1" id="pot_tatuape" oninput="markChanged(this)"></div>
+        <div class="field"><label>Rede</label><input type="number" step="0.1" id="pot_rede" oninput="markChanged(this)"></div>
+        <div class="field-group-label">Trimestrais</div>
+        <div class="field"><label>Albumina Rede % ★</label><input type="number" step="0.1" id="alb_rede" oninput="markChanged(this)"></div>
+        <div class="field"><label>IMC eutrófico Rede % ★</label><input type="number" step="0.1" id="imc_rede" oninput="markChanged(this)"></div>
+      </div>
+    </div>
+
+    <!-- ADEQUAÇÃO -->
+    <div class="form-section">
+      <div class="fs-header" onclick="toggle(this)">
+        <span class="fs-title">⚗️ Adequação da Diálise</span>
+        <span class="fs-toggle">▼</span>
+      </div>
+      <div class="fs-body">
+        <div class="field-group-label">Kt/V ≥1,2 (%)</div>
+        <div class="field"><label>RL</label><input type="number" step="0.1" id="ktv_rl" oninput="markChanged(this)"></div>
+        <div class="field"><label>Santos</label><input type="number" step="0.1" id="ktv_santos" oninput="markChanged(this)"></div>
+        <div class="field"><label>Tatuapé</label><input type="number" step="0.1" id="ktv_tatuape" oninput="markChanged(this)"></div>
+        <div class="field"><label>Rede</label><input type="number" step="0.1" id="ktv_rede" oninput="markChanged(this)"></div>
+        <div class="field-group-label">Volume Convectivo ≥69L (%)</div>
+        <div class="field"><label>RL</label><input type="number" step="0.1" id="vol_rl" oninput="markChanged(this)"></div>
+        <div class="field"><label>Santos</label><input type="number" step="0.1" id="vol_santos" oninput="markChanged(this)"></div>
+        <div class="field"><label>Tatuapé</label><input type="number" step="0.1" id="vol_tatuape" oninput="markChanged(this)"></div>
+        <div class="field"><label>Rede</label><input type="number" step="0.1" id="vol_rede" oninput="markChanged(this)"></div>
+        <div class="field-group-label">FAV / Prótese (%)</div>
+        <div class="field"><label>RL</label><input type="number" step="0.1" id="fav_rl" oninput="markChanged(this)"></div>
+        <div class="field"><label>Santos</label><input type="number" step="0.1" id="fav_santos" oninput="markChanged(this)"></div>
+        <div class="field"><label>Tatuapé</label><input type="number" step="0.1" id="fav_tatuape" oninput="markChanged(this)"></div>
+        <div class="field"><label>Rede</label><input type="number" step="0.1" id="fav_rede" oninput="markChanged(this)"></div>
+      </div>
+    </div>
+
+    <!-- QUALIDADE DE VIDA -->
+    <div class="form-section">
+      <div class="fs-header" onclick="toggle(this)">
+        <span class="fs-title">💚 Qualidade de Vida</span>
+        <span class="fs-toggle">▼</span>
+      </div>
+      <div class="fs-body">
+        <div class="field-group-label">KDQOL-SF36 (período de reaplicação)</div>
+        <div class="field"><label>Mental</label><input type="number" step="0.1" id="kdqol_mental" oninput="markChanged(this)"></div>
+        <div class="field"><label>Físico</label><input type="number" step="0.1" id="kdqol_fisico" oninput="markChanged(this)"></div>
+        <div class="field-group-label">Hemoglobina 10-12 g/dL (%)</div>
+        <div class="field"><label>RL</label><input type="number" step="0.1" id="hb_rl" oninput="markChanged(this)"></div>
+        <div class="field"><label>Santos</label><input type="number" step="0.1" id="hb_santos" oninput="markChanged(this)"></div>
+        <div class="field"><label>Tatuapé</label><input type="number" step="0.1" id="hb_tatuape" oninput="markChanged(this)"></div>
+        <div class="field"><label>Rede</label><input type="number" step="0.1" id="hb_rede" oninput="markChanged(this)"></div>
+      </div>
+    </div>
+
+    <!-- CARDIOVASCULAR -->
+    <div class="form-section">
+      <div class="fs-header" onclick="toggle(this)">
+        <span class="fs-title">❤️ Cardiovascular</span>
+        <span class="fs-toggle">▼</span>
+      </div>
+      <div class="fs-body">
+        <div class="field-group-label">Ganho de Peso Interdialítico (%)</div>
+        <div class="field"><label>RL</label><input type="number" step="0.1" id="gpid_rl" oninput="markChanged(this)"></div>
+        <div class="field"><label>Santos</label><input type="number" step="0.1" id="gpid_santos" oninput="markChanged(this)"></div>
+        <div class="field"><label>Tatuapé</label><input type="number" step="0.1" id="gpid_tatuape" oninput="markChanged(this)"></div>
+        <div class="field"><label>Rede</label><input type="number" step="0.1" id="gpid_rede" oninput="markChanged(this)"></div>
+        <div class="field-group-label">Água Extracelular ECW &lt;15% (%)</div>
+        <div class="field"><label>RL</label><input type="number" step="0.1" id="ecw_rl" oninput="markChanged(this)"></div>
+        <div class="field"><label>Santos</label><input type="number" step="0.1" id="ecw_santos" oninput="markChanged(this)"></div>
+        <div class="field"><label>Tatuapé</label><input type="number" step="0.1" id="ecw_tatuape" oninput="markChanged(this)"></div>
+        <div class="field"><label>Rede</label><input type="number" step="0.1" id="ecw_rede" oninput="markChanged(this)"></div>
+        <div class="field-group-label">Trimestral</div>
+        <div class="field"><label>Hb Glicada Rede % ★</label><input type="number" step="0.1" id="hbg_rede" oninput="markChanged(this)"></div>
+      </div>
+    </div>
+
+    <!-- COMPOSIÇÃO CORPORAL -->
+    <div class="form-section">
+      <div class="fs-header" onclick="toggle(this)">
+        <span class="fs-title">🏋️ Composição Corporal</span>
+        <span class="fs-toggle">▼</span>
+      </div>
+      <div class="fs-body">
+        <div class="field-group-label">Ângulo de Fase &gt;4° (%)</div>
+        <div class="field"><label>RL</label><input type="number" step="0.1" id="ang_rl" oninput="markChanged(this)"></div>
+        <div class="field"><label>Santos</label><input type="number" step="0.1" id="ang_santos" oninput="markChanged(this)"></div>
+        <div class="field"><label>Tatuapé</label><input type="number" step="0.1" id="ang_tatuape" oninput="markChanged(this)"></div>
+        <div class="field"><label>Rede</label><input type="number" step="0.1" id="ang_rede" oninput="markChanged(this)"></div>
+        <div class="field-group-label">Fisioterapia (%)</div>
+        <div class="field"><label>RL</label><input type="number" step="0.1" id="fis_rl" oninput="markChanged(this)"></div>
+        <div class="field"><label>Santos</label><input type="number" step="0.1" id="fis_santos" oninput="markChanged(this)"></div>
+        <div class="field"><label>Tatuapé</label><input type="number" step="0.1" id="fis_tatuape" oninput="markChanged(this)"></div>
+        <div class="field"><label>Rede</label><input type="number" step="0.1" id="fis_rede" oninput="markChanged(this)"></div>
+        <div class="field-group-label">Trimestral</div>
+        <div class="field"><label>PTH Rede % ★</label><input type="number" step="0.1" id="pth_rede" oninput="markChanged(this)"></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const SUPABASE_URL = 'https://syzmsixhjlutsynnqivv.supabase.co';
+const SUPABASE_KEY = 'sb_publishable_poKCFHc9n1CtIfCbAxTN0Q_dmlsEy1t';
+const API = (path) => `${SUPABASE_URL}/rest/v1/${path}`;
+const HEADERS = {
+  'Content-Type': 'application/json',
+  'apikey': SUPABASE_KEY,
+  'Authorization': `Bearer ${SUPABASE_KEY}`
+};
+
+let currentUser = null;
+let dadosOriginais = null;
+
+/* ── AUTH ── */
+async function login() {
+  const email = document.getElementById('email').value.trim();
+  const senha = document.getElementById('senha').value;
+  const errEl = document.getElementById('login-err');
+  errEl.textContent = '';
+
+  if(!email || !senha) { errEl.textContent = 'Preencha e-mail e senha.'; return; }
+
+  try {
+    const resp = await fetch(`${SUPABASE_URL}/auth/v1/token?grant_type=password`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'apikey': SUPABASE_KEY },
+      body: JSON.stringify({ email, password: senha })
+    });
+    const data = await resp.json();
+    if(data.error || !data.access_token) {
+      errEl.textContent = 'E-mail ou senha incorretos.';
+      return;
+    }
+    currentUser = data.user;
+    HEADERS['Authorization'] = `Bearer ${data.access_token}`;
+    document.getElementById('login-screen').style.display = 'none';
+    document.getElementById('app').style.display = 'block';
+    document.getElementById('user-email').textContent = currentUser.email;
+    carregarMes();
+  } catch(e) {
+    errEl.textContent = 'Erro de conexão. Verifique sua internet.';
+  }
+}
+
+function logout() {
+  currentUser = null;
+  document.getElementById('login-screen').style.display = 'flex';
+  document.getElementById('app').style.display = 'none';
+}
+
+/* ── TOGGLE SECTIONS ── */
+function toggle(header) {
+  const body = header.nextElementSibling;
+  const icon = header.querySelector('.fs-toggle');
+  body.classList.toggle('hidden');
+  icon.classList.toggle('collapsed');
+}
+
+/* ── STATUS ── */
+function setStatus(state, msg) {
+  const dot = document.getElementById('status-dot');
+  const txt = document.getElementById('status-txt');
+  dot.className = 'status-dot ' + state;
+  txt.textContent = msg;
+}
+
+/* ── FIELDS ── */
+const FIELDS = [
+  'pac_rl','pac_santos','pac_tatuape','pac_rede',
+  'ses_rl','ses_santos','ses_tatuape','ses_rede',
+  'admissoes','saidas','ses_extras','cons_esp','cons_nefro',
+  'eag','sui','obi','obi_pct','fal','fal_pct','tx','ics','icf','que','int_pct',
+  'causas_metabolica','causas_infeccao','causas_vascular','causas_cardio','causas_queda','causas_outros',
+  'fos_rl','fos_santos','fos_tatuape','fos_rede',
+  'pot_rl','pot_santos','pot_tatuape','pot_rede',
+  'alb_rede','imc_rede',
+  'ktv_rl','ktv_santos','ktv_tatuape','ktv_rede',
+  'vol_rl','vol_santos','vol_tatuape','vol_rede',
+  'fav_rl','fav_santos','fav_tatuape','fav_rede',
+  'kdqol_mental','kdqol_fisico',
+  'hb_rl','hb_santos','hb_tatuape','hb_rede',
+  'gpid_rl','gpid_santos','gpid_tatuape','gpid_rede',
+  'ecw_rl','ecw_santos','ecw_tatuape','ecw_rede','hbg_rede',
+  'ang_rl','ang_santos','ang_tatuape','ang_rede',
+  'fis_rl','fis_santos','fis_tatuape','fis_rede','pth_rede'
+];
+
+function markChanged(el) { el.classList.add('changed'); }
+
+function preencherFormulario(dados) {
+  FIELDS.forEach(f => {
+    const el = document.getElementById(f);
+    if(el) {
+      el.value = dados[f] !== null && dados[f] !== undefined ? dados[f] : '';
+      el.classList.remove('changed');
+    }
+  });
+}
+
+function lerFormulario() {
+  const obj = { ano: 2026, mes: +document.getElementById('mes-sel').value };
+  FIELDS.forEach(f => {
+    const el = document.getElementById(f);
+    if(el) {
+      const v = el.value.trim();
+      obj[f] = v === '' ? null : Number(v);
+    }
+  });
+  return obj;
+}
+
+/* ── CARREGAR MÊS ── */
+async function carregarMes() {
+  const mes = +document.getElementById('mes-sel').value;
+  setStatus('loading', 'Carregando dados...');
+  document.getElementById('btn-save').disabled = true;
+
+  try {
+    const resp = await fetch(
+      API(`dados_mensais?ano=eq.2026&mes=eq.${mes}&select=*`),
+      { headers: HEADERS }
+    );
+    const data = await resp.json();
+    if(data && data.length > 0) {
+      dadosOriginais = data[0];
+      preencherFormulario(dadosOriginais);
+      setStatus('ok', `Dados carregados — ${['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'][mes]}/2026`);
+    } else {
+      dadosOriginais = null;
+      FIELDS.forEach(f => { const el=document.getElementById(f); if(el){el.value='';el.classList.remove('changed');} });
+      setStatus('bad', 'Mês sem dados — preencha e salve para criar o registro.');
+    }
+    document.getElementById('btn-save').disabled = false;
+  } catch(e) {
+    setStatus('bad', 'Erro ao carregar dados.');
+    document.getElementById('btn-save').disabled = false;
+  }
+}
+
+/* ── SALVAR ── */
+async function salvar() {
+  const btn = document.getElementById('btn-save');
+  btn.disabled = true;
+  btn.textContent = '⏳ Salvando...';
+  setStatus('loading', 'Salvando dados...');
+
+  const dados = lerFormulario();
+  dados.updated_at = new Date().toISOString();
+
+  try {
+    let resp;
+    if(dadosOriginais) {
+      resp = await fetch(
+        API(`dados_mensais?ano=eq.2026&mes=eq.${dados.mes}`),
+        { method: 'PATCH', headers: { ...HEADERS, 'Prefer': 'return=representation' }, body: JSON.stringify(dados) }
+      );
+    } else {
+      resp = await fetch(
+        API('dados_mensais'),
+        { method: 'POST', headers: { ...HEADERS, 'Prefer': 'return=representation' }, body: JSON.stringify(dados) }
+      );
+    }
+
+    if(resp.ok) {
+      dadosOriginais = dados;
+      FIELDS.forEach(f => { const el=document.getElementById(f); if(el) el.classList.remove('changed'); });
+      setStatus('ok', 'Dados salvos com sucesso!');
+      toast('Dados salvos com sucesso!', 'success');
+    } else {
+      const err = await resp.json();
+      setStatus('bad', 'Erro ao salvar: ' + (err.message||'desconhecido'));
+      toast('Erro ao salvar dados.', 'error');
+    }
+  } catch(e) {
+    setStatus('bad', 'Erro de conexão.');
+    toast('Erro de conexão.', 'error');
+  }
+
+  btn.disabled = false;
+  btn.textContent = '💾 Salvar alterações';
+}
+
+/* ── NOVO MÊS ── */
+function novoMes() {
+  const mesAtual = +document.getElementById('mes-sel').value;
+  const proximo = Math.min(mesAtual + 1, 11);
+  document.getElementById('mes-sel').value = proximo;
+  FIELDS.forEach(f => { const el=document.getElementById(f); if(el){el.value='';el.classList.remove('changed');} });
+  dadosOriginais = null;
+  setStatus('bad', 'Novo mês — preencha os dados e salve.');
+  toast(`Iniciando ${['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'][proximo]}`, 'success');
+}
+
+/* ── TOAST ── */
+function toast(msg, type='success') {
+  const el = document.getElementById('toast');
+  el.textContent = msg;
+  el.className = `toast ${type} show`;
+  setTimeout(() => el.classList.remove('show'), 3000);
+}
+</script>
+</body>
+</html>
