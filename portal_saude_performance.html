@@ -12,100 +12,110 @@
   --muted:rgba(232,213,160,0.75); --white:#FFFFFF;
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
 body{font-family:'Inter',sans-serif;background:var(--navy);color:var(--white);min-height:100vh;}
 
-nav{background:var(--navy-mid);border-bottom:2px solid rgba(212,168,71,0.12);padding:0 48px;height:58px;display:flex;align-items:center;gap:20px;position:sticky;top:0;z-index:100;}
-.nav-logo{font-family:'Cinzel',serif;font-size:14px;font-weight:700;color:var(--gold);letter-spacing:3px;text-decoration:none;}
+nav{background:rgba(13,27,53,0.97);border-bottom:1px solid rgba(212,168,71,0.12);padding:0 48px;height:58px;display:flex;align-items:center;gap:20px;position:sticky;top:0;z-index:100;backdrop-filter:blur(8px);}
+.nav-logo{font-family:'Cinzel',serif;font-size:14px;font-weight:700;color:var(--gold);letter-spacing:6px;text-decoration:none;}
 .nav-sep{width:1px;height:22px;background:rgba(212,168,71,0.2);}
 .nav-section{font-family:'Cinzel',serif;font-size:13px;letter-spacing:3px;color:var(--muted);text-transform:uppercase;}
-.nav-back{margin-left:auto;font-family:'Cinzel',serif;font-size:13px;letter-spacing:2px;color:rgba(212,168,71,0.7);text-decoration:none;transition:color .2s;}
+.nav-links{margin-left:auto;display:flex;gap:32px;list-style:none;}
+.nav-links a{font-family:'Cinzel',serif;font-size:11px;color:rgba(232,213,160,0.55);text-decoration:none;letter-spacing:2px;text-transform:uppercase;transition:color .2s;}
+.nav-links a:hover{color:var(--gold);}
+.nav-back{font-family:'Cinzel',serif;font-size:11px;letter-spacing:2px;color:rgba(212,168,71,0.5);text-decoration:none;transition:color .2s;margin-left:24px;}
 .nav-back:hover{color:var(--gold);}
 
-/* HERO split */
-.hero{
-  min-height:calc(100vh - 58px);
-  display:grid;grid-template-columns:1fr 1fr;
-  position:relative;overflow:hidden;
-}
+.hero{min-height:70vh;display:flex;align-items:center;padding:80px 60px;position:relative;overflow:hidden;border-bottom:1px solid rgba(212,168,71,0.08);}
+.hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse at 70% 50%,rgba(212,168,71,0.06) 0%,transparent 60%),radial-gradient(ellipse at 20% 80%,rgba(27,42,74,0.8) 0%,transparent 50%);}
+.hero-text{position:relative;z-index:1;max-width:680px;}
+.hero-eyebrow{display:inline-flex;align-items:center;gap:10px;font-family:'Cinzel',serif;font-size:11px;letter-spacing:4px;color:var(--gold);text-transform:uppercase;margin-bottom:28px;}
+.hero-dot{width:6px;height:6px;border-radius:50%;background:var(--gold);animation:pulse 2s infinite;}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+.hero-title{font-family:'Cormorant Garamond',serif;font-size:clamp(48px,7vw,80px);font-weight:300;color:var(--white);line-height:1.05;margin-bottom:24px;}
+.hero-title em{color:var(--gold-pale);font-style:italic;display:block;}
+.hero-divider{width:56px;height:1px;background:var(--gold);opacity:.4;margin-bottom:24px;}
+.hero-desc{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:300;font-style:italic;color:var(--muted);line-height:1.8;margin-bottom:40px;max-width:520px;}
+.hero-social{display:flex;gap:12px;}
+.social-btn{display:flex;align-items:center;gap:8px;font-family:'Cinzel',serif;font-size:11px;letter-spacing:2px;color:var(--gold);border:1px solid rgba(212,168,71,0.3);padding:10px 20px;border-radius:8px;text-decoration:none;transition:all .3s;}
+.social-btn:hover{background:rgba(212,168,71,0.1);border-color:rgba(212,168,71,0.6);}
 
-/* Lado esquerdo — texto */
-.hero-left{
-  padding:80px 60px;display:flex;flex-direction:column;
-  justify-content:center;position:relative;z-index:1;
-  border-right:1px solid rgba(212,168,71,0.06);
-}
-.hero-eyebrow{font-family:'Cinzel',serif;font-size:13px;letter-spacing:3px;color:var(--gold);opacity:.7;margin-bottom:20px;text-transform:uppercase;}
-.hero-title{font-family:'Cormorant Garamond',serif;font-size:clamp(38px,5vw,64px);font-weight:300;color:var(--white);line-height:1.1;margin-bottom:20px;}
-.hero-title em{color:var(--gold-pale);font-style:italic;}
-.hero-divider{width:48px;height:1px;background:var(--gold);opacity:.7;margin-bottom:24px;}
-.hero-desc{font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:300;font-style:italic;color:var(--muted);line-height:1.8;margin-bottom:40px;max-width:440px;}
+.section{padding:80px 60px;max-width:1300px;margin:0 auto;}
+.section-header{margin-bottom:48px;}
+.section-eyebrow{font-family:'Cinzel',serif;font-size:11px;letter-spacing:4px;color:var(--gold);text-transform:uppercase;margin-bottom:10px;}
+.section-title{font-family:'Cormorant Garamond',serif;font-size:clamp(28px,3.5vw,42px);font-weight:300;color:var(--white);line-height:1.2;}
+.section-title em{color:var(--gold-pale);font-style:italic;}
 
-/* Tags de conteúdo */
-.content-tags{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:48px;}
-.tag{
-  font-family:'Cinzel',serif;font-size:13px;letter-spacing:2px;
-  color:var(--gold);border:1px solid rgba(212,168,71,0.2);
-  padding:6px 14px;border-radius:20px;text-transform:uppercase;
-}
+/* ARTIGOS */
+.artigos-grid{display:grid;grid-template-columns:1fr 1fr;gap:2px;}
+.artigo-destaque{grid-column:1/3;display:grid;grid-template-columns:1fr 1fr;background:var(--navy-mid);border:1px solid rgba(212,168,71,0.08);border-radius:16px;overflow:hidden;cursor:pointer;transition:all .4s;text-decoration:none;}
+.artigo-destaque:hover{border-color:rgba(212,168,71,0.25);transform:translateY(-3px);}
+.artigo-destaque-img{min-height:280px;position:relative;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#1B3A5A 0%,#0D2040 100%);}
+.artigo-destaque-body{padding:48px 40px;display:flex;flex-direction:column;justify-content:center;}
+.artigo-cat{font-family:'Cinzel',serif;font-size:10px;letter-spacing:3px;color:var(--gold);text-transform:uppercase;margin-bottom:14px;}
+.artigo-title{font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:400;color:var(--white);line-height:1.35;margin-bottom:16px;}
+.artigo-excerpt{font-family:'Cormorant Garamond',serif;font-size:16px;font-style:italic;color:var(--muted);line-height:1.7;margin-bottom:24px;}
+.artigo-meta{display:flex;align-items:center;gap:12px;font-family:'Inter',sans-serif;font-size:12px;color:rgba(232,213,160,0.5);}
+.artigo-meta-dot{width:3px;height:3px;border-radius:50%;background:rgba(212,168,71,0.4);}
+.artigo-link{font-family:'Cinzel',serif;font-size:11px;letter-spacing:2px;color:var(--gold);display:flex;align-items:center;gap:8px;margin-top:auto;transition:gap .3s;}
+.artigo-destaque:hover .artigo-link{gap:14px;}
+.artigo-card{background:var(--navy-mid);border:1px solid rgba(212,168,71,0.08);padding:32px;cursor:pointer;transition:all .35s;text-decoration:none;display:block;}
+.artigo-card:hover{background:var(--navy-light);border-color:rgba(212,168,71,0.2);}
+.artigo-card .artigo-title{font-size:18px;margin-bottom:10px;}
+.artigo-card .artigo-excerpt{font-size:15px;margin-bottom:16px;}
+.artigo-card-num{font-family:'Cinzel',serif;font-size:28px;font-weight:700;color:rgba(212,168,71,0.12);margin-bottom:16px;line-height:1;}
 
-/* Redes sociais */
-.social-title{font-family:'Cinzel',serif;font-size:13px;letter-spacing:3px;color:var(--muted);text-transform:uppercase;margin-bottom:14px;}
-.social-links{display:flex;gap:12px;}
-.social-btn{
-  display:flex;align-items:center;gap:8px;
-  font-family:'Cinzel',serif;font-size:13px;letter-spacing:2px;
-  color:var(--gold);border:1px solid rgba(212,168,71,0.25);
-  padding:8px 16px;border-radius:8px;text-decoration:none;
-  transition:all .2s;
-}
-.social-btn:hover{background:rgba(212,168,71,0.08);border-color:rgba(212,168,71,0.5);}
+/* VÍDEOS */
+.videos-section{background:rgba(27,42,74,0.3);border-top:1px solid rgba(212,168,71,0.06);border-bottom:1px solid rgba(212,168,71,0.06);}
+.videos-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px;}
+.video-card{background:var(--navy-mid);border:1px solid rgba(212,168,71,0.08);border-radius:12px;overflow:hidden;cursor:pointer;transition:all .35s;}
+.video-card:hover{border-color:rgba(212,168,71,0.25);transform:translateY(-3px);}
+.video-thumb{aspect-ratio:16/9;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;flex-direction:column;gap:8px;}
+.video-play{width:52px;height:52px;border-radius:50%;background:rgba(212,168,71,0.15);border:1.5px solid rgba(212,168,71,0.4);display:flex;align-items:center;justify-content:center;transition:all .3s;}
+.video-card:hover .video-play{background:rgba(212,168,71,0.25);transform:scale(1.1);}
+.video-duration{position:absolute;bottom:10px;right:10px;background:rgba(0,0,0,0.7);font-size:11px;color:var(--white);padding:2px 8px;border-radius:4px;font-family:'Inter',sans-serif;}
+.video-body{padding:18px 20px;}
+.video-cat{font-family:'Cinzel',serif;font-size:9px;letter-spacing:3px;color:var(--gold);text-transform:uppercase;margin-bottom:6px;}
+.video-title{font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:400;color:var(--white);line-height:1.4;margin-bottom:8px;}
+.video-meta{font-family:'Inter',sans-serif;font-size:11px;color:rgba(232,213,160,0.5);}
 
-/* Lado direito — preview de conteúdo */
-.hero-right{
-  padding:80px 60px;display:flex;flex-direction:column;
-  justify-content:center;gap:16px;position:relative;z-index:1;
-  background:rgba(27,42,74,0.3);
-}
+/* GALERIA */
+.galeria-grid{display:grid;grid-template-columns:repeat(4,1fr);grid-template-rows:auto auto;gap:12px;}
+.galeria-item{background:var(--navy-mid);border-radius:10px;overflow:hidden;aspect-ratio:1;cursor:pointer;position:relative;border:1px solid rgba(212,168,71,0.06);transition:all .35s;}
+.galeria-item:first-child{grid-column:span 2;grid-row:span 2;aspect-ratio:auto;min-height:300px;}
+.galeria-item:hover{border-color:rgba(212,168,71,0.25);transform:scale(1.02);}
+.galeria-placeholder{width:100%;height:100%;min-height:140px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;}
+.galeria-overlay{position:absolute;inset:0;background:rgba(13,27,53,0);display:flex;align-items:center;justify-content:center;transition:background .3s;}
+.galeria-item:hover .galeria-overlay{background:rgba(13,27,53,0.5);}
+.galeria-icon{opacity:0;transition:opacity .3s;}
+.galeria-item:hover .galeria-icon{opacity:1;}
 
-.coming-soon-label{
-  font-family:'Cinzel',serif;font-size:13px;letter-spacing:4px;
-  color:var(--gold);opacity:.75;text-transform:uppercase;margin-bottom:8px;
-}
+/* NEWSLETTER */
+.newsletter{background:linear-gradient(160deg,var(--navy-mid) 0%,#152640 100%);border-top:1px solid rgba(212,168,71,0.1);padding:80px 60px;text-align:center;}
+.newsletter-title{font-family:'Cormorant Garamond',serif;font-size:clamp(28px,4vw,44px);font-weight:300;color:var(--white);margin-bottom:14px;}
+.newsletter-title em{color:var(--gold-pale);font-style:italic;}
+.newsletter-sub{font-family:'Cormorant Garamond',serif;font-size:18px;font-style:italic;color:var(--muted);margin-bottom:36px;}
+.newsletter-form{display:flex;gap:12px;max-width:480px;margin:0 auto;}
+.newsletter-input{flex:1;background:rgba(13,27,53,0.7);border:1px solid rgba(212,168,71,0.2);border-radius:8px;padding:13px 18px;font-size:14px;font-family:'Inter',sans-serif;color:var(--white);outline:none;transition:border-color .2s;}
+.newsletter-input:focus{border-color:var(--gold);}
+.newsletter-input::placeholder{color:rgba(255,255,255,0.25);}
+.newsletter-btn{background:var(--gold-dark);color:var(--white);border:none;border-radius:8px;padding:13px 24px;font-size:11px;font-weight:600;font-family:'Cinzel',serif;letter-spacing:2px;cursor:pointer;transition:background .2s;white-space:nowrap;}
+.newsletter-btn:hover{background:var(--gold);}
 
-/* Cards de posts futuros */
-.post-preview{
-  background:var(--navy-mid);border:1px solid rgba(212,168,71,0.08);
-  border-radius:12px;padding:20px 22px;
-  display:flex;align-items:flex-start;gap:16px;
-  opacity:.6;
-}
-.post-cat{
-  font-family:'Cinzel',serif;font-size:13px;letter-spacing:2px;
-  color:var(--gold);text-transform:uppercase;margin-bottom:6px;
-}
-.post-title{font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:400;color:var(--white);line-height:1.4;}
-.post-icon{
-  width:40px;height:40px;border-radius:8px;
-  background:rgba(212,168,71,0.08);border:1px solid rgba(212,168,71,0.15);
-  display:flex;align-items:center;justify-content:center;flex-shrink:0;
-}
-
-/* Badge em breve */
-.badge-em-breve{
-  position:absolute;top:24px;right:24px;
-  background:rgba(212,168,71,0.1);border:1px solid rgba(212,168,71,0.2);
-  border-radius:20px;padding:6px 16px;
-  font-family:'Cinzel',serif;font-size:13px;letter-spacing:3px;color:var(--gold);
-}
-
-/* Fundo decorativo */
-.hero-bg{position:absolute;inset:0;pointer-events:none;}
+footer{padding:36px 60px;display:flex;align-items:center;justify-content:space-between;border-top:1px solid rgba(212,168,71,0.08);}
+.footer-brand{font-family:'Cinzel',serif;font-size:12px;font-weight:700;color:var(--gold);letter-spacing:4px;}
+.footer-copy{font-size:12px;color:rgba(232,213,160,0.4);font-family:'Inter',sans-serif;}
 
 @media(max-width:900px){
-  .hero{grid-template-columns:1fr;}
-  .hero-right{display:none;}
-  .hero-left{padding:60px 24px;}
+  .artigos-grid,.videos-grid{grid-template-columns:1fr;}
+  .artigo-destaque{grid-column:1;grid-template-columns:1fr;}
+  .artigo-destaque-img{min-height:180px;}
+  .galeria-grid{grid-template-columns:repeat(2,1fr);}
+  .galeria-item:first-child{grid-column:span 2;grid-row:span 1;}
   nav{padding:0 20px;}
+  .hero,.section,.newsletter{padding:60px 24px;}
+  footer{flex-direction:column;gap:16px;text-align:center;padding:32px 24px;}
+  .nav-links{display:none;}
+  .newsletter-form{flex-direction:column;}
 }
 </style>
 </head>
@@ -115,116 +125,232 @@ nav{background:var(--navy-mid);border-bottom:2px solid rgba(212,168,71,0.12);pad
   <a href="index.html" class="nav-logo">APEX</a>
   <div class="nav-sep"></div>
   <span class="nav-section">Saúde & Performance</span>
+  <ul class="nav-links">
+    <li><a href="#artigos">Artigos</a></li>
+    <li><a href="#videos">Vídeos</a></li>
+    <li><a href="#galeria">Galeria</a></li>
+  </ul>
   <a href="index.html" class="nav-back">← Início</a>
 </nav>
 
+<!-- HERO -->
 <section class="hero">
-  <div class="hero-bg">
-    <svg width="100%" height="100%" viewBox="0 0 1200 800" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
-      <ellipse cx="300" cy="400" rx="400" ry="500" fill="rgba(212,168,71,0.02)" transform="rotate(20 300 400)"/>
-      <circle cx="300" cy="400" r="280" fill="none" stroke="rgba(212,168,71,0.04)" stroke-width="1"/>
-      <circle cx="300" cy="400" r="380" fill="none" stroke="rgba(212,168,71,0.02)" stroke-width="1"/>
-      <circle cx="900" cy="200" r="1.5" fill="rgba(212,168,71,0.15)"/>
-      <circle cx="1100" cy="600" r="2" fill="rgba(212,168,71,0.1)"/>
-    </svg>
-  </div>
-
-  <!-- Esquerda -->
-  <div class="hero-left">
-    <p class="hero-eyebrow">Portal</p>
+  <div class="hero-bg"></div>
+  <div class="hero-text">
+    <div class="hero-eyebrow">
+      <div class="hero-dot"></div>
+      Portal · Saúde & Performance
+    </div>
     <h1 class="hero-title">
-      Saúde &<br><em>Performance</em>
+      Viver bem
+      <em>é uma prática diária</em>
     </h1>
     <div class="hero-divider"></div>
-    <p class="hero-desc">
-      A vida de um médico que também é atleta. Treinos, rotinas, longevidade e a prova de que saúde crônica não é o fim — é o começo de uma vida mais plena.
-    </p>
-
-    <div class="content-tags">
-      <span class="tag">Treinos</span>
-      <span class="tag">Nutrição</span>
-      <span class="tag">Longevidade</span>
-      <span class="tag">Rotinas</span>
-      <span class="tag">Esporte</span>
-      <span class="tag">Bem-estar</span>
-    </div>
-
-    <p class="social-title">Me acompanhe</p>
-    <div class="social-links">
+    <p class="hero-desc">A jornada de um médico que também é atleta — onde ciência e movimento se encontram para provar que saúde crônica não é o fim, é o começo de uma vida mais plena.</p>
+    <div class="hero-social">
       <a href="https://instagram.com" target="_blank" class="social-btn">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
-          <rect x="2" y="2" width="20" height="20" rx="5" stroke="#D4A847" stroke-width="1.5"/>
-          <circle cx="12" cy="12" r="4" stroke="#D4A847" stroke-width="1.5"/>
-          <circle cx="17.5" cy="6.5" r="1" fill="#D4A847"/>
-        </svg>
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><rect x="2" y="2" width="20" height="20" rx="5" stroke="#D4A847" stroke-width="1.5"/><circle cx="12" cy="12" r="4" stroke="#D4A847" stroke-width="1.5"/><circle cx="17.5" cy="6.5" r="1" fill="#D4A847"/></svg>
         Instagram
       </a>
       <a href="https://youtube.com" target="_blank" class="social-btn">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
-          <rect x="2" y="5" width="20" height="14" rx="3" stroke="#D4A847" stroke-width="1.5"/>
-          <path d="M10 9l5 3-5 3V9z" fill="#D4A847" opacity="0.6"/>
-        </svg>
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><rect x="2" y="5" width="20" height="14" rx="3" stroke="#D4A847" stroke-width="1.5"/><path d="M10 9l5 3-5 3V9z" fill="#D4A847" opacity="0.7"/></svg>
         YouTube
       </a>
     </div>
   </div>
+</section>
 
-  <!-- Direita — preview de conteúdo futuro -->
-  <div class="hero-right">
-    <div class="badge-em-breve">Em breve</div>
-    <p class="coming-soon-label">Conteúdo que está por vir</p>
+<!-- ARTIGOS -->
+<div class="section" id="artigos">
+  <div class="section-header">
+    <p class="section-eyebrow">Conteúdo</p>
+    <h2 class="section-title">Artigos &<br><em>Reflexões Clínicas</em></h2>
+  </div>
+  <div class="artigos-grid">
 
-    <div class="post-preview">
-      <div class="post-icon">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
-          <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" stroke="#D4A847" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
+    <a href="#" class="artigo-destaque">
+      <div class="artigo-destaque-img">
+        <svg width="80" height="80" viewBox="0 0 80 80" fill="none"><circle cx="40" cy="26" r="14" stroke="rgba(212,168,71,0.25)" stroke-width="1.5"/><path d="M14 70c0-14.36 11.64-26 26-26s26 11.64 26 26" stroke="rgba(212,168,71,0.25)" stroke-width="1.5" stroke-linecap="round"/><path d="M10 48l6 0 4-8 6 16 5-10 4 6 4 0 4-5 6 0" stroke="rgba(212,168,71,0.35)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </div>
-      <div>
-        <p class="post-cat">Treino</p>
-        <p class="post-title">Como treino força com meus pacientes em diálise — e o que aprendi com eles</p>
+      <div class="artigo-destaque-body">
+        <p class="artigo-cat">Destaque · Longevidade</p>
+        <h3 class="artigo-title">Como treino força com meus pacientes em diálise — e o que aprendi com eles</h3>
+        <p class="artigo-excerpt">A história de como uma conversa na clínica mudou minha visão sobre performance. Pacientes com doença renal crônica que completaram 5km.</p>
+        <div class="artigo-meta">
+          <span>Dr. Bruno Biluca</span>
+          <div class="artigo-meta-dot"></div>
+          <span>8 min</span>
+          <div class="artigo-meta-dot"></div>
+          <span>Em breve</span>
+        </div>
+        <span class="artigo-link" style="margin-top:28px;">Ler artigo →</span>
       </div>
+    </a>
+
+    <a href="#" class="artigo-card">
+      <div class="artigo-card-num">01</div>
+      <p class="artigo-cat">Treino · Resistência</p>
+      <h3 class="artigo-title">Minha rotina matinal — do plantão para a academia em 45 minutos</h3>
+      <p class="artigo-excerpt">O protocolo que uso para manter consistência mesmo nos dias mais intensos da clínica.</p>
+      <div class="artigo-meta"><span>5 min · Em breve</span></div>
+      <span class="artigo-link" style="margin-top:20px;">Ler →</span>
+    </a>
+
+    <a href="#" class="artigo-card">
+      <div class="artigo-card-num">02</div>
+      <p class="artigo-cat">Nutrição · Saúde Renal</p>
+      <h3 class="artigo-title">O que como em um dia de prova — a dieta de um nefrologista atleta</h3>
+      <p class="artigo-excerpt">Conciliar a restrição de potássio e fósforo com a demanda energética do esporte.</p>
+      <div class="artigo-meta"><span>6 min · Em breve</span></div>
+      <span class="artigo-link" style="margin-top:20px;">Ler →</span>
+    </a>
+
+    <a href="#" class="artigo-card">
+      <div class="artigo-card-num">03</div>
+      <p class="artigo-cat">Medicina · Diabetes</p>
+      <h3 class="artigo-title">Diabetes e corrida: por que meus pacientes estão completando 10km</h3>
+      <p class="artigo-excerpt">Evidências e protocolos para atividade física em pacientes diabéticos com DRC.</p>
+      <div class="artigo-meta"><span>7 min · Em breve</span></div>
+      <span class="artigo-link" style="margin-top:20px;">Ler →</span>
+    </a>
+
+    <a href="#" class="artigo-card">
+      <div class="artigo-card-num">04</div>
+      <p class="artigo-cat">Longevidade · Fé</p>
+      <h3 class="artigo-title">Por que acredito que propósito é o melhor remédio para doenças crônicas</h3>
+      <p class="artigo-excerpt">A dimensão espiritual da saúde e como a fé impacta desfechos clínicos reais.</p>
+      <div class="artigo-meta"><span>9 min · Em breve</span></div>
+      <span class="artigo-link" style="margin-top:20px;">Ler →</span>
+    </a>
+
+  </div>
+</div>
+
+<!-- VÍDEOS -->
+<section class="videos-section" id="videos">
+  <div class="section" style="padding-top:80px;padding-bottom:80px;">
+    <div class="section-header">
+      <p class="section-eyebrow">Vídeos</p>
+      <h2 class="section-title">Conteúdo em<br><em>Movimento</em></h2>
     </div>
+    <div class="videos-grid">
 
-    <div class="post-preview">
-      <div class="post-icon">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
-          <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z" stroke="#D4A847" stroke-width="1.5"/>
-          <path d="M12 6v6l4 2" stroke="#D4A847" stroke-width="1.5" stroke-linecap="round"/>
-        </svg>
+      <div class="video-card">
+        <div class="video-thumb" style="background:linear-gradient(135deg,#2A3A20,#1A2A14);">
+          <div class="video-play"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M6 4l14 8-14 8V4z" fill="#D4A847"/></svg></div>
+          <span style="font-family:'Cinzel',serif;font-size:9px;color:rgba(212,168,71,0.4);letter-spacing:2px;">Em breve</span>
+          <span class="video-duration">8:32</span>
+        </div>
+        <div class="video-body">
+          <p class="video-cat">Treino</p>
+          <p class="video-title">Treino funcional para pacientes renais crônicos</p>
+          <p class="video-meta">Dr. Bruno Biluca · Em breve</p>
+        </div>
       </div>
-      <div>
-        <p class="post-cat">Rotina</p>
-        <p class="post-title">Minha rotina matinal — do plantão para a academia em 45 minutos</p>
+
+      <div class="video-card">
+        <div class="video-thumb" style="background:linear-gradient(135deg,#3A2A1A,#2A1A0A);">
+          <div class="video-play"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M6 4l14 8-14 8V4z" fill="#D4A847"/></svg></div>
+          <span style="font-family:'Cinzel',serif;font-size:9px;color:rgba(212,168,71,0.4);letter-spacing:2px;">Em breve</span>
+          <span class="video-duration">12:18</span>
+        </div>
+        <div class="video-body">
+          <p class="video-cat">Rotina</p>
+          <p class="video-title">Um dia na minha vida — médico e atleta</p>
+          <p class="video-meta">Dr. Bruno Biluca · Em breve</p>
+        </div>
       </div>
+
+      <div class="video-card">
+        <div class="video-thumb" style="background:linear-gradient(135deg,#1B3A5A,#0D2040);">
+          <div class="video-play"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M6 4l14 8-14 8V4z" fill="#D4A847"/></svg></div>
+          <span style="font-family:'Cinzel',serif;font-size:9px;color:rgba(212,168,71,0.4);letter-spacing:2px;">Em breve</span>
+          <span class="video-duration">6:45</span>
+        </div>
+        <div class="video-body">
+          <p class="video-cat">Nutrição</p>
+          <p class="video-title">Suplementação segura na doença renal</p>
+          <p class="video-meta">Dr. Bruno Biluca · Em breve</p>
+        </div>
+      </div>
+
     </div>
-
-    <div class="post-preview">
-      <div class="post-icon">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
-          <path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z" stroke="#D4A847" stroke-width="1.5"/>
-        </svg>
-      </div>
-      <div>
-        <p class="post-cat">Longevidade</p>
-        <p class="post-title">Diabetes e corrida: por que meus pacientes diabéticos estão completando 10km</p>
-      </div>
-    </div>
-
-    <div class="post-preview">
-      <div class="post-icon">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
-          <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" stroke="#D4A847" stroke-width="1.5"/>
-        </svg>
-      </div>
-      <div>
-        <p class="post-cat">Nutrição</p>
-        <p class="post-title">O que como em um dia de prova — a dieta de um nefrologista atleta</p>
-      </div>
-    </div>
-
   </div>
 </section>
 
+<!-- GALERIA -->
+<div class="section" id="galeria">
+  <div class="section-header">
+    <p class="section-eyebrow">Galeria</p>
+    <h2 class="section-title">Momentos &<br><em>Bastidores</em></h2>
+  </div>
+  <div class="galeria-grid">
+
+    <div class="galeria-item">
+      <div class="galeria-placeholder" style="background:linear-gradient(135deg,#2A3A20,#1A2A14);min-height:300px;">
+        <svg width="36" height="36" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="2" stroke="rgba(212,168,71,0.25)" stroke-width="1"/><circle cx="8.5" cy="8.5" r="1.5" stroke="rgba(212,168,71,0.25)" stroke-width="1"/><path d="M21 15l-5-5L5 21" stroke="rgba(212,168,71,0.25)" stroke-width="1" stroke-linecap="round"/></svg>
+        <span style="font-family:'Cinzel',serif;font-size:9px;color:rgba(212,168,71,0.3);letter-spacing:2px;">Em breve</span>
+      </div>
+      <div class="galeria-overlay"><svg class="galeria-icon" width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7" stroke="#D4A847" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+    </div>
+
+    <div class="galeria-item">
+      <div class="galeria-placeholder" style="background:linear-gradient(135deg,#1B3A5A,#0D2040);">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="2" stroke="rgba(212,168,71,0.25)" stroke-width="1"/><circle cx="8.5" cy="8.5" r="1.5" stroke="rgba(212,168,71,0.25)" stroke-width="1"/><path d="M21 15l-5-5L5 21" stroke="rgba(212,168,71,0.25)" stroke-width="1" stroke-linecap="round"/></svg>
+      </div>
+      <div class="galeria-overlay"><svg class="galeria-icon" width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7" stroke="#D4A847" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+    </div>
+
+    <div class="galeria-item">
+      <div class="galeria-placeholder" style="background:linear-gradient(135deg,#3A2A1A,#2A1A0A);">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="2" stroke="rgba(212,168,71,0.25)" stroke-width="1"/><circle cx="8.5" cy="8.5" r="1.5" stroke="rgba(212,168,71,0.25)" stroke-width="1"/><path d="M21 15l-5-5L5 21" stroke="rgba(212,168,71,0.25)" stroke-width="1" stroke-linecap="round"/></svg>
+      </div>
+      <div class="galeria-overlay"><svg class="galeria-icon" width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7" stroke="#D4A847" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+    </div>
+
+    <div class="galeria-item">
+      <div class="galeria-placeholder" style="background:linear-gradient(135deg,#2A1A3A,#1A0A2A);">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="2" stroke="rgba(212,168,71,0.25)" stroke-width="1"/><circle cx="8.5" cy="8.5" r="1.5" stroke="rgba(212,168,71,0.25)" stroke-width="1"/><path d="M21 15l-5-5L5 21" stroke="rgba(212,168,71,0.25)" stroke-width="1" stroke-linecap="round"/></svg>
+      </div>
+      <div class="galeria-overlay"><svg class="galeria-icon" width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7" stroke="#D4A847" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+    </div>
+
+    <div class="galeria-item">
+      <div class="galeria-placeholder" style="background:linear-gradient(135deg,#1B2A4A,#243357);">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="2" stroke="rgba(212,168,71,0.25)" stroke-width="1"/><circle cx="8.5" cy="8.5" r="1.5" stroke="rgba(212,168,71,0.25)" stroke-width="1"/><path d="M21 15l-5-5L5 21" stroke="rgba(212,168,71,0.25)" stroke-width="1" stroke-linecap="round"/></svg>
+      </div>
+      <div class="galeria-overlay"><svg class="galeria-icon" width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7" stroke="#D4A847" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+    </div>
+
+  </div>
+</div>
+
+<!-- NEWSLETTER -->
+<section class="newsletter">
+  <h2 class="newsletter-title">Receba conteúdo<br><em>antes de todo mundo</em></h2>
+  <p class="newsletter-sub">Artigos sobre saúde, longevidade e performance direto no seu e-mail</p>
+  <div class="newsletter-form" id="nl-form">
+    <input type="email" class="newsletter-input" placeholder="seu@email.com" id="nl-email"/>
+    <button class="newsletter-btn" onclick="assinar()">Assinar</button>
+  </div>
+  <p id="nl-ok" style="display:none;margin-top:16px;font-family:'Cormorant Garamond',serif;font-size:16px;font-style:italic;color:#5DCB8A;">✓ Obrigado! Você está na lista.</p>
+</section>
+
+<footer>
+  <div class="footer-brand">DR. BRUNO BILUCA</div>
+  <p class="footer-copy">© 2026 APEX · Medicina · Movimento · Propósito</p>
+</footer>
+
+<script>
+function assinar() {
+  const email = document.getElementById('nl-email').value.trim();
+  if(!email || !email.includes('@')) {
+    document.getElementById('nl-email').style.borderColor = '#F07070';
+    return;
+  }
+  document.getElementById('nl-form').style.display = 'none';
+  document.getElementById('nl-ok').style.display = 'block';
+}
+</script>
 </body>
 </html>
