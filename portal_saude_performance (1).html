@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Saúde & Performance — Dr. Bruno Biluca</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy:#0D1B35; --navy-mid:#1B2A4A; --navy-light:#243357;
+  --gold:#D4A847; --gold-dark:#8B6914; --gold-pale:#E8D5A0;
+  --muted:rgba(232,213,160,0.78); --white:#FFFFFF;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:'Inter',sans-serif;background:var(--navy);color:var(--white);min-height:100vh;}
+
+/* NAV */
+nav{background:rgba(13,27,53,0.97);border-bottom:1px solid rgba(212,168,71,0.12);padding:0 48px;height:58px;display:flex;align-items:center;gap:20px;position:sticky;top:0;z-index:100;backdrop-filter:blur(8px);}
+.nav-logo{font-family:'Cinzel',serif;font-size:14px;font-weight:700;color:var(--gold);letter-spacing:6px;text-decoration:none;}
+.nav-sep{width:1px;height:22px;background:rgba(212,168,71,0.2);}
+.nav-section{font-family:'Cinzel',serif;font-size:12px;letter-spacing:3px;color:var(--muted);text-transform:uppercase;}
+.nav-back{margin-left:auto;font-family:'Cinzel',serif;font-size:11px;letter-spacing:2px;color:rgba(212,168,71,0.5);text-decoration:none;transition:color .2s;}
+.nav-back:hover{color:var(--gold);}
+
+/* HERO */
+.hero{
+  min-height:72vh;display:flex;align-items:center;
+  padding:80px 60px;position:relative;overflow:hidden;
+  border-bottom:1px solid rgba(212,168,71,0.08);
+}
+.hero-bg{
+  position:absolute;inset:0;
+  background:
+    radial-gradient(ellipse at 80% 30%, rgba(212,168,71,0.07) 0%, transparent 55%),
+    radial-gradient(ellipse at 10% 90%, rgba(36,51,87,0.6) 0%, transparent 50%);
+}
+/* Linhas de grade decorativas */
+.hero-grid{
+  position:absolute;inset:0;pointer-events:none;
+  background-image:
+    linear-gradient(rgba(212,168,71,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(212,168,71,0.04) 1px, transparent 1px);
+  background-size:60px 60px;
+}
+.hero-content{position:relative;z-index:1;max-width:740px;}
+.hero-badge{
+  display:inline-flex;align-items:center;gap:10px;
+  border:1px solid rgba(212,168,71,0.2);border-radius:30px;
+  padding:8px 20px;margin-bottom:32px;
+  font-family:'Cinzel',serif;font-size:10px;letter-spacing:3px;color:var(--gold);
+  text-transform:uppercase;
+}
+.hero-badge-dot{width:6px;height:6px;border-radius:50%;background:var(--gold);animation:pulse 2s infinite;}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+.hero-title{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(44px,6.5vw,76px);font-weight:300;
+  color:var(--white);line-height:1.05;margin-bottom:22px;
+}
+.hero-title em{color:var(--gold-pale);font-style:italic;}
+.hero-divider{
+  display:flex;align-items:center;gap:14px;margin-bottom:24px;
+}
+.hero-divider-line{flex:1;max-width:48px;height:1px;background:var(--gold);opacity:.4;}
+.hero-divider-dot{width:4px;height:4px;border-radius:50%;background:var(--gold);opacity:.6;}
+.hero-desc{
+  font-family:'Cormorant Garamond',serif;font-size:19px;
+  font-weight:300;font-style:italic;color:var(--muted);
+  line-height:1.85;margin-bottom:36px;max-width:580px;
+}
+/* Wearables hero badges */
+.wearables-strip{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:36px;}
+.wearable-badge{
+  display:flex;align-items:center;gap:8px;
+  background:rgba(212,168,71,0.06);border:1px solid rgba(212,168,71,0.18);
+  border-radius:8px;padding:8px 14px;
+  font-family:'Inter',sans-serif;font-size:12px;font-weight:500;color:var(--gold-pale);
+  transition:all .3s;
+}
+.wearable-badge:hover{background:rgba(212,168,71,0.12);border-color:rgba(212,168,71,0.35);}
+.hero-social{display:flex;gap:10px;}
+.social-btn{
+  display:flex;align-items:center;gap:8px;
+  font-family:'Cinzel',serif;font-size:11px;letter-spacing:2px;
+  color:var(--gold);border:1px solid rgba(212,168,71,0.25);
+  padding:10px 18px;border-radius:8px;text-decoration:none;
+  transition:all .3s;
+}
+.social-btn:hover{background:rgba(212,168,71,0.1);border-color:rgba(212,168,71,0.5);}
+
+/* INTRO STATEMENT */
+.statement{
+  padding:60px;
+  background:rgba(27,42,74,0.4);
+  border-top:1px solid rgba(212,168,71,0.06);
+  border-bottom:1px solid rgba(212,168,71,0.06);
+  text-align:center;
+}
+.statement-text{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(20px,2.8vw,30px);font-weight:300;font-style:italic;
+  color:var(--white);line-height:1.6;max-width:820px;margin:0 auto;
+}
+.statement-text strong{color:var(--gold-pale);font-weight:400;}
+
+/* CARDS TEMÁTICOS */
+.temas{padding:80px 60px;max-width:1300px;margin:0 auto;}
+.temas-header{margin-bottom:52px;}
+.section-eyebrow{font-family:'Cinzel',serif;font-size:11px;letter-spacing:4px;color:var(--gold);text-transform:uppercase;margin-bottom:12px;}
+.section-title{font-family:'Cormorant Garamond',serif;font-size:clamp(28px,3.5vw,42px);font-weight:300;color:var(--white);line-height:1.2;}
+.section-title em{color:var(--gold-pale);font-style:italic;}
+
+.temas-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
+
+/* Card temático */
+.tema-card{
+  background:var(--navy-mid);
+  border:1px solid rgba(212,168,71,0.08);
+  border-radius:16px;padding:36px 32px;
+  display:flex;flex-direction:column;gap:0;
+  transition:all .4s cubic-bezier(.25,.46,.45,.94);
+  position:relative;overflow:hidden;
+  cursor:default;
+}
+.tema-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:var(--tema-color, var(--gold));
+  transform:scaleX(0);transform-origin:left;
+  transition:transform .4s ease;
+}
+.tema-card:hover::before{transform:scaleX(1);}
+.tema-card:hover{
+  border-color:rgba(212,168,71,0.2);
+  transform:translateY(-4px);
+  box-shadow:0 20px 48px rgba(0,0,0,0.3);
+}
+/* Glow de fundo no hover */
+.tema-card::after{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(circle at 80% 20%, var(--tema-glow, rgba(212,168,71,0.05)) 0%, transparent 60%);
+  opacity:0;transition:opacity .4s;pointer-events:none;
+}
+.tema-card:hover::after{opacity:1;}
+
+.tema-icon-wrap{
+  width:54px;height:54px;border-radius:12px;
+  background:rgba(212,168,71,0.07);
+  border:1px solid rgba(212,168,71,0.15);
+  display:flex;align-items:center;justify-content:center;
+  margin-bottom:22px;transition:all .3s;flex-shrink:0;
+}
+.tema-card:hover .tema-icon-wrap{
+  background:rgba(212,168,71,0.13);
+  border-color:rgba(212,168,71,0.3);
+}
+.tema-status{
+  display:inline-flex;align-items:center;gap:6px;
+  font-family:'Cinzel',serif;font-size:9px;letter-spacing:2px;
+  padding:4px 10px;border-radius:20px;margin-bottom:16px;
+  width:fit-content;
+}
+.status-soon{background:rgba(212,168,71,0.08);color:rgba(232,213,160,0.6);border:1px solid rgba(212,168,71,0.15);}
+.status-active{background:rgba(45,106,79,0.15);color:#5DCB8A;border:1px solid rgba(45,106,79,0.3);}
+.tema-num{
+  font-family:'Cinzel',serif;font-size:11px;font-weight:700;
+  color:rgba(212,168,71,0.18);letter-spacing:2px;margin-bottom:10px;
+}
+.tema-title{
+  font-family:'Cinzel',serif;font-size:16px;font-weight:600;
+  color:var(--white);letter-spacing:1px;margin-bottom:12px;line-height:1.3;
+}
+.tema-desc{
+  font-family:'Cormorant Garamond',serif;font-size:16px;
+  font-style:italic;color:var(--muted);line-height:1.75;margin-bottom:20px;flex:1;
+}
+.tema-tags{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:22px;}
+.tema-tag{
+  font-family:'Inter',sans-serif;font-size:10px;font-weight:500;
+  color:rgba(212,168,71,0.7);background:rgba(212,168,71,0.06);
+  border:1px solid rgba(212,168,71,0.14);
+  padding:3px 10px;border-radius:20px;
+}
+.tema-link{
+  font-family:'Cinzel',serif;font-size:10px;letter-spacing:2px;
+  color:var(--gold);display:flex;align-items:center;gap:7px;
+  margin-top:auto;transition:gap .3s;
+}
+.tema-card:hover .tema-link{gap:12px;}
+
+/* Card destaque — ocupa 2 colunas */
+.tema-card.destaque{
+  grid-column:span 2;
+  flex-direction:row;gap:36px;align-items:flex-start;
+}
+.tema-card.destaque .tema-icon-wrap{
+  width:68px;height:68px;border-radius:16px;flex-shrink:0;
+}
+.tema-card.destaque .tema-body{flex:1;}
+.tema-card.destaque .tema-title{font-size:20px;}
+.tema-card.destaque .tema-desc{font-size:17px;}
+
+/* NEWSLETTER */
+.newsletter{
+  background:linear-gradient(160deg,#152640 0%,var(--navy-mid) 100%);
+  border-top:1px solid rgba(212,168,71,0.1);
+  padding:80px 60px;text-align:center;
+}
+.newsletter-eyebrow{font-family:'Cinzel',serif;font-size:11px;letter-spacing:4px;color:var(--gold);text-transform:uppercase;margin-bottom:16px;}
+.newsletter-title{font-family:'Cormorant Garamond',serif;font-size:clamp(26px,3.5vw,40px);font-weight:300;color:var(--white);margin-bottom:12px;line-height:1.25;}
+.newsletter-title em{color:var(--gold-pale);font-style:italic;}
+.newsletter-sub{font-family:'Cormorant Garamond',serif;font-size:17px;font-style:italic;color:var(--muted);margin-bottom:36px;}
+.newsletter-form{display:flex;gap:10px;max-width:460px;margin:0 auto;}
+.newsletter-input{flex:1;background:rgba(13,27,53,0.8);border:1px solid rgba(212,168,71,0.2);border-radius:8px;padding:13px 18px;font-size:14px;font-family:'Inter',sans-serif;color:var(--white);outline:none;transition:border-color .2s;}
+.newsletter-input:focus{border-color:var(--gold);}
+.newsletter-input::placeholder{color:rgba(255,255,255,0.22);}
+.newsletter-btn{background:var(--gold-dark);color:var(--white);border:none;border-radius:8px;padding:13px 22px;font-size:11px;font-weight:600;font-family:'Cinzel',serif;letter-spacing:2px;cursor:pointer;transition:background .2s;white-space:nowrap;}
+.newsletter-btn:hover{background:var(--gold);}
+
+footer{padding:36px 60px;display:flex;align-items:center;justify-content:space-between;border-top:1px solid rgba(212,168,71,0.08);}
+.footer-brand{font-family:'Cinzel',serif;font-size:12px;font-weight:700;color:var(--gold);letter-spacing:4px;}
+.footer-copy{font-size:12px;color:rgba(232,213,160,0.4);font-family:'Inter',sans-serif;}
+
+@media(max-width:1024px){.temas-grid{grid-template-columns:1fr 1fr;}.tema-card.destaque{grid-column:span 2;}}
+@media(max-width:700px){
+  nav{padding:0 20px;}
+  .hero,.temas,.newsletter{padding:60px 24px;}
+  .statement{padding:48px 24px;}
+  .temas-grid{grid-template-columns:1fr;}
+  .tema-card.destaque{grid-column:span 1;flex-direction:column;gap:0;}
+  .newsletter-form{flex-direction:column;}
+  footer{flex-direction:column;gap:16px;text-align:center;padding:32px 24px;}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">APEX</a>
+  <div class="nav-sep"></div>
+  <span class="nav-section">Saúde & Performance</span>
+  <a href="index.html" class="nav-back">← Início</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-content">
+    <div class="hero-badge">
+      <div class="hero-badge-dot"></div>
+      Portal · Saúde & Performance
+    </div>
+    <h1 class="hero-title">
+      Medicina de precisão<br><em>para a vida real</em>
+    </h1>
+    <div class="hero-divider">
+      <div class="hero-divider-line"></div>
+      <div class="hero-divider-dot"></div>
+      <div class="hero-divider-line"></div>
+    </div>
+    <p class="hero-desc">
+      Wearables, dados biométricos, exercício com segurança e suplementação baseada em evidência — para quem quer viver mais e melhor, com ou sem comorbidades.
+    </p>
+    <!-- Wearables que uso -->
+    <div class="wearables-strip">
+      <div class="wearable-badge">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="8" stroke="#D4A847" stroke-width="1.5"/><circle cx="12" cy="12" r="3" fill="rgba(212,168,71,0.4)"/></svg>
+        Oura Ring
+      </div>
+      <div class="wearable-badge">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><rect x="5" y="3" width="14" height="18" rx="3" stroke="#D4A847" stroke-width="1.5"/><path d="M9 7h6M9 11h6M9 15h4" stroke="#D4A847" stroke-width="1.2" stroke-linecap="round"/></svg>
+        Garmin
+      </div>
+      <div class="wearable-badge">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><rect x="6" y="3" width="12" height="18" rx="3" stroke="#D4A847" stroke-width="1.5"/><path d="M9 9h6M9 13h6" stroke="#D4A847" stroke-width="1.2" stroke-linecap="round"/></svg>
+        Apple Watch
+      </div>
+      <div class="wearable-badge" style="opacity:.6;font-style:italic;">
+        + mais em breve
+      </div>
+    </div>
+    <div class="hero-social">
+      <a href="https://instagram.com" target="_blank" class="social-btn">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><rect x="2" y="2" width="20" height="20" rx="5" stroke="#D4A847" stroke-width="1.5"/><circle cx="12" cy="12" r="4" stroke="#D4A847" stroke-width="1.5"/><circle cx="17.5" cy="6.5" r="1" fill="#D4A847"/></svg>
+        Instagram
+      </a>
+      <a href="https://youtube.com" target="_blank" class="social-btn">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><rect x="2" y="5" width="20" height="14" rx="3" stroke="#D4A847" stroke-width="1.5"/><path d="M10 9l5 3-5 3V9z" fill="#D4A847" opacity="0.7"/></svg>
+        YouTube
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- STATEMENT -->
+<div class="statement">
+  <p class="statement-text">
+    "Meus pacientes usam diálise três vezes por semana e ainda <strong>completam corridas de 5km</strong>. A diferença entre eles e quem desiste não é a doença — é a <strong>informação certa</strong> e o acompanhamento adequado."
+  </p>
+</div>
+
+<!-- TEMAS -->
+<div class="temas" id="temas">
+  <div class="temas-header">
+    <p class="section-eyebrow">Conteúdo temático</p>
+    <h2 class="section-title">Os pilares de<br><em>saúde & performance</em></h2>
+  </div>
+
+  <div class="temas-grid">
+
+    <!-- DESTAQUE: Wearables — 2 colunas -->
+    <div class="tema-card destaque" style="--tema-color:#D4A847;--tema-glow:rgba(212,168,71,0.08);">
+      <div class="tema-icon-wrap">
+        <svg width="30" height="30" viewBox="0 0 30 30" fill="none">
+          <circle cx="15" cy="15" r="10" stroke="#D4A847" stroke-width="1.4"/>
+          <circle cx="15" cy="15" r="4" fill="rgba(212,168,71,0.25)" stroke="#D4A847" stroke-width="1"/>
+          <path d="M15 5v3M15 22v3M5 15h3M22 15h3" stroke="#D4A847" stroke-width="1.2" stroke-linecap="round"/>
+          <path d="M9 9l2 2M19 19l2 2M19 9l-2 2M9 19l2-2" stroke="#D4A847" stroke-width="1" stroke-linecap="round" opacity="0.5"/>
+        </svg>
+      </div>
+      <div class="tema-body">
+        <div class="tema-status status-active">
+          <div style="width:5px;height:5px;border-radius:50%;background:#5DCB8A;"></div>
+          Conteúdo principal
+        </div>
+        <p class="tema-num">TEMA 01</p>
+        <h3 class="tema-title">Monitoramento de Sinais Vitais com Wearables</h3>
+        <p class="tema-desc">Como uso o Oura Ring, Garmin e Apple Watch na minha prática clínica e pessoal — e o que esses dados realmente significam para quem tem hipertensão, diabetes ou doença renal.</p>
+        <div class="tema-tags">
+          <span class="tema-tag">Oura Ring</span>
+          <span class="tema-tag">Garmin</span>
+          <span class="tema-tag">Apple Watch</span>
+          <span class="tema-tag">HRV</span>
+          <span class="tema-tag">Sono</span>
+          <span class="tema-tag">VO₂ máx</span>
+          <span class="tema-tag">SpO₂</span>
+        </div>
+        <span class="tema-link">Ver conteúdo →</span>
+      </div>
+    </div>
+
+    <!-- TEMA 2: Atividade Física + Comorbidades -->
+    <div class="tema-card" style="--tema-color:#5DCB8A;--tema-glow:rgba(45,106,79,0.08);">
+      <div class="tema-icon-wrap">
+        <svg width="26" height="26" viewBox="0 0 26 26" fill="none">
+          <circle cx="18" cy="5" r="3" stroke="#D4A847" stroke-width="1.3"/>
+          <path d="M18 8L16 14" stroke="#D4A847" stroke-width="1.5" stroke-linecap="round"/>
+          <path d="M17 11L11 9" stroke="#D4A847" stroke-width="1.3" stroke-linecap="round"/>
+          <path d="M17 11L21 9" stroke="#D4A847" stroke-width="1.3" stroke-linecap="round"/>
+          <path d="M16 14L12 21" stroke="#D4A847" stroke-width="1.5" stroke-linecap="round"/>
+          <path d="M16 14L20 20" stroke="#D4A847" stroke-width="1.5" stroke-linecap="round"/>
+          <path d="M4 14l3 0 2-3 2 6 2-3 1 2 2 0" stroke="#D4A847" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" opacity="0.6"/>
+        </svg>
+      </div>
+      <div class="tema-status status-soon">Em breve</div>
+      <p class="tema-num">TEMA 02</p>
+      <h3 class="tema-title">Atividade Física com Comorbidades</h3>
+      <p class="tema-desc">Protocolos seguros de exercício para quem tem DRC, diabetes, hipertensão ou insuficiência cardíaca. Como se mover mais sem colocar a saúde em risco.</p>
+      <div class="tema-tags">
+        <span class="tema-tag">DRC</span>
+        <span class="tema-tag">Diabetes</span>
+        <span class="tema-tag">Hipertensão</span>
+        <span class="tema-tag">Zona de treino</span>
+      </div>
+      <span class="tema-link">Em breve →</span>
+    </div>
+
+    <!-- TEMA 3: Monitoramento Remoto -->
+    <div class="tema-card" style="--tema-color:#5BA8D4;--tema-glow:rgba(91,168,212,0.07);">
+      <div class="tema-icon-wrap">
+        <svg width="26" height="26" viewBox="0 0 26 26" fill="none">
+          <rect x="3" y="6" width="14" height="18" rx="2" stroke="#D4A847" stroke-width="1.3"/>
+          <path d="M7 11h6M7 14h4M7 17h5" stroke="#D4A847" stroke-width="1" stroke-linecap="round" opacity="0.7"/>
+          <circle cx="19" cy="8" r="5" fill="rgba(212,168,71,0.08)" stroke="#D4A847" stroke-width="1.2"/>
+          <path d="M17 8l1.5 1.5L21 6.5" stroke="#D4A847" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M10 3v3" stroke="#D4A847" stroke-width="1.2" stroke-linecap="round" opacity="0.5"/>
+        </svg>
+      </div>
+      <div class="tema-status status-soon">Em breve</div>
+      <p class="tema-num">TEMA 03</p>
+      <h3 class="tema-title">Monitoramento Remoto de Doenças Crônicas</h3>
+      <p class="tema-desc">Como a tecnologia permite acompanhar pressão, glicemia e função renal à distância — e por que isso muda completamente a relação entre médico e paciente.</p>
+      <div class="tema-tags">
+        <span class="tema-tag">Telemedicina</span>
+        <span class="tema-tag">IoT em saúde</span>
+        <span class="tema-tag">Glicemia</span>
+        <span class="tema-tag">Pressão arterial</span>
+      </div>
+      <span class="tema-link">Em breve →</span>
+    </div>
+
+    <!-- TEMA 4: Suplementação -->
+    <div class="tema-card" style="--tema-color:#D4A847;--tema-glow:rgba(212,168,71,0.07);">
+      <div class="tema-icon-wrap">
+        <svg width="26" height="26" viewBox="0 0 26 26" fill="none">
+          <path d="M10 4h6l1 4H9L10 4z" stroke="#D4A847" stroke-width="1.3" stroke-linejoin="round"/>
+          <rect x="7" y="8" width="12" height="14" rx="2" stroke="#D4A847" stroke-width="1.3"/>
+          <line x1="7" y1="13" x2="19" y2="13" stroke="#D4A847" stroke-width="1" opacity="0.5"/>
+          <path d="M11 10.5v2M13 10v3M15 10.5v2" stroke="#D4A847" stroke-width="1" stroke-linecap="round" opacity="0.6"/>
+          <path d="M10 16h6M10 19h4" stroke="#D4A847" stroke-width="1" stroke-linecap="round" opacity="0.5"/>
+        </svg>
+      </div>
+      <div class="tema-status status-soon">Em breve</div>
+      <p class="tema-num">TEMA 04</p>
+      <h3 class="tema-title">Suplementação Baseada em Evidência</h3>
+      <p class="tema-desc">O que funciona, o que é mito e o que é perigoso — para saudáveis que querem performance e para pacientes com doença renal, diabetes e doenças crônicas.</p>
+      <div class="tema-tags">
+        <span class="tema-tag">Creatina</span>
+        <span class="tema-tag">Vitamina D</span>
+        <span class="tema-tag">Ômega-3</span>
+        <span class="tema-tag">Proteína</span>
+        <span class="tema-tag">Renal-safe</span>
+      </div>
+      <span class="tema-link">Em breve →</span>
+    </div>
+
+    <!-- TEMA 5: Longevidade -->
+    <div class="tema-card" style="--tema-color:#C084FC;--tema-glow:rgba(192,132,252,0.06);">
+      <div class="tema-icon-wrap">
+        <svg width="26" height="26" viewBox="0 0 26 26" fill="none">
+          <path d="M13 4C13 4 5 8 5 14a8 8 0 0016 0C21 8 13 4 13 4z" stroke="#D4A847" stroke-width="1.3" fill="none"/>
+          <path d="M9 14l3 3 5-5" stroke="#D4A847" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="13" cy="14" r="5" stroke="#D4A847" stroke-width="0.8" opacity="0.3"/>
+        </svg>
+      </div>
+      <div class="tema-status status-soon">Em breve</div>
+      <p class="tema-num">TEMA 05</p>
+      <h3 class="tema-title">Longevidade & Medicina do Estilo de Vida</h3>
+      <p class="tema-desc">Sono, estresse, alimentação e movimento como pilares da longevidade — com dados reais do meu próprio monitoramento e da minha prática clínica.</p>
+      <div class="tema-tags">
+        <span class="tema-tag">Sono</span>
+        <span class="tema-tag">Cortisol</span>
+        <span class="tema-tag">HRV</span>
+        <span class="tema-tag">Alimentação</span>
+      </div>
+      <span class="tema-link">Em breve →</span>
+    </div>
+
+    <!-- TEMA 6: Em construção / Futuro -->
+    <div class="tema-card" style="opacity:.65;cursor:default;">
+      <div class="tema-icon-wrap">
+        <svg width="26" height="26" viewBox="0 0 26 26" fill="none">
+          <circle cx="13" cy="13" r="9" stroke="#D4A847" stroke-width="1.3" stroke-dasharray="3 2"/>
+          <path d="M13 9v4l3 2" stroke="#D4A847" stroke-width="1.3" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <div class="tema-status status-soon">Em desenvolvimento</div>
+      <p class="tema-num">TEMA 06</p>
+      <h3 class="tema-title">Mais temas em breve</h3>
+      <p class="tema-desc">Novos conteúdos sendo desenvolvidos — medicina personalizada, nutrigenômica, saúde mental e mais. Assine a newsletter para ser notificado.</p>
+      <div class="tema-tags">
+        <span class="tema-tag">Nutrigenômica</span>
+        <span class="tema-tag">Saúde mental</span>
+        <span class="tema-tag">Em breve</span>
+      </div>
+      <span class="tema-link" style="opacity:.4;">Aguarde →</span>
+    </div>
+
+  </div>
+</div>
+
+<!-- NEWSLETTER -->
+<section class="newsletter">
+  <p class="newsletter-eyebrow">Newsletter</p>
+  <h2 class="newsletter-title">Conteúdo que<br><em>faz a diferença</em></h2>
+  <p class="newsletter-sub">Artigos, protocolos e análises de dados direto no seu e-mail — sem enrolação</p>
+  <div class="newsletter-form" id="nl-form">
+    <input type="email" class="newsletter-input" placeholder="seu@email.com" id="nl-email"/>
+    <button class="newsletter-btn" onclick="assinar()">Assinar</button>
+  </div>
+  <p id="nl-ok" style="display:none;margin-top:16px;font-family:'Cormorant Garamond',serif;font-size:17px;font-style:italic;color:#5DCB8A;">✓ Perfeito! Você será notificado com os primeiros conteúdos.</p>
+</section>
+
+<footer>
+  <div class="footer-brand">DR. BRUNO BILUCA</div>
+  <p class="footer-copy">© 2026 APEX · Medicina · Movimento · Propósito</p>
+</footer>
+
+<script>
+function assinar() {
+  const email = document.getElementById('nl-email').value.trim();
+  if(!email || !email.includes('@')) {
+    document.getElementById('nl-email').style.borderColor = '#F07070';
+    return;
+  }
+  document.getElementById('nl-form').style.display = 'none';
+  document.getElementById('nl-ok').style.display = 'block';
+}
+</script>
+</body>
+</html>
