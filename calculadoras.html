@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Calculadoras Clínicas — Dr. Bruno Biluca</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy:#0D1B35; --navy-mid:#1B2A4A; --navy-light:#243357;
+  --gold:#D4A847; --gold-dark:#8B6914; --gold-pale:#E8D5A0;
+  --muted:rgba(232,213,160,0.5); --white:#FFFFFF;
+  --ok:#2D6A4F; --ok-bg:rgba(45,106,79,0.15);
+  --warn:#9C6400; --warn-bg:rgba(156,100,0,0.15);
+  --bad:#A32D2D; --bad-bg:rgba(163,45,45,0.15);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Inter',sans-serif;background:var(--navy);color:var(--white);min-height:100vh;}
+
+nav{background:var(--navy-mid);border-bottom:2px solid rgba(212,168,71,0.12);padding:0 48px;height:58px;display:flex;align-items:center;gap:20px;position:sticky;top:0;z-index:100;}
+.nav-logo{font-family:'Cinzel',serif;font-size:14px;font-weight:700;color:var(--gold);letter-spacing:6px;text-decoration:none;}
+.nav-sep{width:1px;height:22px;background:rgba(212,168,71,0.2);}
+.nav-section{font-family:'Cinzel',serif;font-size:10px;letter-spacing:3px;color:var(--muted);text-transform:uppercase;}
+.nav-back{margin-left:auto;font-family:'Cinzel',serif;font-size:10px;letter-spacing:2px;color:rgba(212,168,71,0.4);text-decoration:none;transition:color .2s;}
+.nav-back:hover{color:var(--gold);}
+
+.page{max-width:1200px;margin:0 auto;padding:52px 48px;}
+.page-eyebrow{font-family:'Cinzel',serif;font-size:10px;letter-spacing:5px;color:var(--gold);margin-bottom:12px;text-transform:uppercase;}
+.page-title{font-family:'Cormorant Garamond',serif;font-size:clamp(28px,4vw,44px);font-weight:300;color:var(--white);margin-bottom:8px;line-height:1.2;}
+.page-title em{color:var(--gold-pale);font-style:italic;}
+.page-sub{font-family:'Cormorant Garamond',serif;font-size:17px;font-style:italic;color:var(--muted);margin-bottom:52px;}
+
+/* Tabs */
+.tabs{display:flex;gap:4px;margin-bottom:36px;flex-wrap:wrap;}
+.tab{font-family:'Cinzel',serif;font-size:10px;letter-spacing:2px;color:var(--muted);background:transparent;border:1px solid rgba(212,168,71,0.15);border-radius:6px;padding:8px 16px;cursor:pointer;transition:all .2s;text-transform:uppercase;}
+.tab.active{background:rgba(212,168,71,0.12);color:var(--gold);border-color:rgba(212,168,71,0.35);}
+.tab:hover:not(.active){color:var(--gold-pale);border-color:rgba(212,168,71,0.25);}
+
+/* Calculadora */
+.calc{display:none;animation:fadeIn .3s ease;}
+.calc.active{display:grid;grid-template-columns:1fr 1fr;gap:32px;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+.calc-form{background:var(--navy-mid);border:1px solid rgba(212,168,71,0.1);border-radius:16px;padding:36px;}
+.calc-result{background:var(--navy-mid);border:1px solid rgba(212,168,71,0.1);border-radius:16px;padding:36px;display:flex;flex-direction:column;}
+
+.calc-title{font-family:'Cinzel',serif;font-size:14px;font-weight:600;color:var(--white);letter-spacing:2px;margin-bottom:6px;}
+.calc-subtitle{font-family:'Cormorant Garamond',serif;font-size:15px;font-style:italic;color:var(--muted);margin-bottom:28px;}
+
+.field{margin-bottom:18px;}
+.field label{display:block;font-size:11px;font-weight:500;color:var(--muted);letter-spacing:.05em;margin-bottom:7px;text-transform:uppercase;}
+.field input,.field select{
+  width:100%;background:rgba(13,27,53,0.6);border:1px solid rgba(212,168,71,0.18);
+  border-radius:8px;padding:11px 14px;font-size:14px;
+  font-family:'Inter',sans-serif;color:var(--white);outline:none;transition:border-color .2s;
+}
+.field input:focus,.field select:focus{border-color:var(--gold);}
+.field select option{background:var(--navy-mid);}
+.field-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+
+.btn-calc{
+  width:100%;margin-top:8px;background:var(--gold-dark);color:var(--white);
+  border:none;border-radius:8px;padding:13px;font-size:11px;font-weight:600;
+  font-family:'Cinzel',serif;letter-spacing:3px;text-transform:uppercase;
+  cursor:pointer;transition:background .2s;
+}
+.btn-calc:hover{background:var(--gold);}
+
+/* Resultado */
+.result-empty{
+  flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  opacity:.3;text-align:center;gap:12px;
+}
+.result-empty svg{opacity:.5;}
+.result-empty p{font-family:'Cormorant Garamond',serif;font-size:16px;font-style:italic;color:var(--muted);}
+
+.result-content{display:none;flex-direction:column;gap:20px;}
+.result-content.show{display:flex;}
+
+.result-value{
+  text-align:center;padding:28px;
+  background:rgba(13,27,53,0.5);border-radius:12px;
+  border:1px solid rgba(212,168,71,0.1);
+}
+.result-num{font-family:'Cinzel',serif;font-size:48px;font-weight:700;color:var(--gold);line-height:1;}
+.result-unit{font-family:'Cormorant Garamond',serif;font-size:16px;font-style:italic;color:var(--muted);margin-top:6px;}
+
+.result-stage{
+  padding:16px 20px;border-radius:10px;
+  font-family:'Inter',sans-serif;font-size:13px;font-weight:500;
+  display:flex;align-items:center;gap:10px;
+}
+.result-stage.ok{background:var(--ok-bg);color:#5DCB8A;border:1px solid rgba(45,106,79,0.3);}
+.result-stage.warn{background:var(--warn-bg);color:#E8B84A;border:1px solid rgba(156,100,0,0.3);}
+.result-stage.bad{background:var(--bad-bg);color:#F07070;border:1px solid rgba(163,45,45,0.3);}
+
+.result-info{font-family:'Cormorant Garamond',serif;font-size:15px;font-style:italic;color:var(--muted);line-height:1.7;}
+
+.result-stages{margin-top:4px;}
+.stage-row{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:8px 12px;border-radius:6px;margin-bottom:4px;
+  font-size:12px;font-family:'Inter',sans-serif;
+  border-left:3px solid transparent;
+}
+.stage-row.active-stage{background:rgba(212,168,71,0.08);border-left-color:var(--gold);}
+.stage-label{color:var(--muted);}
+.stage-val{color:var(--gold-pale);font-weight:500;}
+
+@media(max-width:768px){
+  .calc.active{grid-template-columns:1fr;}
+  .page{padding:32px 20px;}
+  nav{padding:0 20px;}
+  .tabs{gap:6px;}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">APEX</a>
+  <div class="nav-sep"></div>
+  <span class="nav-section">Utilidades</span>
+  <a href="portal_profissionais.html" class="nav-back">← Profissionais</a>
+</nav>
+
+<div class="page">
+  <p class="page-eyebrow">Módulo 03</p>
+  <h1 class="page-title">Calculadoras<br><em>Clínicas</em></h1>
+  <p class="page-sub">Ferramentas de cálculo para uso clínico diário em nefrologia</p>
+
+  <div class="tabs">
+    <button class="tab active" onclick="showCalc('ckd')">CKD-EPI / Cockroft</button>
+    <button class="tab" onclick="showCalc('ktv')">Dose de Diálise (Kt/V)</button>
+    <button class="tab" onclick="showCalc('imc')">IMC</button>
+    <button class="tab" onclick="showCalc('cardio')">Risco Cardiovascular</button>
+    <button class="tab" onclick="showCalc('med')">Dose por Função Renal</button>
+  </div>
+
+  <!-- CALC 1: CKD-EPI / Cockroft-Gault -->
+  <div class="calc active" id="calc-ckd">
+    <div class="calc-form">
+      <div class="calc-title">Clearance de Creatinina</div>
+      <div class="calc-subtitle">CKD-EPI 2021 e Cockroft-Gault</div>
+      <div class="field"><label>Creatinina sérica (mg/dL)</label><input type="number" id="ckd-cr" placeholder="1.0" step="0.01"></div>
+      <div class="field-row">
+        <div class="field"><label>Idade (anos)</label><input type="number" id="ckd-idade" placeholder="50"></div>
+        <div class="field"><label>Sexo</label><select id="ckd-sexo"><option value="M">Masculino</option><option value="F">Feminino</option></select></div>
+      </div>
+      <div class="field"><label>Peso (kg) — para Cockroft</label><input type="number" id="ckd-peso" placeholder="70"></div>
+      <div class="field"><label>Raça</label><select id="ckd-raca"><option value="other">Não negra</option><option value="black">Negra</option></select></div>
+      <button class="btn-calc" onclick="calcCKD()">Calcular</button>
+    </div>
+    <div class="calc-result">
+      <div class="result-empty" id="ckd-empty">
+        <svg width="48" height="48" viewBox="0 0 48 48" fill="none"><circle cx="24" cy="24" r="20" stroke="#D4A847" stroke-width="1"/><path d="M24 14v12M24 32v2" stroke="#D4A847" stroke-width="1.5" stroke-linecap="round"/></svg>
+        <p>Preencha os dados e clique em Calcular</p>
+      </div>
+      <div class="result-content" id="ckd-result">
+        <div class="result-value">
+          <div class="result-num" id="ckd-val">—</div>
+          <div class="result-unit">mL/min/1,73m² (CKD-EPI)</div>
+        </div>
+        <div class="result-stage" id="ckd-stage"></div>
+        <div class="result-info" id="ckd-ckinfo"></div>
+        <div class="result-stages" id="ckd-stages"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CALC 2: Kt/V -->
+  <div class="calc" id="calc-ktv">
+    <div class="calc-form">
+      <div class="calc-title">Dose de Diálise</div>
+      <div class="calc-subtitle">Kt/V pela fórmula de Daugirdas II</div>
+      <div class="field"><label>Ureia pré-diálise (mg/dL)</label><input type="number" id="ktv-upre" placeholder="120"></div>
+      <div class="field"><label>Ureia pós-diálise (mg/dL)</label><input type="number" id="ktv-upos" placeholder="40"></div>
+      <div class="field-row">
+        <div class="field"><label>Peso pré (kg)</label><input type="number" id="ktv-wpre" placeholder="70" step="0.1"></div>
+        <div class="field"><label>Peso pós (kg)</label><input type="number" id="ktv-wpos" placeholder="68" step="0.1"></div>
+      </div>
+      <div class="field"><label>Tempo de sessão (minutos)</label><input type="number" id="ktv-t" placeholder="240"></div>
+      <button class="btn-calc" onclick="calcKTV()">Calcular</button>
+    </div>
+    <div class="calc-result">
+      <div class="result-empty" id="ktv-empty">
+        <svg width="48" height="48" viewBox="0 0 48 48" fill="none"><circle cx="24" cy="24" r="20" stroke="#D4A847" stroke-width="1"/><path d="M24 14v12M24 32v2" stroke="#D4A847" stroke-width="1.5" stroke-linecap="round"/></svg>
+        <p>Preencha os dados e clique em Calcular</p>
+      </div>
+      <div class="result-content" id="ktv-result">
+        <div class="result-value">
+          <div class="result-num" id="ktv-val">—</div>
+          <div class="result-unit">Kt/V (Daugirdas II)</div>
+        </div>
+        <div class="result-stage" id="ktv-stage"></div>
+        <div class="result-info" id="ktv-info"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CALC 3: IMC -->
+  <div class="calc" id="calc-imc">
+    <div class="calc-form">
+      <div class="calc-title">Índice de Massa Corporal</div>
+      <div class="calc-subtitle">IMC e classificação nutricional</div>
+      <div class="field"><label>Peso (kg)</label><input type="number" id="imc-peso" placeholder="70" step="0.1"></div>
+      <div class="field"><label>Altura (cm)</label><input type="number" id="imc-altura" placeholder="170"></div>
+      <button class="btn-calc" onclick="calcIMC()">Calcular</button>
+    </div>
+    <div class="calc-result">
+      <div class="result-empty" id="imc-empty">
+        <svg width="48" height="48" viewBox="0 0 48 48" fill="none"><circle cx="24" cy="24" r="20" stroke="#D4A847" stroke-width="1"/><path d="M24 14v12M24 32v2" stroke="#D4A847" stroke-width="1.5" stroke-linecap="round"/></svg>
+        <p>Preencha os dados e clique em Calcular</p>
+      </div>
+      <div class="result-content" id="imc-result">
+        <div class="result-value">
+          <div class="result-num" id="imc-val">—</div>
+          <div class="result-unit">kg/m²</div>
+        </div>
+        <div class="result-stage" id="imc-stage"></div>
+        <div class="result-stages" id="imc-stages"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CALC 4: Risco Cardiovascular (Framingham simplificado) -->
+  <div class="calc" id="calc-cardio">
+    <div class="calc-form">
+      <div class="calc-title">Risco Cardiovascular</div>
+      <div class="calc-subtitle">Escore de Framingham simplificado (10 anos)</div>
+      <div class="field-row">
+        <div class="field"><label>Idade</label><input type="number" id="cv-idade" placeholder="55"></div>
+        <div class="field"><label>Sexo</label><select id="cv-sexo"><option value="M">Masculino</option><option value="F">Feminino</option></select></div>
+      </div>
+      <div class="field"><label>PAS sistólica (mmHg)</label><input type="number" id="cv-pas" placeholder="130"></div>
+      <div class="field"><label>Colesterol total (mg/dL)</label><input type="number" id="cv-col" placeholder="200"></div>
+      <div class="field"><label>HDL (mg/dL)</label><input type="number" id="cv-hdl" placeholder="50"></div>
+      <div class="field-row">
+        <div class="field"><label>Tabagismo</label><select id="cv-tab"><option value="0">Não</option><option value="1">Sim</option></select></div>
+        <div class="field"><label>Diabetes</label><select id="cv-dm"><option value="0">Não</option><option value="1">Sim</option></select></div>
+      </div>
+      <button class="btn-calc" onclick="calcCardio()">Calcular</button>
+    </div>
+    <div class="calc-result">
+      <div class="result-empty" id="cardio-empty">
+        <svg width="48" height="48" viewBox="0 0 48 48" fill="none"><circle cx="24" cy="24" r="20" stroke="#D4A847" stroke-width="1"/><path d="M24 14v12M24 32v2" stroke="#D4A847" stroke-width="1.5" stroke-linecap="round"/></svg>
+        <p>Preencha os dados e clique em Calcular</p>
+      </div>
+      <div class="result-content" id="cardio-result">
+        <div class="result-value">
+          <div class="result-num" id="cardio-val">—</div>
+          <div class="result-unit">% risco em 10 anos</div>
+        </div>
+        <div class="result-stage" id="cardio-stage"></div>
+        <div class="result-info" id="cardio-info"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CALC 5: Dose por Função Renal -->
+  <div class="calc" id="calc-med">
+    <div class="calc-form">
+      <div class="calc-title">Dose por Função Renal</div>
+      <div class="calc-subtitle">Ajuste de medicamentos conforme TFG</div>
+      <div class="field"><label>TFG estimada (mL/min/1,73m²)</label><input type="number" id="med-tfg" placeholder="30"></div>
+      <div class="field"><label>Medicamento</label>
+        <select id="med-drug">
+          <option value="">Selecione...</option>
+          <option value="metformina">Metformina</option>
+          <option value="atenolol">Atenolol</option>
+          <option value="digoxina">Digoxina</option>
+          <option value="gabapentina">Gabapentina</option>
+          <option value="ciprofloxacino">Ciprofloxacino</option>
+          <option value="allopurinol">Alopurinol</option>
+          <option value="spironolactona">Espironolactona</option>
+          <option value="aciclovir">Aciclovir</option>
+        </select>
+      </div>
+      <button class="btn-calc" onclick="calcMed()">Verificar</button>
+    </div>
+    <div class="calc-result">
+      <div class="result-empty" id="med-empty">
+        <svg width="48" height="48" viewBox="0 0 48 48" fill="none"><circle cx="24" cy="24" r="20" stroke="#D4A847" stroke-width="1"/><path d="M24 14v12M24 32v2" stroke="#D4A847" stroke-width="1.5" stroke-linecap="round"/></svg>
+        <p>Selecione um medicamento e informe a TFG</p>
+      </div>
+      <div class="result-content" id="med-result">
+        <div class="result-stage" id="med-stage"></div>
+        <div class="result-info" id="med-info" style="margin-top:8px;"></div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+function showCalc(id) {
+  document.querySelectorAll('.calc').forEach(c => c.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('calc-'+id).classList.add('active');
+  event.target.classList.add('active');
+}
+
+function showResult(prefix) {
+  document.getElementById(prefix+'-empty').style.display = 'none';
+  document.getElementById(prefix+'-result').classList.add('show');
+}
+
+function setStage(el, cls, icon, text) {
+  el.className = 'result-stage ' + cls;
+  el.innerHTML = icon + ' ' + text;
+}
+
+/* CKD-EPI 2021 */
+function calcCKD() {
+  const cr = +document.getElementById('ckd-cr').value;
+  const idade = +document.getElementById('ckd-idade').value;
+  const sexo = document.getElementById('ckd-sexo').value;
+  const peso = +document.getElementById('ckd-peso').value;
+  if(!cr || !idade) { alert('Preencha creatinina e idade.'); return; }
+
+  /* CKD-EPI 2021 (sem raça) */
+  let kappa = sexo === 'F' ? 0.7 : 0.9;
+  let alpha = sexo === 'F' ? -0.241 : -0.302;
+  let crRatio = cr / kappa;
+  let ckdepi = 142 * Math.pow(Math.min(crRatio, 1), alpha) * Math.pow(Math.max(crRatio, 1), -1.200) * Math.pow(0.9938, idade);
+  if(sexo === 'F') ckdepi *= 1.012;
+  ckdepi = Math.round(ckdepi);
+
+  /* Cockroft-Gault */
+  let cg = peso ? Math.round(((140 - idade) * peso) / (72 * cr) * (sexo === 'F' ? 0.85 : 1)) : null;
+
+  document.getElementById('ckd-val').textContent = ckdepi;
+  document.getElementById('ckd-ckinfo').textContent = cg ? `Cockroft-Gault: ${cg} mL/min` : '';
+
+  const stageEl = document.getElementById('ckd-stage');
+  let stages = [
+    {min:90,label:'G1 — Normal ou aumentada',cls:'ok'},
+    {min:60,label:'G2 — Levemente reduzida',cls:'ok'},
+    {min:45,label:'G3a — Redução leve a moderada',cls:'warn'},
+    {min:30,label:'G3b — Redução moderada a grave',cls:'warn'},
+    {min:15,label:'G4 — Redução grave',cls:'bad'},
+    {min:0,label:'G5 — Falência renal',cls:'bad'},
+  ];
+  let current = stages.find(s => ckdepi >= s.min) || stages[stages.length-1];
+  setStage(stageEl, current.cls, current.cls==='ok'?'✓':current.cls==='warn'?'⚠':'✕', current.label);
+
+  /* Tabela de estágios */
+  const stagesEl = document.getElementById('ckd-stages');
+  stagesEl.innerHTML = stages.map(s => `
+    <div class="stage-row ${ckdepi >= s.min && s === current ? 'active-stage' : ''}">
+      <span class="stage-label">${s.label}</span>
+      <span class="stage-val">≥${s.min}</span>
+    </div>`).join('');
+
+  showResult('ckd');
+}
+
+/* Kt/V Daugirdas II */
+function calcKTV() {
+  const upre = +document.getElementById('ktv-upre').value;
+  const upos = +document.getElementById('ktv-upos').value;
+  const wpre = +document.getElementById('ktv-wpre').value;
+  const wpos = +document.getElementById('ktv-wpos').value;
+  const t = +document.getElementById('ktv-t').value;
+  if(!upre||!upos||!wpre||!wpos||!t){alert('Preencha todos os campos.');return;}
+
+  const R = upos / upre;
+  const UF = (wpre - wpos) / wpos;
+  const ktv = -Math.log(R - 0.008 * t) + (4 - 3.5 * R) * UF;
+  const val = Math.round(ktv * 100) / 100;
+
+  document.getElementById('ktv-val').textContent = val.toFixed(2);
+  const stageEl = document.getElementById('ktv-stage');
+  const infoEl = document.getElementById('ktv-info');
+
+  if(val >= 1.4) {
+    setStage(stageEl,'ok','✓','Adequado — Kt/V ≥ 1,4 (meta KDOQI)');
+    infoEl.textContent = 'Dose de diálise dentro das metas internacionais para pacientes 3x/semana.';
+  } else if(val >= 1.2) {
+    setStage(stageEl,'warn','⚠','Limítrofe — Kt/V entre 1,2 e 1,4');
+    infoEl.textContent = 'Dose mínima atingida, porém abaixo da meta ideal. Considerar ajuste da sessão.';
+  } else {
+    setStage(stageEl,'bad','✕','Inadequado — Kt/V < 1,2');
+    infoEl.textContent = 'Dose de diálise abaixo do mínimo recomendado. Revisar tempo, fluxo e acesso vascular.';
+  }
+  showResult('ktv');
+}
+
+/* IMC */
+function calcIMC() {
+  const peso = +document.getElementById('imc-peso').value;
+  const altcm = +document.getElementById('imc-altura').value;
+  if(!peso||!altcm){alert('Preencha peso e altura.');return;}
+  const alt = altcm / 100;
+  const imc = Math.round((peso / (alt * alt)) * 10) / 10;
+  document.getElementById('imc-val').textContent = imc.toFixed(1);
+
+  const cats = [
+    {max:18.5,label:'Abaixo do peso',cls:'warn'},
+    {max:25,label:'Peso normal (Eutrófico)',cls:'ok'},
+    {max:30,label:'Sobrepeso',cls:'warn'},
+    {max:35,label:'Obesidade grau I',cls:'bad'},
+    {max:40,label:'Obesidade grau II',cls:'bad'},
+    {max:999,label:'Obesidade grau III (mórbida)',cls:'bad'},
+  ];
+  const cat = cats.find(c => imc < c.max);
+  setStage(document.getElementById('imc-stage'), cat.cls, cat.cls==='ok'?'✓':'⚠', cat.label);
+
+  document.getElementById('imc-stages').innerHTML = cats.map(c => `
+    <div class="stage-row ${cat===c?'active-stage':''}">
+      <span class="stage-label">${c.label}</span>
+      <span class="stage-val">${c.max<999?'< '+c.max:'≥ 40'}</span>
+    </div>`).join('');
+
+  showResult('imc');
+}
+
+/* Risco Cardiovascular Framingham simplificado */
+function calcCardio() {
+  const idade = +document.getElementById('cv-idade').value;
+  const sexo = document.getElementById('cv-sexo').value;
+  const pas = +document.getElementById('cv-pas').value;
+  const col = +document.getElementById('cv-col').value;
+  const hdl = +document.getElementById('cv-hdl').value;
+  const tab = +document.getElementById('cv-tab').value;
+  const dm = +document.getElementById('cv-dm').value;
+  if(!idade||!pas||!col||!hdl){alert('Preencha todos os campos.');return;}
+
+  /* Pontos Framingham simplificado */
+  let pts = 0;
+  if(sexo==='M'){
+    if(idade<35)pts+=0;else if(idade<40)pts+=2;else if(idade<45)pts+=5;
+    else if(idade<50)pts+=6;else if(idade<55)pts+=8;else if(idade<60)pts+=10;
+    else if(idade<65)pts+=11;else if(idade<70)pts+=12;else pts+=13;
+    if(col<160)pts+=0;else if(col<200)pts+=3;else if(col<240)pts+=5;
+    else if(col<280)pts+=6;else pts+=8;
+    if(hdl>=60)pts-=2;else if(hdl>=50)pts+=0;else if(hdl>=40)pts+=1;else pts+=2;
+    if(pas<120)pts+=0;else if(pas<130)pts+=0;else if(pas<140)pts+=1;
+    else if(pas<160)pts+=1;else pts+=2;
+    if(tab)pts+=4;
+    if(dm)pts+=3;
+    const riskM = [1,1,1,1,1,2,2,3,4,5,6,8,10,12,16,20,25,30];
+    const risk = pts <= 0 ? 1 : pts >= 17 ? 30 : riskM[Math.min(pts, riskM.length-1)];
+    showCardioResult(risk);
+  } else {
+    if(idade<35)pts+=0;else if(idade<40)pts+=2;else if(idade<45)pts+=4;
+    else if(idade<50)pts+=5;else if(idade<55)pts+=7;else if(idade<60)pts+=8;
+    else if(idade<65)pts+=9;else if(idade<70)pts+=10;else pts+=11;
+    if(col<160)pts+=0;else if(col<200)pts+=3;else if(col<240)pts+=6;
+    else if(col<280)pts+=8;else pts+=11;
+    if(hdl>=60)pts-=2;else if(hdl>=50)pts+=0;else if(hdl>=40)pts+=1;else pts+=2;
+    if(pas<120)pts-=3;else if(pas<130)pts+=0;else if(pas<140)pts+=1;
+    else if(pas<160)pts+=2;else pts+=3;
+    if(tab)pts+=3;
+    if(dm)pts+=4;
+    const riskF = [1,1,1,1,1,2,2,3,4,5,6,7,8,10,12,14,16,20,24,27];
+    const risk = pts <= 0 ? 1 : pts >= 19 ? 27 : riskF[Math.min(pts, riskF.length-1)];
+    showCardioResult(risk);
+  }
+}
+
+function showCardioResult(risk) {
+  document.getElementById('cardio-val').textContent = risk + '%';
+  const stageEl = document.getElementById('cardio-stage');
+  const infoEl = document.getElementById('cardio-info');
+  if(risk < 10) {
+    setStage(stageEl,'ok','✓','Risco baixo — < 10%');
+    infoEl.textContent = 'Risco cardiovascular baixo em 10 anos. Manter estilo de vida saudável e monitoramento periódico.';
+  } else if(risk < 20) {
+    setStage(stageEl,'warn','⚠','Risco intermediário — 10% a 20%');
+    infoEl.textContent = 'Risco cardiovascular intermediário. Considerar intervenções no estilo de vida e monitoramento mais frequente.';
+  } else {
+    setStage(stageEl,'bad','✕','Risco alto — ≥ 20%');
+    infoEl.textContent = 'Risco cardiovascular alto. Intervenção terapêutica indicada — estatinas, controle pressórico rigoroso e modificações de estilo de vida.';
+  }
+  showResult('cardio');
+}
+
+/* Dose por Função Renal */
+const DRUGS = {
+  metformina: {
+    nome: 'Metformina',
+    regras: [
+      {min:45, text:'Dose normal. Monitorar função renal a cada 3-6 meses.', cls:'ok'},
+      {min:30, text:'Reduzir dose em 50%. TFG 30-44: usar com cautela, máximo 1000mg/dia.', cls:'warn'},
+      {min:0,  text:'CONTRAINDICADA. Risco de acidose lática. Suspender.', cls:'bad'},
+    ]
+  },
+  atenolol: {
+    nome: 'Atenolol',
+    regras: [
+      {min:35, text:'Dose normal: 50-100mg/dia.', cls:'ok'},
+      {min:15, text:'Reduzir dose: 50mg/dia. Intervalo a cada 48h.', cls:'warn'},
+      {min:0,  text:'Dose mínima: 50mg em dias alternados. Monitorar bradicardia.', cls:'bad'},
+    ]
+  },
+  digoxina: {
+    nome: 'Digoxina',
+    regras: [
+      {min:50, text:'Dose normal com monitoramento sérico.', cls:'ok'},
+      {min:10, text:'Reduzir dose em 50%. Monitorar nível sérico — toxicidade aumentada.', cls:'warn'},
+      {min:0,  text:'Evitar se possível. Se necessário, dose muito reduzida com monitoramento intensivo.', cls:'bad'},
+    ]
+  },
+  gabapentina: {
+    nome: 'Gabapentina',
+    regras: [
+      {min:60, text:'Dose normal: até 3600mg/dia.', cls:'ok'},
+      {min:30, text:'Dose máxima: 700mg/dia. Dividir em 2x.', cls:'warn'},
+      {min:15, text:'Dose máxima: 300mg/dia.', cls:'warn'},
+      {min:0,  text:'Dose máxima: 150mg/dia. Ajuste necessário após diálise.', cls:'bad'},
+    ]
+  },
+  ciprofloxacino: {
+    nome: 'Ciprofloxacino',
+    regras: [
+      {min:30, text:'Dose normal: 500-750mg 12/12h VO ou 400mg 12/12h EV.', cls:'ok'},
+      {min:0,  text:'Reduzir dose: 500mg 12/12h VO. Monitorar tendinopatia.', cls:'warn'},
+    ]
+  },
+  allopurinol: {
+    nome: 'Alopurinol',
+    regras: [
+      {min:60, text:'Dose normal: 200-300mg/dia.', cls:'ok'},
+      {min:30, text:'Reduzir para 100mg/dia. Risco de toxicidade aumentado.', cls:'warn'},
+      {min:10, text:'Dose máxima: 50-100mg em dias alternados.', cls:'bad'},
+      {min:0,  text:'Usar com extrema cautela. 50mg 3x/semana. Risco de síndrome de hipersensibilidade.', cls:'bad'},
+    ]
+  },
+  spironolactona: {
+    nome: 'Espironolactona',
+    regras: [
+      {min:45, text:'Pode usar com monitoramento de potássio.', cls:'ok'},
+      {min:30, text:'Usar com cautela. Risco de hipercalemia. Monitorar K+ semanalmente.', cls:'warn'},
+      {min:0,  text:'CONTRAINDICADA. Alto risco de hipercalemia grave.', cls:'bad'},
+    ]
+  },
+  aciclovir: {
+    nome: 'Aciclovir',
+    regras: [
+      {min:50, text:'Dose normal: 800mg 5x/dia (herpes zoster) ou 400mg 3x/dia.', cls:'ok'},
+      {min:25, text:'Reduzir intervalo: 800mg 8/8h.', cls:'warn'},
+      {min:10, text:'Reduzir dose e intervalo: 800mg 12/12h.', cls:'warn'},
+      {min:0,  text:'Dose mínima: 800mg/dia (1x). Risco de nefrotoxicidade e neurotoxicidade.', cls:'bad'},
+    ]
+  },
+};
+
+function calcMed() {
+  const tfg = +document.getElementById('med-tfg').value;
+  const drug = document.getElementById('med-drug').value;
+  if(!tfg||!drug){alert('Selecione um medicamento e informe a TFG.');return;}
+
+  const d = DRUGS[drug];
+  const regra = d.regras.find(r => tfg >= r.min);
+
+  document.getElementById('med-empty').style.display = 'none';
+  document.getElementById('med-result').classList.add('show');
+
+  setStage(document.getElementById('med-stage'), regra.cls,
+    regra.cls==='ok'?'✓':regra.cls==='warn'?'⚠':'✕',
+    d.nome + ' — TFG ' + tfg + ' mL/min/1,73m²');
+  document.getElementById('med-info').textContent = regra.text;
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Portal Profissionais da Saúde — Dr. Bruno Biluca</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy:      #0D1B35;
+  --navy-mid:  #1B2A4A;
+  --navy-light:#243357;
+  --gold:      #D4A847;
+  --gold-dark: #8B6914;
+  --gold-pale: #E8D5A0;
+  --muted:     rgba(232,213,160,0.5);
+  --white:     #FFFFFF;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Inter',sans-serif;background:var(--navy);color:var(--white);min-height:100vh;}
+
+/* NAV */
+nav{
+  background:var(--navy-mid);border-bottom:2px solid rgba(212,168,71,0.12);
+  padding:0 48px;height:58px;display:flex;align-items:center;gap:20px;
+  position:sticky;top:0;z-index:100;
+}
+.nav-logo{font-family:'Cinzel',serif;font-size:14px;font-weight:700;color:var(--gold);letter-spacing:6px;text-decoration:none;}
+.nav-sep{width:1px;height:22px;background:rgba(212,168,71,0.2);}
+.nav-section{font-family:'Cinzel',serif;font-size:10px;letter-spacing:3px;color:var(--muted);text-transform:uppercase;}
+.nav-back{margin-left:auto;font-family:'Cinzel',serif;font-size:10px;letter-spacing:2px;color:rgba(212,168,71,0.4);text-decoration:none;transition:color .2s;}
+.nav-back:hover{color:var(--gold);}
+
+/* HERO */
+.hero{
+  padding:72px 60px 56px;
+  display:flex;align-items:center;justify-content:space-between;gap:40px;
+  border-bottom:1px solid rgba(212,168,71,0.08);
+  position:relative;overflow:hidden;
+}
+.hero-bg{position:absolute;inset:0;pointer-events:none;}
+.hero-text{position:relative;z-index:1;max-width:580px;}
+.hero-eyebrow{font-family:'Cinzel',serif;font-size:10px;letter-spacing:5px;color:var(--gold);opacity:.7;margin-bottom:14px;text-transform:uppercase;}
+.hero-title{font-family:'Cormorant Garamond',serif;font-size:clamp(32px,4vw,52px);font-weight:300;color:var(--white);line-height:1.2;margin-bottom:16px;}
+.hero-title em{color:var(--gold-pale);font-style:italic;}
+.hero-desc{font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:300;font-style:italic;color:var(--muted);line-height:1.8;}
+.hero-svg{position:relative;z-index:1;opacity:.6;}
+
+/* GRID MÓDULOS */
+.modulos{padding:60px;max-width:1300px;margin:0 auto;}
+.modulos-eyebrow{font-family:'Cinzel',serif;font-size:10px;letter-spacing:5px;color:var(--gold);margin-bottom:12px;text-transform:uppercase;}
+.modulos-title{font-family:'Cormorant Garamond',serif;font-size:clamp(24px,3vw,36px);font-weight:300;color:var(--white);margin-bottom:48px;line-height:1.3;}
+.modulos-title em{color:var(--gold-pale);font-style:italic;}
+
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px;}
+
+.modulo{
+  background:var(--navy-mid);border:1px solid rgba(212,168,71,0.08);
+  border-radius:16px;padding:40px;cursor:pointer;
+  transition:all .35s cubic-bezier(.25,.46,.45,.94);
+  text-decoration:none;display:block;position:relative;overflow:hidden;
+}
+.modulo::before{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,rgba(212,168,71,0.05) 0%,transparent 60%);
+  opacity:0;transition:opacity .35s;
+}
+.modulo:hover::before{opacity:1;}
+.modulo::after{
+  content:'';position:absolute;bottom:0;left:0;right:0;height:2px;
+  background:var(--gold);transform:scaleX(0);transition:transform .35s;transform-origin:left;
+}
+.modulo:hover::after{transform:scaleX(1);}
+.modulo:hover{border-color:rgba(212,168,71,0.25);transform:translateY(-3px);}
+
+/* Ícone ilustrativo grande */
+.modulo-icon{
+  width:80px;height:80px;margin-bottom:28px;
+  opacity:.7;transition:opacity .3s;
+}
+.modulo:hover .modulo-icon{opacity:1;}
+
+.modulo-num{font-family:'Cinzel',serif;font-size:9px;letter-spacing:4px;color:var(--gold);opacity:.5;margin-bottom:10px;}
+.modulo-name{font-family:'Cinzel',serif;font-size:20px;font-weight:600;color:var(--white);letter-spacing:2px;margin-bottom:12px;}
+.modulo-desc{font-family:'Cormorant Garamond',serif;font-size:16px;font-style:italic;color:var(--muted);line-height:1.7;margin-bottom:24px;}
+
+.modulo-tags{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:28px;}
+.modulo-tag{font-size:10px;letter-spacing:1.5px;color:var(--gold);border:1px solid rgba(212,168,71,0.2);padding:3px 10px;border-radius:20px;font-family:'Inter',sans-serif;}
+
+.modulo-link{font-family:'Cinzel',serif;font-size:10px;letter-spacing:3px;color:var(--gold);display:flex;align-items:center;gap:8px;transition:gap .3s;}
+.modulo:hover .modulo-link{gap:14px;}
+
+/* Lock badge */
+.lock-badge{
+  position:absolute;top:20px;right:20px;
+  background:rgba(212,168,71,0.1);border:1px solid rgba(212,168,71,0.2);
+  border-radius:20px;padding:4px 12px;
+  font-family:'Cinzel',serif;font-size:9px;letter-spacing:2px;color:var(--gold);opacity:.7;
+}
+
+/* Em breve badge */
+.soon-badge{
+  position:absolute;top:20px;right:20px;
+  background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);
+  border-radius:20px;padding:4px 12px;
+  font-family:'Cinzel',serif;font-size:9px;letter-spacing:2px;color:rgba(255,255,255,0.3);
+}
+
+@media(max-width:768px){
+  .grid{grid-template-columns:1fr;}
+  .hero,.modulos{padding:40px 24px;}
+  nav{padding:0 24px;}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">APEX</a>
+  <div class="nav-sep"></div>
+  <span class="nav-section">Profissionais da Saúde</span>
+  <a href="index.html" class="nav-back">← Início</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg">
+    <svg width="100%" height="100%" viewBox="0 0 1200 300" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+      <ellipse cx="1000" cy="150" rx="450" ry="300" fill="rgba(212,168,71,0.03)" transform="rotate(-10 1000 150)"/>
+      <circle cx="1100" cy="150" r="250" fill="none" stroke="rgba(212,168,71,0.05)" stroke-width="1"/>
+      <circle cx="1100" cy="150" r="320" fill="none" stroke="rgba(212,168,71,0.03)" stroke-width="1"/>
+      <circle cx="200" cy="150" r="2" fill="rgba(212,168,71,0.2)"/>
+      <circle cx="400" cy="80" r="1.5" fill="rgba(212,168,71,0.15)"/>
+      <circle cx="600" cy="220" r="2" fill="rgba(212,168,71,0.15)"/>
+    </svg>
+  </div>
+  <div class="hero-text">
+    <p class="hero-eyebrow">Portal</p>
+    <h1 class="hero-title">Profissionais<br><em>da Saúde</em></h1>
+    <p class="hero-desc">Ferramentas clínicas, indicadores, calculadoras e material de apoio — tudo em um só lugar para o profissional de nefrologia.</p>
+  </div>
+  <!-- Ilustração rim -->
+  <svg class="hero-svg" width="220" height="220" viewBox="0 0 220 220" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <!-- Rim direito -->
+    <path d="M70 110 C70 70 90 40 110 40 C125 40 135 55 135 75 C135 95 125 105 115 110 C125 115 135 125 135 145 C135 165 125 180 110 180 C90 180 70 150 70 110Z" fill="none" stroke="#D4A847" stroke-width="1.5" opacity="0.6"/>
+    <!-- Pelve renal -->
+    <path d="M110 80 C118 80 125 88 125 100 C125 112 118 120 110 120 C102 120 95 112 95 100 C95 88 102 80 110 80Z" fill="none" stroke="#D4A847" stroke-width="1" opacity="0.4"/>
+    <!-- Ureter -->
+    <path d="M110 180 C110 195 112 205 115 215" stroke="#D4A847" stroke-width="1.2" stroke-dasharray="4 3" opacity="0.4"/>
+    <!-- Detalhes internos -->
+    <path d="M95 95 C98 88 105 85 110 86" stroke="#D4A847" stroke-width="0.8" opacity="0.3"/>
+    <path d="M95 105 C97 98 103 94 108 95" stroke="#D4A847" stroke-width="0.8" opacity="0.3"/>
+    <path d="M95 115 C98 108 105 106 110 107" stroke="#D4A847" stroke-width="0.8" opacity="0.3"/>
+    <!-- Círculo decorativo -->
+    <circle cx="110" cy="110" r="90" fill="none" stroke="rgba(212,168,71,0.08)" stroke-width="1"/>
+    <circle cx="110" cy="110" r="105" fill="none" stroke="rgba(212,168,71,0.04)" stroke-width="1"/>
+  </svg>
+</section>
+
+<!-- MÓDULOS -->
+<div class="modulos">
+  <p class="modulos-eyebrow">Módulos</p>
+  <h2 class="modulos-title">Escolha sua<br><em>área de trabalho</em></h2>
+
+  <div class="grid">
+
+    <!-- 1. Indicadores -->
+    <a href="portal_gestor.html" class="modulo">
+      <span class="lock-badge">🔒 Acesso restrito</span>
+      <svg class="modulo-icon" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="8" y="16" width="64" height="48" rx="4" stroke="#D4A847" stroke-width="1.2"/>
+        <line x1="8" y1="28" x2="72" y2="28" stroke="#D4A847" stroke-width="1.2"/>
+        <rect x="16" y="36" width="10" height="20" rx="2" fill="rgba(212,168,71,0.2)" stroke="#D4A847" stroke-width="1"/>
+        <rect x="30" y="42" width="10" height="14" rx="2" fill="rgba(212,168,71,0.15)" stroke="#D4A847" stroke-width="1"/>
+        <rect x="44" y="38" width="10" height="18" rx="2" fill="rgba(212,168,71,0.25)" stroke="#D4A847" stroke-width="1"/>
+        <path d="M16 34 L21 30 L35 38 L49 32 L64 28" stroke="#D4A847" stroke-width="1" stroke-dasharray="3 2" opacity="0.5"/>
+      </svg>
+      <p class="modulo-num">01</p>
+      <h3 class="modulo-name">Indicadores Clínicos</h3>
+      <p class="modulo-desc">Dashboard completo da rede Fênix, painel de lançamento mensal e fichas técnicas descritivas de cada indicador.</p>
+      <div class="modulo-tags">
+        <span class="modulo-tag">Dashboard</span>
+        <span class="modulo-tag">Lançamento Mensal</span>
+        <span class="modulo-tag">Fichas Técnicas</span>
+      </div>
+      <span class="modulo-link">Acessar com senha →</span>
+    </a>
+
+    <!-- 2. Manual Clínico -->
+    <a href="manual_clinico.html" class="modulo">
+      <span class="soon-badge">Em breve</span>
+      <svg class="modulo-icon" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="14" y="8" width="44" height="58" rx="3" stroke="#D4A847" stroke-width="1.2"/>
+        <rect x="18" y="8" width="44" height="58" rx="3" stroke="#D4A847" stroke-width="0.8" opacity="0.4" transform="translate(2,2)"/>
+        <line x1="22" y1="24" x2="50" y2="24" stroke="#D4A847" stroke-width="1" opacity="0.6"/>
+        <line x1="22" y1="32" x2="50" y2="32" stroke="#D4A847" stroke-width="1" opacity="0.4"/>
+        <line x1="22" y1="40" x2="50" y2="40" stroke="#D4A847" stroke-width="1" opacity="0.4"/>
+        <line x1="22" y1="48" x2="42" y2="48" stroke="#D4A847" stroke-width="1" opacity="0.3"/>
+        <path d="M36 12 L36 20 M32 16 L40 16" stroke="#D4A847" stroke-width="1.5" stroke-linecap="round"/>
+      </svg>
+      <p class="modulo-num">02</p>
+      <h3 class="modulo-name">Manual Clínico</h3>
+      <p class="modulo-desc">Protocolos, diretrizes e condutas clínicas em nefrologia. Material de referência para toda a equipe de saúde.</p>
+      <div class="modulo-tags">
+        <span class="modulo-tag">Protocolos</span>
+        <span class="modulo-tag">Diretrizes</span>
+        <span class="modulo-tag">Condutas</span>
+      </div>
+      <span class="modulo-link">Em breve →</span>
+    </a>
+
+    <!-- 3. Utilidades / Calculadoras -->
+    <a href="calculadoras.html" class="modulo">
+      <span class="soon-badge">Em breve</span>
+      <svg class="modulo-icon" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="14" y="10" width="52" height="60" rx="4" stroke="#D4A847" stroke-width="1.2"/>
+        <rect x="20" y="16" width="40" height="14" rx="2" stroke="#D4A847" stroke-width="1" fill="rgba(212,168,71,0.1)"/>
+        <rect x="20" y="36" width="11" height="11" rx="2" stroke="#D4A847" stroke-width="1" opacity="0.6"/>
+        <rect x="35" y="36" width="11" height="11" rx="2" stroke="#D4A847" stroke-width="1" opacity="0.6"/>
+        <rect x="49" y="36" width="11" height="11" rx="2" stroke="#D4A847" stroke-width="1" opacity="0.6"/>
+        <rect x="20" y="51" width="11" height="11" rx="2" stroke="#D4A847" stroke-width="1" opacity="0.4"/>
+        <rect x="35" y="51" width="11" height="11" rx="2" stroke="#D4A847" stroke-width="1" opacity="0.4"/>
+        <rect x="49" y="51" width="11" height="22" rx="2" stroke="#D4A847" stroke-width="1" fill="rgba(212,168,71,0.15)" opacity="0.8"/>
+      </svg>
+      <p class="modulo-num">03</p>
+      <h3 class="modulo-name">Utilidades</h3>
+      <p class="modulo-desc">Calculadoras clínicas de nefrologia — clearance de creatinina, Kt/V, IMC, risco cardiovascular e dose por função renal.</p>
+      <div class="modulo-tags">
+        <span class="modulo-tag">CKD-EPI</span>
+        <span class="modulo-tag">Kt/V</span>
+        <span class="modulo-tag">Cardiovascular</span>
+        <span class="modulo-tag">Medicamentos</span>
+      </div>
+      <span class="modulo-link">Em breve →</span>
+    </a>
+
+    <!-- 4. Material de Apoio -->
+    <a href="material_apoio.html" class="modulo">
+      <span class="soon-badge">Em breve</span>
+      <svg class="modulo-icon" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <!-- Rim estilizado -->
+        <path d="M32 40 C32 24 38 14 44 14 C50 14 55 22 55 32 C55 42 50 47 46 50 C50 53 55 58 55 68 C55 74 50 66 44 66 C38 66 32 56 32 40Z" fill="none" stroke="#D4A847" stroke-width="1.2" opacity="0.7"/>
+        <!-- Lupa -->
+        <circle cx="24" cy="56" r="10" stroke="#D4A847" stroke-width="1.2" opacity="0.5"/>
+        <line x1="31" y1="63" x2="38" y2="70" stroke="#D4A847" stroke-width="1.5" stroke-linecap="round" opacity="0.5"/>
+        <!-- Faísca / destaque -->
+        <path d="M58 20 L62 26 L68 24 L64 30 L70 32 L64 34 L66 40 L60 36 L56 42 L56 36 L50 38 L54 32 L48 28 L55 28Z" fill="rgba(212,168,71,0.15)" stroke="#D4A847" stroke-width="0.8" opacity="0.5"/>
+      </svg>
+      <p class="modulo-num">04</p>
+      <h3 class="modulo-name">Material de Apoio</h3>
+      <p class="modulo-desc">Ilustrações didáticas para uso em consultas — anatomia renal, diálise, transplante, dieta, acesso vascular e muito mais.</p>
+      <div class="modulo-tags">
+        <span class="modulo-tag">Anatomia</span>
+        <span class="modulo-tag">Diálise</span>
+        <span class="modulo-tag">Ilustrações</span>
+        <span class="modulo-tag">Pacientes</span>
+      </div>
+      <span class="modulo-link">Em breve →</span>
+    </a>
+
+  </div>
+</div>
+
+</body>
+</html>
