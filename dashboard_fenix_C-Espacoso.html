@@ -122,7 +122,16 @@ canvas{display:block;width:100%;}
 }
 .portal-nav-back:hover { color: #D4A847; }
 
-@media print{body{background:#fff;}.dashboard{padding:12px 18px;}.analytic-box .ai-btn{display:none;}}
+@media print{
+  body{background:#fff;}
+  .dashboard{padding:12px 18px;}
+  .analytic-box .ai-btn{display:none;}
+  .mes-bar button{display:none;}
+  .mes-bar select{display:none;}
+  .mes-bar label{display:none;}
+  #loading-overlay{display:none!important;}
+  .portal-nav{display:none!important;}
+}
 
 </style>
 </head>
@@ -161,6 +170,9 @@ canvas{display:block;width:100%;}
     <option value="10">Novembro</option><option value="11">Dezembro</option>
   </select>
   <span class="mes-info">2026 — Atualizado mensalmente pela equipe clínica</span>
+  <button onclick="exportarPDF()" style="margin-left:16px;background:#8B6914;color:#fff;border:none;border-radius:8px;padding:6px 16px;font-size:11px;font-weight:600;cursor:pointer;font-family:inherit;letter-spacing:1px;display:flex;align-items:center;gap:6px;transition:background .2s;" onmouseover="this.style.background='#BE9664'" onmouseout="this.style.background='#8B6914'">
+    ⬇ Exportar PDF
+  </button>
 </div>
 
 <div class="dashboard">
@@ -621,6 +633,18 @@ const METAS = {
   potassio:  [80,80,80,80,80,80,80,80,80,80,80,80]
 };
 const CBD = { fos:67, pot:81, alb:90, imc:47, ktv:76, vol:null, fav:69, hb:57, pth:65 };
+
+/* Override CBD com valores atualizados do painel admin (localStorage) */
+(function(){
+  try {
+    const saved = localStorage.getItem('apex_cbd');
+    if(saved){
+      const updated = JSON.parse(saved);
+      Object.keys(updated).forEach(k => { if(k !== 'ano') CBD[k] = updated[k] || null; });
+      console.log('CBD atualizado:', updated.ano ? `CBD ${updated.ano}` : 'CBD customizado');
+    }
+  } catch(e){}
+})();
 const MESES = ['jan','fev','mar','abr','mai','jun','jul','ago','set','out','nov','dez'];
 const fmt = v => v===0 ? '0' : (v ? Math.round(v).toLocaleString('pt-BR') : '—');
 
@@ -1667,6 +1691,29 @@ function renderCompCorp(mes) {
 
   miniDonut('dn-pth', pthVal, '#8B6914');
   setDelta('delta-pth', pthVal, CBD.pth);
+}
+
+/* ═══════════════════════════════
+   EXPORTAR PDF
+═══════════════════════════════ */
+function exportarPDF() {
+  const mes = +document.getElementById('mesSel').value;
+  const meses = ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
+  const nomeArquivo = `APEX_Dashboard_Fenix_${meses[mes]}_2026`;
+
+  /* Título da janela para nome do PDF */
+  const tituloOriginal = document.title;
+  document.title = nomeArquivo;
+
+  /* Esconde elementos não imprimíveis */
+  const nav = document.querySelector('.portal-nav');
+  if(nav) nav.style.display = 'none';
+
+  window.print();
+
+  /* Restaura */
+  document.title = tituloOriginal;
+  if(nav) nav.style.display = 'flex';
 }
 
 function render(mes){

@@ -646,6 +646,28 @@ if(!sessionStorage.getItem('apex_gestor_logado')) {
       </div>
     </div>
 
+    <!-- BENCHMARK CBD -->
+    <div class="form-section">
+      <div class="fs-header" onclick="toggle(this)">
+        <span class="fs-title">📊 Benchmarks CBD — Censo Brasileiro de Diálise</span>
+        <span class="fs-toggle">▼</span>
+      </div>
+      <div class="fs-body hidden">
+        <div class="field-group-label">Atualizar quando o CBD 2025 for divulgado</div>
+        <div class="field"><label>Fósforo ≤5,5 mg/dl (%)</label><input type="number" id="cbd_fos" placeholder="Atual: 67" oninput="markChanged(this)"></div>
+        <div class="field"><label>Potássio &lt;6,0 mmol/L (%)</label><input type="number" id="cbd_pot" placeholder="Atual: 81" oninput="markChanged(this)"></div>
+        <div class="field"><label>Albumina ≥3,5 mg/dl (%)</label><input type="number" id="cbd_alb" placeholder="Atual: 90" oninput="markChanged(this)"></div>
+        <div class="field"><label>IMC eutrófico (%)</label><input type="number" id="cbd_imc" placeholder="Atual: 47" oninput="markChanged(this)"></div>
+        <div class="field"><label>Kt/V ≥1,2 (%)</label><input type="number" id="cbd_ktv" placeholder="Atual: 76" oninput="markChanged(this)"></div>
+        <div class="field"><label>FAV/Prótese (%)</label><input type="number" id="cbd_fav" placeholder="Atual: 69" oninput="markChanged(this)"></div>
+        <div class="field"><label>Hemoglobina (%)</label><input type="number" id="cbd_hb" placeholder="Atual: 57" oninput="markChanged(this)"></div>
+        <div class="field"><label>PTH (%)</label><input type="number" id="cbd_pth" placeholder="Atual: 65" oninput="markChanged(this)"></div>
+        <div class="field"><label>Vol. Convectivo (%)</label><input type="number" id="cbd_vol" placeholder="Sem benchmark" oninput="markChanged(this)"></div>
+        <div class="field-group-label">Ano de referência do censo</div>
+        <div class="field"><label>Ano do CBD</label><input type="number" id="cbd_ano" placeholder="2024" oninput="markChanged(this)"></div>
+      </div>
+    </div>
+
   </div>
 </div>
 
@@ -831,6 +853,19 @@ async function salvar() {
 
   btn.disabled = false;
   btn.textContent = '💾 Salvar alterações';
+  /* Salva CBD no localStorage como cache local */
+  const cbdFields = ['fos','pot','alb','imc','ktv','fav','hb','pth','vol'];
+  const cbdData = {};
+  cbdFields.forEach(f => {
+    const el = document.getElementById('cbd_'+f);
+    if(el && el.value) cbdData[f] = +el.value;
+  });
+  const anoEl = document.getElementById('cbd_ano');
+  if(anoEl && anoEl.value) cbdData.ano = +anoEl.value;
+  if(Object.keys(cbdData).length > 0) {
+    localStorage.setItem('apex_cbd', JSON.stringify(cbdData));
+    toast('Benchmarks CBD salvos!', 'success');
+  }
 }
 
 /* ── NOVO MÊS ── */
