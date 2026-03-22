@@ -7,109 +7,101 @@
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
 :root {
-  --navy:      #0D1B35;
-  --navy-mid:  #1B2A4A;
-  --navy-light:#243357;
-  --gold:      #D4A847;
-  --gold-dark: #8B6914;
-  --gold-pale: #E8D5A0;
-  --muted:     rgba(232,213,160,0.5);
-  --white:     #FFFFFF;
+  --navy:#0D1B35; --navy-mid:#1B2A4A; --navy-light:#243357;
+  --gold:#D4A847; --gold-dark:#8B6914; --gold-pale:#E8D5A0;
+  --muted:rgba(232,213,160,0.5); --white:#FFFFFF;
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
 body{font-family:'Inter',sans-serif;background:var(--navy);color:var(--white);min-height:100vh;}
 
-/* NAV */
-nav{
-  background:var(--navy-mid);border-bottom:2px solid rgba(212,168,71,0.12);
-  padding:0 48px;height:58px;display:flex;align-items:center;gap:20px;
-  position:sticky;top:0;z-index:100;
-}
+nav{background:var(--navy-mid);border-bottom:2px solid rgba(212,168,71,0.12);padding:0 48px;height:58px;display:flex;align-items:center;gap:20px;position:sticky;top:0;z-index:100;}
 .nav-logo{font-family:'Cinzel',serif;font-size:14px;font-weight:700;color:var(--gold);letter-spacing:6px;text-decoration:none;}
 .nav-sep{width:1px;height:22px;background:rgba(212,168,71,0.2);}
 .nav-section{font-family:'Cinzel',serif;font-size:10px;letter-spacing:3px;color:var(--muted);text-transform:uppercase;}
 .nav-back{margin-left:auto;font-family:'Cinzel',serif;font-size:10px;letter-spacing:2px;color:rgba(212,168,71,0.4);text-decoration:none;transition:color .2s;}
 .nav-back:hover{color:var(--gold);}
 
-/* HERO */
-.hero{
-  padding:72px 60px 56px;
-  display:flex;align-items:center;justify-content:space-between;gap:40px;
-  border-bottom:1px solid rgba(212,168,71,0.08);
-  position:relative;overflow:hidden;
-}
+.hero{padding:64px 60px 48px;display:flex;align-items:center;justify-content:space-between;gap:40px;border-bottom:1px solid rgba(212,168,71,0.08);position:relative;overflow:hidden;}
 .hero-bg{position:absolute;inset:0;pointer-events:none;}
-.hero-text{position:relative;z-index:1;max-width:580px;}
+.hero-text{position:relative;z-index:1;max-width:560px;}
 .hero-eyebrow{font-family:'Cinzel',serif;font-size:10px;letter-spacing:5px;color:var(--gold);opacity:.7;margin-bottom:14px;text-transform:uppercase;}
-.hero-title{font-family:'Cormorant Garamond',serif;font-size:clamp(32px,4vw,52px);font-weight:300;color:var(--white);line-height:1.2;margin-bottom:16px;}
+.hero-title{font-family:'Cormorant Garamond',serif;font-size:clamp(30px,4vw,50px);font-weight:300;color:var(--white);line-height:1.2;margin-bottom:16px;}
 .hero-title em{color:var(--gold-pale);font-style:italic;}
 .hero-desc{font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:300;font-style:italic;color:var(--muted);line-height:1.8;}
-.hero-svg{position:relative;z-index:1;opacity:.6;}
+.hero-ilus{position:relative;z-index:1;opacity:.65;}
 
-/* GRID MÓDULOS */
-.modulos{padding:60px;max-width:1300px;margin:0 auto;}
-.modulos-eyebrow{font-family:'Cinzel',serif;font-size:10px;letter-spacing:5px;color:var(--gold);margin-bottom:12px;text-transform:uppercase;}
-.modulos-title{font-family:'Cormorant Garamond',serif;font-size:clamp(24px,3vw,36px);font-weight:300;color:var(--white);margin-bottom:48px;line-height:1.3;}
+.modulos{padding:56px 60px;max-width:1300px;margin:0 auto;}
+.modulos-label{font-family:'Cinzel',serif;font-size:10px;letter-spacing:5px;color:var(--gold);margin-bottom:12px;text-transform:uppercase;}
+.modulos-title{font-family:'Cormorant Garamond',serif;font-size:clamp(22px,3vw,34px);font-weight:300;color:var(--white);margin-bottom:44px;line-height:1.3;}
 .modulos-title em{color:var(--gold-pale);font-style:italic;}
 
-.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px;}
+.grid-top{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px;}
+.grid-bottom{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;}
 
-.modulo{
-  background:var(--navy-mid);border:1px solid rgba(212,168,71,0.08);
-  border-radius:16px;padding:40px;cursor:pointer;
-  transition:all .35s cubic-bezier(.25,.46,.45,.94);
-  text-decoration:none;display:block;position:relative;overflow:hidden;
-}
-.modulo::before{
-  content:'';position:absolute;inset:0;
-  background:linear-gradient(135deg,rgba(212,168,71,0.05) 0%,transparent 60%);
-  opacity:0;transition:opacity .35s;
-}
+.modulo{background:var(--navy-mid);border:1px solid rgba(212,168,71,0.08);border-radius:14px;padding:36px;cursor:pointer;transition:all .35s cubic-bezier(.25,.46,.45,.94);text-decoration:none;display:block;position:relative;overflow:hidden;}
+.modulo::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(212,168,71,0.05) 0%,transparent 60%);opacity:0;transition:opacity .35s;}
 .modulo:hover::before{opacity:1;}
-.modulo::after{
-  content:'';position:absolute;bottom:0;left:0;right:0;height:2px;
-  background:var(--gold);transform:scaleX(0);transition:transform .35s;transform-origin:left;
-}
+.modulo::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:var(--gold);transform:scaleX(0);transition:transform .35s;transform-origin:left;}
 .modulo:hover::after{transform:scaleX(1);}
 .modulo:hover{border-color:rgba(212,168,71,0.25);transform:translateY(-3px);}
+.modulo.destaque{background:linear-gradient(160deg,var(--navy-light) 0%,#1a2d52 100%);}
 
-/* Ícone ilustrativo grande */
-.modulo-icon{
-  width:80px;height:80px;margin-bottom:28px;
-  opacity:.7;transition:opacity .3s;
-}
+.modulo-icon{width:60px;height:60px;margin-bottom:24px;opacity:.7;transition:opacity .3s;}
 .modulo:hover .modulo-icon{opacity:1;}
+.modulo-num{font-family:'Cinzel',serif;font-size:9px;letter-spacing:4px;color:var(--gold);opacity:.5;margin-bottom:8px;}
+.modulo-name{font-family:'Cinzel',serif;font-size:17px;font-weight:600;color:var(--white);letter-spacing:2px;margin-bottom:10px;line-height:1.3;}
+.modulo-desc{font-family:'Cormorant Garamond',serif;font-size:15px;font-style:italic;color:var(--muted);line-height:1.7;margin-bottom:20px;}
+.modulo-tags{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:20px;}
+.modulo-tag{font-size:9px;letter-spacing:1.5px;color:var(--gold);border:1px solid rgba(212,168,71,0.2);padding:3px 9px;border-radius:20px;font-family:'Inter',sans-serif;}
+.modulo-link{font-family:'Cinzel',serif;font-size:10px;letter-spacing:2px;color:var(--gold);display:flex;align-items:center;gap:7px;transition:gap .3s;}
+.modulo:hover .modulo-link{gap:12px;}
 
-.modulo-num{font-family:'Cinzel',serif;font-size:9px;letter-spacing:4px;color:var(--gold);opacity:.5;margin-bottom:10px;}
-.modulo-name{font-family:'Cinzel',serif;font-size:20px;font-weight:600;color:var(--white);letter-spacing:2px;margin-bottom:12px;}
-.modulo-desc{font-family:'Cormorant Garamond',serif;font-size:16px;font-style:italic;color:var(--muted);line-height:1.7;margin-bottom:24px;}
+.lock-badge{position:absolute;top:18px;right:18px;background:rgba(212,168,71,0.1);border:1px solid rgba(212,168,71,0.25);border-radius:20px;padding:4px 12px;font-family:'Cinzel',serif;font-size:9px;letter-spacing:2px;color:var(--gold);}
+.soon-badge{position:absolute;top:18px;right:18px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:20px;padding:4px 12px;font-family:'Cinzel',serif;font-size:9px;letter-spacing:2px;color:rgba(255,255,255,0.25);}
 
-.modulo-tags{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:28px;}
-.modulo-tag{font-size:10px;letter-spacing:1.5px;color:var(--gold);border:1px solid rgba(212,168,71,0.2);padding:3px 10px;border-radius:20px;font-family:'Inter',sans-serif;}
+/* MODAL LOGIN */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(5,12,25,0.92);z-index:200;align-items:center;justify-content:center;padding:20px;}
+.modal-overlay.show{display:flex;}
+.modal-login{background:var(--navy-mid);border:1px solid rgba(212,168,71,0.15);border-radius:20px;width:100%;max-width:440px;padding:48px;position:relative;}
+.modal-close{position:absolute;top:16px;right:20px;background:transparent;border:none;color:var(--muted);font-size:20px;cursor:pointer;transition:color .2s;}
+.modal-close:hover{color:var(--gold);}
+.modal-login-logo{font-family:'Cinzel',serif;font-size:10px;letter-spacing:5px;color:var(--gold);opacity:.6;margin-bottom:6px;text-transform:uppercase;}
+.modal-login-title{font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:300;color:var(--white);margin-bottom:6px;}
+.modal-login-sub{font-family:'Cormorant Garamond',serif;font-size:15px;font-style:italic;color:var(--muted);margin-bottom:32px;}
+.field{margin-bottom:16px;}
+.field label{display:block;font-size:10px;font-weight:500;color:var(--muted);letter-spacing:.05em;margin-bottom:7px;text-transform:uppercase;font-family:'Cinzel',serif;}
+.field input{width:100%;background:rgba(13,27,53,0.7);border:1px solid rgba(212,168,71,0.18);border-radius:8px;padding:12px 14px;font-size:14px;font-family:'Inter',sans-serif;color:var(--white);outline:none;transition:border-color .2s;}
+.field input:focus{border-color:var(--gold);}
+.field input::placeholder{color:rgba(255,255,255,0.2);}
+.btn-entrar{width:100%;margin-top:8px;background:var(--gold-dark);color:var(--white);border:none;border-radius:8px;padding:13px;font-size:11px;font-weight:600;font-family:'Cinzel',serif;letter-spacing:3px;text-transform:uppercase;cursor:pointer;transition:background .2s;}
+.btn-entrar:hover{background:var(--gold);}
+.btn-entrar:disabled{background:rgba(139,105,20,0.4);cursor:not-allowed;}
+.login-err{font-size:12px;color:#F07070;margin-top:10px;text-align:center;min-height:18px;font-family:'Inter',sans-serif;}
 
-.modulo-link{font-family:'Cinzel',serif;font-size:10px;letter-spacing:3px;color:var(--gold);display:flex;align-items:center;gap:8px;transition:gap .3s;}
-.modulo:hover .modulo-link{gap:14px;}
+/* OVERLAY INDICADORES */
+.indicadores-overlay{display:none;position:fixed;inset:0;background:var(--navy);z-index:150;flex-direction:column;}
+.indicadores-overlay.show{display:flex;}
+.ind-nav{background:var(--navy-mid);border-bottom:2px solid rgba(212,168,71,0.12);padding:0 36px;height:56px;display:flex;align-items:center;gap:16px;flex-shrink:0;}
+.ind-nav-logo{font-family:'Cinzel',serif;font-size:13px;font-weight:700;color:var(--gold);letter-spacing:6px;}
+.ind-nav-sep{width:1px;height:20px;background:rgba(212,168,71,0.2);}
+.ind-nav-title{font-family:'Cinzel',serif;font-size:10px;letter-spacing:3px;color:var(--muted);text-transform:uppercase;}
+.ind-nav-space{flex:1;}
+.ind-nav-btns{display:flex;gap:8px;}
+.ind-btn{font-family:'Cinzel',serif;font-size:10px;letter-spacing:2px;color:var(--muted);background:transparent;border:1px solid rgba(212,168,71,0.15);border-radius:6px;padding:6px 14px;cursor:pointer;transition:all .2s;text-decoration:none;display:flex;align-items:center;gap:6px;}
+.ind-btn.active{background:rgba(212,168,71,0.12);color:var(--gold);border-color:rgba(212,168,71,0.3);}
+.ind-btn:hover:not(.active){color:var(--gold-pale);border-color:rgba(212,168,71,0.2);}
+.ind-btn-sair{color:rgba(255,100,100,0.5);border-color:rgba(255,100,100,0.15);}
+.ind-btn-sair:hover{color:#F07070;border-color:rgba(255,100,100,0.3);}
+.ind-content{flex:1;overflow:hidden;}
+.ind-iframe{width:100%;height:100%;border:none;display:none;}
+.ind-iframe.active{display:block;}
 
-/* Lock badge */
-.lock-badge{
-  position:absolute;top:20px;right:20px;
-  background:rgba(212,168,71,0.1);border:1px solid rgba(212,168,71,0.2);
-  border-radius:20px;padding:4px 12px;
-  font-family:'Cinzel',serif;font-size:9px;letter-spacing:2px;color:var(--gold);opacity:.7;
-}
-
-/* Em breve badge */
-.soon-badge{
-  position:absolute;top:20px;right:20px;
-  background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);
-  border-radius:20px;padding:4px 12px;
-  font-family:'Cinzel',serif;font-size:9px;letter-spacing:2px;color:rgba(255,255,255,0.3);
-}
-
-@media(max-width:768px){
-  .grid{grid-template-columns:1fr;}
+@media(max-width:900px){
+  .grid-top,.grid-bottom{grid-template-columns:1fr;}
   .hero,.modulos{padding:40px 24px;}
-  nav{padding:0 24px;}
+  nav{padding:0 20px;}
+  .ind-nav{padding:0 16px;flex-wrap:wrap;height:auto;padding:8px 16px;}
+  .ind-nav-btns{gap:4px;}
 }
 </style>
 </head>
@@ -122,142 +114,268 @@ nav{
   <a href="index.html" class="nav-back">← Início</a>
 </nav>
 
-<!-- HERO -->
 <section class="hero">
   <div class="hero-bg">
-    <svg width="100%" height="100%" viewBox="0 0 1200 300" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
-      <ellipse cx="1000" cy="150" rx="450" ry="300" fill="rgba(212,168,71,0.03)" transform="rotate(-10 1000 150)"/>
-      <circle cx="1100" cy="150" r="250" fill="none" stroke="rgba(212,168,71,0.05)" stroke-width="1"/>
-      <circle cx="1100" cy="150" r="320" fill="none" stroke="rgba(212,168,71,0.03)" stroke-width="1"/>
-      <circle cx="200" cy="150" r="2" fill="rgba(212,168,71,0.2)"/>
-      <circle cx="400" cy="80" r="1.5" fill="rgba(212,168,71,0.15)"/>
-      <circle cx="600" cy="220" r="2" fill="rgba(212,168,71,0.15)"/>
+    <svg width="100%" height="100%" viewBox="0 0 1200 280" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+      <ellipse cx="1000" cy="140" rx="450" ry="280" fill="rgba(212,168,71,0.03)" transform="rotate(-10 1000 140)"/>
+      <circle cx="1100" cy="140" r="250" fill="none" stroke="rgba(212,168,71,0.05)" stroke-width="1"/>
+      <circle cx="200" cy="140" r="2" fill="rgba(212,168,71,0.2)"/>
+      <circle cx="500" cy="60" r="1.5" fill="rgba(212,168,71,0.15)"/>
     </svg>
   </div>
   <div class="hero-text">
     <p class="hero-eyebrow">Portal</p>
     <h1 class="hero-title">Profissionais<br><em>da Saúde</em></h1>
-    <p class="hero-desc">Ferramentas clínicas, indicadores, calculadoras e material de apoio — tudo em um só lugar para o profissional de nefrologia.</p>
+    <p class="hero-desc">Indicadores clínicos, ferramentas de cálculo, material educativo e protocolos — tudo em um só lugar para o profissional de nefrologia.</p>
   </div>
-  <!-- Ilustração rim -->
-  <svg class="hero-svg" width="220" height="220" viewBox="0 0 220 220" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <!-- Rim direito -->
-    <path d="M70 110 C70 70 90 40 110 40 C125 40 135 55 135 75 C135 95 125 105 115 110 C125 115 135 125 135 145 C135 165 125 180 110 180 C90 180 70 150 70 110Z" fill="none" stroke="#D4A847" stroke-width="1.5" opacity="0.6"/>
-    <!-- Pelve renal -->
-    <path d="M110 80 C118 80 125 88 125 100 C125 112 118 120 110 120 C102 120 95 112 95 100 C95 88 102 80 110 80Z" fill="none" stroke="#D4A847" stroke-width="1" opacity="0.4"/>
-    <!-- Ureter -->
-    <path d="M110 180 C110 195 112 205 115 215" stroke="#D4A847" stroke-width="1.2" stroke-dasharray="4 3" opacity="0.4"/>
-    <!-- Detalhes internos -->
-    <path d="M95 95 C98 88 105 85 110 86" stroke="#D4A847" stroke-width="0.8" opacity="0.3"/>
-    <path d="M95 105 C97 98 103 94 108 95" stroke="#D4A847" stroke-width="0.8" opacity="0.3"/>
-    <path d="M95 115 C98 108 105 106 110 107" stroke="#D4A847" stroke-width="0.8" opacity="0.3"/>
-    <!-- Círculo decorativo -->
-    <circle cx="110" cy="110" r="90" fill="none" stroke="rgba(212,168,71,0.08)" stroke-width="1"/>
-    <circle cx="110" cy="110" r="105" fill="none" stroke="rgba(212,168,71,0.04)" stroke-width="1"/>
+  <svg class="hero-ilus" width="200" height="200" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M65 100C65 70 76 48 88 48C98 48 106 62 106 76C106 90 98 98 93 101C98 104 106 114 106 128C106 142 98 152 88 152C76 152 65 132 65 100Z" fill="none" stroke="#D4A847" stroke-width="1.5" opacity="0.6"/>
+    <ellipse cx="88" cy="101" rx="14" ry="18" fill="none" stroke="#D4A847" stroke-width="1" opacity="0.4"/>
+    <path d="M80 84C75 76 77 68 82 66" stroke="#D4A847" stroke-width="0.8" opacity="0.5"/>
+    <path d="M88 80C88 72 90 66 94 65" stroke="#D4A847" stroke-width="0.8" opacity="0.5"/>
+    <path d="M96 86C102 78 103 70 98 67" stroke="#D4A847" stroke-width="0.8" opacity="0.5"/>
+    <path d="M88 152C88 162 90 170 92 178" stroke="#D4A847" stroke-width="1" stroke-dasharray="4 3" opacity="0.4"/>
+    <circle cx="88" cy="100" r="80" fill="none" stroke="rgba(212,168,71,0.05)" stroke-width="1"/>
   </svg>
 </section>
 
-<!-- MÓDULOS -->
 <div class="modulos">
-  <p class="modulos-eyebrow">Módulos</p>
-  <h2 class="modulos-title">Escolha sua<br><em>área de trabalho</em></h2>
+  <p class="modulos-label">Módulos</p>
+  <h2 class="modulos-title">Ferramentas para sua<br><em>prática clínica</em></h2>
 
-  <div class="grid">
-
+  <div class="grid-top">
     <!-- 1. Indicadores -->
-    <a href="portal_gestor.html" class="modulo">
+    <div class="modulo destaque" onclick="abrirLogin()">
       <span class="lock-badge">🔒 Acesso restrito</span>
-      <svg class="modulo-icon" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <rect x="8" y="16" width="64" height="48" rx="4" stroke="#D4A847" stroke-width="1.2"/>
-        <line x1="8" y1="28" x2="72" y2="28" stroke="#D4A847" stroke-width="1.2"/>
-        <rect x="16" y="36" width="10" height="20" rx="2" fill="rgba(212,168,71,0.2)" stroke="#D4A847" stroke-width="1"/>
-        <rect x="30" y="42" width="10" height="14" rx="2" fill="rgba(212,168,71,0.15)" stroke="#D4A847" stroke-width="1"/>
-        <rect x="44" y="38" width="10" height="18" rx="2" fill="rgba(212,168,71,0.25)" stroke="#D4A847" stroke-width="1"/>
-        <path d="M16 34 L21 30 L35 38 L49 32 L64 28" stroke="#D4A847" stroke-width="1" stroke-dasharray="3 2" opacity="0.5"/>
+      <svg class="modulo-icon" viewBox="0 0 60 60" fill="none">
+        <rect x="6" y="14" width="48" height="36" rx="3" stroke="#D4A847" stroke-width="1.2"/>
+        <line x1="6" y1="24" x2="54" y2="24" stroke="#D4A847" stroke-width="1.2"/>
+        <rect x="12" y="31" width="8" height="12" rx="1.5" fill="rgba(212,168,71,0.2)" stroke="#D4A847" stroke-width="0.8"/>
+        <rect x="24" y="35" width="8" height="8" rx="1.5" fill="rgba(212,168,71,0.15)" stroke="#D4A847" stroke-width="0.8"/>
+        <rect x="36" y="29" width="8" height="14" rx="1.5" fill="rgba(212,168,71,0.25)" stroke="#D4A847" stroke-width="0.8"/>
+        <path d="M12 28L16 24L28 30L40 24L48 28" stroke="#D4A847" stroke-width="0.8" stroke-dasharray="2 2" opacity="0.5"/>
       </svg>
-      <p class="modulo-num">01</p>
+      <p class="modulo-num">Módulo 01</p>
       <h3 class="modulo-name">Indicadores Clínicos</h3>
       <p class="modulo-desc">Dashboard completo da rede Fênix, painel de lançamento mensal e fichas técnicas descritivas de cada indicador.</p>
       <div class="modulo-tags">
         <span class="modulo-tag">Dashboard</span>
         <span class="modulo-tag">Lançamento Mensal</span>
         <span class="modulo-tag">Fichas Técnicas</span>
+        <span class="modulo-tag">Análise IA</span>
       </div>
-      <span class="modulo-link">Acessar com senha →</span>
-    </a>
+      <span class="modulo-link">🔒 Acessar com senha →</span>
+    </div>
 
-    <!-- 2. Manual Clínico -->
-    <a href="manual_clinico.html" class="modulo">
-      <span class="soon-badge">Em breve</span>
-      <svg class="modulo-icon" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <rect x="14" y="8" width="44" height="58" rx="3" stroke="#D4A847" stroke-width="1.2"/>
-        <rect x="18" y="8" width="44" height="58" rx="3" stroke="#D4A847" stroke-width="0.8" opacity="0.4" transform="translate(2,2)"/>
-        <line x1="22" y1="24" x2="50" y2="24" stroke="#D4A847" stroke-width="1" opacity="0.6"/>
-        <line x1="22" y1="32" x2="50" y2="32" stroke="#D4A847" stroke-width="1" opacity="0.4"/>
-        <line x1="22" y1="40" x2="50" y2="40" stroke="#D4A847" stroke-width="1" opacity="0.4"/>
-        <line x1="22" y1="48" x2="42" y2="48" stroke="#D4A847" stroke-width="1" opacity="0.3"/>
-        <path d="M36 12 L36 20 M32 16 L40 16" stroke="#D4A847" stroke-width="1.5" stroke-linecap="round"/>
-      </svg>
-      <p class="modulo-num">02</p>
-      <h3 class="modulo-name">Manual Clínico</h3>
-      <p class="modulo-desc">Protocolos, diretrizes e condutas clínicas em nefrologia. Material de referência para toda a equipe de saúde.</p>
-      <div class="modulo-tags">
-        <span class="modulo-tag">Protocolos</span>
-        <span class="modulo-tag">Diretrizes</span>
-        <span class="modulo-tag">Condutas</span>
-      </div>
-      <span class="modulo-link">Em breve →</span>
-    </a>
-
-    <!-- 3. Utilidades / Calculadoras -->
-    <a href="calculadoras.html" class="modulo">
-      <svg class="modulo-icon" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <rect x="14" y="10" width="52" height="60" rx="4" stroke="#D4A847" stroke-width="1.2"/>
-        <rect x="20" y="16" width="40" height="14" rx="2" stroke="#D4A847" stroke-width="1" fill="rgba(212,168,71,0.1)"/>
-        <rect x="20" y="36" width="11" height="11" rx="2" stroke="#D4A847" stroke-width="1" opacity="0.6"/>
-        <rect x="35" y="36" width="11" height="11" rx="2" stroke="#D4A847" stroke-width="1" opacity="0.6"/>
-        <rect x="49" y="36" width="11" height="11" rx="2" stroke="#D4A847" stroke-width="1" opacity="0.6"/>
-        <rect x="20" y="51" width="11" height="11" rx="2" stroke="#D4A847" stroke-width="1" opacity="0.4"/>
-        <rect x="35" y="51" width="11" height="11" rx="2" stroke="#D4A847" stroke-width="1" opacity="0.4"/>
-        <rect x="49" y="51" width="11" height="22" rx="2" stroke="#D4A847" stroke-width="1" fill="rgba(212,168,71,0.15)" opacity="0.8"/>
-      </svg>
-      <p class="modulo-num">03</p>
-      <h3 class="modulo-name">Utilidades</h3>
-      <p class="modulo-desc">Calculadoras clínicas de nefrologia — clearance de creatinina, Kt/V, IMC, risco cardiovascular e dose por função renal.</p>
-      <div class="modulo-tags">
-        <span class="modulo-tag">CKD-EPI</span>
-        <span class="modulo-tag">Kt/V</span>
-        <span class="modulo-tag">Cardiovascular</span>
-        <span class="modulo-tag">Medicamentos</span>
-      </div>
-      <span class="modulo-link">Em breve →</span>
-    </a>
-
-    <!-- 4. Material de Apoio -->
+    <!-- 2. Material de Apoio -->
     <a href="material_apoio.html" class="modulo">
-      <svg class="modulo-icon" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <!-- Rim estilizado -->
-        <path d="M32 40 C32 24 38 14 44 14 C50 14 55 22 55 32 C55 42 50 47 46 50 C50 53 55 58 55 68 C55 74 50 66 44 66 C38 66 32 56 32 40Z" fill="none" stroke="#D4A847" stroke-width="1.2" opacity="0.7"/>
-        <!-- Lupa -->
-        <circle cx="24" cy="56" r="10" stroke="#D4A847" stroke-width="1.2" opacity="0.5"/>
-        <line x1="31" y1="63" x2="38" y2="70" stroke="#D4A847" stroke-width="1.5" stroke-linecap="round" opacity="0.5"/>
-        <!-- Faísca / destaque -->
-        <path d="M58 20 L62 26 L68 24 L64 30 L70 32 L64 34 L66 40 L60 36 L56 42 L56 36 L50 38 L54 32 L48 28 L55 28Z" fill="rgba(212,168,71,0.15)" stroke="#D4A847" stroke-width="0.8" opacity="0.5"/>
+      <svg class="modulo-icon" viewBox="0 0 60 60" fill="none">
+        <path d="M22 30C22 20 26 14 30 14C34 14 37 19 37 24C37 29 34 31 32 32C34 33 37 37 37 42C37 47 34 50 30 50C26 50 22 44 22 30Z" fill="none" stroke="#D4A847" stroke-width="1.2"/>
+        <circle cx="18" cy="42" r="8" stroke="#D4A847" stroke-width="1" opacity="0.6"/>
+        <line x1="24" y1="48" x2="30" y2="54" stroke="#D4A847" stroke-width="1.5" stroke-linecap="round" opacity="0.5"/>
+        <path d="M42 16L46 22L52 20L48 26L54 28L48 30L50 36L44 32L40 38L40 32L34 34L38 28L32 24L39 24Z" fill="rgba(212,168,71,0.1)" stroke="#D4A847" stroke-width="0.8" opacity="0.5"/>
       </svg>
-      <p class="modulo-num">04</p>
+      <p class="modulo-num">Módulo 02</p>
       <h3 class="modulo-name">Material de Apoio</h3>
       <p class="modulo-desc">Ilustrações didáticas para uso em consultas — anatomia renal, diálise, transplante, dieta, acesso vascular e muito mais.</p>
       <div class="modulo-tags">
-        <span class="modulo-tag">Anatomia</span>
-        <span class="modulo-tag">Diálise</span>
-        <span class="modulo-tag">Ilustrações</span>
-        <span class="modulo-tag">Pacientes</span>
+        <span class="modulo-tag">9 Ilustrações</span>
+        <span class="modulo-tag">Didático</span>
+        <span class="modulo-tag">Imprimível</span>
       </div>
-      <span class="modulo-link">Em breve →</span>
+      <span class="modulo-link">Acessar →</span>
+    </a>
+  </div>
+
+  <div class="grid-bottom">
+    <!-- 3. Calculadoras -->
+    <a href="calculadoras.html" class="modulo">
+      <svg class="modulo-icon" viewBox="0 0 60 60" fill="none">
+        <rect x="10" y="8" width="40" height="46" rx="4" stroke="#D4A847" stroke-width="1.2"/>
+        <rect x="15" y="14" width="30" height="12" rx="2" stroke="#D4A847" stroke-width="1" fill="rgba(212,168,71,0.08)"/>
+        <rect x="15" y="30" width="8" height="8" rx="1.5" stroke="#D4A847" stroke-width="0.8" opacity="0.6"/>
+        <rect x="26" y="30" width="8" height="8" rx="1.5" stroke="#D4A847" stroke-width="0.8" opacity="0.6"/>
+        <rect x="37" y="30" width="8" height="8" rx="1.5" stroke="#D4A847" stroke-width="0.8" opacity="0.6"/>
+        <rect x="15" y="42" width="8" height="8" rx="1.5" stroke="#D4A847" stroke-width="0.8" opacity="0.4"/>
+        <rect x="26" y="42" width="8" height="8" rx="1.5" stroke="#D4A847" stroke-width="0.8" opacity="0.4"/>
+        <rect x="37" y="42" width="8" height="18" rx="1.5" stroke="#D4A847" stroke-width="0.8" fill="rgba(212,168,71,0.12)"/>
+      </svg>
+      <p class="modulo-num">Módulo 03</p>
+      <h3 class="modulo-name">Calculadoras</h3>
+      <p class="modulo-desc">CKD-EPI, Kt/V, IMC, risco cardiovascular e dose por função renal.</p>
+      <div class="modulo-tags">
+        <span class="modulo-tag">5 Ferramentas</span>
+        <span class="modulo-tag">CKD-EPI</span>
+        <span class="modulo-tag">Kt/V</span>
+      </div>
+      <span class="modulo-link">Acessar →</span>
     </a>
 
+    <!-- 4. Manual Clínico -->
+    <div class="modulo" style="cursor:default;opacity:.7;">
+      <span class="soon-badge">Em breve</span>
+      <svg class="modulo-icon" viewBox="0 0 60 60" fill="none">
+        <rect x="10" y="6" width="34" height="46" rx="3" stroke="#D4A847" stroke-width="1.2"/>
+        <rect x="14" y="8" width="34" height="46" rx="3" stroke="#D4A847" stroke-width="0.8" opacity="0.3" transform="translate(2,2)"/>
+        <line x1="16" y1="18" x2="36" y2="18" stroke="#D4A847" stroke-width="0.8" opacity="0.6"/>
+        <line x1="16" y1="25" x2="36" y2="25" stroke="#D4A847" stroke-width="0.8" opacity="0.4"/>
+        <line x1="16" y1="32" x2="36" y2="32" stroke="#D4A847" stroke-width="0.8" opacity="0.4"/>
+        <line x1="16" y1="39" x2="28" y2="39" stroke="#D4A847" stroke-width="0.8" opacity="0.3"/>
+        <path d="M27 10L27 16M24 13L30 13" stroke="#D4A847" stroke-width="1.5" stroke-linecap="round"/>
+      </svg>
+      <p class="modulo-num">Módulo 04</p>
+      <h3 class="modulo-name">Manual Clínico</h3>
+      <p class="modulo-desc">Protocolos, diretrizes e condutas em nefrologia para toda a equipe.</p>
+      <div class="modulo-tags">
+        <span class="modulo-tag">Protocolos</span>
+        <span class="modulo-tag">Diretrizes</span>
+      </div>
+      <span class="modulo-link" style="opacity:.3;">Em breve →</span>
+    </div>
+
+    <!-- 5. Fichas Técnicas -->
+    <div class="modulo" style="cursor:default;opacity:.7;">
+      <span class="soon-badge">Em breve</span>
+      <svg class="modulo-icon" viewBox="0 0 60 60" fill="none">
+        <rect x="8" y="8" width="44" height="44" rx="4" stroke="#D4A847" stroke-width="1.2"/>
+        <line x1="8" y1="20" x2="52" y2="20" stroke="#D4A847" stroke-width="1"/>
+        <line x1="28" y1="20" x2="28" y2="52" stroke="#D4A847" stroke-width="1"/>
+        <text x="18" y="32" font-family="Georgia,serif" font-size="7" fill="#D4A847" text-anchor="middle" opacity="0.6">Ind.</text>
+        <text x="40" y="32" font-family="Georgia,serif" font-size="7" fill="#D4A847" text-anchor="middle" opacity="0.6">Meta</text>
+        <rect x="12" y="35" width="12" height="4" rx="1" fill="rgba(212,168,71,0.15)" stroke="#D4A847" stroke-width="0.6" opacity="0.6"/>
+        <rect x="32" y="35" width="16" height="4" rx="1" fill="rgba(45,106,79,0.2)" stroke="#2D6A4F" stroke-width="0.6" opacity="0.6"/>
+        <rect x="12" y="42" width="12" height="4" rx="1" fill="rgba(212,168,71,0.15)" stroke="#D4A847" stroke-width="0.6" opacity="0.6"/>
+        <rect x="32" y="42" width="16" height="4" rx="1" fill="rgba(45,106,79,0.2)" stroke="#2D6A4F" stroke-width="0.6" opacity="0.6"/>
+      </svg>
+      <p class="modulo-num">Módulo 05</p>
+      <h3 class="modulo-name">Fichas Técnicas</h3>
+      <p class="modulo-desc">Descrição detalhada de cada indicador — metodologia, meta e interpretação.</p>
+      <div class="modulo-tags">
+        <span class="modulo-tag">Indicadores</span>
+        <span class="modulo-tag">Metodologia</span>
+      </div>
+      <span class="modulo-link" style="opacity:.3;">Em breve →</span>
+    </div>
   </div>
 </div>
 
+<!-- MODAL LOGIN -->
+<div class="modal-overlay" id="login-modal" onclick="fecharLoginFora(event)">
+  <div class="modal-login">
+    <button class="modal-close" onclick="fecharLogin()">✕</button>
+    <p class="modal-login-logo">Indicadores Clínicos · Fênix</p>
+    <h2 class="modal-login-title">Acesso Restrito</h2>
+    <p class="modal-login-sub">Entre com suas credenciais para continuar</p>
+    <div class="field">
+      <label>E-mail</label>
+      <input type="email" id="login-email" placeholder="seu@email.com"/>
+    </div>
+    <div class="field">
+      <label>Senha</label>
+      <input type="password" id="login-senha" placeholder="••••••••" onkeydown="if(event.key==='Enter')fazerLogin()"/>
+    </div>
+    <button class="btn-entrar" id="btn-login" onclick="fazerLogin()">Entrar</button>
+    <div class="login-err" id="login-err"></div>
+  </div>
+</div>
+
+<!-- OVERLAY INDICADORES -->
+<div class="indicadores-overlay" id="ind-overlay">
+  <div class="ind-nav">
+    <span class="ind-nav-logo">APEX</span>
+    <div class="ind-nav-sep"></div>
+    <span class="ind-nav-title">Indicadores Clínicos</span>
+    <div class="ind-nav-space"></div>
+    <div class="ind-nav-btns">
+      <button class="ind-btn active" id="btn-dash" onclick="trocarView('dashboard')">▦ Dashboard</button>
+      <button class="ind-btn" id="btn-admin" onclick="trocarView('admin')">✎ Lançamento Mensal</button>
+      <button class="ind-btn ind-btn-sair" onclick="sairIndicadores()">← Voltar</button>
+    </div>
+  </div>
+  <div class="ind-content">
+    <iframe id="iframe-dashboard" class="ind-iframe active" src=""></iframe>
+    <iframe id="iframe-admin" class="ind-iframe" src=""></iframe>
+  </div>
+</div>
+
+<script>
+const SUPA_URL = 'https://syzmsixhjlutsynnqivv.supabase.co';
+const SUPA_KEY = 'sb_publishable_poKCFHc9n1CtIfCbAxTN0Q_dmlsEy1t';
+
+function abrirLogin() {
+  document.getElementById('login-modal').classList.add('show');
+  setTimeout(() => document.getElementById('login-email').focus(), 100);
+}
+function fecharLogin() {
+  document.getElementById('login-modal').classList.remove('show');
+  document.getElementById('login-err').textContent = '';
+}
+function fecharLoginFora(e) {
+  if(e.target === document.getElementById('login-modal')) fecharLogin();
+}
+
+async function fazerLogin() {
+  const email = document.getElementById('login-email').value.trim();
+  const senha = document.getElementById('login-senha').value;
+  const err = document.getElementById('login-err');
+  const btn = document.getElementById('btn-login');
+  err.textContent = '';
+  if(!email || !senha){ err.textContent = 'Preencha e-mail e senha.'; return; }
+  btn.disabled = true; btn.textContent = 'Entrando...';
+  try {
+    const resp = await fetch(`${SUPA_URL}/auth/v1/token?grant_type=password`, {
+      method:'POST',
+      headers:{'Content-Type':'application/json','apikey':SUPA_KEY},
+      body:JSON.stringify({email, password:senha})
+    });
+    const data = await resp.json();
+    if(data.error || !data.access_token){
+      err.textContent = 'E-mail ou senha incorretos.';
+      btn.disabled = false; btn.textContent = 'Entrar';
+      return;
+    }
+    sessionStorage.setItem('apex_gestor_logado','1');
+    fecharLogin();
+    abrirIndicadores();
+  } catch(e) {
+    err.textContent = 'Erro de conexão.';
+    btn.disabled = false; btn.textContent = 'Entrar';
+  }
+}
+
+function abrirIndicadores() {
+  document.getElementById('ind-overlay').classList.add('show');
+  const dash = document.getElementById('iframe-dashboard');
+  if(!dash.src || dash.src === window.location.href) {
+    dash.src = 'dashboard_fenix_C-Espacoso.html';
+  }
+}
+
+function trocarView(view) {
+  const config = {
+    dashboard: { btn:'btn-dash', iframe:'iframe-dashboard', src:'dashboard_fenix_C-Espacoso.html' },
+    admin:     { btn:'btn-admin', iframe:'iframe-admin',     src:'fenix_admin.html' }
+  };
+  Object.entries(config).forEach(([k, c]) => {
+    document.getElementById(c.btn).classList.toggle('active', k === view);
+    const iframe = document.getElementById(c.iframe);
+    iframe.classList.toggle('active', k === view);
+    if(k === view && (!iframe.src || iframe.src === window.location.href)) {
+      iframe.src = c.src;
+    }
+  });
+}
+
+function sairIndicadores() {
+  sessionStorage.removeItem('apex_gestor_logado');
+  document.getElementById('ind-overlay').classList.remove('show');
+  document.getElementById('iframe-dashboard').src = '';
+  document.getElementById('iframe-admin').src = '';
+  document.getElementById('btn-login').disabled = false;
+  document.getElementById('btn-login').textContent = 'Entrar';
+  document.getElementById('login-email').value = '';
+  document.getElementById('login-senha').value = '';
+}
+</script>
 </body>
 </html>
