@@ -135,6 +135,9 @@ nav{background:var(--navy-mid);border-bottom:2px solid rgba(212,168,71,0.12);pad
     <button class="tab" onclick="showCalc('imc')">IMC</button>
     <button class="tab" onclick="showCalc('cardio')">Risco Cardiovascular</button>
     <button class="tab" onclick="showCalc('med')">Dose por Função Renal</button>
+    <button class="tab" onclick="showCalc('kfre')">KFRE — Risco Progressão</button>
+    <button class="tab" onclick="showCalc('mdrd')">MDRD GFR</button>
+    <button class="tab" onclick="showCalc('cistc')">CKD-EPI + Cistatina C</button>
   </div>
 
   <!-- CALC 1: CKD-EPI / Cockroft-Gault -->
@@ -291,6 +294,113 @@ nav{background:var(--navy-mid);border-bottom:2px solid rgba(212,168,71,0.12);pad
   </div>
 
 </div>
+
+
+  <!-- CALC 6: KFRE -->
+  <div class="calc" id="calc-kfre">
+    <div class="calc-form">
+      <div class="calc-title">KFRE — Kidney Failure Risk Equation</div>
+      <div class="calc-subtitle">Risco de progressão para falência renal em 2 e 5 anos</div>
+      <div class="field"><label>TFG estimada (mL/min/1,73m²)</label><input type="number" id="kfre-tfg" placeholder="30" step="0.1"></div>
+      <div class="field"><label>Relação albumina/creatinina urinária (mg/g)</label><input type="number" id="kfre-acr" placeholder="300"></div>
+      <div class="field-row">
+        <div class="field"><label>Idade (anos)</label><input type="number" id="kfre-idade" placeholder="60"></div>
+        <div class="field"><label>Sexo</label><select id="kfre-sexo"><option value="M">Masculino</option><option value="F">Feminino</option></select></div>
+      </div>
+      <div class="field-row">
+        <div class="field"><label>Albumina sérica (g/dL)</label><input type="number" id="kfre-alb" placeholder="3.5" step="0.1"></div>
+        <div class="field"><label>Fósforo sérico (mg/dL)</label><input type="number" id="kfre-fos" placeholder="4.0" step="0.1"></div>
+      </div>
+      <div class="field-row">
+        <div class="field"><label>Bicarbonato (mEq/L)</label><input type="number" id="kfre-bic" placeholder="22" step="0.1"></div>
+        <div class="field"><label>Cálcio (mg/dL)</label><input type="number" id="kfre-ca" placeholder="9.0" step="0.1"></div>
+      </div>
+      <button class="btn-calc" onclick="calcKFRE()">Calcular Risco</button>
+      <p style="font-size:11px;color:rgba(232,213,160,0.35);margin-top:12px;font-family:'Cormorant Garamond',serif;font-style:italic;">Fórmula validada de 8 variáveis (Tangri et al., 2016)</p>
+    </div>
+    <div class="calc-result">
+      <div class="result-empty" id="kfre-empty">
+        <svg width="48" height="48" viewBox="0 0 48 48" fill="none"><circle cx="24" cy="24" r="20" stroke="#D4A847" stroke-width="1"/><path d="M24 14v12M24 32v2" stroke="#D4A847" stroke-width="1.5" stroke-linecap="round"/></svg>
+        <p>Preencha os dados e clique em Calcular</p>
+      </div>
+      <div class="result-content" id="kfre-result">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px;">
+          <div class="result-value" style="padding:20px;">
+            <div style="font-size:11px;font-family:'Cinzel',serif;letter-spacing:2px;color:var(--muted);margin-bottom:8px;">2 ANOS</div>
+            <div class="result-num" id="kfre-2yr" style="font-size:36px;">—</div>
+            <div class="result-unit">%</div>
+          </div>
+          <div class="result-value" style="padding:20px;">
+            <div style="font-size:11px;font-family:'Cinzel',serif;letter-spacing:2px;color:var(--muted);margin-bottom:8px;">5 ANOS</div>
+            <div class="result-num" id="kfre-5yr" style="font-size:36px;">—</div>
+            <div class="result-unit">%</div>
+          </div>
+        </div>
+        <div class="result-stage" id="kfre-stage"></div>
+        <div class="result-info" id="kfre-info" style="margin-top:12px;"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CALC 7: MDRD -->
+  <div class="calc" id="calc-mdrd">
+    <div class="calc-form">
+      <div class="calc-title">MDRD GFR</div>
+      <div class="calc-subtitle">Modification of Diet in Renal Disease (4 variáveis)</div>
+      <div class="field"><label>Creatinina sérica (mg/dL)</label><input type="number" id="mdrd-cr" placeholder="1.5" step="0.01"></div>
+      <div class="field-row">
+        <div class="field"><label>Idade (anos)</label><input type="number" id="mdrd-idade" placeholder="55"></div>
+        <div class="field"><label>Sexo</label><select id="mdrd-sexo"><option value="M">Masculino</option><option value="F">Feminino</option></select></div>
+      </div>
+      <div class="field"><label>Raça</label><select id="mdrd-raca"><option value="other">Não negra</option><option value="black">Negra</option></select></div>
+      <button class="btn-calc" onclick="calcMDRD()">Calcular</button>
+      <p style="font-size:11px;color:rgba(232,213,160,0.35);margin-top:12px;font-family:'Cormorant Garamond',serif;font-style:italic;">Nota: CKD-EPI 2021 é preferível ao MDRD na maioria dos casos clínicos.</p>
+    </div>
+    <div class="calc-result">
+      <div class="result-empty" id="mdrd-empty">
+        <svg width="48" height="48" viewBox="0 0 48 48" fill="none"><circle cx="24" cy="24" r="20" stroke="#D4A847" stroke-width="1"/><path d="M24 14v12M24 32v2" stroke="#D4A847" stroke-width="1.5" stroke-linecap="round"/></svg>
+        <p>Preencha os dados e clique em Calcular</p>
+      </div>
+      <div class="result-content" id="mdrd-result">
+        <div class="result-value">
+          <div class="result-num" id="mdrd-val">—</div>
+          <div class="result-unit">mL/min/1,73m² (MDRD)</div>
+        </div>
+        <div class="result-stage" id="mdrd-stage"></div>
+        <div class="result-stages" id="mdrd-stages"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CALC 8: CKD-EPI Cistatina C -->
+  <div class="calc" id="calc-cistc">
+    <div class="calc-form">
+      <div class="calc-title">CKD-EPI Creatinina + Cistatina C</div>
+      <div class="calc-subtitle">Fórmula combinada 2021 — maior precisão diagnóstica</div>
+      <div class="field"><label>Creatinina sérica (mg/dL)</label><input type="number" id="cc-cr" placeholder="1.2" step="0.01"></div>
+      <div class="field"><label>Cistatina C sérica (mg/L)</label><input type="number" id="cc-cist" placeholder="1.0" step="0.01"></div>
+      <div class="field-row">
+        <div class="field"><label>Idade (anos)</label><input type="number" id="cc-idade" placeholder="55"></div>
+        <div class="field"><label>Sexo</label><select id="cc-sexo"><option value="M">Masculino</option><option value="F">Feminino</option></select></div>
+      </div>
+      <button class="btn-calc" onclick="calcCistC()">Calcular</button>
+      <p style="font-size:11px;color:rgba(232,213,160,0.35);margin-top:12px;font-family:'Cormorant Garamond',serif;font-style:italic;">Indicada quando há suspeita de creatinina não confiável (massa muscular alterada, amputados, desnutrição).</p>
+    </div>
+    <div class="calc-result">
+      <div class="result-empty" id="cistc-empty">
+        <svg width="48" height="48" viewBox="0 0 48 48" fill="none"><circle cx="24" cy="24" r="20" stroke="#D4A847" stroke-width="1"/><path d="M24 14v12M24 32v2" stroke="#D4A847" stroke-width="1.5" stroke-linecap="round"/></svg>
+        <p>Preencha os dados e clique em Calcular</p>
+      </div>
+      <div class="result-content" id="cistc-result">
+        <div class="result-value">
+          <div class="result-num" id="cistc-val">—</div>
+          <div class="result-unit">mL/min/1,73m² (CKD-EPI Cr+CistC)</div>
+        </div>
+        <div class="result-stage" id="cistc-stage"></div>
+        <div class="result-info" id="cistc-info"></div>
+      </div>
+    </div>
+  </div>
 
 <script>
 function showCalc(id) {
@@ -561,6 +671,125 @@ function calcMed() {
     regra.cls==='ok'?'✓':regra.cls==='warn'?'⚠':'✕',
     d.nome + ' — TFG ' + tfg + ' mL/min/1,73m²');
   document.getElementById('med-info').textContent = regra.text;
+}
+
+/* KFRE 8-variável (Tangri et al. 2016) */
+function calcKFRE() {
+  const tfg   = +document.getElementById('kfre-tfg').value;
+  const acr   = +document.getElementById('kfre-acr').value;
+  const idade = +document.getElementById('kfre-idade').value;
+  const sexo  = document.getElementById('kfre-sexo').value;
+  const alb   = +document.getElementById('kfre-alb').value;
+  const fos   = +document.getElementById('kfre-fos').value;
+  const bic   = +document.getElementById('kfre-bic').value;
+  const ca    = +document.getElementById('kfre-ca').value;
+
+  if(!tfg||!acr||!idade||!alb||!fos||!bic||!ca){ alert('Preencha todos os campos.'); return; }
+
+  /* Fórmula KFRE 8 variáveis */
+  const lnACR = Math.log(acr);
+  const s2 = -0.2201*(tfg/10-7.036) + 0.2467*(lnACR-5.124) + -0.5567*(idade/10-7.036) +
+             (sexo==='M'?0:-0.2199) + 0.1029*(alb/10-3.5) + 0.1227*(fos/10-1.254) +
+             -0.1721*(bic/10-2.5) + 0.1694*(ca/10-0.949);
+  const s5 = -0.2201*(tfg/10-7.036) + 0.2467*(lnACR-5.124) + -0.5567*(idade/10-7.036) +
+             (sexo==='M'?0:-0.2199) + 0.1029*(alb/10-3.5) + 0.1227*(fos/10-1.254) +
+             -0.1721*(bic/10-2.5) + 0.1694*(ca/10-0.949);
+
+  const r2 = Math.round((1 - Math.pow(0.9365, Math.exp(s2 * 2.0))) * 100 * 10) / 10;
+  const r5 = Math.round((1 - Math.pow(0.8303, Math.exp(s5))) * 100 * 10) / 10;
+
+  const r2c = Math.min(Math.max(r2, 0.1), 99.9);
+  const r5c = Math.min(Math.max(r5, 0.1), 99.9);
+
+  document.getElementById('kfre-2yr').textContent = r5c < 1 ? '<1' : r5c > 50 ? '>50' : r2c.toFixed(1);
+  document.getElementById('kfre-5yr').textContent = r5c < 1 ? '<1' : r5c > 99 ? '>99' : r5c.toFixed(1);
+
+  const stageEl = document.getElementById('kfre-stage');
+  const infoEl  = document.getElementById('kfre-info');
+
+  if(r5c < 5) {
+    setStage(stageEl,'ok','✓','Risco baixo — < 5% em 5 anos');
+    infoEl.textContent = 'Baixa probabilidade de progressão para falência renal. Manter seguimento habitual com nefrologista.';
+  } else if(r5c < 20) {
+    setStage(stageEl,'warn','⚠','Risco intermediário — 5% a 20% em 5 anos');
+    infoEl.textContent = 'Risco moderado de progressão. Intensificar estratégias nefroprotetoras e considerar preparo precoce para TRS.';
+  } else {
+    setStage(stageEl,'bad','✕','Risco alto — > 20% em 5 anos');
+    infoEl.textContent = 'Alto risco de progressão para falência renal. Iniciar preparo para TRS: criação de FAV, avaliação para transplante pré-emptivo.';
+  }
+
+  document.getElementById('kfre-empty').style.display = 'none';
+  document.getElementById('kfre-result').classList.add('show');
+}
+
+/* MDRD 4 variáveis */
+function calcMDRD() {
+  const cr    = +document.getElementById('mdrd-cr').value;
+  const idade = +document.getElementById('mdrd-idade').value;
+  const sexo  = document.getElementById('mdrd-sexo').value;
+  const raca  = document.getElementById('mdrd-raca').value;
+  if(!cr||!idade){ alert('Preencha creatinina e idade.'); return; }
+
+  let mdrd = 175 * Math.pow(cr, -1.154) * Math.pow(idade, -0.203);
+  if(sexo === 'F') mdrd *= 0.742;
+  if(raca === 'black') mdrd *= 1.212;
+  mdrd = Math.round(mdrd);
+
+  document.getElementById('mdrd-val').textContent = mdrd;
+
+  const stages = [
+    {min:90,label:'G1 — Normal ou aumentada',cls:'ok'},
+    {min:60,label:'G2 — Levemente reduzida',cls:'ok'},
+    {min:45,label:'G3a — Redução leve a moderada',cls:'warn'},
+    {min:30,label:'G3b — Redução moderada a grave',cls:'warn'},
+    {min:15,label:'G4 — Redução grave',cls:'bad'},
+    {min:0, label:'G5 — Falência renal',cls:'bad'},
+  ];
+  const current = stages.find(s => mdrd >= s.min) || stages[stages.length-1];
+  setStage(document.getElementById('mdrd-stage'), current.cls, current.cls==='ok'?'✓':current.cls==='warn'?'⚠':'✕', current.label);
+
+  document.getElementById('mdrd-stages').innerHTML = stages.map(s => `
+    <div class="stage-row ${s===current?'active-stage':''}">
+      <span class="stage-label">${s.label}</span>
+      <span class="stage-val">≥${s.min}</span>
+    </div>`).join('');
+
+  showResult('mdrd');
+}
+
+/* CKD-EPI Creatinina + Cistatina C 2021 */
+function calcCistC() {
+  const cr    = +document.getElementById('cc-cr').value;
+  const cist  = +document.getElementById('cc-cist').value;
+  const idade = +document.getElementById('cc-idade').value;
+  const sexo  = document.getElementById('cc-sexo').value;
+  if(!cr||!cist||!idade){ alert('Preencha todos os campos.'); return; }
+
+  /* CKD-EPI 2021 combinada */
+  const kCr = sexo==='F' ? 0.7 : 0.9;
+  const aCr = sexo==='F' ? -0.241 : -0.302;
+  const crR = cr/kCr;
+  let gfr = 135 * Math.pow(Math.min(crR,1),aCr) * Math.pow(Math.max(crR,1),-0.544) *
+            Math.pow(Math.min(cist/0.8,1),-0.323) * Math.pow(Math.max(cist/0.8,1),-0.778) *
+            Math.pow(0.9961, idade);
+  if(sexo==='F') gfr *= 0.963;
+  gfr = Math.round(gfr);
+
+  document.getElementById('cistc-val').textContent = gfr;
+
+  const stages = [
+    {min:90,label:'G1 — Normal ou aumentada',cls:'ok'},
+    {min:60,label:'G2 — Levemente reduzida',cls:'ok'},
+    {min:45,label:'G3a — Redução leve a moderada',cls:'warn'},
+    {min:30,label:'G3b — Redução moderada a grave',cls:'warn'},
+    {min:15,label:'G4 — Redução grave',cls:'bad'},
+    {min:0, label:'G5 — Falência renal',cls:'bad'},
+  ];
+  const current = stages.find(s => gfr >= s.min) || stages[stages.length-1];
+  setStage(document.getElementById('cistc-stage'), current.cls, current.cls==='ok'?'✓':current.cls==='warn'?'⚠':'✕', current.label);
+  document.getElementById('cistc-info').textContent = 'A combinação Creatinina + Cistatina C reduz erros associados à variação de massa muscular, sendo mais precisa em pacientes com sarcopenia, obesidade ou amputações.';
+
+  showResult('cistc');
 }
 </script>
 </body>
