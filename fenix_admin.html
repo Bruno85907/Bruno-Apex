@@ -419,6 +419,11 @@ body {
   <a href="portal_gestor.html" class="portal-nav-back">← Portal Gestor</a>
 </div>
 
+<script>
+if(!sessionStorage.getItem('apex_gestor_logado')) {
+  window.location.href = 'portal_gestor.html';
+}
+</script>
 <!-- LOGIN -->
 <div id="login-screen">
   <div class="login-card">

@@ -1733,7 +1733,15 @@ function render(mes){
 
 document.getElementById('mesSel').addEventListener('change',e=>render(+e.target.value));
 window.addEventListener('resize',()=>render(+document.getElementById('mesSel').value));
-window.addEventListener('load', carregarDadosSupabase);
+window.addEventListener('load', () => {
+  /* Proteção — verifica sessão */
+  const sessao = sessionStorage.getItem('apex_gestor_logado');
+  if(!sessao) {
+    window.location.href = 'portal_gestor.html';
+    return;
+  }
+  carregarDadosSupabase();
+});
 
 /* ═══════════════════════════════
    ANÁLISE COM IA
@@ -1832,7 +1840,8 @@ ${resumo}`;
     });
 
     const data = await resp.json();
-    const text = data.text || 'Não foi possível gerar a análise.';
+    console.log('Resposta API:', JSON.stringify(data));
+    const text = data.text || data.error || 'Não foi possível gerar a análise.';
     textarea.value = text;
   } catch(e) {
     textarea.value = 'Erro ao conectar com a IA. Verifique sua conexão e tente novamente.';

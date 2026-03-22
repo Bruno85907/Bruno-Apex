@@ -687,7 +687,8 @@ async function login() {
       return;
     }
 
-    /* Sucesso */
+    /* Sucesso — salva sessão */
+    sessionStorage.setItem('apex_gestor_logado', '1');
     const nome = email.split('@')[0];
     document.getElementById('login-screen').style.display = 'none';
     document.getElementById('portal').style.display = 'block';
@@ -703,6 +704,7 @@ async function login() {
 }
 
 function logout() {
+  sessionStorage.removeItem('apex_gestor_logado');
   document.getElementById('portal').style.display = 'none';
   document.getElementById('login-screen').style.display = 'flex';
   document.getElementById('email').value = '';
@@ -780,8 +782,10 @@ function abrirModulo(modulo) {
   /* Carrega o iframe apenas quando necessário e após login */
   if(modulo !== 'home'){
     const iframe = document.getElementById('view-'+modulo);
-    if(iframe && !iframe.src) {
+    if(iframe) {
       iframe.src = MODULO_SRCS[modulo];
+      iframe.style.display = 'block';
+      iframe.style.height = '100%';
     }
   }
 }
