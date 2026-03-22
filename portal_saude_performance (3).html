@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Saúde & Performance — Dr. Bruno Biluca</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#0D1B35;--navy-mid:#1B2A4A;--navy-light:#243357;
+  --gold:#D4A847;--gold-dark:#8B6914;--gold-pale:#E8D5A0;
+  --muted:rgba(232,213,160,0.78);--white:#FFFFFF;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:'Inter',sans-serif;background:var(--navy);color:var(--white);min-height:100vh;}
+
+/* NAV */
+nav{background:rgba(13,27,53,0.97);border-bottom:1px solid rgba(212,168,71,0.12);padding:0 48px;height:58px;display:flex;align-items:center;gap:20px;position:sticky;top:0;z-index:100;backdrop-filter:blur(8px);}
+.nav-logo{font-family:'Cinzel',serif;font-size:14px;font-weight:700;color:var(--gold);letter-spacing:6px;text-decoration:none;}
+.nav-sep{width:1px;height:22px;background:rgba(212,168,71,0.2);}
+.nav-section{font-family:'Cinzel',serif;font-size:12px;letter-spacing:3px;color:var(--muted);text-transform:uppercase;}
+.nav-anchors{margin-left:auto;display:flex;gap:28px;list-style:none;}
+.nav-anchors a{font-family:'Cinzel',serif;font-size:11px;color:rgba(232,213,160,0.5);text-decoration:none;letter-spacing:2px;text-transform:uppercase;transition:color .2s;}
+.nav-anchors a:hover{color:var(--gold);}
+.nav-back{font-family:'Cinzel',serif;font-size:11px;letter-spacing:2px;color:rgba(212,168,71,0.4);text-decoration:none;transition:color .2s;margin-left:20px;}
+.nav-back:hover{color:var(--gold);}
+
+/* HERO */
+.hero{padding:72px 60px 60px;position:relative;overflow:hidden;border-bottom:1px solid rgba(212,168,71,0.08);}
+.hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse at 85% 40%,rgba(212,168,71,0.07) 0%,transparent 55%),radial-gradient(ellipse at 5% 80%,rgba(36,51,87,0.5) 0%,transparent 50%);}
+.hero-grid{position:absolute;inset:0;pointer-events:none;background-image:linear-gradient(rgba(212,168,71,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(212,168,71,0.03) 1px,transparent 1px);background-size:64px 64px;}
+.hero-inner{position:relative;z-index:1;display:grid;grid-template-columns:1fr auto;gap:60px;align-items:center;max-width:1200px;}
+.hero-badge{display:inline-flex;align-items:center;gap:10px;border:1px solid rgba(212,168,71,0.2);border-radius:30px;padding:7px 18px;margin-bottom:24px;font-family:'Cinzel',serif;font-size:10px;letter-spacing:3px;color:var(--gold);}
+.hero-dot{width:6px;height:6px;border-radius:50%;background:var(--gold);animation:blink 2s infinite;}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.25}}
+.hero-title{font-family:'Cormorant Garamond',serif;font-size:clamp(38px,5vw,64px);font-weight:300;color:var(--white);line-height:1.08;margin-bottom:18px;}
+.hero-title em{color:var(--gold-pale);font-style:italic;}
+.hero-desc{font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:300;font-style:italic;color:var(--muted);line-height:1.85;margin-bottom:28px;max-width:520px;}
+.wearables-strip{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:28px;}
+.wb{display:flex;align-items:center;gap:7px;background:rgba(212,168,71,0.06);border:1px solid rgba(212,168,71,0.15);border-radius:8px;padding:7px 13px;font-family:'Inter',sans-serif;font-size:12px;font-weight:500;color:var(--gold-pale);}
+.hero-social{display:flex;gap:10px;}
+.soc-btn{display:flex;align-items:center;gap:8px;font-family:'Cinzel',serif;font-size:11px;letter-spacing:2px;color:var(--gold);border:1px solid rgba(212,168,71,0.25);padding:9px 16px;border-radius:8px;text-decoration:none;transition:all .3s;}
+.soc-btn:hover{background:rgba(212,168,71,0.1);border-color:rgba(212,168,71,0.5);}
+.hero-stats{display:flex;flex-direction:column;gap:14px;min-width:190px;}
+.stat-card{background:rgba(27,42,74,0.7);border:1px solid rgba(212,168,71,0.1);border-radius:12px;padding:18px 22px;text-align:center;}
+.stat-num{font-family:'Cormorant Garamond',serif;font-size:34px;font-weight:300;color:var(--gold);line-height:1;}
+.stat-label{font-family:'Cinzel',serif;font-size:9px;letter-spacing:2px;color:var(--muted);text-transform:uppercase;margin-top:4px;}
+
+/* ARTIGOS */
+.artigos-section{padding:72px 60px;max-width:1280px;margin:0 auto;}
+.section-header{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:40px;gap:20px;flex-wrap:wrap;}
+.section-eyebrow{font-family:'Cinzel',serif;font-size:11px;letter-spacing:4px;color:var(--gold);text-transform:uppercase;margin-bottom:8px;}
+.section-title{font-family:'Cormorant Garamond',serif;font-size:clamp(26px,3vw,38px);font-weight:300;color:var(--white);line-height:1.2;}
+.section-title em{color:var(--gold-pale);font-style:italic;}
+.section-count{font-family:'Cinzel',serif;font-size:11px;letter-spacing:2px;color:rgba(212,168,71,0.4);}
+
+/* FILTROS */
+.filtros-wrap{margin-bottom:36px;overflow-x:auto;padding-bottom:4px;}
+.filtros{display:flex;gap:8px;min-width:max-content;}
+.filtro-btn{
+  font-family:'Cinzel',serif;font-size:10px;letter-spacing:2px;
+  color:rgba(232,213,160,0.55);background:transparent;
+  border:1px solid rgba(212,168,71,0.12);border-radius:20px;
+  padding:7px 16px;cursor:pointer;transition:all .25s;white-space:nowrap;
+}
+.filtro-btn:hover{color:var(--gold);border-color:rgba(212,168,71,0.3);}
+.filtro-btn.active{background:rgba(212,168,71,0.12);color:var(--gold);border-color:rgba(212,168,71,0.35);}
+
+/* DESTAQUE */
+.artigo-destaque{
+  display:grid;grid-template-columns:1fr 1fr;
+  background:var(--navy-mid);border:1px solid rgba(212,168,71,0.1);
+  border-radius:16px;overflow:hidden;text-decoration:none;
+  transition:all .4s;margin-bottom:3px;
+}
+.artigo-destaque:hover{border-color:rgba(212,168,71,0.28);transform:translateY(-2px);box-shadow:0 16px 40px rgba(0,0,0,0.25);}
+.artigo-destaque-img{min-height:260px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;position:relative;}
+.destaque-tag{position:absolute;top:16px;left:16px;background:var(--gold-dark);color:var(--white);font-family:'Cinzel',serif;font-size:9px;letter-spacing:2px;padding:4px 12px;border-radius:20px;}
+.artigo-destaque-body{padding:40px 36px;display:flex;flex-direction:column;}
+.a-cat{font-family:'Cinzel',serif;font-size:10px;letter-spacing:3px;color:var(--gold);text-transform:uppercase;margin-bottom:12px;}
+.a-title{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:400;color:var(--white);line-height:1.4;margin-bottom:14px;}
+.a-excerpt{font-family:'Cormorant Garamond',serif;font-size:15px;font-style:italic;color:var(--muted);line-height:1.78;margin-bottom:20px;flex:1;}
+.a-meta{display:flex;align-items:center;gap:10px;font-family:'Inter',sans-serif;font-size:11px;color:rgba(232,213,160,0.45);margin-bottom:20px;}
+.a-dot{width:3px;height:3px;border-radius:50%;background:rgba(212,168,71,0.35);}
+.a-link{font-family:'Cinzel',serif;font-size:10px;letter-spacing:2px;color:var(--gold);display:flex;align-items:center;gap:8px;transition:gap .3s;margin-top:auto;}
+.artigo-destaque:hover .a-link{gap:14px;}
+
+/* LISTA DE ARTIGOS */
+.artigos-grid{display:flex;flex-direction:column;}
+.artigo-item{
+  display:flex;align-items:flex-start;gap:22px;
+  padding:22px 0;border-bottom:1px solid rgba(212,168,71,0.06);
+  text-decoration:none;transition:all .3s;
+  animation:fadeIn .3s ease;
+}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.artigo-item:first-of-type{border-top:1px solid rgba(212,168,71,0.06);margin-top:3px;}
+.artigo-item:last-of-type{border-bottom:none;}
+.artigo-item:hover{padding-left:8px;}
+.a-num{font-family:'Cinzel',serif;font-size:20px;font-weight:700;color:rgba(212,168,71,0.13);min-width:36px;line-height:1;padding-top:4px;flex-shrink:0;}
+.a-body{flex:1;}
+.a-body .a-cat{margin-bottom:5px;}
+.a-body .a-title{font-size:17px;margin-bottom:7px;}
+.a-body .a-excerpt{font-size:14px;margin-bottom:10px;}
+.a-soon{display:inline-flex;align-items:center;gap:5px;font-family:'Cinzel',serif;font-size:9px;letter-spacing:1.5px;color:rgba(232,213,160,0.35);background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:20px;padding:3px 10px;}
+.a-cat-badge{display:inline-block;font-family:'Cinzel',serif;font-size:8px;letter-spacing:1.5px;padding:2px 8px;border-radius:10px;margin-left:8px;vertical-align:middle;}
+
+/* Cores por categoria */
+.cat-wearables{color:#D4A847;} .cat-wearables .a-cat{color:#D4A847;}
+.cat-idosos{color:#5BA8D4;} .cat-idosos .a-cat{color:#5BA8D4;}
+.cat-atividade{color:#5DCB8A;} .cat-atividade .a-cat{color:#5DCB8A;}
+.cat-hidratacao{color:#60B8D4;} .cat-hidratacao .a-cat{color:#60B8D4;}
+.cat-sono{color:#9B8ED4;} .cat-sono .a-cat{color:#9B8ED4;}
+.cat-longevidade{color:#D4A847;} .cat-longevidade .a-cat{color:#D4A847;}
+.cat-suplementacao{color:#D47A5B;} .cat-suplementacao .a-cat{color:#D47A5B;}
+.cat-metricas{color:#D4A847;} .cat-metricas .a-cat{color:#D4A847;}
+.cat-combinada{color:#C084FC;} .cat-combinada .a-cat{color:#C084FC;}
+.cat-pratica{color:#5DCB8A;} .cat-pratica .a-cat{color:#5DCB8A;}
+
+/* Mensagem sem resultados */
+.no-results{text-align:center;padding:60px 20px;font-family:'Cormorant Garamond',serif;font-size:18px;font-style:italic;color:rgba(232,213,160,0.35);}
+
+/* SEP */
+.section-sep{height:1px;background:rgba(212,168,71,0.07);margin:0 60px;}
+
+/* VÍDEOS */
+.videos-bg{background:rgba(27,42,74,0.25);border-top:1px solid rgba(212,168,71,0.06);border-bottom:1px solid rgba(212,168,71,0.06);}
+.videos-section{padding:72px 60px;max-width:1280px;margin:0 auto;}
+.serie-banner{
+  background:linear-gradient(160deg,var(--navy-light) 0%,#152640 100%);
+  border:1px solid rgba(212,168,71,0.15);border-radius:16px;
+  padding:36px 40px;margin-bottom:28px;
+  display:flex;align-items:center;gap:32px;
+}
+.serie-badge{background:var(--gold-dark);color:var(--white);font-family:'Cinzel',serif;font-size:9px;letter-spacing:3px;padding:5px 14px;border-radius:20px;white-space:nowrap;}
+.serie-info{flex:1;}
+.serie-title{font-family:'Cinzel',serif;font-size:16px;font-weight:700;color:var(--gold);letter-spacing:2px;margin-bottom:6px;}
+.serie-desc{font-family:'Cormorant Garamond',serif;font-size:15px;font-style:italic;color:var(--muted);}
+.serie-eps{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px;}
+.ep-chip{font-family:'Inter',sans-serif;font-size:11px;font-weight:500;color:rgba(212,168,71,0.65);background:rgba(212,168,71,0.07);border:1px solid rgba(212,168,71,0.15);border-radius:6px;padding:4px 12px;}
+.videos-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;}
+.video-card{background:var(--navy-mid);border:1px solid rgba(212,168,71,0.08);border-radius:14px;overflow:hidden;cursor:pointer;transition:all .4s;text-decoration:none;display:block;}
+.video-card:hover{border-color:rgba(212,168,71,0.25);transform:translateY(-4px);box-shadow:0 16px 40px rgba(0,0,0,0.3);}
+.video-thumb{aspect-ratio:16/9;display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;gap:10px;}
+.video-play{width:52px;height:52px;border-radius:50%;background:rgba(212,168,71,0.15);border:1.5px solid rgba(212,168,71,0.4);display:flex;align-items:center;justify-content:center;transition:all .3s;}
+.video-card:hover .video-play{background:rgba(212,168,71,0.28);transform:scale(1.1);}
+.video-ep{position:absolute;top:10px;left:12px;background:rgba(0,0,0,0.6);font-family:'Cinzel',serif;font-size:9px;letter-spacing:2px;color:var(--gold);padding:3px 10px;border-radius:4px;}
+.video-dur{position:absolute;bottom:10px;right:12px;background:rgba(0,0,0,0.65);font-size:11px;color:var(--white);padding:2px 8px;border-radius:4px;font-family:'Inter',sans-serif;}
+.v-soon{font-family:'Cinzel',serif;font-size:9px;letter-spacing:2px;color:rgba(212,168,71,0.4);}
+.video-body{padding:16px 20px 20px;}
+.v-serie{font-family:'Cinzel',serif;font-size:9px;letter-spacing:3px;color:var(--gold);text-transform:uppercase;margin-bottom:6px;}
+.v-title{font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:400;color:var(--white);line-height:1.45;margin-bottom:7px;}
+.v-meta{font-family:'Inter',sans-serif;font-size:11px;color:rgba(232,213,160,0.45);}
+
+/* GALERIA */
+.galeria-section{padding:72px 60px;max-width:1280px;margin:0 auto;}
+.galeria-grid{display:grid;grid-template-columns:repeat(12,1fr);grid-template-rows:210px 210px;gap:10px;}
+.gal-item{background:var(--navy-mid);border-radius:12px;overflow:hidden;cursor:pointer;position:relative;border:1px solid rgba(212,168,71,0.06);transition:all .4s;}
+.gal-item:nth-child(1){grid-column:span 5;grid-row:span 2;}
+.gal-item:nth-child(2){grid-column:span 4;}
+.gal-item:nth-child(3){grid-column:span 3;}
+.gal-item:nth-child(4){grid-column:span 3;}
+.gal-item:nth-child(5){grid-column:span 4;}
+.gal-item:hover{border-color:rgba(212,168,71,0.22);transform:scale(1.015);}
+.gal-ph{width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;}
+.gal-ov{position:absolute;inset:0;background:rgba(13,27,53,0);display:flex;align-items:center;justify-content:center;transition:background .35s;}
+.gal-item:hover .gal-ov{background:rgba(13,27,53,0.55);}
+.gal-exp{opacity:0;transition:opacity .35s;}
+.gal-item:hover .gal-exp{opacity:1;}
+.gal-lbl{position:absolute;bottom:12px;left:14px;font-family:'Cinzel',serif;font-size:9px;letter-spacing:2px;color:rgba(212,168,71,0.55);text-transform:uppercase;opacity:0;transition:opacity .35s;}
+.gal-item:hover .gal-lbl{opacity:1;}
+
+/* NEWSLETTER */
+.newsletter{background:linear-gradient(160deg,#152640 0%,var(--navy-mid) 100%);border-top:1px solid rgba(212,168,71,0.1);padding:64px 60px;text-align:center;}
+.nl-eyebrow{font-family:'Cinzel',serif;font-size:11px;letter-spacing:4px;color:var(--gold);text-transform:uppercase;margin-bottom:14px;}
+.nl-title{font-family:'Cormorant Garamond',serif;font-size:clamp(24px,3.5vw,38px);font-weight:300;color:var(--white);margin-bottom:10px;line-height:1.2;}
+.nl-title em{color:var(--gold-pale);font-style:italic;}
+.nl-sub{font-family:'Cormorant Garamond',serif;font-size:17px;font-style:italic;color:var(--muted);margin-bottom:30px;}
+.nl-form{display:flex;gap:10px;max-width:420px;margin:0 auto;}
+.nl-input{flex:1;background:rgba(13,27,53,0.8);border:1px solid rgba(212,168,71,0.2);border-radius:8px;padding:12px 16px;font-size:14px;font-family:'Inter',sans-serif;color:var(--white);outline:none;transition:border-color .2s;}
+.nl-input:focus{border-color:var(--gold);}
+.nl-input::placeholder{color:rgba(255,255,255,0.22);}
+.nl-btn{background:var(--gold-dark);color:var(--white);border:none;border-radius:8px;padding:12px 20px;font-size:11px;font-weight:600;font-family:'Cinzel',serif;letter-spacing:2px;cursor:pointer;transition:background .2s;white-space:nowrap;}
+.nl-btn:hover{background:var(--gold);}
+
+footer{padding:30px 60px;display:flex;align-items:center;justify-content:space-between;border-top:1px solid rgba(212,168,71,0.08);}
+.footer-brand{font-family:'Cinzel',serif;font-size:12px;font-weight:700;color:var(--gold);letter-spacing:4px;}
+.footer-copy{font-size:12px;color:rgba(232,213,160,0.4);font-family:'Inter',sans-serif;}
+
+@media(max-width:1100px){
+  .artigo-destaque{grid-template-columns:1fr;}.artigo-destaque-img{min-height:180px;}
+  .videos-grid{grid-template-columns:1fr 1fr;}
+  .galeria-grid{grid-template-columns:repeat(6,1fr);grid-template-rows:180px 180px;}
+  .gal-item:nth-child(1){grid-column:span 3;grid-row:span 2;}
+  .gal-item:nth-child(2){grid-column:span 3;}.gal-item:nth-child(3){grid-column:span 2;}
+  .gal-item:nth-child(4){grid-column:span 2;}.gal-item:nth-child(5){grid-column:span 3;}
+}
+@media(max-width:700px){
+  nav{padding:0 20px;}.nav-anchors{display:none;}
+  .hero,.artigos-section,.videos-section,.galeria-section,.newsletter{padding:52px 20px;}
+  .section-sep{margin:0 20px;}
+  .hero-inner{grid-template-columns:1fr;}
+  .hero-stats{flex-direction:row;flex-wrap:wrap;}
+  .stat-card{flex:1;min-width:120px;}
+  .videos-grid{grid-template-columns:1fr;}
+  .galeria-grid{grid-template-columns:1fr 1fr;grid-template-rows:auto;}
+  .gal-item:nth-child(n){grid-column:span 1;grid-row:span 1;min-height:140px;}
+  .gal-item:nth-child(1){grid-column:span 2;}
+  .nl-form{flex-direction:column;}
+  footer{flex-direction:column;gap:12px;text-align:center;padding:24px 20px;}
+  .serie-banner{flex-direction:column;gap:16px;padding:24px;}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">APEX</a>
+  <div class="nav-sep"></div>
+  <span class="nav-section">Saúde & Performance</span>
+  <ul class="nav-anchors">
+    <li><a href="#artigos">Artigos</a></li>
+    <li><a href="#videos">Vídeos</a></li>
+    <li><a href="#galeria">Galeria</a></li>
+  </ul>
+  <a href="index.html" class="nav-back">← Início</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div><div class="hero-grid"></div>
+  <div class="hero-inner">
+    <div class="hero-left">
+      <div class="hero-badge"><div class="hero-dot"></div>Medicina · Movimento · Propósito</div>
+      <h1 class="hero-title">Medicina de precisão<br><em>para a vida real</em></h1>
+      <p class="hero-desc">Wearables, dados biométricos, exercício seguro e suplementação baseada em evidência — para quem quer viver mais e melhor, com ou sem comorbidades.</p>
+      <div class="wearables-strip">
+        <div class="wb"><svg width="13" height="13" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="8" stroke="#D4A847" stroke-width="1.5"/><circle cx="12" cy="12" r="3" fill="rgba(212,168,71,0.4)"/></svg>Oura Ring</div>
+        <div class="wb"><svg width="13" height="13" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="#D4A847" stroke-width="1.5"/><path d="M12 7v5l3 3" stroke="#D4A847" stroke-width="1.3" stroke-linecap="round"/></svg>Garmin</div>
+        <div class="wb"><svg width="13" height="13" viewBox="0 0 24 24" fill="none"><rect x="6" y="2" width="12" height="20" rx="3" stroke="#D4A847" stroke-width="1.5"/><path d="M9 8h6M9 12h4" stroke="#D4A847" stroke-width="1.2" stroke-linecap="round"/></svg>Apple Watch</div>
+      </div>
+      <div class="hero-social">
+        <a href="https://instagram.com" target="_blank" class="soc-btn"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><rect x="2" y="2" width="20" height="20" rx="5" stroke="#D4A847" stroke-width="1.5"/><circle cx="12" cy="12" r="4" stroke="#D4A847" stroke-width="1.5"/><circle cx="17.5" cy="6.5" r="1" fill="#D4A847"/></svg>Instagram</a>
+        <a href="https://youtube.com" target="_blank" class="soc-btn"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><rect x="2" y="5" width="20" height="14" rx="3" stroke="#D4A847" stroke-width="1.5"/><path d="M10 9l5 3-5 3V9z" fill="#D4A847" opacity="0.7"/></svg>YouTube</a>
+      </div>
+    </div>
+    <div class="hero-stats">
+      <div class="stat-card"><div class="stat-num">54</div><div class="stat-label">Artigos planejados</div></div>
+      <div class="stat-card"><div class="stat-num">10</div><div class="stat-label">Categorias</div></div>
+      <div class="stat-card"><div class="stat-num">6</div><div class="stat-label">Episódios da série</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ARTIGOS -->
+<div class="artigos-section" id="artigos">
+  <div class="section-header">
+    <div>
+      <p class="section-eyebrow">01 · Leitura</p>
+      <h2 class="section-title">Artigos &<br><em>análises clínicas</em></h2>
+    </div>
+    <span class="section-count" id="artigos-count">54 artigos · Em breve</span>
+  </div>
+
+  <!-- FILTROS -->
+  <div class="filtros-wrap">
+    <div class="filtros">
+      <button class="filtro-btn active" onclick="filtrar('todos', this)">Todos</button>
+      <button class="filtro-btn" onclick="filtrar('wearables', this)">⌚ Wearables</button>
+      <button class="filtro-btn" onclick="filtrar('idosos', this)">🏥 Idosos & Crônicos</button>
+      <button class="filtro-btn" onclick="filtrar('atividade', this)">🏃 Atividade Física</button>
+      <button class="filtro-btn" onclick="filtrar('hidratacao', this)">💧 Hidratação</button>
+      <button class="filtro-btn" onclick="filtrar('sono', this)">😴 Sono</button>
+      <button class="filtro-btn" onclick="filtrar('longevidade', this)">💪 Longevidade</button>
+      <button class="filtro-btn" onclick="filtrar('suplementacao', this)">💊 Suplementação</button>
+      <button class="filtro-btn" onclick="filtrar('metricas', this)">🔬 Métricas</button>
+      <button class="filtro-btn" onclick="filtrar('combinada', this)">🧠 Dados Combinados</button>
+      <button class="filtro-btn" onclick="filtrar('pratica', this)">🏃‍♂️ Aplicação Prática</button>
+    </div>
+  </div>
+
+  <!-- DESTAQUE -->
+  <a href="#" class="artigo-destaque" data-cat="wearables" id="artigo-destaque">
+    <div class="artigo-destaque-img" style="background:linear-gradient(135deg,#1B3A5A,#0D2040);">
+      <span class="destaque-tag">Destaque</span>
+      <svg width="68" height="68" viewBox="0 0 68 68" fill="none"><circle cx="34" cy="34" r="26" stroke="rgba(212,168,71,0.2)" stroke-width="1"/><circle cx="34" cy="34" r="9" fill="rgba(212,168,71,0.1)" stroke="rgba(212,168,71,0.3)" stroke-width="1.2"/><path d="M34 8v6M34 54v6M8 34h6M54 34h6" stroke="rgba(212,168,71,0.2)" stroke-width="1.2" stroke-linecap="round"/><path d="M14 34l4-8 4 14 4-9 3 5 3 0 3-3 4 0" stroke="rgba(212,168,71,0.35)" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span style="font-family:'Cinzel',serif;font-size:10px;letter-spacing:2px;color:rgba(212,168,71,0.4);">Wearables</span>
+    </div>
+    <div class="artigo-destaque-body">
+      <p class="a-cat">Wearables · Monitoramento</p>
+      <h3 class="a-title">O que seu smartwatch já sabe sobre sua saúde (e você ignora)</h3>
+      <p class="a-excerpt">Seu relógio coleta HRV, frequência cardíaca de repouso, temperatura corporal, SpO₂ e padrões de sono — 24 horas por dia. Mas a maioria das pessoas olha só para os passos. Veja o que esses dados realmente significam para sua saúde.</p>
+      <div class="a-meta"><span>Dr. Bruno Biluca</span><div class="a-dot"></div><span>10 min</span><div class="a-dot"></div><span>Em breve</span></div>
+      <span class="a-link">Ler artigo →</span>
+    </div>
+  </a>
+
+  <!-- LISTA -->
+  <div class="artigos-grid" id="artigos-lista">
+
+    <!-- WEARABLES -->
+    <a href="#" class="artigo-item cat-wearables" data-cat="wearables"><div class="a-num">01</div><div class="a-body"><p class="a-cat">Wearables</p><h3 class="a-title">HRV: o que realmente significa na prática</h3><p class="a-excerpt">A variabilidade da frequência cardíaca é o dado mais importante do seu wearable. Aprenda a interpretar e usar na decisão de treinar ou descansar.</p><div class="a-meta"><span>8 min</span></div><span class="a-soon">Em breve</span></div></a>
+
+    <a href="#" class="artigo-item cat-wearables" data-cat="wearables"><div class="a-num">02</div><div class="a-body"><p class="a-cat">Wearables</p><h3 class="a-title">Frequência cardíaca de repouso: quando se preocupar</h3><p class="a-excerpt">O que significa uma RHR elevada, o que a melhora e em que momento ela sinaliza algo que precisa de atenção médica.</p><div class="a-meta"><span>6 min</span></div><span class="a-soon">Em breve</span></div></a>
+
+    <a href="#" class="artigo-item cat-wearables" data-cat="wearables"><div class="a-num">03</div><div class="a-body"><p class="a-cat">Wearables</p><h3 class="a-title">Wearables substituem consulta médica?</h3><p class="a-excerpt">A resposta honesta de um médico que usa três dispositivos todos os dias. Onde a tecnologia ajuda — e onde ela pode induzir ao erro.</p><div class="a-meta"><span>7 min</span></div><span class="a-soon">Em breve</span></div></a>
+
+    <a href="#" class="artigo-item cat-wearables" data-cat="wearables"><div class="a-num">04</div><div class="a-body"><p class="a-cat">Wearables</p><h3 class="a-title">Como usar dados do relógio sem paranoia</h3><p class="a-excerpt">Existe um equilíbrio entre monitorar e obsessionar. Como usar os dados de forma saudável e produtiva, sem ansiedade.</p><div class="a-meta"><span>5 min</span></div><span class="a-soon">Em breve</span></div></a>
+
+    <!-- IDOSOS & CRÔNICOS -->
+    <a href="#" class="artigo-item cat-idosos" data-cat="idosos"><div class="a-num">05</div><div class="a-body"><p class="a-cat">Idosos & Crônicos</p><h3 class="a-title">Como monitorar um idoso em casa</h3><p class="a-excerpt">Quais sinais vitais acompanhar, com que frequência e quando ligar para o médico. Guia prático para cuidadores e familiares.</p><div class="a-meta"><span>9 min</span></div><span class="a-soon">Em breve</span></div></a>
+
+    <a href="#" class="artigo-item cat-idosos" data-cat="idosos"><div class="a-num">06</div><div class="a-body"><p class="a-cat">Idosos & Crônicos</p><h3 class="a-title">Sinais vitais mais importantes no paciente crônico</h3><p class="a-excerpt">Pressão arterial, frequência cardíaca, peso, saturação — o que monitorar em casa quando você tem uma doença crônica.</p><div class="a-meta"><span>8 min</span></div><span class="a-soon">Em breve</span></div></a>
+
+    <a href="#" class="artigo-item cat-idosos" data-cat="idosos"><div class="a-num">07</div><div class="a-body"><p class="a-cat">Idosos & Crônicos</p><h3 class="a-title">Telemonitoramento: o futuro da medicina</h3><p class="a-excerpt">Como a tecnologia permite acompanhar pacientes crônicos à distância — e por que isso muda completamente a relação médico-paciente.</p><div class="a-meta"><span>10 min</span></div><span class="a-soon">Em breve</span></div></a>
+
+    <a href="#" class="artigo-item cat-idosos" data-cat="idosos"><div class="a-num">08</div><div class="a-body"><p class="a-cat">Idosos & Crônicos</p><h3 class="a-title">Alertas precoces antes da piora clínica</h3><p class="a-excerpt">Os dados que aparecem dias antes de uma crise — e como identificá-los no wearable para agir preventivamente.</p><div class="a-meta"><span>7 min</span></div><span class="a-soon">Em breve</span></div></a>
+
+    <a href="#" class="artigo-item cat-idosos" data-cat="idosos"><div class="a-num">09</div><div class="a-body"><p class="a-cat">Idosos & Crônicos</p><h3 class="a-title">Como acompanhar um idoso à distância com segurança</h3><p class="a-excerpt">Ferramentas, aplicativos e protocolos para quem cuida de um familiar idoso de longe — sem precisar ser médico.</p><div class="a-meta"><span>8 min</span></div><span class="a-soon">Em breve</span></div></a>
+
+    <!-- ATIVIDADE FÍSICA -->
+    <a href="#" class="artigo-item cat-atividade" data-cat="atividade"><div class="a-num">10</div><div class="a-body"><p class="a-cat">Atividade Física</p><h3 class="a-title">Hipertensão e exercício: o que é seguro</h3><p class="a-excerpt">Mitos e verdades sobre treinar com pressão alta. Tipos de exercício, intensidade recomendada e sinais de alerta para parar.</p><div class="a-meta"><span>8 min</span></div><span class="a-soon">Em breve</span></div></a>
+
+    <a href="#" class="artigo-item cat-atividade" data-cat="atividade"><div class="a-num">11</div><div class="a-body"><p class="a-cat">Atividade Física</p><h3 class="a-title">Exercício na doença renal crônica</h3><p class="a-excerpt">Pacientes dialíticos que completam corridas de 5km existem — e o protocolo para chegar lá com segurança.</p><div class="a-meta"><span>9 min</span></div><span class="a-soon">Em breve</span></div></a>
+
+    <a href="#" class="artigo-item cat-atividade" data-cat="atividade"><div class="a-num">12</div><div class="a-body"><p class="a-cat">Atividade Física</p><h3 class="a-title">Zona de FC segura: como calcular a sua</h3><p class="a-excerpt">Frequência cardíaca máxima, zonas de treino e como usar o wearable para treinar dentro do limite certo para sua condição.</p><div class="a-meta"><span>7 min</span></div><span class="a-soon">Em breve</span></div></a>
+
+    <a href="#" class="artigo-item cat-atividade" data-cat="atividade"><div class="a-num">13</div><div class="a-body"><p class="a-cat">Atividade Física</p><h3 class="a-title">O erro de começar treino sem avaliação médica</h3><p class="a-excerpt">Por que uma consulta antes de iniciar atividade física pode salvar vidas — especialmente acima dos 40 anos com comorbidades.</p><div class="a-meta"><span>6 min</span></div><span class="a-soon">Em breve</span></div></a>
+
+    <a href="#" class="artigo-item cat-atividade" data-cat="atividade"><div class="a-num">14</div><div class="a-body"><p class="a-cat">Atividade Física</p><h3 class="a-title">Como adaptar o treino para doenças crônicas</h3><p class="a-excerpt">Diabetes, insuficiência renal, hipertensão e doença cardiovascular — ajustes práticos para cada condição.</p><div class="a-meta"><span>10 min</span></div><span class="a-soon">Em breve</span></div></a>
+
+    <!-- HIDRATAÇÃO -->
+    <a href="#" class="artigo-item cat-hidratacao" data-cat="hidratacao"><div class="a-num">15</div><div class="a-body"><p class="a-cat">Hidratação</p><h3 class="a-title">Sinais ocultos de desidratação</h3><p class="a-excerpt">Muito antes da sede chegar, seu corpo já está desidratado. Os sinais que a maioria ignora — e que impactam performance e função renal.</p><div class="a-meta"><span>6 min</span></div><span class="a-soon">Em breve</span></div></a>
+
+    <a href="#" class="artigo-item cat-hidratacao" data-cat="hidratacao"><div class="a-num">16</div><div class="a-body"><p class="a-cat">Hidratação</p><h3 class="a-title">Quanto de água você realmente precisa</h3><p class="a-excerpt">A fórmula dos 2 litros por dia é mito para a maioria das pessoas. Como calcular a necessidade real baseada no seu peso e atividade.</p><div class="a-meta"><span>5 min</span></div><span class="a-soon">Em breve</span></div></a>
+
+    <a href="#" class="artigo-item cat-hidratacao" data-cat="hidratacao"><div class="a-num">17</div><div class="a-body"><p class="a-cat">Hidratação</p><h3 class="a-title">Água vs isotônico: quando cada um faz sentido</h3><p class="a-excerpt">Para a maioria das atividades, água é suficiente. Quando o isotônico ajuda de verdade — e quando é só marketing.</p><div class="a-meta"><span>6 min</span></div><span class="a-soon">Em breve</span></div></a>
+
+    <a href="#" class="artigo-item cat-hidratacao" data-cat="hidratacao"><div class="a-num">18</div><div class="a-body"><p class="a-cat">Hidratação</p><h3 class="a-title">Impacto da desidratação nos rins</h3><p class="a-excerpt">Os rins são os órgãos mais sensíveis à desidratação. Como a falta de água crônica acelera a perda de função renal.</p><div class="a-meta"><span>7 min</span></div><span class="a-soon">Em breve</span></div></a>
+
+    <a href="#" class="artigo-item cat-hidratacao" data-cat="hidratacao"><div class="a-num">19</div><div class="a-body"><p class="a-cat">Hidratação</p><h3 class="a-title">O erro de beber água só quando sente sede</h3><p class="a-excerpt">A sede é um sinal tardio. Por que esperar sentir sede é especialmente perigoso para idosos e pacientes com DRC.</p><div class="a-meta"><span>5 min</span></div><span class="a-soon">Em breve</span></div></a>
+
+    <!-- SONO -->
+    <a href="#" class="artigo-item cat-sono" data-cat="sono"><div class="a-num">20</div><div class="a-body"><p class="a-cat">Sono & Recuperação</p><h3 class="a-title">O que seu wearable diz sobre seu sono</h3><p class="a-excerpt">Sleep score, sono profundo, REM, latência e despertares — como interpretar cada métrica e o que realmente importa.</p><div class="a-meta"><span>9 min</span></div><span class="a-soon">Em breve</span></div></a>
+
+    <a href="#" class="artigo-item cat-sono" data-cat="sono"><div class="a-num">21</div><div class="a-body"><p class="a-cat">Sono & Recuperação</p><h3 class="a-title">Sono ruim e impacto na saúde crônica</h3><p class="a-excerpt">Privação de sono eleva pressão arterial, piora controle glicêmico e acelera progressão da doença renal. As evidências são contundentes.</p><div class="a-meta"><span>8 min</span></div><span class="a-soon">Em breve</span></div></a>
+
+    <a href="#" class="artigo-item cat-sono" data-cat="sono"><div class="a-num">22</div><div class="a-body"><p class="a-cat">Sono & Recuperação</p><h3 class="a-title">Quantas horas dormir: a resposta baseada em evidência</h3><p class="a-excerpt">7 a 9 horas para adultos — mas qualidade importa tanto quanto quantidade. Como identificar se seu sono está realmente reparador.</p><div class="a-meta"><span>6 min</span></div><span class="a-soon">Em breve</span></div></a>
+
+    <a href="#" class="artigo-item cat-sono" data-cat="sono"><div class="a-num">23</div><div class="a-body"><p class="a-cat">Sono & Recuperação</p><h3 class="a-title">Como melhorar o sono sem remédio</h3><p class="a-excerpt">Higiene do sono, temperatura do quarto, luz azul, horários e outros fatores com evidência real para melhorar qualidade do sono.</p><div class="a-meta"><span>7 min</span></div><span class="a-soon">Em breve</span></div></a>
+
+    <!-- LONGEVIDADE -->
+    <a href="#" class="artigo-item cat-longevidade" data-cat="longevidade"><div class="a-num">24</div><div class="a-body"><p class="a-cat">Longevidade</p><h3 class="a-title">Exercício como remédio: o que a ciência diz</h3><p class="a-excerpt">Nenhum medicamento tem o perfil de benefícios do exercício físico regular. Dose, tipo e frequência ideais para quem quer viver mais e melhor.</p><div class="a-meta"><span>10 min</span></div><span class="a-soon">Em breve</span></div></a>
+
+    <!-- SUPLEMENTAÇÃO -->
+    <a href="#" class="artigo-item cat-suplementacao" data-cat="suplementacao"><div class="a-num">25</div><div class="a-body"><p class="a-cat">Suplementação</p><h3 class="a-title">Quem realmente precisa de suplemento?</h3><p class="a-excerpt">A maioria das pessoas que compra suplemento não precisa dele — e algumas que precisam não sabem. Como identificar sua real necessidade.</p><div class="a-meta"><span>7 min</span></div><span class="a-soon">Em breve</span></div></a>
+
+    <a href="#" class="artigo-item cat-suplementacao" data-cat="suplementacao"><div class="a-num">26</div><div class="a-body"><p class="a-cat">Suplementação</p><h3 class="a-title">Ômega-3: quando realmente vale a pena</h3><p class="a-excerpt">Dose, forma (EPA vs DHA), contraindicações em doença renal e cardiovascular. O que a literatura mais recente diz.</p><div class="a-meta"><span>8 min</span></div><span class="a-soon">Em breve</span></div></a>
+
+    <a href="#" class="artigo-item cat-suplementacao" data-cat="suplementacao"><div class="a-num">27</div><div class="a-body"><p class="a-cat">Suplementação</p><h3 class="a-title">Magnésio: qual tipo usar e para quê</h3><p class="a-excerpt">Magnésio glicinato, citrato, malato — cada forma tem uma indicação diferente. Guia prático para a escolha certa.</p><div class="a-meta"><span>7 min</span></div><span class="a-soon">Em breve</span></div></a>
+
+    <a href="#" class="artigo-item cat-suplementacao" data-cat="suplementacao"><div class="a-num">28</div><div class="a-body"><p class="a-cat">Suplementação</p><h3 class="a-title">Coenzima Q10: vale a pena?</h3><p class="a-excerpt">Especialmente relevante para quem usa estatinas. Evidências, dose e para quem realmente há benefício.</p><div class="a-meta"><span>6 min</span></div><span class="a-soon">Em breve</span></div></a>
+
+    <a href="#" class="artigo-item cat-suplementacao" data-cat="suplementacao"><div class="a-num">29</div><div class="a-body"><p class="a-cat">Suplementação</p><h3 class="a-title">Os suplementos com evidência real — e os sem</h3><p class="a-excerpt">Uma lista honesta: o que a ciência apoia, o que é promissor, o que é marketing e o que é perigoso.</p><div class="a-meta"><span>10 min</span></div><span class="a-soon">Em breve</span></div></a>
+
+    <!-- MÉTRICAS -->
+    <a href="#" class="artigo-item cat-metricas" data-cat="metricas"><div class="a-num">30</div><div class="a-body"><p class="a-cat">Métricas</p><h3 class="a-title">HRV: interpretação prática do dia a dia</h3><p class="a-excerpt">O que é normal, o que é baixo, como sua linha de base muda com o tempo e por que comparar com outros é um erro.</p><div class="a-meta"><span>8 min</span></div><span class="a-soon">Em breve</span></div></a>
+
+    <a href="#" class="artigo-item cat-metricas" data-cat="metricas"><div class="a-num">31</div><div class="a-body"><p class="a-cat">Métricas</p><h3 class="a-title">RHR: quando a melhora é sinal de saúde — e quando é alerta</h3><p class="a-excerpt">Frequência cardíaca de repouso baixa nem sempre é boa notícia. Como interpretar a tendência ao longo do tempo.</p><div class="a-meta"><span>7 min</span></div><span class="a-soon">Em breve</span></div></a>
+
+    <a href="#" class="artigo-item cat-metricas" data-cat="metricas"><div class="a-num">32</div><div class="a-body"><p class="a-cat">Métricas</p><h3 class="a-title">VO₂ máximo estimado: confiável ou não?</h3><p class="a-excerpt">O Garmin e o Apple Watch estimam seu VO₂ máx sem ergômetro. Qual é a precisão — e quando esse número realmente importa.</p><div class="a-meta"><span>7 min</span></div><span class="a-soon">Em breve</span></div></a>
+
+    <a href="#" class="artigo-item cat-metricas" data-cat="metricas"><div class="a-num">33</div><div class="a-body"><p class="a-cat">Métricas</p><h3 class="a-title">Sleep Score: o que está por trás da nota</h3><p class="a-excerpt">Uma nota 85 no Oura significa realmente que você dormiu bem? O que o score esconde — e o que você deve olhar de verdade.</p><div class="a-meta"><span>6 min</span></div><span class="a-soon">Em breve</span></div></a>
+
+    <a href="#" class="artigo-item cat-metricas" data-cat="metricas"><div class="a-num">34</div><div class="a-body"><p class="a-cat">Métricas</p><h3 class="a-title">Temperatura corporal noturna: o que monitorar</h3><p class="a-excerpt">O Oura Ring mede variações de temperatura que precedem doenças, ciclo menstrual e estresse. Como interpretar essas mudanças.</p><div class="a-meta"><span>7 min</span></div><span class="a-soon">Em breve</span></div></a>
+
+    <a href="#" class="artigo-item cat-metricas" data-cat="metricas"><div class="a-num">35</div><div class="a-body"><p class="a-cat">Métricas</p><h3 class="a-title">SpO₂: quando realmente importa monitorar</h3><p class="a-excerpt">Saturação de oxigênio noturna pode revelar apneia do sono e outros problemas. Quando agir — e quando ignorar variações.</p><div class="a-meta"><span>6 min</span></div><span class="a-soon">Em breve</span></div></a>
+
+    <a href="#" class="artigo-item cat-metricas" data-cat="metricas"><div class="a-num">36</div><div class="a-body"><p class="a-cat">Métricas</p><h3 class="a-title">Respiração no sono: frequência e regularidade</h3><p class="a-excerpt">Taxa respiratória noturna é um marcador precoce de piora clínica. O que seu wearable captura — e o que isso pode indicar.</p><div class="a-meta"><span>6 min</span></div><span class="a-soon">Em breve</span></div></a>
+
+    <a href="#" class="artigo-item cat-metricas" data-cat="metricas"><div class="a-num">37</div><div class="a-body"><p class="a-cat">Métricas</p><h3 class="a-title">Carga de treino: como evitar o acúmulo perigoso</h3><p class="a-excerpt">Training load, stress de treino e como balancear esforço e recuperação usando os dados do Garmin e Apple Watch.</p><div class="a-meta"><span>8 min</span></div><span class="a-soon">Em breve</span></div></a>
+
+    <a href="#" class="artigo-item cat-metricas" data-cat="metricas"><div class="a-num">38</div><div class="a-body"><p class="a-cat">Métricas</p><h3 class="a-title">Recovery score: o que significa na prática</h3><p class="a-excerpt">O índice de prontidão do Oura e do Garmin — como ele é calculado e se você deve mesmo seguir a recomendação.</p><div class="a-meta"><span>7 min</span></div><span class="a-soon">Em breve</span></div></a>
+
+    <a href="#" class="artigo-item cat-metricas" data-cat="metricas"><div class="a-num">39</div><div class="a-body"><p class="a-cat">Métricas</p><h3 class="a-title">Passos por dia ainda fazem sentido em 2025?</h3><p class="a-excerpt">A meta de 10.000 passos tem base científica? O que pesquisas recentes dizem sobre o número ideal — e por que ele varia.</p><div class="a-meta"><span>5 min</span></div><span class="a-soon">Em breve</span></div></a>
+
+    <!-- DADOS COMBINADOS -->
+    <a href="#" class="artigo-item cat-combinada" data-cat="combinada"><div class="a-num">40</div><div class="a-body"><p class="a-cat">Dados Combinados</p><h3 class="a-title">HRV baixo + RHR alto: estresse fisiológico em ação</h3><p class="a-excerpt">Quando essas duas métricas se combinam negativamente, seu corpo está sobrecarregado. O que fazer — e o que não fazer.</p><div class="a-meta"><span>8 min</span></div><span class="a-soon">Em breve</span></div></a>
+
+    <a href="#" class="artigo-item cat-combinada" data-cat="combinada"><div class="a-num">41</div><div class="a-body"><p class="a-cat">Dados Combinados</p><h3 class="a-title">Sono ruim + HRV baixo: por que não treinar hoje</h3><p class="a-excerpt">A combinação mais comum para lesão e overtraining. Como usar esses dois dados para proteger sua saúde e performance.</p><div class="a-meta"><span>7 min</span></div><span class="a-soon">Em breve</span></div></a>
+
+    <a href="#" class="artigo-item cat-combinada" data-cat="combinada"><div class="a-num">42</div><div class="a-body"><p class="a-cat">Dados Combinados</p><h3 class="a-title">Temperatura elevada + queda de performance: possível doença</h3><p class="a-excerpt">Como o Oura pode identificar infecções 1 a 2 dias antes dos sintomas aparecerem — usando temperatura e HRV juntos.</p><div class="a-meta"><span>8 min</span></div><span class="a-soon">Em breve</span></div></a>
+
+    <a href="#" class="artigo-item cat-combinada" data-cat="combinada"><div class="a-num">43</div><div class="a-body"><p class="a-cat">Dados Combinados</p><h3 class="a-title">VO₂ caindo ao longo do tempo: quando é alerta</h3><p class="a-excerpt">Queda progressiva no VO₂ estimado pode indicar descondicionamento, doença ou problema cardiovascular. Como interpretar a tendência.</p><div class="a-meta"><span>7 min</span></div><span class="a-soon">Em breve</span></div></a>
+
+    <a href="#" class="artigo-item cat-combinada" data-cat="combinada"><div class="a-num">44</div><div class="a-body"><p class="a-cat">Dados Combinados</p><h3 class="a-title">HRV muito alto: sempre é boa notícia?</h3><p class="a-excerpt">HRV elevado geralmente é positivo — mas nem sempre. Quando valores muito acima da sua linha de base merecem atenção.</p><div class="a-meta"><span>6 min</span></div><span class="a-soon">Em breve</span></div></a>
+
+    <a href="#" class="artigo-item cat-combinada" data-cat="combinada"><div class="a-num">45</div><div class="a-body"><p class="a-cat">Dados Combinados</p><h3 class="a-title">Boa performance com dados ruins: o que fazer</h3><p class="a-excerpt">Você treinou bem mas HRV caiu, sono piorou e RHR subiu. Como interpretar esse paradoxo e o que ajustar.</p><div class="a-meta"><span>7 min</span></div><span class="a-soon">Em breve</span></div></a>
+
+    <a href="#" class="artigo-item cat-combinada" data-cat="combinada"><div class="a-num">46</div><div class="a-body"><p class="a-cat">Dados Combinados</p><h3 class="a-title">Cruzamento de dados para decisão diária</h3><p class="a-excerpt">Um framework simples para usar HRV, sono, temperatura e RHR juntos para decidir intensidade de treino e ritmo do dia.</p><div class="a-meta"><span>9 min</span></div><span class="a-soon">Em breve</span></div></a>
+
+    <a href="#" class="artigo-item cat-combinada" data-cat="combinada"><div class="a-num">47</div><div class="a-body"><p class="a-cat">Dados Combinados</p><h3 class="a-title">Erros comuns na interpretação de wearables</h3><p class="a-excerpt">Os equívocos mais frequentes que vejo nos meus pacientes — e como evitar conclusões erradas a partir de dados corretos.</p><div class="a-meta"><span>8 min</span></div><span class="a-soon">Em breve</span></div></a>
+
+    <!-- APLICAÇÃO PRÁTICA -->
+    <a href="#" class="artigo-item cat-pratica" data-cat="pratica"><div class="a-num">48</div><div class="a-body"><p class="a-cat">Aplicação Prática</p><h3 class="a-title">Treinar ou descansar hoje? O protocolo que uso</h3><p class="a-excerpt">Como tomo essa decisão todas as manhãs usando dados do Oura e Garmin — e o critério médico por trás de cada escolha.</p><div class="a-meta"><span>6 min</span></div><span class="a-soon">Em breve</span></div></a>
+
+    <a href="#" class="artigo-item cat-pratica" data-cat="pratica"><div class="a-num">49</div><div class="a-body"><p class="a-cat">Aplicação Prática</p><h3 class="a-title">Como ajustar a intensidade do treino com HRV</h3><p class="a-excerpt">HRV-guided training na prática: dia de força, zona 2, recuperação ativa ou descanso total. O critério para cada um.</p><div class="a-meta"><span>8 min</span></div><span class="a-soon">Em breve</span></div></a>
+
+    <a href="#" class="artigo-item cat-pratica" data-cat="pratica"><div class="a-num">50</div><div class="a-body"><p class="a-cat">Aplicação Prática</p><h3 class="a-title">Quando interromper o exercício — e não ignorar</h3><p class="a-excerpt">Sinais durante o treino que nunca devem ser ignorados, especialmente em quem tem comorbidades. Com ou sem wearable.</p><div class="a-meta"><span>7 min</span></div><span class="a-soon">Em breve</span></div></a>
+
+    <a href="#" class="artigo-item cat-pratica" data-cat="pratica"><div class="a-num">51</div><div class="a-body"><p class="a-cat">Aplicação Prática</p><h3 class="a-title">Como identificar overtraining pelos dados</h3><p class="a-excerpt">Overtraining se instala silenciosamente. Os padrões que aparecem no wearable semanas antes de você perceber que passou do limite.</p><div class="a-meta"><span>8 min</span></div><span class="a-soon">Em breve</span></div></a>
+
+    <a href="#" class="artigo-item cat-pratica" data-cat="pratica"><div class="a-num">52</div><div class="a-body"><p class="a-cat">Aplicação Prática</p><h3 class="a-title">O que fazer com piora contínua dos dados</h3><p class="a-excerpt">HRV caindo, sono piorando, RHR subindo há semanas. Um protocolo de investigação e ajuste — e quando procurar o médico.</p><div class="a-meta"><span>9 min</span></div><span class="a-soon">Em breve</span></div></a>
+
+    <a href="#" class="artigo-item cat-pratica" data-cat="pratica"><div class="a-num">53</div><div class="a-body"><p class="a-cat">Aplicação Prática</p><h3 class="a-title">Como criar sua linha de base pessoal</h3><p class="a-excerpt">Sem sua linha de base, qualquer dado é inútil. Como estabelecer seus valores de referência em 30 dias — e por que isso muda tudo.</p><div class="a-meta"><span>7 min</span></div><span class="a-soon">Em breve</span></div></a>
+
+  </div>
+  <div class="no-results" id="no-results" style="display:none;">Nenhum artigo encontrado nessa categoria ainda.</div>
+</div>
+
+<div class="section-sep"></div>
+
+<!-- VÍDEOS -->
+<section class="videos-bg" id="videos">
+  <div class="videos-section">
+    <div class="section-header">
+      <div>
+        <p class="section-eyebrow">02 · Audiovisual</p>
+        <h2 class="section-title">Série:<br><em>Interpretando seu Relógio</em></h2>
+      </div>
+      <span class="section-count">6 episódios · Em breve</span>
+    </div>
+
+    <!-- Banner da série -->
+    <div class="serie-banner">
+      <span class="serie-badge">SÉRIE EXCLUSIVA</span>
+      <div class="serie-info">
+        <div class="serie-title">Interpretando seu Relógio</div>
+        <div class="serie-desc">Cada episódio desvenda uma métrica do wearable — o que ela significa, como interpretar e como usar para melhorar sua saúde.</div>
+        <div class="serie-eps">
+          <span class="ep-chip">Ep.1: HRV</span>
+          <span class="ep-chip">Ep.2: RHR</span>
+          <span class="ep-chip">Ep.3: Sono</span>
+          <span class="ep-chip">Ep.4: VO₂</span>
+          <span class="ep-chip">Ep.5: Temperatura</span>
+          <span class="ep-chip">Ep.6: Recovery</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="videos-grid">
+      <a href="#" class="video-card">
+        <div class="video-thumb" style="background:linear-gradient(135deg,#1B3A5A,#0D2040);">
+          <span class="video-ep">Ep. 1</span>
+          <div class="video-play"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M6 4l14 8-14 8V4z" fill="#D4A847"/></svg></div>
+          <span class="v-soon">Em breve</span>
+          <span class="video-dur">~15 min</span>
+        </div>
+        <div class="video-body"><p class="v-serie">Interpretando seu Relógio</p><p class="v-title">HRV: o que seu coração está te dizendo</p><p class="v-meta">Dr. Bruno Biluca · Em breve</p></div>
+      </a>
+      <a href="#" class="video-card">
+        <div class="video-thumb" style="background:linear-gradient(135deg,#1B3050,#0D1A30);">
+          <span class="video-ep">Ep. 2</span>
+          <div class="video-play"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M6 4l14 8-14 8V4z" fill="#D4A847"/></svg></div>
+          <span class="v-soon">Em breve</span>
+          <span class="video-dur">~12 min</span>
+        </div>
+        <div class="video-body"><p class="v-serie">Interpretando seu Relógio</p><p class="v-title">RHR: frequência cardíaca de repouso na prática</p><p class="v-meta">Dr. Bruno Biluca · Em breve</p></div>
+      </a>
+      <a href="#" class="video-card">
+        <div class="video-thumb" style="background:linear-gradient(135deg,#2A1A3A,#1A0A2A);">
+          <span class="video-ep">Ep. 3</span>
+          <div class="video-play"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M6 4l14 8-14 8V4z" fill="#D4A847"/></svg></div>
+          <span class="v-soon">Em breve</span>
+          <span class="video-dur">~18 min</span>
+        </div>
+        <div class="video-body"><p class="v-serie">Interpretando seu Relógio</p><p class="v-title">Sono: o que o wearable realmente mede</p><p class="v-meta">Dr. Bruno Biluca · Em breve</p></div>
+      </a>
+      <a href="#" class="video-card">
+        <div class="video-thumb" style="background:linear-gradient(135deg,#2A3A20,#1A2A14);">
+          <span class="video-ep">Ep. 4</span>
+          <div class="video-play"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M6 4l14 8-14 8V4z" fill="#D4A847"/></svg></div>
+          <span class="v-soon">Em breve</span>
+          <span class="video-dur">~14 min</span>
+        </div>
+        <div class="video-body"><p class="v-serie">Interpretando seu Relógio</p><p class="v-title">VO₂ máximo: o que esse número diz sobre você</p><p class="v-meta">Dr. Bruno Biluca · Em breve</p></div>
+      </a>
+      <a href="#" class="video-card">
+        <div class="video-thumb" style="background:linear-gradient(135deg,#3A2A1A,#2A1A0A);">
+          <span class="video-ep">Ep. 5</span>
+          <div class="video-play"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M6 4l14 8-14 8V4z" fill="#D4A847"/></svg></div>
+          <span class="v-soon">Em breve</span>
+          <span class="video-dur">~10 min</span>
+        </div>
+        <div class="video-body"><p class="v-serie">Interpretando seu Relógio</p><p class="v-title">Temperatura corporal noturna: o sensor que poucos usam</p><p class="v-meta">Dr. Bruno Biluca · Em breve</p></div>
+      </a>
+      <a href="#" class="video-card">
+        <div class="video-thumb" style="background:linear-gradient(135deg,#1A3A2A,#0A2A1A);">
+          <span class="video-ep">Ep. 6</span>
+          <div class="video-play"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M6 4l14 8-14 8V4z" fill="#D4A847"/></svg></div>
+          <span class="v-soon">Em breve</span>
+          <span class="video-dur">~13 min</span>
+        </div>
+        <div class="video-body"><p class="v-serie">Interpretando seu Relógio</p><p class="v-title">Recovery Score: ouvir ou ignorar?</p><p class="v-meta">Dr. Bruno Biluca · Em breve</p></div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<div class="section-sep"></div>
+
+<!-- GALERIA -->
+<div class="galeria-section" id="galeria">
+  <div class="section-header">
+    <div>
+      <p class="section-eyebrow">03 · Galeria</p>
+      <h2 class="section-title">Bastidores &<br><em>momentos reais</em></h2>
+    </div>
+    <span class="section-count">Fotos · Em breve</span>
+  </div>
+  <div class="galeria-grid">
+    <div class="gal-item"><div class="gal-ph" style="background:linear-gradient(135deg,#2A3A20,#1A2A14);height:100%;"><svg width="32" height="32" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="2" stroke="rgba(212,168,71,0.22)" stroke-width="1"/><circle cx="8.5" cy="8.5" r="1.5" stroke="rgba(212,168,71,0.22)" stroke-width="0.8"/><path d="M21 15l-5-5L5 21" stroke="rgba(212,168,71,0.22)" stroke-width="1" stroke-linecap="round"/></svg><span style="font-family:'Cinzel',serif;font-size:9px;color:rgba(212,168,71,0.28);letter-spacing:2px;">Em breve</span></div><div class="gal-ov"><svg class="gal-exp" width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7" stroke="#D4A847" stroke-width="1.5" stroke-linecap="round"/></svg></div><span class="gal-lbl">Treino</span></div>
+    <div class="gal-item"><div class="gal-ph" style="background:linear-gradient(135deg,#1B3A5A,#0D2040);height:100%;"><svg width="28" height="28" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="2" stroke="rgba(212,168,71,0.22)" stroke-width="1"/><circle cx="8.5" cy="8.5" r="1.5" stroke="rgba(212,168,71,0.22)" stroke-width="0.8"/><path d="M21 15l-5-5L5 21" stroke="rgba(212,168,71,0.22)" stroke-width="1" stroke-linecap="round"/></svg></div><div class="gal-ov"><svg class="gal-exp" width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7" stroke="#D4A847" stroke-width="1.5" stroke-linecap="round"/></svg></div><span class="gal-lbl">Clínica</span></div>
+    <div class="gal-item"><div class="gal-ph" style="background:linear-gradient(135deg,#3A2A1A,#2A1A0A);height:100%;"><svg width="28" height="28" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="2" stroke="rgba(212,168,71,0.22)" stroke-width="1"/><circle cx="8.5" cy="8.5" r="1.5" stroke="rgba(212,168,71,0.22)" stroke-width="0.8"/><path d="M21 15l-5-5L5 21" stroke="rgba(212,168,71,0.22)" stroke-width="1" stroke-linecap="round"/></svg></div><div class="gal-ov"><svg class="gal-exp" width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7" stroke="#D4A847" stroke-width="1.5" stroke-linecap="round"/></svg></div><span class="gal-lbl">Provas</span></div>
+    <div class="gal-item"><div class="gal-ph" style="background:linear-gradient(135deg,#2A1A3A,#1A0A2A);height:100%;"><svg width="28" height="28" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="2" stroke="rgba(212,168,71,0.22)" stroke-width="1"/><circle cx="8.5" cy="8.5" r="1.5" stroke="rgba(212,168,71,0.22)" stroke-width="0.8"/><path d="M21 15l-5-5L5 21" stroke="rgba(212,168,71,0.22)" stroke-width="1" stroke-linecap="round"/></svg></div><div class="gal-ov"><svg class="gal-exp" width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7" stroke="#D4A847" stroke-width="1.5" stroke-linecap="round"/></svg></div><span class="gal-lbl">Bastidores</span></div>
+    <div class="gal-item"><div class="gal-ph" style="background:linear-gradient(135deg,#1B2A4A,#243357);height:100%;"><svg width="28" height="28" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="2" stroke="rgba(212,168,71,0.22)" stroke-width="1"/><circle cx="8.5" cy="8.5" r="1.5" stroke="rgba(212,168,71,0.22)" stroke-width="0.8"/><path d="M21 15l-5-5L5 21" stroke="rgba(212,168,71,0.22)" stroke-width="1" stroke-linecap="round"/></svg></div><div class="gal-ov"><svg class="gal-exp" width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7" stroke="#D4A847" stroke-width="1.5" stroke-linecap="round"/></svg></div><span class="gal-lbl">Eventos</span></div>
+  </div>
+</div>
+
+<!-- NEWSLETTER -->
+<section class="newsletter">
+  <p class="nl-eyebrow">Newsletter</p>
+  <h2 class="nl-title">Seja o primeiro a<br><em>receber cada artigo</em></h2>
+  <p class="nl-sub">Conteúdo médico sério, linguagem acessível — direto no seu e-mail</p>
+  <div class="nl-form" id="nl-form">
+    <input type="email" class="nl-input" placeholder="seu@email.com" id="nl-email"/>
+    <button class="nl-btn" onclick="assinar()">Assinar</button>
+  </div>
+  <p id="nl-ok" style="display:none;margin-top:16px;font-family:'Cormorant Garamond',serif;font-size:17px;font-style:italic;color:#5DCB8A;">✓ Perfeito! Você será o primeiro a saber.</p>
+</section>
+
+<footer>
+  <div class="footer-brand">DR. BRUNO BILUCA</div>
+  <p class="footer-copy">© 2026 APEX · Medicina · Movimento · Propósito</p>
+</footer>
+
+<script>
+const TODOS = document.querySelectorAll('.artigo-item');
+const DESTAQUE = document.getElementById('artigo-destaque');
+const NO_RESULTS = document.getElementById('no-results');
+
+function filtrar(cat, btn) {
+  /* Atualiza botão ativo */
+  document.querySelectorAll('.filtro-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+
+  let visiveis = 0;
+
+  TODOS.forEach(item => {
+    const itemCat = item.dataset.cat;
+    const mostrar = cat === 'todos' || itemCat === cat;
+    item.style.display = mostrar ? 'flex' : 'none';
+    if(mostrar) visiveis++;
+  });
+
+  /* Destaque: oculta se filtro específico não é wearables */
+  if(cat === 'todos' || cat === 'wearables') {
+    DESTAQUE.style.display = '';
+  } else {
+    DESTAQUE.style.display = 'none';
+  }
+
+  /* Sem resultados */
+  NO_RESULTS.style.display = visiveis === 0 ? 'block' : 'none';
+
+  /* Contador */
+  const total = cat === 'todos' ? 54 : visiveis + (cat === 'wearables' ? 1 : 0);
+  document.getElementById('artigos-count').textContent = total + ' artigos · Em breve';
+
+  /* Scroll suave */
+  document.getElementById('artigos').scrollIntoView({behavior:'smooth', block:'start'});
+}
+
+function assinar() {
+  const email = document.getElementById('nl-email').value.trim();
+  if(!email || !email.includes('@')) {
+    document.getElementById('nl-email').style.borderColor = '#F07070';
+    return;
+  }
+  document.getElementById('nl-form').style.display = 'none';
+  document.getElementById('nl-ok').style.display = 'block';
+}
+</script>
+</body>
+</html>
