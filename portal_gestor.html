@@ -562,7 +562,7 @@ body { font-family:'Inter',sans-serif; background:var(--navy); color:var(--white
 
       <button class="btn-entrar" onclick="login()">Entrar</button>
       <div class="login-err" id="login-err"></div>
-      <a href="apex_home.html" class="login-back">← Voltar para o início</a>
+      <a href="index.html" class="login-back">← Voltar para o início</a>
     </div>
 
   </div>
@@ -576,7 +576,7 @@ body { font-family:'Inter',sans-serif; background:var(--navy); color:var(--white
     <div class="topbar-sep"></div>
     <div class="topbar-portal">Portal Gestor</div>
     <div class="topbar-space"></div>
-    <a href="index.html" style="font-family:'Cinzel',serif;font-size:10px;letter-spacing:2px;color:rgba(212,168,71,0.4);text-decoration:none;transition:color .2s;margin-right:16px;" onmouseover="this.style.color='#D4A847'" onmouseout="this.style.color='rgba(212,168,71,0.4)'">← Início</a>
+    <a href="index.html" target="_top" style="font-family:'Cinzel',serif;font-size:10px;letter-spacing:2px;color:rgba(212,168,71,0.4);text-decoration:none;transition:color .2s;margin-right:16px;" onmouseover="this.style.color='#D4A847'" onmouseout="this.style.color='rgba(212,168,71,0.4)'">← Início</a>
     <div class="topbar-user">Bem-vindo, <span id="user-name">—</span></div>
     <button class="btn-logout" onclick="logout()">Sair</button>
   </div>
@@ -645,11 +645,11 @@ body { font-family:'Inter',sans-serif; background:var(--navy); color:var(--white
       </div>
 
       <!-- iframe Dashboard -->
-      <iframe id="view-dashboard" src="dashboard_fenix_C-Espacoso.html"
+      <iframe id="view-dashboard" src=""
         style="display:none;width:100%;height:100%;border:none;"></iframe>
 
       <!-- iframe Admin -->
-      <iframe id="view-admin" src="fenix_admin.html"
+      <iframe id="view-admin" src=""
         style="display:none;width:100%;height:100%;border:none;"></iframe>
 
     </div>
@@ -746,6 +746,11 @@ async function carregarStatus(token) {
 }
 
 /* ── NAVEGAÇÃO ENTRE MÓDULOS ── */
+const MODULO_SRCS = {
+  dashboard: 'dashboard_fenix_C-Espacoso.html',
+  admin: 'fenix_admin.html'
+};
+
 function abrirModulo(modulo) {
   const views = ['home','dashboard','admin'];
   const btns  = ['btn-home','btn-dashboard','btn-admin'];
@@ -764,7 +769,7 @@ function abrirModulo(modulo) {
   });
 
   const view = document.getElementById('view-'+modulo);
-  if(view) view.style.display = modulo === 'home' ? 'block' : 'block';
+  if(view) view.style.display = 'block';
 
   const btn = document.getElementById('btn-'+modulo);
   if(btn){
@@ -772,10 +777,12 @@ function abrirModulo(modulo) {
     btn.style.color = '#D4A847';
   }
 
-  // iframes ficam block, home fica block com scroll
+  /* Carrega o iframe apenas quando necessário e após login */
   if(modulo !== 'home'){
     const iframe = document.getElementById('view-'+modulo);
-    if(iframe) { iframe.style.display = 'block'; iframe.style.height = '100%'; }
+    if(iframe && !iframe.src) {
+      iframe.src = MODULO_SRCS[modulo];
+    }
   }
 }
 </script>
