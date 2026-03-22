@@ -1,5 +1,4 @@
 export default async function handler(req, res) {
-  // CORS
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
@@ -25,10 +24,14 @@ export default async function handler(req, res) {
     });
 
     const data = await response.json();
+    if(data.error) {
+      res.status(200).json({ text: 'Erro da IA: ' + (data.error.message || JSON.stringify(data.error)) });
+      return;
+    }
     const text = data.content?.[0]?.text || 'Não foi possível gerar a análise.';
     res.status(200).json({ text });
 
   } catch (error) {
-    res.status(500).json({ error: 'Erro ao conectar com a IA.' });
+    res.status(500).json({ error: 'Erro: ' + error.message });
   }
 }
