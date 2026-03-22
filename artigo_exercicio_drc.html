@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Exercício na Doença Renal Crônica — Dr. Bruno Biluca</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#0D1B35;--navy-mid:#1B2A4A;--navy-light:#243357;
+  --gold:#D4A847;--gold-dark:#8B6914;--gold-pale:#E8D5A0;
+  --muted:rgba(232,213,160,0.78);--white:#FFFFFF;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:'Inter',sans-serif;background:var(--navy);color:var(--white);min-height:100vh;}
+
+/* NAV */
+nav{background:rgba(13,27,53,0.97);border-bottom:1px solid rgba(212,168,71,0.12);padding:0 48px;height:58px;display:flex;align-items:center;gap:20px;position:sticky;top:0;z-index:100;backdrop-filter:blur(8px);}
+.nav-logo{font-family:'Cinzel',serif;font-size:14px;font-weight:700;color:var(--gold);letter-spacing:6px;text-decoration:none;}
+.nav-sep{width:1px;height:22px;background:rgba(212,168,71,0.2);}
+.nav-section{font-family:'Cinzel',serif;font-size:12px;letter-spacing:3px;color:var(--muted);text-transform:uppercase;}
+.nav-back{margin-left:auto;font-family:'Cinzel',serif;font-size:11px;letter-spacing:2px;color:rgba(212,168,71,0.4);text-decoration:none;transition:color .2s;}
+.nav-back:hover{color:var(--gold);}
+
+/* HERO DO ARTIGO */
+.artigo-hero{
+  padding:72px 0 0;position:relative;overflow:hidden;
+  border-bottom:1px solid rgba(212,168,71,0.08);
+}
+.artigo-hero-bg{
+  position:absolute;inset:0;
+  background:radial-gradient(ellipse at 80% 30%,rgba(212,168,71,0.07) 0%,transparent 55%),
+              radial-gradient(ellipse at 10% 80%,rgba(36,51,87,0.5) 0%,transparent 50%);
+}
+.artigo-hero-inner{position:relative;z-index:1;max-width:800px;margin:0 auto;padding:0 40px 56px;}
+.artigo-cat-breadcrumb{display:flex;align-items:center;gap:10px;margin-bottom:24px;}
+.breadcrumb-link{font-family:'Cinzel',serif;font-size:10px;letter-spacing:2px;color:rgba(212,168,71,0.5);text-decoration:none;transition:color .2s;}
+.breadcrumb-link:hover{color:var(--gold);}
+.breadcrumb-sep{color:rgba(212,168,71,0.3);font-size:12px;}
+.breadcrumb-current{font-family:'Cinzel',serif;font-size:10px;letter-spacing:2px;color:var(--gold);}
+.artigo-cat-tag{display:inline-block;background:rgba(93,203,138,0.1);border:1px solid rgba(93,203,138,0.25);color:#5DCB8A;font-family:'Cinzel',serif;font-size:9px;letter-spacing:2px;padding:4px 14px;border-radius:20px;margin-bottom:20px;}
+.artigo-titulo{font-family:'Cormorant Garamond',serif;font-size:clamp(32px,5vw,54px);font-weight:300;color:var(--white);line-height:1.1;margin-bottom:16px;}
+.artigo-titulo em{color:var(--gold-pale);font-style:italic;}
+.artigo-subtitulo{font-family:'Cormorant Garamond',serif;font-size:clamp(16px,2vw,22px);font-weight:300;font-style:italic;color:var(--muted);line-height:1.6;margin-bottom:32px;}
+.artigo-meta-bar{display:flex;align-items:center;gap:16px;flex-wrap:wrap;padding-top:24px;border-top:1px solid rgba(212,168,71,0.1);}
+.meta-autor{display:flex;align-items:center;gap:10px;}
+.meta-autor-avatar{width:38px;height:38px;border-radius:50%;background:var(--gold-dark);border:1.5px solid rgba(212,168,71,0.3);display:flex;align-items:center;justify-content:center;font-family:'Cinzel',serif;font-size:12px;color:var(--white);font-weight:700;}
+.meta-autor-name{font-family:'Inter',sans-serif;font-size:13px;font-weight:500;color:var(--white);}
+.meta-autor-title{font-family:'Inter',sans-serif;font-size:11px;color:rgba(232,213,160,0.5);}
+.meta-sep{width:1px;height:32px;background:rgba(212,168,71,0.15);}
+.meta-info{font-family:'Inter',sans-serif;font-size:12px;color:rgba(232,213,160,0.5);}
+.meta-info strong{color:var(--gold-pale);}
+
+/* CONTEÚDO */
+.artigo-body{max-width:800px;margin:0 auto;padding:64px 40px;}
+
+/* Tipografia do artigo */
+.artigo-body p{
+  font-family:'Cormorant Garamond',serif;
+  font-size:19px;font-weight:400;color:rgba(255,255,255,0.88);
+  line-height:1.85;margin-bottom:24px;
+}
+.artigo-body h2{
+  font-family:'Cinzel',serif;font-size:13px;font-weight:600;
+  letter-spacing:3px;color:var(--gold);text-transform:uppercase;
+  margin:52px 0 20px;display:flex;align-items:center;gap:12px;
+}
+.artigo-body h2::after{content:'';flex:1;height:1px;background:rgba(212,168,71,0.15);}
+.artigo-body h3{
+  font-family:'Cormorant Garamond',serif;font-size:24px;font-weight:400;
+  color:var(--white);margin:32px 0 16px;line-height:1.3;
+}
+.artigo-body strong{color:var(--gold-pale);font-weight:600;}
+.artigo-body em{color:var(--gold-pale);font-style:italic;}
+
+/* Quote destacada */
+.artigo-quote{
+  border-left:3px solid var(--gold);
+  padding:20px 28px;margin:36px 0;
+  background:rgba(212,168,71,0.05);border-radius:0 10px 10px 0;
+}
+.artigo-quote p{
+  font-family:'Cormorant Garamond',serif;font-size:22px;font-style:italic;
+  color:var(--gold-pale);line-height:1.6;margin-bottom:8px;
+}
+.artigo-quote cite{font-family:'Cinzel',serif;font-size:10px;letter-spacing:2px;color:rgba(212,168,71,0.5);}
+
+/* Caixa de destaque */
+.artigo-destaque-box{
+  background:var(--navy-mid);border:1px solid rgba(212,168,71,0.15);
+  border-radius:14px;padding:28px 32px;margin:36px 0;
+}
+.artigo-destaque-box h4{font-family:'Cinzel',serif;font-size:11px;letter-spacing:3px;color:var(--gold);text-transform:uppercase;margin-bottom:16px;}
+.artigo-destaque-box ul{list-style:none;display:flex;flex-direction:column;gap:10px;}
+.artigo-destaque-box li{
+  font-family:'Cormorant Garamond',serif;font-size:17px;color:var(--muted);
+  display:flex;align-items:flex-start;gap:12px;line-height:1.6;
+}
+.artigo-destaque-box li::before{content:'→';color:var(--gold);flex-shrink:0;margin-top:2px;}
+
+/* Caixa alerta */
+.artigo-alerta{
+  background:rgba(240,112,112,0.06);border:1px solid rgba(240,112,112,0.2);
+  border-radius:14px;padding:28px 32px;margin:36px 0;
+}
+.artigo-alerta h4{font-family:'Cinzel',serif;font-size:11px;letter-spacing:3px;color:#F07070;text-transform:uppercase;margin-bottom:16px;display:flex;align-items:center;gap:8px;}
+.artigo-alerta ul{list-style:none;display:flex;flex-direction:column;gap:10px;}
+.artigo-alerta li{font-family:'Cormorant Garamond',serif;font-size:17px;color:rgba(255,255,255,0.75);display:flex;align-items:flex-start;gap:12px;line-height:1.6;}
+.artigo-alerta li::before{content:'⚠';flex-shrink:0;}
+
+/* Caixa resumo */
+.artigo-resumo{
+  background:linear-gradient(160deg,var(--navy-mid) 0%,#152640 100%);
+  border:1px solid rgba(212,168,71,0.15);border-radius:14px;
+  padding:32px 36px;margin:48px 0;
+}
+.artigo-resumo h4{font-family:'Cinzel',serif;font-size:11px;letter-spacing:3px;color:var(--gold);text-transform:uppercase;margin-bottom:20px;}
+.artigo-resumo ul{list-style:none;display:flex;flex-direction:column;gap:12px;}
+.artigo-resumo li{font-family:'Cormorant Garamond',serif;font-size:17px;color:var(--muted);display:flex;align-items:flex-start;gap:12px;line-height:1.6;}
+.artigo-resumo li::before{content:'✓';color:#5DCB8A;font-size:14px;flex-shrink:0;margin-top:3px;}
+
+/* Referências */
+.artigo-refs{margin-top:52px;padding-top:32px;border-top:1px solid rgba(212,168,71,0.1);}
+.artigo-refs h4{font-family:'Cinzel',serif;font-size:10px;letter-spacing:3px;color:rgba(212,168,71,0.45);text-transform:uppercase;margin-bottom:16px;}
+.artigo-refs ol{list-style:decimal;padding-left:20px;display:flex;flex-direction:column;gap:8px;}
+.artigo-refs li{font-family:'Inter',sans-serif;font-size:12px;color:rgba(232,213,160,0.4);line-height:1.6;}
+
+/* Vídeo embed */
+.video-embed{
+  margin:40px 0;border-radius:14px;overflow:hidden;
+  border:1px solid rgba(212,168,71,0.15);
+  background:var(--navy-mid);
+}
+.video-embed-label{
+  padding:14px 20px;display:flex;align-items:center;gap:10px;
+  border-bottom:1px solid rgba(212,168,71,0.1);
+}
+.video-embed-label span{font-family:'Cinzel',serif;font-size:10px;letter-spacing:2px;color:var(--gold);}
+.video-embed iframe{width:100%;aspect-ratio:16/9;display:block;border:none;}
+
+/* Compartilhar */
+.artigo-share{
+  display:flex;align-items:center;gap:12px;margin-top:48px;
+  padding-top:32px;border-top:1px solid rgba(212,168,71,0.1);flex-wrap:wrap;
+}
+.share-label{font-family:'Cinzel',serif;font-size:10px;letter-spacing:3px;color:rgba(212,168,71,0.4);text-transform:uppercase;}
+.share-btn{font-family:'Cinzel',serif;font-size:10px;letter-spacing:2px;color:var(--gold);border:1px solid rgba(212,168,71,0.25);padding:8px 16px;border-radius:20px;text-decoration:none;transition:all .3s;cursor:pointer;background:transparent;}
+.share-btn:hover{background:rgba(212,168,71,0.1);border-color:rgba(212,168,71,0.5);}
+
+/* Navegação entre artigos */
+.artigo-nav{
+  max-width:800px;margin:0 auto;padding:0 40px 64px;
+  display:flex;justify-content:space-between;gap:16px;
+  border-top:1px solid rgba(212,168,71,0.08);
+  padding-top:40px;
+}
+.artigo-nav-link{
+  font-family:'Cinzel',serif;font-size:10px;letter-spacing:2px;
+  color:var(--gold);text-decoration:none;display:flex;align-items:center;gap:8px;
+  transition:gap .3s;
+}
+.artigo-nav-link.prev:hover{gap:4px;}
+.artigo-nav-link.next:hover{gap:12px;}
+.artigo-nav-link span{font-family:'Cormorant Garamond',serif;font-size:15px;font-style:italic;color:var(--muted);display:block;margin-top:4px;font-weight:400;}
+
+@media(max-width:700px){
+  nav{padding:0 20px;}
+  .artigo-hero-inner,.artigo-body,.artigo-nav{padding-left:24px;padding-right:24px;}
+  .artigo-body p{font-size:17px;}
+  .artigo-titulo{font-size:28px;}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">APEX</a>
+  <div class="nav-sep"></div>
+  <span class="nav-section">Saúde & Performance</span>
+  <a href="portal_saude_performance.html" class="nav-back">← Voltar aos artigos</a>
+</nav>
+
+<!-- HERO DO ARTIGO -->
+<div class="artigo-hero">
+  <div class="artigo-hero-bg"></div>
+  <div class="artigo-hero-inner">
+
+    <div class="artigo-cat-breadcrumb">
+      <a href="portal_saude_performance.html" class="breadcrumb-link">Saúde & Performance</a>
+      <span class="breadcrumb-sep">›</span>
+      <a href="portal_saude_performance.html" class="breadcrumb-link">Atividade Física</a>
+      <span class="breadcrumb-sep">›</span>
+      <span class="breadcrumb-current">Artigo</span>
+    </div>
+
+    <span class="artigo-cat-tag">Atividade Física · Doença Renal Crônica</span>
+
+    <h1 class="artigo-titulo">
+      Exercício na doença renal crônica:<br>
+      <em>o que André me ensinou</em>
+    </h1>
+
+    <p class="artigo-subtitulo">
+      André tinha 41 anos, fazia diálise três vezes por semana e completou 42 quilômetros ao lado do próprio médico na Maratona de São Paulo. Esta é a história — e o protocolo por trás dela.
+    </p>
+
+    <div class="artigo-meta-bar">
+      <div class="meta-autor">
+        <div class="meta-autor-avatar">BB</div>
+        <div>
+          <div class="meta-autor-name">Dr. Bruno Biluca</div>
+          <div class="meta-autor-title">Nefrologista — CRM ativo</div>
+        </div>
+      </div>
+      <div class="meta-sep"></div>
+      <div class="meta-info"><strong>Atividade Física & DRC</strong></div>
+      <div class="meta-sep"></div>
+      <div class="meta-info">⏱ 12 min de leitura</div>
+      <div class="meta-sep"></div>
+      <div class="meta-info">Maratona de São Paulo</div>
+    </div>
+
+  </div>
+</div>
+
+<!-- CORPO DO ARTIGO -->
+<div class="artigo-body">
+
+  <!-- DOCUMENTÁRIO -->
+  <div class="video-embed">
+    <div class="video-embed-label">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><rect x="2" y="5" width="20" height="14" rx="3" stroke="#D4A847" stroke-width="1.5"/><path d="M10 9l5 3-5 3V9z" fill="#D4A847" opacity="0.8"/></svg>
+      <span>Documentário · Sobre Correr</span>
+    </div>
+    <iframe
+      src="https://www.youtube.com/embed/SfyPJ4ez04U"
+      title="Sobre Correr — Documentário"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+      allowfullscreen>
+    </iframe>
+  </div>
+
+  <!-- 1. INTRODUÇÃO -->
+  <h2>A história</h2>
+
+  <p>
+    Era pouco antes das seis da manhã quando André e eu cruzamos a linha de largada da Maratona de São Paulo juntos. Ele tinha 41 anos. Fazia hemodiálise três vezes por semana — segunda, quarta e sexta. Naquela manhã de domingo, estava de pé, no asfalto, pronto para correr 42 quilômetros.
+  </p>
+
+  <p>
+    Quando André chegou ao meu consultório pela primeira vez, o quadro era de doença renal crônica avançada, já em programa de diálise. Como todo nefrologista, cuidei dos exames, dos acessos, da pressão, dos níveis de fósforo e potássio. Mas em algum momento da consulta, ele mencionou, quase de passagem: <em>"Doutor, eu corria antes de ficar doente. Acho que nunca mais vou poder."</em>
+  </p>
+
+  <p>
+    Essa frase ficou comigo. E foi ela que mudou tudo.
+  </p>
+
+  <div class="artigo-quote">
+    <p>"Quando um paciente diz que nunca mais vai poder fazer algo que amava, isso não é uma declaração médica — é um pedido de ajuda disfarçado."</p>
+    <cite>— Dr. Bruno Biluca</cite>
+  </div>
+
+  <!-- 2. POR QUE ISSO IMPORTA -->
+  <h2>Por que isso importa</h2>
+
+  <p>
+    A doença renal crônica afeta mais de <strong>850 milhões de pessoas no mundo</strong>. No Brasil, estima-se que mais de 10 milhões de pessoas convivam com algum grau de comprometimento da função renal. Entre os pacientes em diálise — o estágio mais avançado da doença — existe uma crença amplamente difundida, inclusive entre profissionais de saúde: <em>que exercício físico é contraindicado ou, no mínimo, perigoso.</em>
+  </p>
+
+  <p>
+    Essa crença está errada. Não apenas errada — ela é prejudicial. O sedentarismo em pacientes com DRC acelera a perda de massa muscular, piora o controle cardiovascular, aumenta a mortalidade e reduz drasticamente a qualidade de vida. A ciência, nos últimos 15 anos, tem sido contundente nesse ponto.
+  </p>
+
+  <p>
+    O caso de André não é um milagre. É a consequência de um protocolo cuidadoso, construído com paciência, adaptado à realidade de quem faz diálise — e fundamentado em evidências sólidas.
+  </p>
+
+  <!-- 3. EXPLICAÇÃO CIENTÍFICA -->
+  <h2>O que acontece com os músculos na DRC</h2>
+
+  <p>
+    Para entender por que o exercício é tão importante — e também por que precisa ser cuidadosamente prescrito — é preciso entender o que a doença renal faz ao corpo.
+  </p>
+
+  <p>
+    Os rins doentes não eliminam adequadamente as toxinas urêmicas que circulam no sangue. Essas substâncias têm um efeito direto sobre o músculo esquelético: inibem a síntese proteica, aumentam a degradação muscular e promovem inflamação crônica. O resultado é a <strong>sarcopenia urêmica</strong> — perda progressiva de massa e força muscular que acomete a grande maioria dos pacientes em diálise.
+  </p>
+
+  <p>
+    Some-se a isso a anemia quase universal nesses pacientes, que reduz a capacidade de transporte de oxigênio; a disfunção autonômica, que altera a resposta cardíaca ao esforço; e o próprio processo de diálise, que é em si metabolicamente exigente. Parece uma lista de contraindicações ao exercício. Na prática, é exatamente o oposto: <strong>é uma lista de razões pelas quais o exercício bem prescrito se torna ainda mais necessário.</strong>
+  </p>
+
+  <!-- 4. EVIDÊNCIA -->
+  <h2>O que diz a evidência</h2>
+
+  <p>
+    A literatura científica sobre exercício em DRC cresceu enormemente na última década. Alguns marcos importantes:
+  </p>
+
+  <div class="artigo-destaque-box">
+    <h4>Evidência científica selecionada</h4>
+    <ul>
+      <li>Uma revisão sistemática publicada no <em>American Journal of Kidney Diseases</em> com mais de 30 ensaios clínicos demonstrou que exercício aeróbico regular em pacientes dialíticos melhora a capacidade funcional, reduz a pressão arterial e melhora parâmetros de qualidade de vida.</li>
+      <li>Estudos com exercício intradialítico — ou seja, realizado durante a própria sessão de diálise — mostraram melhora na eficiência da depuração de toxinas urêmicas, o que significa que o paciente que se exercita pode estar "dializando melhor".</li>
+      <li>As diretrizes da <em>Kidney Disease Improving Global Outcomes (KDIGO)</em> de 2022 passaram a recomendar explicitamente atividade física regular para todos os pacientes com DRC, incluindo aqueles em diálise.</li>
+      <li>Uma meta-análise de 2020 no <em>Journal of the American Society of Nephrology</em> concluiu que pacientes com DRC que praticam exercício regular têm mortalidade cardiovascular significativamente menor do que os sedentários.</li>
+    </ul>
+  </div>
+
+  <!-- 5. EXPERIÊNCIA PESSOAL -->
+  <h2>O protocolo que construímos</h2>
+
+  <p>
+    Com André, não começamos pela maratona. Começamos por ele conseguir subir um lance de escada sem se cantar. Literalmente.
+  </p>
+
+  <p>
+    O ponto de partida foi uma avaliação funcional completa: teste ergométrico adaptado, avaliação da composição corporal por bioimpedância, força de preensão manual e capacidade aeróbica estimada. Os números eram compatíveis com o esperado para alguém em diálise há alguns anos: abaixo do que ele — e qualquer pessoa — merecia.
+  </p>
+
+  <p>
+    Construímos um protocolo em etapas:
+  </p>
+
+  <div class="artigo-destaque-box">
+    <h4>O protocolo — etapas da progressão</h4>
+    <ul>
+      <li><strong>Fase 1 — Base funcional (3 meses):</strong> caminhadas leves nos dias sem diálise, alongamento e exercícios de fortalecimento de baixa intensidade. Foco em não ultrapassar 60% da frequência cardíaca máxima estimada.</li>
+      <li><strong>Fase 2 — Construção aeróbica (4 meses):</strong> corrida leve intercalada com caminhada, monitoramento contínuo de FC, pressão pré e pós-exercício, e marcadores laboratoriais a cada 4-6 semanas.</li>
+      <li><strong>Fase 3 — Volume progressivo (6 meses):</strong> aumento gradual da distância semanal, sempre respeitando sinais de alerta e com supervisão próxima. Inclusão de treinos longos em finais de semana.</li>
+      <li><strong>Fase 4 — Específica para maratona (4 meses):</strong> preparação estruturada com pico de 32-35km de treino longo, estratégia de hidratação adaptada à restrição hídrica do dialítico, e ajuste da sessão de diálise para o dia anterior à prova.</li>
+    </ul>
+  </div>
+
+  <p>
+    Um detalhe crítico: André sempre corria nos dias imediatamente após a diálise — quando o organismo estava com o menor acúmulo de toxinas e fluidos. A sessão de diálise da véspera da maratona foi estrategicamente mais longa, para garantir a melhor condição metabólica possível no dia da prova.
+  </p>
+
+  <p>
+    Monitorei pessoalmente cada fase. Usamos o Garmin para acompanhar frequência cardíaca, pace e variabilidade. Qualquer sinal de alarme — pressão muito elevada, frequência cardíaca desproporcional ao esforço, queda de performance inexplicada — era motivo para revisão imediata do protocolo.
+  </p>
+
+  <!-- DOCUMENTÁRIO DESTAQUE TEXTUAL -->
+  <div class="artigo-quote">
+    <p>"Não corri ao lado de André para provar que era possível. Corri porque queria que ele soubesse que não estava sozinho. Que seu médico acreditava nele mais do que qualquer exame de laboratório poderia medir."</p>
+    <cite>— Dr. Bruno Biluca · Maratona de São Paulo</cite>
+  </div>
+
+  <!-- 6. A LINHA DE CHEGADA -->
+  <h2>42 quilômetros depois</h2>
+
+  <p>
+    André cruzou a linha de chegada da Maratona de São Paulo de pé, com o braço erguido e os olhos cheios de lágrima. Eu estava ao lado dele. Não vou tentar descrever o que senti naquele momento — qualquer palavra pareceria insuficiente.
+  </p>
+
+  <p>
+    O que posso dizer é que aquela linha de chegada não representava apenas 42 quilômetros percorridos. Representava quase dois anos de treino, dezenas de sessões de diálise, exames de sangue, ajustes de protocolo, dias bons e dias em que o corpo não cooperava. Representava a recusa de André de aceitar que a doença renal crônica era o fim de algo que ele amava.
+  </p>
+
+  <p>
+    Toda essa história foi documentada. O filme <em>"Sobre Correr"</em> — disponível no YouTube — registrou essa jornada de uma forma que nenhum artigo médico conseguiria. Se você ainda não assistiu, vale cada minuto.
+  </p>
+
+  <!-- 7. APLICAÇÃO PRÁTICA -->
+  <h2>O que você pode fazer</h2>
+
+  <p>
+    A história de André é extraordinária — mas os princípios que a tornaram possível se aplicam a qualquer paciente com DRC, em qualquer estágio. Você não precisa querer correr uma maratona. Você precisa querer se mover.
+  </p>
+
+  <div class="artigo-destaque-box">
+    <h4>Princípios práticos para exercício com DRC</h4>
+    <ul>
+      <li><strong>Sempre comece com avaliação médica:</strong> teste ergométrico adaptado, avaliação da composição corporal e liberação do nefrologista são inegociáveis antes de qualquer programa de exercício.</li>
+      <li><strong>Prefira os dias pós-diálise:</strong> o organismo está em melhor condição metabólica nas 24-48h após a sessão. Evite exercício intenso nos dias de diálise ou imediatamente antes.</li>
+      <li><strong>Controle a frequência cardíaca:</strong> para a maioria dos pacientes dialíticos, trabalhar entre 50-70% da FC máxima é seguro e eficaz. Um wearable como Garmin ou Apple Watch facilita muito esse monitoramento.</li>
+      <li><strong>Hidratação é complexa:</strong> pacientes com restrição hídrica precisam de estratégia específica. Não copie protocolos de hidratação de atletas saudáveis — converse com seu médico.</li>
+      <li><strong>Progresso lento é progresso real:</strong> aumentar 10% do volume semanal por mês é suficiente — e seguro. A pressa é o maior inimigo do dialítico que quer se exercitar.</li>
+      <li><strong>Monitore os marcadores regularmente:</strong> potássio, fósforo, hemoglobina e função cardíaca precisam ser acompanhados durante qualquer programa de exercício em DRC.</li>
+    </ul>
+  </div>
+
+  <!-- 8. ALERTA -->
+  <div class="artigo-alerta">
+    <h4>⚠ Quando interromper e procurar o médico</h4>
+    <ul>
+      <li>Dor ou pressão no peito durante ou após o exercício</li>
+      <li>Falta de ar desproporcional ao esforço realizado</li>
+      <li>Palpitações ou arritmia perceptível durante o treino</li>
+      <li>Pressão arterial acima de 180/110 mmHg antes do exercício</li>
+      <li>Ganho de peso interdialítico muito acima do habitual (retenção de fluidos)</li>
+      <li>Tontura, desmaio ou confusão mental durante o esforço</li>
+      <li>Queda inexplicada de performance por mais de 2 semanas consecutivas</li>
+    </ul>
+  </div>
+
+  <!-- 9. RESUMO -->
+  <div class="artigo-resumo">
+    <h4>Pontos essenciais deste artigo</h4>
+    <ul>
+      <li>Exercício físico é <strong>recomendado</strong> para pacientes com DRC — inclusive em diálise — pelas principais diretrizes internacionais.</li>
+      <li>O sedentarismo em pacientes renais acelera a sarcopenia, piora o controle cardiovascular e aumenta a mortalidade.</li>
+      <li>Um paciente de 41 anos em hemodiálise completou a Maratona de São Paulo com protocolo adequado e acompanhamento médico próximo.</li>
+      <li>O timing é importante: prefira exercitar-se nos dias após a diálise, quando o organismo está em melhor condição metabólica.</li>
+      <li>O uso de wearables (Garmin, Apple Watch) para monitoramento de FC durante o treino é uma ferramenta valiosa para esse perfil de paciente.</li>
+      <li>Progressão lenta, avaliação regular dos marcadores laboratoriais e comunicação contínua com o nefrologista são a base de qualquer protocolo seguro.</li>
+      <li>O limite do paciente renal não é a doença — é a falta de informação e de um médico disposto a acreditar junto com ele.</li>
+    </ul>
+  </div>
+
+  <!-- REFERÊNCIAS -->
+  <div class="artigo-refs">
+    <h4>Referências</h4>
+    <ol>
+      <li>Heiwe S, Jacobson SH. Exercise training for adults with chronic kidney disease. Cochrane Database Syst Rev. 2011.</li>
+      <li>KDIGO 2022 Clinical Practice Guideline for Diabetes Management in Chronic Kidney Disease. Kidney Int. 2022.</li>
+      <li>Clarkson MJ, et al. Exercise for renal transplant recipients: a systematic review. Am J Transplant. 2019.</li>
+      <li>Viana JL, et al. Evidence for anti-inflammatory effects of exercise in CKD. J Am Soc Nephrol. 2014.</li>
+      <li>Johansen KL. Exercise in the end-stage renal disease population. J Am Soc Nephrol. 2007.</li>
+      <li>Documentário "Sobre Correr". YouTube, 2022. Disponível em: youtube.com/watch?v=SfyPJ4ez04U</li>
+    </ol>
+  </div>
+
+  <!-- COMPARTILHAR -->
+  <div class="artigo-share">
+    <span class="share-label">Compartilhar</span>
+    <a href="https://wa.me/?text=Exercício na doença renal crônica — artigo do Dr. Bruno Biluca: https://apex.med.br/artigo_exercicio_drc.html" target="_blank" class="share-btn">WhatsApp</a>
+    <a href="https://www.linkedin.com/sharing/share-offsite/?url=https://apex.med.br/artigo_exercicio_drc.html" target="_blank" class="share-btn">LinkedIn</a>
+    <button class="share-btn" onclick="navigator.clipboard.writeText(window.location.href);this.textContent='Copiado!';setTimeout(()=>this.textContent='Copiar link',2000)">Copiar link</button>
+  </div>
+
+</div>
+
+<!-- NAVEGAÇÃO ENTRE ARTIGOS -->
+<div class="artigo-nav">
+  <a href="portal_saude_performance.html" class="artigo-nav-link prev">
+    ← Voltar
+    <span>Todos os artigos</span>
+  </a>
+  <a href="portal_saude_performance.html" class="artigo-nav-link next">
+    Próximo artigo →
+    <span>Em breve</span>
+  </a>
+</div>
+
+</body>
+</html>

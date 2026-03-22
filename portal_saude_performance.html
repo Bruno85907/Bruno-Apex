@@ -59,13 +59,14 @@ nav{background:rgba(13,27,53,0.97);border-bottom:1px solid rgba(212,168,71,0.12)
 .filtros-wrap{margin-bottom:36px;overflow-x:auto;padding-bottom:4px;}
 .filtros{display:flex;gap:8px;min-width:max-content;}
 .filtro-btn{
-  font-family:'Cinzel',serif;font-size:10px;letter-spacing:2px;
-  color:rgba(232,213,160,0.55);background:transparent;
-  border:1px solid rgba(212,168,71,0.12);border-radius:20px;
-  padding:7px 16px;cursor:pointer;transition:all .25s;white-space:nowrap;
+  font-family:'Cinzel',serif;font-size:12px;letter-spacing:1.5px;
+  color:rgba(232,213,160,0.7);background:rgba(255,255,255,0.03);
+  border:1px solid rgba(212,168,71,0.15);border-radius:24px;
+  padding:10px 20px;cursor:pointer;transition:all .25s;white-space:nowrap;
+  font-weight:500;
 }
-.filtro-btn:hover{color:var(--gold);border-color:rgba(212,168,71,0.3);}
-.filtro-btn.active{background:rgba(212,168,71,0.12);color:var(--gold);border-color:rgba(212,168,71,0.35);}
+.filtro-btn:hover{color:var(--gold);border-color:rgba(212,168,71,0.4);background:rgba(212,168,71,0.06);}
+.filtro-btn.active{background:rgba(212,168,71,0.14);color:var(--gold);border-color:rgba(212,168,71,0.4);box-shadow:0 0 0 1px rgba(212,168,71,0.15);}
 
 /* DESTAQUE */
 .artigo-destaque{
@@ -117,6 +118,8 @@ nav{background:rgba(13,27,53,0.97);border-bottom:1px solid rgba(212,168,71,0.12)
 .cat-metricas{color:#D4A847;} .cat-metricas .a-cat{color:#D4A847;}
 .cat-combinada{color:#C084FC;} .cat-combinada .a-cat{color:#C084FC;}
 .cat-pratica{color:#5DCB8A;} .cat-pratica .a-cat{color:#5DCB8A;}
+.cat-antiinflamatorio{color:#F07070;} .cat-antiinflamatorio .a-cat{color:#F07070;}
+.cat-antiinflamatorio{color:#F07070;} .cat-antiinflamatorio .a-cat{color:#F07070;}
 
 /* Mensagem sem resultados */
 .no-results{text-align:center;padding:60px 20px;font-family:'Cormorant Garamond',serif;font-size:18px;font-style:italic;color:rgba(232,213,160,0.35);}
@@ -246,7 +249,7 @@ footer{padding:30px 60px;display:flex;align-items:center;justify-content:space-b
       </div>
     </div>
     <div class="hero-stats">
-      <div class="stat-card"><div class="stat-num">54</div><div class="stat-label">Artigos planejados</div></div>
+      <div class="stat-card"><div class="stat-num">58</div><div class="stat-label">Artigos planejados</div></div>
       <div class="stat-card"><div class="stat-num">10</div><div class="stat-label">Categorias</div></div>
       <div class="stat-card"><div class="stat-num">6</div><div class="stat-label">Episódios da série</div></div>
     </div>
@@ -260,11 +263,11 @@ footer{padding:30px 60px;display:flex;align-items:center;justify-content:space-b
       <p class="section-eyebrow">01 · Leitura</p>
       <h2 class="section-title">Artigos &<br><em>análises clínicas</em></h2>
     </div>
-    <span class="section-count" id="artigos-count">54 artigos · Em breve</span>
+    <span class="section-count" id="artigos-count">58 artigos · Em breve</span>
   </div>
 
   <!-- FILTROS -->
-  <div class="filtros-wrap">
+  <div class="filtros-wrap" style="padding-bottom:8px;">
     <div class="filtros">
       <button class="filtro-btn active" onclick="filtrar('todos', this)">Todos</button>
       <button class="filtro-btn" onclick="filtrar('wearables', this)">⌚ Wearables</button>
@@ -277,21 +280,22 @@ footer{padding:30px 60px;display:flex;align-items:center;justify-content:space-b
       <button class="filtro-btn" onclick="filtrar('metricas', this)">🔬 Métricas</button>
       <button class="filtro-btn" onclick="filtrar('combinada', this)">🧠 Dados Combinados</button>
       <button class="filtro-btn" onclick="filtrar('pratica', this)">🏃‍♂️ Aplicação Prática</button>
+      <button class="filtro-btn" onclick="filtrar('antiinflamatorio', this)">⚠️ Anti-inflamatórios & Rim</button>
     </div>
   </div>
 
   <!-- DESTAQUE -->
-  <a href="#" class="artigo-destaque" data-cat="wearables" id="artigo-destaque">
+  <a href="artigo_exercicio_drc.html" class="artigo-destaque" data-cat="atividade" id="artigo-destaque">
     <div class="artigo-destaque-img" style="background:linear-gradient(135deg,#1B3A5A,#0D2040);">
       <span class="destaque-tag">Destaque</span>
       <svg width="68" height="68" viewBox="0 0 68 68" fill="none"><circle cx="34" cy="34" r="26" stroke="rgba(212,168,71,0.2)" stroke-width="1"/><circle cx="34" cy="34" r="9" fill="rgba(212,168,71,0.1)" stroke="rgba(212,168,71,0.3)" stroke-width="1.2"/><path d="M34 8v6M34 54v6M8 34h6M54 34h6" stroke="rgba(212,168,71,0.2)" stroke-width="1.2" stroke-linecap="round"/><path d="M14 34l4-8 4 14 4-9 3 5 3 0 3-3 4 0" stroke="rgba(212,168,71,0.35)" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
       <span style="font-family:'Cinzel',serif;font-size:10px;letter-spacing:2px;color:rgba(212,168,71,0.4);">Wearables</span>
     </div>
     <div class="artigo-destaque-body">
-      <p class="a-cat">Wearables · Monitoramento</p>
-      <h3 class="a-title">O que seu smartwatch já sabe sobre sua saúde (e você ignora)</h3>
-      <p class="a-excerpt">Seu relógio coleta HRV, frequência cardíaca de repouso, temperatura corporal, SpO₂ e padrões de sono — 24 horas por dia. Mas a maioria das pessoas olha só para os passos. Veja o que esses dados realmente significam para sua saúde.</p>
-      <div class="a-meta"><span>Dr. Bruno Biluca</span><div class="a-dot"></div><span>10 min</span><div class="a-dot"></div><span>Em breve</span></div>
+      <p class="a-cat">Atividade Física · Doença Renal Crônica</p>
+      <h3 class="a-title">Exercício na DRC: o que André me ensinou</h3>
+      <p class="a-excerpt">André tinha 41 anos, fazia diálise três vezes por semana e completou 42km na Maratona de São Paulo ao lado do próprio médico. Esta é a história — e o protocolo por trás dela.</p>
+      <div class="a-meta"><span>Dr. Bruno Biluca</span><div class="a-dot"></div><span>12 min</span><div class="a-dot"></div><span>Publicado</span></div>
       <span class="a-link">Ler artigo →</span>
     </div>
   </a>
@@ -322,7 +326,7 @@ footer{padding:30px 60px;display:flex;align-items:center;justify-content:space-b
     <!-- ATIVIDADE FÍSICA -->
     <a href="#" class="artigo-item cat-atividade" data-cat="atividade"><div class="a-num">10</div><div class="a-body"><p class="a-cat">Atividade Física</p><h3 class="a-title">Hipertensão e exercício: o que é seguro</h3><p class="a-excerpt">Mitos e verdades sobre treinar com pressão alta. Tipos de exercício, intensidade recomendada e sinais de alerta para parar.</p><div class="a-meta"><span>8 min</span></div><span class="a-soon">Em breve</span></div></a>
 
-    <a href="#" class="artigo-item cat-atividade" data-cat="atividade"><div class="a-num">11</div><div class="a-body"><p class="a-cat">Atividade Física</p><h3 class="a-title">Exercício na doença renal crônica</h3><p class="a-excerpt">Pacientes dialíticos que completam corridas de 5km existem — e o protocolo para chegar lá com segurança.</p><div class="a-meta"><span>9 min</span></div><span class="a-soon">Em breve</span></div></a>
+    <a href="artigo_exercicio_drc.html" class="artigo-item cat-atividade" data-cat="atividade"><div class="a-num">11</div><div class="a-body"><p class="a-cat">Atividade Física</p><h3 class="a-title">Exercício na doença renal crônica: o que André me ensinou</h3><p class="a-excerpt">André, 41 anos, em diálise, completou 42km na Maratona de São Paulo. Esta é a história e o protocolo por trás dela.</p><div class="a-meta"><span>12 min</span><div class="a-dot"></div><span style="color:#5DCB8A;">● Publicado</span></div></div></a>
 
     <a href="#" class="artigo-item cat-atividade" data-cat="atividade"><div class="a-num">12</div><div class="a-body"><p class="a-cat">Atividade Física</p><h3 class="a-title">Zona de FC segura: como calcular a sua</h3><p class="a-excerpt">Frequência cardíaca máxima, zonas de treino e como usar o wearable para treinar dentro do limite certo para sua condição.</p><div class="a-meta"><span>7 min</span></div><span class="a-soon">Em breve</span></div></a>
 
@@ -417,6 +421,18 @@ footer{padding:30px 60px;display:flex;align-items:center;justify-content:space-b
 
   </div>
   <div class="no-results" id="no-results" style="display:none;">Nenhum artigo encontrado nessa categoria ainda.</div>
+
+    <!-- ANTI-INFLAMATÓRIOS -->
+    <a href="#" class="artigo-item cat-antiinflamatorio" data-cat="antiinflamatorio"><div class="a-num">54</div><div class="a-body"><p class="a-cat">Anti-inflamatórios & Rim</p><h3 class="a-title">Anti-inflamatório e rim: uma combinação perigosa</h3><p class="a-excerpt">Ibuprofeno, diclofenaco e naproxeno são alguns dos medicamentos mais vendidos no Brasil — e alguns dos mais nocivos para os rins. O que acontece dentro dos glomérulos quando você toma um analgésico.</p><div class="a-meta"><span>10 min</span></div><span class="a-soon">Em breve</span></div></a>
+
+    <a href="#" class="artigo-item cat-antiinflamatorio" data-cat="antiinflamatorio"><div class="a-num">55</div><div class="a-body"><p class="a-cat">Anti-inflamatórios & Rim</p><h3 class="a-title">Quem não pode usar anti-inflamatório — e quase ninguém sabe</h3><p class="a-excerpt">Hipertensos, diabéticos, idosos e pacientes com DRC têm risco muito maior de lesão renal aguda com AINEs. A lista de quem precisa de alternativas.</p><div class="a-meta"><span>8 min</span></div><span class="a-soon">Em breve</span></div></a>
+
+    <a href="#" class="artigo-item cat-antiinflamatorio" data-cat="antiinflamatorio"><div class="a-num">56</div><div class="a-body"><p class="a-cat">Anti-inflamatórios & Rim</p><h3 class="a-title">Uso crônico de anti-inflamatório: o dano silencioso</h3><p class="a-excerpt">Muitos pacientes tomam AINEs por meses para dor crônica sem saber que estão perdendo função renal progressivamente. Como identificar e interromper esse ciclo.</p><div class="a-meta"><span>9 min</span></div><span class="a-soon">Em breve</span></div></a>
+
+    <a href="#" class="artigo-item cat-antiinflamatorio" data-cat="antiinflamatorio"><div class="a-num">57</div><div class="a-body"><p class="a-cat">Anti-inflamatórios & Rim</p><h3 class="a-title">Alternativas seguras ao anti-inflamatório</h3><p class="a-excerpt">Paracetamol, fisioterapia, crioterapia e outras opções com perfil renal mais seguro. O que usar no lugar — e em quais situações.</p><div class="a-meta"><span>7 min</span></div><span class="a-soon">Em breve</span></div></a>
+
+    <a href="#" class="artigo-item cat-antiinflamatorio" data-cat="antiinflamatorio"><div class="a-num">58</div><div class="a-body"><p class="a-cat">Anti-inflamatórios & Rim</p><h3 class="a-title">Posso tomar anti-inflamatório após treino?</h3><p class="a-excerpt">A prática comum entre atletas de usar AINE após treino intenso pode bloquear adaptações musculares e prejudicar os rins. O que a ciência diz.</p><div class="a-meta"><span>6 min</span></div><span class="a-soon">Em breve</span></div></a>
+
 </div>
 
 <div class="section-sep"></div>
