@@ -1,0 +1,1111 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Material de Apoio — Dr. Bruno Biluca</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy:#0D1B35; --navy-mid:#1B2A4A; --navy-light:#243357;
+  --gold:#D4A847; --gold-dark:#8B6914; --gold-pale:#E8D5A0;
+  --muted:rgba(232,213,160,0.5); --white:#FFFFFF;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Inter',sans-serif;background:var(--navy);color:var(--white);min-height:100vh;}
+
+nav{background:var(--navy-mid);border-bottom:2px solid rgba(212,168,71,0.12);padding:0 48px;height:58px;display:flex;align-items:center;gap:20px;position:sticky;top:0;z-index:100;}
+.nav-logo{font-family:'Cinzel',serif;font-size:14px;font-weight:700;color:var(--gold);letter-spacing:6px;text-decoration:none;}
+.nav-sep{width:1px;height:22px;background:rgba(212,168,71,0.2);}
+.nav-section{font-family:'Cinzel',serif;font-size:10px;letter-spacing:3px;color:var(--muted);text-transform:uppercase;}
+.nav-back{margin-left:auto;font-family:'Cinzel',serif;font-size:10px;letter-spacing:2px;color:rgba(212,168,71,0.4);text-decoration:none;transition:color .2s;}
+.nav-back:hover{color:var(--gold);}
+
+.page{max-width:1300px;margin:0 auto;padding:52px 48px;}
+.page-eyebrow{font-family:'Cinzel',serif;font-size:10px;letter-spacing:5px;color:var(--gold);margin-bottom:12px;text-transform:uppercase;}
+.page-title{font-family:'Cormorant Garamond',serif;font-size:clamp(28px,4vw,44px);font-weight:300;color:var(--white);margin-bottom:8px;line-height:1.2;}
+.page-title em{color:var(--gold-pale);font-style:italic;}
+.page-sub{font-family:'Cormorant Garamond',serif;font-size:17px;font-style:italic;color:var(--muted);margin-bottom:52px;}
+
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px;}
+
+.card{
+  background:var(--navy-mid);border:1px solid rgba(212,168,71,0.08);
+  border-radius:16px;overflow:hidden;cursor:pointer;
+  transition:all .35s cubic-bezier(.25,.46,.45,.94);
+  text-decoration:none;display:block;
+}
+.card:hover{border-color:rgba(212,168,71,0.25);transform:translateY(-4px);}
+.card::after{content:'';display:block;height:2px;background:var(--gold);transform:scaleX(0);transition:transform .35s;transform-origin:left;}
+.card:hover::after{transform:scaleX(1);}
+
+.card-ilus{
+  height:200px;display:flex;align-items:center;justify-content:center;
+  background:linear-gradient(160deg,var(--navy-light) 0%,var(--navy-mid) 100%);
+  border-bottom:1px solid rgba(212,168,71,0.06);
+  position:relative;overflow:hidden;
+}
+.card-ilus svg{position:relative;z-index:1;}
+.card-ilus-bg{
+  position:absolute;inset:0;
+  background:radial-gradient(ellipse at center,rgba(212,168,71,0.04) 0%,transparent 70%);
+}
+
+.card-body{padding:24px;}
+.card-num{font-family:'Cinzel',serif;font-size:9px;letter-spacing:3px;color:var(--gold);opacity:.5;margin-bottom:8px;}
+.card-title{font-family:'Cinzel',serif;font-size:14px;font-weight:600;color:var(--white);letter-spacing:1.5px;margin-bottom:8px;}
+.card-desc{font-family:'Cormorant Garamond',serif;font-size:15px;font-style:italic;color:var(--muted);line-height:1.6;margin-bottom:16px;}
+.card-link{font-family:'Cinzel',serif;font-size:10px;letter-spacing:2px;color:var(--gold);display:flex;align-items:center;gap:6px;transition:gap .3s;}
+.card:hover .card-link{gap:10px;}
+
+/* Modal */
+.modal-overlay{
+  display:none;position:fixed;inset:0;background:rgba(5,12,25,0.92);
+  z-index:200;align-items:center;justify-content:center;padding:20px;
+}
+.modal-overlay.show{display:flex;}
+.modal{
+  background:var(--navy-mid);border:1px solid rgba(212,168,71,0.15);
+  border-radius:20px;max-width:900px;width:100%;max-height:90vh;
+  overflow-y:auto;position:relative;
+}
+.modal-close{
+  position:absolute;top:16px;right:20px;
+  background:transparent;border:none;color:var(--muted);
+  font-size:20px;cursor:pointer;transition:color .2s;z-index:1;
+}
+.modal-close:hover{color:var(--gold);}
+.modal-header{padding:36px 40px 24px;border-bottom:1px solid rgba(212,168,71,0.08);}
+.modal-eyebrow{font-family:'Cinzel',serif;font-size:9px;letter-spacing:3px;color:var(--gold);opacity:.6;margin-bottom:8px;text-transform:uppercase;}
+.modal-title{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:300;color:var(--white);line-height:1.2;}
+.modal-body{padding:36px 40px;}
+.modal-ilus{display:flex;justify-content:center;margin-bottom:32px;}
+.modal-text h3{font-family:'Cinzel',serif;font-size:12px;letter-spacing:2px;color:var(--gold);margin:24px 0 10px;text-transform:uppercase;}
+.modal-text p{font-family:'Cormorant Garamond',serif;font-size:17px;font-weight:300;color:rgba(232,213,160,0.8);line-height:1.8;margin-bottom:8px;}
+.modal-text ul{list-style:none;padding:0;}
+.modal-text ul li{font-family:'Cormorant Garamond',serif;font-size:16px;color:rgba(232,213,160,0.7);line-height:1.7;padding:4px 0 4px 20px;position:relative;}
+.modal-text ul li::before{content:'·';position:absolute;left:6px;color:var(--gold);}
+.modal-print{
+  display:inline-flex;align-items:center;gap:8px;margin-top:24px;
+  background:var(--gold-dark);color:var(--white);border:none;border-radius:8px;
+  padding:10px 20px;font-family:'Cinzel',serif;font-size:10px;letter-spacing:2px;
+  cursor:pointer;transition:background .2s;
+}
+.modal-print:hover{background:var(--gold);}
+@media print{
+  nav,.modal-close,.modal-print,.modal-overlay ~ *{display:none!important;}
+  .modal{border:none;box-shadow:none;max-height:none;}
+  body{background:white;color:black;}
+  .modal-text p,.modal-text ul li{color:#333;}
+  .modal-title,.modal-eyebrow{color:#1B2A4A;}
+}
+
+@media(max-width:768px){
+  .grid{grid-template-columns:1fr 1fr;}
+  .page{padding:32px 20px;}
+  nav{padding:0 20px;}
+  .modal-header,.modal-body{padding:24px;}
+}
+@media(max-width:480px){.grid{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">APEX</a>
+  <div class="nav-sep"></div>
+  <span class="nav-section">Material de Apoio</span>
+  <a href="portal_profissionais.html" class="nav-back">← Profissionais</a>
+</nav>
+
+<div class="page">
+  <p class="page-eyebrow">Módulo 04</p>
+  <h1 class="page-title">Material de<br><em>Apoio ao Paciente</em></h1>
+  <p class="page-sub">Ilustrações didáticas para uso em consultas — explique com clareza, conecte com seu paciente</p>
+
+  <div class="grid">
+
+    <!-- 1. Anatomia do Rim -->
+    <div class="card" onclick="openModal('rim')">
+      <div class="card-ilus">
+        <div class="card-ilus-bg"></div>
+        <svg width="160" height="160" viewBox="0 0 160 160" fill="none">
+          <!-- Rim esquerdo -->
+          <path d="M50 80C50 52 62 32 75 32C85 32 92 44 92 58C92 72 85 80 78 84C85 88 92 96 92 110C92 124 85 132 75 132C62 132 50 108 50 80Z" fill="#1B3060" stroke="#D4A847" stroke-width="1.5"/>
+          <!-- Pelve renal -->
+          <ellipse cx="75" cy="82" rx="14" ry="18" fill="#152640" stroke="#D4A847" stroke-width="1" opacity="0.8"/>
+          <!-- Cálices -->
+          <path d="M68 68 C64 62 66 56 70 55" stroke="#D4A847" stroke-width="0.8" opacity="0.6"/>
+          <path d="M75 65 C75 58 76 52 79 51" stroke="#D4A847" stroke-width="0.8" opacity="0.6"/>
+          <path d="M82 70 C87 65 89 59 86 56" stroke="#D4A847" stroke-width="0.8" opacity="0.6"/>
+          <path d="M68 96 C64 102 66 108 70 109" stroke="#D4A847" stroke-width="0.8" opacity="0.6"/>
+          <path d="M82 94 C87 99 89 105 86 108" stroke="#D4A847" stroke-width="0.8" opacity="0.6"/>
+          <!-- Ureter -->
+          <path d="M75 132 C75 140 77 148 80 155" stroke="#D4A847" stroke-width="1.2" stroke-dasharray="4 3" opacity="0.5"/>
+          <!-- Artéria renal -->
+          <path d="M50 80 C38 80 30 76 22 72" stroke="#D4A847" stroke-width="1" opacity="0.4"/>
+          <!-- Glômulo detalhe -->
+          <circle cx="62" cy="72" r="3" fill="none" stroke="#D4A847" stroke-width="0.8" opacity="0.5"/>
+          <circle cx="62" cy="72" r="1.2" fill="rgba(212,168,71,0.3)"/>
+          <!-- Círculos decorativos -->
+          <circle cx="75" cy="80" r="70" fill="none" stroke="rgba(212,168,71,0.05)" stroke-width="1"/>
+        </svg>
+      </div>
+      <div class="card-body">
+        <p class="card-num">01</p>
+        <h3 class="card-title">Anatomia do Rim</h3>
+        <p class="card-desc">Estrutura renal, néfrons, córtex, medula e sistema coletor.</p>
+        <span class="card-link">Ver ilustração →</span>
+      </div>
+    </div>
+
+    <!-- 2. Como funciona a diálise -->
+    <div class="card" onclick="openModal('dialise')">
+      <div class="card-ilus">
+        <div class="card-ilus-bg"></div>
+        <svg width="160" height="160" viewBox="0 0 160 160" fill="none">
+          <!-- Paciente -->
+          <circle cx="30" cy="45" r="12" fill="#1B3060" stroke="#D4A847" stroke-width="1.2"/>
+          <path d="M18 75 C18 60 42 60 42 75 L42 95 L18 95 Z" fill="#1B3060" stroke="#D4A847" stroke-width="1"/>
+          <!-- Linhas sanguíneas -->
+          <path d="M42 70 C55 70 60 65 70 65" stroke="#A32D2D" stroke-width="2" stroke-linecap="round"/>
+          <path d="M70 95 C60 95 55 90 42 85" stroke="#2D6A4F" stroke-width="2" stroke-linecap="round"/>
+          <!-- Dialisador -->
+          <rect x="70" y="55" width="40" height="50" rx="6" fill="#152640" stroke="#D4A847" stroke-width="1.2"/>
+          <!-- Membranas do dialisador -->
+          <line x1="78" y1="60" x2="78" y2="100" stroke="#D4A847" stroke-width="0.6" opacity="0.4"/>
+          <line x1="84" y1="60" x2="84" y2="100" stroke="#D4A847" stroke-width="0.6" opacity="0.4"/>
+          <line x1="90" y1="60" x2="90" y2="100" stroke="#D4A847" stroke-width="0.6" opacity="0.4"/>
+          <line x1="96" y1="60" x2="96" y2="100" stroke="#D4A847" stroke-width="0.6" opacity="0.4"/>
+          <line x1="102" y1="60" x2="102" y2="100" stroke="#D4A847" stroke-width="0.6" opacity="0.4"/>
+          <!-- Dialisato -->
+          <path d="M110 65 C120 65 128 68 135 72" stroke="#5A8AB0" stroke-width="1.5" stroke-dasharray="3 2"/>
+          <path d="M135 88 C128 92 120 95 110 95" stroke="#5A8AB0" stroke-width="1.5" stroke-dasharray="3 2"/>
+          <!-- Bomba -->
+          <circle cx="145" cy="80" r="12" fill="#152640" stroke="#5A8AB0" stroke-width="1"/>
+          <path d="M141 80 L145 76 L149 80 L145 84 Z" fill="#5A8AB0" opacity="0.6"/>
+          <!-- Labels -->
+          <text x="75" y="120" font-family="Georgia,serif" font-size="7" fill="#D4A847" text-anchor="middle" opacity="0.7">Dialisador</text>
+        </svg>
+      </div>
+      <div class="card-body">
+        <p class="card-num">02</p>
+        <h3 class="card-title">Como Funciona a Diálise</h3>
+        <p class="card-desc">O processo de hemodiálise explicado de forma simples e visual.</p>
+        <span class="card-link">Ver ilustração →</span>
+      </div>
+    </div>
+
+    <!-- 3. Diálise vs Transplante -->
+    <div class="card" onclick="openModal('transplante')">
+      <div class="card-ilus">
+        <div class="card-ilus-bg"></div>
+        <svg width="160" height="160" viewBox="0 0 160 160" fill="none">
+          <!-- VS no centro -->
+          <text x="80" y="88" font-family="Georgia,serif" font-size="18" font-weight="700" fill="rgba(212,168,71,0.3)" text-anchor="middle">VS</text>
+          <!-- Lado esquerdo: Diálise -->
+          <rect x="10" y="50" width="50" height="65" rx="6" fill="#152640" stroke="#D4A847" stroke-width="1" opacity="0.8"/>
+          <line x1="18" y1="63" x2="18" y2="108" stroke="#D4A847" stroke-width="0.6" opacity="0.3"/>
+          <line x1="24" y1="63" x2="24" y2="108" stroke="#D4A847" stroke-width="0.6" opacity="0.3"/>
+          <line x1="30" y1="63" x2="30" y2="108" stroke="#D4A847" stroke-width="0.6" opacity="0.3"/>
+          <line x1="36" y1="63" x2="36" y2="108" stroke="#D4A847" stroke-width="0.6" opacity="0.3"/>
+          <line x1="42" y1="63" x2="42" y2="108" stroke="#D4A847" stroke-width="0.6" opacity="0.3"/>
+          <line x1="48" y1="63" x2="48" y2="108" stroke="#D4A847" stroke-width="0.6" opacity="0.3"/>
+          <text x="35" y="44" font-family="Georgia,serif" font-size="7" fill="#D4A847" text-anchor="middle" opacity="0.7">Diálise</text>
+          <!-- Lado direito: Transplante -->
+          <path d="M105 80 C105 64 111 54 118 54C124 54 128 62 128 70C128 78 124 83 121 85C124 87 128 92 128 100C128 108 124 114 118 114C111 114 105 100 105 80Z" fill="#152640" stroke="#2D6A4F" stroke-width="1.2" opacity="0.9"/>
+          <text x="118" y="44" font-family="Georgia,serif" font-size="7" fill="#2D6A4F" text-anchor="middle" opacity="0.8">Transplante</text>
+          <!-- Seta de conexão -->
+          <path d="M62 82 C68 82 72 82 76 82" stroke="rgba(212,168,71,0.2)" stroke-width="1" stroke-dasharray="2 2"/>
+          <path d="M84 82 C88 82 92 82 98 82" stroke="rgba(212,168,71,0.2)" stroke-width="1" stroke-dasharray="2 2"/>
+        </svg>
+      </div>
+      <div class="card-body">
+        <p class="card-num">03</p>
+        <h3 class="card-title">Diálise vs Transplante</h3>
+        <p class="card-desc">Comparativo entre as modalidades de terapia renal substitutiva.</p>
+        <span class="card-link">Ver ilustração →</span>
+      </div>
+    </div>
+
+    <!-- 4. Dieta na Doença Renal -->
+    <div class="card" onclick="openModal('dieta')">
+      <div class="card-ilus">
+        <div class="card-ilus-bg"></div>
+        <svg width="160" height="160" viewBox="0 0 160 160" fill="none">
+          <!-- Prato -->
+          <circle cx="80" cy="85" r="55" fill="#152640" stroke="#D4A847" stroke-width="1.2" opacity="0.6"/>
+          <circle cx="80" cy="85" r="42" fill="none" stroke="#D4A847" stroke-width="0.8" opacity="0.3"/>
+          <!-- Alimentos: ícones simples -->
+          <!-- Frango (proteína) -->
+          <ellipse cx="65" cy="78" rx="14" ry="10" fill="#1B3060" stroke="#D4A847" stroke-width="1" opacity="0.8"/>
+          <path d="M58 72 C60 68 65 66 70 68" stroke="#D4A847" stroke-width="0.8" opacity="0.6"/>
+          <!-- Arroz -->
+          <ellipse cx="95" cy="80" rx="12" ry="8" fill="#1B3060" stroke="#D4A847" stroke-width="1" opacity="0.7"/>
+          <circle cx="90" cy="79" r="1.5" fill="rgba(212,168,71,0.4)"/>
+          <circle cx="95" cy="77" r="1.5" fill="rgba(212,168,71,0.4)"/>
+          <circle cx="100" cy="79" r="1.5" fill="rgba(212,168,71,0.4)"/>
+          <!-- Legumes -->
+          <ellipse cx="78" cy="96" rx="16" ry="9" fill="#1B3060" stroke="#2D6A4F" stroke-width="1" opacity="0.8"/>
+          <!-- X no sal e potássio -->
+          <circle cx="108" cy="60" r="14" fill="rgba(163,45,45,0.15)" stroke="#A32D2D" stroke-width="1"/>
+          <text x="108" y="55" font-family="Georgia,serif" font-size="7" fill="#A32D2D" text-anchor="middle">K⁺</text>
+          <text x="108" y="63" font-family="Georgia,serif" font-size="7" fill="#A32D2D" text-anchor="middle">Sal</text>
+          <path d="M100 52 L116 68M116 52 L100 68" stroke="#A32D2D" stroke-width="1" opacity="0.5"/>
+          <!-- Copo de água -->
+          <path d="M45 55 L48 72 L58 72 L61 55 Z" fill="#152640" stroke="#5A8AB0" stroke-width="1" opacity="0.8"/>
+          <path d="M47 58 C50 56 56 56 59 58" stroke="#5A8AB0" stroke-width="0.8" opacity="0.5"/>
+        </svg>
+      </div>
+      <div class="card-body">
+        <p class="card-num">04</p>
+        <h3 class="card-title">Dieta na Doença Renal</h3>
+        <p class="card-desc">Controle de potássio, fósforo, sódio e proteínas na DRC.</p>
+        <span class="card-link">Ver ilustração →</span>
+      </div>
+    </div>
+
+    <!-- 5. Controle da Pressão Arterial -->
+    <div class="card" onclick="openModal('pressao')">
+      <div class="card-ilus">
+        <div class="card-ilus-bg"></div>
+        <svg width="160" height="160" viewBox="0 0 160 160" fill="none">
+          <!-- Esfigmomanômetro -->
+          <rect x="40" y="40" width="80" height="50" rx="8" fill="#152640" stroke="#D4A847" stroke-width="1.2"/>
+          <!-- Display -->
+          <rect x="50" y="50" width="60" height="30" rx="4" fill="#0D1B35" stroke="#D4A847" stroke-width="0.8" opacity="0.6"/>
+          <text x="80" y="62" font-family="Georgia,serif" font-size="9" font-weight="700" fill="#D4A847" text-anchor="middle">120</text>
+          <text x="80" y="72" font-family="Georgia,serif" font-size="7" fill="#D4A847" text-anchor="middle" opacity="0.6">/ 80 mmHg</text>
+          <!-- Braçadeira -->
+          <path d="M60 90 C60 110 100 110 100 90" stroke="#D4A847" stroke-width="1.5" fill="none" opacity="0.5"/>
+          <path d="M65 90 C65 105 95 105 95 90" stroke="#D4A847" stroke-width="1" fill="none" opacity="0.3"/>
+          <!-- Rim -->
+          <path d="M20 110 C20 100 24 94 28 94C31 94 33 98 33 102C33 106 31 108 29 109C31 110 33 112 33 116C33 120 31 122 28 122C24 122 20 116 20 110Z" fill="#1B3060" stroke="#D4A847" stroke-width="1" opacity="0.7"/>
+          <!-- Coração -->
+          <path d="M130 100 C130 94 136 90 140 94 C144 90 150 94 150 100 C150 106 140 114 140 114 C140 114 130 106 130 100Z" fill="#1B3060" stroke="#A32D2D" stroke-width="1" opacity="0.7"/>
+          <!-- Seta conexão -->
+          <path d="M33 110 C40 110 45 108 50 105" stroke="rgba(212,168,71,0.3)" stroke-width="1" stroke-dasharray="3 2"/>
+          <path d="M110 100 C118 100 124 100 129 100" stroke="rgba(163,45,45,0.3)" stroke-width="1" stroke-dasharray="3 2"/>
+          <!-- Zona verde/vermelho -->
+          <rect x="44" y="130" width="30" height="8" rx="2" fill="rgba(45,106,79,0.3)" stroke="#2D6A4F" stroke-width="0.8"/>
+          <text x="59" y="137" font-family="Georgia,serif" font-size="6" fill="#2D6A4F" text-anchor="middle">Normal</text>
+          <rect x="86" y="130" width="30" height="8" rx="2" fill="rgba(163,45,45,0.3)" stroke="#A32D2D" stroke-width="0.8"/>
+          <text x="101" y="137" font-family="Georgia,serif" font-size="6" fill="#A32D2D" text-anchor="middle">Hipertensão</text>
+        </svg>
+      </div>
+      <div class="card-body">
+        <p class="card-num">05</p>
+        <h3 class="card-title">Controle da Pressão Arterial</h3>
+        <p class="card-desc">Hipertensão e sua relação com a doença renal crônica.</p>
+        <span class="card-link">Ver ilustração →</span>
+      </div>
+    </div>
+
+    <!-- 6. Diabetes e Rim -->
+    <div class="card" onclick="openModal('diabetes')">
+      <div class="card-ilus">
+        <div class="card-ilus-bg"></div>
+        <svg width="160" height="160" viewBox="0 0 160 160" fill="none">
+          <!-- Glicosímetro -->
+          <rect x="25" y="55" width="45" height="60" rx="8" fill="#152640" stroke="#D4A847" stroke-width="1"/>
+          <rect x="31" y="63" width="33" height="20" rx="3" fill="#0D1B35" stroke="#D4A847" stroke-width="0.7" opacity="0.6"/>
+          <text x="47" y="75" font-family="Georgia,serif" font-size="9" font-weight="700" fill="#E8B84A" text-anchor="middle">250</text>
+          <text x="47" y="83" font-family="Georgia,serif" font-size="6" fill="#E8B84A" text-anchor="middle" opacity="0.7">mg/dL</text>
+          <!-- Gota de sangue -->
+          <path d="M47 95 C47 95 42 102 42 106 C42 110 44 112 47 112 C50 112 52 110 52 106 C52 102 47 95 47 95Z" fill="rgba(163,45,45,0.5)" stroke="#A32D2D" stroke-width="0.8"/>
+          <!-- Rim com dano -->
+          <path d="M90 90 C90 74 96 64 102 64C108 64 112 72 112 80C112 88 108 93 105 95C108 97 112 102 112 110C112 118 108 124 102 124C96 124 90 110 90 90Z" fill="#1B3060" stroke="#E8B84A" stroke-width="1.5"/>
+          <!-- Pontos de lesão -->
+          <circle cx="98" cy="80" r="2.5" fill="rgba(163,45,45,0.5)" stroke="#A32D2D" stroke-width="0.8"/>
+          <circle cx="105" cy="88" r="2" fill="rgba(163,45,45,0.4)" stroke="#A32D2D" stroke-width="0.8"/>
+          <circle cx="100" cy="98" r="2.5" fill="rgba(163,45,45,0.5)" stroke="#A32D2D" stroke-width="0.8"/>
+          <!-- Seta -->
+          <path d="M72 90 C78 90 84 90 88 90" stroke="rgba(232,184,74,0.4)" stroke-width="1.5" stroke-dasharray="3 2"/>
+          <path d="M86 87 L90 90 L86 93" fill="none" stroke="rgba(232,184,74,0.4)" stroke-width="1.2"/>
+          <!-- Molécula glicose simplificada -->
+          <circle cx="135" cy="65" r="8" fill="rgba(232,184,74,0.1)" stroke="#E8B84A" stroke-width="0.8" opacity="0.5"/>
+          <text x="135" y="68" font-family="Georgia,serif" font-size="6" fill="#E8B84A" text-anchor="middle" opacity="0.6">Glc</text>
+          <path d="M135 73 L135 80 M131 80 L139 80" stroke="#E8B84A" stroke-width="0.7" opacity="0.4"/>
+        </svg>
+      </div>
+      <div class="card-body">
+        <p class="card-num">06</p>
+        <h3 class="card-title">Diabetes e Rim</h3>
+        <p class="card-desc">Nefropatia diabética, progressão e prevenção de danos renais.</p>
+        <span class="card-link">Ver ilustração →</span>
+      </div>
+    </div>
+
+    <!-- 7. Acesso Vascular -->
+    <div class="card" onclick="openModal('acesso')">
+      <div class="card-ilus">
+        <div class="card-ilus-bg"></div>
+        <svg width="160" height="160" viewBox="0 0 160 160" fill="none">
+          <!-- Braço -->
+          <path d="M35 40 C30 40 28 50 28 80 C28 110 30 125 35 130 L55 130 C60 125 62 110 62 80 C62 50 60 40 55 40 Z" fill="#1B3060" stroke="#D4A847" stroke-width="1" opacity="0.5"/>
+          <!-- FAV - anastomose -->
+          <path d="M38 75 C38 68 45 62 52 62 C59 62 62 68 62 75" stroke="#A32D2D" stroke-width="2" fill="none" stroke-linecap="round"/>
+          <path d="M38 85 C38 92 45 98 52 98 C59 98 62 92 62 85" stroke="#2D6A4F" stroke-width="2" fill="none" stroke-linecap="round"/>
+          <!-- Anastomose cirúrgica -->
+          <circle cx="38" cy="80" r="5" fill="#152640" stroke="#D4A847" stroke-width="1.2"/>
+          <text x="38" y="83" font-family="Georgia,serif" font-size="6" fill="#D4A847" text-anchor="middle">FAV</text>
+          <!-- Fremito -->
+          <path d="M50 72 C53 69 56 72 53 75 C56 78 59 75 56 72" stroke="#D4A847" stroke-width="0.8" opacity="0.4"/>
+          <!-- Cateter lado direito -->
+          <path d="M90 35 C90 35 95 50 95 65 L105 65 C105 50 110 35 110 35" stroke="#D4A847" stroke-width="1" fill="none" opacity="0.6"/>
+          <path d="M92 35 L108 35" stroke="#D4A847" stroke-width="1.5" stroke-linecap="round" opacity="0.7"/>
+          <path d="M95 65 L95 110 M105 65 L105 110" stroke="#5A8AB0" stroke-width="1.5" opacity="0.6"/>
+          <path d="M95 110 C95 115 100 118 100 118 C100 118 105 115 105 110" stroke="#5A8AB0" stroke-width="1.2" fill="none" opacity="0.5"/>
+          <!-- Labels -->
+          <text x="38" y="108" font-family="Georgia,serif" font-size="7" fill="#D4A847" text-anchor="middle" opacity="0.6">FAV/Prótese</text>
+          <text x="100" y="125" font-family="Georgia,serif" font-size="7" fill="#5A8AB0" text-anchor="middle" opacity="0.6">Cateter</text>
+          <!-- Divisor -->
+          <line x1="75" y1="30" x2="75" y2="140" stroke="rgba(212,168,71,0.1)" stroke-width="1" stroke-dasharray="4 4"/>
+        </svg>
+      </div>
+      <div class="card-body">
+        <p class="card-num">07</p>
+        <h3 class="card-title">Acesso Vascular</h3>
+        <p class="card-desc">FAV, prótese e cateter — tipos, cuidados e complicações.</p>
+        <span class="card-link">Ver ilustração →</span>
+      </div>
+    </div>
+
+    <!-- 8. Estágios DRC -->
+    <div class="card" onclick="openModal('estagios')">
+      <div class="card-ilus">
+        <div class="card-ilus-bg"></div>
+        <svg width="160" height="160" viewBox="0 0 160 160" fill="none">
+          <!-- Barra de progresso DRC -->
+          <rect x="15" y="70" width="130" height="18" rx="9" fill="#152640" stroke="rgba(212,168,71,0.2)" stroke-width="1"/>
+          <!-- Estágios coloridos -->
+          <rect x="15" y="70" width="26" height="18" rx="9" fill="rgba(45,106,79,0.5)"/>
+          <rect x="41" y="70" width="26" height="18" fill="rgba(45,106,79,0.35)"/>
+          <rect x="67" y="70" width="26" height="18" fill="rgba(156,100,0,0.4)"/>
+          <rect x="93" y="70" width="26" height="18" fill="rgba(163,45,45,0.4)"/>
+          <rect x="119" y="70" width="26" height="18" rx="9" fill="rgba(163,45,45,0.6)"/>
+          <!-- Labels estágios -->
+          <text x="28" y="82" font-family="Georgia,serif" font-size="7" fill="#5DCB8A" text-anchor="middle" font-weight="700">G1</text>
+          <text x="54" y="82" font-family="Georgia,serif" font-size="7" fill="#5DCB8A" text-anchor="middle" font-weight="700">G2</text>
+          <text x="80" y="82" font-family="Georgia,serif" font-size="7" fill="#E8B84A" text-anchor="middle" font-weight="700">G3</text>
+          <text x="106" y="82" font-family="Georgia,serif" font-size="7" fill="#F07070" text-anchor="middle" font-weight="700">G4</text>
+          <text x="132" y="82" font-family="Georgia,serif" font-size="7" fill="#F07070" text-anchor="middle" font-weight="700">G5</text>
+          <!-- TFG valores -->
+          <text x="28" y="65" font-family="Georgia,serif" font-size="6" fill="#5DCB8A" text-anchor="middle" opacity="0.8">≥90</text>
+          <text x="54" y="65" font-family="Georgia,serif" font-size="6" fill="#5DCB8A" text-anchor="middle" opacity="0.8">60-89</text>
+          <text x="80" y="65" font-family="Georgia,serif" font-size="6" fill="#E8B84A" text-anchor="middle" opacity="0.8">30-59</text>
+          <text x="106" y="65" font-family="Georgia,serif" font-size="6" fill="#F07070" text-anchor="middle" opacity="0.8">15-29</text>
+          <text x="132" y="65" font-family="Georgia,serif" font-size="6" fill="#F07070" text-anchor="middle" opacity="0.8">&lt;15</text>
+          <!-- TFG label -->
+          <text x="80" y="55" font-family="Georgia,serif" font-size="7" fill="#D4A847" text-anchor="middle" opacity="0.6">TFG (mL/min/1,73m²)</text>
+          <!-- Rins progressivamente menores -->
+          <path d="M25 100 C25 94 28 90 31 90C33 90 35 93 35 96C35 99 33 101 31 102C33 103 35 105 35 108C35 111 33 112 31 112C28 112 25 107 25 100Z" fill="#1B3060" stroke="#5DCB8A" stroke-width="1" opacity="0.8"/>
+          <path d="M55 100 C55 94 57 90 60 90C62 90 64 93 64 96C64 99 62 101 60 102C62 103 64 105 64 108C64 111 62 112 60 112C57 112 55 107 55 100Z" fill="#1B3060" stroke="#5DCB8A" stroke-width="1" opacity="0.7"/>
+          <path d="M82 100 C82 95 84 92 86 92C88 92 89 94 89 97C89 100 88 101 87 102C88 103 89 104 89 107C89 110 88 111 86 111C84 111 82 107 82 100Z" fill="#1B3060" stroke="#E8B84A" stroke-width="1" opacity="0.7"/>
+          <path d="M106 100 C106 96 108 93 110 93C111 93 112 95 112 97C112 99 111 101 110 101C111 102 112 103 112 106C112 108 111 109 110 109C108 109 106 106 106 100Z" fill="#1B3060" stroke="#F07070" stroke-width="1" opacity="0.7"/>
+          <path d="M128 100 C128 96 130 94 131 94C132 94 133 96 133 98C133 100 132 101 131 101C132 102 133 103 133 105C133 107 132 108 131 108C130 108 128 106 128 100Z" fill="#1B3060" stroke="#F07070" stroke-width="1" opacity="0.8"/>
+          <!-- Seta progressão -->
+          <path d="M15 120 L145 120" stroke="rgba(212,168,71,0.2)" stroke-width="1"/>
+          <path d="M140 117 L145 120 L140 123" fill="none" stroke="rgba(212,168,71,0.3)" stroke-width="1"/>
+          <text x="80" y="132" font-family="Georgia,serif" font-size="6" fill="rgba(212,168,71,0.4)" text-anchor="middle">Progressão da doença →</text>
+        </svg>
+      </div>
+      <div class="card-body">
+        <p class="card-num">08</p>
+        <h3 class="card-title">Estágios da DRC</h3>
+        <p class="card-desc">G1 a G5 — entenda cada etapa da doença renal crônica.</p>
+        <span class="card-link">Ver ilustração →</span>
+      </div>
+    </div>
+
+    <!-- 9. Litíase Renal -->
+    <div class="card" onclick="openModal('litiase')">
+      <div class="card-ilus">
+        <div class="card-ilus-bg"></div>
+        <svg width="160" height="160" viewBox="0 0 160 160" fill="none">
+          <!-- Rim com cálculo -->
+          <path d="M45 80 C45 56 56 38 68 38C79 38 87 52 87 66C87 80 79 88 73 92C79 96 87 104 87 118C87 132 79 142 68 142C56 142 45 122 45 80Z" fill="#1B3060" stroke="#D4A847" stroke-width="1.5"/>
+          <!-- Pelve renal -->
+          <ellipse cx="68" cy="90" rx="16" ry="20" fill="#152640" stroke="#D4A847" stroke-width="1" opacity="0.7"/>
+          <!-- Cálculos (pedras) -->
+          <path d="M62 82 C62 82 65 78 70 80 C74 81 76 85 73 88 C70 91 65 90 62 87 C59 84 60 82 62 82Z" fill="rgba(212,168,71,0.3)" stroke="#D4A847" stroke-width="1"/>
+          <path d="M58 95 C58 95 61 92 65 93 C68 94 69 97 67 99 C65 101 61 101 59 99 C57 97 57 95 58 95Z" fill="rgba(212,168,71,0.25)" stroke="#D4A847" stroke-width="0.8"/>
+          <!-- Ureter com obstrução -->
+          <path d="M68 142 C68 148 69 155 71 158" stroke="#D4A847" stroke-width="1.2" stroke-dasharray="4 3" opacity="0.5"/>
+          <!-- Cálculo no ureter -->
+          <circle cx="70" cy="150" r="5" fill="rgba(212,168,71,0.3)" stroke="#D4A847" stroke-width="1"/>
+          <!-- Dor/inflamação -->
+          <path d="M95 65 L102 58 M105 70 L114 70 M102 82 L108 88" stroke="#A32D2D" stroke-width="1.5" stroke-linecap="round" opacity="0.6"/>
+          <!-- Ampliação -->
+          <circle cx="125" cy="75" r="25" fill="rgba(13,27,53,0.8)" stroke="rgba(212,168,71,0.3)" stroke-width="1"/>
+          <path d="M115 70 C115 70 119 65 124 67 C129 68 131 73 128 77 C125 81 119 80 116 77 C113 74 114 70 115 70Z" fill="rgba(212,168,71,0.25)" stroke="#D4A847" stroke-width="1.2"/>
+          <text x="125" y="97" font-family="Georgia,serif" font-size="6" fill="#D4A847" text-anchor="middle" opacity="0.6">Cálculo</text>
+          <!-- Lupa handle -->
+          <line x1="145" y1="95" x2="152" y2="102" stroke="rgba(212,168,71,0.3)" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <div class="card-body">
+        <p class="card-num">09</p>
+        <h3 class="card-title">Litíase Renal</h3>
+        <p class="card-desc">Cálculos renais — formação, sintomas, tratamento e prevenção.</p>
+        <span class="card-link">Ver ilustração →</span>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- MODAIS -->
+<div class="modal-overlay" id="modal" onclick="closeModal(event)">
+  <div class="modal" id="modal-content">
+    <button class="modal-close" onclick="closeModalBtn()">✕</button>
+    <div class="modal-header">
+      <p class="modal-eyebrow" id="modal-eyebrow"></p>
+      <h2 class="modal-title" id="modal-title"></h2>
+    </div>
+    <div class="modal-body">
+      <div class="modal-ilus" id="modal-ilus"></div>
+      <div class="modal-text" id="modal-text"></div>
+      <button class="modal-print" onclick="window.print()">⎙ Imprimir / Salvar PDF</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const MODAIS = {
+  rim: {
+    eyebrow: 'Anatomia',
+    title: 'Anatomia do Rim',
+    ilus: `<svg width="320" height="300" viewBox="0 0 320 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <!-- Rim esquerdo grande -->
+      <path d="M80 150C80 96 106 56 130 56C150 56 164 80 164 108C164 136 150 150 140 156C150 162 164 176 164 204C164 232 150 252 130 252C106 252 80 208 80 150Z" fill="#1B3060" stroke="#D4A847" stroke-width="2"/>
+      <!-- Pelve renal -->
+      <ellipse cx="130" cy="154" rx="26" ry="34" fill="#152640" stroke="#D4A847" stroke-width="1.5" opacity="0.9"/>
+      <!-- Cálices maiores -->
+      <path d="M115 128 C107 116 110 102 118 99" stroke="#D4A847" stroke-width="1.2" opacity="0.7"/>
+      <path d="M130 122 C130 109 132 98 137 96" stroke="#D4A847" stroke-width="1.2" opacity="0.7"/>
+      <path d="M145 130 C154 118 155 104 148 100" stroke="#D4A847" stroke-width="1.2" opacity="0.7"/>
+      <path d="M115 180 C107 192 110 206 118 209" stroke="#D4A847" stroke-width="1.2" opacity="0.7"/>
+      <path d="M145 178 C154 190 155 204 148 208" stroke="#D4A847" stroke-width="1.2" opacity="0.7"/>
+      <!-- Glômulos -->
+      <circle cx="100" cy="120" r="5" fill="none" stroke="#D4A847" stroke-width="1" opacity="0.5"/>
+      <circle cx="100" cy="120" r="2.5" fill="rgba(212,168,71,0.3)"/>
+      <circle cx="96" cy="135" r="4" fill="none" stroke="#D4A847" stroke-width="1" opacity="0.4"/>
+      <circle cx="96" cy="135" r="2" fill="rgba(212,168,71,0.25)"/>
+      <circle cx="102" cy="150" r="5" fill="none" stroke="#D4A847" stroke-width="1" opacity="0.5"/>
+      <circle cx="102" cy="150" r="2.5" fill="rgba(212,168,71,0.3)"/>
+      <!-- Ureter -->
+      <path d="M130 252 C130 265 132 278 135 290" stroke="#D4A847" stroke-width="2" stroke-dasharray="6 4" opacity="0.5"/>
+      <!-- Artéria e veia renal -->
+      <path d="M80 152 C58 152 42 146 28 138" stroke="#A32D2D" stroke-width="2" opacity="0.6"/>
+      <path d="M80 160 C58 160 42 166 28 170" stroke="#2D6A4F" stroke-width="2" opacity="0.6"/>
+      <!-- Labels -->
+      <text x="170" y="90" font-family="Georgia,serif" font-size="11" fill="#D4A847" opacity="0.8">Córtex</text>
+      <line x1="163" y1="90" x2="145" y2="95" stroke="#D4A847" stroke-width="0.8" opacity="0.4"/>
+      <text x="170" y="115" font-family="Georgia,serif" font-size="11" fill="#D4A847" opacity="0.8">Medula</text>
+      <line x1="168" y1="115" x2="152" y2="118" stroke="#D4A847" stroke-width="0.8" opacity="0.4"/>
+      <text x="170" y="155" font-family="Georgia,serif" font-size="11" fill="#D4A847" opacity="0.8">Pelve renal</text>
+      <line x1="168" y1="152" x2="158" y2="152" stroke="#D4A847" stroke-width="0.8" opacity="0.4"/>
+      <text x="170" y="180" font-family="Georgia,serif" font-size="11" fill="#D4A847" opacity="0.8">Cálices</text>
+      <text x="22" y="135" font-family="Georgia,serif" font-size="10" fill="#A32D2D" opacity="0.7" text-anchor="middle">Artéria</text>
+      <text x="22" y="173" font-family="Georgia,serif" font-size="10" fill="#2D6A4F" opacity="0.7" text-anchor="middle">Veia</text>
+      <text x="138" y="285" font-family="Georgia,serif" font-size="10" fill="#D4A847" opacity="0.6" text-anchor="middle">Ureter</text>
+      <!-- Néfron ampliado -->
+      <circle cx="260" cy="100" r="40" fill="rgba(13,27,53,0.8)" stroke="rgba(212,168,71,0.2)" stroke-width="1"/>
+      <text x="260" y="52" font-family="Georgia,serif" font-size="9" fill="#D4A847" text-anchor="middle" opacity="0.7">Néfron</text>
+      <circle cx="260" cy="90" r="12" fill="none" stroke="#D4A847" stroke-width="1.2"/>
+      <circle cx="260" cy="90" r="6" fill="rgba(212,168,71,0.15)" stroke="#D4A847" stroke-width="0.8"/>
+      <path d="M260 102 C260 108 263 114 263 120 C263 126 258 130 258 136" stroke="#D4A847" stroke-width="1" fill="none" opacity="0.6"/>
+      <text x="260" y="148" font-family="Georgia,serif" font-size="8" fill="#D4A847" text-anchor="middle" opacity="0.6">Glomérulo</text>
+    </svg>`,
+    texto: `
+      <h3>O que são os rins?</h3>
+      <p>Os rins são dois órgãos em forma de feijão localizados na região dorsal do abdômen, um de cada lado da coluna vertebral. Cada rim adulto mede cerca de 12 cm e pesa aproximadamente 150g.</p>
+      <h3>Principais funções</h3>
+      <ul>
+        <li>Filtração do sangue — aproximadamente 180 litros por dia</li>
+        <li>Eliminação de resíduos metabólicos (ureia, creatinina, ácido úrico)</li>
+        <li>Regulação do volume e composição do sangue</li>
+        <li>Controle da pressão arterial (sistema renina-angiotensina)</li>
+        <li>Produção de eritropoietina (estimula a produção de glóbulos vermelhos)</li>
+        <li>Ativação da vitamina D (saúde óssea)</li>
+        <li>Equilíbrio ácido-base do organismo</li>
+      </ul>
+      <h3>Estrutura interna</h3>
+      <p>Cada rim contém cerca de 1 milhão de néfrons — as unidades funcionais de filtração. O néfron é composto pelo glomérulo (filtração) e túbulos (reabsorção e secreção). O sangue filtrado torna-se urina, que é coletada na pelve renal e conduzida pelo ureter até a bexiga.</p>
+      <h3>Sinais de alerta</h3>
+      <ul>
+        <li>Urina espumosa (proteinúria) ou com sangue</li>
+        <li>Inchaço nos tornozelos e pálpebras</li>
+        <li>Pressão arterial elevada</li>
+        <li>Cansaço excessivo e falta de ar</li>
+        <li>Diminuição da quantidade de urina</li>
+      </ul>`
+  },
+  dialise: {
+    eyebrow: 'Tratamento',
+    title: 'Como Funciona a Hemodiálise',
+    ilus: `<svg width="320" height="260" viewBox="0 0 320 260" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <!-- Paciente -->
+      <circle cx="45" cy="60" r="18" fill="#1B3060" stroke="#D4A847" stroke-width="1.2"/>
+      <path d="M27 100 C27 78 63 78 63 100 L63 130 L27 130 Z" fill="#1B3060" stroke="#D4A847" stroke-width="1"/>
+      <!-- Braço/acesso vascular -->
+      <path d="M45 115 L45 145 L75 145" stroke="#D4A847" stroke-width="1.5" opacity="0.5"/>
+      <!-- Linhas arterial (vermelha) e venosa (azul) -->
+      <path d="M75 138 C100 135 115 130 130 128" stroke="#A32D2D" stroke-width="2.5" stroke-linecap="round"/>
+      <text x="100" y="125" font-family="Georgia,serif" font-size="8" fill="#A32D2D" opacity="0.8">Sangue p/ filtrar</text>
+      <path d="M130 168 C115 170 100 168 75 160" stroke="#2D6A4F" stroke-width="2.5" stroke-linecap="round"/>
+      <text x="100" y="182" font-family="Georgia,serif" font-size="8" fill="#2D6A4F" opacity="0.8">Sangue filtrado</text>
+      <!-- Bomba peristáltica -->
+      <circle cx="115" cy="148" r="14" fill="#152640" stroke="#D4A847" stroke-width="1.2"/>
+      <text x="115" y="152" font-family="Georgia,serif" font-size="7" fill="#D4A847" text-anchor="middle">Bomba</text>
+      <!-- Dialisador (filtro) -->
+      <rect x="138" y="110" width="60" height="80" rx="8" fill="#152640" stroke="#D4A847" stroke-width="1.5"/>
+      <text x="168" y="104" font-family="Georgia,serif" font-size="9" fill="#D4A847" text-anchor="middle">Dialisador</text>
+      <!-- Membranas semicermeáveis -->
+      <line x1="148" y1="118" x2="148" y2="182" stroke="#D4A847" stroke-width="0.7" opacity="0.5"/>
+      <line x1="156" y1="118" x2="156" y2="182" stroke="#D4A847" stroke-width="0.7" opacity="0.5"/>
+      <line x1="164" y1="118" x2="164" y2="182" stroke="#D4A847" stroke-width="0.7" opacity="0.5"/>
+      <line x1="172" y1="118" x2="172" y2="182" stroke="#D4A847" stroke-width="0.7" opacity="0.5"/>
+      <line x1="180" y1="118" x2="180" y2="182" stroke="#D4A847" stroke-width="0.7" opacity="0.5"/>
+      <line x1="188" y1="118" x2="188" y2="182" stroke="#D4A847" stroke-width="0.7" opacity="0.5"/>
+      <!-- Dialisato (azul) -->
+      <path d="M198 120 C214 120 226 125 236 132" stroke="#5A8AB0" stroke-width="1.5" stroke-dasharray="4 3"/>
+      <path d="M236 168 C226 175 214 178 198 178" stroke="#5A8AB0" stroke-width="1.5" stroke-dasharray="4 3"/>
+      <text x="255" y="150" font-family="Georgia,serif" font-size="8" fill="#5A8AB0" text-anchor="middle" opacity="0.8">Dialisato</text>
+      <!-- Máquina de diálise -->
+      <rect x="240" y="105" width="55" height="90" rx="6" fill="#152640" stroke="#5A8AB0" stroke-width="1"/>
+      <rect x="247" y="113" width="40" height="20" rx="3" fill="#0D1B35" stroke="#5A8AB0" stroke-width="0.7"/>
+      <text x="267" y="127" font-family="Georgia,serif" font-size="7" fill="#5A8AB0" text-anchor="middle">Máquina</text>
+      <!-- Toxinas saindo -->
+      <text x="168" y="220" font-family="Georgia,serif" font-size="9" fill="#D4A847" text-anchor="middle" opacity="0.6">Toxinas eliminadas pelo dialisato</text>
+      <path d="M140" y1="200" x2="196" y2="200" stroke="rgba(212,168,71,0.2)" stroke-width="1"/>
+      <!-- Moléculas -->
+      <circle cx="155" cy="145" r="3" fill="rgba(163,45,45,0.4)" stroke="#A32D2D" stroke-width="0.5"/>
+      <circle cx="162" cy="138" r="2" fill="rgba(163,45,45,0.3)"/>
+      <circle cx="170" cy="150" r="2.5" fill="rgba(163,45,45,0.35)"/>
+    </svg>`,
+    texto: `
+      <h3>O que é hemodiálise?</h3>
+      <p>A hemodiálise é um procedimento que substitui parcialmente a função dos rins quando estes não conseguem mais filtrar o sangue adequadamente. O sangue é retirado do paciente, filtrado em uma máquina e devolvido ao organismo.</p>
+      <h3>Como funciona o processo</h3>
+      <ul>
+        <li>O sangue é retirado pelo acesso vascular (FAV, prótese ou cateter)</li>
+        <li>A bomba peristáltica impulsiona o sangue pelo circuito extracorpóreo</li>
+        <li>No dialisador, o sangue passa por membranas semipermeáveis</li>
+        <li>As toxinas passam para o dialisato por difusão e osmose</li>
+        <li>O sangue limpo e purificado retorna ao paciente</li>
+      </ul>
+      <h3>Duração e frequência</h3>
+      <p>Cada sessão dura em média 3 a 5 horas e é realizada habitualmente 3 vezes por semana. Durante a sessão, o paciente fica sentado ou reclinado em uma poltrona especial.</p>
+      <h3>O que é removido na diálise</h3>
+      <ul>
+        <li>Ureia e creatinina (resíduos do metabolismo proteico)</li>
+        <li>Potássio em excesso (protege o coração)</li>
+        <li>Fósforo em excesso (protege os ossos)</li>
+        <li>Excesso de líquido acumulado entre as sessões</li>
+        <li>Outras toxinas urêmicas</li>
+      </ul>`
+  },
+  transplante: {
+    eyebrow: 'Terapias Renais Substitutivas',
+    title: 'Diálise vs Transplante Renal',
+    ilus: `<svg width="320" height="240" viewBox="0 0 320 240" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <!-- Lado esquerdo: Diálise -->
+      <text x="75" y="25" font-family="Georgia,serif" font-size="13" font-weight="700" fill="#D4A847" text-anchor="middle">Diálise</text>
+      <rect x="20" y="35" width="110" height="140" rx="8" fill="#152640" stroke="#D4A847" stroke-width="1" opacity="0.7"/>
+      <!-- Ícone máquina diálise -->
+      <rect x="45" y="50" width="60" height="40" rx="4" fill="#1B3060" stroke="#D4A847" stroke-width="1"/>
+      <rect x="51" y="56" width="36" height="14" rx="2" fill="#0D1B35" stroke="#D4A847" stroke-width="0.6"/>
+      <text x="69" y="66" font-family="Georgia,serif" font-size="6" fill="#D4A847" text-anchor="middle" opacity="0.7">Hemodiálise</text>
+      <!-- Pros diálise -->
+      <text x="30" y="108" font-family="Georgia,serif" font-size="9" fill="#5DCB8A">✓ Disponível imediatamente</text>
+      <text x="30" y="122" font-family="Georgia,serif" font-size="9" fill="#5DCB8A">✓ Sem cirurgia maior</text>
+      <text x="30" y="136" font-family="Georgia,serif" font-size="9" fill="#F07070">✗ 3x/semana, 4h/sessão</text>
+      <text x="30" y="150" font-family="Georgia,serif" font-size="9" fill="#F07070">✗ Restrições alimentares</text>
+      <text x="30" y="164" font-family="Georgia,serif" font-size="9" fill="#F07070">✗ Qualidade de vida limitada</text>
+      <!-- Lado direito: Transplante -->
+      <text x="245" y="25" font-family="Georgia,serif" font-size="13" font-weight="700" fill="#2D6A4F" text-anchor="middle">Transplante</text>
+      <rect x="190" y="35" width="110" height="140" rx="8" fill="#152640" stroke="#2D6A4F" stroke-width="1" opacity="0.7"/>
+      <!-- Rim transplantado -->
+      <path d="M220 85 C220 68 226 58 232 58C237 58 241 65 241 72C241 79 237 83 234 85C237 87 241 91 241 98C241 105 237 109 232 109C226 109 220 98 220 85Z" fill="#1B3060" stroke="#2D6A4F" stroke-width="1.5"/>
+      <!-- Checkmark coração -->
+      <path d="M255 68 C255 62 261 58 265 62 C269 58 275 62 275 68 C275 74 265 82 265 82 C265 82 255 74 255 68Z" fill="rgba(45,106,79,0.3)" stroke="#2D6A4F" stroke-width="1"/>
+      <!-- Pros transplante -->
+      <text x="198" y="125" font-family="Georgia,serif" font-size="9" fill="#5DCB8A">✓ Melhor qualidade de vida</text>
+      <text x="198" y="139" font-family="Georgia,serif" font-size="9" fill="#5DCB8A">✓ Maior sobrevida</text>
+      <text x="198" y="153" font-family="Georgia,serif" font-size="9" fill="#F07070">✗ Espera em lista</text>
+      <text x="198" y="167" font-family="Georgia,serif" font-size="9" fill="#F07070">✗ Imunossupressão</text>
+      <!-- VS central -->
+      <text x="160" y="115" font-family="Georgia,serif" font-size="16" font-weight="700" fill="rgba(212,168,71,0.25)" text-anchor="middle">VS</text>
+      <line x1="145" y1="35" x2="145" y2="175" stroke="rgba(212,168,71,0.15)" stroke-width="1" stroke-dasharray="6 4"/>
+      <!-- Notas rodapé -->
+      <text x="160" y="200" font-family="Georgia,serif" font-size="8" fill="rgba(212,168,71,0.5)" text-anchor="middle" font-style="italic">A decisão deve ser individualizada com seu médico</text>
+    </svg>`,
+    texto: `
+      <h3>Hemodiálise</h3>
+      <p>A hemodiálise substitui parcialmente a função dos rins por meio de sessões regulares de 3 a 5 horas, 3 vezes por semana. É uma terapia de manutenção que controla os sintomas da doença renal terminal mas não cura a doença.</p>
+      <h3>Transplante renal</h3>
+      <p>O transplante renal é considerado o tratamento ideal para a maioria dos pacientes com doença renal terminal. Oferece melhor qualidade de vida e maior sobrevida quando comparado à diálise crônica.</p>
+      <h3>Comparativo</h3>
+      <ul>
+        <li>Sobrevida: transplante oferece expectativa de vida superior à diálise</li>
+        <li>Qualidade de vida: transplantados relatam melhora significativa no bem-estar</li>
+        <li>Acesso: transplante depende de compatibilidade e disponibilidade de doador</li>
+        <li>Custos: transplante é mais custo-efetivo a longo prazo</li>
+        <li>Complicações: transplante exige imunossupressão para evitar rejeição</li>
+      </ul>
+      <h3>Quem pode ser transplantado?</h3>
+      <p>A elegibilidade para transplante é avaliada individualmente, considerando idade, condições clínicas associadas, condições cardiovasculares e motivação do paciente. Pacientes em diálise podem e devem ser avaliados para transplante.</p>`
+  },
+  dieta: {
+    eyebrow: 'Nutrição',
+    title: 'Dieta na Doença Renal',
+    ilus: `<svg width="320" height="260" viewBox="0 0 320 260" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <!-- Prato principal -->
+      <circle cx="130" cy="140" r="90" fill="#152640" stroke="#D4A847" stroke-width="1.5" opacity="0.5"/>
+      <circle cx="130" cy="140" r="74" fill="none" stroke="#D4A847" stroke-width="0.8" opacity="0.2"/>
+      <!-- Divisões do prato -->
+      <path d="M130 66 L130 140" stroke="rgba(212,168,71,0.15)" stroke-width="1"/>
+      <path d="M56 140 L130 140" stroke="rgba(212,168,71,0.15)" stroke-width="1"/>
+      <!-- Proteínas (1/4 do prato) -->
+      <path d="M130 66 A74 74 0 0 1 204 140 L130 140Z" fill="rgba(163,45,45,0.15)" stroke="rgba(163,45,45,0.3)" stroke-width="1"/>
+      <text x="165" y="112" font-family="Georgia,serif" font-size="9" fill="#F07070" text-anchor="middle">Proteína</text>
+      <text x="165" y="122" font-family="Georgia,serif" font-size="8" fill="#F07070" text-anchor="middle" opacity="0.7">Controlada</text>
+      <!-- Vegetais/frutas (1/4) -->
+      <path d="M204 140 A74 74 0 0 1 130 214 L130 140Z" fill="rgba(45,106,79,0.15)" stroke="rgba(45,106,79,0.3)" stroke-width="1"/>
+      <text x="165" y="175" font-family="Georgia,serif" font-size="9" fill="#5DCB8A" text-anchor="middle">Vegetais</text>
+      <text x="165" y="185" font-family="Georgia,serif" font-size="8" fill="#5DCB8A" text-anchor="middle" opacity="0.7">Baixo K⁺</text>
+      <!-- Carboidratos (1/2) -->
+      <path d="M130 214 A74 74 0 0 1 56 140 A74 74 0 0 1 130 66 L130 140Z" fill="rgba(156,100,0,0.12)" stroke="rgba(156,100,0,0.25)" stroke-width="1"/>
+      <text x="92" y="148" font-family="Georgia,serif" font-size="9" fill="#E8B84A" text-anchor="middle">Carboidratos</text>
+      <!-- Alertas -->
+      <!-- Sal -->
+      <rect x="220" y="40" width="85" height="32" rx="6" fill="rgba(163,45,45,0.12)" stroke="#A32D2D" stroke-width="1"/>
+      <text x="262" y="52" font-family="Georgia,serif" font-size="9" fill="#F07070" text-anchor="middle">🧂 Sal (sódio)</text>
+      <text x="262" y="64" font-family="Georgia,serif" font-size="8" fill="#F07070" text-anchor="middle" opacity="0.7">Máx 2g/dia</text>
+      <!-- Potássio -->
+      <rect x="220" y="82" width="85" height="32" rx="6" fill="rgba(163,45,45,0.12)" stroke="#A32D2D" stroke-width="1"/>
+      <text x="262" y="94" font-family="Georgia,serif" font-size="9" fill="#F07070" text-anchor="middle">K⁺ Potássio</text>
+      <text x="262" y="106" font-family="Georgia,serif" font-size="8" fill="#F07070" text-anchor="middle" opacity="0.7">Restringir</text>
+      <!-- Fósforo -->
+      <rect x="220" y="124" width="85" height="32" rx="6" fill="rgba(156,100,0,0.12)" stroke="#9C6400" stroke-width="1"/>
+      <text x="262" y="136" font-family="Georgia,serif" font-size="9" fill="#E8B84A" text-anchor="middle">P Fósforo</text>
+      <text x="262" y="148" font-family="Georgia,serif" font-size="8" fill="#E8B84A" text-anchor="middle" opacity="0.7">Controlar</text>
+      <!-- Água -->
+      <rect x="220" y="166" width="85" height="32" rx="6" fill="rgba(90,138,176,0.12)" stroke="#5A8AB0" stroke-width="1"/>
+      <text x="262" y="178" font-family="Georgia,serif" font-size="9" fill="#8AB4D4" text-anchor="middle">💧 Líquidos</text>
+      <text x="262" y="190" font-family="Georgia,serif" font-size="8" fill="#8AB4D4" text-anchor="middle" opacity="0.7">Conforme diurese</text>
+      <!-- OK badge -->
+      <rect x="220" y="208" width="85" height="32" rx="6" fill="rgba(45,106,79,0.12)" stroke="#2D6A4F" stroke-width="1"/>
+      <text x="262" y="220" font-family="Georgia,serif" font-size="9" fill="#5DCB8A" text-anchor="middle">✓ Proteína</text>
+      <text x="262" y="232" font-family="Georgia,serif" font-size="8" fill="#5DCB8A" text-anchor="middle" opacity="0.7">Adequada</text>
+    </svg>`,
+    texto: `
+      <h3>Por que a dieta é importante na DRC?</h3>
+      <p>Os rins doentes não conseguem eliminar todos os resíduos e minerais em excesso. A dieta adequada ajuda a reduzir o acúmulo de substâncias prejudiciais e retardar a progressão da doença.</p>
+      <h3>Potássio (K⁺)</h3>
+      <ul>
+        <li>Excesso causa arritmias cardíacas graves</li>
+        <li>Evitar: banana, laranja, tomate, batata, feijão, chocolate</li>
+        <li>Preferir: maçã, pera, morango, repolho, pepino</li>
+        <li>Cozinhar legumes em bastante água (descarta o caldo)</li>
+      </ul>
+      <h3>Fósforo (P)</h3>
+      <ul>
+        <li>Excesso causa coceira, calcificações e fragilidade óssea</li>
+        <li>Evitar: leite, queijo, refrigerantes escuros, embutidos</li>
+        <li>Quelatores de fósforo devem ser tomados com as refeições</li>
+      </ul>
+      <h3>Sódio (sal)</h3>
+      <ul>
+        <li>Aumenta a pressão arterial e retenção de líquidos</li>
+        <li>Limite: 2g de sódio por dia (menos de 5g de sal)</li>
+        <li>Evitar: alimentos processados, enlatados, temperos prontos</li>
+      </ul>
+      <h3>Proteínas</h3>
+      <p>Pacientes sem diálise devem restringir proteínas (0,6-0,8g/kg/dia). Pacientes em diálise precisam de mais proteína (1,2g/kg/dia) devido às perdas na sessão.</p>`
+  },
+  pressao: {
+    eyebrow: 'Cardiovascular',
+    title: 'Controle da Pressão Arterial',
+    ilus: `<svg width="320" height="240" viewBox="0 0 320 240" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <!-- Escala de pressão -->
+      <rect x="20" y="20" width="180" height="200" rx="8" fill="#152640" stroke="#D4A847" stroke-width="1" opacity="0.7"/>
+      <text x="110" y="14" font-family="Georgia,serif" font-size="10" fill="#D4A847" text-anchor="middle" opacity="0.8">PAS (mmHg)</text>
+      <!-- Faixas de pressão -->
+      <rect x="28" y="28" width="164" height="36" rx="4" fill="rgba(45,106,79,0.3)" stroke="#2D6A4F" stroke-width="1"/>
+      <text x="110" y="42" font-family="Georgia,serif" font-size="10" fill="#5DCB8A" text-anchor="middle" font-weight="700">Normal</text>
+      <text x="110" y="56" font-family="Georgia,serif" font-size="9" fill="#5DCB8A" text-anchor="middle" opacity="0.8">< 120 mmHg</text>
+      <rect x="28" y="70" width="164" height="36" rx="4" fill="rgba(45,106,79,0.2)" stroke="#2D6A4F" stroke-width="0.8"/>
+      <text x="110" y="84" font-family="Georgia,serif" font-size="10" fill="#5DCB8A" text-anchor="middle">Normal-elevada</text>
+      <text x="110" y="98" font-family="Georgia,serif" font-size="9" fill="#5DCB8A" text-anchor="middle" opacity="0.7">120–129 mmHg</text>
+      <rect x="28" y="112" width="164" height="36" rx="4" fill="rgba(156,100,0,0.25)" stroke="#9C6400" stroke-width="1"/>
+      <text x="110" y="126" font-family="Georgia,serif" font-size="10" fill="#E8B84A" text-anchor="middle" font-weight="700">Hipertensão G1</text>
+      <text x="110" y="140" font-family="Georgia,serif" font-size="9" fill="#E8B84A" text-anchor="middle" opacity="0.8">130–139 mmHg</text>
+      <rect x="28" y="154" width="164" height="36" rx="4" fill="rgba(163,45,45,0.25)" stroke="#A32D2D" stroke-width="1"/>
+      <text x="110" y="168" font-family="Georgia,serif" font-size="10" fill="#F07070" text-anchor="middle" font-weight="700">Hipertensão G2</text>
+      <text x="110" y="182" font-family="Georgia,serif" font-size="9" fill="#F07070" text-anchor="middle" opacity="0.8">≥ 140 mmHg</text>
+      <rect x="28" y="196" width="164" height="16" rx="4" fill="rgba(163,45,45,0.4)" stroke="#A32D2D" stroke-width="1"/>
+      <text x="110" y="208" font-family="Georgia,serif" font-size="9" fill="#F07070" text-anchor="middle">Crise hipertensiva ≥ 180</text>
+      <!-- Rim e coração conectados à PA -->
+      <path d="M215 80 C215 64 221 54 227 54C232 54 236 61 236 68C236 75 232 79 229 81C232 83 236 87 236 94C236 101 232 105 227 105C221 105 215 94 215 80Z" fill="#1B3060" stroke="#D4A847" stroke-width="1.5"/>
+      <text x="227" y="118" font-family="Georgia,serif" font-size="8" fill="#D4A847" text-anchor="middle" opacity="0.7">Rim</text>
+      <path d="M255 148 C255 140 262 136 267 140 C272 136 279 140 279 148 C279 156 267 164 267 164 C267 164 255 156 255 148Z" fill="rgba(163,45,45,0.25)" stroke="#A32D2D" stroke-width="1.2"/>
+      <text x="267" y="175" font-family="Georgia,serif" font-size="8" fill="#A32D2D" text-anchor="middle" opacity="0.7">Coração</text>
+      <!-- Seta bidirecional -->
+      <path d="M236 80 C244 80 250 90 255 110 C258 125 263 138 265 144" stroke="rgba(212,168,71,0.3)" stroke-width="1.2" stroke-dasharray="4 3"/>
+      <text x="252" y="115" font-family="Georgia,serif" font-size="7" fill="#D4A847" text-anchor="middle" opacity="0.5" transform="rotate(-70 252 115)">interação</text>
+    </svg>`,
+    texto: `
+      <h3>A relação entre hipertensão e rins</h3>
+      <p>Hipertensão arterial e doença renal crônica têm uma relação bidirecional: a hipertensão danifica os rins ao longo do tempo, e os rins doentes pioram o controle da pressão arterial. É um ciclo vicioso que precisa ser interrompido com tratamento adequado.</p>
+      <h3>Metas de pressão arterial na DRC</h3>
+      <ul>
+        <li>Pacientes com DRC sem proteinúria: < 140/90 mmHg</li>
+        <li>Pacientes com DRC e proteinúria: < 130/80 mmHg</li>
+        <li>Pacientes em diálise: meta individualizada</li>
+        <li>Diabéticos com DRC: < 130/80 mmHg</li>
+      </ul>
+      <h3>Como os rins controlam a pressão</h3>
+      <ul>
+        <li>Sistema renina-angiotensina-aldosterona (SRAA)</li>
+        <li>Regulação do volume de líquido corporal</li>
+        <li>Eliminação de sódio e água</li>
+        <li>Produção de prostaglandinas vasodilatadoras</li>
+      </ul>
+      <h3>Medidas não medicamentosas</h3>
+      <ul>
+        <li>Reduzir sal na alimentação (< 2g sódio/dia)</li>
+        <li>Manter peso adequado</li>
+        <li>Atividade física regular (150 min/semana)</li>
+        <li>Evitar tabagismo e álcool excessivo</li>
+        <li>Controle do estresse</li>
+      </ul>`
+  },
+  diabetes: {
+    eyebrow: 'Metabólico',
+    title: 'Diabetes e Rim',
+    ilus: `<svg width="320" height="240" viewBox="0 0 320 240" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <!-- Timeline de progressão -->
+      <text x="160" y="18" font-family="Georgia,serif" font-size="10" fill="#D4A847" text-anchor="middle" opacity="0.7">Progressão da Nefropatia Diabética</text>
+      <!-- Seta de progressão -->
+      <path d="M20 40 L290 40" stroke="rgba(212,168,71,0.3)" stroke-width="1.5"/>
+      <path d="M285 36 L292 40 L285 44" fill="none" stroke="rgba(212,168,71,0.4)" stroke-width="1.2"/>
+      <!-- Estágios -->
+      <!-- Estágio 1 -->
+      <rect x="15" y="52" width="52" height="130" rx="6" fill="rgba(45,106,79,0.15)" stroke="#2D6A4F" stroke-width="1"/>
+      <text x="41" y="68" font-family="Georgia,serif" font-size="8" fill="#5DCB8A" text-anchor="middle" font-weight="700">Fase 1</text>
+      <path d="M26 80 C26 70 30 64 34 64C37 64 39 67 39 70C39 73 37 74 35 75C37 76 39 78 39 81C39 84 37 85 34 85C30 85 26 80 26 80Z" fill="#1B3060" stroke="#2D6A4F" stroke-width="1"/>
+      <text x="41" y="100" font-family="Georgia,serif" font-size="7" fill="#5DCB8A" text-anchor="middle">Normal</text>
+      <text x="41" y="112" font-family="Georgia,serif" font-size="7" fill="#5DCB8A" text-anchor="middle" opacity="0.7">Glicose</text>
+      <text x="41" y="122" font-family="Georgia,serif" font-size="7" fill="#5DCB8A" text-anchor="middle" opacity="0.7">controlada</text>
+      <!-- Estágio 2 -->
+      <rect x="73" y="52" width="52" height="130" rx="6" fill="rgba(45,106,79,0.1)" stroke="#2D6A4F" stroke-width="0.8"/>
+      <text x="99" y="68" font-family="Georgia,serif" font-size="8" fill="#5DCB8A" text-anchor="middle" font-weight="700">Fase 2</text>
+      <path d="M82 82 C82 70 87 62 92 62C97 62 100 67 100 72C100 77 97 79 94 80C97 82 100 85 100 90C100 95 97 97 92 97C87 97 82 90 82 82Z" fill="#1B3060" stroke="#E8B84A" stroke-width="1" opacity="0.8"/>
+      <text x="99" y="110" font-family="Georgia,serif" font-size="7" fill="#E8B84A" text-anchor="middle">Micro-</text>
+      <text x="99" y="120" font-family="Georgia,serif" font-size="7" fill="#E8B84A" text-anchor="middle">albuminúria</text>
+      <!-- Estágio 3 -->
+      <rect x="131" y="52" width="52" height="130" rx="6" fill="rgba(156,100,0,0.1)" stroke="#9C6400" stroke-width="0.8"/>
+      <text x="157" y="68" font-family="Georgia,serif" font-size="8" fill="#E8B84A" text-anchor="middle" font-weight="700">Fase 3</text>
+      <path d="M138 85 C138 70 145 60 151 60C157 60 161 66 161 73C161 80 157 83 154 84C157 86 161 90 161 97C161 104 157 107 151 107C145 107 138 98 138 85Z" fill="#1B3060" stroke="#E8B84A" stroke-width="1.2"/>
+      <text x="157" y="120" font-family="Georgia,serif" font-size="7" fill="#E8B84A" text-anchor="middle">Macro-</text>
+      <text x="157" y="130" font-family="Georgia,serif" font-size="7" fill="#E8B84A" text-anchor="middle">albuminúria</text>
+      <!-- Estágio 4 -->
+      <rect x="189" y="52" width="52" height="130" rx="6" fill="rgba(163,45,45,0.1)" stroke="#A32D2D" stroke-width="0.8"/>
+      <text x="215" y="68" font-family="Georgia,serif" font-size="8" fill="#F07070" text-anchor="middle" font-weight="700">Fase 4</text>
+      <path d="M194 90 C194 73 202 61 209 61C215 61 220 68 220 76C220 84 215 88 212 89C215 91 220 96 220 104C220 112 215 116 209 116C202 116 194 105 194 90Z" fill="#1B3060" stroke="#A32D2D" stroke-width="1.3"/>
+      <text x="215" y="130" font-family="Georgia,serif" font-size="7" fill="#F07070" text-anchor="middle">DRC</text>
+      <text x="215" y="140" font-family="Georgia,serif" font-size="7" fill="#F07070" text-anchor="middle">avançada</text>
+      <!-- Estágio 5 -->
+      <rect x="247" y="52" width="52" height="130" rx="6" fill="rgba(163,45,45,0.18)" stroke="#A32D2D" stroke-width="1"/>
+      <text x="273" y="68" font-family="Georgia,serif" font-size="8" fill="#F07070" text-anchor="middle" font-weight="700">Fase 5</text>
+      <path d="M254 96 C254 77 263 63 271 63C278 63 284 71 284 80C284 89 278 94 274 95C278 97 284 103 284 113C284 123 278 128 271 128C263 128 254 115 254 96Z" fill="#1B3060" stroke="#A32D2D" stroke-width="1.5"/>
+      <text x="273" y="142" font-family="Georgia,serif" font-size="7" fill="#F07070" text-anchor="middle">Falência</text>
+      <text x="273" y="152" font-family="Georgia,serif" font-size="7" fill="#F07070" text-anchor="middle">renal</text>
+      <!-- Nota prevenção -->
+      <rect x="15" y="195" width="290" height="35" rx="6" fill="rgba(45,106,79,0.1)" stroke="#2D6A4F" stroke-width="0.8"/>
+      <text x="160" y="208" font-family="Georgia,serif" font-size="9" fill="#5DCB8A" text-anchor="middle">Prevenção: controle glicêmico (HbA1c < 7%), PA < 130/80,</text>
+      <text x="160" y="222" font-family="Georgia,serif" font-size="9" fill="#5DCB8A" text-anchor="middle">uso de IECA/BRA e SGLT2i quando indicado</text>
+    </svg>`,
+    texto: `
+      <h3>O que é nefropatia diabética?</h3>
+      <p>A nefropatia diabética é uma complicação do diabetes mellitus que afeta os rins. É a principal causa de doença renal crônica terminal no mundo. Ocorre quando o excesso de glicose no sangue danifica os glomérulos renais ao longo dos anos.</p>
+      <h3>Como o diabetes danifica os rins</h3>
+      <ul>
+        <li>A hiperglicemia crônica danifica os capilares glomerulares</li>
+        <li>Espessamento da membrana basal glomerular</li>
+        <li>Expansão mesangial e esclerose glomerular (lesão de Kimmelstiel-Wilson)</li>
+        <li>Redução progressiva da taxa de filtração glomerular</li>
+      </ul>
+      <h3>Sinais de alerta precoces</h3>
+      <ul>
+        <li>Microalbuminúria (30–300 mg/g creatinina) — sinal inicial</li>
+        <li>Macroalbuminúria (> 300 mg/g) — dano estabelecido</li>
+        <li>Elevação da creatinina sérica</li>
+        <li>Redução da TFG estimada</li>
+        <li>Hipertensão arterial de difícil controle</li>
+      </ul>
+      <h3>Prevenção e tratamento</h3>
+      <ul>
+        <li>Controle glicêmico rigoroso (HbA1c < 7%)</li>
+        <li>Controle pressórico (< 130/80 mmHg)</li>
+        <li>Uso de IECA ou BRA (proteção renal)</li>
+        <li>Inibidores de SGLT2 (gliflozinas) — nefroprotetores</li>
+        <li>Restrição proteica moderada na dieta</li>
+        <li>Cessação do tabagismo</li>
+      </ul>`
+  },
+  acesso: {
+    eyebrow: 'Acesso Vascular',
+    title: 'Acesso Vascular para Hemodiálise',
+    ilus: `<svg width="320" height="260" viewBox="0 0 320 260" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <!-- FAV -->
+      <text x="70" y="18" font-family="Georgia,serif" font-size="11" font-weight="700" fill="#D4A847" text-anchor="middle">FAV Nativa</text>
+      <text x="185" y="18" font-family="Georgia,serif" font-size="11" font-weight="700" fill="#5A8AB0" text-anchor="middle">Cateter</text>
+      <line x1="130" y1="10" x2="130" y2="250" stroke="rgba(212,168,71,0.1)" stroke-width="1" stroke-dasharray="6 4"/>
+      <!-- Braço FAV -->
+      <path d="M20 60 C18 60 16 70 16 110 C16 150 18 170 20 175 L80 175 C82 170 84 150 84 110 C84 70 82 60 80 60 Z" fill="#1B3060" stroke="#D4A847" stroke-width="1" opacity="0.5"/>
+      <!-- Artéria (vermelha) -->
+      <path d="M32 80 L32 145" stroke="#A32D2D" stroke-width="3" stroke-linecap="round"/>
+      <!-- Veia (azul/verde com dilatação pós FAV) -->
+      <path d="M68 80 C68 80 60 85 56 95 C52 105 54 120 60 130 C64 137 68 140 68 145" stroke="#2D6A4F" stroke-width="4" stroke-linecap="round"/>
+      <!-- Anastomose -->
+      <path d="M32 145 C40 148 55 148 68 145" stroke="#D4A847" stroke-width="2" fill="none" stroke-linecap="round"/>
+      <!-- Círculo anastomose -->
+      <circle cx="50" cy="148" r="8" fill="#152640" stroke="#D4A847" stroke-width="1.5"/>
+      <text x="50" y="152" font-family="Georgia,serif" font-size="6" fill="#D4A847" text-anchor="middle">Anast</text>
+      <!-- Tremor/fremito -->
+      <path d="M62 100 C65 96 68 100 65 104 C68 108 72 104 68 100" stroke="#D4A847" stroke-width="1" opacity="0.5"/>
+      <text x="50" y="190" font-family="Georgia,serif" font-size="8" fill="#D4A847" text-anchor="middle" opacity="0.7">Fístula Arteriovenosa</text>
+      <text x="50" y="202" font-family="Georgia,serif" font-size="7" fill="#D4A847" text-anchor="middle" opacity="0.5">1ª escolha — melhor opção</text>
+      <!-- Labels artéria/veia -->
+      <text x="25" y="76" font-family="Georgia,serif" font-size="7" fill="#A32D2D" opacity="0.7">A</text>
+      <text x="70" y="76" font-family="Georgia,serif" font-size="7" fill="#2D6A4F" opacity="0.7">V</text>
+      <!-- Cateter -->
+      <!-- Pescoço/jugular -->
+      <path d="M155 30 C155 30 158 42 158 58 L175 58 C175 42 178 30 178 30" stroke="#5A8AB0" stroke-width="1.5" fill="none" opacity="0.7"/>
+      <path d="M153 30 L180 30" stroke="#5A8AB0" stroke-width="2" stroke-linecap="round" opacity="0.8"/>
+      <!-- Veia cava/coração -->
+      <path d="M158 58 L158 140 M175 58 L175 140" stroke="#5A8AB0" stroke-width="2" opacity="0.7"/>
+      <!-- Bifurcação -->
+      <path d="M158 140 C155 150 152 160 150 170" stroke="#A32D2D" stroke-width="1.8" opacity="0.7" stroke-linecap="round"/>
+      <path d="M175 140 C178 150 181 160 183 170" stroke="#2D6A4F" stroke-width="1.8" opacity="0.7" stroke-linecap="round"/>
+      <!-- Ponta no átrio -->
+      <path d="M158 140 C160 145 167 148 175 140" fill="none" stroke="#5A8AB0" stroke-width="1.2"/>
+      <!-- Coração simplificado -->
+      <path d="M148 195 C148 185 155 180 160 185 C165 180 172 185 172 195 C172 205 160 214 160 214 C160 214 148 205 148 195Z" fill="rgba(163,45,45,0.2)" stroke="#A32D2D" stroke-width="1"/>
+      <!-- Clamps/conectores -->
+      <rect x="147" y="165" width="11" height="8" rx="2" fill="#152640" stroke="#A32D2D" stroke-width="0.8"/>
+      <rect x="177" y="165" width="11" height="8" rx="2" fill="#152640" stroke="#2D6A4F" stroke-width="0.8"/>
+      <text x="167" y="230" font-family="Georgia,serif" font-size="8" fill="#5A8AB0" text-anchor="middle" opacity="0.7">Cateter de Longa Permanência</text>
+      <text x="167" y="242" font-family="Georgia,serif" font-size="7" fill="#5A8AB0" text-anchor="middle" opacity="0.5">Uso temporário ou quando FAV indisponível</text>
+      <!-- Comparativo cuidados -->
+      <rect x="215" y="25" width="95" height="210" rx="8" fill="#152640" stroke="rgba(212,168,71,0.15)" stroke-width="1"/>
+      <text x="262" y="42" font-family="Georgia,serif" font-size="9" fill="#D4A847" text-anchor="middle" font-weight="700">Cuidados</text>
+      <text x="262" y="58" font-family="Georgia,serif" font-size="8" fill="#5DCB8A" text-anchor="middle">FAV</text>
+      <text x="222" y="72" font-family="Georgia,serif" font-size="7" fill="rgba(232,213,160,0.6)">✓ Não apertar</text>
+      <text x="222" y="84" font-family="Georgia,serif" font-size="7" fill="rgba(232,213,160,0.6)">✓ Não dormir em cima</text>
+      <text x="222" y="96" font-family="Georgia,serif" font-size="7" fill="rgba(232,213,160,0.6)">✓ Ouvir o fremito</text>
+      <text x="222" y="108" font-family="Georgia,serif" font-size="7" fill="rgba(232,213,160,0.6)">✓ Higiene local</text>
+      <line x1="222" y1="118" x2="302" y2="118" stroke="rgba(212,168,71,0.15)" stroke-width="1"/>
+      <text x="262" y="132" font-family="Georgia,serif" font-size="8" fill="#5A8AB0" text-anchor="middle">Cateter</text>
+      <text x="222" y="146" font-family="Georgia,serif" font-size="7" fill="rgba(232,213,160,0.6)">✓ Não molhar</text>
+      <text x="222" y="158" font-family="Georgia,serif" font-size="7" fill="rgba(232,213,160,0.6)">✓ Troca curativo</text>
+      <text x="222" y="170" font-family="Georgia,serif" font-size="7" fill="rgba(232,213,160,0.6)">✓ Não puxar</text>
+      <text x="222" y="182" font-family="Georgia,serif" font-size="7" fill="rgba(232,213,160,0.6)">✓ Sinais infecção</text>
+      <text x="222" y="198" font-family="Georgia,serif" font-size="7" fill="#F07070">✗ Não mergulhar</text>
+    </svg>`,
+    texto: `
+      <h3>Tipos de acesso vascular</h3>
+      <p>O acesso vascular é a "porta de entrada" para a hemodiálise — permite que o sangue circule entre o paciente e a máquina de diálise. A escolha do acesso impacta diretamente na qualidade do tratamento.</p>
+      <h3>Fístula Arteriovenosa (FAV) — 1ª escolha</h3>
+      <ul>
+        <li>Criada cirurgicamente conectando uma artéria a uma veia</li>
+        <li>A veia "arterializa" — torna-se mais calibrosa e resistente</li>
+        <li>Menor taxa de infecção e complicações</li>
+        <li>Maior durabilidade (anos a décadas)</li>
+        <li>Requer de 1 a 3 meses para maturação antes do uso</li>
+        <li>Deve ser planejada antes do início da diálise</li>
+      </ul>
+      <h3>Cateter de Longa Permanência</h3>
+      <ul>
+        <li>Inserido na veia jugular interna ou subclávia</li>
+        <li>Ponta posicionada no átrio direito ou veia cava superior</li>
+        <li>Pode ser usado imediatamente</li>
+        <li>Maior risco de infecção (bacteremia)</li>
+        <li>Usado quando FAV não está disponível ou maturada</li>
+      </ul>
+      <h3>Cuidados com a FAV</h3>
+      <ul>
+        <li>Verificar o fremito (vibração) diariamente — sua ausência é emergência</li>
+        <li>Não dormir sobre o braço da fístula</li>
+        <li>Evitar apertar, comprimir ou usar relógio/pulseira neste braço</li>
+        <li>Não permitir punção venosa ou aferição de PA neste braço</li>
+        <li>Manter higiene e observar sinais de infecção</li>
+      </ul>`
+  },
+  estagios: {
+    eyebrow: 'Doença Renal Crônica',
+    title: 'Estágios da DRC',
+    ilus: `<svg width="320" height="280" viewBox="0 0 320 280" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <!-- Cabeçalho -->
+      <text x="160" y="18" font-family="Georgia,serif" font-size="10" fill="#D4A847" text-anchor="middle" opacity="0.7">Classificação KDIGO — TFG e Albuminúria</text>
+      <!-- Tabela de estágios -->
+      <!-- G1 -->
+      <rect x="10" y="26" width="300" height="42" rx="5" fill="rgba(45,106,79,0.2)" stroke="#2D6A4F" stroke-width="1"/>
+      <text x="30" y="44" font-family="Georgia,serif" font-size="12" font-weight="700" fill="#5DCB8A">G1</text>
+      <text x="60" y="44" font-family="Georgia,serif" font-size="10" fill="#5DCB8A">Normal ou aumentada</text>
+      <text x="60" y="58" font-family="Georgia,serif" font-size="9" fill="#5DCB8A" opacity="0.7">TFG ≥ 90 mL/min/1,73m²</text>
+      <path d="M230 27 C230 27 245 35 248 48 C245 60 230 68 230 68" fill="none" stroke="#2D6A4F" stroke-width="1.5" opacity="0.5"/>
+      <!-- Rim G1 -->
+      <path d="M270 36 C270 28 274 23 277 23C280 23 282 26 282 29C282 32 280 34 278 35C280 36 282 38 282 41C282 44 280 46 277 46C274 46 270 41 270 36Z" fill="#1B3060" stroke="#5DCB8A" stroke-width="1.2"/>
+      <text x="276" y="57" font-family="Georgia,serif" font-size="7" fill="#5DCB8A" text-anchor="middle" opacity="0.6">Saudável</text>
+      <!-- G2 -->
+      <rect x="10" y="74" width="300" height="42" rx="5" fill="rgba(45,106,79,0.15)" stroke="#2D6A4F" stroke-width="0.8"/>
+      <text x="30" y="92" font-family="Georgia,serif" font-size="12" font-weight="700" fill="#5DCB8A">G2</text>
+      <text x="60" y="92" font-family="Georgia,serif" font-size="10" fill="#5DCB8A">Levemente reduzida</text>
+      <text x="60" y="106" font-family="Georgia,serif" font-size="9" fill="#5DCB8A" opacity="0.7">TFG 60–89 mL/min/1,73m²</text>
+      <path d="M270 80 C270 72 274 67 277 67C279 67 281 70 281 73C281 76 279 78 277 79C279 80 281 82 281 85C281 88 279 90 277 90C274 90 270 86 270 80Z" fill="#1B3060" stroke="#5DCB8A" stroke-width="1" opacity="0.9"/>
+      <!-- G3 -->
+      <rect x="10" y="122" width="300" height="42" rx="5" fill="rgba(156,100,0,0.18)" stroke="#9C6400" stroke-width="1"/>
+      <text x="30" y="140" font-family="Georgia,serif" font-size="12" font-weight="700" fill="#E8B84A">G3</text>
+      <text x="60" y="140" font-family="Georgia,serif" font-size="10" fill="#E8B84A">Redução moderada (G3a/G3b)</text>
+      <text x="60" y="154" font-family="Georgia,serif" font-size="9" fill="#E8B84A" opacity="0.7">TFG 30–59 mL/min/1,73m²</text>
+      <path d="M272 128 C272 122 276 117 278 117C280 117 282 120 282 123C282 126 280 128 278 129C280 130 282 132 282 135C282 138 280 140 278 140C276 140 272 136 272 128Z" fill="#1B3060" stroke="#E8B84A" stroke-width="1"/>
+      <!-- G4 -->
+      <rect x="10" y="170" width="300" height="42" rx="5" fill="rgba(163,45,45,0.18)" stroke="#A32D2D" stroke-width="1"/>
+      <text x="30" y="188" font-family="Georgia,serif" font-size="12" font-weight="700" fill="#F07070">G4</text>
+      <text x="60" y="188" font-family="Georgia,serif" font-size="10" fill="#F07070">Redução grave</text>
+      <text x="60" y="202" font-family="Georgia,serif" font-size="9" fill="#F07070" opacity="0.7">TFG 15–29 mL/min/1,73m² · Preparar para TRS</text>
+      <path d="M273 175 C273 170 276 166 278 166C280 166 281 168 281 170C281 172 280 173 279 174C280 175 281 177 281 179C281 181 280 182 278 182C276 182 273 179 273 175Z" fill="#1B3060" stroke="#F07070" stroke-width="1"/>
+      <!-- G5 -->
+      <rect x="10" y="218" width="300" height="42" rx="5" fill="rgba(163,45,45,0.28)" stroke="#A32D2D" stroke-width="1.2"/>
+      <text x="30" y="236" font-family="Georgia,serif" font-size="12" font-weight="700" fill="#F07070">G5</text>
+      <text x="60" y="236" font-family="Georgia,serif" font-size="10" fill="#F07070">Falência renal — TRS indicada</text>
+      <text x="60" y="250" font-family="Georgia,serif" font-size="9" fill="#F07070" opacity="0.7">TFG < 15 mL/min/1,73m² · Diálise ou Transplante</text>
+      <path d="M274 223 C274 219 277 216 279 216C280 216 281 218 281 220C281 222 280 223 279 224C280 225 281 226 281 228C281 230 280 231 279 231C277 231 274 228 274 223Z" fill="#1B3060" stroke="#F07070" stroke-width="1.2"/>
+    </svg>`,
+    texto: `
+      <h3>O que é a Doença Renal Crônica?</h3>
+      <p>A Doença Renal Crônica (DRC) é definida pela presença de alterações da estrutura ou função dos rins por mais de 3 meses, com implicações para a saúde. A classificação em estágios orienta o tratamento e o seguimento dos pacientes.</p>
+      <h3>Estágio G1 — TFG ≥ 90</h3>
+      <p>Função renal normal ou aumentada. A doença pode estar presente por outros marcadores (proteinúria, alterações na imagem). Foco em tratar a causa base e prevenir progressão.</p>
+      <h3>Estágio G2 — TFG 60-89</h3>
+      <p>Redução leve da função renal. Geralmente assintomático. Controle dos fatores de risco cardiovasculares e monitoramento semestral.</p>
+      <h3>Estágio G3 — TFG 30-59</h3>
+      <p>Redução moderada. Podem surgir primeiros sintomas: anemia, hipertensão, alterações ósseas. Seguimento com nefrologista obrigatório.</p>
+      <h3>Estágio G4 — TFG 15-29</h3>
+      <p>Redução grave. Sintomas mais evidentes. Este é o momento de planejar e preparar o acesso vascular para diálise futura. Educação sobre modalidades de TRS.</p>
+      <h3>Estágio G5 — TFG < 15</h3>
+      <p>Falência renal. Terapia Renal Substitutiva (TRS) indicada: hemodiálise, diálise peritoneal ou transplante renal. Decisão compartilhada com o paciente.</p>
+      <h3>Causas mais comuns</h3>
+      <ul>
+        <li>Diabetes mellitus (principal causa)</li>
+        <li>Hipertensão arterial sistêmica</li>
+        <li>Glomerulopatias</li>
+        <li>Doenças policísticas renais</li>
+        <li>Obstruções urológicas crônicas</li>
+      </ul>`
+  },
+  litiase: {
+    eyebrow: 'Urologia / Nefrologia',
+    title: 'Litíase Renal',
+    ilus: `<svg width="320" height="280" viewBox="0 0 320 280" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <!-- Rim com cálculo ampliado -->
+      <path d="M55 140 C55 100 70 72 86 72C99 72 108 88 108 106C108 124 99 134 93 138C99 142 108 154 108 172C108 190 99 202 86 202C70 202 55 174 55 140Z" fill="#1B3060" stroke="#D4A847" stroke-width="2"/>
+      <!-- Pelve renal -->
+      <ellipse cx="86" cy="140" rx="22" ry="28" fill="#152640" stroke="#D4A847" stroke-width="1.2" opacity="0.8"/>
+      <!-- Cálices -->
+      <path d="M74 118 C67 108 69 98 75 95" stroke="#D4A847" stroke-width="1" opacity="0.6"/>
+      <path d="M86 114 C86 103 88 95 92 94" stroke="#D4A847" stroke-width="1" opacity="0.6"/>
+      <path d="M98 120 C106 110 107 100 101 97" stroke="#D4A847" stroke-width="1" opacity="0.6"/>
+      <path d="M74 162 C67 172 69 182 75 185" stroke="#D4A847" stroke-width="1" opacity="0.6"/>
+      <path d="M98 160 C106 170 107 180 101 183" stroke="#D4A847" stroke-width="1" opacity="0.6"/>
+      <!-- Cálculo principal -->
+      <path d="M78 132 C78 132 84 125 92 128 C98 130 101 137 97 143 C93 149 85 148 80 144 C75 140 76 132 78 132Z" fill="rgba(212,168,71,0.35)" stroke="#D4A847" stroke-width="1.5"/>
+      <!-- Ureter com cálculo -->
+      <path d="M86 202 C86 216 87 228 89 240" stroke="#D4A847" stroke-width="2" stroke-dasharray="6 4" opacity="0.5"/>
+      <circle cx="88" cy="222" r="6" fill="rgba(212,168,71,0.3)" stroke="#D4A847" stroke-width="1.5"/>
+      <!-- Dor coluna -->
+      <path d="M115 120 L125 112 M128 132 L140 132 M124 148 L132 156" stroke="#A32D2D" stroke-width="1.5" stroke-linecap="round" opacity="0.7"/>
+      <text x="148" y="135" font-family="Georgia,serif" font-size="9" fill="#F07070" opacity="0.7">Dor em</text>
+      <text x="148" y="147" font-family="Georgia,serif" font-size="9" fill="#F07070" opacity="0.7">cólica</text>
+      <!-- Ampliação do cálculo -->
+      <circle cx="230" cy="100" r="55" fill="rgba(13,27,53,0.8)" stroke="rgba(212,168,71,0.2)" stroke-width="1"/>
+      <text x="230" y="40" font-family="Georgia,serif" font-size="9" fill="#D4A847" text-anchor="middle" opacity="0.7">Detalhe: Cálculo</text>
+      <path d="M202 95 C202 95 210 84 222 88 C232 91 237 102 231 111 C225 120 213 118 206 112 C199 106 200 95 202 95Z" fill="rgba(212,168,71,0.25)" stroke="#D4A847" stroke-width="1.5"/>
+      <!-- Composição -->
+      <text x="230" y="125" font-family="Georgia,serif" font-size="8" fill="#D4A847" text-anchor="middle" opacity="0.6">Oxalato de cálcio</text>
+      <text x="230" y="137" font-family="Georgia,serif" font-size="7" fill="#D4A847" text-anchor="middle" opacity="0.4">(tipo mais comum)</text>
+      <!-- Tratamentos -->
+      <rect x="145" y="165" width="165" height="100" rx="8" fill="#152640" stroke="rgba(212,168,71,0.15)" stroke-width="1"/>
+      <text x="228" y="182" font-family="Georgia,serif" font-size="9" fill="#D4A847" text-anchor="middle" font-weight="700">Tratamento</text>
+      <text x="153" y="198" font-family="Georgia,serif" font-size="8" fill="#5DCB8A">✓ Hidratação intensa</text>
+      <text x="153" y="212" font-family="Georgia,serif" font-size="8" fill="#5DCB8A">✓ Analgesia</text>
+      <text x="153" y="226" font-family="Georgia,serif" font-size="8" fill="#E8B84A">⚡ Litotripsia (LECO)</text>
+      <text x="153" y="240" font-family="Georgia,serif" font-size="8" fill="#E8B84A">⚡ Ureteroscopia</text>
+      <text x="153" y="254" font-family="Georgia,serif" font-size="8" fill="#F07070">✗ Cirurgia (grande cálculo)</text>
+    </svg>`,
+    texto: `
+      <h3>O que é litíase renal?</h3>
+      <p>Litíase renal (cálculo renal ou "pedra nos rins") é a formação de cristais sólidos no interior do sistema urinário. Podem variar de grãos de areia a pedras do tamanho de uma bola de golfe. É uma das condições urológicas mais dolorosas e prevalentes.</p>
+      <h3>Tipos de cálculos</h3>
+      <ul>
+        <li>Oxalato de cálcio (70-80%) — o mais comum</li>
+        <li>Fosfato de cálcio — associado a hiperparatireoidismo</li>
+        <li>Ácido úrico — gota, hiperuricemia</li>
+        <li>Estruvita — infecções urinárias recorrentes</li>
+        <li>Cistina — raro, origem genética</li>
+      </ul>
+      <h3>Sintomas</h3>
+      <ul>
+        <li>Cólica renal — dor intensa em flanco irradiando para a virilha</li>
+        <li>Hematúria (sangue na urina)</li>
+        <li>Náuseas e vômitos associados à dor</li>
+        <li>Disúria e urgência miccional</li>
+        <li>Febre (quando há infecção associada — urgência!)</li>
+      </ul>
+      <h3>Tratamento</h3>
+      <ul>
+        <li>Hidratação vigorosa (2-3L/dia) — facilita a eliminação espontânea</li>
+        <li>Analgesia adequada (AINEs, opioides se necessário)</li>
+        <li>Litotripsia extracorpórea (LECO) — ondas de choque para fragmentar</li>
+        <li>Ureteroscopia — retirada endoscópica do cálculo</li>
+        <li>Nefrolitotomia percutânea — para cálculos grandes</li>
+      </ul>
+      <h3>Prevenção</h3>
+      <ul>
+        <li>Beber 2,5 a 3 litros de água por dia</li>
+        <li>Reduzir sódio e proteína animal na dieta</li>
+        <li>Limitar alimentos ricos em oxalato (espinafre, amendoim, chocolate)</li>
+        <li>Manter citrato na dieta (limão, laranja)</li>
+        <li>Tratar condições associadas (hiperuricemia, hiperparatireoidismo)</li>
+      </ul>`
+  }
+};
+
+function openModal(id) {
+  const m = MODAIS[id];
+  document.getElementById('modal-eyebrow').textContent = m.eyebrow;
+  document.getElementById('modal-title').textContent = m.title;
+  document.getElementById('modal-ilus').innerHTML = m.ilus;
+  document.getElementById('modal-text').innerHTML = m.texto;
+  document.getElementById('modal').classList.add('show');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal(e) {
+  if(e.target === document.getElementById('modal')) closeModalBtn();
+}
+
+function closeModalBtn() {
+  document.getElementById('modal').classList.remove('show');
+  document.body.style.overflow = '';
+}
+
+document.addEventListener('keydown', e => { if(e.key === 'Escape') closeModalBtn(); });
+</script>
+</body>
+</html>
