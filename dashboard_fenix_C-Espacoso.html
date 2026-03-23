@@ -855,11 +855,12 @@ async function carregarDadosSupabase() {
       BASE.compcorp.fis.rede[m]   = d.fis_rede   || 0;
       BASE.compcorp.pth.rede[m]   = d.pth_rede;
 
-      /* Análises clínicas salvas */
+      /* Análises clínicas salvas — guardar em memória por mês */
       const blocos = ['vol','def','nutri','adequ','qol','cardio','compcorp'];
       blocos.forEach(b => {
-        const ta = document.getElementById(`analysis-${b}`);
-        if(ta && d[`analise_${b}`]) ta.value = d[`analise_${b}`];
+        if(!BASE.analises) BASE.analises = {};
+        if(!BASE.analises[m]) BASE.analises[m] = {};
+        BASE.analises[m][b] = d[`analise_${b}`] || '';
       });
     });
 
@@ -876,6 +877,12 @@ async function salvarAnalise(blockId, mes) {
   if(!ta) return;
   const campo = `analise_${blockId}`;
   const body = {}; body[campo] = ta.value;
+
+  /* Atualizar memória local imediatamente */
+  if(!BASE.analises) BASE.analises = {};
+  if(!BASE.analises[mes]) BASE.analises[mes] = {};
+  BASE.analises[mes][blockId] = ta.value;
+
   await fetch(
     `${SUPA_URL}/rest/v1/dados_mensais?ano=eq.2026&mes=eq.${mes}`,
     { method: 'PATCH', headers: { 'Content-Type':'application/json', 'apikey':SUPA_KEY, 'Authorization':`Bearer ${SUPA_KEY}`, 'Prefer':'return=minimal' }, body: JSON.stringify(body) }
@@ -1892,6 +1899,20 @@ function render(mes){
   renderQoL(mes);
   renderCardio(mes);
   renderCompCorp(mes);
+
+  /* Restaurar textos de análise salvos para o mês selecionado */
+  const blocos = ['vol','def','nutri','adequ','qol','cardio','compcorp'];
+  if(BASE.analises && BASE.analises[mes]) {
+    blocos.forEach(b => {
+      const ta = document.getElementById(`analysis-${b}`);
+      if(ta) ta.value = BASE.analises[mes][b] || '';
+    });
+  } else {
+    blocos.forEach(b => {
+      const ta = document.getElementById(`analysis-${b}`);
+      if(ta) ta.value = '';
+    });
+  }
 }
 
 document.getElementById('mesSel').addEventListener('change',e=>render(+e.target.value));
