@@ -124,9 +124,9 @@ canvas{display:block;width:100%;}
 
 @media print{
   /* ── Página: paisagem A4 ── */
-  @page { size: A4 landscape; margin: 12mm 14mm; }
+  @page { size: A4 landscape; margin: 10mm 12mm; }
 
-  /* ── Forçar cores e backgrounds em todos os elementos ── */
+  /* ── Forçar cores e backgrounds ── */
   *, *::before, *::after {
     -webkit-print-color-adjust: exact !important;
     print-color-adjust: exact !important;
@@ -142,43 +142,89 @@ canvas{display:block;width:100%;}
   #loading-overlay     { display: none !important; }
 
   /* ── Layout geral ── */
-  body    { background: #fff !important; }
-  .dashboard { padding: 0; max-width: 100%; }
+  body { background: #fff !important; }
+  .dashboard { padding: 0; max-width: 100%; gap: 12px; }
 
-  /* ── Impedir quebra de página dentro das seções ── */
-  .section {
-    break-inside: avoid;
-    page-break-inside: avoid;
-    margin-bottom: 12px;
+  /* ── Header e mes-bar: grudar na primeira seção, sem página em branco ── */
+  .header {
+    break-after: avoid !important;
+    page-break-after: avoid !important;
+  }
+  .mes-bar {
+    break-after: avoid !important;
+    page-break-after: avoid !important;
   }
 
-  /* ── Impedir quebra dentro dos grupos de cards e gráficos ── */
+  /* ── Seções: nunca cortar internamente ── */
+  .section {
+    break-inside: avoid !important;
+    page-break-inside: avoid !important;
+    margin-bottom: 10px;
+  }
+
+  /* ── Grupos de cards e gráficos: nunca cortar ── */
   .cards-vol,
   .cards-def,
   .charts-row,
   .int-row {
-    break-inside: avoid;
-    page-break-inside: avoid;
+    break-inside: avoid !important;
+    page-break-inside: avoid !important;
   }
 
   /* ── Canvas nunca cortado ── */
   canvas {
-    break-inside: avoid;
-    page-break-inside: avoid;
+    break-inside: avoid !important;
+    page-break-inside: avoid !important;
   }
 
-  /* ── Caixa de análise IA: nunca cortar e exibir texto completo ── */
-  .analytic-box {
-    break-inside: avoid;
-    page-break-inside: avoid;
+  /* ── Big numbers dos cards de volumetria: travar alinhamento ── */
+  .card-vol {
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: flex-start !important;
   }
+  .card-vol .lbl {
+    margin-bottom: 6px !important;
+  }
+  .card-vol .val {
+    font-size: 34px !important;
+    line-height: 1 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    display: block !important;
+  }
+
+  /* ── Caixa de análise IA: nunca cortar ── */
+  .analytic-box {
+    break-inside: avoid !important;
+    page-break-inside: avoid !important;
+  }
+
+  /* ── Textarea: respeita altura definida pelo inline style (via exportarPDF) ── */
   .analytic-box textarea {
-    height: auto !important;
-    min-height: unset !important;
-    overflow: visible !important;
+    overflow: hidden !important;
     border: none !important;
-    resize: none;
-    white-space: pre-wrap;
+    resize: none !important;
+    white-space: pre-wrap !important;
+    word-break: break-word !important;
+  }
+  /* ── Div espelho das textareas: expande conforme conteúdo ── */
+  .print-analise-espelho {
+    display: block !important;
+    width: 100% !important;
+    font-size: 13px !important;
+    color: #3D2B0E !important;
+    line-height: 1.6 !important;
+    white-space: pre-wrap !important;
+    word-break: break-word !important;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif !important;
+    background: transparent !important;
+    border: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+  .print-hide-textarea {
+    display: none !important;
   }
 }
 
@@ -1750,19 +1796,29 @@ function exportarPDF() {
   const meses = ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
   const nomeArquivo = `APEX_Dashboard_Fenix_${meses[mes]}_2026`;
 
-  /* Título da janela para nome do PDF */
   const tituloOriginal = document.title;
   document.title = nomeArquivo;
 
-  /* Esconde elementos não imprimíveis */
   const nav = document.querySelector('.portal-nav');
   if(nav) nav.style.display = 'none';
+
+  /* Preserva a altura que o usuário definiu com o resize antes de imprimir */
+  const textareas = document.querySelectorAll('.analytic-box textarea');
+  textareas.forEach(ta => {
+    const h = ta.offsetHeight;
+    ta.style.setProperty('min-height', h + 'px', 'important');
+    ta.style.setProperty('height', h + 'px', 'important');
+  });
 
   window.print();
 
   /* Restaura */
   document.title = tituloOriginal;
   if(nav) nav.style.display = 'flex';
+  textareas.forEach(ta => {
+    ta.style.removeProperty('min-height');
+    ta.style.removeProperty('height');
+  });
 }
 
 function render(mes){
@@ -1922,10 +1978,12 @@ Bloco: ${blockName}
     }
 
     const prompt = `Você é um especialista em nefrologia clínica e gestão de qualidade em hemodiálise.
-Com base nos dados abaixo, escreva uma análise clínica objetiva e profissional em 3 a 5 linhas.
-Destaque os pontos positivos, alertas e sugestões de plano de ação quando necessário.
-Use linguagem técnica apropriada para equipe de saúde. Seja direto e prático.
-Não use bullet points, escreva em parágrafo corrido.
+Com base nos dados abaixo, escreva uma análise clínica objetiva e profissional.
+Regras obrigatórias:
+- Máximo absoluto de 500 caracteres (conte rigorosamente)
+- Parágrafo corrido, sem bullet points
+- Destaque pontos positivos, alertas e plano de ação quando necessário
+- Linguagem técnica para equipe de saúde, direta e prática
 
 ${resumo}`;
 
