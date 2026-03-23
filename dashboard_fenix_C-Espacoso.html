@@ -207,8 +207,10 @@ canvas{display:block;width:100%;}
     display: block !important;
   }
 
-  /* ── Caixa de análise IA: pode quebrar livremente ── */
+  /* ── Caixa de análise IA: gruda no conteúdo acima, nunca fica órfã ── */
   .analytic-box {
+    break-before: avoid !important;
+    page-break-before: avoid !important;
     margin-top: 8px;
   }
 
