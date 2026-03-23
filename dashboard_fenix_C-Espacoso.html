@@ -160,6 +160,16 @@ canvas{display:block;width:100%;}
     margin-bottom: 10px;
   }
 
+  /* ── Título nunca fica órfão no final da página ── */
+  .sec-title {
+    break-after: avoid !important;
+    page-break-after: avoid !important;
+  }
+  .sec-bar {
+    break-after: avoid !important;
+    page-break-after: avoid !important;
+  }
+
   /* ── Grupos de cards: nunca cortar no meio ── */
   .cards-vol,
   .cards-def,
