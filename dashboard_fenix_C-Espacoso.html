@@ -200,13 +200,24 @@ canvas{display:block;width:100%;}
     page-break-inside: avoid !important;
   }
 
+<<<<<<< HEAD
   /* ── Textarea: respeita altura definida pelo inline style (via exportarPDF) ── */
   .analytic-box textarea {
     overflow: hidden !important;
+=======
+  /* ── Textarea: altura automática conforme conteúdo ── */
+  .analytic-box textarea {
+    display: block !important;
+    height: auto !important;
+    min-height: unset !important;
+    max-height: none !important;
+    overflow: visible !important;
+>>>>>>> 5e3010ed6cd558ee4ecd16e2c24d654fc36aec81
     border: none !important;
     resize: none !important;
     white-space: pre-wrap !important;
     word-break: break-word !important;
+<<<<<<< HEAD
   }
   /* ── Div espelho das textareas: expande conforme conteúdo ── */
   .print-analise-espelho {
@@ -225,6 +236,11 @@ canvas{display:block;width:100%;}
   }
   .print-hide-textarea {
     display: none !important;
+=======
+    /* Hack para forçar browsers a expandir textarea no print */
+    position: static !important;
+    width: 100% !important;
+>>>>>>> 5e3010ed6cd558ee4ecd16e2c24d654fc36aec81
   }
 }
 
