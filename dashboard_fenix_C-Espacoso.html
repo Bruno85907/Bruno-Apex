@@ -1464,17 +1464,22 @@ function renderAdequacao(mes) {
 }
 function renderNutri(mes) {
   const N = BASE.nutri;
+  const u = _unidadeFiltro;
+  const isRede = (u === 'rede');
+  const cores = {rl:'#8B6914', santos:'#BE9664', tatuape:'#D4A847'};
+  const nomes = {rl:'Rep. Libano', santos:'Santos', tatuape:'Tatuapé'};
 
-  const dsFos = [
+  const dsFos = isRede ? [
     {data:N.fos.rl,     color:'#8B6914', name:'Rep. Libano'},
     {data:N.fos.santos, color:'#BE9664', name:'Santos'},
     {data:N.fos.tatuape,color:'#D4A847', name:'Tatuapé'}
-  ];
-  const dsPot = [
+  ] : [{data:N.fos[u], color:cores[u], name:nomes[u]}];
+
+  const dsPot = isRede ? [
     {data:N.pot.rl,     color:'#8B6914', name:'Rep. Libano'},
     {data:N.pot.santos, color:'#BE9664', name:'Santos'},
     {data:N.pot.tatuape,color:'#D4A847', name:'Tatuapé'}
-  ];
+  ] : [{data:N.pot[u], color:cores[u], name:nomes[u]}];
 
   drawGroupedBar('cFos', dsFos, 70, MESES, null);
   drawGroupedBar('cPot', dsPot, 80, MESES, null);
@@ -1734,26 +1739,41 @@ function exportarPDF() {
   if(nav) nav.style.display = 'flex';
 }
 
+// Variável global do filtro atual
+if(typeof _unidadeFiltro === 'undefined') var _unidadeFiltro = 'rede';
+
 function render(mes){
-  /* Volumetria */
-  document.getElementById('v-pac').textContent=fmt(BASE.pacientes.rede[mes]);
-  document.getElementById('v-ses').textContent=fmt(BASE.sessoes.rede[mes]);
+  const u = _unidadeFiltro;
+  const isRede = (u === 'rede');
+
+  /* Volumetria — valores dos cards */
+  document.getElementById('v-pac').textContent=fmt(isRede ? BASE.pacientes.rede[mes] : BASE.pacientes[u][mes]);
+  document.getElementById('v-ses').textContent=fmt(isRede ? BASE.sessoes.rede[mes]   : BASE.sessoes[u][mes]);
   document.getElementById('v-adm').textContent=fmt(BASE.admissoes[mes]);
   document.getElementById('v-sai').textContent=fmt(BASE.saidas[mes]);
   document.getElementById('v-ext').textContent=fmt(BASE.sesExtras[mes]);
   document.getElementById('v-esp').textContent=fmt(BASE.consEsp[mes]);
   document.getElementById('v-nef').textContent=fmt(BASE.consNefro[mes]);
 
-  const dsPac = [
-    {data:BASE.pacientes.rl,     color:'#8B6914', name:'RL'},
-    {data:BASE.pacientes.santos, color:'#BE9664', name:'Santos'},
-    {data:BASE.pacientes.tatuape,color:'#D4A847', name:'Tatuapé'}
-  ];
-  const dsSes = [
-    {data:BASE.sessoes.rl,     color:'#8B6914', name:'RL'},
-    {data:BASE.sessoes.santos, color:'#BE9664', name:'Santos'},
-    {data:BASE.sessoes.tatuape,color:'#D4A847', name:'Tatuapé'}
-  ];
+  /* Gráficos de volumetria — adapta conforme filtro */
+  let dsPac, dsSes;
+  if(isRede){
+    dsPac = [
+      {data:BASE.pacientes.rl,     color:'#8B6914', name:'RL'},
+      {data:BASE.pacientes.santos, color:'#BE9664', name:'Santos'},
+      {data:BASE.pacientes.tatuape,color:'#D4A847', name:'Tatuapé'}
+    ];
+    dsSes = [
+      {data:BASE.sessoes.rl,     color:'#8B6914', name:'RL'},
+      {data:BASE.sessoes.santos, color:'#BE9664', name:'Santos'},
+      {data:BASE.sessoes.tatuape,color:'#D4A847', name:'Tatuapé'}
+    ];
+  } else {
+    const cores = {rl:'#8B6914', santos:'#BE9664', tatuape:'#D4A847'};
+    const nomes = {rl:'RL', santos:'Santos', tatuape:'Tatuapé'};
+    dsPac = [{data:BASE.pacientes[u], color:cores[u], name:nomes[u]}];
+    dsSes = [{data:BASE.sessoes[u],   color:cores[u], name:nomes[u]}];
+  }
   drawStackedBar('cPac', dsPac, METAS.pacientes, MESES, null);
   drawStackedBar('cSes', dsSes, METAS.sessoes,   MESES, null);
   registerTooltip('cPac', dsPac, METAS.pacientes, MESES);
@@ -1929,6 +1949,8 @@ const UNID_LABELS = {
 let _BASE_ORIGINAL = null;
 
 function filtrarUnidade(unidade) {
+  _unidadeFiltro = unidade; // atualiza variável global usada pelo render
+
   // Atualiza botões
   document.querySelectorAll('.filtro-unid').forEach(b => b.classList.remove('active'));
   document.getElementById('fu-' + unidade).classList.add('active');
