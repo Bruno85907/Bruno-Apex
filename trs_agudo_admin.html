@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lançamento Semanal TRS Agudo — APEX</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--navy:#0D1B35;--navy-mid:#1B2A4A;--gold:#D4A847;--gold-pale:#E8D5A0;--blue:#5BA8D4;--blue-dark:#3A7A9C;--muted:rgba(232,213,160,0.75);--white:#FFFFFF;}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Inter',sans-serif;background:var(--navy);color:var(--white);min-height:100vh;}
+nav{background:var(--navy-mid);border-bottom:2px solid rgba(91,168,212,0.15);padding:0 48px;height:58px;display:flex;align-items:center;gap:20px;position:sticky;top:0;z-index:100;}
+.nav-logo{font-family:'Cinzel',serif;font-size:14px;font-weight:700;color:var(--gold);letter-spacing:3px;text-decoration:none;}
+.nav-sep{width:1px;height:22px;background:rgba(212,168,71,0.2);}
+.nav-hosp{font-family:'Cinzel',serif;font-size:11px;letter-spacing:3px;color:var(--muted);text-transform:uppercase;}
+.nav-back{margin-left:auto;font-family:'Cinzel',serif;font-size:11px;letter-spacing:2px;color:rgba(212,168,71,0.7);text-decoration:none;}
+.nav-back:hover{color:var(--gold);}
+.page{max-width:900px;margin:0 auto;padding:48px 40px;}
+.page-header{margin-bottom:36px;}
+.page-eyebrow{font-family:'Cinzel',serif;font-size:10px;letter-spacing:4px;color:var(--blue);text-transform:uppercase;margin-bottom:10px;}
+.page-title{font-family:'Cormorant Garamond',serif;font-size:clamp(28px,4vw,42px);font-weight:300;color:var(--white);line-height:1.15;}
+.page-title em{color:#A8D4F0;font-style:italic;}
+.semana-row{display:flex;align-items:center;gap:14px;margin-bottom:36px;flex-wrap:wrap;}
+.semana-lbl{font-family:'Cinzel',serif;font-size:10px;letter-spacing:3px;color:var(--blue);text-transform:uppercase;}
+.semana-in{background:var(--navy-mid);border:1px solid rgba(91,168,212,0.2);border-radius:8px;padding:10px 16px;font-family:'Inter',sans-serif;font-size:14px;color:var(--white);outline:none;color-scheme:dark;}
+.semana-in:focus{border-color:var(--blue);}
+.bloco{background:var(--navy-mid);border:1px solid rgba(91,168,212,0.1);border-radius:14px;margin-bottom:20px;overflow:hidden;}
+.bloco-hdr{padding:18px 26px;border-bottom:1px solid rgba(91,168,212,0.08);display:flex;align-items:center;gap:12px;}
+.bloco-num{width:26px;height:26px;border-radius:50%;background:rgba(91,168,212,0.1);border:1px solid rgba(91,168,212,0.25);display:flex;align-items:center;justify-content:center;font-family:'Cinzel',serif;font-size:10px;color:var(--blue);flex-shrink:0;}
+.bloco-title{font-family:'Cinzel',serif;font-size:11px;letter-spacing:3px;color:var(--white);text-transform:uppercase;}
+.bloco-body{padding:22px 26px;}
+.inp-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;}
+.inp-grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;}
+.inp-grid-1{display:grid;grid-template-columns:1fr;gap:14px;max-width:200px;}
+.inp-grp{display:flex;flex-direction:column;gap:6px;}
+.inp-lbl{font-family:'Cinzel',serif;font-size:9px;letter-spacing:2px;color:rgba(91,168,212,0.7);text-transform:uppercase;}
+.inp{background:rgba(13,27,53,0.8);border:1px solid rgba(91,168,212,0.15);border-radius:8px;padding:10px 14px;font-family:'Inter',sans-serif;font-size:16px;font-weight:500;color:var(--white);outline:none;width:100%;text-align:center;transition:all .2s;}
+.inp:focus{border-color:var(--blue);background:rgba(91,168,212,0.05);}
+.inp.changed{border-color:rgba(212,168,71,0.6);background:rgba(212,168,71,0.04);}
+.inp::placeholder{color:rgba(255,255,255,0.15);font-size:14px;}
+/* Intercorrências */
+.ic-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;}
+.ic-item{display:flex;align-items:center;gap:9px;background:rgba(13,27,53,0.6);border:1px solid rgba(91,168,212,0.1);border-radius:8px;padding:9px 12px;cursor:pointer;transition:all .2s;user-select:none;}
+.ic-item:hover{border-color:rgba(91,168,212,0.25);}
+.ic-item.active{border-color:rgba(91,168,212,0.45);background:rgba(91,168,212,0.08);}
+.ic-box{width:17px;height:17px;border-radius:4px;border:1.5px solid rgba(91,168,212,0.3);display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .15s;}
+.ic-item.active .ic-box{background:var(--blue);border-color:var(--blue);}
+.ic-check{opacity:0;transition:opacity .15s;}
+.ic-item.active .ic-check{opacity:1;}
+.ic-nome{font-family:'Inter',sans-serif;font-size:11.5px;color:rgba(232,213,160,0.7);flex:1;line-height:1.3;}
+.ic-item.active .ic-nome{color:var(--white);}
+.ic-qtd{width:34px;height:24px;background:rgba(13,27,53,0.8);border:1px solid rgba(91,168,212,0.2);border-radius:4px;font-family:'Inter',sans-serif;font-size:12px;color:var(--white);text-align:center;outline:none;display:none;flex-shrink:0;}
+.ic-item.active .ic-qtd{display:block;}
+/* Ações */
+.actions{display:flex;gap:12px;margin-top:28px;justify-content:flex-end;}
+.btn-save{background:var(--blue-dark);color:var(--white);border:none;border-radius:8px;padding:14px 32px;font-family:'Cinzel',serif;font-size:11px;letter-spacing:3px;cursor:pointer;transition:background .2s;}
+.btn-save:hover{background:var(--blue);}
+.btn-clear{background:transparent;color:rgba(255,255,255,0.35);border:1px solid rgba(255,255,255,0.1);border-radius:8px;padding:14px 22px;font-family:'Cinzel',serif;font-size:10px;letter-spacing:2px;cursor:pointer;transition:all .2s;}
+.btn-clear:hover{border-color:rgba(255,255,255,0.3);color:rgba(255,255,255,0.6);}
+/* Histórico */
+.hist{margin-top:36px;}
+.hist-title{font-family:'Cinzel',serif;font-size:11px;letter-spacing:3px;color:var(--blue);text-transform:uppercase;margin-bottom:14px;display:flex;align-items:center;gap:12px;}
+.hist-title::after{content:'';flex:1;height:1px;background:rgba(91,168,212,0.1);}
+.hist-empty{font-family:'Cormorant Garamond',serif;font-size:16px;font-style:italic;color:rgba(232,213,160,0.25);padding:28px;text-align:center;}
+.hist-list{display:flex;flex-direction:column;gap:9px;}
+.hist-item{background:var(--navy-mid);border:1px solid rgba(91,168,212,0.08);border-radius:10px;padding:14px 18px;display:flex;align-items:center;gap:14px;cursor:pointer;transition:border-color .2s;}
+.hist-item:hover{border-color:rgba(91,168,212,0.2);}
+.hist-sem{font-family:'Cinzel',serif;font-size:10px;letter-spacing:2px;color:var(--blue);}
+.hist-resumo{font-family:'Cormorant Garamond',serif;font-size:15px;color:var(--muted);flex:1;}
+.hist-del{font-size:12px;color:rgba(240,112,112,0.35);cursor:pointer;padding:4px 8px;border-radius:4px;transition:color .2s;}
+.hist-del:hover{color:#F07070;}
+/* Toast */
+.toast{position:fixed;bottom:24px;right:24px;background:var(--blue-dark);color:var(--white);font-family:'Cinzel',serif;font-size:11px;letter-spacing:2px;padding:14px 22px;border-radius:8px;transform:translateY(60px);opacity:0;transition:all .3s;z-index:999;}
+.toast.show{transform:translateY(0);opacity:1;}
+@media(max-width:700px){nav{padding:0 20px;}.page{padding:32px 20px;}.inp-grid,.inp-grid-3{grid-template-columns:1fr 1fr;}.ic-grid{grid-template-columns:1fr 1fr;}}
+</style>
+</head>
+<body>
+<nav>
+  <a href="index.html" class="nav-logo">APEX</a>
+  <div class="nav-sep"></div>
+  <span class="nav-hosp" id="nav-hosp">TRS Agudo</span>
+  <a href="trs_agudo.html" class="nav-back">← Voltar</a>
+</nav>
+<div class="page">
+  <div class="page-header">
+    <p class="page-eyebrow" id="pg-eyebrow">Hospital · Lançamento Semanal</p>
+    <h1 class="page-title">Lançamento <em>Semanal</em></h1>
+  </div>
+  <div class="semana-row">
+    <span class="semana-lbl">Semana</span>
+    <input type="week" id="semana" class="semana-in"/>
+  </div>
+
+  <!-- BLOCO 0: PACIENTES -->
+  <div class="bloco">
+    <div class="bloco-hdr"><div class="bloco-num">00</div><span class="bloco-title">Pacientes Atendidos</span></div>
+    <div class="bloco-body">
+      <div class="inp-grid-1">
+        <div class="inp-grp">
+          <label class="inp-lbl">Nº de Pacientes</label>
+          <input type="number" class="inp" id="pac" placeholder="0" min="0" oninput="markChanged(this)"/>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BLOCO 1: SESSÕES -->
+  <div class="bloco">
+    <div class="bloco-hdr"><div class="bloco-num">01</div><span class="bloco-title">Sessões por Modalidade</span></div>
+    <div class="bloco-body">
+      <div class="inp-grid">
+        <div class="inp-grp"><label class="inp-lbl">HD</label><input type="number" class="inp" id="hd" placeholder="0" min="0" oninput="markChanged(this)"/></div>
+        <div class="inp-grp"><label class="inp-lbl">CRRT</label><input type="number" class="inp" id="crrt" placeholder="0" min="0" oninput="markChanged(this)"/></div>
+        <div class="inp-grp"><label class="inp-lbl">DP</label><input type="number" class="inp" id="dp" placeholder="0" min="0" oninput="markChanged(this)"/></div>
+        <div class="inp-grp"><label class="inp-lbl">SLED</label><input type="number" class="inp" id="sled" placeholder="0" min="0" oninput="markChanged(this)"/></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BLOCO 2: ACESSOS -->
+  <div class="bloco">
+    <div class="bloco-hdr"><div class="bloco-num">02</div><span class="bloco-title">Acessos Venosos</span></div>
+    <div class="bloco-body">
+      <div class="inp-grid-3">
+        <div class="inp-grp"><label class="inp-lbl">FAV (Fístula)</label><input type="number" class="inp" id="fav" placeholder="0" min="0" oninput="markChanged(this)"/></div>
+        <div class="inp-grp"><label class="inp-lbl">Permcath</label><input type="number" class="inp" id="permcath" placeholder="0" min="0" oninput="markChanged(this)"/></div>
+        <div class="inp-grp"><label class="inp-lbl">CDL (Shilley)</label><input type="number" class="inp" id="cdl" placeholder="0" min="0" oninput="markChanged(this)"/></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BLOCO 3: INTERCORRÊNCIAS -->
+  <div class="bloco">
+    <div class="bloco-hdr"><div class="bloco-num">03</div><span class="bloco-title">Intercorrências</span></div>
+    <div class="bloco-body"><div class="ic-grid" id="ic-grid"></div></div>
+  </div>
+
+  <div class="actions">
+    <button class="btn-clear" onclick="limpar()">Limpar</button>
+    <button class="btn-save" onclick="salvar()">Salvar semana →</button>
+  </div>
+
+  <div class="hist">
+    <div class="hist-title">Histórico</div>
+    <div id="hist-empty" class="hist-empty">Nenhum lançamento registrado ainda.</div>
+    <div id="hist-list" class="hist-list" style="display:none;"></div>
+  </div>
+</div>
+<div class="toast" id="toast"></div>
+<script>
+const IC=['Hipotensão','Hipertensão','Hipoglicemia','Hiperglicemia','Taquicardia','Bradicardia','Desconforto respiratório','Cãibras','Náuseas','Vômitos','Cefaleia','Tremores','Calafrios','Febre','Dor','Hematoma de FAV','FAV sem frêmito','Cateter disfuncionante','Infecção óstio cateter','Síndrome 1º uso','Coagulação do sistema','Hemólise','Embolia gasosa','PCR','Precordialgia','Alteração neurológica'];
+
+// URL params
+const params=new URLSearchParams(location.search);
+const HOSPITAL_ID=params.get('hospital')||'mont_serrat';
+const HOSPITAL_NOME=params.get('nome')||'Hospital Mont Serrat';
+const STORAGE_KEY=`trs_agudo_${HOSPITAL_ID}`;
+
+document.getElementById('nav-hosp').textContent=HOSPITAL_NOME;
+document.getElementById('pg-eyebrow').textContent=`${HOSPITAL_NOME} · Lançamento Semanal`;
+
+function renderIC(){
+  document.getElementById('ic-grid').innerHTML=IC.map((nome,i)=>`
+    <div class="ic-item" id="ic-${i}" onclick="toggleIC(${i})">
+      <div class="ic-box"><svg class="ic-check" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M1.5 5l2.5 2.5 4.5-5" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <span class="ic-nome">${nome}</span>
+      <input type="number" class="ic-qtd" id="ic-qtd-${i}" min="1" value="1" onclick="event.stopPropagation()"/>
+    </div>`).join('');
+}
+
+function toggleIC(i){document.getElementById(`ic-${i}`).classList.toggle('active');}
+function markChanged(el){el.classList.add('changed');}
+
+function getData(){
+  const semana=document.getElementById('semana').value;
+  if(!semana){showToast('Selecione a semana');return null;}
+  return{
+    semana,
+    pac:parseInt(document.getElementById('pac').value)||0,
+    sessoes:{hd:parseInt(document.getElementById('hd').value)||0,crrt:parseInt(document.getElementById('crrt').value)||0,dp:parseInt(document.getElementById('dp').value)||0,sled:parseInt(document.getElementById('sled').value)||0},
+    acessos:{fav:parseInt(document.getElementById('fav').value)||0,permcath:parseInt(document.getElementById('permcath').value)||0,cdl:parseInt(document.getElementById('cdl').value)||0},
+    ic:IC.reduce((a,nome,i)=>{const el=document.getElementById(`ic-${i}`);if(el.classList.contains('active'))a.push({nome,qtd:parseInt(document.getElementById(`ic-qtd-${i}`).value)||1});return a;},[]),
+    ts:Date.now()
+  };
+}
+
+function salvar(){
+  const d=getData();if(!d)return;
+  const hist=JSON.parse(localStorage.getItem(STORAGE_KEY)||'[]');
+  const idx=hist.findIndex(h=>h.semana===d.semana);
+  if(idx>=0)hist[idx]=d;else hist.unshift(d);
+  localStorage.setItem(STORAGE_KEY,JSON.stringify(hist));
+  renderHist();showToast('✓ Semana salva');
+}
+
+function renderHist(){
+  const hist=JSON.parse(localStorage.getItem(STORAGE_KEY)||'[]');
+  if(hist.length===0){document.getElementById('hist-empty').style.display='block';document.getElementById('hist-list').style.display='none';return;}
+  document.getElementById('hist-empty').style.display='none';
+  document.getElementById('hist-list').style.display='flex';
+  document.getElementById('hist-list').innerHTML=hist.map((h,i)=>{
+    const[y,w]=h.semana.split('-W');
+    const ts=Object.values(h.sessoes).reduce((a,b)=>a+b,0);
+    const ti=h.ic.reduce((a,ic)=>a+ic.qtd,0);
+    return`<div class="hist-item" onclick="carregar(${i})"><span class="hist-sem">Sem. ${w}/${y}</span><span class="hist-resumo">${h.pac} pac · ${ts} sessões · ${ti} intercorr.</span><span class="hist-del" onclick="event.stopPropagation();deletar(${i})">✕</span></div>`;
+  }).join('');
+}
+
+function carregar(i){
+  const hist=JSON.parse(localStorage.getItem(STORAGE_KEY)||'[]');
+  const h=hist[i];
+  document.getElementById('semana').value=h.semana;
+  document.getElementById('pac').value=h.pac||'';
+  ['hd','crrt','dp','sled'].forEach(k=>document.getElementById(k).value=h.sessoes[k]||'');
+  ['fav','permcath','cdl'].forEach(k=>document.getElementById(k).value=h.acessos[k]||'');
+  IC.forEach((_,i)=>{document.getElementById(`ic-${i}`).classList.remove('active');});
+  h.ic.forEach(ic=>{const i=IC.indexOf(ic.nome);if(i>=0){document.getElementById(`ic-${i}`).classList.add('active');document.getElementById(`ic-qtd-${i}`).value=ic.qtd;}});
+  showToast('Semana carregada');
+}
+
+function deletar(i){
+  const hist=JSON.parse(localStorage.getItem(STORAGE_KEY)||'[]');
+  hist.splice(i,1);localStorage.setItem(STORAGE_KEY,JSON.stringify(hist));renderHist();
+}
+
+function limpar(){
+  ['pac','hd','crrt','dp','sled','fav','permcath','cdl'].forEach(id=>{const el=document.getElementById(id);el.value='';el.classList.remove('changed');});
+  IC.forEach((_,i)=>document.getElementById(`ic-${i}`).classList.remove('active'));
+  document.getElementById('semana').value='';
+}
+
+function showToast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2500);}
+
+function initSemana(){
+  const d=new Date();
+  const start=new Date(d.getFullYear(),0,1);
+  const sem=Math.ceil(((d-start)/86400000+start.getDay()+1)/7);
+  document.getElementById('semana').value=`${d.getFullYear()}-W${String(sem).padStart(2,'0')}`;
+}
+
+document.addEventListener('DOMContentLoaded',()=>{renderIC();initSemana();renderHist();});
+</script>
+</body>
+</html>

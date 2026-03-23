@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard TRS Agudo — APEX</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--navy:#0D1B35;--navy-mid:#1B2A4A;--navy-light:#243357;--gold:#D4A847;--gold-pale:#E8D5A0;--blue:#5BA8D4;--blue-dark:#3A7A9C;--green:#5DCB8A;--red:#F07070;--muted:rgba(232,213,160,0.75);--white:#FFFFFF;}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Inter',sans-serif;background:var(--navy);color:var(--white);min-height:100vh;}
+nav{background:var(--navy-mid);border-bottom:2px solid rgba(91,168,212,0.15);padding:0 48px;height:58px;display:flex;align-items:center;gap:20px;position:sticky;top:0;z-index:100;}
+.nav-logo{font-family:'Cinzel',serif;font-size:14px;font-weight:700;color:var(--gold);letter-spacing:3px;text-decoration:none;}
+.nav-sep{width:1px;height:22px;background:rgba(212,168,71,0.2);}
+.nav-hosp{font-family:'Cinzel',serif;font-size:11px;letter-spacing:3px;color:var(--muted);text-transform:uppercase;}
+.nav-back{margin-left:auto;font-family:'Cinzel',serif;font-size:11px;letter-spacing:2px;color:rgba(212,168,71,0.7);text-decoration:none;}
+.nav-back:hover{color:var(--gold);}
+.page{max-width:1100px;margin:0 auto;padding:48px 40px;}
+.dash-hdr{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:36px;gap:20px;flex-wrap:wrap;}
+.dash-hdr-left .eyebrow{font-family:'Cinzel',serif;font-size:10px;letter-spacing:4px;color:var(--blue);text-transform:uppercase;margin-bottom:10px;}
+.dash-title{font-family:'Cormorant Garamond',serif;font-size:clamp(28px,4vw,44px);font-weight:300;color:var(--white);line-height:1.15;}
+.dash-title em{color:#A8D4F0;font-style:italic;}
+.dash-controls{display:flex;gap:10px;align-items:center;flex-wrap:wrap;}
+.mes-in{background:var(--navy-mid);border:1px solid rgba(91,168,212,0.2);border-radius:8px;padding:10px 14px;font-family:'Inter',sans-serif;font-size:13px;color:var(--white);outline:none;color-scheme:dark;}
+.mes-in:focus{border-color:var(--blue);}
+.btn{border:none;border-radius:8px;padding:10px 20px;font-family:'Cinzel',serif;font-size:10px;letter-spacing:2px;cursor:pointer;transition:background .2s;}
+.btn-gerar{background:var(--blue-dark);color:var(--white);}
+.btn-gerar:hover{background:var(--blue);}
+.btn-print{background:transparent;color:rgba(212,168,71,0.6);border:1px solid rgba(212,168,71,0.2);}
+.btn-print:hover{color:var(--gold);border-color:rgba(212,168,71,0.5);}
+.sem-dados{text-align:center;padding:80px 20px;font-family:'Cormorant Garamond',serif;font-size:20px;font-style:italic;color:rgba(232,213,160,0.3);}
+/* KPI */
+.kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:28px;}
+.kpi{background:var(--navy-mid);border:1px solid rgba(91,168,212,0.1);border-radius:12px;padding:22px 24px;}
+.kpi-lbl{font-family:'Cinzel',serif;font-size:9px;letter-spacing:2px;color:rgba(91,168,212,0.6);text-transform:uppercase;margin-bottom:10px;}
+.kpi-val{font-family:'Cormorant Garamond',serif;font-size:42px;font-weight:300;color:var(--white);line-height:1;}
+.kpi-val span{font-size:16px;color:rgba(255,255,255,0.3);}
+.kpi-sub{font-family:'Inter',sans-serif;font-size:11px;color:rgba(255,255,255,0.3);margin-top:6px;}
+/* Seções */
+.sec{background:var(--navy-mid);border:1px solid rgba(91,168,212,0.1);border-radius:14px;padding:26px 28px;margin-bottom:18px;}
+.sec-title{font-family:'Cinzel',serif;font-size:11px;letter-spacing:3px;color:var(--blue);text-transform:uppercase;margin-bottom:20px;display:flex;align-items:center;gap:12px;}
+.sec-title::after{content:'';flex:1;height:1px;background:rgba(91,168,212,0.1);}
+/* Modalidades */
+.mod-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;}
+.mod-item{background:rgba(91,168,212,0.05);border:1px solid rgba(91,168,212,0.12);border-radius:10px;padding:16px;text-align:center;}
+.mod-nome{font-family:'Cinzel',serif;font-size:10px;letter-spacing:2px;color:var(--blue);text-transform:uppercase;margin-bottom:8px;}
+.mod-val{font-family:'Cormorant Garamond',serif;font-size:36px;font-weight:300;color:var(--white);line-height:1;}
+.mod-pct{font-family:'Inter',sans-serif;font-size:11px;color:rgba(255,255,255,0.3);margin-top:4px;}
+/* Acessos */
+.acess-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;}
+.acess-item{background:rgba(93,203,138,0.05);border:1px solid rgba(93,203,138,0.12);border-radius:10px;padding:16px;text-align:center;}
+.acess-nome{font-family:'Cinzel',serif;font-size:10px;letter-spacing:2px;color:var(--green);text-transform:uppercase;margin-bottom:8px;}
+.acess-val{font-family:'Cormorant Garamond',serif;font-size:36px;font-weight:300;color:var(--white);line-height:1;}
+/* Tabela intercorrências */
+.ic-table{width:100%;border-collapse:collapse;}
+.ic-table th{font-family:'Cinzel',serif;font-size:9px;letter-spacing:2px;color:rgba(91,168,212,0.6);text-transform:uppercase;padding:8px 14px;border-bottom:1px solid rgba(91,168,212,0.1);text-align:left;}
+.ic-table th.num{text-align:center;}
+.ic-table td{padding:10px 14px;border-bottom:1px solid rgba(255,255,255,0.04);font-family:'Cormorant Garamond',serif;font-size:16px;color:rgba(232,213,160,0.8);}
+.ic-table td.num{text-align:center;}
+.ic-table tr:hover td{background:rgba(91,168,212,0.03);}
+.badge-qtd{display:inline-block;background:rgba(240,112,112,0.1);border:1px solid rgba(240,112,112,0.2);color:var(--red);font-family:'Cinzel',serif;font-size:11px;font-weight:600;padding:2px 12px;border-radius:20px;min-width:36px;}
+.badge-taxa{display:inline-block;font-family:'Cinzel',serif;font-size:10px;padding:2px 10px;border-radius:20px;min-width:52px;}
+.taxa-alta{background:rgba(240,112,112,0.1);border:1px solid rgba(240,112,112,0.2);color:var(--red);}
+.taxa-med{background:rgba(212,168,71,0.1);border:1px solid rgba(212,168,71,0.2);color:var(--gold);}
+.taxa-baixa{background:rgba(93,203,138,0.1);border:1px solid rgba(93,203,138,0.2);color:var(--green);}
+.taxa-hint{font-family:'Inter',sans-serif;font-size:11px;color:rgba(255,255,255,0.25);margin-top:8px;text-align:right;}
+/* Semanas */
+.sem-table{width:100%;border-collapse:collapse;}
+.sem-table th{font-family:'Cinzel',serif;font-size:9px;letter-spacing:2px;color:rgba(91,168,212,0.6);text-transform:uppercase;padding:8px 14px;border-bottom:1px solid rgba(91,168,212,0.1);text-align:center;}
+.sem-table th:first-child{text-align:left;}
+.sem-table td{padding:9px 14px;border-bottom:1px solid rgba(255,255,255,0.04);font-family:'Inter',sans-serif;font-size:13px;color:rgba(255,255,255,0.7);text-align:center;}
+.sem-table td:first-child{text-align:left;font-family:'Cinzel',serif;font-size:10px;letter-spacing:1px;color:var(--blue);}
+@media print{nav,.dash-controls{display:none!important;}body{background:#fff;color:#000;}.page{padding:20px;}.sec,.kpi{border:1px solid #ddd;break-inside:avoid;}-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+@media(max-width:800px){nav{padding:0 20px;}.page{padding:32px 20px;}.kpi-grid,.mod-grid{grid-template-columns:1fr 1fr;}.acess-grid{grid-template-columns:1fr 1fr;}}
+</style>
+</head>
+<body>
+<nav>
+  <a href="index.html" class="nav-logo">APEX</a>
+  <div class="nav-sep"></div>
+  <span class="nav-hosp" id="nav-hosp">Dashboard TRS Agudo</span>
+  <a href="trs_agudo.html" class="nav-back">← Voltar</a>
+</nav>
+<div class="page">
+  <div class="dash-hdr">
+    <div class="dash-hdr-left">
+      <p class="eyebrow" id="pg-eyebrow">Hospital · Dashboard</p>
+      <h1 class="dash-title">Dashboard <em>TRS Agudo</em></h1>
+    </div>
+    <div class="dash-controls">
+      <input type="month" id="mes-ref" class="mes-in"/>
+      <button class="btn btn-gerar" onclick="gerar()">Gerar →</button>
+      <button class="btn btn-print" onclick="window.print()">⎙ Imprimir</button>
+    </div>
+  </div>
+  <div id="content"><div class="sem-dados">Selecione o mês e clique em Gerar para visualizar os dados.</div></div>
+</div>
+<script>
+const params=new URLSearchParams(location.search);
+const HOSPITAL_ID=params.get('hospital')||'mont_serrat';
+const HOSPITAL_NOME=params.get('nome')||'Hospital Mont Serrat';
+const STORAGE_KEY=`trs_agudo_${HOSPITAL_ID}`;
+
+document.getElementById('nav-hosp').textContent=`${HOSPITAL_NOME} · Dashboard`;
+document.getElementById('pg-eyebrow').textContent=`${HOSPITAL_NOME} · Visualização Mensal`;
+
+function isoWeekToDate(y,w){const d=new Date(y,0,1+(w-1)*7);const dow=d.getDay();if(dow<=4)d.setDate(d.getDate()-d.getDay()+1);else d.setDate(d.getDate()+8-d.getDay());return d;}
+
+function formatMes(mes){const[a,mm]=mes.split('-');const M=['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];return`${M[parseInt(mm)-1]} ${a}`;}
+
+function taxaClass(t){if(t>=5)return'taxa-alta';if(t>=2)return'taxa-med';return'taxa-baixa';}
+
+function gerar(){
+  const mes=document.getElementById('mes-ref').value;
+  if(!mes){alert('Selecione o mês');return;}
+  const[ano,mm]=mes.split('-');
+  const hist=JSON.parse(localStorage.getItem(STORAGE_KEY)||'[]');
+  const sems=hist.filter(h=>{
+    if(!h.semana)return false;
+    const[y,w]=h.semana.split('-W');
+    const d=isoWeekToDate(parseInt(y),parseInt(w));
+    return d.getFullYear()===parseInt(ano)&&(d.getMonth()+1)===parseInt(mm);
+  });
+
+  if(sems.length===0){
+    document.getElementById('content').innerHTML=`<div class="sem-dados">Nenhum dado encontrado para ${formatMes(mes)}.<br><a href="trs_agudo_admin.html?hospital=${HOSPITAL_ID}&nome=${encodeURIComponent(HOSPITAL_NOME)}" style="color:var(--blue);font-size:16px;">→ Ir para lançamento</a></div>`;
+    return;
+  }
+
+  // Agrega
+  let totPac=0;
+  const totS={hd:0,crrt:0,dp:0,sled:0};
+  const totA={fav:0,permcath:0,cdl:0};
+  const totIC={};
+  sems.forEach(s=>{
+    totPac+=(s.pac||0);
+    Object.keys(totS).forEach(k=>totS[k]+=(s.sessoes[k]||0));
+    Object.keys(totA).forEach(k=>totA[k]+=(s.acessos[k]||0));
+    s.ic.forEach(ic=>{totIC[ic.nome]=(totIC[ic.nome]||0)+ic.qtd;});
+  });
+
+  const totSess=Object.values(totS).reduce((a,b)=>a+b,0);
+  const totICval=Object.values(totIC).reduce((a,b)=>a+b,0);
+  const pct=v=>totSess>0?Math.round(v/totSess*100)+'%':'0%';
+  const taxa=v=>totSess>0?(v/totSess*100).toFixed(1):'-';
+
+  const icList=Object.entries(totIC).sort((a,b)=>b[1]-a[1]);
+
+  document.getElementById('content').innerHTML=`
+    <div class="kpi-grid">
+      <div class="kpi"><div class="kpi-lbl">Pacientes Atendidos</div><div class="kpi-val">${totPac}</div><div class="kpi-sub">${sems.length} semanas</div></div>
+      <div class="kpi"><div class="kpi-lbl">Total de Sessões</div><div class="kpi-val">${totSess}</div><div class="kpi-sub">HD + CRRT + DP + SLED</div></div>
+      <div class="kpi"><div class="kpi-lbl">Intercorrências</div><div class="kpi-val">${totICval}</div><div class="kpi-sub">${icList.length} tipos registrados</div></div>
+      <div class="kpi"><div class="kpi-lbl">Taxa Global</div><div class="kpi-val">${taxa(totICval)}<span> /100</span></div><div class="kpi-sub">intercorrências por 100 sessões</div></div>
+    </div>
+
+    <div class="sec">
+      <div class="sec-title">Sessões por Modalidade — ${formatMes(mes)}</div>
+      <div class="mod-grid">
+        <div class="mod-item"><div class="mod-nome">HD</div><div class="mod-val">${totS.hd}</div><div class="mod-pct">${pct(totS.hd)}</div></div>
+        <div class="mod-item"><div class="mod-nome">CRRT</div><div class="mod-val">${totS.crrt}</div><div class="mod-pct">${pct(totS.crrt)}</div></div>
+        <div class="mod-item"><div class="mod-nome">DP</div><div class="mod-val">${totS.dp}</div><div class="mod-pct">${pct(totS.dp)}</div></div>
+        <div class="mod-item"><div class="mod-nome">SLED</div><div class="mod-val">${totS.sled}</div><div class="mod-pct">${pct(totS.sled)}</div></div>
+      </div>
+    </div>
+
+    <div class="sec">
+      <div class="sec-title">Acessos Venosos — ${formatMes(mes)}</div>
+      <div class="acess-grid">
+        <div class="acess-item"><div class="acess-nome">FAV (Fístula)</div><div class="acess-val">${totA.fav}</div></div>
+        <div class="acess-item"><div class="acess-nome">Permcath</div><div class="acess-val">${totA.permcath}</div></div>
+        <div class="acess-item"><div class="acess-nome">CDL (Shilley)</div><div class="acess-val">${totA.cdl}</div></div>
+      </div>
+    </div>
+
+    <div class="sec">
+      <div class="sec-title">Densidade de Intercorrências — ${formatMes(mes)}</div>
+      ${icList.length===0
+        ?'<p style="font-family:Cormorant Garamond,serif;font-size:17px;font-style:italic;color:rgba(93,203,138,0.6);text-align:center;padding:20px;">✓ Nenhuma intercorrência registrada neste mês</p>'
+        :`<table class="ic-table">
+          <thead><tr><th>Intercorrência</th><th class="num">Ocorrências</th><th class="num">Taxa / 100 sessões</th></tr></thead>
+          <tbody>${icList.map(([nome,qtd])=>{
+            const t=parseFloat(taxa(qtd));
+            return`<tr><td>${nome}</td><td class="num"><span class="badge-qtd">${qtd}</span></td><td class="num"><span class="badge-taxa ${taxaClass(t)}">${t}</span></td></tr>`;
+          }).join('')}</tbody>
+        </table>
+        <div class="taxa-hint">Verde &lt; 2,0 · Amarelo 2,0–5,0 · Vermelho &gt; 5,0 por 100 sessões</div>`
+      }
+    </div>
+
+    <div class="sec">
+      <div class="sec-title">Detalhe por Semana</div>
+      <table class="sem-table">
+        <thead><tr><th style="text-align:left;">Semana</th><th>Pac.</th><th>HD</th><th>CRRT</th><th>DP</th><th>SLED</th><th>FAV</th><th>Perm.</th><th>CDL</th><th>Intercorr.</th></tr></thead>
+        <tbody>${sems.map(s=>{
+          const[y,w]=s.semana.split('-W');
+          const ti=s.ic.reduce((a,ic)=>a+ic.qtd,0);
+          return`<tr><td>Sem. ${w}/${y}</td><td>${s.pac||0}</td><td>${s.sessoes.hd||0}</td><td>${s.sessoes.crrt||0}</td><td>${s.sessoes.dp||0}</td><td>${s.sessoes.sled||0}</td><td>${s.acessos.fav||0}</td><td>${s.acessos.permcath||0}</td><td>${s.acessos.cdl||0}</td><td>${ti}</td></tr>`;
+        }).join('')}</tbody>
+      </table>
+    </div>`;
+}
+
+document.addEventListener('DOMContentLoaded',()=>{
+  const d=new Date();
+  document.getElementById('mes-ref').value=`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}`;
+});
+</script>
+</body>
+</html>

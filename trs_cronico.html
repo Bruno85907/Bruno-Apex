@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gestão TRS Crônico — APEX</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--navy:#0D1B35;--navy-mid:#1B2A4A;--navy-light:#243357;--gold:#D4A847;--gold-dark:#8B6914;--gold-pale:#E8D5A0;--muted:rgba(232,213,160,0.75);--white:#FFFFFF;}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Inter',sans-serif;background:var(--navy);color:var(--white);min-height:100vh;}
+nav{background:var(--navy-mid);border-bottom:2px solid rgba(212,168,71,0.12);padding:0 48px;height:58px;display:flex;align-items:center;gap:20px;position:sticky;top:0;z-index:100;}
+.nav-logo{font-family:'Cinzel',serif;font-size:14px;font-weight:700;color:var(--gold);letter-spacing:3px;text-decoration:none;}
+.nav-sep{width:1px;height:22px;background:rgba(212,168,71,0.2);}
+.nav-section{font-family:'Cinzel',serif;font-size:13px;letter-spacing:3px;color:var(--muted);text-transform:uppercase;}
+.nav-back{margin-left:auto;font-family:'Cinzel',serif;font-size:13px;letter-spacing:2px;color:rgba(212,168,71,0.7);text-decoration:none;}
+.nav-back:hover{color:var(--gold);}
+.hero{padding:64px 60px 48px;border-bottom:1px solid rgba(212,168,71,0.08);position:relative;overflow:hidden;}
+.hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse at 80% 50%,rgba(212,168,71,0.05) 0%,transparent 60%);}
+.hero-eyebrow{font-family:'Cinzel',serif;font-size:11px;letter-spacing:4px;color:var(--gold);opacity:.7;margin-bottom:12px;text-transform:uppercase;}
+.hero-title{font-family:'Cormorant Garamond',serif;font-size:clamp(32px,4vw,52px);font-weight:300;color:var(--white);line-height:1.15;margin-bottom:14px;}
+.hero-title em{color:var(--gold-pale);font-style:italic;}
+.hero-desc{font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:300;font-style:italic;color:var(--muted);line-height:1.8;}
+.content{padding:56px 60px;max-width:1100px;margin:0 auto;}
+.selector-label{font-family:'Cinzel',serif;font-size:10px;letter-spacing:4px;color:var(--gold);text-transform:uppercase;margin-bottom:16px;}
+.unidade-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:48px;}
+.unidade-card{background:var(--navy-mid);border:1px solid rgba(212,168,71,0.1);border-radius:14px;padding:24px 22px;cursor:pointer;transition:all .3s;position:relative;overflow:hidden;}
+.unidade-card::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:var(--gold);transform:scaleX(0);transition:transform .3s;transform-origin:left;}
+.unidade-card:hover::after,.unidade-card.selected::after{transform:scaleX(1);}
+.unidade-card:hover,.unidade-card.selected{border-color:rgba(212,168,71,0.35);}
+.unidade-card.selected{background:rgba(212,168,71,0.04);}
+.unid-tipo{font-family:'Cinzel',serif;font-size:8px;letter-spacing:3px;color:rgba(212,168,71,0.5);text-transform:uppercase;margin-bottom:8px;}
+.unid-nome{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:400;color:var(--white);margin-bottom:4px;}
+.unid-desc{font-family:'Inter',sans-serif;font-size:11px;color:rgba(232,213,160,0.4);}
+.unid-check{position:absolute;top:12px;right:12px;width:18px;height:18px;border-radius:50%;background:var(--gold);display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .2s;}
+.unidade-card.selected .unid-check{opacity:1;}
+/* Card Rede com destaque */
+.unidade-card.rede{border-color:rgba(212,168,71,0.2);background:linear-gradient(160deg,rgba(212,168,71,0.06) 0%,var(--navy-mid) 100%);}
+/* Ações */
+.acoes{display:none;grid-template-columns:1fr 1fr;gap:20px;}
+.acoes.visible{display:grid;}
+.acoes-sep{grid-column:1/-1;font-family:'Cinzel',serif;font-size:10px;letter-spacing:3px;color:var(--gold);text-transform:uppercase;display:flex;align-items:center;gap:12px;margin-bottom:4px;}
+.acoes-sep::after{content:'';flex:1;height:1px;background:rgba(212,168,71,0.1);}
+.acao{background:var(--navy-mid);border:1px solid rgba(212,168,71,0.1);border-radius:14px;padding:36px;text-decoration:none;display:block;transition:all .35s;position:relative;overflow:hidden;}
+.acao::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(212,168,71,0.05),transparent 60%);opacity:0;transition:opacity .3s;}
+.acao:hover::before{opacity:1;}
+.acao::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:var(--gold);transform:scaleX(0);transition:transform .35s;transform-origin:left;}
+.acao:hover::after{transform:scaleX(1);}
+.acao:hover{border-color:rgba(212,168,71,0.28);transform:translateY(-3px);box-shadow:0 14px 36px rgba(0,0,0,0.3);}
+.acao.disabled{opacity:.4;pointer-events:none;cursor:default;}
+.acao-icon{width:50px;height:50px;border-radius:12px;background:rgba(212,168,71,0.08);border:1px solid rgba(212,168,71,0.2);display:flex;align-items:center;justify-content:center;margin-bottom:20px;}
+.acao-label{font-family:'Cinzel',serif;font-size:9px;letter-spacing:3px;color:var(--gold);text-transform:uppercase;margin-bottom:8px;}
+.acao-title{font-family:'Cormorant Garamond',serif;font-size:24px;font-weight:300;color:var(--white);line-height:1.2;margin-bottom:12px;}
+.acao-title em{color:var(--gold-pale);font-style:italic;}
+.acao-desc{font-family:'Cormorant Garamond',serif;font-size:15px;font-style:italic;color:rgba(232,213,160,0.6);line-height:1.7;}
+.acao-arrow{margin-top:20px;font-family:'Cinzel',serif;font-size:10px;letter-spacing:2px;color:var(--gold);display:flex;align-items:center;gap:8px;transition:gap .3s;}
+.acao:hover .acao-arrow{gap:14px;}
+.acao-note{margin-top:10px;font-family:'Inter',sans-serif;font-size:11px;color:rgba(212,168,71,0.4);}
+@media(max-width:800px){nav{padding:0 20px;}.hero,.content{padding:40px 24px;}.unidade-grid{grid-template-columns:1fr 1fr;}.acoes.visible{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+<nav>
+  <a href="index.html" class="nav-logo">APEX</a>
+  <div class="nav-sep"></div>
+  <span class="nav-section">TRS Crônico</span>
+  <a href="portal_profissionais.html" class="nav-back">← Voltar</a>
+</nav>
+<div class="hero">
+  <div class="hero-bg"></div>
+  <p class="hero-eyebrow">Fenix Nefrologia · RL · Santos · Tatuapé</p>
+  <h1 class="hero-title">Gestão <em>TRS Crônico</em></h1>
+  <p class="hero-desc">Selecione a unidade para lançamento individual ou a Rede para o dashboard consolidado.</p>
+</div>
+<div class="content">
+  <p class="selector-label">Selecione a unidade</p>
+  <div class="unidade-grid">
+    <div class="unidade-card" id="u-0" onclick="selecionar(0)">
+      <div class="unid-check"><svg width="9" height="9" viewBox="0 0 10 10" fill="none"><path d="M1.5 5l2.5 2.5 4.5-5" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <div class="unid-tipo">Unidade</div>
+      <div class="unid-nome">RL</div>
+      <div class="unid-desc">República do Líbano</div>
+    </div>
+    <div class="unidade-card" id="u-1" onclick="selecionar(1)">
+      <div class="unid-check"><svg width="9" height="9" viewBox="0 0 10 10" fill="none"><path d="M1.5 5l2.5 2.5 4.5-5" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <div class="unid-tipo">Unidade</div>
+      <div class="unid-nome">Santos</div>
+      <div class="unid-desc">Santos · SP</div>
+    </div>
+    <div class="unidade-card" id="u-2" onclick="selecionar(2)">
+      <div class="unid-check"><svg width="9" height="9" viewBox="0 0 10 10" fill="none"><path d="M1.5 5l2.5 2.5 4.5-5" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <div class="unid-tipo">Unidade</div>
+      <div class="unid-nome">Tatuapé</div>
+      <div class="unid-desc">Tatuapé · SP</div>
+    </div>
+    <div class="unidade-card rede" id="u-3" onclick="selecionar(3)">
+      <div class="unid-check"><svg width="9" height="9" viewBox="0 0 10 10" fill="none"><path d="M1.5 5l2.5 2.5 4.5-5" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <div class="unid-tipo">Consolidado</div>
+      <div class="unid-nome">Rede</div>
+      <div class="unid-desc">RL + Santos + Tatuapé</div>
+    </div>
+  </div>
+
+  <div class="acoes" id="acoes">
+    <div class="acoes-sep" id="acoes-sep">Unidade RL</div>
+    <a href="#" id="btn-admin" class="acao">
+      <div class="acao-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14" stroke="#D4A847" stroke-width="1.6" stroke-linecap="round"/><rect x="3" y="3" width="18" height="18" rx="2" stroke="#D4A847" stroke-width="1.4"/></svg></div>
+      <p class="acao-label">Entrada de dados</p>
+      <h2 class="acao-title"><em>Lançamento</em><br>Mensal</h2>
+      <p class="acao-desc">Inserção dos indicadores clínicos mensais da unidade selecionada.</p>
+      <div class="acao-arrow">Acessar lançamento →</div>
+    </a>
+    <a href="#" id="btn-dash" class="acao">
+      <div class="acao-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="2" stroke="#D4A847" stroke-width="1.4"/><line x1="3" y1="9" x2="21" y2="9" stroke="#D4A847" stroke-width="1.2"/><rect x="6" y="13" width="3" height="5" rx="1" fill="rgba(212,168,71,0.3)" stroke="#D4A847" stroke-width="0.8"/><rect x="11" y="11" width="3" height="7" rx="1" fill="rgba(212,168,71,0.2)" stroke="#D4A847" stroke-width="0.8"/><rect x="16" y="14" width="3" height="4" rx="1" fill="rgba(212,168,71,0.25)" stroke="#D4A847" stroke-width="0.8"/></svg></div>
+      <p class="acao-label">Visualização</p>
+      <h2 class="acao-title" id="dash-title"><em>Dashboard</em><br>da Unidade</h2>
+      <p class="acao-desc" id="dash-desc">Indicadores consolidados da unidade selecionada com histórico mensal.</p>
+      <div class="acao-arrow">Acessar dashboard →</div>
+      <p class="acao-note" id="dash-note"></p>
+    </a>
+  </div>
+</div>
+<script>
+const UNIDADES=[
+  {id:'rl',nome:'Unidade RL',admin:'fenix_admin.html?unidade=rl',dash:'dashboard_fenix_C-Espacoso.html?unidade=rl',dashTitulo:'Dashboard · Unidade RL',dashDesc:'Indicadores mensais da unidade RL.',isRede:false},
+  {id:'santos',nome:'Unidade Santos',admin:'fenix_admin.html?unidade=santos',dash:'dashboard_fenix_C-Espacoso.html?unidade=santos',dashTitulo:'Dashboard · Unidade Santos',dashDesc:'Indicadores mensais da unidade Santos.',isRede:false},
+  {id:'tatuape',nome:'Unidade Tatuapé',admin:'fenix_admin.html?unidade=tatuape',dash:'dashboard_fenix_C-Espacoso.html?unidade=tatuape',dashTitulo:'Dashboard · Tatuapé',dashDesc:'Indicadores mensais da unidade Tatuapé.',isRede:false},
+  {id:'rede',nome:'Rede Fenix',admin:null,dash:'dashboard_fenix_C-Espacoso.html',dashTitulo:'Dashboard · Rede Completa',dashDesc:'Indicadores consolidados de todas as unidades — RL, Santos e Tatuapé.',isRede:true},
+];
+
+function selecionar(i){
+  document.querySelectorAll('.unidade-card').forEach(c=>c.classList.remove('selected'));
+  document.getElementById(`u-${i}`).classList.add('selected');
+  const u=UNIDADES[i];
+  document.getElementById('acoes-sep').textContent=u.nome;
+  const btnAdmin=document.getElementById('btn-admin');
+  if(u.isRede){
+    btnAdmin.classList.add('disabled');
+    document.getElementById('dash-note').textContent='Dashboard da Rede já inclui todas as unidades.';
+  } else {
+    btnAdmin.classList.remove('disabled');
+    btnAdmin.href=u.admin;
+    document.getElementById('dash-note').textContent='';
+  }
+  document.getElementById('btn-dash').href=u.dash;
+  document.getElementById('dash-title').innerHTML=`<em>Dashboard</em><br>${u.isRede?'da Rede':'da Unidade'}`;
+  document.getElementById('dash-desc').textContent=u.dashDesc;
+  document.getElementById('acoes').classList.add('visible');
+  setTimeout(()=>document.getElementById('acoes').scrollIntoView({behavior:'smooth',block:'nearest'}),150);
+}
+</script>
+</body>
+</html>
