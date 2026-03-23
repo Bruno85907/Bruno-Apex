@@ -1926,14 +1926,9 @@ const UNID_LABELS = {
   tatuape: 'Unidade Tatuapé'
 };
 
-let _unidadeFiltro = 'rede';
-
-// Guarda os dados originais na primeira vez
 let _BASE_ORIGINAL = null;
 
 function filtrarUnidade(unidade) {
-  _unidadeFiltro = unidade;
-
   // Atualiza botões
   document.querySelectorAll('.filtro-unid').forEach(b => b.classList.remove('active'));
   document.getElementById('fu-' + unidade).classList.add('active');
@@ -1941,42 +1936,63 @@ function filtrarUnidade(unidade) {
   // Atualiza label do header
   document.getElementById('header-unidade-label').innerHTML = UNID_LABELS[unidade];
 
-  // Salva BASE original na primeira vez
+  // Salva cópia dos dados originais (Rede) na primeira vez
   if(!_BASE_ORIGINAL) {
-    _BASE_ORIGINAL = JSON.parse(JSON.stringify(BASE));
+    _BASE_ORIGINAL = {
+      pacientes: { rede: [...BASE.pacientes.rede] },
+      sessoes:   { rede: [...BASE.sessoes.rede] },
+      nutri: {
+        fos: { rede: [...BASE.nutri.fos.rede] },
+        pot: { rede: [...BASE.nutri.pot.rede] },
+      },
+      adequ: {
+        ktv: { rede: [...BASE.adequ.ktv.rede] },
+        vol: { rede: [...BASE.adequ.vol.rede] },
+        fav: { rede: [...BASE.adequ.fav.rede] },
+      },
+      qol: {
+        hb: { rede: [...BASE.qol.hb.rede] },
+      },
+      cardio: {
+        gpid: { rede: [...BASE.cardio.gpid.rede] },
+        ecw:  { rede: [...BASE.cardio.ecw.rede] },
+      },
+      compcorp: {
+        ang: { rede: [...BASE.compcorp.ang.rede] },
+        fis: { rede: [...BASE.compcorp.fis.rede] },
+      },
+    };
   }
 
   if(unidade === 'rede') {
-    // Restaura dados originais
-    Object.assign(BASE, JSON.parse(JSON.stringify(_BASE_ORIGINAL)));
+    // Restaura dados originais da Rede
+    BASE.pacientes.rede = [..._BASE_ORIGINAL.pacientes.rede];
+    BASE.sessoes.rede   = [..._BASE_ORIGINAL.sessoes.rede];
+    BASE.nutri.fos.rede = [..._BASE_ORIGINAL.nutri.fos.rede];
+    BASE.nutri.pot.rede = [..._BASE_ORIGINAL.nutri.pot.rede];
+    BASE.adequ.ktv.rede = [..._BASE_ORIGINAL.adequ.ktv.rede];
+    BASE.adequ.vol.rede = [..._BASE_ORIGINAL.adequ.vol.rede];
+    BASE.adequ.fav.rede = [..._BASE_ORIGINAL.adequ.fav.rede];
+    BASE.qol.hb.rede    = [..._BASE_ORIGINAL.qol.hb.rede];
+    BASE.cardio.gpid.rede = [..._BASE_ORIGINAL.cardio.gpid.rede];
+    BASE.cardio.ecw.rede  = [..._BASE_ORIGINAL.cardio.ecw.rede];
+    BASE.compcorp.ang.rede = [..._BASE_ORIGINAL.compcorp.ang.rede];
+    BASE.compcorp.fis.rede = [..._BASE_ORIGINAL.compcorp.fis.rede];
   } else {
-    // Sobrescreve dados de rede com os da unidade selecionada
-    const u = unidade; // 'rl', 'santos', 'tatuape'
-
-    // Pacientes e sessões — usa dados da unidade
-    if(BASE.pacientes[u]) BASE.pacientes.rede = BASE.pacientes[u];
-    if(BASE.sessoes[u])   BASE.sessoes.rede   = BASE.sessoes[u];
-
-    // Nutricional
-    if(BASE.nutri) {
-      ['fos','pot','hb','gpid','ecw','ang'].forEach(k => {
-        if(BASE.nutri[k] && BASE.nutri[k][u]) BASE.nutri[k].rede = BASE.nutri[k][u];
-      });
-    }
-
-    // Adequação
-    if(BASE.adequ) {
-      ['ktv','vol','fav'].forEach(k => {
-        if(BASE.adequ[k] && BASE.adequ[k][u]) BASE.adequ[k].rede = BASE.adequ[k][u];
-      });
-    }
-
-    // Composição corporal
-    if(BASE.compCorp) {
-      Object.keys(BASE.compCorp).forEach(k => {
-        if(BASE.compCorp[k] && BASE.compCorp[k][u]) BASE.compCorp[k].rede = BASE.compCorp[k][u];
-      });
-    }
+    const u = unidade; // 'rl', 'santos' ou 'tatuape'
+    // Sobrescreve .rede com dados da unidade selecionada
+    BASE.pacientes.rede = [...BASE.pacientes[u]];
+    BASE.sessoes.rede   = [...BASE.sessoes[u]];
+    BASE.nutri.fos.rede = [...BASE.nutri.fos[u]];
+    BASE.nutri.pot.rede = [...BASE.nutri.pot[u]];
+    BASE.adequ.ktv.rede = [...BASE.adequ.ktv[u]];
+    BASE.adequ.vol.rede = [...BASE.adequ.vol[u]];
+    BASE.adequ.fav.rede = [...BASE.adequ.fav[u]];
+    BASE.qol.hb.rede    = [...BASE.qol.hb[u]];
+    BASE.cardio.gpid.rede = [...BASE.cardio.gpid[u]];
+    BASE.cardio.ecw.rede  = [...BASE.cardio.ecw[u]];
+    BASE.compcorp.ang.rede = [...BASE.compcorp.ang[u]];
+    BASE.compcorp.fis.rede = [...BASE.compcorp.fis[u]];
   }
 
   // Re-renderiza com o mês atual
