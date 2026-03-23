@@ -1915,77 +1915,147 @@ Bloco: ${blockName}
 
 `;
 
+  /* Contexto clínico e prompt específico por bloco */
+  let prompt = '';
+
   try {
     if(dataKey === 'vol') {
-      resumo += `Pacientes: ${BASE.pacientes.rede[mes]} (meta progressiva)
-`;
-      resumo += `Sessões: ${BASE.sessoes.rede[mes]}
-`;
-      resumo += `Admissões: ${BASE.admissoes[mes]}, Saídas: ${BASE.saidas[mes]}
-`;
-      resumo += `Cons. especialista: ${BASE.consEsp[mes]}, Cons. nefro: ${BASE.consNefro[mes]}`;
+      const sessoesPorPaciente = BASE.pacientes.rede[mes] > 0
+        ? (BASE.sessoes.rede[mes] / BASE.pacientes.rede[mes]).toFixed(1)
+        : 'n.a.';
+      prompt = `Você é especialista em nefrologia e gestão de qualidade em hemodiálise. Analise os dados de Volumetria de ${mesNome}/2026.
+
+CONTEXTO: Pacientes e sessões referem-se exclusivamente ao programa de hemodiálise. Consultas de nefro e especialista são de pacientes do consultório ambulatorial — população distinta, não relacionada à HD.
+PRIORIDADE: Foco principal na aderência ao tratamento dialítico. A média ideal é 12 sessões/paciente/mês (3x/semana). Desvios indicam faltas ou intercorrências.
+TOM: Descritivo, com comparativo histórico quando disponível. Sem prescrever conduta.
+
+DADOS:
+- Pacientes em HD: ${BASE.pacientes.rede[mes]}
+- Sessões realizadas: ${BASE.sessoes.rede[mes]} (média: ${sessoesPorPaciente} sessões/paciente)
+- Admissões: ${BASE.admissoes[mes]} | Saídas: ${BASE.saidas[mes]}
+- Sessões extras: ${BASE.sesExtras[mes]}
+- Consultas ambulatoriais — Nefro: ${BASE.consNefro[mes]} | Especialista: ${BASE.consEsp[mes]}
+
+Escreva em parágrafo corrido, máximo 500 caracteres, linguagem técnica para equipe de saúde.`;
+
     } else if(dataKey === 'def') {
       const D = BASE.def;
-      resumo += `Faltas: ${D.fal[mes]} (${D.falPct[mes].toFixed(2)}%, meta ≤1%)
-`;
-      resumo += `Óbito: ${D.obi[mes]} (meta zero)
-`;
-      resumo += `Internação: ${D.intPct[mes].toFixed(1)}% (meta ≤6%)
-`;
-      resumo += `Infecção CS: ${D.ics[mes]}, Infecção Local: ${D.icf[mes]} (meta zero)
-`;
-      resumo += `Inscrição Tx: ${D.tx[mes]}% (meta ≥55%)
-`;
-      resumo += `Evento Adverso: ${D.eag[mes]}, Risco Suicídio: ${D.sui[mes]}`;
+      prompt = `Você é especialista em nefrologia e gestão de qualidade em hemodiálise. Analise os Desfechos Clínicos de ${mesNome}/2026.
+
+CONTEXTO E PRIORIDADES (ordem de importância):
+1. Mortalidade: óbito em diálise tem mortalidade anual esperada de 15-20%. Contextualizar sempre — não é necessariamente evitável.
+2. Taxa de internação: meta ≤6%. Acima disso indica instabilidade clínica da população.
+3. Infecções: ICS (infecção de corrente sanguínea) e infecção de cateter/FAV têm meta zero — qualquer episódio é crítico.
+4. Faltas: meta ≤1%. Acima indica risco de subdiálise e piora clínica.
+5. Inscrição em transplante: meta ≥55%. Reflete acesso ao tratamento definitivo.
+
+DADOS:
+- Óbito: ${D.obi[mes]} (${D.obiPct[mes]}% da população | meta: zero)
+- Internação: ${D.intPct[mes].toFixed(1)}% (meta ≤6%) | Causas predominantes no período
+- ICS: ${D.ics[mes]} | Infecção cateter/FAV: ${D.icf[mes]} (meta zero para ambos)
+- Faltas: ${D.fal[mes]} (${D.falPct[mes].toFixed(2)}% | meta ≤1%)
+- Inscrição Tx Renal: ${D.tx[mes]}% (meta ≥55%)
+- Evento adverso grave: ${D.eag[mes]} | Risco suicídio: ${D.sui[mes]}
+
+Escreva em parágrafo corrido, máximo 500 caracteres, linguagem técnica para equipe de saúde.`;
+
     } else if(dataKey === 'nutri') {
       const N = BASE.nutri;
-      resumo += `Fósforo (meta ≥70%): RL ${N.fos.rl[mes]}%, Santos ${N.fos.santos[mes]}%, Tatuapé ${N.fos.tatuape[mes]}% | CBD 2024: 67%
-`;
-      resumo += `Potássio (meta ≥80%): RL ${N.pot.rl[mes]}%, Santos ${N.pot.santos[mes]}%, Tatuapé ${N.pot.tatuape[mes]}% | CBD 2024: 81%
-`;
-      resumo += `Albumina (trimestral, meta ≥80%): Rede ${N.alb.rede[mes]||'n.a.'}% | CBD 2024: 90%
-`;
-      resumo += `IMC eutrófico (trimestral, meta ≥50%): Rede ${N.imc.rede[mes]||'n.a.'}% | CBD 2024: 47%`;
+      const fosRL = N.fos.rl[mes], fosSantos = N.fos.santos[mes], fosTatuape = N.fos.tatuape[mes];
+      const potRL = N.pot.rl[mes], potSantos = N.pot.santos[mes], potTatuape = N.pot.tatuape[mes];
+      const fosAbaixo = [fosRL < 70 ? 'RL' : null, fosSantos < 70 ? 'Santos' : null, fosTatuape < 70 ? 'Tatuapé' : null].filter(Boolean);
+      const potAbaixo = [potRL < 80 ? 'RL' : null, potSantos < 80 ? 'Santos' : null, potTatuape < 80 ? 'Tatuapé' : null].filter(Boolean);
+      prompt = `Você é especialista em nefrologia e gestão de qualidade em hemodiálise. Analise a Avaliação Nutricional de ${mesNome}/2026.
+
+CONTEXTO E PRIORIDADES (ordem de importância):
+1. Fósforo ≤5,5 mg/dl (meta ≥70% dos pacientes): hiperfosfatemia causa calcificação vascular e óssea — indicador crítico de adesão dietética e quelantes.
+2. Potássio <6,0 mmol/L (meta ≥80%): hipercalemia é risco de arritmia fatal — monitoramento essencial.
+3. Albumina ≥3,5 g/dl (meta ≥80%, trimestral): marcador de estado nutricional e inflamatório.
+4. IMC eutrófico (meta ≥50%, trimestral): contexto nutricional geral.
+COMPARATIVO: destacar unidades abaixo da meta apenas quando houver desvio.
+
+DADOS:
+- Fósforo (meta ≥70%): RL ${fosRL}% | Santos ${fosSantos}% | Tatuapé ${fosTatuape}% | CBD 2024: 67%${fosAbaixo.length ? ` | ABAIXO DA META: ${fosAbaixo.join(', ')}` : ''}
+- Potássio (meta ≥80%): RL ${potRL}% | Santos ${potSantos}% | Tatuapé ${potTatuape}% | CBD 2024: 81%${potAbaixo.length ? ` | ABAIXO DA META: ${potAbaixo.join(', ')}` : ''}
+- Albumina (trimestral, meta ≥80%): ${N.alb.rede[mes]||'n.a.'}% | CBD 2024: 90%
+- IMC eutrófico (trimestral, meta ≥50%): ${N.imc.rede[mes]||'n.a.'}% | CBD 2024: 47%
+
+Escreva em parágrafo corrido, máximo 500 caracteres, linguagem técnica para equipe de saúde.`;
+
     } else if(dataKey === 'adequ') {
       const A = BASE.adequ;
-      resumo += `Kt/V (meta ≥80%): RL ${A.ktv.rl[mes]}%, Santos ${A.ktv.santos[mes]}%, Tatuapé ${A.ktv.tatuape[mes]}% | CBD 2024: 76%
-`;
-      resumo += `Vol. Convectivo (meta ≥80%): RL ${A.vol.rl[mes]}%, Santos ${A.vol.santos[mes]}%, Tatuapé ${A.vol.tatuape[mes]}%
-`;
-      resumo += `FAV/Prótese (meta ≥80%): Rede ${A.fav.rede[mes]}% | CBD 2024: 69%`;
+      const ktvAbaixo = [A.ktv.rl[mes] < 80 ? 'RL' : null, A.ktv.santos[mes] < 80 ? 'Santos' : null, A.ktv.tatuape[mes] < 80 ? 'Tatuapé' : null].filter(Boolean);
+      const volAbaixo = [A.vol.rl[mes] < 80 ? 'RL' : null, A.vol.santos[mes] < 80 ? 'Santos' : null, A.vol.tatuape[mes] < 80 ? 'Tatuapé' : null].filter(Boolean);
+      prompt = `Você é especialista em nefrologia e gestão de qualidade em hemodiálise. Analise a Adequação da Diálise de ${mesNome}/2026.
+
+CONTEXTO E PRIORIDADES (ordem de importância):
+1. Kt/V ≥1,2 (meta ≥80% dos pacientes): índice de adequação da dose dialítica — abaixo de 1,2 indica subdiálise com impacto direto em mortalidade.
+2. Volume Convectivo ≥69L (meta ≥80%): parâmetro de hemodiafiltração online — sem benchmark CBD disponível.
+3. FAV/Prótese (meta ≥80%): acesso vascular definitivo é superior ao cateter em termos de infecção e mortalidade.
+A equipe conhece os indicadores — não é necessário explicá-los.
+
+DADOS:
+- Kt/V ≥1,2 (meta ≥80%): RL ${A.ktv.rl[mes]}% | Santos ${A.ktv.santos[mes]}% | Tatuapé ${A.ktv.tatuape[mes]}% | CBD 2024: 76%${ktvAbaixo.length ? ` | ABAIXO DA META: ${ktvAbaixo.join(', ')}` : ''}
+- Vol. Convectivo ≥69L (meta ≥80%): RL ${A.vol.rl[mes]}% | Santos ${A.vol.santos[mes]}% | Tatuapé ${A.vol.tatuape[mes]}%${volAbaixo.length ? ` | ABAIXO DA META: ${volAbaixo.join(', ')}` : ''}
+- FAV/Prótese (meta ≥80%): ${A.fav.rede[mes]}% | CBD 2024: 69%
+
+Escreva em parágrafo corrido, máximo 500 caracteres, linguagem técnica para equipe de saúde.`;
+
     } else if(dataKey === 'qol') {
       const Q = BASE.qol;
       const kdqol = Q.kdqol[Math.min(mes, Q.kdqol.length-1)];
-      resumo += `KDQOL Mental: ${kdqol.mental} (meta ≥50)
-`;
-      resumo += `KDQOL Físico: ${kdqol.fisico} (meta ≥50)
-`;
-      resumo += `Hemoglobina (meta ≥70%): Rede ${Q.hb.rede[mes]}% | CBD 2024: 57%`;
+      const hbVal = Q.hb.rede[mes];
+      const kdqolAlerta = kdqol.mental < 50 || kdqol.fisico < 50;
+      const hbAlerta = hbVal < 70;
+      prompt = `Você é especialista em nefrologia e gestão de qualidade em hemodiálise. Analise a Qualidade de Vida de ${mesNome}/2026.
+
+CONTEXTO: KDQOL-SF36 e Hemoglobina têm peso igual neste bloco.
+- KDQOL Mental e Físico: meta ≥50 pontos. Escores abaixo indicam impacto significativo da doença na qualidade de vida.
+- Hemoglobina 10-12 g/dL (% conformidade): meta ≥70%. Fora da faixa — seja por anemia ou por hemoglobina elevada — impacta diretamente bem-estar e risco cardiovascular.
+- CORRELAÇÃO IMPORTANTE: quando Hb estiver abaixo da meta E KDQOL abaixo de 50, correlacionar anemia com piora da qualidade de vida percebida.
+
+DADOS:
+- KDQOL Mental: ${kdqol.mental} pontos (meta ≥50)${kdqol.mental < 50 ? ' ⚠ ABAIXO DA META' : ''}
+- KDQOL Físico: ${kdqol.fisico} pontos (meta ≥50)${kdqol.fisico < 50 ? ' ⚠ ABAIXO DA META' : ''}
+- Hemoglobina conformidade: ${hbVal}% (meta ≥70% | CBD 2024: 57%)${hbAlerta ? ' ⚠ ABAIXO DA META' : ''}
+${kdqolAlerta && hbAlerta ? '- ATENÇÃO: ambos KDQOL e Hb abaixo da meta — correlacionar anemia com piora da qualidade de vida.' : ''}
+
+Escreva em parágrafo corrido, máximo 500 caracteres, linguagem técnica para equipe de saúde.`;
+
     } else if(dataKey === 'cardio') {
       const C = BASE.cardio;
-      resumo += `Ganho Peso ID (meta ≥70%): Rede ${C.gpid.rede[mes]}%
-`;
-      resumo += `ECW <15% (meta ≥70%): Rede ${C.ecw.rede[mes]}%
-`;
-      resumo += `Hb Glicada (trimestral, meta ≥70%): Rede ${C.hbg.rede[mes]||'n.a.'}%`;
+      const gpid = C.gpid.rede[mes], ecw = C.ecw.rede[mes];
+      prompt = `Você é especialista em nefrologia e gestão de qualidade em hemodiálise. Analise os indicadores Cardiovasculares de ${mesNome}/2026.
+
+CONTEXTO E PRIORIDADES (ordem de importância):
+1. Ganho de Peso Interdialítico (meta ≥70% dentro do alvo): reflete adesão hídrica e dietética entre as sessões — ganho excessivo sobrecarrega o coração.
+2. Água Extracelular ECW <15% (meta ≥70%): avalia sobrecarga hídrica por bioimpedância. ECW elevado é fator de risco cardiovascular independente em diálise — quando abaixo da meta, correlacionar com risco cardiovascular aumentado.
+3. Hb Glicada (trimestral, meta ≥70%): controle glicêmico em pacientes diabéticos.
+
+DADOS:
+- Ganho Peso Interdialítico (meta ≥70%): ${gpid}%${gpid < 70 ? ' ⚠ ABAIXO DA META' : ''}
+- ECW <15% (meta ≥70%): ${ecw}%${ecw < 70 ? ' ⚠ ABAIXO DA META — risco cardiovascular elevado' : ''}
+- Hb Glicada (trimestral, meta ≥70%): ${C.hbg.rede[mes]||'n.a.'}%
+
+Escreva em parágrafo corrido, máximo 500 caracteres, linguagem técnica para equipe de saúde.`;
+
     } else if(dataKey === 'compcorp') {
       const CC = BASE.compcorp;
-      resumo += `Ângulo de fase (meta ≥70%): Rede ${CC.ang.rede[mes]}%
-`;
-      resumo += `Fisioterapia (meta ≥90%): Rede ${CC.fis.rede[mes]}%
-`;
-      resumo += `PTH (trimestral, meta ≥70%): Rede ${CC.pth.rede[mes]||'n.a.'}% | CBD 2024: 65%`;
+      const ang = CC.ang.rede[mes], fis = CC.fis.rede[mes];
+      prompt = `Você é especialista em nefrologia e gestão de qualidade em hemodiálise. Analise a Composição Corporal de ${mesNome}/2026.
+
+CONTEXTO E PRIORIDADES (ordem de importância):
+1. Ângulo de Fase >4° (meta ≥70% dos pacientes): marcador de integridade celular por bioimpedância. Valores ≤4° indicam risco de desnutrição e estado inflamatório — quando abaixo da meta, correlacionar com desnutrição e inflamação crônica.
+2. PTH 130-585 pg/ml (meta ≥70%, trimestral): controle do hiperparatireoidismo secundário — PTH fora da faixa indica doença mineral óssea.
+3. Fisioterapia (meta ≥90%): adesão ao programa de reabilitação física — impacta força muscular e qualidade de vida.
+
+DADOS:
+- Ângulo de Fase >4° (meta ≥70%): ${ang}%${ang < 70 ? ' ⚠ ABAIXO DA META — avaliar desnutrição/inflamação' : ''}
+- PTH 130-585 pg/ml (trimestral, meta ≥70%): ${CC.pth.rede[mes]||'n.a.'}% | CBD 2024: 65%
+- Fisioterapia (meta ≥90%): ${fis}%${fis < 90 ? ' ⚠ ABAIXO DA META' : ''}
+
+Escreva em parágrafo corrido, máximo 500 caracteres, linguagem técnica para equipe de saúde.`;
     }
-
-    const prompt = `Você é um especialista em nefrologia clínica e gestão de qualidade em hemodiálise.
-Com base nos dados abaixo, escreva uma análise clínica objetiva e profissional.
-Regras obrigatórias:
-- Máximo absoluto de 500 caracteres (conte rigorosamente)
-- Parágrafo corrido, sem bullet points
-- Destaque pontos positivos, alertas e plano de ação quando necessário
-- Linguagem técnica para equipe de saúde, direta e prática
-
-${resumo}`;
 
     const resp = await fetch('https://www.apex.med.br/api/analisar', {
       method: 'POST',
