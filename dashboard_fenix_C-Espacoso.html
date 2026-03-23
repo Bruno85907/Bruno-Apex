@@ -207,10 +207,9 @@ canvas{display:block;width:100%;}
     display: block !important;
   }
 
-  /* ── Caixa de análise IA: nunca cortar ── */
+  /* ── Caixa de análise IA: pode quebrar livremente ── */
   .analytic-box {
-    break-inside: avoid !important;
-    page-break-inside: avoid !important;
+    margin-top: 8px;
   }
 
   /* ── Textarea: respeita altura definida pelo inline style (via exportarPDF) ── */
