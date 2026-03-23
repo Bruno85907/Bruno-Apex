@@ -123,14 +123,63 @@ canvas{display:block;width:100%;}
 .portal-nav-back:hover { color: #D4A847; }
 
 @media print{
-  body{background:#fff;}
-  .dashboard{padding:12px 18px;}
-  .analytic-box .ai-btn{display:none;}
-  .mes-bar button{display:none;}
-  .mes-bar select{display:none;}
-  .mes-bar label{display:none;}
-  #loading-overlay{display:none!important;}
-  .portal-nav{display:none!important;}
+  /* ── Página: paisagem A4 ── */
+  @page { size: A4 landscape; margin: 12mm 14mm; }
+
+  /* ── Forçar cores e backgrounds em todos os elementos ── */
+  *, *::before, *::after {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  /* ── Ocultar elementos interativos ── */
+  .portal-nav          { display: none !important; }
+  .mes-bar button      { display: none !important; }
+  .mes-bar select      { display: none !important; }
+  .mes-bar label       { display: none !important; }
+  .analytic-box .ai-btn{ display: none !important; }
+  .ai-loading          { display: none !important; }
+  #loading-overlay     { display: none !important; }
+
+  /* ── Layout geral ── */
+  body    { background: #fff !important; }
+  .dashboard { padding: 0; max-width: 100%; }
+
+  /* ── Impedir quebra de página dentro das seções ── */
+  .section {
+    break-inside: avoid;
+    page-break-inside: avoid;
+    margin-bottom: 12px;
+  }
+
+  /* ── Impedir quebra dentro dos grupos de cards e gráficos ── */
+  .cards-vol,
+  .cards-def,
+  .charts-row,
+  .int-row {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  /* ── Canvas nunca cortado ── */
+  canvas {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  /* ── Caixa de análise IA: nunca cortar e exibir texto completo ── */
+  .analytic-box {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+  .analytic-box textarea {
+    height: auto !important;
+    min-height: unset !important;
+    overflow: visible !important;
+    border: none !important;
+    resize: none;
+    white-space: pre-wrap;
+  }
 }
 
 </style>
