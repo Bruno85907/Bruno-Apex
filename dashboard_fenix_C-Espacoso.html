@@ -1920,69 +1920,68 @@ ${resumo}`;
 
 /* ── FILTRO DE UNIDADE ── */
 const UNID_LABELS = {
-  rede: 'República do Libano &nbsp;·&nbsp; Praiamar (Santos) &nbsp;·&nbsp; Tatuapé',
-  rl:   'Unidade RL — República do Libano',
-  santos: 'Unidade Santos — Praiamar',
+  rede:    'República do Libano &nbsp;·&nbsp; Praiamar (Santos) &nbsp;·&nbsp; Tatuapé',
+  rl:      'Unidade RL — República do Libano',
+  santos:  'Unidade Santos — Praiamar',
   tatuape: 'Unidade Tatuapé'
 };
 
-// Índices das séries nos gráficos (RL=0, Santos=1, Tatuapé=2)
-const UNID_IDX = { rl:0, santos:1, tatuape:2 };
+let _unidadeFiltro = 'rede';
+
+// Guarda os dados originais na primeira vez
+let _BASE_ORIGINAL = null;
 
 function filtrarUnidade(unidade) {
+  _unidadeFiltro = unidade;
+
   // Atualiza botões
   document.querySelectorAll('.filtro-unid').forEach(b => b.classList.remove('active'));
-  document.getElementById(`fu-${unidade}`).classList.add('active');
+  document.getElementById('fu-' + unidade).classList.add('active');
 
   // Atualiza label do header
   document.getElementById('header-unidade-label').innerHTML = UNID_LABELS[unidade];
 
-  // Atualiza todos os gráficos Chart.js
-  if(typeof Chart !== 'undefined') {
-    Chart.instances && Object.values(Chart.instances || {}).forEach(chart => {
-      if(!chart || !chart.data || !chart.data.datasets) return;
-      const ds = chart.data.datasets;
-
-      if(unidade === 'rede') {
-        // Mostra todas as séries
-        ds.forEach(d => { d.hidden = false; });
-      } else {
-        const idx = UNID_IDX[unidade];
-        ds.forEach((d, i) => {
-          // Oculta séries que não são da unidade selecionada
-          // Séries de rede (soma) ficam visíveis sempre
-          const nome = (d.label || '').toLowerCase();
-          const isRede = nome.includes('rede') || nome.includes('total') || nome.includes('média') || nome.includes('meta');
-          if(isRede) {
-            d.hidden = false;
-          } else {
-            d.hidden = (i !== idx);
-          }
-        });
-      }
-      chart.update();
-    });
+  // Salva BASE original na primeira vez
+  if(!_BASE_ORIGINAL) {
+    _BASE_ORIGINAL = JSON.parse(JSON.stringify(BASE));
   }
 
-  // Atualiza tabelas — oculta colunas das outras unidades
-  const unidCols = {rl:1, santos:2, tatuape:3}; // índice 1-based das colunas (0 = label)
-  document.querySelectorAll('.tabela-unidades').forEach(tabela => {
-    const ths = tabela.querySelectorAll('th');
-    const rows = tabela.querySelectorAll('tr');
-    ths.forEach((th, i) => {
-      if(i === 0) return; // coluna de label sempre visível
-      const show = unidade === 'rede' || unidCols[unidade] === i;
-      th.style.display = show ? '' : 'none';
-    });
-    rows.forEach(row => {
-      const tds = row.querySelectorAll('td');
-      tds.forEach((td, i) => {
-        if(i === 0) return;
-        const show = unidade === 'rede' || unidCols[unidade] === i;
-        td.style.display = show ? '' : 'none';
+  if(unidade === 'rede') {
+    // Restaura dados originais
+    Object.assign(BASE, JSON.parse(JSON.stringify(_BASE_ORIGINAL)));
+  } else {
+    // Sobrescreve dados de rede com os da unidade selecionada
+    const u = unidade; // 'rl', 'santos', 'tatuape'
+
+    // Pacientes e sessões — usa dados da unidade
+    if(BASE.pacientes[u]) BASE.pacientes.rede = BASE.pacientes[u];
+    if(BASE.sessoes[u])   BASE.sessoes.rede   = BASE.sessoes[u];
+
+    // Nutricional
+    if(BASE.nutri) {
+      ['fos','pot','hb','gpid','ecw','ang'].forEach(k => {
+        if(BASE.nutri[k] && BASE.nutri[k][u]) BASE.nutri[k].rede = BASE.nutri[k][u];
       });
-    });
-  });
+    }
+
+    // Adequação
+    if(BASE.adequ) {
+      ['ktv','vol','fav'].forEach(k => {
+        if(BASE.adequ[k] && BASE.adequ[k][u]) BASE.adequ[k].rede = BASE.adequ[k][u];
+      });
+    }
+
+    // Composição corporal
+    if(BASE.compCorp) {
+      Object.keys(BASE.compCorp).forEach(k => {
+        if(BASE.compCorp[k] && BASE.compCorp[k][u]) BASE.compCorp[k].rede = BASE.compCorp[k][u];
+      });
+    }
+  }
+
+  // Re-renderiza com o mês atual
+  const mes = +document.getElementById('mesSel').value;
+  render(mes);
 }
 </script>
 
