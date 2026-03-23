@@ -123,120 +123,14 @@ canvas{display:block;width:100%;}
 .portal-nav-back:hover { color: #D4A847; }
 
 @media print{
-  /* ── Página: paisagem A4 ── */
-  @page { size: A4 landscape; margin: 10mm 12mm; }
-
-  /* ── Forçar cores e backgrounds ── */
-  *, *::before, *::after {
-    -webkit-print-color-adjust: exact !important;
-    print-color-adjust: exact !important;
-  }
-
-  /* ── Ocultar elementos interativos ── */
-  .portal-nav          { display: none !important; }
-  .mes-bar button      { display: none !important; }
-  .mes-bar select      { display: none !important; }
-  .mes-bar label       { display: none !important; }
-  .analytic-box .ai-btn{ display: none !important; }
-  .ai-loading          { display: none !important; }
-  #loading-overlay     { display: none !important; }
-
-  /* ── Layout geral ── */
-  body { background: #fff !important; }
-  .dashboard {
-    display: block !important;
-    padding: 0 !important;
-    max-width: 100% !important;
-  }
-
-  /* ── Cabeçalho gruda com a primeira seção (Volumetria na página 1) ── */
-  .header {
-    break-after: avoid !important;
-    page-break-after: avoid !important;
-  }
-  .mes-bar {
-    break-after: avoid !important;
-    page-break-after: avoid !important;
-  }
-
-  /* ── Cada seção ocupa sua própria página ── */
-  .section {
-    display: block !important;
-    break-inside: avoid !important;
-    page-break-inside: avoid !important;
-    break-after: always !important;
-    page-break-after: always !important;
-    margin-bottom: 0 !important;
-  }
-
-  /* ── Última seção não força nova página após ── */
-  .section:last-child {
-    break-after: avoid !important;
-    page-break-after: avoid !important;
-  }
-
-  /* ── Grupos de cards e gráficos: nunca cortar ── */
-  .cards-vol,
-  .cards-def,
-  .charts-row,
-  .int-row {
-    break-inside: avoid !important;
-    page-break-inside: avoid !important;
-  }
-
-  /* ── Canvas nunca cortado ── */
-  canvas {
-    break-inside: avoid !important;
-    page-break-inside: avoid !important;
-  }
-
-  /* ── Big numbers dos cards de volumetria ── */
-  .card-vol {
-    display: flex !important;
-    flex-direction: column !important;
-    justify-content: flex-start !important;
-  }
-  .card-vol .lbl { margin-bottom: 6px !important; }
-  .card-vol .val {
-    font-size: 34px !important;
-    line-height: 1 !important;
-    margin: 0 !important;
-    padding: 0 !important;
-    display: block !important;
-  }
-
-  /* ── Caixa de análise IA ── */
-  .analytic-box {
-    break-inside: avoid !important;
-    page-break-inside: avoid !important;
-    margin-top: 8px !important;
-  }
-
-  /* ── Textarea ── */
-  .analytic-box textarea {
-    overflow: hidden !important;
-    border: none !important;
-    resize: none !important;
-    white-space: pre-wrap !important;
-    word-break: break-word !important;
-  }
-
-  /* ── Div espelho das textareas ── */
-  .print-analise-espelho {
-    display: block !important;
-    width: 100% !important;
-    font-size: 13px !important;
-    color: #3D2B0E !important;
-    line-height: 1.6 !important;
-    white-space: pre-wrap !important;
-    word-break: break-word !important;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif !important;
-    background: transparent !important;
-    border: none !important;
-    padding: 0 !important;
-    margin: 0 !important;
-  }
-  .print-hide-textarea { display: none !important; }
+  body{background:#fff;}
+  .dashboard{padding:12px 18px;}
+  .analytic-box .ai-btn{display:none;}
+  .mes-bar button{display:none;}
+  .mes-bar select{display:none;}
+  .mes-bar label{display:none;}
+  #loading-overlay{display:none!important;}
+  .portal-nav{display:none!important;}
 }
 
 </style>
@@ -259,10 +153,28 @@ canvas{display:block;width:100%;}
 <div class="header">
   <div>
     <h1>Dashboard de Indicadores Clínicos</h1>
-    <p>República do Libano &nbsp;·&nbsp; Praiamar (Santos) &nbsp;·&nbsp; Tatuapé</p>
+    <p id="header-unidade-label">República do Libano &nbsp;·&nbsp; Praiamar (Santos) &nbsp;·&nbsp; Tatuapé</p>
   </div>
   <div class="header-logo">FÊNIX nefrologia</div>
 </div>
+
+<!-- FILTRO DE UNIDADE -->
+<div style="background:#fff;border-bottom:1px solid #e8ddd0;padding:10px 36px;display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
+  <span style="font-size:11px;font-weight:600;color:#9C7A4A;letter-spacing:1px;text-transform:uppercase;margin-right:4px;">Visualizar:</span>
+  <button class="filtro-unid active" id="fu-rede" onclick="filtrarUnidade('rede')">⬡ Rede Completa</button>
+  <button class="filtro-unid" id="fu-rl" onclick="filtrarUnidade('rl')">RL</button>
+  <button class="filtro-unid" id="fu-santos" onclick="filtrarUnidade('santos')">Santos</button>
+  <button class="filtro-unid" id="fu-tatuape" onclick="filtrarUnidade('tatuape')">Tatuapé</button>
+</div>
+
+<style>
+.filtro-unid{font-family:inherit;font-size:11px;font-weight:600;letter-spacing:1px;color:#9C7A4A;background:#f8f3ec;border:1px solid #d4b896;border-radius:20px;padding:5px 16px;cursor:pointer;transition:all .2s;}
+.filtro-unid:hover{background:#f0e6d8;border-color:#BE9664;color:#8B6914;}
+.filtro-unid.active{background:#8B6914;color:#fff;border-color:#8B6914;}
+/* Ocultar seções por unidade */
+.secao-rl, .secao-santos, .secao-tatuape, .secao-rede{transition:opacity .25s;}
+.secao-oculta{display:none !important;}
+</style>
 
 <div class="mes-bar">
   <label>Período</label>
@@ -855,12 +767,11 @@ async function carregarDadosSupabase() {
       BASE.compcorp.fis.rede[m]   = d.fis_rede   || 0;
       BASE.compcorp.pth.rede[m]   = d.pth_rede;
 
-      /* Análises clínicas salvas — guardar em memória por mês */
+      /* Análises clínicas salvas */
       const blocos = ['vol','def','nutri','adequ','qol','cardio','compcorp'];
       blocos.forEach(b => {
-        if(!BASE.analises) BASE.analises = {};
-        if(!BASE.analises[m]) BASE.analises[m] = {};
-        BASE.analises[m][b] = d[`analise_${b}`] || '';
+        const ta = document.getElementById(`analysis-${b}`);
+        if(ta && d[`analise_${b}`]) ta.value = d[`analise_${b}`];
       });
     });
 
@@ -877,12 +788,6 @@ async function salvarAnalise(blockId, mes) {
   if(!ta) return;
   const campo = `analise_${blockId}`;
   const body = {}; body[campo] = ta.value;
-
-  /* Atualizar memória local imediatamente */
-  if(!BASE.analises) BASE.analises = {};
-  if(!BASE.analises[mes]) BASE.analises[mes] = {};
-  BASE.analises[mes][blockId] = ta.value;
-
   await fetch(
     `${SUPA_URL}/rest/v1/dados_mensais?ano=eq.2026&mes=eq.${mes}`,
     { method: 'PATCH', headers: { 'Content-Type':'application/json', 'apikey':SUPA_KEY, 'Authorization':`Bearer ${SUPA_KEY}`, 'Prefer':'return=minimal' }, body: JSON.stringify(body) }
@@ -1814,29 +1719,19 @@ function exportarPDF() {
   const meses = ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
   const nomeArquivo = `APEX_Dashboard_Fenix_${meses[mes]}_2026`;
 
+  /* Título da janela para nome do PDF */
   const tituloOriginal = document.title;
   document.title = nomeArquivo;
 
+  /* Esconde elementos não imprimíveis */
   const nav = document.querySelector('.portal-nav');
   if(nav) nav.style.display = 'none';
-
-  /* Preserva a altura que o usuário definiu com o resize antes de imprimir */
-  const textareas = document.querySelectorAll('.analytic-box textarea');
-  textareas.forEach(ta => {
-    const h = ta.offsetHeight;
-    ta.style.setProperty('min-height', h + 'px', 'important');
-    ta.style.setProperty('height', h + 'px', 'important');
-  });
 
   window.print();
 
   /* Restaura */
   document.title = tituloOriginal;
   if(nav) nav.style.display = 'flex';
-  textareas.forEach(ta => {
-    ta.style.removeProperty('min-height');
-    ta.style.removeProperty('height');
-  });
 }
 
 function render(mes){
@@ -1899,20 +1794,6 @@ function render(mes){
   renderQoL(mes);
   renderCardio(mes);
   renderCompCorp(mes);
-
-  /* Restaurar textos de análise salvos para o mês selecionado */
-  const blocos = ['vol','def','nutri','adequ','qol','cardio','compcorp'];
-  if(BASE.analises && BASE.analises[mes]) {
-    blocos.forEach(b => {
-      const ta = document.getElementById(`analysis-${b}`);
-      if(ta) ta.value = BASE.analises[mes][b] || '';
-    });
-  } else {
-    blocos.forEach(b => {
-      const ta = document.getElementById(`analysis-${b}`);
-      if(ta) ta.value = '';
-    });
-  }
 }
 
 document.getElementById('mesSel').addEventListener('change',e=>render(+e.target.value));
@@ -1947,147 +1828,75 @@ Bloco: ${blockName}
 
 `;
 
-  /* Contexto clínico e prompt específico por bloco */
-  let prompt = '';
-
   try {
     if(dataKey === 'vol') {
-      const sessoesPorPaciente = BASE.pacientes.rede[mes] > 0
-        ? (BASE.sessoes.rede[mes] / BASE.pacientes.rede[mes]).toFixed(1)
-        : 'n.a.';
-      prompt = `Você é especialista em nefrologia e gestão de qualidade em hemodiálise. Analise os dados de Volumetria de ${mesNome}/2026.
-
-CONTEXTO: Pacientes e sessões referem-se exclusivamente ao programa de hemodiálise. Consultas de nefro e especialista são de pacientes do consultório ambulatorial — população distinta, não relacionada à HD.
-PRIORIDADE: Foco principal na aderência ao tratamento dialítico. A média ideal é 12 sessões/paciente/mês (3x/semana). Desvios indicam faltas ou intercorrências.
-TOM: Descritivo, com comparativo histórico quando disponível. Sem prescrever conduta.
-
-DADOS:
-- Pacientes em HD: ${BASE.pacientes.rede[mes]}
-- Sessões realizadas: ${BASE.sessoes.rede[mes]} (média: ${sessoesPorPaciente} sessões/paciente)
-- Admissões: ${BASE.admissoes[mes]} | Saídas: ${BASE.saidas[mes]}
-- Sessões extras: ${BASE.sesExtras[mes]}
-- Consultas ambulatoriais — Nefro: ${BASE.consNefro[mes]} | Especialista: ${BASE.consEsp[mes]}
-
-Escreva em parágrafo corrido, máximo 500 caracteres, linguagem técnica para equipe de saúde.`;
-
+      resumo += `Pacientes: ${BASE.pacientes.rede[mes]} (meta progressiva)
+`;
+      resumo += `Sessões: ${BASE.sessoes.rede[mes]}
+`;
+      resumo += `Admissões: ${BASE.admissoes[mes]}, Saídas: ${BASE.saidas[mes]}
+`;
+      resumo += `Cons. especialista: ${BASE.consEsp[mes]}, Cons. nefro: ${BASE.consNefro[mes]}`;
     } else if(dataKey === 'def') {
       const D = BASE.def;
-      prompt = `Você é especialista em nefrologia e gestão de qualidade em hemodiálise. Analise os Desfechos Clínicos de ${mesNome}/2026.
-
-CONTEXTO E PRIORIDADES (ordem de importância):
-1. Mortalidade: óbito em diálise tem mortalidade anual esperada de 15-20%. Contextualizar sempre — não é necessariamente evitável.
-2. Taxa de internação: meta ≤6%. Acima disso indica instabilidade clínica da população.
-3. Infecções: ICS (infecção de corrente sanguínea) e infecção de cateter/FAV têm meta zero — qualquer episódio é crítico.
-4. Faltas: meta ≤1%. Acima indica risco de subdiálise e piora clínica.
-5. Inscrição em transplante: meta ≥55%. Reflete acesso ao tratamento definitivo.
-
-DADOS:
-- Óbito: ${D.obi[mes]} (${D.obiPct[mes]}% da população | meta: zero)
-- Internação: ${D.intPct[mes].toFixed(1)}% (meta ≤6%) | Causas predominantes no período
-- ICS: ${D.ics[mes]} | Infecção cateter/FAV: ${D.icf[mes]} (meta zero para ambos)
-- Faltas: ${D.fal[mes]} (${D.falPct[mes].toFixed(2)}% | meta ≤1%)
-- Inscrição Tx Renal: ${D.tx[mes]}% (meta ≥55%)
-- Evento adverso grave: ${D.eag[mes]} | Risco suicídio: ${D.sui[mes]}
-
-Escreva em parágrafo corrido, máximo 500 caracteres, linguagem técnica para equipe de saúde.`;
-
+      resumo += `Faltas: ${D.fal[mes]} (${D.falPct[mes].toFixed(2)}%, meta ≤1%)
+`;
+      resumo += `Óbito: ${D.obi[mes]} (meta zero)
+`;
+      resumo += `Internação: ${D.intPct[mes].toFixed(1)}% (meta ≤6%)
+`;
+      resumo += `Infecção CS: ${D.ics[mes]}, Infecção Local: ${D.icf[mes]} (meta zero)
+`;
+      resumo += `Inscrição Tx: ${D.tx[mes]}% (meta ≥55%)
+`;
+      resumo += `Evento Adverso: ${D.eag[mes]}, Risco Suicídio: ${D.sui[mes]}`;
     } else if(dataKey === 'nutri') {
       const N = BASE.nutri;
-      const fosRL = N.fos.rl[mes], fosSantos = N.fos.santos[mes], fosTatuape = N.fos.tatuape[mes];
-      const potRL = N.pot.rl[mes], potSantos = N.pot.santos[mes], potTatuape = N.pot.tatuape[mes];
-      const fosAbaixo = [fosRL < 70 ? 'RL' : null, fosSantos < 70 ? 'Santos' : null, fosTatuape < 70 ? 'Tatuapé' : null].filter(Boolean);
-      const potAbaixo = [potRL < 80 ? 'RL' : null, potSantos < 80 ? 'Santos' : null, potTatuape < 80 ? 'Tatuapé' : null].filter(Boolean);
-      prompt = `Você é especialista em nefrologia e gestão de qualidade em hemodiálise. Analise a Avaliação Nutricional de ${mesNome}/2026.
-
-CONTEXTO E PRIORIDADES (ordem de importância):
-1. Fósforo ≤5,5 mg/dl (meta ≥70% dos pacientes): hiperfosfatemia causa calcificação vascular e óssea — indicador crítico de adesão dietética e quelantes.
-2. Potássio <6,0 mmol/L (meta ≥80%): hipercalemia é risco de arritmia fatal — monitoramento essencial.
-3. Albumina ≥3,5 g/dl (meta ≥80%, trimestral): marcador de estado nutricional e inflamatório.
-4. IMC eutrófico (meta ≥50%, trimestral): contexto nutricional geral.
-COMPARATIVO: destacar unidades abaixo da meta apenas quando houver desvio.
-
-DADOS:
-- Fósforo (meta ≥70%): RL ${fosRL}% | Santos ${fosSantos}% | Tatuapé ${fosTatuape}% | CBD 2024: 67%${fosAbaixo.length ? ` | ABAIXO DA META: ${fosAbaixo.join(', ')}` : ''}
-- Potássio (meta ≥80%): RL ${potRL}% | Santos ${potSantos}% | Tatuapé ${potTatuape}% | CBD 2024: 81%${potAbaixo.length ? ` | ABAIXO DA META: ${potAbaixo.join(', ')}` : ''}
-- Albumina (trimestral, meta ≥80%): ${N.alb.rede[mes]||'n.a.'}% | CBD 2024: 90%
-- IMC eutrófico (trimestral, meta ≥50%): ${N.imc.rede[mes]||'n.a.'}% | CBD 2024: 47%
-
-Escreva em parágrafo corrido, máximo 500 caracteres, linguagem técnica para equipe de saúde.`;
-
+      resumo += `Fósforo (meta ≥70%): RL ${N.fos.rl[mes]}%, Santos ${N.fos.santos[mes]}%, Tatuapé ${N.fos.tatuape[mes]}% | CBD 2024: 67%
+`;
+      resumo += `Potássio (meta ≥80%): RL ${N.pot.rl[mes]}%, Santos ${N.pot.santos[mes]}%, Tatuapé ${N.pot.tatuape[mes]}% | CBD 2024: 81%
+`;
+      resumo += `Albumina (trimestral, meta ≥80%): Rede ${N.alb.rede[mes]||'n.a.'}% | CBD 2024: 90%
+`;
+      resumo += `IMC eutrófico (trimestral, meta ≥50%): Rede ${N.imc.rede[mes]||'n.a.'}% | CBD 2024: 47%`;
     } else if(dataKey === 'adequ') {
       const A = BASE.adequ;
-      const ktvAbaixo = [A.ktv.rl[mes] < 80 ? 'RL' : null, A.ktv.santos[mes] < 80 ? 'Santos' : null, A.ktv.tatuape[mes] < 80 ? 'Tatuapé' : null].filter(Boolean);
-      const volAbaixo = [A.vol.rl[mes] < 80 ? 'RL' : null, A.vol.santos[mes] < 80 ? 'Santos' : null, A.vol.tatuape[mes] < 80 ? 'Tatuapé' : null].filter(Boolean);
-      prompt = `Você é especialista em nefrologia e gestão de qualidade em hemodiálise. Analise a Adequação da Diálise de ${mesNome}/2026.
-
-CONTEXTO E PRIORIDADES (ordem de importância):
-1. Kt/V ≥1,2 (meta ≥80% dos pacientes): índice de adequação da dose dialítica — abaixo de 1,2 indica subdiálise com impacto direto em mortalidade.
-2. Volume Convectivo ≥69L (meta ≥80%): parâmetro de hemodiafiltração online — sem benchmark CBD disponível.
-3. FAV/Prótese (meta ≥80%): acesso vascular definitivo é superior ao cateter em termos de infecção e mortalidade.
-A equipe conhece os indicadores — não é necessário explicá-los.
-
-DADOS:
-- Kt/V ≥1,2 (meta ≥80%): RL ${A.ktv.rl[mes]}% | Santos ${A.ktv.santos[mes]}% | Tatuapé ${A.ktv.tatuape[mes]}% | CBD 2024: 76%${ktvAbaixo.length ? ` | ABAIXO DA META: ${ktvAbaixo.join(', ')}` : ''}
-- Vol. Convectivo ≥69L (meta ≥80%): RL ${A.vol.rl[mes]}% | Santos ${A.vol.santos[mes]}% | Tatuapé ${A.vol.tatuape[mes]}%${volAbaixo.length ? ` | ABAIXO DA META: ${volAbaixo.join(', ')}` : ''}
-- FAV/Prótese (meta ≥80%): ${A.fav.rede[mes]}% | CBD 2024: 69%
-
-Escreva em parágrafo corrido, máximo 500 caracteres, linguagem técnica para equipe de saúde.`;
-
+      resumo += `Kt/V (meta ≥80%): RL ${A.ktv.rl[mes]}%, Santos ${A.ktv.santos[mes]}%, Tatuapé ${A.ktv.tatuape[mes]}% | CBD 2024: 76%
+`;
+      resumo += `Vol. Convectivo (meta ≥80%): RL ${A.vol.rl[mes]}%, Santos ${A.vol.santos[mes]}%, Tatuapé ${A.vol.tatuape[mes]}%
+`;
+      resumo += `FAV/Prótese (meta ≥80%): Rede ${A.fav.rede[mes]}% | CBD 2024: 69%`;
     } else if(dataKey === 'qol') {
       const Q = BASE.qol;
       const kdqol = Q.kdqol[Math.min(mes, Q.kdqol.length-1)];
-      const hbVal = Q.hb.rede[mes];
-      const kdqolAlerta = kdqol.mental < 50 || kdqol.fisico < 50;
-      const hbAlerta = hbVal < 70;
-      prompt = `Você é especialista em nefrologia e gestão de qualidade em hemodiálise. Analise a Qualidade de Vida de ${mesNome}/2026.
-
-CONTEXTO: KDQOL-SF36 e Hemoglobina têm peso igual neste bloco.
-- KDQOL Mental e Físico: meta ≥50 pontos. Escores abaixo indicam impacto significativo da doença na qualidade de vida.
-- Hemoglobina 10-12 g/dL (% conformidade): meta ≥70%. Fora da faixa — seja por anemia ou por hemoglobina elevada — impacta diretamente bem-estar e risco cardiovascular.
-- CORRELAÇÃO IMPORTANTE: quando Hb estiver abaixo da meta E KDQOL abaixo de 50, correlacionar anemia com piora da qualidade de vida percebida.
-
-DADOS:
-- KDQOL Mental: ${kdqol.mental} pontos (meta ≥50)${kdqol.mental < 50 ? ' ⚠ ABAIXO DA META' : ''}
-- KDQOL Físico: ${kdqol.fisico} pontos (meta ≥50)${kdqol.fisico < 50 ? ' ⚠ ABAIXO DA META' : ''}
-- Hemoglobina conformidade: ${hbVal}% (meta ≥70% | CBD 2024: 57%)${hbAlerta ? ' ⚠ ABAIXO DA META' : ''}
-${kdqolAlerta && hbAlerta ? '- ATENÇÃO: ambos KDQOL e Hb abaixo da meta — correlacionar anemia com piora da qualidade de vida.' : ''}
-
-Escreva em parágrafo corrido, máximo 500 caracteres, linguagem técnica para equipe de saúde.`;
-
+      resumo += `KDQOL Mental: ${kdqol.mental} (meta ≥50)
+`;
+      resumo += `KDQOL Físico: ${kdqol.fisico} (meta ≥50)
+`;
+      resumo += `Hemoglobina (meta ≥70%): Rede ${Q.hb.rede[mes]}% | CBD 2024: 57%`;
     } else if(dataKey === 'cardio') {
       const C = BASE.cardio;
-      const gpid = C.gpid.rede[mes], ecw = C.ecw.rede[mes];
-      prompt = `Você é especialista em nefrologia e gestão de qualidade em hemodiálise. Analise os indicadores Cardiovasculares de ${mesNome}/2026.
-
-CONTEXTO E PRIORIDADES (ordem de importância):
-1. Ganho de Peso Interdialítico (meta ≥70% dentro do alvo): reflete adesão hídrica e dietética entre as sessões — ganho excessivo sobrecarrega o coração.
-2. Água Extracelular ECW <15% (meta ≥70%): avalia sobrecarga hídrica por bioimpedância. ECW elevado é fator de risco cardiovascular independente em diálise — quando abaixo da meta, correlacionar com risco cardiovascular aumentado.
-3. Hb Glicada (trimestral, meta ≥70%): controle glicêmico em pacientes diabéticos.
-
-DADOS:
-- Ganho Peso Interdialítico (meta ≥70%): ${gpid}%${gpid < 70 ? ' ⚠ ABAIXO DA META' : ''}
-- ECW <15% (meta ≥70%): ${ecw}%${ecw < 70 ? ' ⚠ ABAIXO DA META — risco cardiovascular elevado' : ''}
-- Hb Glicada (trimestral, meta ≥70%): ${C.hbg.rede[mes]||'n.a.'}%
-
-Escreva em parágrafo corrido, máximo 500 caracteres, linguagem técnica para equipe de saúde.`;
-
+      resumo += `Ganho Peso ID (meta ≥70%): Rede ${C.gpid.rede[mes]}%
+`;
+      resumo += `ECW <15% (meta ≥70%): Rede ${C.ecw.rede[mes]}%
+`;
+      resumo += `Hb Glicada (trimestral, meta ≥70%): Rede ${C.hbg.rede[mes]||'n.a.'}%`;
     } else if(dataKey === 'compcorp') {
       const CC = BASE.compcorp;
-      const ang = CC.ang.rede[mes], fis = CC.fis.rede[mes];
-      prompt = `Você é especialista em nefrologia e gestão de qualidade em hemodiálise. Analise a Composição Corporal de ${mesNome}/2026.
-
-CONTEXTO E PRIORIDADES (ordem de importância):
-1. Ângulo de Fase >4° (meta ≥70% dos pacientes): marcador de integridade celular por bioimpedância. Valores ≤4° indicam risco de desnutrição e estado inflamatório — quando abaixo da meta, correlacionar com desnutrição e inflamação crônica.
-2. PTH 130-585 pg/ml (meta ≥70%, trimestral): controle do hiperparatireoidismo secundário — PTH fora da faixa indica doença mineral óssea.
-3. Fisioterapia (meta ≥90%): adesão ao programa de reabilitação física — impacta força muscular e qualidade de vida.
-
-DADOS:
-- Ângulo de Fase >4° (meta ≥70%): ${ang}%${ang < 70 ? ' ⚠ ABAIXO DA META — avaliar desnutrição/inflamação' : ''}
-- PTH 130-585 pg/ml (trimestral, meta ≥70%): ${CC.pth.rede[mes]||'n.a.'}% | CBD 2024: 65%
-- Fisioterapia (meta ≥90%): ${fis}%${fis < 90 ? ' ⚠ ABAIXO DA META' : ''}
-
-Escreva em parágrafo corrido, máximo 500 caracteres, linguagem técnica para equipe de saúde.`;
+      resumo += `Ângulo de fase (meta ≥70%): Rede ${CC.ang.rede[mes]}%
+`;
+      resumo += `Fisioterapia (meta ≥90%): Rede ${CC.fis.rede[mes]}%
+`;
+      resumo += `PTH (trimestral, meta ≥70%): Rede ${CC.pth.rede[mes]||'n.a.'}% | CBD 2024: 65%`;
     }
+
+    const prompt = `Você é um especialista em nefrologia clínica e gestão de qualidade em hemodiálise.
+Com base nos dados abaixo, escreva uma análise clínica objetiva e profissional em 3 a 5 linhas.
+Destaque os pontos positivos, alertas e sugestões de plano de ação quando necessário.
+Use linguagem técnica apropriada para equipe de saúde. Seja direto e prático.
+Não use bullet points, escreva em parágrafo corrido.
+
+${resumo}`;
 
     const resp = await fetch('https://www.apex.med.br/api/analisar', {
       method: 'POST',
@@ -2107,6 +1916,73 @@ Escreva em parágrafo corrido, máximo 500 caracteres, linguagem técnica para e
   loading.style.display = 'none';
   /* Auto-salvar análise no Supabase */
   await salvarAnalise(blockId, mes);
+}
+
+/* ── FILTRO DE UNIDADE ── */
+const UNID_LABELS = {
+  rede: 'República do Libano &nbsp;·&nbsp; Praiamar (Santos) &nbsp;·&nbsp; Tatuapé',
+  rl:   'Unidade RL — República do Libano',
+  santos: 'Unidade Santos — Praiamar',
+  tatuape: 'Unidade Tatuapé'
+};
+
+// Índices das séries nos gráficos (RL=0, Santos=1, Tatuapé=2)
+const UNID_IDX = { rl:0, santos:1, tatuape:2 };
+
+function filtrarUnidade(unidade) {
+  // Atualiza botões
+  document.querySelectorAll('.filtro-unid').forEach(b => b.classList.remove('active'));
+  document.getElementById(`fu-${unidade}`).classList.add('active');
+
+  // Atualiza label do header
+  document.getElementById('header-unidade-label').innerHTML = UNID_LABELS[unidade];
+
+  // Atualiza todos os gráficos Chart.js
+  if(typeof Chart !== 'undefined') {
+    Chart.instances && Object.values(Chart.instances || {}).forEach(chart => {
+      if(!chart || !chart.data || !chart.data.datasets) return;
+      const ds = chart.data.datasets;
+
+      if(unidade === 'rede') {
+        // Mostra todas as séries
+        ds.forEach(d => { d.hidden = false; });
+      } else {
+        const idx = UNID_IDX[unidade];
+        ds.forEach((d, i) => {
+          // Oculta séries que não são da unidade selecionada
+          // Séries de rede (soma) ficam visíveis sempre
+          const nome = (d.label || '').toLowerCase();
+          const isRede = nome.includes('rede') || nome.includes('total') || nome.includes('média') || nome.includes('meta');
+          if(isRede) {
+            d.hidden = false;
+          } else {
+            d.hidden = (i !== idx);
+          }
+        });
+      }
+      chart.update();
+    });
+  }
+
+  // Atualiza tabelas — oculta colunas das outras unidades
+  const unidCols = {rl:1, santos:2, tatuape:3}; // índice 1-based das colunas (0 = label)
+  document.querySelectorAll('.tabela-unidades').forEach(tabela => {
+    const ths = tabela.querySelectorAll('th');
+    const rows = tabela.querySelectorAll('tr');
+    ths.forEach((th, i) => {
+      if(i === 0) return; // coluna de label sempre visível
+      const show = unidade === 'rede' || unidCols[unidade] === i;
+      th.style.display = show ? '' : 'none';
+    });
+    rows.forEach(row => {
+      const tds = row.querySelectorAll('td');
+      tds.forEach((td, i) => {
+        if(i === 0) return;
+        const show = unidade === 'rede' || unidCols[unidade] === i;
+        td.style.display = show ? '' : 'none';
+      });
+    });
+  });
 }
 </script>
 

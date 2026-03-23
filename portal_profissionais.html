@@ -81,18 +81,62 @@ nav{background:var(--navy-mid);border-bottom:2px solid rgba(212,168,71,0.12);pad
 /* OVERLAY INDICADORES */
 .indicadores-overlay{display:none;position:fixed;inset:0;background:var(--navy);z-index:150;flex-direction:column;}
 .indicadores-overlay.show{display:flex;}
+
+/* NAV do overlay */
 .ind-nav{background:var(--navy-mid);border-bottom:2px solid rgba(212,168,71,0.12);padding:0 36px;height:56px;display:flex;align-items:center;gap:16px;flex-shrink:0;}
 .ind-nav-logo{font-family:'Cinzel',serif;font-size:13px;font-weight:700;color:var(--gold);letter-spacing:3px;}
 .ind-nav-sep{width:1px;height:20px;background:rgba(212,168,71,0.2);}
 .ind-nav-title{font-family:'Cinzel',serif;font-size:13px;letter-spacing:3px;color:var(--muted);text-transform:uppercase;}
 .ind-nav-space{flex:1;}
 .ind-nav-btns{display:flex;gap:8px;}
-.ind-btn{font-family:'Cinzel',serif;font-size:13px;letter-spacing:2px;color:var(--muted);background:transparent;border:1px solid rgba(212,168,71,0.15);border-radius:6px;padding:6px 14px;cursor:pointer;transition:all .2s;text-decoration:none;display:flex;align-items:center;gap:6px;}
+.ind-btn{font-family:'Cinzel',serif;font-size:11px;letter-spacing:2px;color:var(--muted);background:transparent;border:1px solid rgba(212,168,71,0.15);border-radius:6px;padding:6px 14px;cursor:pointer;transition:all .2s;text-decoration:none;display:flex;align-items:center;gap:6px;}
 .ind-btn.active{background:rgba(212,168,71,0.12);color:var(--gold);border-color:rgba(212,168,71,0.6);}
 .ind-btn:hover:not(.active){color:var(--gold-pale);border-color:rgba(212,168,71,0.2);}
 .ind-btn-sair{color:rgba(255,100,100,0.5);border-color:rgba(255,100,100,0.15);}
 .ind-btn-sair:hover{color:#F07070;border-color:rgba(255,100,100,0.3);}
-.ind-content{flex:1;overflow:hidden;}
+.ind-btn-voltar{display:none;}
+.ind-btn-voltar.visible{display:flex;}
+
+/* HOME do overlay — 2 cards TRS */
+.ind-home{flex:1;overflow-y:auto;padding:56px 60px;display:none;}
+.ind-home.active{display:block;}
+.ind-home-eyebrow{font-family:'Cinzel',serif;font-size:10px;letter-spacing:4px;color:var(--gold);opacity:.6;text-transform:uppercase;margin-bottom:12px;}
+.ind-home-title{font-family:'Cormorant Garamond',serif;font-size:clamp(28px,3.5vw,44px);font-weight:300;color:var(--white);line-height:1.15;margin-bottom:40px;}
+.ind-home-title em{color:var(--gold-pale);font-style:italic;}
+.ind-trs-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;max-width:900px;}
+.ind-trs-card{background:var(--navy-mid);border:1px solid rgba(212,168,71,0.1);border-radius:16px;padding:36px;cursor:pointer;transition:all .35s;position:relative;overflow:hidden;}
+.ind-trs-card::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(212,168,71,0.05),transparent 60%);opacity:0;transition:opacity .3s;}
+.ind-trs-card:hover::before{opacity:1;}
+.ind-trs-card::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:var(--gold);transform:scaleX(0);transition:transform .35s;transform-origin:left;}
+.ind-trs-card:hover::after{transform:scaleX(1);}
+.ind-trs-card:hover{border-color:rgba(212,168,71,0.3);transform:translateY(-3px);box-shadow:0 16px 40px rgba(0,0,0,0.3);}
+.ind-trs-card.agudo{border-color:rgba(91,168,212,0.12);}
+.ind-trs-card.agudo::after{background:var(--blue, #5BA8D4);}
+.ind-trs-card.agudo:hover{border-color:rgba(91,168,212,0.3);}
+.ind-trs-icon{width:50px;height:50px;border-radius:12px;background:rgba(212,168,71,0.08);border:1px solid rgba(212,168,71,0.2);display:flex;align-items:center;justify-content:center;margin-bottom:20px;}
+.ind-trs-card.agudo .ind-trs-icon{background:rgba(91,168,212,0.08);border-color:rgba(91,168,212,0.2);}
+.ind-trs-label{font-family:'Cinzel',serif;font-size:9px;letter-spacing:3px;color:var(--gold);text-transform:uppercase;margin-bottom:8px;}
+.ind-trs-card.agudo .ind-trs-label{color:#5BA8D4;}
+.ind-trs-title{font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:300;color:var(--white);line-height:1.2;margin-bottom:12px;}
+.ind-trs-title em{color:var(--gold-pale);font-style:italic;}
+.ind-trs-card.agudo .ind-trs-title em{color:#A8D4F0;}
+.ind-trs-desc{font-family:'Cormorant Garamond',serif;font-size:15px;font-style:italic;color:rgba(232,213,160,0.6);line-height:1.7;margin-bottom:18px;}
+.ind-trs-tags{display:flex;gap:7px;flex-wrap:wrap;}
+.ind-trs-tag{font-family:'Cinzel',serif;font-size:8px;letter-spacing:2px;color:var(--gold);background:rgba(212,168,71,0.07);border:1px solid rgba(212,168,71,0.15);padding:3px 10px;border-radius:20px;}
+.ind-trs-card.agudo .ind-trs-tag{color:#5BA8D4;background:rgba(91,168,212,0.07);border-color:rgba(91,168,212,0.15);}
+
+/* Sub-nav TRS Crônico */
+.ind-subnav{display:none;background:rgba(27,42,74,0.7);border-bottom:1px solid rgba(212,168,71,0.08);padding:0 36px;height:46px;align-items:center;gap:10px;flex-shrink:0;}
+.ind-subnav.visible{display:flex;}
+.ind-subnav-label{font-family:'Cinzel',serif;font-size:9px;letter-spacing:3px;color:rgba(212,168,71,0.4);text-transform:uppercase;}
+.ind-subnav-sep{width:1px;height:16px;background:rgba(212,168,71,0.1);}
+.ind-subnav-btn{font-family:'Cinzel',serif;font-size:10px;letter-spacing:2px;color:rgba(232,213,160,0.5);background:transparent;border:1px solid rgba(212,168,71,0.1);border-radius:5px;padding:5px 12px;cursor:pointer;transition:all .2s;}
+.ind-subnav-btn.active{background:rgba(212,168,71,0.1);color:var(--gold);border-color:rgba(212,168,71,0.4);}
+.ind-subnav-btn:hover:not(.active){color:var(--gold-pale);}
+
+/* Iframes */
+.ind-content{flex:1;overflow:hidden;display:none;}
+.ind-content.active{display:block;}
 .ind-iframe{width:100%;height:100%;border:none;display:none;}
 .ind-iframe.active{display:block;}
 
@@ -327,21 +371,73 @@ nav{background:var(--navy-mid);border-bottom:2px solid rgba(212,168,71,0.12);pad
 
 <!-- OVERLAY INDICADORES -->
 <div class="indicadores-overlay" id="ind-overlay">
+
+  <!-- NAV -->
   <div class="ind-nav">
     <span class="ind-nav-logo">APEX</span>
     <div class="ind-nav-sep"></div>
-    <span class="ind-nav-title">Indicadores Clínicos</span>
+    <span class="ind-nav-title" id="ind-nav-title">Indicadores Clínicos</span>
     <div class="ind-nav-space"></div>
     <div class="ind-nav-btns">
-      <button class="ind-btn active" id="btn-dash" onclick="trocarView('dashboard')">▦ Dashboard</button>
-      <button class="ind-btn" id="btn-admin" onclick="trocarView('admin')">✎ Lançamento Mensal</button>
-      <button class="ind-btn ind-btn-sair" onclick="sairIndicadores()">← Voltar</button>
+      <button class="ind-btn ind-btn-voltar" id="btn-voltar" onclick="voltarHome()">← Início</button>
+      <button class="ind-btn ind-btn-sair" onclick="sairIndicadores()">✕ Sair</button>
     </div>
   </div>
-  <div class="ind-content">
+
+  <!-- SUB-NAV TRS CRÔNICO -->
+  <div class="ind-subnav" id="ind-subnav">
+    <span class="ind-subnav-label">TRS Crônico</span>
+    <div class="ind-nav-sep"></div>
+    <button class="ind-subnav-btn active" id="sub-dash" onclick="trocarSubView('dashboard')">▦ Dashboard</button>
+    <button class="ind-subnav-btn" id="sub-admin" onclick="trocarSubView('admin')">✎ Lançamento Mensal</button>
+  </div>
+
+  <!-- HOME — 2 CARDS TRS -->
+  <div class="ind-home active" id="ind-home">
+    <p class="ind-home-eyebrow">Fenix Nefrologia</p>
+    <h2 class="ind-home-title">Selecione o <em>serviço</em></h2>
+    <div class="ind-trs-grid">
+
+      <!-- TRS CRÔNICO -->
+      <div class="ind-trs-card" onclick="abrirCronico()">
+        <div class="ind-trs-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="2" stroke="#D4A847" stroke-width="1.4"/><line x1="3" y1="9" x2="21" y2="9" stroke="#D4A847" stroke-width="1.2"/><rect x="6" y="13" width="3" height="5" rx="1" fill="rgba(212,168,71,0.3)" stroke="#D4A847" stroke-width="0.8"/><rect x="11" y="11" width="3" height="7" rx="1" fill="rgba(212,168,71,0.2)" stroke="#D4A847" stroke-width="0.8"/><rect x="16" y="14" width="3" height="4" rx="1" fill="rgba(212,168,71,0.25)" stroke="#D4A847" stroke-width="0.8"/></svg>
+        </div>
+        <p class="ind-trs-label">Fenix Nefrologia</p>
+        <h3 class="ind-trs-title">Gestão <em>TRS Crônico</em></h3>
+        <p class="ind-trs-desc">Dashboard de indicadores mensais e lançamento de dados das unidades RL, Santos e Tatuapé.</p>
+        <div class="ind-trs-tags">
+          <span class="ind-trs-tag">Dashboard</span>
+          <span class="ind-trs-tag">Lançamento Mensal</span>
+          <span class="ind-trs-tag">3 Unidades</span>
+        </div>
+      </div>
+
+      <!-- TRS AGUDO -->
+      <div class="ind-trs-card agudo" onclick="abrirAgudo()">
+        <div class="ind-trs-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M12 3L3 7.5l9 4.5 9-4.5L12 3z" stroke="#5BA8D4" stroke-width="1.4" stroke-linejoin="round"/><path d="M3 16.5l9 4.5 9-4.5M3 12l9 4.5 9-4.5" stroke="#5BA8D4" stroke-width="1.4" stroke-linejoin="round"/></svg>
+        </div>
+        <p class="ind-trs-label">Hospital Mont Serrat · Santos</p>
+        <h3 class="ind-trs-title">Gestão <em>TRS Agudo</em></h3>
+        <p class="ind-trs-desc">Lançamento semanal de sessões por modalidade, acessos venosos e intercorrências clínicas.</p>
+        <div class="ind-trs-tags">
+          <span class="ind-trs-tag">HD · CRRT · DP · SLED</span>
+          <span class="ind-trs-tag">Intercorrências</span>
+          <span class="ind-trs-tag">Semanal</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- IFRAMES -->
+  <div class="ind-content" id="ind-content">
     <iframe id="iframe-dashboard" class="ind-iframe active" src=""></iframe>
     <iframe id="iframe-admin" class="ind-iframe" src=""></iframe>
+    <iframe id="iframe-agudo" class="ind-iframe" src=""></iframe>
   </div>
+
 </div>
 
 <script>
@@ -391,16 +487,46 @@ async function fazerLogin() {
 
 function abrirIndicadores() {
   document.getElementById('ind-overlay').classList.add('show');
-  const dash = document.getElementById('iframe-dashboard');
-  if(!dash.src || dash.src === window.location.href) {
-    dash.src = 'dashboard_fenix_C-Espacoso.html';
+  voltarHome();
+}
+
+function voltarHome() {
+  // Mostra home, esconde content e subnav
+  document.getElementById('ind-home').classList.add('active');
+  document.getElementById('ind-content').classList.remove('active');
+  document.getElementById('ind-subnav').classList.remove('visible');
+  document.getElementById('btn-voltar').classList.remove('visible');
+  document.getElementById('ind-nav-title').textContent = 'Indicadores Clínicos';
+}
+
+function abrirCronico() {
+  document.getElementById('ind-home').classList.remove('active');
+  document.getElementById('ind-content').classList.add('active');
+  document.getElementById('ind-subnav').classList.add('visible');
+  document.getElementById('btn-voltar').classList.add('visible');
+  document.getElementById('ind-nav-title').textContent = 'TRS Crônico';
+  trocarSubView('dashboard');
+}
+
+function abrirAgudo() {
+  document.getElementById('ind-home').classList.remove('active');
+  document.getElementById('ind-content').classList.add('active');
+  document.getElementById('ind-subnav').classList.remove('visible');
+  document.getElementById('btn-voltar').classList.add('visible');
+  document.getElementById('ind-nav-title').textContent = 'TRS Agudo';
+  // Carrega seletor de hospitais no iframe-agudo
+  const iframe = document.getElementById('iframe-agudo');
+  document.querySelectorAll('.ind-iframe').forEach(f => f.classList.remove('active'));
+  iframe.classList.add('active');
+  if(!iframe.src || iframe.src === window.location.href) {
+    iframe.src = 'trs_agudo.html';
   }
 }
 
-function trocarView(view) {
+function trocarSubView(view) {
   const config = {
-    dashboard: { btn:'btn-dash', iframe:'iframe-dashboard', src:'dashboard_fenix_C-Espacoso.html' },
-    admin:     { btn:'btn-admin', iframe:'iframe-admin',     src:'fenix_admin.html' }
+    dashboard: { btn:'sub-dash', iframe:'iframe-dashboard', src:'dashboard_fenix_C-Espacoso.html' },
+    admin:     { btn:'sub-admin', iframe:'iframe-admin',    src:'fenix_admin.html' },
   };
   Object.entries(config).forEach(([k, c]) => {
     document.getElementById(c.btn).classList.toggle('active', k === view);
@@ -410,6 +536,8 @@ function trocarView(view) {
       iframe.src = c.src;
     }
   });
+  // Garante que agudo está desativo
+  document.getElementById('iframe-agudo').classList.remove('active');
 }
 
 function sairIndicadores() {
@@ -417,6 +545,7 @@ function sairIndicadores() {
   document.getElementById('ind-overlay').classList.remove('show');
   document.getElementById('iframe-dashboard').src = '';
   document.getElementById('iframe-admin').src = '';
+  document.getElementById('iframe-agudo').src = '';
   document.getElementById('btn-login').disabled = false;
   document.getElementById('btn-login').textContent = 'Entrar';
   document.getElementById('login-email').value = '';
