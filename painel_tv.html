@@ -256,21 +256,23 @@ const SUPA_KEY='sb_publishable_poKCFHc9n1CtIfCbAxTN0Q_dmlsEy1t';
 
 async function fetchCronicoSupabase(mes){
   const[ano,mm]=mes.split('-');
-  const mIdx=parseInt(mm)-1; // mês como índice 0-11 (igual ao dashboard)
+  const mIdx=parseInt(mm)-1; // índice 0-11
   try{
+    // Busca todos os meses do ano igual ao dashboard (ano fixo 2026)
     const resp=await fetch(
-      `${SUPA_URL}/rest/v1/dados_mensais?ano=eq.${ano}&mes=eq.${mIdx}&select=pac_rede,ses_rede,pac_rl,pac_santos,pac_tatuape,ses_rl,ses_santos,ses_tatuape`,
+      `${SUPA_URL}/rest/v1/dados_mensais?ano=eq.2026&select=mes,pac_rede,ses_rede&order=mes.asc`,
       {headers:{'apikey':SUPA_KEY,'Authorization':`Bearer ${SUPA_KEY}`}}
     );
     const rows=await resp.json();
+    console.log('Supabase rows:', rows);
     if(!Array.isArray(rows)||rows.length===0)return null;
-    const d=rows[0];
-    return{
-      pac: d.pac_rede||0,
-      ses: d.ses_rede||0,
-    };
+    // Filtra pelo mês correto
+    const d=rows.find(r=>r.mes===mIdx);
+    console.log(`Buscando mês índice ${mIdx}, encontrado:`, d);
+    if(!d)return null;
+    return{pac:d.pac_rede||0, ses:d.ses_rede||0};
   }catch(e){
-    console.error('Erro Supabase crônico:',e);
+    console.error('Erro Supabase:',e);
     return null;
   }
 }
