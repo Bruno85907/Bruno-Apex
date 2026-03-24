@@ -408,6 +408,7 @@ nav{background:var(--navy-mid);border-bottom:2px solid rgba(212,168,71,0.12);pad
     <iframe id="iframe-dashboard" class="ind-iframe active" src=""></iframe>
     <iframe id="iframe-admin" class="ind-iframe" src=""></iframe>
     <iframe id="iframe-agudo" class="ind-iframe" src=""></iframe>
+    <iframe id="iframe-tv" class="ind-iframe" src=""></iframe>
   </div>
 
 </div>
@@ -484,7 +485,6 @@ function abrirPainelTV() {
   // Salva dados do crônico no localStorage para o painel TV ler
   try{
     if(typeof BASE !== 'undefined' && BASE.pacientes){
-      // Salva todos os meses disponíveis
       const payload = {
         pacientes: BASE.pacientes.rede,
         sessoes:   BASE.sessoes.rede,
@@ -493,7 +493,20 @@ function abrirPainelTV() {
       localStorage.setItem('apex_tv_cronico', JSON.stringify(payload));
     }
   }catch(e){}
-  window.open('tv.html', '_blank');
+
+  // Abre dentro do overlay (igual agudo/crônico — sem abrir nova aba)
+  document.getElementById('ind-home').classList.remove('active');
+  document.getElementById('ind-content').classList.add('active');
+  document.getElementById('ind-subnav').classList.remove('visible');
+  document.getElementById('btn-voltar').classList.add('visible');
+  document.getElementById('ind-nav-title').textContent = 'Painel de Indicadores';
+
+  const iframe = document.getElementById('iframe-tv');
+  document.querySelectorAll('.ind-iframe').forEach(f => f.classList.remove('active'));
+  iframe.classList.add('active');
+  if(!iframe.src || iframe.src === window.location.href) {
+    iframe.src = 'tv.html';
+  }
 }
 
 function abrirAgudo() {
@@ -534,6 +547,7 @@ function sairIndicadores() {
   document.getElementById('iframe-dashboard').src = '';
   document.getElementById('iframe-admin').src = '';
   document.getElementById('iframe-agudo').src = '';
+  document.getElementById('iframe-tv').src = '';
   document.getElementById('btn-login').disabled = false;
   document.getElementById('btn-login').textContent = 'Entrar';
   document.getElementById('login-email').value = '';
