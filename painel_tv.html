@@ -20,94 +20,93 @@ body{font-family:'Inter',sans-serif;color:var(--white);}
 .tv{
   width:100vw;height:100vh;
   display:grid;
-  grid-template-rows:72px 1fr 56px;
+  grid-template-rows:64px 1fr 48px;
   background:var(--black);
 }
 
 /* HEADER */
 .tv-header{
   display:flex;align-items:center;justify-content:space-between;
-  padding:0 48px;
+  padding:0 40px;
   border-bottom:1px solid var(--border);
   background:rgba(13,27,53,0.6);
   flex-shrink:0;
 }
-.tv-logo{font-family:'Cinzel',serif;font-size:18px;font-weight:700;color:var(--gold);letter-spacing:4px;}
-.tv-header-center{display:flex;flex-direction:column;align-items:center;gap:2px;}
-.tv-header-title{font-family:'Cinzel',serif;font-size:13px;letter-spacing:4px;color:var(--gold);text-transform:uppercase;}
-.tv-header-sub{font-family:'Cormorant Garamond',serif;font-size:13px;font-style:italic;color:var(--muted);}
+.tv-logo{font-family:'Cinzel',serif;font-size:16px;font-weight:700;color:var(--gold);letter-spacing:4px;}
+.tv-header-center{display:flex;flex-direction:column;align-items:center;gap:1px;}
+.tv-header-title{font-family:'Cinzel',serif;font-size:12px;letter-spacing:4px;color:var(--gold);text-transform:uppercase;}
+.tv-header-sub{font-family:'Cormorant Garamond',serif;font-size:12px;font-style:italic;color:var(--muted);}
 .tv-header-right{display:flex;align-items:center;gap:16px;}
-.tv-mes{font-family:'Cinzel',serif;font-size:11px;letter-spacing:3px;color:var(--muted);text-transform:uppercase;}
-.tv-clock{font-family:'Cinzel',serif;font-size:16px;font-weight:600;color:var(--gold);letter-spacing:2px;min-width:60px;text-align:right;}
+.tv-mes{font-family:'Cinzel',serif;font-size:10px;letter-spacing:3px;color:var(--muted);text-transform:uppercase;}
+.tv-clock{font-family:'Cinzel',serif;font-size:15px;font-weight:600;color:var(--gold);letter-spacing:2px;min-width:55px;text-align:right;}
 
 /* CORPO PRINCIPAL */
 .tv-body{
   display:grid;
   grid-template-columns:1fr 1px 1fr;
   overflow:hidden;
-  padding:0;
 }
 .tv-divider{background:var(--border);}
 
-/* COLUNA */
+/* COLUNA — usa flex com overflow hidden para caber tudo */
 .col{
-  display:flex;flex-direction:column;gap:0;
-  padding:20px 32px;
+  display:flex;flex-direction:column;
+  padding:14px 28px;
   overflow:hidden;
+  gap:8px;
 }
 .col-header{
-  display:flex;align-items:center;gap:12px;
-  margin-bottom:16px;flex-shrink:0;
+  display:flex;align-items:center;gap:10px;
+  flex-shrink:0;
 }
 .col-badge{
-  font-family:'Cinzel',serif;font-size:9px;letter-spacing:3px;
-  text-transform:uppercase;padding:3px 12px;border-radius:20px;
+  font-family:'Cinzel',serif;font-size:8px;letter-spacing:3px;
+  text-transform:uppercase;padding:2px 10px;border-radius:20px;
 }
 .badge-cronico{background:rgba(212,168,71,0.15);color:var(--gold);border:1px solid rgba(212,168,71,0.3);}
 .badge-agudo{background:rgba(91,168,212,0.12);color:var(--blue);border:1px solid rgba(91,168,212,0.25);}
-.col-title{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:300;color:var(--white);}
+.col-title{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:300;color:var(--white);}
 .col-title em{color:var(--gold-pale);font-style:italic;}
 
 /* KPI GRID */
-.kpi-row{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:14px;flex-shrink:0;}
-.kpi-row-2{grid-template-columns:repeat(2,1fr);}
+.kpi-row{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;flex-shrink:0;}
 .kpi{
-  background:var(--navy-mid);border:1px solid var(--border);border-radius:10px;
-  padding:12px 16px;position:relative;overflow:hidden;
+  background:var(--navy-mid);border:1px solid var(--border);border-radius:8px;
+  padding:10px 14px;position:relative;overflow:hidden;
 }
 .kpi::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--gold);opacity:.5;}
-.kpi-lbl{font-family:'Cinzel',serif;font-size:8px;letter-spacing:2px;color:rgba(212,168,71,0.55);text-transform:uppercase;margin-bottom:6px;}
-.kpi-val{font-family:'Cormorant Garamond',serif;font-size:44px;font-weight:300;color:var(--white);line-height:1;}
-.kpi-val.big{font-size:52px;}
-.kpi-sub{font-family:'Inter',sans-serif;font-size:10px;color:var(--muted);margin-top:3px;}
+.kpi-lbl{font-family:'Cinzel',serif;font-size:7px;letter-spacing:2px;color:rgba(212,168,71,0.55);text-transform:uppercase;margin-bottom:4px;}
+.kpi-val{font-family:'Cormorant Garamond',serif;font-size:38px;font-weight:300;color:var(--white);line-height:1;}
+.kpi-val.big{font-size:42px;}
+.kpi-sub{font-family:'Inter',sans-serif;font-size:9px;color:var(--muted);margin-top:2px;}
 
 /* GAUGE */
-.gauge-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px;flex-shrink:0;}
-.gauge-card{background:var(--navy-mid);border:1px solid var(--border);border-radius:10px;padding:12px 16px;display:flex;flex-direction:column;align-items:center;}
-.gauge-lbl{font-family:'Cinzel',serif;font-size:8px;letter-spacing:2px;color:rgba(212,168,71,0.55);text-transform:uppercase;margin-bottom:8px;text-align:center;}
-.gauge-wrap{width:160px;height:86px;position:relative;}
-.gauge-num{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:300;color:var(--white);text-align:center;margin-top:4px;line-height:1;}
-.gauge-faixa{font-family:'Cinzel',serif;font-size:8px;letter-spacing:2px;padding:2px 10px;border-radius:20px;margin-top:4px;display:inline-block;}
+.gauge-row{display:grid;grid-template-columns:1fr 1fr;gap:8px;flex-shrink:0;}
+.gauge-card{background:var(--navy-mid);border:1px solid var(--border);border-radius:8px;padding:10px 12px;display:flex;flex-direction:column;align-items:center;}
+.gauge-lbl{font-family:'Cinzel',serif;font-size:7px;letter-spacing:2px;color:rgba(212,168,71,0.55);text-transform:uppercase;margin-bottom:4px;text-align:center;}
+.gauge-wrap{width:140px;height:76px;position:relative;}
+.gauge-num{font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:300;color:var(--white);text-align:center;margin-top:2px;line-height:1;}
+.gauge-faixa{font-family:'Cinzel',serif;font-size:7px;letter-spacing:2px;padding:2px 8px;border-radius:20px;margin-top:3px;display:inline-block;}
 
 /* MODALIDADES */
-.mod-row{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:14px;flex-shrink:0;}
-.mod-item{background:var(--gold-dim);border:1px solid rgba(212,168,71,0.12);border-radius:8px;padding:10px;text-align:center;}
-.mod-nome{font-family:'Cinzel',serif;font-size:8px;letter-spacing:3px;color:var(--gold);text-transform:uppercase;margin-bottom:5px;}
-.mod-val{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:300;color:var(--white);line-height:1;}
-.mod-pct{font-family:'Inter',sans-serif;font-size:10px;color:var(--muted);margin-top:2px;}
+.mod-row{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;flex-shrink:0;}
+.mod-item{background:var(--gold-dim);border:1px solid rgba(212,168,71,0.12);border-radius:7px;padding:8px;text-align:center;}
+.mod-nome{font-family:'Cinzel',serif;font-size:7px;letter-spacing:3px;color:var(--gold);text-transform:uppercase;margin-bottom:3px;}
+.mod-val{font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:300;color:var(--white);line-height:1;}
+.mod-pct{font-family:'Inter',sans-serif;font-size:9px;color:var(--muted);margin-top:1px;}
 
-/* COMPARATIVO */
+/* COMPARATIVO — ocupa o espaço restante */
 .comp-card{
-  background:var(--navy-mid);border:1px solid var(--border);border-radius:10px;
-  padding:12px 16px;flex:1;min-height:0;
+  background:var(--navy-mid);border:1px solid var(--border);border-radius:8px;
+  padding:10px 14px;flex:1;min-height:0;overflow:hidden;
 }
-.comp-title{font-family:'Cinzel',serif;font-size:8px;letter-spacing:3px;color:rgba(212,168,71,0.55);text-transform:uppercase;margin-bottom:10px;}
-.comp-row{display:flex;align-items:center;gap:10px;margin-bottom:8px;}
-.comp-label{font-family:'Inter',sans-serif;font-size:11px;color:var(--muted);min-width:100px;}
-.comp-bar-bg{flex:1;background:rgba(255,255,255,0.06);border-radius:4px;height:20px;overflow:hidden;position:relative;}
-.comp-bar-fill{height:100%;border-radius:4px;display:flex;align-items:center;padding-left:8px;}
-.comp-bar-val{font-family:'Cinzel',serif;font-size:9px;font-weight:600;color:var(--black);}
-.comp-delta{font-family:'Cinzel',serif;font-size:10px;font-weight:600;min-width:48px;text-align:right;}
+.comp-title{font-family:'Cinzel',serif;font-size:7px;letter-spacing:3px;color:rgba(212,168,71,0.55);text-transform:uppercase;margin-bottom:8px;}
+.comp-row{display:flex;align-items:center;gap:8px;margin-bottom:6px;}
+.comp-label{font-family:'Inter',sans-serif;font-size:10px;color:var(--muted);min-width:90px;}
+.comp-bar-bg{flex:1;background:rgba(255,255,255,0.06);border-radius:3px;height:18px;overflow:hidden;}
+.comp-bar-fill{height:100%;border-radius:3px;display:flex;align-items:center;padding-left:7px;min-width:36px;}
+.comp-bar-val{font-family:'Cinzel',serif;font-size:8px;font-weight:600;color:var(--black);}
+.comp-delta{font-family:'Cinzel',serif;font-size:9px;font-weight:600;min-width:44px;text-align:right;}
 .delta-up{color:var(--green);}
 .delta-down{color:var(--red);}
 .delta-eq{color:var(--muted);}
@@ -115,22 +114,19 @@ body{font-family:'Inter',sans-serif;color:var(--white);}
 /* FOOTER */
 .tv-footer{
   display:flex;align-items:center;justify-content:space-between;
-  padding:0 48px;
+  padding:0 40px;
   border-top:1px solid var(--border);
   background:rgba(13,27,53,0.4);
   flex-shrink:0;
 }
-.tv-footer-left{font-family:'Cinzel',serif;font-size:9px;letter-spacing:3px;color:rgba(212,168,71,0.4);text-transform:uppercase;}
-.tv-footer-right{font-family:'Inter',sans-serif;font-size:11px;color:var(--muted);}
-.tv-update{font-family:'Inter',sans-serif;font-size:10px;color:rgba(212,168,71,0.4);}
+.tv-footer-left{font-family:'Cinzel',serif;font-size:8px;letter-spacing:3px;color:rgba(212,168,71,0.4);text-transform:uppercase;}
+.tv-footer-right{font-family:'Inter',sans-serif;font-size:10px;color:var(--muted);}
+.tv-update{font-family:'Inter',sans-serif;font-size:9px;color:rgba(212,168,71,0.4);}
 
 /* SEM DADOS */
-.no-data{
-  display:flex;flex-direction:column;align-items:center;justify-content:center;
-  flex:1;gap:12px;
-}
-.no-data-text{font-family:'Cormorant Garamond',serif;font-size:20px;font-style:italic;color:rgba(232,213,160,0.25);}
-.no-data-hint{font-family:'Cinzel',serif;font-size:9px;letter-spacing:3px;color:rgba(212,168,71,0.2);text-transform:uppercase;}
+.no-data{display:flex;flex-direction:column;align-items:center;justify-content:center;flex:1;gap:10px;}
+.no-data-text{font-family:'Cormorant Garamond',serif;font-size:18px;font-style:italic;color:rgba(232,213,160,0.25);}
+.no-data-hint{font-family:'Cinzel',serif;font-size:8px;letter-spacing:3px;color:rgba(212,168,71,0.2);text-transform:uppercase;}
 </style>
 </head>
 <body>
@@ -254,30 +250,90 @@ function drawGauge(canvasId,valor){
   ctx.beginPath();ctx.arc(cx,cy,2.5,0,2*Math.PI);ctx.fillStyle='#fff';ctx.fill();
 }
 
-// ── DADOS CRÔNICO ────────────────────────────────────────────
-function getDadosCronico(mes){
-  // Tenta buscar do localStorage (salvo pelo fenix_admin via Supabase)
-  // Fallback: retorna zeros para indicar sem dados
-  const key=`fenix_dados_${mes}`;
-  const saved=localStorage.getItem(key);
-  if(saved){
-    try{
-      const d=JSON.parse(saved);
-      const m=parseInt(mes.split('-')[1])-1;
-      return{
-        pac: d.pacientes?.rede?.[m]||0,
-        ses: d.sessoes?.rede?.[m]||0,
-        ktv: d.adequ?.ktv?.rede?.[m]||0,
-        hb:  d.qol?.hb?.rede?.[m]||0,
-      };
-    }catch(e){}
-  }
-  // Estrutura do BASE carregada pelo Supabase no dashboard
-  // Tenta via variáveis globais se aberto em iframe — caso contrário sem dados
-  return null;
+// ── DADOS CRÔNICO VIA SUPABASE ───────────────────────────────
+const SUPA_URL='https://syzmsixhjlutsynnqivv.supabase.co';
+const SUPA_KEY='sb_publishable_poKCFHc9n1CtIfCbAxTN0Q_dmlsEy1t';
+
+async function fetchCronicoSupabase(mes){
+  const[ano,mm]=mes.split('-');
+  const mIdx=parseInt(mm)-1;
+  try{
+    const resp=await fetch(
+      `${SUPA_URL}/rest/v1/dados_mensais?ano=eq.${ano}&mes=eq.${mIdx}&select=*`,
+      {headers:{'apikey':SUPA_KEY,'Authorization':`Bearer ${SUPA_KEY}`}}
+    );
+    const rows=await resp.json();
+    if(!Array.isArray(rows)||rows.length===0)return null;
+    const d=rows[0];
+    return{
+      pac: d.pac_rede||0,
+      ses: d.ses_rede||0,
+      ktv: d.ktv_rede||0,
+      hb:  d.hb_rede||0,
+    };
+  }catch(e){return null;}
 }
 
-// ── DADOS AGUDO ──────────────────────────────────────────────
+// ── RENDERIZA CRÔNICO ────────────────────────────────────────
+async function renderCronico(mes, mesAnt){
+  const el=document.getElementById('cronico-content');
+  el.innerHTML=`<div class="no-data"><div class="no-data-text">Carregando...</div></div>`;
+
+  const[dadosMes, dadosAnt]=await Promise.all([
+    fetchCronicoSupabase(mes),
+    fetchCronicoSupabase(mesAnt)
+  ]);
+
+  if(!dadosMes||(!dadosMes.pac&&!dadosMes.ses)){
+    el.innerHTML=`<div class="no-data">
+      <div class="no-data-text">Sem dados lançados para ${formatMesFull(mes)}</div>
+      <div class="no-data-hint">Lance os dados via Lançamento Mensal</div>
+    </div>`;
+    return;
+  }
+
+  const{pac,ses}=dadosMes;
+  const pacAnt=dadosAnt?.pac||0;
+  const sesAnt=dadosAnt?.ses||0;
+  const mediaSessPac=pac>0?(ses/pac).toFixed(1):'-';
+  const deltaSes=ses-sesAnt;
+  const deltaPac=pac-pacAnt;
+  const maxComp=Math.max(ses,sesAnt,1);
+
+  el.innerHTML=`
+    <div class="kpi-row">
+      <div class="kpi"><div class="kpi-lbl">Pacientes</div><div class="kpi-val big">${fmt(pac)}</div><div class="kpi-sub">total rede</div></div>
+      <div class="kpi"><div class="kpi-lbl">Sessões</div><div class="kpi-val big">${fmt(ses)}</div><div class="kpi-sub">total rede</div></div>
+      <div class="kpi"><div class="kpi-lbl">Ses / Paciente</div><div class="kpi-val big">${mediaSessPac}</div><div class="kpi-sub">média</div></div>
+      <div class="kpi"><div class="kpi-lbl">Vs mês ant.</div>
+        <div class="kpi-val big" style="color:${deltaSes>=0?'#5DCB8A':'#F07070'};">${deltaSes>=0?'+':''}${fmt(deltaSes)}</div>
+        <div class="kpi-sub">sessões</div>
+      </div>
+    </div>
+    <div class="comp-card">
+      <div class="comp-title">Comparativo — ${formatMes(mes)} vs ${formatMes(mesAnt)}</div>
+      <div class="comp-row">
+        <div class="comp-label">Sessões ${formatMes(mes)}</div>
+        <div class="comp-bar-bg"><div class="comp-bar-fill" style="width:${Math.round(ses/maxComp*100)}%;background:linear-gradient(90deg,#8B6914,#D4A847);"><span class="comp-bar-val">${fmt(ses)}</span></div></div>
+        <div class="comp-delta ${deltaSes>=0?'delta-up':'delta-down'}">${deltaSes>=0?'▲':'▼'} ${Math.abs(deltaSes)}</div>
+      </div>
+      <div class="comp-row">
+        <div class="comp-label">Sessões ${formatMes(mesAnt)}</div>
+        <div class="comp-bar-bg"><div class="comp-bar-fill" style="width:${Math.round(sesAnt/maxComp*100)}%;background:linear-gradient(90deg,#2A2A2A,#555);"><span class="comp-bar-val" style="color:#fff;">${fmt(sesAnt)}</span></div></div>
+        <div class="comp-delta delta-eq">—</div>
+      </div>
+      <div class="comp-row" style="margin-top:6px;">
+        <div class="comp-label">Pacientes ${formatMes(mes)}</div>
+        <div class="comp-bar-bg"><div class="comp-bar-fill" style="width:${Math.round(pac/Math.max(pac,pacAnt,1)*100)}%;background:linear-gradient(90deg,#1B4D6B,#5BA8D4);"><span class="comp-bar-val">${fmt(pac)}</span></div></div>
+        <div class="comp-delta ${deltaPac>=0?'delta-up':'delta-down'}">${deltaPac>=0?'▲':'▼'} ${Math.abs(deltaPac)}</div>
+      </div>
+      <div class="comp-row">
+        <div class="comp-label">Pacientes ${formatMes(mesAnt)}</div>
+        <div class="comp-bar-bg"><div class="comp-bar-fill" style="width:${Math.round(pacAnt/Math.max(pac,pacAnt,1)*100)}%;background:linear-gradient(90deg,#2A2A2A,#555);"><span class="comp-bar-val" style="color:#fff;">${fmt(pacAnt)}</span></div></div>
+        <div class="comp-delta delta-eq">—</div>
+      </div>
+    </div>`;
+}
 function isoWeekToDate(y,w){
   const d=new Date(y,0,1+(w-1)*7);
   const dow=d.getDay();
@@ -472,7 +528,7 @@ function atualizarRelogio(){
 }
 
 // ── INICIALIZAÇÃO ─────────────────────────────────────────────
-function init(){
+async function init(){
   const mes=getMesAtual();
   const mesAnt=getMesAnterior(mes);
 
@@ -480,7 +536,7 @@ function init(){
   document.getElementById('tv-footer-right').textContent=`Período: ${formatMesFull(mes)}`;
   document.getElementById('tv-update').textContent=`Atualizado em ${new Date().toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'})}`;
 
-  renderCronico(mes,mesAnt);
+  renderCronico(mes,mesAnt); // async, não bloqueia
   renderAgudo(mes,mesAnt);
   atualizarRelogio();
   setInterval(atualizarRelogio,30000);
