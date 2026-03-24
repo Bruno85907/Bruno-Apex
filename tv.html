@@ -250,31 +250,46 @@ function drawGauge(canvasId,valor){
   ctx.beginPath();ctx.arc(cx,cy,2.5,0,2*Math.PI);ctx.fillStyle='#fff';ctx.fill();
 }
 
-// ── DADOS CRÔNICO VIA SUPABASE ───────────────────────────────
-const SUPA_URL='https://syzmsixhjlutsynnqivv.supabase.co';
-const SUPA_KEY='sb_publishable_poKCFHc9n1CtIfCbAxTN0Q_dmlsEy1t';
+// ── DADOS CRÔNICO ─────────────────────────────────────────────
+// Lê do localStorage salvo pelo portal antes de abrir o painel
+function fetchCronicoLocal(mes){
+  try{
+    const raw = localStorage.getItem('apex_tv_cronico');
+    if(!raw) return null;
+    const data = JSON.parse(raw);
+    // Verifica se foi salvo há menos de 2 horas
+    if(Date.now() - data.savedAt > 7200000) return null;
+    const mIdx = parseInt(mes.split('-')[1]) - 1;
+    const pac = data.pacientes?.[mIdx] || 0;
+    const ses = data.sessoes?.[mIdx]   || 0;
+    if(pac === 0 && ses === 0) return null;
+    return { pac, ses };
+  }catch(e){ return null; }
+}
 
 async function fetchCronicoSupabase(mes){
-  const[ano,mm]=mes.split('-');
-  const mIdx=parseInt(mm)-1; // índice 0-11
+  // Primeiro tenta localStorage (dados salvos pelo portal)
+  const local = fetchCronicoLocal(mes);
+  if(local) return local;
+
+  // Fallback: tenta Supabase direto
+  const SUPA_URL='https://syzmsixhjlutsynnqivv.supabase.co';
+  const SUPA_KEY='sb_publishable_poKCFHc9n1CtIfCbAxTN0Q_dmlsEy1t';
+  const mIdx = parseInt(mes.split('-')[1]) - 1;
   try{
-    // Busca todos os meses do ano igual ao dashboard (ano fixo 2026)
-    const resp=await fetch(
+    const resp = await fetch(
       `${SUPA_URL}/rest/v1/dados_mensais?ano=eq.2026&select=mes,pac_rede,ses_rede&order=mes.asc`,
-      {headers:{'apikey':SUPA_KEY,'Authorization':`Bearer ${SUPA_KEY}`}}
+      { headers:{'apikey':SUPA_KEY,'Authorization':`Bearer ${SUPA_KEY}`} }
     );
-    const rows=await resp.json();
-    console.log('Supabase rows:', rows);
-    if(!Array.isArray(rows)||rows.length===0)return null;
-    // Filtra pelo mês correto
-    const d=rows.find(r=>r.mes===mIdx);
-    console.log(`Buscando mês índice ${mIdx}, encontrado:`, d);
-    if(!d)return null;
-    return{pac:d.pac_rede||0, ses:d.ses_rede||0};
+    if(resp.ok){
+      const rows = await resp.json();
+      const d = rows.find(r => r.mes === mIdx);
+      if(d) return { pac: d.pac_rede||0, ses: d.ses_rede||0 };
+    }
   }catch(e){
-    console.error('Erro Supabase:',e);
-    return null;
+    console.warn('Supabase falhou:', e.message);
   }
+  return null;
 }
 
 // ── RENDERIZA CRÔNICO ────────────────────────────────────────
@@ -291,8 +306,8 @@ async function renderCronico(mes, mesAnt){
 
   if(!dadosMes||(dadosMes.pac===0&&dadosMes.ses===0)){
     el.innerHTML=`<div class="no-data">
-      <div class="no-data-text">Sem dados lançados para ${formatMesFull(mes)}</div>
-      <div class="no-data-hint">Lance os dados via Lançamento Mensal</div>
+      <div class="no-data-text">Sem dados para ${formatMesFull(mes)}</div>
+      <div class="no-data-hint">Abra o painel pelo Portal → Indicadores Clínicos → Painel de Indicadores</div>
     </div>`;
     return;
   }

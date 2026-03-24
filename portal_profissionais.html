@@ -481,7 +481,19 @@ function abrirCronico() {
 }
 
 function abrirPainelTV() {
-  window.open('painel_tv.html', '_blank');
+  // Salva dados do crônico no localStorage para o painel TV ler
+  try{
+    if(typeof BASE !== 'undefined' && BASE.pacientes){
+      // Salva todos os meses disponíveis
+      const payload = {
+        pacientes: BASE.pacientes.rede,
+        sessoes:   BASE.sessoes.rede,
+        savedAt:   Date.now()
+      };
+      localStorage.setItem('apex_tv_cronico', JSON.stringify(payload));
+    }
+  }catch(e){}
+  window.open('tv.html', '_blank');
 }
 
 function abrirAgudo() {
