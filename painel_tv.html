@@ -256,10 +256,10 @@ const SUPA_KEY='sb_publishable_poKCFHc9n1CtIfCbAxTN0Q_dmlsEy1t';
 
 async function fetchCronicoSupabase(mes){
   const[ano,mm]=mes.split('-');
-  const mIdx=parseInt(mm)-1;
+  const mIdx=parseInt(mm)-1; // mês como índice 0-11 (igual ao dashboard)
   try{
     const resp=await fetch(
-      `${SUPA_URL}/rest/v1/dados_mensais?ano=eq.${ano}&mes=eq.${mIdx}&select=*`,
+      `${SUPA_URL}/rest/v1/dados_mensais?ano=eq.${ano}&mes=eq.${mIdx}&select=pac_rede,ses_rede,pac_rl,pac_santos,pac_tatuape,ses_rl,ses_santos,ses_tatuape`,
       {headers:{'apikey':SUPA_KEY,'Authorization':`Bearer ${SUPA_KEY}`}}
     );
     const rows=await resp.json();
@@ -268,23 +268,26 @@ async function fetchCronicoSupabase(mes){
     return{
       pac: d.pac_rede||0,
       ses: d.ses_rede||0,
-      ktv: d.ktv_rede||0,
-      hb:  d.hb_rede||0,
     };
-  }catch(e){return null;}
+  }catch(e){
+    console.error('Erro Supabase crônico:',e);
+    return null;
+  }
 }
 
 // ── RENDERIZA CRÔNICO ────────────────────────────────────────
 async function renderCronico(mes, mesAnt){
   const el=document.getElementById('cronico-content');
-  el.innerHTML=`<div class="no-data"><div class="no-data-text">Carregando...</div></div>`;
+  el.innerHTML=`<div class="no-data"><div class="no-data-text">Carregando dados...</div></div>`;
 
   const[dadosMes, dadosAnt]=await Promise.all([
     fetchCronicoSupabase(mes),
     fetchCronicoSupabase(mesAnt)
   ]);
 
-  if(!dadosMes||(!dadosMes.pac&&!dadosMes.ses)){
+  console.log('Crônico mes:', dadosMes, 'ant:', dadosAnt);
+
+  if(!dadosMes||(dadosMes.pac===0&&dadosMes.ses===0)){
     el.innerHTML=`<div class="no-data">
       <div class="no-data-text">Sem dados lançados para ${formatMesFull(mes)}</div>
       <div class="no-data-hint">Lance os dados via Lançamento Mensal</div>
