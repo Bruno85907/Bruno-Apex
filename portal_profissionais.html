@@ -103,7 +103,10 @@ nav{background:var(--navy-mid);border-bottom:2px solid rgba(212,168,71,0.12);pad
 .ind-home-eyebrow{font-family:'Cinzel',serif;font-size:10px;letter-spacing:4px;color:var(--gold);opacity:.6;text-transform:uppercase;margin-bottom:12px;}
 .ind-home-title{font-family:'Cormorant Garamond',serif;font-size:clamp(28px,3.5vw,44px);font-weight:300;color:var(--white);line-height:1.15;margin-bottom:40px;}
 .ind-home-title em{color:var(--gold-pale);font-style:italic;}
-.ind-trs-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;max-width:900px;}
+.ind-trs-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:20px;max-width:1100px;}
+.ind-trs-card.tv{border-color:rgba(93,203,138,0.12);}
+.ind-trs-card.tv::after{background:#5DCB8A;}
+.ind-trs-card.tv:hover{border-color:rgba(93,203,138,0.3);}
 .ind-trs-card{background:var(--navy-mid);border:1px solid rgba(212,168,71,0.1);border-radius:16px;padding:36px;cursor:pointer;transition:all .35s;position:relative;overflow:hidden;}
 .ind-trs-card::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(212,168,71,0.05),transparent 60%);opacity:0;transition:opacity .3s;}
 .ind-trs-card:hover::before{opacity:1;}
@@ -346,9 +349,9 @@ nav{background:var(--navy-mid);border-bottom:2px solid rgba(212,168,71,0.12);pad
     <button class="ind-subnav-btn" id="sub-admin" onclick="trocarSubView('admin')">✎ Lançamento Mensal</button>
   </div>
 
-  <!-- HOME — 2 CARDS TRS -->
+  <!-- HOME — 3 CARDS TRS -->
   <div class="ind-home active" id="ind-home">
-    <p class="ind-home-eyebrow">Fenix Nefrologia</p>
+    <p class="ind-home-eyebrow">Indicadores Clínicos</p>
     <h2 class="ind-home-title">Selecione o <em>serviço</em></h2>
     <div class="ind-trs-grid">
 
@@ -357,13 +360,13 @@ nav{background:var(--navy-mid);border-bottom:2px solid rgba(212,168,71,0.12);pad
         <div class="ind-trs-icon">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="2" stroke="#D4A847" stroke-width="1.4"/><line x1="3" y1="9" x2="21" y2="9" stroke="#D4A847" stroke-width="1.2"/><rect x="6" y="13" width="3" height="5" rx="1" fill="rgba(212,168,71,0.3)" stroke="#D4A847" stroke-width="0.8"/><rect x="11" y="11" width="3" height="7" rx="1" fill="rgba(212,168,71,0.2)" stroke="#D4A847" stroke-width="0.8"/><rect x="16" y="14" width="3" height="4" rx="1" fill="rgba(212,168,71,0.25)" stroke="#D4A847" stroke-width="0.8"/></svg>
         </div>
-        <p class="ind-trs-label">Fenix Nefrologia</p>
+        <p class="ind-trs-label">Terapia Renal Substitutiva</p>
         <h3 class="ind-trs-title">Gestão <em>TRS Crônico</em></h3>
-        <p class="ind-trs-desc">Dashboard de indicadores mensais e lançamento de dados das unidades RL, Santos e Tatuapé.</p>
+        <p class="ind-trs-desc">Dashboard de indicadores mensais e lançamento de dados por unidade.</p>
         <div class="ind-trs-tags">
           <span class="ind-trs-tag">Dashboard</span>
           <span class="ind-trs-tag">Lançamento Mensal</span>
-          <span class="ind-trs-tag">3 Unidades</span>
+          <span class="ind-trs-tag">Por Unidade</span>
         </div>
       </div>
 
@@ -372,13 +375,28 @@ nav{background:var(--navy-mid);border-bottom:2px solid rgba(212,168,71,0.12);pad
         <div class="ind-trs-icon">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M12 3L3 7.5l9 4.5 9-4.5L12 3z" stroke="#5BA8D4" stroke-width="1.4" stroke-linejoin="round"/><path d="M3 16.5l9 4.5 9-4.5M3 12l9 4.5 9-4.5" stroke="#5BA8D4" stroke-width="1.4" stroke-linejoin="round"/></svg>
         </div>
-        <p class="ind-trs-label">Hospital Mont Serrat · Santos</p>
+        <p class="ind-trs-label">Terapia Renal Substitutiva</p>
         <h3 class="ind-trs-title">Gestão <em>TRS Agudo</em></h3>
         <p class="ind-trs-desc">Lançamento semanal de sessões por modalidade, acessos venosos e intercorrências clínicas.</p>
         <div class="ind-trs-tags">
           <span class="ind-trs-tag">HD · CRRT · DP · SLED</span>
           <span class="ind-trs-tag">Intercorrências</span>
-          <span class="ind-trs-tag">Semanal</span>
+          <span class="ind-trs-tag">Por Hospital</span>
+        </div>
+      </div>
+
+      <!-- PAINEL TV -->
+      <div class="ind-trs-card tv" onclick="abrirPainelTV()">
+        <div class="ind-trs-icon" style="background:rgba(93,203,138,0.08);border-color:rgba(93,203,138,0.2);">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><rect x="2" y="3" width="20" height="14" rx="2" stroke="#5DCB8A" stroke-width="1.4"/><path d="M8 21h8M12 17v4" stroke="#5DCB8A" stroke-width="1.4" stroke-linecap="round"/><rect x="5" y="6" width="4" height="3" rx="1" fill="rgba(93,203,138,0.3)" stroke="#5DCB8A" stroke-width="0.7"/><rect x="10" y="6" width="9" height="1.5" rx="0.75" fill="rgba(93,203,138,0.4)"/><rect x="10" y="9" width="6" height="1.5" rx="0.75" fill="rgba(93,203,138,0.25)"/></svg>
+        </div>
+        <p class="ind-trs-label" style="color:#5DCB8A;">Sala da Diretoria</p>
+        <h3 class="ind-trs-title">Painel de <em style="color:#A8E8C4;">Indicadores</em></h3>
+        <p class="ind-trs-desc">Visualização em TV — Crônico e Agudo lado a lado, otimizado para 16:9 com alto contraste.</p>
+        <div class="ind-trs-tags">
+          <span class="ind-trs-tag" style="color:#5DCB8A;background:rgba(93,203,138,0.07);border-color:rgba(93,203,138,0.15);">Crônico + Agudo</span>
+          <span class="ind-trs-tag" style="color:#5DCB8A;background:rgba(93,203,138,0.07);border-color:rgba(93,203,138,0.15);">TV 16:9</span>
+          <span class="ind-trs-tag" style="color:#5DCB8A;background:rgba(93,203,138,0.07);border-color:rgba(93,203,138,0.15);">Tempo real</span>
         </div>
       </div>
 
@@ -460,6 +478,10 @@ function abrirCronico() {
   document.getElementById('btn-voltar').classList.add('visible');
   document.getElementById('ind-nav-title').textContent = 'TRS Crônico';
   trocarSubView('dashboard');
+}
+
+function abrirPainelTV() {
+  window.open('painel_tv.html', '_blank');
 }
 
 function abrirAgudo() {
