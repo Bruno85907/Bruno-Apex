@@ -6,7 +6,7 @@
 <title>Dashboard TRS Agudo — APEX</title>
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
-:root{--navy:#0D1B35;--navy-mid:#1B2A4A;--navy-light:#243357;--gold:#D4A847;--gold-pale:#E8D5A0;--blue:#5BA8D4;--blue-dark:#3A7A9C;--green:#5DCB8A;--red:#F07070;--muted:rgba(232,213,160,0.75);--white:#FFFFFF;}
+:root{--navy:#0D1B35;--navy-mid:#1B2A4A;--navy-light:#243357;--gold:#D4A847;--gold-pale:#E8D5A0;--blue:#5BA8D4;--blue-dark:#3A7A9C;--green:#5DCB8A;--red:#F07070;--amber:#D4A847;--muted:rgba(232,213,160,0.75);--white:#FFFFFF;}
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
 body{font-family:'Inter',sans-serif;background:var(--navy);color:var(--white);min-height:100vh;}
 nav{background:var(--navy-mid);border-bottom:2px solid rgba(91,168,212,0.15);padding:0 48px;height:58px;display:flex;align-items:center;gap:20px;position:sticky;top:0;z-index:100;}
@@ -30,16 +30,31 @@ nav{background:var(--navy-mid);border-bottom:2px solid rgba(91,168,212,0.15);pad
 .btn-print:hover{color:var(--gold);border-color:rgba(212,168,71,0.5);}
 .sem-dados{text-align:center;padding:80px 20px;font-family:'Cormorant Garamond',serif;font-size:20px;font-style:italic;color:rgba(232,213,160,0.3);}
 /* KPI */
-.kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:28px;}
-.kpi{background:var(--navy-mid);border:1px solid rgba(91,168,212,0.1);border-radius:12px;padding:22px 24px;}
-.kpi-lbl{font-family:'Cinzel',serif;font-size:9px;letter-spacing:2px;color:rgba(91,168,212,0.6);text-transform:uppercase;margin-bottom:10px;}
-.kpi-val{font-family:'Cormorant Garamond',serif;font-size:42px;font-weight:300;color:var(--white);line-height:1;}
-.kpi-val span{font-size:16px;color:rgba(255,255,255,0.3);}
-.kpi-sub{font-family:'Inter',sans-serif;font-size:11px;color:rgba(255,255,255,0.3);margin-top:6px;}
+.kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:20px;}
+.kpi-grid-2{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:20px;}
+.kpi{background:var(--navy-mid);border:1px solid rgba(91,168,212,0.1);border-radius:12px;padding:20px 22px;}
+.kpi-lbl{font-family:'Cinzel',serif;font-size:9px;letter-spacing:2px;color:rgba(91,168,212,0.6);text-transform:uppercase;margin-bottom:8px;}
+.kpi-val{font-family:'Cormorant Garamond',serif;font-size:40px;font-weight:300;color:var(--white);line-height:1;}
+.kpi-val span{font-size:15px;color:rgba(255,255,255,0.3);}
+.kpi-sub{font-family:'Inter',sans-serif;font-size:11px;color:rgba(255,255,255,0.3);margin-top:5px;}
 /* Seções */
-.sec{background:var(--navy-mid);border:1px solid rgba(91,168,212,0.1);border-radius:14px;padding:26px 28px;margin-bottom:18px;}
-.sec-title{font-family:'Cinzel',serif;font-size:11px;letter-spacing:3px;color:var(--blue);text-transform:uppercase;margin-bottom:20px;display:flex;align-items:center;gap:12px;}
+.sec{background:var(--navy-mid);border:1px solid rgba(91,168,212,0.1);border-radius:14px;padding:24px 26px;margin-bottom:18px;}
+.sec-title{font-family:'Cinzel',serif;font-size:11px;letter-spacing:3px;color:var(--blue);text-transform:uppercase;margin-bottom:18px;display:flex;align-items:center;gap:12px;}
 .sec-title::after{content:'';flex:1;height:1px;background:rgba(91,168,212,0.1);}
+/* Velocímetros */
+.gauges-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:18px;}
+.gauge-card{background:var(--navy-mid);border:1px solid rgba(91,168,212,0.1);border-radius:14px;padding:24px;display:flex;flex-direction:column;align-items:center;}
+.gauge-title{font-family:'Cinzel',serif;font-size:10px;letter-spacing:3px;color:var(--blue);text-transform:uppercase;margin-bottom:16px;text-align:center;}
+.gauge-wrap{position:relative;width:200px;height:110px;}
+.gauge-val{font-family:'Cormorant Garamond',serif;font-size:36px;font-weight:300;color:var(--white);text-align:center;margin-top:8px;line-height:1;}
+.gauge-sub{font-family:'Inter',sans-serif;font-size:11px;color:rgba(255,255,255,0.35);text-align:center;margin-top:4px;}
+/* Médias */
+.medias-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:18px;}
+.media-card{background:var(--navy-mid);border:1px solid rgba(91,168,212,0.1);border-radius:12px;padding:20px 24px;text-align:center;}
+.media-lbl{font-family:'Cinzel',serif;font-size:9px;letter-spacing:2px;color:rgba(91,168,212,0.6);text-transform:uppercase;margin-bottom:8px;}
+.media-val{font-family:'Cormorant Garamond',serif;font-size:48px;font-weight:300;color:var(--white);line-height:1;}
+.media-val span{font-size:18px;color:rgba(255,255,255,0.3);}
+.media-desc{font-family:'Cormorant Garamond',serif;font-size:14px;font-style:italic;color:rgba(232,213,160,0.5);margin-top:6px;}
 /* Modalidades */
 .mod-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;}
 .mod-item{background:rgba(91,168,212,0.05);border:1px solid rgba(91,168,212,0.12);border-radius:10px;padding:16px;text-align:center;}
@@ -51,27 +66,36 @@ nav{background:var(--navy-mid);border-bottom:2px solid rgba(91,168,212,0.15);pad
 .acess-item{background:rgba(93,203,138,0.05);border:1px solid rgba(93,203,138,0.12);border-radius:10px;padding:16px;text-align:center;}
 .acess-nome{font-family:'Cinzel',serif;font-size:10px;letter-spacing:2px;color:var(--green);text-transform:uppercase;margin-bottom:8px;}
 .acess-val{font-family:'Cormorant Garamond',serif;font-size:36px;font-weight:300;color:var(--white);line-height:1;}
-/* Tabela intercorrências */
-.ic-table{width:100%;border-collapse:collapse;}
-.ic-table th{font-family:'Cinzel',serif;font-size:9px;letter-spacing:2px;color:rgba(91,168,212,0.6);text-transform:uppercase;padding:8px 14px;border-bottom:1px solid rgba(91,168,212,0.1);text-align:left;}
-.ic-table th.num{text-align:center;}
-.ic-table td{padding:10px 14px;border-bottom:1px solid rgba(255,255,255,0.04);font-family:'Cormorant Garamond',serif;font-size:16px;color:rgba(232,213,160,0.8);}
-.ic-table td.num{text-align:center;}
-.ic-table tr:hover td{background:rgba(91,168,212,0.03);}
-.badge-qtd{display:inline-block;background:rgba(240,112,112,0.1);border:1px solid rgba(240,112,112,0.2);color:var(--red);font-family:'Cinzel',serif;font-size:11px;font-weight:600;padding:2px 12px;border-radius:20px;min-width:36px;}
-.badge-taxa{display:inline-block;font-family:'Cinzel',serif;font-size:10px;padding:2px 10px;border-radius:20px;min-width:52px;}
-.taxa-alta{background:rgba(240,112,112,0.1);border:1px solid rgba(240,112,112,0.2);color:var(--red);}
-.taxa-med{background:rgba(212,168,71,0.1);border:1px solid rgba(212,168,71,0.2);color:var(--gold);}
-.taxa-baixa{background:rgba(93,203,138,0.1);border:1px solid rgba(93,203,138,0.2);color:var(--green);}
-.taxa-hint{font-family:'Inter',sans-serif;font-size:11px;color:rgba(255,255,255,0.25);margin-top:8px;text-align:right;}
-/* Semanas */
+/* Intercorrências — layout D */
+.ic-layout{display:grid;grid-template-columns:1fr 280px;gap:20px;}
+.ic-barras{display:flex;flex-direction:column;gap:8px;}
+.ic-barra-row{display:grid;grid-template-columns:150px 1fr 60px;gap:8px;align-items:center;}
+.ic-barra-nome{font-family:'Inter',sans-serif;font-size:12px;color:rgba(232,213,160,0.8);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.ic-barra-bg{background:rgba(91,168,212,0.08);border-radius:4px;height:18px;overflow:hidden;}
+.ic-barra-fill{height:100%;border-radius:4px;transition:width .4s;}
+.ic-barra-taxa{font-family:'Cinzel',serif;font-size:9px;letter-spacing:1px;color:rgba(232,213,160,0.5);text-align:right;}
+.ic-right{display:flex;flex-direction:column;gap:14px;}
+.ic-taxa-global{background:rgba(91,168,212,0.06);border:1px solid rgba(91,168,212,0.15);border-radius:12px;padding:20px;text-align:center;}
+.ic-taxa-num{font-family:'Cormorant Garamond',serif;font-size:52px;font-weight:300;color:var(--white);line-height:1;}
+.ic-taxa-label{font-family:'Cinzel',serif;font-size:9px;letter-spacing:2px;color:rgba(91,168,212,0.6);text-transform:uppercase;margin-top:6px;}
+.ic-top3-title{font-family:'Cinzel',serif;font-size:9px;letter-spacing:3px;color:rgba(91,168,212,0.5);text-transform:uppercase;margin-bottom:8px;}
+.ic-top3-item{display:flex;align-items:center;gap:10px;padding:10px 14px;background:rgba(13,27,53,0.6);border:1px solid rgba(91,168,212,0.08);border-radius:10px;margin-bottom:6px;}
+.ic-top3-rank{font-family:'Cinzel',serif;font-size:12px;font-weight:700;min-width:16px;}
+.ic-top3-nome{font-family:'Inter',sans-serif;font-size:12px;color:rgba(232,213,160,0.8);flex:1;}
+.ic-top3-n{font-family:'Cormorant Garamond',serif;font-size:18px;color:var(--white);font-weight:300;}
+.ic-top3-trend{font-family:'Cinzel',serif;font-size:9px;letter-spacing:1px;display:flex;align-items:center;gap:3px;}
+.trend-up{color:var(--red);}
+.trend-down{color:var(--green);}
+.trend-eq{color:rgba(255,255,255,0.3);}
+.taxa-hint{font-family:'Inter',sans-serif;font-size:10px;color:rgba(255,255,255,0.2);margin-top:10px;text-align:right;}
+/* Tabela semanas */
 .sem-table{width:100%;border-collapse:collapse;}
-.sem-table th{font-family:'Cinzel',serif;font-size:9px;letter-spacing:2px;color:rgba(91,168,212,0.6);text-transform:uppercase;padding:8px 14px;border-bottom:1px solid rgba(91,168,212,0.1);text-align:center;}
+.sem-table th{font-family:'Cinzel',serif;font-size:9px;letter-spacing:2px;color:rgba(91,168,212,0.6);text-transform:uppercase;padding:8px 12px;border-bottom:1px solid rgba(91,168,212,0.1);text-align:center;}
 .sem-table th:first-child{text-align:left;}
-.sem-table td{padding:9px 14px;border-bottom:1px solid rgba(255,255,255,0.04);font-family:'Inter',sans-serif;font-size:13px;color:rgba(255,255,255,0.7);text-align:center;}
+.sem-table td{padding:9px 12px;border-bottom:1px solid rgba(255,255,255,0.04);font-family:'Inter',sans-serif;font-size:13px;color:rgba(255,255,255,0.7);text-align:center;}
 .sem-table td:first-child{text-align:left;font-family:'Cinzel',serif;font-size:10px;letter-spacing:1px;color:var(--blue);}
-@media print{nav,.dash-controls{display:none!important;}body{background:#fff;color:#000;}.page{padding:20px;}.sec,.kpi{border:1px solid #ddd;break-inside:avoid;}-webkit-print-color-adjust:exact;print-color-adjust:exact;}
-@media(max-width:800px){nav{padding:0 20px;}.page{padding:32px 20px;}.kpi-grid,.mod-grid{grid-template-columns:1fr 1fr;}.acess-grid{grid-template-columns:1fr 1fr;}}
+@media print{nav,.dash-controls{display:none!important;}body{background:#fff;color:#000;}.page{padding:20px;}.sec,.kpi,.gauge-card,.media-card,.mod-item,.acess-item{border:1px solid #ddd;break-inside:avoid;}-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+@media(max-width:800px){nav{padding:0 20px;}.page{padding:32px 20px;}.kpi-grid{grid-template-columns:1fr 1fr;}.mod-grid{grid-template-columns:1fr 1fr;}.acess-grid{grid-template-columns:1fr 1fr;}.gauges-grid,.medias-grid{grid-template-columns:1fr;}.ic-layout{grid-template-columns:1fr;}.ic-barra-row{grid-template-columns:120px 1fr 50px;}}
 </style>
 </head>
 <body>
@@ -95,6 +119,7 @@ nav{background:var(--navy-mid);border-bottom:2px solid rgba(91,168,212,0.15);pad
   </div>
   <div id="content"><div class="sem-dados">Selecione o mês e clique em Gerar para visualizar os dados.</div></div>
 </div>
+
 <script>
 const params=new URLSearchParams(location.search);
 const HOSPITAL_ID=params.get('hospital')||'mont_serrat';
@@ -104,56 +129,223 @@ const STORAGE_KEY=`trs_agudo_${HOSPITAL_ID}`;
 document.getElementById('nav-hosp').textContent=`${HOSPITAL_NOME} · Dashboard`;
 document.getElementById('pg-eyebrow').textContent=`${HOSPITAL_NOME} · Visualização Mensal`;
 
-function isoWeekToDate(y,w){const d=new Date(y,0,1+(w-1)*7);const dow=d.getDay();if(dow<=4)d.setDate(d.getDate()-d.getDay()+1);else d.setDate(d.getDate()+8-d.getDay());return d;}
+function isoWeekToDate(y,w){
+  const d=new Date(y,0,1+(w-1)*7);
+  const dow=d.getDay();
+  if(dow<=4)d.setDate(d.getDate()-d.getDay()+1);
+  else d.setDate(d.getDate()+8-d.getDay());
+  return d;
+}
 
-function formatMes(mes){const[a,mm]=mes.split('-');const M=['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];return`${M[parseInt(mm)-1]} ${a}`;}
+function formatMes(mes){
+  const[a,mm]=mes.split('-');
+  const M=['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
+  return`${M[parseInt(mm)-1]} ${a}`;
+}
 
-function taxaClass(t){if(t>=5)return'taxa-alta';if(t>=2)return'taxa-med';return'taxa-baixa';}
+function mesAnterior(mes){
+  const[a,mm]=mes.split('-');
+  let m=parseInt(mm)-1, y=parseInt(a);
+  if(m===0){m=12;y--;}
+  return`${y}-${String(m).padStart(2,'0')}`;
+}
 
-function gerar(){
-  const mes=document.getElementById('mes-ref').value;
-  if(!mes){alert('Selecione o mês');return;}
+function getSemsDoMes(mes){
   const[ano,mm]=mes.split('-');
   const hist=JSON.parse(localStorage.getItem(STORAGE_KEY)||'[]');
-  const sems=hist.filter(h=>{
+  return hist.filter(h=>{
     if(!h.semana)return false;
     const[y,w]=h.semana.split('-W');
     const d=isoWeekToDate(parseInt(y),parseInt(w));
     return d.getFullYear()===parseInt(ano)&&(d.getMonth()+1)===parseInt(mm);
   });
+}
+
+function agregaSemanas(sems){
+  let totPac=0;
+  const totS={hd:0,crrt:0,dp:0,sled:0};
+  const totA={fav:0,permcath:0,cdl:0};
+  const totIC={};
+  const diasComSessao=new Set();
+  sems.forEach(s=>{
+    totPac+=(s.pac||0);
+    Object.keys(totS).forEach(k=>totS[k]+=(s.sessoes[k]||0));
+    Object.keys(totA).forEach(k=>totA[k]+=(s.acessos[k]||0));
+    s.ic.forEach(ic=>{totIC[ic.nome]=(totIC[ic.nome]||0)+ic.qtd;});
+    // Conta dias com sessões — cada semana com sessões conta como dias registrados
+    const sessNaSem=Object.values(s.sessoes).reduce((a,b)=>a+b,0);
+    if(sessNaSem>0) diasComSessao.add(s.semana);
+  });
+  const totSess=Object.values(totS).reduce((a,b)=>a+b,0);
+  return{totPac, totS, totA, totIC, totSess, diasComSessao:diasComSessao.size};
+}
+
+// Faixas do velocímetro
+const FAIXAS=[{min:0,max:50},{min:50,max:100},{min:100,max:150},{min:150,max:200},{min:200,max:250},{min:250,max:999}];
+const FAIXA_LABELS=['0–50','50–100','100–150','150–200','200–250','>250'];
+const FAIXA_CORES=['#3A7A9C','#5BA8D4','#A8D4F0','#D4A847','#E8973A','#E24B4A'];
+
+function faixaIndex(n){
+  if(n>=250)return 5;
+  return Math.floor(n/50);
+}
+
+function drawGauge(canvasId, valor, mesLabel, isFechado){
+  const canvas=document.getElementById(canvasId);
+  if(!canvas)return;
+  const ctx=canvas.getContext('2d');
+  const W=200, H=110;
+  canvas.width=W; canvas.height=H;
+  ctx.clearRect(0,0,W,H);
+  const cx=W/2, cy=H-10, R=85, thick=22;
+
+  // Arcos das faixas (semicírculo = PI radianos dividido em 6)
+  const totalArc=Math.PI;
+  const arcPorFaixa=totalArc/6;
+
+  FAIXAS.forEach((_,i)=>{
+    const sa=Math.PI+(i*arcPorFaixa);
+    const ea=Math.PI+((i+1)*arcPorFaixa);
+    ctx.beginPath();
+    ctx.arc(cx,cy,R,sa,ea);
+    ctx.arc(cx,cy,R-thick,ea,sa,true);
+    ctx.closePath();
+    ctx.fillStyle=FAIXA_CORES[i];
+    ctx.globalAlpha=0.3;
+    ctx.fill();
+    ctx.globalAlpha=1;
+
+    // Label da faixa
+    const mid=sa+(arcPorFaixa/2);
+    const lx=cx+(R-thick/2)*Math.cos(mid);
+    const ly=cy+(R-thick/2)*Math.sin(mid);
+    ctx.font='bold 8px Inter,sans-serif';
+    ctx.fillStyle='rgba(255,255,255,0.6)';
+    ctx.textAlign='center';
+    ctx.textBaseline='middle';
+    ctx.fillText(FAIXA_LABELS[i],lx,ly);
+  });
+
+  // Agulha
+  const fi=faixaIndex(valor);
+  const frac=fi<5?(valor-FAIXAS[fi].min)/(FAIXAS[fi].max-FAIXAS[fi].min):1;
+  const angle=Math.PI+(fi+frac)*arcPorFaixa;
+  const nLen=R-thick-6;
+
+  ctx.strokeStyle=FAIXA_CORES[fi];
+  ctx.lineWidth=2.5;
+  ctx.lineCap='round';
+  ctx.beginPath();
+  ctx.moveTo(cx,cy);
+  ctx.lineTo(cx+nLen*Math.cos(angle), cy+nLen*Math.sin(angle));
+  ctx.stroke();
+
+  // Ponto central
+  ctx.beginPath();
+  ctx.arc(cx,cy,5,0,2*Math.PI);
+  ctx.fillStyle=FAIXA_CORES[fi];
+  ctx.fill();
+
+  // Faixa ativa em destaque
+  const sa2=Math.PI+(fi*arcPorFaixa);
+  const ea2=Math.PI+((fi+1)*arcPorFaixa);
+  ctx.beginPath();
+  ctx.arc(cx,cy,R,sa2,ea2);
+  ctx.arc(cx,cy,R-thick,ea2,sa2,true);
+  ctx.closePath();
+  ctx.fillStyle=FAIXA_CORES[fi];
+  ctx.globalAlpha=0.85;
+  ctx.fill();
+  ctx.globalAlpha=1;
+}
+
+function taxaCor(t){
+  if(t>=5)return'var(--red)';
+  if(t>=2)return'var(--amber)';
+  return'var(--green)';
+}
+
+function tendenciaHTML(n, ant){
+  if(ant===undefined||ant===null) return'<span class="trend-eq">—</span>';
+  const delta=n-ant;
+  if(delta>0) return`<span class="trend-up">▲ +${delta}</span>`;
+  if(delta<0) return`<span class="trend-down">▼ ${delta}</span>`;
+  return'<span class="trend-eq">= 0</span>';
+}
+
+function gerar(){
+  const mes=document.getElementById('mes-ref').value;
+  if(!mes){alert('Selecione o mês');return;}
+
+  const sems=getSemsDoMes(mes);
+  const mesAnt=mesAnterior(mes);
+  const semsAnt=getSemsDoMes(mesAnt);
 
   if(sems.length===0){
     document.getElementById('content').innerHTML=`<div class="sem-dados">Nenhum dado encontrado para ${formatMes(mes)}.<br><a href="trs_agudo_admin.html?hospital=${HOSPITAL_ID}&nome=${encodeURIComponent(HOSPITAL_NOME)}" style="color:var(--blue);font-size:16px;">→ Ir para lançamento</a></div>`;
     return;
   }
 
-  // Agrega
-  let totPac=0;
-  const totS={hd:0,crrt:0,dp:0,sled:0};
-  const totA={fav:0,permcath:0,cdl:0};
-  const totIC={};
-  sems.forEach(s=>{
-    totPac+=(s.pac||0);
-    Object.keys(totS).forEach(k=>totS[k]+=(s.sessoes[k]||0));
-    Object.keys(totA).forEach(k=>totA[k]+=(s.acessos[k]||0));
-    s.ic.forEach(ic=>{totIC[ic.nome]=(totIC[ic.nome]||0)+ic.qtd;});
-  });
-
-  const totSess=Object.values(totS).reduce((a,b)=>a+b,0);
+  const {totPac,totS,totA,totIC,totSess,diasComSessao}=agregaSemanas(sems);
+  const agAnt=semsAnt.length>0?agregaSemanas(semsAnt):null;
+  const totSessAnt=agAnt?agAnt.totSess:0;
   const totICval=Object.values(totIC).reduce((a,b)=>a+b,0);
   const pct=v=>totSess>0?Math.round(v/totSess*100)+'%':'0%';
   const taxa=v=>totSess>0?(v/totSess*100).toFixed(1):'-';
 
-  const icList=Object.entries(totIC).sort((a,b)=>b[1]-a[1]);
+  // Médias
+  const mediaSessaoPac=totPac>0?(totSess/totPac).toFixed(1):'-';
+  const mediaSessaoDia=diasComSessao>0?(totSess/diasComSessao).toFixed(1):'-';
 
-  document.getElementById('content').innerHTML=`
+  // Intercorrências ordenadas
+  const icList=Object.entries(totIC).sort((a,b)=>b[1]-a[1]);
+  const maxIC=icList.length>0?icList[0][1]:1;
+
+  // IC do mês anterior para tendência
+  const icAntMap=agAnt?agAnt.totIC:{};
+
+  const html=`
+    <!-- KPIs principais -->
     <div class="kpi-grid">
-      <div class="kpi"><div class="kpi-lbl">Pacientes Atendidos</div><div class="kpi-val">${totPac}</div><div class="kpi-sub">${sems.length} semanas</div></div>
-      <div class="kpi"><div class="kpi-lbl">Total de Sessões</div><div class="kpi-val">${totSess}</div><div class="kpi-sub">HD + CRRT + DP + SLED</div></div>
-      <div class="kpi"><div class="kpi-lbl">Intercorrências</div><div class="kpi-val">${totICval}</div><div class="kpi-sub">${icList.length} tipos registrados</div></div>
-      <div class="kpi"><div class="kpi-lbl">Taxa Global</div><div class="kpi-val">${taxa(totICval)}<span> /100</span></div><div class="kpi-sub">intercorrências por 100 sessões</div></div>
+      <div class="kpi">
+        <div class="kpi-lbl">Pacientes únicos</div>
+        <div class="kpi-val">${totPac}</div>
+        <div class="kpi-sub">${sems.length} semanas lançadas</div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-lbl">Total de Sessões</div>
+        <div class="kpi-val">${totSess}</div>
+        <div class="kpi-sub">HD + CRRT + DP + SLED</div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-lbl">Sessões / Paciente</div>
+        <div class="kpi-val">${mediaSessaoPac}</div>
+        <div class="kpi-sub">média por paciente único</div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-lbl">Sessões / Dia</div>
+        <div class="kpi-val">${mediaSessaoDia}</div>
+        <div class="kpi-sub">média por dia com sessões</div>
+      </div>
     </div>
 
+    <!-- Velocímetros -->
+    <div class="gauges-grid">
+      <div class="gauge-card">
+        <div class="gauge-title">Sessões — Mês Vigente (acumulado)</div>
+        <div class="gauge-wrap"><canvas id="gauge-atual" width="200" height="110"></canvas></div>
+        <div class="gauge-val">${totSess}</div>
+        <div class="gauge-sub">${formatMes(mes)}</div>
+      </div>
+      <div class="gauge-card">
+        <div class="gauge-title">Sessões — Mês Anterior (fechado)</div>
+        <div class="gauge-wrap"><canvas id="gauge-ant" width="200" height="110"></canvas></div>
+        <div class="gauge-val">${totSessAnt||'—'}</div>
+        <div class="gauge-sub">${formatMes(mesAnt)}</div>
+      </div>
+    </div>
+
+    <!-- Sessões por modalidade -->
     <div class="sec">
       <div class="sec-title">Sessões por Modalidade — ${formatMes(mes)}</div>
       <div class="mod-grid">
@@ -164,6 +356,7 @@ function gerar(){
       </div>
     </div>
 
+    <!-- Acessos -->
     <div class="sec">
       <div class="sec-title">Acessos Venosos — ${formatMes(mes)}</div>
       <div class="acess-grid">
@@ -173,32 +366,79 @@ function gerar(){
       </div>
     </div>
 
+    <!-- Intercorrências — Layout D com tendência no top 3 -->
     <div class="sec">
       <div class="sec-title">Densidade de Intercorrências — ${formatMes(mes)}</div>
       ${icList.length===0
         ?'<p style="font-family:Cormorant Garamond,serif;font-size:17px;font-style:italic;color:rgba(93,203,138,0.6);text-align:center;padding:20px;">✓ Nenhuma intercorrência registrada neste mês</p>'
-        :`<table class="ic-table">
-          <thead><tr><th>Intercorrência</th><th class="num">Ocorrências</th><th class="num">Taxa / 100 sessões</th></tr></thead>
-          <tbody>${icList.map(([nome,qtd])=>{
-            const t=parseFloat(taxa(qtd));
-            return`<tr><td>${nome}</td><td class="num"><span class="badge-qtd">${qtd}</span></td><td class="num"><span class="badge-taxa ${taxaClass(t)}">${t}</span></td></tr>`;
-          }).join('')}</tbody>
-        </table>
-        <div class="taxa-hint">Verde &lt; 2,0 · Amarelo 2,0–5,0 · Vermelho &gt; 5,0 por 100 sessões</div>`
+        :`<div class="ic-layout">
+          <div>
+            <div class="ic-barras">
+              ${icList.map(([nome,qtd])=>{
+                const t=parseFloat(taxa(qtd));
+                const pctBar=Math.round(qtd/maxIC*100);
+                const cor=t>=5?'var(--red)':t>=2?'var(--amber)':'var(--green)';
+                return`<div class="ic-barra-row">
+                  <span class="ic-barra-nome" title="${nome}">${nome}</span>
+                  <div class="ic-barra-bg"><div class="ic-barra-fill" style="width:${pctBar}%;background:${cor};"></div></div>
+                  <span class="ic-barra-taxa" style="color:${cor};">${t}/100</span>
+                </div>`;
+              }).join('')}
+            </div>
+            <div class="taxa-hint">Verde &lt;2,0 · Amarelo 2,0–5,0 · Vermelho &gt;5,0 por 100 sessões</div>
+          </div>
+          <div class="ic-right">
+            <div class="ic-taxa-global">
+              <div class="ic-taxa-num">${taxa(totICval)}</div>
+              <div class="ic-taxa-label">Taxa global / 100 sessões</div>
+            </div>
+            <div>
+              <div class="ic-top3-title">Top 3 — com tendência</div>
+              ${icList.slice(0,3).map(([nome,qtd],i)=>{
+                const cores=['var(--red)','var(--amber)','var(--green)'];
+                const antQtd=icAntMap[nome];
+                return`<div class="ic-top3-item">
+                  <span class="ic-top3-rank" style="color:${cores[i]};">${i+1}</span>
+                  <span class="ic-top3-nome">${nome}</span>
+                  <span class="ic-top3-n">${qtd}</span>
+                  <span class="ic-top3-trend">${tendenciaHTML(qtd,antQtd)}</span>
+                </div>`;
+              }).join('')}
+            </div>
+          </div>
+        </div>`
       }
     </div>
 
+    <!-- Detalhe por semana -->
     <div class="sec">
       <div class="sec-title">Detalhe por Semana</div>
       <table class="sem-table">
-        <thead><tr><th style="text-align:left;">Semana</th><th>Pac.</th><th>HD</th><th>CRRT</th><th>DP</th><th>SLED</th><th>FAV</th><th>Perm.</th><th>CDL</th><th>Intercorr.</th></tr></thead>
+        <thead><tr><th style="text-align:left;">Semana</th><th>Pac.</th><th>HD</th><th>CRRT</th><th>DP</th><th>SLED</th><th>Total ses.</th><th>FAV</th><th>Perm.</th><th>CDL</th><th>Intercorr.</th></tr></thead>
         <tbody>${sems.map(s=>{
           const[y,w]=s.semana.split('-W');
           const ti=s.ic.reduce((a,ic)=>a+ic.qtd,0);
-          return`<tr><td>Sem. ${w}/${y}</td><td>${s.pac||0}</td><td>${s.sessoes.hd||0}</td><td>${s.sessoes.crrt||0}</td><td>${s.sessoes.dp||0}</td><td>${s.sessoes.sled||0}</td><td>${s.acessos.fav||0}</td><td>${s.acessos.permcath||0}</td><td>${s.acessos.cdl||0}</td><td>${ti}</td></tr>`;
+          const ts=Object.values(s.sessoes).reduce((a,b)=>a+b,0);
+          return`<tr>
+            <td>Sem. ${w}/${y}</td>
+            <td>${s.pac||0}</td>
+            <td>${s.sessoes.hd||0}</td><td>${s.sessoes.crrt||0}</td>
+            <td>${s.sessoes.dp||0}</td><td>${s.sessoes.sled||0}</td>
+            <td style="font-weight:600;color:rgba(91,168,212,0.8);">${ts}</td>
+            <td>${s.acessos.fav||0}</td><td>${s.acessos.permcath||0}</td><td>${s.acessos.cdl||0}</td>
+            <td>${ti}</td>
+          </tr>`;
         }).join('')}</tbody>
       </table>
     </div>`;
+
+  document.getElementById('content').innerHTML=html;
+
+  // Desenha velocímetros após renderizar
+  requestAnimationFrame(()=>{
+    drawGauge('gauge-atual', totSess, formatMes(mes), false);
+    if(totSessAnt>0) drawGauge('gauge-ant', totSessAnt, formatMes(mesAnt), true);
+  });
 }
 
 document.addEventListener('DOMContentLoaded',()=>{
