@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Painel Indicadores — APEX</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --black:#080C14;--navy:#0D1B35;--navy-mid:#1B2A4A;
+  --gold:#D4A847;--gold-bright:#F0C860;--gold-pale:#E8D5A0;--gold-dim:rgba(212,168,71,0.15);
+  --white:#FFFFFF;--muted:rgba(255,255,255,0.45);--border:rgba(212,168,71,0.18);
+  --green:#5DCB8A;--red:#F07070;--blue:#5BA8D4;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html,body{width:100%;height:100%;overflow:hidden;background:var(--black);}
+body{font-family:'Inter',sans-serif;color:var(--white);}
+
+/* LAYOUT PRINCIPAL 16:9 */
+.tv{
+  width:100vw;height:100vh;
+  display:grid;
+  grid-template-rows:64px 1fr 48px;
+  background:var(--black);
+}
+
+/* HEADER */
+.tv-header{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 40px;
+  border-bottom:1px solid var(--border);
+  background:rgba(13,27,53,0.6);
+  flex-shrink:0;
+}
+.tv-logo{font-family:'Cinzel',serif;font-size:16px;font-weight:700;color:var(--gold);letter-spacing:4px;}
+.tv-header-center{display:flex;flex-direction:column;align-items:center;gap:1px;}
+.tv-header-title{font-family:'Cinzel',serif;font-size:12px;letter-spacing:4px;color:var(--gold);text-transform:uppercase;}
+.tv-header-sub{font-family:'Cormorant Garamond',serif;font-size:12px;font-style:italic;color:var(--muted);}
+.tv-header-right{display:flex;align-items:center;gap:16px;}
+.tv-mes{font-family:'Cinzel',serif;font-size:10px;letter-spacing:3px;color:var(--muted);text-transform:uppercase;}
+.tv-clock{font-family:'Cinzel',serif;font-size:15px;font-weight:600;color:var(--gold);letter-spacing:2px;min-width:55px;text-align:right;}
+
+/* CORPO PRINCIPAL */
+.tv-body{
+  display:grid;
+  grid-template-columns:1fr 1px 1fr;
+  overflow:hidden;
+}
+.tv-divider{background:var(--border);}
+
+/* COLUNA — usa flex com overflow hidden para caber tudo */
+.col{
+  display:flex;flex-direction:column;
+  padding:14px 28px;
+  overflow:hidden;
+  gap:8px;
+}
+.col-header{
+  display:flex;align-items:center;gap:10px;
+  flex-shrink:0;
+}
+.col-badge{
+  font-family:'Cinzel',serif;font-size:8px;letter-spacing:3px;
+  text-transform:uppercase;padding:2px 10px;border-radius:20px;
+}
+.badge-cronico{background:rgba(212,168,71,0.15);color:var(--gold);border:1px solid rgba(212,168,71,0.3);}
+.badge-agudo{background:rgba(91,168,212,0.12);color:var(--blue);border:1px solid rgba(91,168,212,0.25);}
+.col-title{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:300;color:var(--white);}
+.col-title em{color:var(--gold-pale);font-style:italic;}
+
+/* KPI GRID */
+.kpi-row{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;flex-shrink:0;}
+.kpi{
+  background:var(--navy-mid);border:1px solid var(--border);border-radius:8px;
+  padding:10px 14px;position:relative;overflow:hidden;
+}
+.kpi::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--gold);opacity:.5;}
+.kpi-lbl{font-family:'Cinzel',serif;font-size:7px;letter-spacing:2px;color:rgba(212,168,71,0.55);text-transform:uppercase;margin-bottom:4px;}
+.kpi-val{font-family:'Cormorant Garamond',serif;font-size:38px;font-weight:300;color:var(--white);line-height:1;}
+.kpi-val.big{font-size:42px;}
+.kpi-sub{font-family:'Inter',sans-serif;font-size:9px;color:var(--muted);margin-top:2px;}
+
+/* GAUGE */
+.gauge-row{display:grid;grid-template-columns:1fr 1fr;gap:8px;flex-shrink:0;}
+.gauge-card{background:var(--navy-mid);border:1px solid var(--border);border-radius:8px;padding:10px 12px;display:flex;flex-direction:column;align-items:center;}
+.gauge-lbl{font-family:'Cinzel',serif;font-size:7px;letter-spacing:2px;color:rgba(212,168,71,0.55);text-transform:uppercase;margin-bottom:4px;text-align:center;}
+.gauge-wrap{width:140px;height:76px;position:relative;}
+.gauge-num{font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:300;color:var(--white);text-align:center;margin-top:2px;line-height:1;}
+.gauge-faixa{font-family:'Cinzel',serif;font-size:7px;letter-spacing:2px;padding:2px 8px;border-radius:20px;margin-top:3px;display:inline-block;}
+
+/* MODALIDADES */
+.mod-row{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;flex-shrink:0;}
+.mod-item{background:var(--gold-dim);border:1px solid rgba(212,168,71,0.12);border-radius:7px;padding:8px;text-align:center;}
+.mod-nome{font-family:'Cinzel',serif;font-size:7px;letter-spacing:3px;color:var(--gold);text-transform:uppercase;margin-bottom:3px;}
+.mod-val{font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:300;color:var(--white);line-height:1;}
+.mod-pct{font-family:'Inter',sans-serif;font-size:9px;color:var(--muted);margin-top:1px;}
+
+/* COMPARATIVO — ocupa o espaço restante */
+.comp-card{
+  background:var(--navy-mid);border:1px solid var(--border);border-radius:8px;
+  padding:10px 14px;flex:1;min-height:0;overflow:hidden;
+}
+.comp-title{font-family:'Cinzel',serif;font-size:7px;letter-spacing:3px;color:rgba(212,168,71,0.55);text-transform:uppercase;margin-bottom:8px;}
+.comp-row{display:flex;align-items:center;gap:8px;margin-bottom:6px;}
+.comp-label{font-family:'Inter',sans-serif;font-size:10px;color:var(--muted);min-width:90px;}
+.comp-bar-bg{flex:1;background:rgba(255,255,255,0.06);border-radius:3px;height:18px;overflow:hidden;}
+.comp-bar-fill{height:100%;border-radius:3px;display:flex;align-items:center;padding-left:7px;min-width:36px;}
+.comp-bar-val{font-family:'Cinzel',serif;font-size:8px;font-weight:600;color:var(--black);}
+.comp-delta{font-family:'Cinzel',serif;font-size:9px;font-weight:600;min-width:44px;text-align:right;}
+.delta-up{color:var(--green);}
+.delta-down{color:var(--red);}
+.delta-eq{color:var(--muted);}
+
+/* FOOTER */
+.tv-footer{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 40px;
+  border-top:1px solid var(--border);
+  background:rgba(13,27,53,0.4);
+  flex-shrink:0;
+}
+.tv-footer-left{font-family:'Cinzel',serif;font-size:8px;letter-spacing:3px;color:rgba(212,168,71,0.4);text-transform:uppercase;}
+.tv-footer-right{font-family:'Inter',sans-serif;font-size:10px;color:var(--muted);}
+.tv-update{font-family:'Inter',sans-serif;font-size:9px;color:rgba(212,168,71,0.4);}
+
+/* SEM DADOS */
+.no-data{display:flex;flex-direction:column;align-items:center;justify-content:center;flex:1;gap:10px;}
+.no-data-text{font-family:'Cormorant Garamond',serif;font-size:18px;font-style:italic;color:rgba(232,213,160,0.25);}
+.no-data-hint{font-family:'Cinzel',serif;font-size:8px;letter-spacing:3px;color:rgba(212,168,71,0.2);text-transform:uppercase;}
+</style>
+</head>
+<body>
+
+<div class="tv">
+
+  <!-- HEADER -->
+  <div class="tv-header">
+    <div class="tv-logo">APEX</div>
+    <div class="tv-header-center">
+      <div class="tv-header-title">Painel de Indicadores</div>
+      <div class="tv-header-sub" id="tv-sub">Terapia Renal Substitutiva — Crônico &amp; Agudo</div>
+    </div>
+    <div class="tv-header-right">
+      <div class="tv-mes" id="tv-mes-label">—</div>
+      <div class="tv-clock" id="tv-clock">--:--</div>
+    </div>
+  </div>
+
+  <!-- CORPO -->
+  <div class="tv-body">
+
+    <!-- COLUNA CRÔNICO -->
+    <div class="col" id="col-cronico">
+      <div class="col-header">
+        <span class="col-badge badge-cronico">TRS Crônico</span>
+        <span class="col-title">Rede <em>Crônico</em></span>
+      </div>
+      <div id="cronico-content" style="display:flex;flex-direction:column;gap:0;flex:1;"></div>
+    </div>
+
+    <div class="tv-divider"></div>
+
+    <!-- COLUNA AGUDO -->
+    <div class="col" id="col-agudo">
+      <div class="col-header">
+        <span class="col-badge badge-agudo">TRS Agudo</span>
+        <span class="col-title">Hospital <em>Agudo</em></span>
+      </div>
+      <div id="agudo-content" style="display:flex;flex-direction:column;gap:0;flex:1;"></div>
+    </div>
+
+  </div>
+
+  <!-- FOOTER -->
+  <div class="tv-footer">
+    <div class="tv-footer-left">Fenix Nefrologia · APEX Platform</div>
+    <div class="tv-update" id="tv-update">Atualizado em —</div>
+    <div class="tv-footer-right" id="tv-footer-right">—</div>
+  </div>
+
+</div>
+
+<script>
+// ── UTILITÁRIOS ──────────────────────────────────────────────
+function getMesAtual(){
+  const d=new Date();
+  return`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}`;
+}
+function getMesAnterior(mes){
+  const[a,mm]=mes.split('-');
+  let m=parseInt(mm)-1,y=parseInt(a);
+  if(m===0){m=12;y--;}
+  return`${y}-${String(m).padStart(2,'0')}`;
+}
+function formatMes(mes){
+  const[a,mm]=mes.split('-');
+  const M=['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
+  return`${M[parseInt(mm)-1]}/${a}`;
+}
+function formatMesFull(mes){
+  const[a,mm]=mes.split('-');
+  const M=['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
+  return`${M[parseInt(mm)-1]} ${a}`;
+}
+function fmt(v){return v===0?'0':(v?Math.round(v).toLocaleString('pt-BR'):'—');}
+function pct(v,t){return t>0?Math.round(v/t*100)+'%':'0%';}
+function taxa(v,t){return t>0?(v/t*100).toFixed(1):'-';}
+
+// ── VELOCÍMETRO ──────────────────────────────────────────────
+const FAIXAS_LABELS=['0–50','50–100','100–150','150–200','200–250','>250'];
+const FAIXAS_CORES=['#9C7A4A','#BE9664','#D4A847','#E8973A','#C85B2A','#8B1A1A'];
+const FAIXAS_BG=['rgba(156,122,74,.15)','rgba(190,150,100,.2)','rgba(212,168,71,.2)','rgba(232,151,58,.2)','rgba(200,91,42,.2)','rgba(139,26,26,.2)'];
+
+function faixaIdx(n){if(n>=250)return 5;return Math.min(Math.floor(n/50),5);}
+
+function drawGauge(canvasId,valor){
+  const canvas=document.getElementById(canvasId);
+  if(!canvas)return;
+  const ctx=canvas.getContext('2d');
+  const W=160,H=86;
+  canvas.width=W;canvas.height=H;
+  ctx.clearRect(0,0,W,H);
+  const cx=W/2,cy=H-6,R=72,thick=20;
+  const arcFx=Math.PI/6;
+
+  FAIXAS_CORES.forEach((_,i)=>{
+    const sa=Math.PI+(i*arcFx),ea=Math.PI+((i+1)*arcFx);
+    ctx.beginPath();ctx.arc(cx,cy,R,sa,ea);ctx.arc(cx,cy,R-thick,ea,sa,true);
+    ctx.closePath();ctx.fillStyle=FAIXAS_BG[i];ctx.fill();
+    ctx.strokeStyle=FAIXAS_CORES[i];ctx.lineWidth=0.5;ctx.stroke();
+    const mid=sa+(arcFx/2);
+    const lx=cx+(R-thick/2)*Math.cos(mid);
+    const ly=cy+(R-thick/2)*Math.sin(mid);
+    ctx.font='bold 6px Arial';ctx.fillStyle='rgba(255,255,255,0.5)';
+    ctx.textAlign='center';ctx.textBaseline='middle';
+    ctx.fillText(FAIXAS_LABELS[i],lx,ly);
+  });
+
+  const fi=faixaIdx(valor);
+  const sa2=Math.PI+(fi*arcFx),ea2=Math.PI+((fi+1)*arcFx);
+  ctx.beginPath();ctx.arc(cx,cy,R,sa2,ea2);ctx.arc(cx,cy,R-thick,ea2,sa2,true);
+  ctx.closePath();ctx.fillStyle=FAIXAS_CORES[fi];ctx.globalAlpha=0.9;ctx.fill();ctx.globalAlpha=1;
+
+  const frac=fi<5?(valor-fi*50)/50:1;
+  const angle=Math.PI+(fi+frac)*arcFx;
+  const nLen=R-thick-8;
+  ctx.strokeStyle=FAIXAS_CORES[fi];ctx.lineWidth=2.5;ctx.lineCap='round';
+  ctx.beginPath();ctx.moveTo(cx,cy);ctx.lineTo(cx+nLen*Math.cos(angle),cy+nLen*Math.sin(angle));ctx.stroke();
+  ctx.beginPath();ctx.arc(cx,cy,5,0,2*Math.PI);ctx.fillStyle=FAIXAS_CORES[fi];ctx.fill();
+  ctx.beginPath();ctx.arc(cx,cy,2.5,0,2*Math.PI);ctx.fillStyle='#fff';ctx.fill();
+}
+
+// ── DADOS CRÔNICO VIA SUPABASE ───────────────────────────────
+const SUPA_URL='https://syzmsixhjlutsynnqivv.supabase.co';
+const SUPA_KEY='sb_publishable_poKCFHc9n1CtIfCbAxTN0Q_dmlsEy1t';
+
+async function fetchCronicoSupabase(mes){
+  const[ano,mm]=mes.split('-');
+  const mIdx=parseInt(mm)-1; // índice 0-11
+  try{
+    // Busca todos os meses do ano igual ao dashboard (ano fixo 2026)
+    const resp=await fetch(
+      `${SUPA_URL}/rest/v1/dados_mensais?ano=eq.2026&select=mes,pac_rede,ses_rede&order=mes.asc`,
+      {headers:{'apikey':SUPA_KEY,'Authorization':`Bearer ${SUPA_KEY}`}}
+    );
+    const rows=await resp.json();
+    console.log('Supabase rows:', rows);
+    if(!Array.isArray(rows)||rows.length===0)return null;
+    // Filtra pelo mês correto
+    const d=rows.find(r=>r.mes===mIdx);
+    console.log(`Buscando mês índice ${mIdx}, encontrado:`, d);
+    if(!d)return null;
+    return{pac:d.pac_rede||0, ses:d.ses_rede||0};
+  }catch(e){
+    console.error('Erro Supabase:',e);
+    return null;
+  }
+}
+
+// ── RENDERIZA CRÔNICO ────────────────────────────────────────
+async function renderCronico(mes, mesAnt){
+  const el=document.getElementById('cronico-content');
+  el.innerHTML=`<div class="no-data"><div class="no-data-text">Carregando dados...</div></div>`;
+
+  const[dadosMes, dadosAnt]=await Promise.all([
+    fetchCronicoSupabase(mes),
+    fetchCronicoSupabase(mesAnt)
+  ]);
+
+  console.log('Crônico mes:', dadosMes, 'ant:', dadosAnt);
+
+  if(!dadosMes||(dadosMes.pac===0&&dadosMes.ses===0)){
+    el.innerHTML=`<div class="no-data">
+      <div class="no-data-text">Sem dados lançados para ${formatMesFull(mes)}</div>
+      <div class="no-data-hint">Lance os dados via Lançamento Mensal</div>
+    </div>`;
+    return;
+  }
+
+  const{pac,ses}=dadosMes;
+  const pacAnt=dadosAnt?.pac||0;
+  const sesAnt=dadosAnt?.ses||0;
+  const mediaSessPac=pac>0?(ses/pac).toFixed(1):'-';
+  const deltaSes=ses-sesAnt;
+  const deltaPac=pac-pacAnt;
+  const maxComp=Math.max(ses,sesAnt,1);
+
+  el.innerHTML=`
+    <div class="kpi-row">
+      <div class="kpi"><div class="kpi-lbl">Pacientes</div><div class="kpi-val big">${fmt(pac)}</div><div class="kpi-sub">total rede</div></div>
+      <div class="kpi"><div class="kpi-lbl">Sessões</div><div class="kpi-val big">${fmt(ses)}</div><div class="kpi-sub">total rede</div></div>
+      <div class="kpi"><div class="kpi-lbl">Ses / Paciente</div><div class="kpi-val big">${mediaSessPac}</div><div class="kpi-sub">média</div></div>
+      <div class="kpi"><div class="kpi-lbl">Vs mês ant.</div>
+        <div class="kpi-val big" style="color:${deltaSes>=0?'#5DCB8A':'#F07070'};">${deltaSes>=0?'+':''}${fmt(deltaSes)}</div>
+        <div class="kpi-sub">sessões</div>
+      </div>
+    </div>
+    <div class="comp-card">
+      <div class="comp-title">Comparativo — ${formatMes(mes)} vs ${formatMes(mesAnt)}</div>
+      <div class="comp-row">
+        <div class="comp-label">Sessões ${formatMes(mes)}</div>
+        <div class="comp-bar-bg"><div class="comp-bar-fill" style="width:${Math.round(ses/maxComp*100)}%;background:linear-gradient(90deg,#8B6914,#D4A847);"><span class="comp-bar-val">${fmt(ses)}</span></div></div>
+        <div class="comp-delta ${deltaSes>=0?'delta-up':'delta-down'}">${deltaSes>=0?'▲':'▼'} ${Math.abs(deltaSes)}</div>
+      </div>
+      <div class="comp-row">
+        <div class="comp-label">Sessões ${formatMes(mesAnt)}</div>
+        <div class="comp-bar-bg"><div class="comp-bar-fill" style="width:${Math.round(sesAnt/maxComp*100)}%;background:linear-gradient(90deg,#2A2A2A,#555);"><span class="comp-bar-val" style="color:#fff;">${fmt(sesAnt)}</span></div></div>
+        <div class="comp-delta delta-eq">—</div>
+      </div>
+      <div class="comp-row" style="margin-top:6px;">
+        <div class="comp-label">Pacientes ${formatMes(mes)}</div>
+        <div class="comp-bar-bg"><div class="comp-bar-fill" style="width:${Math.round(pac/Math.max(pac,pacAnt,1)*100)}%;background:linear-gradient(90deg,#1B4D6B,#5BA8D4);"><span class="comp-bar-val">${fmt(pac)}</span></div></div>
+        <div class="comp-delta ${deltaPac>=0?'delta-up':'delta-down'}">${deltaPac>=0?'▲':'▼'} ${Math.abs(deltaPac)}</div>
+      </div>
+      <div class="comp-row">
+        <div class="comp-label">Pacientes ${formatMes(mesAnt)}</div>
+        <div class="comp-bar-bg"><div class="comp-bar-fill" style="width:${Math.round(pacAnt/Math.max(pac,pacAnt,1)*100)}%;background:linear-gradient(90deg,#2A2A2A,#555);"><span class="comp-bar-val" style="color:#fff;">${fmt(pacAnt)}</span></div></div>
+        <div class="comp-delta delta-eq">—</div>
+      </div>
+    </div>`;
+}
+function isoWeekToDate(y,w){
+  const d=new Date(y,0,1+(w-1)*7);
+  const dow=d.getDay();
+  if(dow<=4)d.setDate(d.getDate()-d.getDay()+1);
+  else d.setDate(d.getDate()+8-d.getDay());
+  return d;
+}
+
+function getDadosAgudo(mes, hospitalId){
+  const key=`trs_agudo_${hospitalId}`;
+  const hist=JSON.parse(localStorage.getItem(key)||'[]');
+  const[ano,mm]=mes.split('-');
+  const sems=hist.filter(h=>{
+    if(!h.semana)return false;
+    const[y,w]=h.semana.split('-W');
+    const d=isoWeekToDate(parseInt(y),parseInt(w));
+    return d.getFullYear()===parseInt(ano)&&(d.getMonth()+1)===parseInt(mm);
+  });
+  if(sems.length===0)return null;
+  let totPac=0;
+  const totS={hd:0,crrt:0,dp:0,sled:0};
+  const semsComSessao=new Set();
+  sems.forEach(s=>{
+    totPac+=(s.pac||0);
+    Object.keys(totS).forEach(k=>totS[k]+=(s.sessoes[k]||0));
+    if(Object.values(s.sessoes).reduce((a,b)=>a+b,0)>0)semsComSessao.add(s.semana);
+  });
+  const totSess=Object.values(totS).reduce((a,b)=>a+b,0);
+  return{totPac, totS, totSess, diasComSessao:semsComSessao.size};
+}
+
+// Hospital ID padrão (primeiro disponível)
+const HOSPITAIS_IDS=['mont_serrat','hosp_exemplo'];
+function getHospitalComDados(mes){
+  for(const id of HOSPITAIS_IDS){
+    const d=getDadosAgudo(mes,id);
+    if(d)return{id,data:d};
+  }
+  return null;
+}
+
+// ── RENDERIZA CRÔNICO ────────────────────────────────────────
+function renderCronico(mes, mesAnt){
+  const el=document.getElementById('cronico-content');
+
+  // Tenta obter dados do Supabase via BASE global (se disponível)
+  // Como o painel é standalone, usamos dados do localStorage do admin
+  const mIdx=parseInt(mes.split('-')[1])-1;
+  const mIdxAnt=parseInt(mesAnt.split('-')[1])-1;
+
+  // Acessa BASE global se disponível (quando aberto dentro do dashboard)
+  let pac=0,ses=0,pacAnt=0,sesAnt=0,hd=0,crrt=0,dp=0,sled=0;
+  let temDados=false;
+
+  if(typeof BASE!=='undefined'&&BASE.pacientes){
+    pac=BASE.pacientes.rede[mIdx]||0;
+    ses=BASE.sessoes.rede[mIdx]||0;
+    pacAnt=BASE.pacientes.rede[mIdxAnt]||0;
+    sesAnt=BASE.sessoes.rede[mIdxAnt]||0;
+    temDados=pac>0||ses>0;
+  }
+
+  if(!temDados){
+    el.innerHTML=`<div class="no-data">
+      <div class="no-data-text">Dados carregados via Supabase</div>
+      <div class="no-data-hint">Acesse pelo portal para visualizar</div>
+    </div>`;
+    return;
+  }
+
+  const mediaSessPac=pac>0?(ses/pac).toFixed(1):'-';
+  const deltaSes=ses-sesAnt;
+  const deltaPac=pac-pacAnt;
+  const maxComp=Math.max(ses,sesAnt,1);
+
+  el.innerHTML=`
+    <div class="kpi-row" style="margin-bottom:12px;">
+      <div class="kpi"><div class="kpi-lbl">Pacientes</div><div class="kpi-val big">${fmt(pac)}</div><div class="kpi-sub">total rede</div></div>
+      <div class="kpi"><div class="kpi-lbl">Sessões</div><div class="kpi-val big">${fmt(ses)}</div><div class="kpi-sub">total rede</div></div>
+      <div class="kpi"><div class="kpi-lbl">Ses / Paciente</div><div class="kpi-val big">${mediaSessPac}</div><div class="kpi-sub">média</div></div>
+      <div class="kpi"><div class="kpi-lbl">Vs mês ant.</div>
+        <div class="kpi-val big" style="color:${deltaSes>=0?'#5DCB8A':'#F07070'};">${deltaSes>=0?'+':''}${fmt(deltaSes)}</div>
+        <div class="kpi-sub">sessões</div>
+      </div>
+    </div>
+    <div class="comp-card" style="flex:1;">
+      <div class="comp-title">Comparativo — ${formatMes(mes)} vs ${formatMes(mesAnt)}</div>
+      <div class="comp-row">
+        <div class="comp-label">Sessões ${formatMes(mes)}</div>
+        <div class="comp-bar-bg"><div class="comp-bar-fill" style="width:${Math.round(ses/maxComp*100)}%;background:linear-gradient(90deg,#8B6914,#D4A847);"><span class="comp-bar-val">${fmt(ses)}</span></div></div>
+        <div class="comp-delta ${deltaSes>=0?'delta-up':'delta-down'}">${deltaSes>=0?'▲':'▼'} ${Math.abs(deltaSes)}</div>
+      </div>
+      <div class="comp-row">
+        <div class="comp-label">Sessões ${formatMes(mesAnt)}</div>
+        <div class="comp-bar-bg"><div class="comp-bar-fill" style="width:${Math.round(sesAnt/maxComp*100)}%;background:linear-gradient(90deg,#3A3A3A,#6B6B6B);"><span class="comp-bar-val" style="color:#fff;">${fmt(sesAnt)}</span></div></div>
+        <div class="comp-delta delta-eq">—</div>
+      </div>
+      <div class="comp-row" style="margin-top:8px;">
+        <div class="comp-label">Pacientes ${formatMes(mes)}</div>
+        <div class="comp-bar-bg"><div class="comp-bar-fill" style="width:${Math.round(pac/Math.max(pac,pacAnt,1)*100)}%;background:linear-gradient(90deg,#1B4D6B,#5BA8D4);"><span class="comp-bar-val">${fmt(pac)}</span></div></div>
+        <div class="comp-delta ${deltaPac>=0?'delta-up':'delta-down'}">${deltaPac>=0?'▲':'▼'} ${Math.abs(deltaPac)}</div>
+      </div>
+      <div class="comp-row">
+        <div class="comp-label">Pacientes ${formatMes(mesAnt)}</div>
+        <div class="comp-bar-bg"><div class="comp-bar-fill" style="width:${Math.round(pacAnt/Math.max(pac,pacAnt,1)*100)}%;background:linear-gradient(90deg,#3A3A3A,#6B6B6B);"><span class="comp-bar-val" style="color:#fff;">${fmt(pacAnt)}</span></div></div>
+        <div class="comp-delta delta-eq">—</div>
+      </div>
+    </div>`;
+}
+
+// ── RENDERIZA AGUDO ──────────────────────────────────────────
+function renderAgudo(mes, mesAnt){
+  const el=document.getElementById('agudo-content');
+  const hosp=getHospitalComDados(mes);
+  const hospAnt=getHospitalComDados(mesAnt);
+
+  if(!hosp){
+    el.innerHTML=`<div class="no-data">
+      <div class="no-data-text">Nenhum dado lançado para ${formatMesFull(mes)}</div>
+      <div class="no-data-hint">Lance os dados semanais para visualizar</div>
+    </div>`;
+    return;
+  }
+
+  const{totPac,totS,totSess,diasComSessao}=hosp.data;
+  const sesAnt=hospAnt?hospAnt.data.totSess:0;
+  const pacAnt=hospAnt?hospAnt.data.totPac:0;
+  const mediaSessPac=totPac>0?(totSess/totPac).toFixed(1):'-';
+  const mediaSessDia=diasComSessao>0?(totSess/diasComSessao).toFixed(1):'-';
+  const deltaSes=totSess-sesAnt;
+  const deltaPac=totPac-pacAnt;
+  const fi=faixaIdx(totSess);
+  const fiAnt=faixaIdx(sesAnt);
+  const maxComp=Math.max(totSess,sesAnt,1);
+
+  el.innerHTML=`
+    <div class="kpi-row" style="margin-bottom:12px;">
+      <div class="kpi"><div class="kpi-lbl">Pacientes únicos</div><div class="kpi-val big">${fmt(totPac)}</div><div class="kpi-sub">no mês</div></div>
+      <div class="kpi"><div class="kpi-lbl">Total Sessões</div><div class="kpi-val big">${fmt(totSess)}</div><div class="kpi-sub">HD·CRRT·DP·SLED</div></div>
+      <div class="kpi"><div class="kpi-lbl">Ses / Paciente</div><div class="kpi-val big">${mediaSessPac}</div><div class="kpi-sub">média</div></div>
+      <div class="kpi"><div class="kpi-lbl">Ses / Dia</div><div class="kpi-val big">${mediaSessDia}</div><div class="kpi-sub">média</div></div>
+    </div>
+
+    <div class="gauge-row" style="margin-bottom:12px;">
+      <div class="gauge-card">
+        <div class="gauge-lbl">Sessões — Mês vigente</div>
+        <div class="gauge-wrap"><canvas id="tv-gauge-atual"></canvas></div>
+        <div class="gauge-num">${totSess}</div>
+        <span class="gauge-faixa" style="background:${FAIXAS_BG[fi]};color:${FAIXAS_CORES[fi]};border:1px solid ${FAIXAS_CORES[fi]};">${FAIXAS_LABELS[fi]}</span>
+      </div>
+      <div class="gauge-card">
+        <div class="gauge-lbl">Sessões — Mês anterior</div>
+        <div class="gauge-wrap"><canvas id="tv-gauge-ant"></canvas></div>
+        <div class="gauge-num">${sesAnt||'—'}</div>
+        ${sesAnt>0?`<span class="gauge-faixa" style="background:${FAIXAS_BG[fiAnt]};color:${FAIXAS_CORES[fiAnt]};border:1px solid ${FAIXAS_CORES[fiAnt]};">${FAIXAS_LABELS[fiAnt]}</span>`:'<span class="gauge-faixa" style="background:rgba(255,255,255,0.05);color:rgba(255,255,255,0.3);">Sem dados</span>'}
+      </div>
+    </div>
+
+    <div class="mod-row" style="margin-bottom:12px;">
+      <div class="mod-item"><div class="mod-nome">HD</div><div class="mod-val">${totS.hd}</div><div class="mod-pct">${pct(totS.hd,totSess)}</div></div>
+      <div class="mod-item"><div class="mod-nome">CRRT</div><div class="mod-val">${totS.crrt}</div><div class="mod-pct">${pct(totS.crrt,totSess)}</div></div>
+      <div class="mod-item"><div class="mod-nome">DP</div><div class="mod-val">${totS.dp}</div><div class="mod-pct">${pct(totS.dp,totSess)}</div></div>
+      <div class="mod-item"><div class="mod-nome">SLED</div><div class="mod-val">${totS.sled}</div><div class="mod-pct">${pct(totS.sled,totSess)}</div></div>
+    </div>
+
+    <div class="comp-card" style="flex:1;">
+      <div class="comp-title">Comparativo — ${formatMes(mes)} vs ${formatMes(mesAnt)}</div>
+      <div class="comp-row">
+        <div class="comp-label">Sessões ${formatMes(mes)}</div>
+        <div class="comp-bar-bg"><div class="comp-bar-fill" style="width:${Math.round(totSess/maxComp*100)}%;background:linear-gradient(90deg,#1B4D6B,#5BA8D4);"><span class="comp-bar-val">${fmt(totSess)}</span></div></div>
+        <div class="comp-delta ${deltaSes>=0?'delta-up':'delta-down'}">${deltaSes>=0?'▲':'▼'} ${Math.abs(deltaSes)}</div>
+      </div>
+      <div class="comp-row">
+        <div class="comp-label">Sessões ${formatMes(mesAnt)}</div>
+        <div class="comp-bar-bg"><div class="comp-bar-fill" style="width:${Math.round(sesAnt/maxComp*100)}%;background:linear-gradient(90deg,#3A3A3A,#6B6B6B);"><span class="comp-bar-val" style="color:#fff;">${fmt(sesAnt)}</span></div></div>
+        <div class="comp-delta delta-eq">—</div>
+      </div>
+    </div>`;
+
+  requestAnimationFrame(()=>{
+    drawGauge('tv-gauge-atual',totSess);
+    if(sesAnt>0)drawGauge('tv-gauge-ant',sesAnt);
+  });
+}
+
+// ── RELÓGIO ──────────────────────────────────────────────────
+function atualizarRelogio(){
+  const d=new Date();
+  const h=String(d.getHours()).padStart(2,'0');
+  const m=String(d.getMinutes()).padStart(2,'0');
+  document.getElementById('tv-clock').textContent=`${h}:${m}`;
+}
+
+// ── INICIALIZAÇÃO ─────────────────────────────────────────────
+async function init(){
+  const mes=getMesAtual();
+  const mesAnt=getMesAnterior(mes);
+
+  document.getElementById('tv-mes-label').textContent=formatMesFull(mes);
+  document.getElementById('tv-footer-right').textContent=`Período: ${formatMesFull(mes)}`;
+  document.getElementById('tv-update').textContent=`Atualizado em ${new Date().toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'})}`;
+
+  renderCronico(mes,mesAnt); // async, não bloqueia
+  renderAgudo(mes,mesAnt);
+  atualizarRelogio();
+  setInterval(atualizarRelogio,30000);
+}
+
+document.addEventListener('DOMContentLoaded',init);
+</script>
+</body>
+</html>
