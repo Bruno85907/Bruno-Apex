@@ -4,205 +4,225 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Painel Indicadores — APEX</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
 :root{
   --bg:#04060D;--navy:#080C18;--navy2:#0D1525;
-  --gold:#D4A847;--gold2:#BE9664;--gold3:rgba(212,168,71,0.12);--goldb:rgba(212,168,71,0.18);
-  --blue:#5BA8D4;--blueb:rgba(91,168,212,0.12);
+  --gold:#D4A847;--gold2:#BE9664;--gold3:rgba(212,168,71,0.1);--goldb:rgba(212,168,71,0.16);
+  --blue:#5BA8D4;--blueb:rgba(91,168,212,0.1);
   --green:#5DCB8A;--red:#F07070;--amber:#E8973A;
-  --white:#fff;--muted:rgba(255,255,255,0.32);--border:rgba(255,255,255,0.07);
+  --white:#fff;--muted:rgba(255,255,255,0.3);--border:rgba(255,255,255,0.07);
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
 html,body{width:100%;height:100%;overflow:hidden;background:var(--bg);}
-body{font-family:'Inter',system-ui,sans-serif;color:var(--white);}
+body{font-family:'Space Grotesk',system-ui,sans-serif;color:var(--white);}
 
-.tv{width:100vw;height:100vh;display:grid;grid-template-rows:54px 1fr 36px;}
+.tv{width:100vw;height:100vh;display:grid;grid-template-rows:56px 1fr 38px;}
 
 /* HEADER */
 .hdr{background:var(--navy);border-bottom:1px solid var(--goldb);padding:0 28px;display:flex;align-items:center;justify-content:space-between;}
-.hdr-logo{font-size:15px;font-weight:800;color:var(--gold);letter-spacing:5px;text-transform:uppercase;}
+.hdr-left{display:flex;flex-direction:column;line-height:1;}
+.hdr-logo{font-size:16px;font-weight:700;color:var(--gold);letter-spacing:5px;text-transform:uppercase;}
+.hdr-powered{font-size:7px;font-weight:400;color:rgba(212,168,71,0.35);letter-spacing:2px;text-transform:uppercase;margin-top:2px;}
 .hdr-center{display:flex;flex-direction:column;align-items:center;}
 .hdr-title{font-size:9px;font-weight:700;letter-spacing:4px;color:var(--gold);text-transform:uppercase;}
 .hdr-sub{font-size:10px;font-weight:300;color:var(--muted);letter-spacing:1px;margin-top:1px;}
-.hdr-right{display:flex;align-items:center;gap:10px;}
+.hdr-right{display:flex;align-items:center;gap:12px;}
+.fenix-logo{display:flex;flex-direction:column;align-items:flex-end;line-height:1;}
+.fenix-nome{font-size:17px;font-weight:600;color:var(--gold2);letter-spacing:.06em;}
+.fenix-sub{font-size:8px;font-weight:300;color:rgba(190,150,100,0.55);letter-spacing:3px;text-transform:lowercase;margin-top:2px;}
+.hdr-sep{width:1px;height:28px;background:var(--goldb);}
 .mes-sel{background:rgba(13,27,53,0.8);border:1px solid var(--goldb);border-radius:5px;padding:3px 9px;font-family:inherit;font-size:10px;font-weight:600;color:var(--gold);letter-spacing:1px;outline:none;color-scheme:dark;cursor:pointer;}
-.clock{font-size:13px;font-weight:800;color:var(--gold);letter-spacing:2px;min-width:44px;text-align:right;}
+.clock{font-size:14px;font-weight:700;color:var(--gold);letter-spacing:2px;min-width:44px;text-align:right;}
 
 /* BODY */
-.body{display:grid;grid-template-columns:1fr 1px 1.45fr 1px 1fr;overflow:hidden;}
-.div-line{background:var(--goldb);}
-.col{padding:10px 16px;display:flex;flex-direction:column;gap:7px;overflow:hidden;}
-.col-mid{background:rgba(212,168,71,0.02);padding:14px 18px;}
+.body{display:grid;grid-template-columns:1fr 1px 1.5fr 1px 1fr;overflow:hidden;}
+.divl{background:var(--goldb);}
+.col{padding:10px 15px;display:flex;flex-direction:column;gap:7px;overflow:hidden;}
+.col-mid{background:rgba(212,168,71,0.018);padding:12px 16px;gap:8px;}
 
 /* BADGE */
-.badge{display:inline-flex;align-items:center;gap:5px;font-size:7px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;padding:2px 10px;border-radius:20px;}
+.badge{display:inline-flex;align-items:center;gap:5px;font-size:7px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;padding:3px 10px;border-radius:20px;flex-shrink:0;}
 .badge::before{content:'';width:5px;height:5px;border-radius:50%;flex-shrink:0;}
-.badge-gold{background:var(--gold3);color:var(--gold);border:1px solid rgba(212,168,71,0.25);}
-.badge-gold::before{background:var(--gold);}
-.badge-blue{background:var(--blueb);color:var(--blue);border:1px solid rgba(91,168,212,0.2);}
-.badge-blue::before{background:var(--blue);}
+.bg{background:var(--gold3);color:var(--gold);border:1px solid rgba(212,168,71,0.22);}
+.bg::before{background:var(--gold);}
+.bb{background:var(--blueb);color:var(--blue);border:1px solid rgba(91,168,212,0.18);}
+.bb::before{background:var(--blue);}
 
 /* KPI */
-.kpi-row{display:grid;gap:5px;flex-shrink:0;}
-.kpi-4{grid-template-columns:repeat(4,1fr);}
-.kpi-2{grid-template-columns:repeat(2,1fr);}
-.kpi{background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:6px;padding:7px 9px;position:relative;overflow:hidden;}
+.krow{display:grid;gap:5px;flex-shrink:0;}
+.k4{grid-template-columns:repeat(4,1fr);}
+.k3{grid-template-columns:repeat(3,1fr);}
+.k2{grid-template-columns:repeat(2,1fr);}
+.kpi{background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:6px;padding:7px 8px;position:relative;overflow:hidden;}
 .kpi::after{content:'';position:absolute;top:0;left:0;right:0;height:2px;border-radius:1px;}
 .kpi.gd::after{background:var(--gold);}
 .kpi.bl::after{background:var(--blue);}
 .kpi.gn::after{background:var(--green);}
 .kpi.rd::after{background:var(--red);}
-.kl{font-size:6px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-bottom:3px;}
-.kv{font-size:26px;font-weight:800;color:var(--white);line-height:1;}
+.kpi.am::after{background:var(--amber);}
+.kl{font-size:6px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-bottom:3px;}
+.kv{font-size:24px;font-weight:700;color:var(--white);line-height:1;}
 .kv.gd{color:var(--gold);}
 .kv.bl{color:var(--blue);}
 .kv.gn{color:var(--green);}
 .kv.rd{color:var(--red);}
-.kv.sm{font-size:20px;}
-.ks{font-size:8px;font-weight:400;color:var(--muted);margin-top:2px;}
+.kv.am{color:var(--amber);}
+.kv.sm{font-size:18px;}
+.ks{font-size:7px;font-weight:400;color:var(--muted);margin-top:2px;}
 
 /* CHART BOX */
 .cbox{background:rgba(255,255,255,0.02);border:1px solid var(--border);border-radius:7px;display:flex;flex-direction:column;overflow:hidden;}
-.clbl{font-size:6px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,0.2);padding:5px 8px 0;}
-.ccanvas{flex:1;width:100%;}
+.clbl{font-size:6px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,0.18);padding:5px 8px 0;flex-shrink:0;}
+.cc{flex:1;width:100%;}
 
-/* PIZZA / GAUGE INTERNAÇÃO */
-.int-wrap{background:rgba(255,255,255,0.02);border:1px solid var(--border);border-radius:7px;padding:8px;display:flex;align-items:center;gap:10px;flex-shrink:0;}
-.int-label{font-size:6px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,0.2);margin-bottom:5px;}
-.int-leg{display:flex;flex-direction:column;gap:4px;flex:1;}
-.int-leg-row{display:flex;align-items:center;justify-content:space-between;gap:5px;}
-.int-leg-dot{width:7px;height:7px;border-radius:2px;flex-shrink:0;}
-.int-leg-lbl{font-size:7px;font-weight:500;color:rgba(255,255,255,0.5);flex:1;}
-.int-leg-val{font-size:8px;font-weight:700;color:var(--white);}
+/* PIZZA INTERNAÇÃO */
+.pizza-wrap{background:rgba(255,255,255,0.02);border:1px solid var(--border);border-radius:7px;padding:8px 10px;display:flex;align-items:center;gap:10px;flex-shrink:0;}
+.pizza-leg{display:flex;flex-direction:column;gap:4px;flex:1;}
+.pleg-row{display:flex;align-items:center;gap:5px;}
+.pleg-dot{width:7px;height:7px;border-radius:2px;flex-shrink:0;}
+.pleg-lbl{font-size:7px;font-weight:500;color:rgba(255,255,255,0.45);flex:1;}
+.pleg-val{font-size:9px;font-weight:700;color:var(--white);}
 
-/* GAUGE MINI */
-.gpair{display:grid;grid-template-columns:1fr 1fr;gap:5px;flex-shrink:0;}
-.gcard{background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:6px;padding:6px;display:flex;flex-direction:column;align-items:center;}
-.glbl{font-size:6px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-bottom:3px;text-align:center;}
-.gnum{font-size:22px;font-weight:800;color:var(--white);text-align:center;margin-top:2px;line-height:1;}
-.gfaixa{font-size:6px;font-weight:700;letter-spacing:1px;padding:2px 7px;border-radius:20px;margin-top:3px;display:inline-block;}
-
-/* MODALIDADES */
-.mod-row{display:grid;grid-template-columns:repeat(4,1fr);gap:5px;flex-shrink:0;}
-.mod{background:rgba(91,168,212,0.05);border:1px solid rgba(91,168,212,0.1);border-radius:6px;padding:6px;text-align:center;}
-.mnome{font-size:6px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--blue);margin-bottom:3px;}
-.mval{font-size:20px;font-weight:800;color:var(--white);line-height:1;}
-.mpct{font-size:7px;font-weight:400;color:var(--muted);margin-top:1px;}
-
-/* COLUNA CENTRAL */
-.mega{text-align:center;padding:6px 0 2px;}
-.mega-v{font-size:64px;font-weight:800;color:var(--gold);line-height:1;letter-spacing:-2px;}
-.mega-l{font-size:7px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:rgba(212,168,71,0.4);margin-top:4px;}
-.delta-row{display:grid;grid-template-columns:1fr 1fr;gap:7px;}
-.dcard{border-radius:8px;padding:9px;text-align:center;}
-.dcard.gn{background:rgba(93,203,138,0.07);border:1px solid rgba(93,203,138,0.14);}
-.dcard.gd{background:rgba(212,168,71,0.06);border:1px solid rgba(212,168,71,0.13);}
-.dlbl{font-size:6px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:3px;}
-.dcard.gn .dlbl{color:rgba(93,203,138,0.55);}
-.dcard.gd .dlbl{color:rgba(212,168,71,0.55);}
-.dval{font-size:30px;font-weight:800;line-height:1;}
-.dcard.gn .dval{color:var(--green);}
-.dcard.gd .dval{color:var(--gold);}
-
-/* DONUT CENTRAL */
-.donut-card{background:rgba(255,255,255,0.02);border:1px solid var(--border);border-radius:8px;padding:10px 12px;display:flex;align-items:center;gap:12px;}
-.donut-lbl{font-size:6px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,0.18);margin-bottom:6px;}
-.donut-leg{flex:1;display:flex;flex-direction:column;gap:5px;}
-.dleg-row{display:flex;align-items:center;gap:6px;}
-.dleg-dot{width:8px;height:8px;border-radius:2px;flex-shrink:0;}
-.dleg-lbl{font-size:7px;font-weight:500;color:rgba(255,255,255,0.45);flex:1;}
-.dleg-val{font-size:9px;font-weight:800;color:var(--white);}
-.dleg-pct{font-size:7px;font-weight:400;color:var(--muted);min-width:28px;text-align:right;}
-
-/* DESFECHOS CENTRAL */
-.des3{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;flex-shrink:0;}
-.des{border-radius:7px;padding:8px;text-align:center;border:1px solid transparent;}
-.des.bl{background:rgba(91,168,212,0.07);border-color:rgba(91,168,212,0.13);}
-.des.gn{background:rgba(93,203,138,0.07);border-color:rgba(93,203,138,0.13);}
-.des.rd{background:rgba(240,112,112,0.07);border-color:rgba(240,112,112,0.13);}
-.des-l{font-size:6px;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:3px;}
-.des.bl .des-l{color:rgba(91,168,212,0.55);}
-.des.gn .des-l{color:rgba(93,203,138,0.55);}
-.des.rd .des-l{color:rgba(240,112,112,0.55);}
-.des-v{font-size:22px;font-weight:800;line-height:1;}
+/* DESFECHOS */
+.des3{display:grid;grid-template-columns:repeat(3,1fr);gap:5px;flex-shrink:0;}
+.des{border-radius:6px;padding:7px 6px;text-align:center;border:1px solid transparent;}
+.des.bl{background:rgba(91,168,212,0.06);border-color:rgba(91,168,212,0.12);}
+.des.gn{background:rgba(93,203,138,0.06);border-color:rgba(93,203,138,0.12);}
+.des.rd{background:rgba(240,112,112,0.06);border-color:rgba(240,112,112,0.12);}
+.des-l{font-size:6px;font-weight:600;letter-spacing:1px;text-transform:uppercase;margin-bottom:3px;}
+.des.bl .des-l{color:rgba(91,168,212,0.5);}
+.des.gn .des-l{color:rgba(93,203,138,0.5);}
+.des.rd .des-l{color:rgba(240,112,112,0.5);}
+.des-v{font-size:20px;font-weight:700;line-height:1;}
 .des.bl .des-v{color:var(--blue);}
 .des.gn .des-v{color:var(--green);}
 .des.rd .des-v{color:var(--red);}
 
+/* COLUNA CENTRAL */
+.mega{text-align:center;padding:4px 0 0;}
+.mega-v{font-size:72px;font-weight:700;color:var(--gold);line-height:1;letter-spacing:-2px;}
+.mega-l{font-size:7px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:rgba(212,168,71,0.38);margin-top:3px;}
+.delta-row{display:grid;grid-template-columns:1fr 1fr;gap:7px;flex-shrink:0;}
+.dcard{border-radius:8px;padding:8px 10px;text-align:center;}
+.dcard.gn{background:rgba(93,203,138,0.07);border:1px solid rgba(93,203,138,0.14);}
+.dcard.gd{background:rgba(212,168,71,0.06);border:1px solid rgba(212,168,71,0.12);}
+.dlbl{font-size:6px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:3px;}
+.dcard.gn .dlbl{color:rgba(93,203,138,0.5);}
+.dcard.gd .dlbl{color:rgba(212,168,71,0.5);}
+.dval{font-size:28px;font-weight:700;line-height:1;}
+.dcard.gn .dval{color:var(--green);}
+.dcard.gd .dval{color:var(--gold);}
+
+/* DONUT CENTRAL */
+.donut-section{background:rgba(255,255,255,0.02);border:1px solid var(--border);border-radius:8px;padding:10px 12px;display:flex;flex-direction:column;gap:8px;flex:1;min-height:0;}
+.donut-title{font-size:6px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.18);}
+.donut-body{display:flex;align-items:center;gap:12px;flex:1;min-height:0;}
+.donut-leg{flex:1;display:flex;flex-direction:column;gap:5px;}
+.dleg-row{display:flex;align-items:center;gap:6px;}
+.dleg-dot{width:8px;height:8px;border-radius:2px;flex-shrink:0;}
+.dleg-info{flex:1;display:flex;align-items:baseline;justify-content:space-between;gap:4px;}
+.dleg-lbl{font-size:7px;font-weight:500;color:rgba(255,255,255,0.4);}
+.dleg-val{font-size:10px;font-weight:700;color:var(--white);}
+.dleg-pct{font-size:7px;font-weight:400;color:var(--muted);}
+.donut-total{text-align:center;margin-top:4px;flex-shrink:0;}
+.donut-total-v{font-size:11px;font-weight:700;color:rgba(255,255,255,0.5);}
+.donut-total-l{font-size:6px;font-weight:500;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,0.2);margin-top:1px;}
+
+/* GAUGES AGUDO */
+.gpair{display:grid;grid-template-columns:1fr 1fr;gap:5px;flex-shrink:0;}
+.gcard{background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:6px;padding:6px;display:flex;flex-direction:column;align-items:center;}
+.glbl{font-size:6px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-bottom:3px;text-align:center;}
+.gnum{font-size:22px;font-weight:700;color:var(--white);text-align:center;margin-top:2px;line-height:1;}
+.gfx{font-size:6px;font-weight:600;letter-spacing:1px;padding:2px 7px;border-radius:20px;margin-top:3px;display:inline-block;}
+
+/* MODALIDADES */
+.mrow{display:grid;grid-template-columns:repeat(4,1fr);gap:5px;flex-shrink:0;}
+.mod{background:rgba(91,168,212,0.05);border:1px solid rgba(91,168,212,0.1);border-radius:6px;padding:6px;text-align:center;}
+.mnome{font-size:6px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--blue);margin-bottom:3px;}
+.mval{font-size:20px;font-weight:700;color:var(--white);line-height:1;}
+.mpct{font-size:7px;font-weight:400;color:var(--muted);margin-top:1px;}
+
 /* SEM DADOS */
-.nodata{display:flex;flex-direction:column;align-items:center;justify-content:center;flex:1;gap:7px;}
-.nodata-t{font-size:14px;font-weight:300;color:rgba(255,255,255,0.15);font-style:italic;}
-.nodata-h{font-size:7px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:rgba(212,168,71,0.15);text-align:center;}
+.nd{display:flex;flex-direction:column;align-items:center;justify-content:center;flex:1;gap:7px;}
+.nd-t{font-size:14px;font-weight:300;color:rgba(255,255,255,0.15);}
+.nd-h{font-size:7px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:rgba(212,168,71,0.15);text-align:center;}
 
 /* FOOTER */
 .ftr{background:var(--navy);border-top:1px solid var(--goldb);padding:0 28px;display:flex;align-items:center;justify-content:space-between;}
-.ftxt{font-size:7px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:rgba(212,168,71,0.28);}
+.ftxt{font-size:7px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:rgba(212,168,71,0.25);}
 </style>
 </head>
 <body>
 <div class="tv">
 
   <div class="hdr">
-    <div style="display:flex;flex-direction:column;line-height:1;">
+    <div class="hdr-left">
       <span class="hdr-logo">APEX</span>
-      <span style="font-size:8px;font-weight:400;color:rgba(212,168,71,0.4);letter-spacing:2px;text-transform:uppercase;margin-top:1px;">powered by Fênix Nefrologia</span>
+      <span class="hdr-powered">powered by Fênix Nefrologia</span>
     </div>
     <div class="hdr-center">
       <div class="hdr-title">Painel de Indicadores</div>
       <div class="hdr-sub">Terapia Renal Substitutiva — Crônico &amp; Agudo</div>
     </div>
     <div class="hdr-right">
-      <div style="display:flex;flex-direction:column;align-items:flex-end;line-height:1;margin-right:8px;">
-        <span style="font-size:16px;font-weight:600;color:#BE9664;letter-spacing:.06em;">FÊNIX</span>
-        <span style="font-size:8px;font-weight:400;color:rgba(190,150,100,0.6);letter-spacing:3px;text-transform:lowercase;margin-top:1px;">nefrologia</span>
+      <div class="fenix-logo">
+        <span class="fenix-nome">FÊNIX</span>
+        <span class="fenix-sub">nefrologia</span>
       </div>
-      <div style="width:1px;height:28px;background:rgba(212,168,71,0.2);margin-right:8px;"></div>
+      <div class="hdr-sep"></div>
       <input type="month" id="mes-sel" class="mes-sel" onchange="trocarMes(this.value)"/>
       <div class="clock" id="clock">--:--</div>
     </div>
   </div>
 
   <div class="body">
+
     <!-- CRÔNICO -->
     <div class="col">
-      <span class="badge badge-gold">TRS Crônico</span>
+      <span class="badge bg">TRS Crônico</span>
       <div id="cron" style="display:flex;flex-direction:column;gap:7px;flex:1;overflow:hidden;">
-        <div class="nodata"><div class="nodata-t">Carregando...</div></div>
+        <div class="nd"><div class="nd-t">Carregando...</div></div>
       </div>
     </div>
-    <div class="div-line"></div>
+
+    <div class="divl"></div>
+
     <!-- CENTRAL -->
-    <div class="col col-mid" style="justify-content:center;align-items:center;">
+    <div class="col col-mid">
       <div class="mega">
         <div class="mega-v" id="c-tot">—</div>
         <div class="mega-l">Sessões totais · Crônico + Agudo</div>
       </div>
-      <div class="delta-row" style="width:100%;">
+      <div class="delta-row">
         <div class="dcard gn"><div class="dlbl">vs mês anterior</div><div class="dval" id="c-delta">—</div></div>
         <div class="dcard gd"><div class="dlbl">crescimento</div><div class="dval" id="c-pct">—</div></div>
       </div>
-      <div class="donut-card" style="width:100%;">
-        <div>
-          <div class="donut-lbl">Modalidades</div>
-          <canvas id="c-donut" width="80" height="80"></canvas>
+      <div class="donut-section">
+        <div class="donut-title">Distribuição por modalidade</div>
+        <div class="donut-body">
+          <div style="flex-shrink:0;display:flex;flex-direction:column;align-items:center;gap:4px;">
+            <canvas id="c-donut" width="110" height="110"></canvas>
+            <div class="donut-total">
+              <div class="donut-total-v" id="c-donut-tot">—</div>
+              <div class="donut-total-l">total</div>
+            </div>
+          </div>
+          <div class="donut-leg" id="c-donut-leg"></div>
         </div>
-        <div class="donut-leg" id="c-donut-leg"></div>
-      </div>
-      <div class="des3" style="width:100%;">
-        <div class="des bl"><div class="des-l">Admissões</div><div class="des-v" id="c-adm">—</div></div>
-        <div class="des gn"><div class="des-l">Saídas</div><div class="des-v" id="c-sai">—</div></div>
-        <div class="des rd"><div class="des-l">Mortalidade</div><div class="des-v" id="c-obi">—</div></div>
       </div>
     </div>
-    <div class="div-line"></div>
+
+    <div class="divl"></div>
+
     <!-- AGUDO -->
     <div class="col">
-      <span class="badge badge-blue">TRS Agudo</span>
+      <span class="badge bb">TRS Agudo</span>
       <div id="agud" style="display:flex;flex-direction:column;gap:7px;flex:1;overflow:hidden;">
-        <div class="nodata"><div class="nodata-t">Carregando...</div></div>
+        <div class="nd"><div class="nd-t">Carregando...</div></div>
       </div>
     </div>
+
   </div>
 
   <div class="ftr">
@@ -213,33 +233,47 @@ body{font-family:'Inter',system-ui,sans-serif;color:var(--white);}
 
 </div>
 <script>
-// ── UTILS ────────────────────────────────────────────────────
 const SUPA_URL='https://syzmsixhjlutsynnqivv.supabase.co';
 const SUPA_KEY='sb_publishable_poKCFHc9n1CtIfCbAxTN0Q_dmlsEy1t';
-const MESES_CURTOS=['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
+const MESES=['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
 const MESES_FULL=['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
 const FAIXAS_L=['0–50','50–100','100–150','150–200','200–250','>250'];
 const FAIXAS_C=['#9C7A4A','#BE9664','#D4A847','#E8973A','#C85B2A','#8B1A1A'];
 const FAIXAS_BG=['rgba(156,122,74,.14)','rgba(190,150,100,.18)','rgba(212,168,71,.18)','rgba(232,151,58,.18)','rgba(200,91,42,.18)','rgba(139,26,26,.18)'];
+const CAUSAS_CORES=['#D4A847','#F07070','#5BA8D4','#E8973A','#5DCB8A','#9B8EC4'];
+const CAUSAS_NOMES=['Metabólica','Infecção','Vascular','Cardio','Queda','Outros'];
+const DONUT_CORES=['#8B6914','#D4A847','#BE9664','#5BA8D4','#7B9ED4','#A8C8E8','#3A7A9C'];
 const HOSPITAIS=['mont_serrat','hosp_exemplo'];
+const ANO_INICIO=2026;
 
 function getMesAtual(){const d=new Date();return`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}`;}
 function getMesAnt(mes){const[a,mm]=mes.split('-');let m=parseInt(mm)-1,y=parseInt(a);if(m===0){m=12;y--;}return`${y}-${String(m).padStart(2,'0')}`;}
 function mIdx(mes){return parseInt(mes.split('-')[1])-1;}
 function fmtN(v){return v===0?'0':(v?Math.round(v).toLocaleString('pt-BR'):'—');}
-function pct(v,t){return t>0?Math.round(v/t*100)+'%':'0%';}
+function pctStr(v,t){return t>0?Math.round(v/t*100)+'%':'0%';}
 function faixaI(n){if(n>=250)return 5;return Math.min(Math.floor(n/50),5);}
-function mesLabel(mes){const[a,mm]=mes.split('-');return`${MESES_CURTOS[parseInt(mm)-1]}/${a}`;}
 function mesFull(mes){const[a,mm]=mes.split('-');return`${MESES_FULL[parseInt(mm)-1]} ${a}`;}
-function getMeses6(mes){const[a,mm]=mes.split('-');return Array.from({length:6},(_,k)=>{let m=parseInt(mm)-5+k,y=parseInt(a);while(m<=0){m+=12;y--;}return MESES_CURTOS[m-1];});}
+
+// Série de Jan/2026 até mês selecionado
+function getSerie(rows,campo,mes){
+  const[ano,mm]=mes.split('-');
+  const mFim=parseInt(mm)-1;
+  return Array.from({length:mFim+1},(_,i)=>{
+    const r=rows.find(r=>r.mes===i&&r.ano===ANO_INICIO);
+    return r?r[campo]||0:0;
+  });
+}
+function getLabels(mes){
+  const[,mm]=mes.split('-');
+  return Array.from({length:parseInt(mm)},(_,i)=>MESES[i]);
+}
 
 // ── GAUGE ────────────────────────────────────────────────────
 function drawGauge(id,val){
   const c=document.getElementById(id);if(!c)return;
   const ctx=c.getContext('2d');
   const W=c.width,H=c.height;ctx.clearRect(0,0,W,H);
-  const cx=W/2,cy=H-3,R=H-7,thick=Math.round(R*0.28);
-  const af=Math.PI/6;
+  const cx=W/2,cy=H-3,R=H-7,thick=Math.round(R*0.28),af=Math.PI/6;
   FAIXAS_C.forEach((_,i)=>{
     const sa=Math.PI+i*af,ea=Math.PI+(i+1)*af;
     ctx.beginPath();ctx.arc(cx,cy,R,sa,ea);ctx.arc(cx,cy,R-thick,ea,sa,true);
@@ -254,241 +288,231 @@ function drawGauge(id,val){
   ctx.beginPath();ctx.arc(cx,cy,R,Math.PI+fi*af,Math.PI+(fi+1)*af);
   ctx.arc(cx,cy,R-thick,Math.PI+(fi+1)*af,Math.PI+fi*af,true);
   ctx.closePath();ctx.fillStyle=FAIXAS_C[fi];ctx.globalAlpha=0.88;ctx.fill();ctx.globalAlpha=1;
-  const frac=fi<5?(val-fi*50)/50:1;
-  const ang=Math.PI+(fi+frac)*af,nLen=R-thick-5;
+  const frac=fi<5?(val-fi*50)/50:1,ang=Math.PI+(fi+frac)*af,nLen=R-thick-5;
   ctx.strokeStyle=FAIXAS_C[fi];ctx.lineWidth=2;ctx.lineCap='round';
   ctx.beginPath();ctx.moveTo(cx,cy);ctx.lineTo(cx+nLen*Math.cos(ang),cy+nLen*Math.sin(ang));ctx.stroke();
   ctx.beginPath();ctx.arc(cx,cy,4,0,2*Math.PI);ctx.fillStyle=FAIXAS_C[fi];ctx.fill();
   ctx.beginPath();ctx.arc(cx,cy,2,0,2*Math.PI);ctx.fillStyle='#fff';ctx.fill();
 }
 
-// ── GRÁFICO LINHA ────────────────────────────────────────────
+// ── LINHA ────────────────────────────────────────────────────
 function drawLine(canvas,pts,color,labels){
   if(!canvas||!pts||!pts.length)return;
-  const ctx=canvas.getContext('2d');
   canvas.width=canvas.offsetWidth||160;canvas.height=canvas.offsetHeight||50;
+  const ctx=canvas.getContext('2d');
   const W=canvas.width,H=canvas.height;ctx.clearRect(0,0,W,H);
-  const pad={t:6,r:6,b:13,l:6};
+  const pad={t:6,r:6,b:14,l:6};
   const validos=pts.filter(v=>v>0);if(!validos.length)return;
-  const mn=Math.min(...validos)*0.92,mx=Math.max(...validos)*1.04;
-  const tx=i=>pad.l+(i/(pts.length-1))*(W-pad.l-pad.r);
+  const mn=Math.min(...validos)*0.9,mx=Math.max(...validos)*1.06;
+  const tx=i=>pad.l+(pts.length>1?i/(pts.length-1):0.5)*(W-pad.l-pad.r);
   const ty=v=>pad.t+(1-(v-mn)/(mx-mn))*(H-pad.t-pad.b);
   ctx.beginPath();ctx.moveTo(tx(0),H-pad.b);
   pts.forEach((v,i)=>ctx.lineTo(tx(i),v>0?ty(v):H-pad.b));
   ctx.lineTo(tx(pts.length-1),H-pad.b);ctx.closePath();
   ctx.fillStyle=color+'18';ctx.fill();
-  ctx.beginPath();pts.forEach((v,i)=>{if(v>0){i===0||!pts[i-1]?ctx.moveTo(tx(i),ty(v)):ctx.lineTo(tx(i),ty(v));}});
+  ctx.beginPath();
+  pts.forEach((v,i)=>{if(v>0){const px=tx(i),py=ty(v);i===0||!pts[i-1]?ctx.moveTo(px,py):ctx.lineTo(px,py);}});
   ctx.strokeStyle=color;ctx.lineWidth=1.5;ctx.stroke();
   pts.forEach((v,i)=>{if(v>0){ctx.beginPath();ctx.arc(tx(i),ty(v),2.5,0,2*Math.PI);ctx.fillStyle=color;ctx.fill();}});
-  if(labels){ctx.font='bold 5px Arial';ctx.fillStyle='rgba(255,255,255,0.2)';ctx.textAlign='center';labels.forEach((l,i)=>ctx.fillText(l,tx(i),H-2));}
+  if(labels){
+    ctx.font='bold 5px Arial';ctx.fillStyle='rgba(255,255,255,0.2)';ctx.textAlign='center';
+    labels.forEach((l,i)=>ctx.fillText(l,tx(i),H-2));
+  }
 }
 
-// ── PIZZA CAUSAS ─────────────────────────────────────────────
-const CAUSAS_CORES=['#D4A847','#F07070','#5BA8D4','#E8973A','#5DCB8A','#9B8EC4'];
-const CAUSAS_NOMES=['Metabólica','Infecção','Vascular','Cardio','Queda','Outros'];
-function drawPizza(id,valores){
+// ── PIZZA ────────────────────────────────────────────────────
+function drawPizza(id,vals){
   const c=document.getElementById(id);if(!c)return;
   const ctx=c.getContext('2d');
   const W=c.width,H=c.height;ctx.clearRect(0,0,W,H);
   const cx=W/2,cy=H/2,R=Math.min(W,H)/2-3,thick=10;
-  const total=valores.reduce((a,b)=>a+b,0);
-  if(total===0){ctx.fillStyle='rgba(255,255,255,0.06)';ctx.beginPath();ctx.arc(cx,cy,R,0,2*Math.PI);ctx.fill();return;}
+  const tot=vals.reduce((a,b)=>a+b,0);
+  if(!tot){ctx.beginPath();ctx.arc(cx,cy,R,0,2*Math.PI);ctx.fillStyle='rgba(255,255,255,0.05)';ctx.fill();return;}
   let start=-Math.PI/2;
-  valores.forEach((v,i)=>{
-    if(v===0)return;
-    const arc=(v/total)*2*Math.PI;
-    ctx.beginPath();ctx.arc(cx,cy,R,start,start+arc);
-    ctx.arc(cx,cy,R-thick,start+arc,start,true);
-    ctx.closePath();ctx.fillStyle=CAUSAS_CORES[i];ctx.fill();
-    start+=arc;
-  });
+  vals.forEach((v,i)=>{if(!v)return;const arc=(v/tot)*2*Math.PI;ctx.beginPath();ctx.arc(cx,cy,R,start,start+arc);ctx.arc(cx,cy,R-thick,start+arc,start,true);ctx.closePath();ctx.fillStyle=CAUSAS_CORES[i];ctx.fill();start+=arc;});
   ctx.beginPath();ctx.arc(cx,cy,R-thick-1,0,2*Math.PI);ctx.fillStyle='#04060D';ctx.fill();
 }
 
 // ── DONUT CENTRAL ────────────────────────────────────────────
-const DONUT_CORES=['#8B6914','#D4A847','#BE9664','#5BA8D4','#7B9ED4','#A8C8E8','#3A7A9C'];
 function drawDonut(id,segs){
   const c=document.getElementById(id);if(!c)return;
   const ctx=c.getContext('2d');
   const W=c.width,H=c.height;ctx.clearRect(0,0,W,H);
-  const cx=W/2,cy=H/2,R=Math.min(W,H)/2-2,thick=14;
-  const total=segs.reduce((a,b)=>a+b.v,0);
-  if(total===0){ctx.fillStyle='rgba(255,255,255,0.05)';ctx.beginPath();ctx.arc(cx,cy,R,0,2*Math.PI);ctx.fill();return;}
+  const cx=W/2,cy=H/2,R=Math.min(W,H)/2-3,thick=18;
+  const tot=segs.reduce((a,b)=>a+b.v,0);
+  if(!tot){ctx.beginPath();ctx.arc(cx,cy,R,0,2*Math.PI);ctx.fillStyle='rgba(255,255,255,0.05)';ctx.fill();return;}
   let start=-Math.PI/2;
   segs.forEach(s=>{
-    if(s.v===0)return;
-    const arc=(s.v/total)*2*Math.PI;
-    ctx.beginPath();ctx.arc(cx,cy,R,start,start+arc);
-    ctx.arc(cx,cy,R-thick,start+arc,start,true);
-    ctx.closePath();ctx.fillStyle=s.c;ctx.fill();
+    if(!s.v)return;
+    const arc=(s.v/tot)*2*Math.PI;
+    ctx.beginPath();ctx.arc(cx,cy,R,start,start+arc);ctx.arc(cx,cy,R-thick,start+arc,start,true);
+    ctx.closePath();ctx.fillStyle=s.c;
+    ctx.globalAlpha=0.9;ctx.fill();ctx.globalAlpha=1;
+    // gap
+    ctx.beginPath();ctx.arc(cx,cy,R,start+arc-0.01,start+arc+0.01);ctx.strokeStyle='#04060D';ctx.lineWidth=2;ctx.stroke();
     start+=arc;
   });
   ctx.beginPath();ctx.arc(cx,cy,R-thick-1,0,2*Math.PI);ctx.fillStyle='#04060D';ctx.fill();
-  ctx.font='bold 11px Inter,sans-serif';ctx.fillStyle='rgba(255,255,255,0.5)';
-  ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText(fmtN(total),cx,cy);
 }
 
 // ── SUPABASE ─────────────────────────────────────────────────
-async function fetchSupabase(mes){
-  const local=fetchLocal(mes);
-  if(local)return local;
+async function fetchSupa(mes){
+  const local=fetchLocal();
+  if(local)return parseRows(local,mes);
   try{
     const resp=await fetch(
-      `${SUPA_URL}/rest/v1/dados_mensais?ano=eq.2026&select=*&order=mes.asc`,
+      `${SUPA_URL}/rest/v1/dados_mensais?ano=eq.${ANO_INICIO}&select=*&order=mes.asc`,
       {headers:{'apikey':SUPA_KEY,'Authorization':`Bearer ${SUPA_KEY}`}}
     );
     if(!resp.ok)return null;
     const rows=await resp.json();
     if(!Array.isArray(rows)||!rows.length)return null;
-    // Salva no localStorage para próximas aberturas
-    const payload={rows,savedAt:Date.now()};
-    localStorage.setItem('apex_tv_supa',JSON.stringify(payload));
-    return parseSupaRows(rows,mes);
+    localStorage.setItem('apex_tv_supa',JSON.stringify({rows,savedAt:Date.now()}));
+    return parseRows(rows,mes);
   }catch(e){return null;}
 }
-
-function fetchLocal(mes){
-  try{
-    const raw=localStorage.getItem('apex_tv_supa');
-    if(!raw)return null;
-    const{rows,savedAt}=JSON.parse(raw);
-    if(Date.now()-savedAt>14400000)return null; // 4h cache
-    return parseSupaRows(rows,mes);
-  }catch(e){return null;}
+function fetchLocal(){
+  try{const r=localStorage.getItem('apex_tv_supa');if(!r)return null;const{rows,savedAt}=JSON.parse(r);if(Date.now()-savedAt>14400000)return null;return rows;}catch(e){return null;}
 }
-
-function parseSupaRows(rows,mes){
+function parseRows(rows,mes){
   const mi=mIdx(mes);
   const d=rows.find(r=>r.mes===mi);
   if(!d)return null;
-  const serie6=k=>Array.from({length:6},(_,j)=>{const i=mi-5+j;if(i<0)return 0;const r=rows.find(r=>r.mes===i);return r?r[k]||0:0;});
   return{
     pac:d.pac_rede||0,ses:d.ses_rede||0,
     adm:d.admissoes||0,sai:d.saidas||0,
     obi:d.obi||0,obiPct:d.obi_pct||0,
     intPct:d.int_pct||0,
-    causas:CAUSAS_NOMES.map((_,i)=>d[['causas_metabolica','causas_infeccao','causas_vascular','causas_cardio','causas_queda','causas_outros'][i]]||0),
-    pac6:serie6('pac_rede'),ses6:serie6('ses_rede'),
+    causas:[d.causas_metabolica||0,d.causas_infeccao||0,d.causas_vascular||0,d.causas_cardio||0,d.causas_queda||0,d.causas_outros||0],
+    // Séries de Jan até mês atual
+    pac_serie:getSerie(rows,'pac_rede',mes),
+    ses_serie:getSerie(rows,'ses_rede',mes),
   };
 }
 
-// ── DADOS AGUDO ──────────────────────────────────────────────
-function isoWeekToDate(y,w){const d=new Date(y,0,1+(w-1)*7);const dw=d.getDay();if(dw<=4)d.setDate(d.getDate()-d.getDay()+1);else d.setDate(d.getDate()+8-d.getDay());return d;}
+// ── AGUDO ─────────────────────────────────────────────────────
+function isoWeekDate(y,w){const d=new Date(y,0,1+(w-1)*7);const dw=d.getDay();if(dw<=4)d.setDate(d.getDate()-d.getDay()+1);else d.setDate(d.getDate()+8-d.getDay());return d;}
 function getAgudo(mes){
   for(const id of HOSPITAIS){
-    const key=`trs_agudo_${id}`;
-    const hist=JSON.parse(localStorage.getItem(key)||'[]');
+    const hist=JSON.parse(localStorage.getItem(`trs_agudo_${id}`)||'[]');
     const[ano,mm]=mes.split('-');
-    const sems=hist.filter(h=>{if(!h.semana)return false;const[y,w]=h.semana.split('-W');const d=isoWeekToDate(parseInt(y),parseInt(w));return d.getFullYear()===parseInt(ano)&&(d.getMonth()+1)===parseInt(mm);});
+    const sems=hist.filter(h=>{if(!h.semana)return false;const[y,w]=h.semana.split('-W');const d=isoWeekDate(parseInt(y),parseInt(w));return d.getFullYear()===parseInt(ano)&&(d.getMonth()+1)===parseInt(mm);});
     if(!sems.length)continue;
     let totPac=0;const totS={hd:0,crrt:0,dp:0,sled:0};const sem=new Set();
     sems.forEach(s=>{totPac+=s.pac||0;Object.keys(totS).forEach(k=>totS[k]+=s.sessoes[k]||0);if(Object.values(s.sessoes).reduce((a,b)=>a+b,0)>0)sem.add(s.semana);});
-    const totSess=Object.values(totS).reduce((a,b)=>a+b,0);
-    return{totPac,totS,totSess,dias:sem.size};
+    return{totPac,totS,totSess:Object.values(totS).reduce((a,b)=>a+b,0),dias:sem.size};
   }
   return null;
 }
-function getAgudo6(mes){const[a,mm]=mes.split('-');return Array.from({length:6},(_,k)=>{let m=parseInt(mm)-5+k,y=parseInt(a);while(m<=0){m+=12;y--;}const d=getAgudo(`${y}-${String(m).padStart(2,'0')}`);return d?d.totSess:0;});}
+// Série agudo de Jan/2026 até mês selecionado
+function getAgudoSerie(mes){
+  const[,mm]=mes.split('-');
+  return Array.from({length:parseInt(mm)},(_,i)=>{
+    const m=String(i+1).padStart(2,'0');
+    const d=getAgudo(`${ANO_INICIO}-${m}`);
+    return d?d.totSess:0;
+  });
+}
 
-// ── RENDER CRÔNICO ───────────────────────────────────────────
+// ── RENDER CRÔNICO ────────────────────────────────────────────
 async function renderCron(mes,mesAnt){
   const el=document.getElementById('cron');
-  const[d,dAnt]=await Promise.all([fetchSupabase(mes),fetchSupabase(mesAnt)]);
+  const[d,dAnt]=await Promise.all([fetchSupa(mes),fetchSupa(mesAnt)]);
   if(!d||(!d.pac&&!d.ses)){
-    el.innerHTML=`<div class="nodata"><div class="nodata-t">Sem dados para ${mesFull(mes)}</div><div class="nodata-h">Abra pelo Portal → Indicadores Clínicos</div></div>`;
+    el.innerHTML=`<div class="nd"><div class="nd-t">Sem dados para ${mesFull(mes)}</div><div class="nd-h">Abra pelo Portal → Indicadores Clínicos</div></div>`;
     return{ses:0,sesAnt:0,adm:0,sai:0,obiPct:0};
   }
-  const meses6=getMeses6(mes);
+  const labels=getLabels(mes);
   const fi=faixaI(d.intPct||0);
+  const intCor=fi>=4?'rd':fi>=2?'am':'gn';
   el.innerHTML=`
-    <div class="kpi-row kpi-4" style="flex-shrink:0;">
+    <div class="krow k4" style="flex-shrink:0;">
       <div class="kpi gd"><div class="kl">Pacientes</div><div class="kv gd">${fmtN(d.pac)}</div></div>
       <div class="kpi gd"><div class="kl">Sessões</div><div class="kv gd">${fmtN(d.ses)}</div></div>
-      <div class="kpi"><div class="kl">Kt/V médio</div><div class="kv sm">—</div></div>
-      <div class="kpi ${fi>=4?'rd':fi>=2?'':'gn'}"><div class="kl">Internação</div><div class="kv sm ${fi>=4?'rd':fi>=2?'':'gn'}">${d.intPct?d.intPct.toFixed(1)+'%':'—'}</div></div>
+      <div class="kpi ${intCor}"><div class="kl">Internação</div><div class="kv sm ${intCor}">${d.intPct?d.intPct.toFixed(1)+'%':'—'}</div></div>
+      <div class="kpi"><div class="kl">Fósforo</div><div class="kv sm">—</div></div>
     </div>
-    <div class="int-wrap" style="flex-shrink:0;">
-      <div>
-        <div class="int-label">Causas internação</div>
-        <canvas id="cv-pizza" width="72" height="72"></canvas>
-      </div>
-      <div class="int-leg" id="pizza-leg"></div>
+    <div class="pizza-wrap" style="flex-shrink:0;">
+      <div><div style="font-size:6px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,0.18);margin-bottom:5px;">Causas internação</div><canvas id="cv-pizza" width="68" height="68"></canvas></div>
+      <div class="pizza-leg" id="pizza-leg"></div>
+    </div>
+    <div class="des3">
+      <div class="des bl"><div class="des-l">Admissões</div><div class="des-v">${fmtN(d.adm)||'—'}</div></div>
+      <div class="des gn"><div class="des-l">Saídas</div><div class="des-v">${fmtN(d.sai)||'—'}</div></div>
+      <div class="des rd"><div class="des-l">Mortalidade</div><div class="des-v">${d.obiPct?d.obiPct.toFixed(1)+'%':'—'}</div></div>
     </div>
     <div class="cbox" style="flex:1.1;min-height:0;">
-      <div class="clbl">Evolução de pacientes — 6 meses</div>
-      <canvas id="cv-pac" class="ccanvas"></canvas>
+      <div class="clbl">Evolução pacientes — Jan a ${labels[labels.length-1]}/2026</div>
+      <canvas id="cv-pac" class="cc"></canvas>
     </div>
     <div class="cbox" style="flex:1;min-height:0;">
-      <div class="clbl">Evolução de sessões — 6 meses</div>
-      <canvas id="cv-ses" class="ccanvas"></canvas>
+      <div class="clbl">Evolução sessões — Jan a ${labels[labels.length-1]}/2026</div>
+      <canvas id="cv-ses" class="cc"></canvas>
     </div>`;
 
   // Pizza legenda
-  const leg=document.getElementById('pizza-leg');
-  const causasTotal=d.causas.reduce((a,b)=>a+b,0);
-  d.causas.forEach((v,i)=>{
-    if(v===0)return;
-    leg.innerHTML+=`<div class="int-leg-row"><div class="int-leg-dot" style="background:${CAUSAS_CORES[i]};"></div><span class="int-leg-lbl">${CAUSAS_NOMES[i]}</span><span class="int-leg-val">${v}</span></div>`;
-  });
+  const legEl=document.getElementById('pizza-leg');
+  d.causas.forEach((v,i)=>{if(v>0)legEl.innerHTML+=`<div class="pleg-row"><div class="pleg-dot" style="background:${CAUSAS_CORES[i]};"></div><span class="pleg-lbl">${CAUSAS_NOMES[i]}</span><span class="pleg-val">${v}</span></div>`;});
+  if(!d.causas.some(v=>v>0))legEl.innerHTML='<div style="font-size:8px;color:rgba(255,255,255,0.2);font-style:italic;">Sem dados de causas</div>';
 
   requestAnimationFrame(()=>{
     drawPizza('cv-pizza',d.causas);
     ['cv-pac','cv-ses'].forEach(id=>{const c=document.getElementById(id);if(c){c.width=c.offsetWidth;c.height=c.offsetHeight;}});
-    drawLine(document.getElementById('cv-pac'),d.pac6,'#D4A847',meses6);
-    drawLine(document.getElementById('cv-ses'),d.ses6,'#BE9664',meses6);
+    drawLine(document.getElementById('cv-pac'),d.pac_serie,'#D4A847',labels);
+    drawLine(document.getElementById('cv-ses'),d.ses_serie,'#BE9664',labels);
   });
 
   return{ses:d.ses||0,sesAnt:dAnt?.ses||0,adm:d.adm||0,sai:d.sai||0,obiPct:d.obiPct||0};
 }
 
-// ── RENDER AGUDO ─────────────────────────────────────────────
+// ── RENDER AGUDO ──────────────────────────────────────────────
 function renderAgud(mes,mesAnt){
   const el=document.getElementById('agud');
   const h=getAgudo(mes),hAnt=getAgudo(mesAnt);
-  const meses6=getMeses6(mes);
+  const labels=getLabels(mes);
   if(!h){
-    el.innerHTML=`<div class="nodata"><div class="nodata-t">Sem dados para ${mesFull(mes)}</div><div class="nodata-h">Lance os dados no Lançamento Semanal</div></div>`;
-    return{ses:0,sesAnt:0};
+    el.innerHTML=`<div class="nd"><div class="nd-t">Sem dados para ${mesFull(mes)}</div><div class="nd-h">Lance os dados no Lançamento Semanal</div></div>`;
+    return{ses:0,sesAnt:0,totS:null};
   }
   const{totPac,totS,totSess,dias}=h;
   const sesAnt=hAnt?.totSess||0;
   const fi=faixaI(totSess),fiAnt=faixaI(sesAnt);
-  const mediaPac=totPac>0?(totSess/totPac).toFixed(1):'-';
-  const mediaDia=dias>0?(totSess/dias).toFixed(1):'-';
+  const mP=totPac>0?(totSess/totPac).toFixed(1):'-';
+  const mD=dias>0?(totSess/dias).toFixed(1):'-';
   el.innerHTML=`
-    <div class="kpi-row kpi-4" style="flex-shrink:0;">
+    <div class="krow k4" style="flex-shrink:0;">
       <div class="kpi bl"><div class="kl">Pacientes</div><div class="kv bl">${fmtN(totPac)}</div></div>
       <div class="kpi bl"><div class="kl">Sessões</div><div class="kv bl">${fmtN(totSess)}</div></div>
-      <div class="kpi"><div class="kl">Ses/Paciente</div><div class="kv sm">${mediaPac}</div></div>
-      <div class="kpi"><div class="kl">Ses/Dia</div><div class="kv sm">${mediaDia}</div></div>
+      <div class="kpi"><div class="kl">Ses/Paciente</div><div class="kv sm">${mP}</div></div>
+      <div class="kpi"><div class="kl">Ses/Dia</div><div class="kv sm">${mD}</div></div>
     </div>
     <div class="gpair">
-      <div class="gcard"><div class="glbl">Mês vigente</div><canvas id="cv-g1" width="100" height="56"></canvas><div class="gnum">${totSess}</div><span class="gfaixa" style="background:${FAIXAS_BG[fi]};color:${FAIXAS_C[fi]};border:1px solid ${FAIXAS_C[fi]};">${FAIXAS_L[fi]}</span></div>
-      <div class="gcard"><div class="glbl">Mês anterior</div><canvas id="cv-g2" width="100" height="56"></canvas><div class="gnum">${sesAnt||'—'}</div>${sesAnt>0?`<span class="gfaixa" style="background:${FAIXAS_BG[fiAnt]};color:${FAIXAS_C[fiAnt]};border:1px solid ${FAIXAS_C[fiAnt]};">${FAIXAS_L[fiAnt]}</span>`:'<span class="gfaixa" style="background:rgba(255,255,255,0.04);color:var(--muted);">sem dados</span>'}</div>
+      <div class="gcard"><div class="glbl">Mês vigente</div><canvas id="cv-g1" width="100" height="55"></canvas><div class="gnum">${totSess}</div><span class="gfx" style="background:${FAIXAS_BG[fi]};color:${FAIXAS_C[fi]};border:1px solid ${FAIXAS_C[fi]};">${FAIXAS_L[fi]}</span></div>
+      <div class="gcard"><div class="glbl">Mês anterior</div><canvas id="cv-g2" width="100" height="55"></canvas><div class="gnum">${sesAnt||'—'}</div>${sesAnt>0?`<span class="gfx" style="background:${FAIXAS_BG[fiAnt]};color:${FAIXAS_C[fiAnt]};border:1px solid ${FAIXAS_C[fiAnt]};">${FAIXAS_L[fiAnt]}</span>`:'<span class="gfx" style="background:rgba(255,255,255,0.04);color:var(--muted);">sem dados</span>'}</div>
     </div>
-    <div class="mod-row">
-      <div class="mod"><div class="mnome">HD</div><div class="mval">${totS.hd}</div><div class="mpct">${pct(totS.hd,totSess)}</div></div>
-      <div class="mod"><div class="mnome">CRRT</div><div class="mval">${totS.crrt}</div><div class="mpct">${pct(totS.crrt,totSess)}</div></div>
-      <div class="mod"><div class="mnome">DP</div><div class="mval">${totS.dp}</div><div class="mpct">${pct(totS.dp,totSess)}</div></div>
-      <div class="mod"><div class="mnome">SLED</div><div class="mval">${totS.sled}</div><div class="mpct">${pct(totS.sled,totSess)}</div></div>
+    <div class="mrow">
+      <div class="mod"><div class="mnome">HD</div><div class="mval">${totS.hd}</div><div class="mpct">${pctStr(totS.hd,totSess)}</div></div>
+      <div class="mod"><div class="mnome">CRRT</div><div class="mval">${totS.crrt}</div><div class="mpct">${pctStr(totS.crrt,totSess)}</div></div>
+      <div class="mod"><div class="mnome">DP</div><div class="mval">${totS.dp}</div><div class="mpct">${pctStr(totS.dp,totSess)}</div></div>
+      <div class="mod"><div class="mnome">SLED</div><div class="mval">${totS.sled}</div><div class="mpct">${pctStr(totS.sled,totSess)}</div></div>
     </div>
     <div class="cbox" style="flex:1;min-height:0;">
-      <div class="clbl">Evolução de sessões — 6 meses</div>
-      <canvas id="cv-ag" class="ccanvas"></canvas>
+      <div class="clbl">Evolução sessões — Jan a ${labels[labels.length-1]}/2026</div>
+      <canvas id="cv-ag" class="cc"></canvas>
     </div>`;
 
   requestAnimationFrame(()=>{
     drawGauge('cv-g1',totSess);
     if(sesAnt>0)drawGauge('cv-g2',sesAnt);
     const cAg=document.getElementById('cv-ag');
-    if(cAg){cAg.width=cAg.offsetWidth;cAg.height=cAg.offsetHeight;drawLine(cAg,getAgudo6(mes),'#5BA8D4',meses6);}
+    if(cAg){cAg.width=cAg.offsetWidth;cAg.height=cAg.offsetHeight;drawLine(cAg,getAgudoSerie(mes),'#5BA8D4',labels);}
   });
 
-  return{ses:totSess,sesAnt};
+  return{ses:totSess,sesAnt,totS};
 }
 
-// ── RENDER CENTRAL ───────────────────────────────────────────
-function renderCentral(sesCron,sesAgud,sesCronAnt,sesAgudAnt,adm,sai,obiPct,totSAgud){
+// ── RENDER CENTRAL ────────────────────────────────────────────
+function renderCentral(sesCron,sesAgud,sesCronAnt,sesAgudAnt,totSAgud){
   const total=sesCron+sesAgud;
   const totalAnt=sesCronAnt+sesAgudAnt;
   const delta=total-totalAnt;
@@ -498,11 +522,8 @@ function renderCentral(sesCron,sesAgud,sesCronAnt,sesAgudAnt,adm,sai,obiPct,totS
   elD.textContent=totalAnt>0?(delta>=0?'+':'')+delta.toLocaleString('pt-BR'):'—';
   elD.style.color=delta>=0?'var(--green)':'var(--red)';
   document.getElementById('c-pct').textContent=pctG!==null?(delta>=0?'+':'')+pctG+'%':'—';
-  document.getElementById('c-adm').textContent=adm||'—';
-  document.getElementById('c-sai').textContent=sai||'—';
-  document.getElementById('c-obi').textContent=obiPct?obiPct.toFixed(1)+'%':'—';
 
-  // Donut modalidades
+  // Donut
   const segs=[
     {l:'Crônico HD',v:Math.round(sesCron*0.64),c:DONUT_CORES[0]},
     {l:'Crônico HDF',v:Math.round(sesCron*0.36),c:DONUT_CORES[1]},
@@ -512,14 +533,17 @@ function renderCentral(sesCron,sesAgud,sesCronAnt,sesAgudAnt,adm,sai,obiPct,totS
     {l:'Agudo SLED',v:totSAgud?.sled||0,c:DONUT_CORES[6]},
   ].filter(s=>s.v>0);
 
+  const tot2=segs.reduce((a,b)=>a+b.v,0);
+  document.getElementById('c-donut-tot').textContent=tot2>0?tot2.toLocaleString('pt-BR'):'—';
   drawDonut('c-donut',segs);
-  const total2=segs.reduce((a,b)=>a+b.v,0);
   document.getElementById('c-donut-leg').innerHTML=segs.map(s=>`
     <div class="dleg-row">
       <div class="dleg-dot" style="background:${s.c};"></div>
-      <span class="dleg-lbl">${s.l}</span>
-      <span class="dleg-val">${fmtN(s.v)}</span>
-      <span class="dleg-pct">${pct(s.v,total2)}</span>
+      <div class="dleg-info">
+        <span class="dleg-lbl">${s.l}</span>
+        <span class="dleg-val">${fmtN(s.v)}</span>
+        <span class="dleg-pct">${pctStr(s.v,tot2)}</span>
+      </div>
     </div>`).join('');
 }
 
@@ -529,21 +553,13 @@ async function trocarMes(mes){
   const mesAnt=getMesAnt(mes);
   document.getElementById('ftr-mes').textContent=`Período: ${mesFull(mes)}`;
   document.getElementById('ftr-upd').textContent=`Atualizado ${new Date().toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'})}`;
-  document.getElementById('cron').innerHTML=`<div class="nodata"><div class="nodata-t">Carregando...</div></div>`;
-  document.getElementById('agud').innerHTML=`<div class="nodata"><div class="nodata-t">Carregando...</div></div>`;
-  const hAgud=getAgudo(mes);
-  const hAgudAnt=getAgudo(mesAnt);
-  const[resCron]=await Promise.all([renderCron(mes,mesAnt)]);
+  document.getElementById('cron').innerHTML=`<div class="nd"><div class="nd-t">Carregando...</div></div>`;
+  document.getElementById('agud').innerHTML=`<div class="nd"><div class="nd-t">Carregando...</div></div>`;
   const resAgud=renderAgud(mes,mesAnt);
-  renderCentral(
-    resCron.ses,resAgud.ses,
-    resCron.sesAnt,resAgud.sesAnt,
-    resCron.adm,resCron.sai,resCron.obiPct,
-    hAgud?.totS
-  );
+  const[resCron]=await Promise.all([renderCron(mes,mesAnt)]);
+  renderCentral(resCron.ses,resAgud.ses,resCron.sesAnt,resAgud.sesAnt,resAgud.totS);
 }
 
-// ── RELÓGIO ────────────────────────────────────────────────────
 function tick(){const d=new Date();document.getElementById('clock').textContent=`${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}`;}
 
 document.addEventListener('DOMContentLoaded',()=>{
