@@ -4,539 +4,552 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Painel Indicadores — APEX</title>
-<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
 :root{
-  --black:#05080F;--navy:#0B1220;--navy-mid:#111827;
-  --gold:#D4A847;--gold-dim:rgba(212,168,71,0.08);--gold-border:rgba(212,168,71,0.18);
-  --blue:#5BA8D4;--green:#5DCB8A;--red:#F07070;--amber:#E8973A;
-  --white:#FFFFFF;--muted:rgba(255,255,255,0.35);--border:rgba(255,255,255,0.06);
+  --bg:#04060D;--navy:#080C18;--navy2:#0D1525;
+  --gold:#D4A847;--gold2:#BE9664;--gold3:rgba(212,168,71,0.12);--goldb:rgba(212,168,71,0.18);
+  --blue:#5BA8D4;--blueb:rgba(91,168,212,0.12);
+  --green:#5DCB8A;--red:#F07070;--amber:#E8973A;
+  --white:#fff;--muted:rgba(255,255,255,0.32);--border:rgba(255,255,255,0.07);
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
-html,body{width:100%;height:100%;overflow:hidden;background:var(--black);}
-body{font-family:'Inter',sans-serif;color:var(--white);}
+html,body{width:100%;height:100%;overflow:hidden;background:var(--bg);}
+body{font-family:'Inter',system-ui,sans-serif;color:var(--white);}
 
-/* LAYOUT 16:9 */
-.tv{width:100vw;height:100vh;display:grid;grid-template-rows:58px 1fr 40px;}
+.tv{width:100vw;height:100vh;display:grid;grid-template-rows:54px 1fr 36px;}
 
 /* HEADER */
-.hdr{background:var(--navy);border-bottom:1px solid var(--gold-border);padding:0 32px;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-shrink:0;}
-.hdr-logo{font-family:'Cinzel',serif;font-size:16px;font-weight:700;color:var(--gold);letter-spacing:4px;}
-.hdr-center{display:flex;flex-direction:column;align-items:center;gap:1px;}
-.hdr-title{font-family:'Cinzel',serif;font-size:10px;letter-spacing:4px;color:var(--gold);text-transform:uppercase;}
-.hdr-sub{font-family:'Cormorant Garamond',serif;font-size:12px;font-style:italic;color:var(--muted);}
-.hdr-right{display:flex;align-items:center;gap:12px;}
-.hdr-mes-sel{background:rgba(13,27,53,0.8);border:1px solid var(--gold-border);border-radius:6px;padding:4px 10px;font-family:'Cinzel',serif;font-size:10px;color:var(--gold);letter-spacing:1px;outline:none;color-scheme:dark;cursor:pointer;}
-.hdr-clock{font-family:'Cinzel',serif;font-size:14px;font-weight:700;color:var(--gold);letter-spacing:2px;min-width:48px;text-align:right;}
+.hdr{background:var(--navy);border-bottom:1px solid var(--goldb);padding:0 28px;display:flex;align-items:center;justify-content:space-between;}
+.hdr-logo{font-size:15px;font-weight:800;color:var(--gold);letter-spacing:5px;text-transform:uppercase;}
+.hdr-center{display:flex;flex-direction:column;align-items:center;}
+.hdr-title{font-size:9px;font-weight:700;letter-spacing:4px;color:var(--gold);text-transform:uppercase;}
+.hdr-sub{font-size:10px;font-weight:300;color:var(--muted);letter-spacing:1px;margin-top:1px;}
+.hdr-right{display:flex;align-items:center;gap:10px;}
+.mes-sel{background:rgba(13,27,53,0.8);border:1px solid var(--goldb);border-radius:5px;padding:3px 9px;font-family:inherit;font-size:10px;font-weight:600;color:var(--gold);letter-spacing:1px;outline:none;color-scheme:dark;cursor:pointer;}
+.clock{font-size:13px;font-weight:800;color:var(--gold);letter-spacing:2px;min-width:44px;text-align:right;}
 
-/* BODY 3 colunas */
-.body{flex:1;display:grid;grid-template-columns:1fr 1px 1.5fr 1px 1fr;overflow:hidden;}
-.divider{background:var(--gold-border);}
-.col{padding:12px 18px;display:flex;flex-direction:column;gap:8px;overflow:hidden;}
-.col-center{background:rgba(212,168,71,0.025);padding:16px 20px;}
+/* BODY */
+.body{display:grid;grid-template-columns:1fr 1px 1.45fr 1px 1fr;overflow:hidden;}
+.div-line{background:var(--goldb);}
+.col{padding:10px 16px;display:flex;flex-direction:column;gap:7px;overflow:hidden;}
+.col-mid{background:rgba(212,168,71,0.02);padding:14px 18px;}
 
 /* BADGE */
-.badge{display:inline-block;font-family:'Cinzel',serif;font-size:7px;letter-spacing:2.5px;text-transform:uppercase;padding:2px 10px;border-radius:20px;margin-bottom:2px;font-weight:600;}
-.badge-gold{background:rgba(212,168,71,0.12);color:var(--gold);border:1px solid rgba(212,168,71,0.28);}
-.badge-blue{background:rgba(91,168,212,0.1);color:var(--blue);border:1px solid rgba(91,168,212,0.22);}
+.badge{display:inline-flex;align-items:center;gap:5px;font-size:7px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;padding:2px 10px;border-radius:20px;}
+.badge::before{content:'';width:5px;height:5px;border-radius:50%;flex-shrink:0;}
+.badge-gold{background:var(--gold3);color:var(--gold);border:1px solid rgba(212,168,71,0.25);}
+.badge-gold::before{background:var(--gold);}
+.badge-blue{background:var(--blueb);color:var(--blue);border:1px solid rgba(91,168,212,0.2);}
+.badge-blue::before{background:var(--blue);}
 
-/* KPIs */
+/* KPI */
 .kpi-row{display:grid;gap:5px;flex-shrink:0;}
 .kpi-4{grid-template-columns:repeat(4,1fr);}
 .kpi-2{grid-template-columns:repeat(2,1fr);}
 .kpi{background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:6px;padding:7px 9px;position:relative;overflow:hidden;}
-.kpi::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;opacity:.6;}
-.kpi.gold::before{background:var(--gold);}
-.kpi.blue::before{background:var(--blue);}
-.kpi.green::before{background:var(--green);}
-.kpi.red::before{background:var(--red);}
-.kpi-lbl{font-family:'Cinzel',serif;font-size:6px;letter-spacing:1.5px;color:var(--muted);text-transform:uppercase;margin-bottom:3px;}
-.kpi-val{font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:300;color:var(--white);line-height:1;}
-.kpi-val.xl{font-size:34px;}
-.kpi-val.gold{color:var(--gold);}
-.kpi-val.blue{color:var(--blue);}
-.kpi-val.green{color:var(--green);}
-.kpi-val.red{color:var(--red);}
-.kpi-sub{font-family:'Inter',sans-serif;font-size:8px;color:var(--muted);margin-top:2px;}
+.kpi::after{content:'';position:absolute;top:0;left:0;right:0;height:2px;border-radius:1px;}
+.kpi.gd::after{background:var(--gold);}
+.kpi.bl::after{background:var(--blue);}
+.kpi.gn::after{background:var(--green);}
+.kpi.rd::after{background:var(--red);}
+.kl{font-size:6px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-bottom:3px;}
+.kv{font-size:26px;font-weight:800;color:var(--white);line-height:1;}
+.kv.gd{color:var(--gold);}
+.kv.bl{color:var(--blue);}
+.kv.gn{color:var(--green);}
+.kv.rd{color:var(--red);}
+.kv.sm{font-size:20px;}
+.ks{font-size:8px;font-weight:400;color:var(--muted);margin-top:2px;}
 
-/* GRÁFICO ÁREA */
-.chart-wrap{background:rgba(255,255,255,0.02);border:1px solid var(--border);border-radius:7px;overflow:hidden;display:flex;flex-direction:column;}
-.chart-lbl{font-family:'Cinzel',serif;font-size:6px;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,0.2);padding:5px 8px 0;}
-.chart-canvas{flex:1;width:100%;}
+/* CHART BOX */
+.cbox{background:rgba(255,255,255,0.02);border:1px solid var(--border);border-radius:7px;display:flex;flex-direction:column;overflow:hidden;}
+.clbl{font-size:6px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,0.2);padding:5px 8px 0;}
+.ccanvas{flex:1;width:100%;}
 
-/* DESFECHOS */
-.des-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:5px;flex-shrink:0;}
-.des-card{border-radius:6px;padding:7px 6px;text-align:center;border:1px solid transparent;}
-.des-card.blue{background:rgba(91,168,212,0.07);border-color:rgba(91,168,212,0.14);}
-.des-card.green{background:rgba(93,203,138,0.07);border-color:rgba(93,203,138,0.14);}
-.des-card.red{background:rgba(240,112,112,0.07);border-color:rgba(240,112,112,0.14);}
-.des-lbl{font-family:'Cinzel',serif;font-size:6px;letter-spacing:1px;text-transform:uppercase;margin-bottom:3px;}
-.des-card.blue .des-lbl{color:rgba(91,168,212,0.6);}
-.des-card.green .des-lbl{color:rgba(93,203,138,0.6);}
-.des-card.red .des-lbl{color:rgba(240,112,112,0.6);}
-.des-val{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:300;line-height:1;}
-.des-card.blue .des-val{color:var(--blue);}
-.des-card.green .des-val{color:var(--green);}
-.des-card.red .des-val{color:var(--red);}
+/* PIZZA / GAUGE INTERNAÇÃO */
+.int-wrap{background:rgba(255,255,255,0.02);border:1px solid var(--border);border-radius:7px;padding:8px;display:flex;align-items:center;gap:10px;flex-shrink:0;}
+.int-label{font-size:6px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,0.2);margin-bottom:5px;}
+.int-leg{display:flex;flex-direction:column;gap:4px;flex:1;}
+.int-leg-row{display:flex;align-items:center;justify-content:space-between;gap:5px;}
+.int-leg-dot{width:7px;height:7px;border-radius:2px;flex-shrink:0;}
+.int-leg-lbl{font-size:7px;font-weight:500;color:rgba(255,255,255,0.5);flex:1;}
+.int-leg-val{font-size:8px;font-weight:700;color:var(--white);}
 
-/* CENTRO */
-.mega{text-align:center;padding:8px 0 4px;}
-.mega-val{font-family:'Cormorant Garamond',serif;font-size:72px;font-weight:300;color:var(--gold);line-height:1;}
-.mega-lbl{font-family:'Cinzel',serif;font-size:7px;letter-spacing:3px;color:rgba(212,168,71,0.45);text-transform:uppercase;margin-top:4px;}
-.delta-row{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
-.delta-card{border-radius:8px;padding:10px;text-align:center;}
-.delta-card.green{background:rgba(93,203,138,0.08);border:1px solid rgba(93,203,138,0.16);}
-.delta-card.gold{background:rgba(212,168,71,0.07);border:1px solid rgba(212,168,71,0.15);}
-.delta-lbl{font-family:'Cinzel',serif;font-size:6px;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:4px;}
-.delta-card.green .delta-lbl{color:rgba(93,203,138,0.6);}
-.delta-card.gold .delta-lbl{color:rgba(212,168,71,0.6);}
-.delta-val{font-family:'Cormorant Garamond',serif;font-size:36px;font-weight:300;line-height:1;}
-.delta-card.green .delta-val{color:var(--green);}
-.delta-card.gold .delta-val{color:var(--gold);}
-.distrib-card{background:rgba(255,255,255,0.02);border:1px solid var(--border);border-radius:7px;padding:10px 12px;}
-.distrib-lbl{font-family:'Cinzel',serif;font-size:6px;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,0.2);margin-bottom:8px;}
-.distrib-row{display:flex;align-items:center;gap:8px;margin-bottom:6px;}
-.distrib-nome{font-family:'Cinzel',serif;font-size:7px;color:var(--muted);min-width:44px;letter-spacing:1px;}
-.distrib-bar-bg{flex:1;background:rgba(255,255,255,0.05);border-radius:3px;height:10px;overflow:hidden;}
-.distrib-bar-fill{height:100%;border-radius:3px;}
-.distrib-num{font-family:'Cinzel',serif;font-size:8px;font-weight:600;min-width:28px;text-align:right;}
-
-/* GAUGES AGUDO */
-.gauge-pair{display:grid;grid-template-columns:1fr 1fr;gap:6px;flex-shrink:0;}
-.gauge-card{background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:7px;padding:7px;display:flex;flex-direction:column;align-items:center;}
-.gauge-lbl-s{font-family:'Cinzel',serif;font-size:6px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-bottom:4px;text-align:center;}
-.gauge-num-s{font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:300;color:var(--white);text-align:center;margin-top:3px;line-height:1;}
-.gauge-faixa-s{font-family:'Cinzel',serif;font-size:6px;letter-spacing:1px;padding:2px 8px;border-radius:20px;margin-top:3px;display:inline-block;}
+/* GAUGE MINI */
+.gpair{display:grid;grid-template-columns:1fr 1fr;gap:5px;flex-shrink:0;}
+.gcard{background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:6px;padding:6px;display:flex;flex-direction:column;align-items:center;}
+.glbl{font-size:6px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-bottom:3px;text-align:center;}
+.gnum{font-size:22px;font-weight:800;color:var(--white);text-align:center;margin-top:2px;line-height:1;}
+.gfaixa{font-size:6px;font-weight:700;letter-spacing:1px;padding:2px 7px;border-radius:20px;margin-top:3px;display:inline-block;}
 
 /* MODALIDADES */
 .mod-row{display:grid;grid-template-columns:repeat(4,1fr);gap:5px;flex-shrink:0;}
-.mod-item{background:rgba(91,168,212,0.05);border:1px solid rgba(91,168,212,0.1);border-radius:6px;padding:7px;text-align:center;}
-.mod-nome{font-family:'Cinzel',serif;font-size:6px;letter-spacing:2px;text-transform:uppercase;color:var(--blue);margin-bottom:3px;}
-.mod-val{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:300;color:var(--white);line-height:1;}
-.mod-pct{font-family:'Inter',sans-serif;font-size:7px;color:var(--muted);margin-top:1px;}
+.mod{background:rgba(91,168,212,0.05);border:1px solid rgba(91,168,212,0.1);border-radius:6px;padding:6px;text-align:center;}
+.mnome{font-size:6px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--blue);margin-bottom:3px;}
+.mval{font-size:20px;font-weight:800;color:var(--white);line-height:1;}
+.mpct{font-size:7px;font-weight:400;color:var(--muted);margin-top:1px;}
+
+/* COLUNA CENTRAL */
+.mega{text-align:center;padding:6px 0 2px;}
+.mega-v{font-size:64px;font-weight:800;color:var(--gold);line-height:1;letter-spacing:-2px;}
+.mega-l{font-size:7px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:rgba(212,168,71,0.4);margin-top:4px;}
+.delta-row{display:grid;grid-template-columns:1fr 1fr;gap:7px;}
+.dcard{border-radius:8px;padding:9px;text-align:center;}
+.dcard.gn{background:rgba(93,203,138,0.07);border:1px solid rgba(93,203,138,0.14);}
+.dcard.gd{background:rgba(212,168,71,0.06);border:1px solid rgba(212,168,71,0.13);}
+.dlbl{font-size:6px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:3px;}
+.dcard.gn .dlbl{color:rgba(93,203,138,0.55);}
+.dcard.gd .dlbl{color:rgba(212,168,71,0.55);}
+.dval{font-size:30px;font-weight:800;line-height:1;}
+.dcard.gn .dval{color:var(--green);}
+.dcard.gd .dval{color:var(--gold);}
+
+/* DONUT CENTRAL */
+.donut-card{background:rgba(255,255,255,0.02);border:1px solid var(--border);border-radius:8px;padding:10px 12px;display:flex;align-items:center;gap:12px;}
+.donut-lbl{font-size:6px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,0.18);margin-bottom:6px;}
+.donut-leg{flex:1;display:flex;flex-direction:column;gap:5px;}
+.dleg-row{display:flex;align-items:center;gap:6px;}
+.dleg-dot{width:8px;height:8px;border-radius:2px;flex-shrink:0;}
+.dleg-lbl{font-size:7px;font-weight:500;color:rgba(255,255,255,0.45);flex:1;}
+.dleg-val{font-size:9px;font-weight:800;color:var(--white);}
+.dleg-pct{font-size:7px;font-weight:400;color:var(--muted);min-width:28px;text-align:right;}
+
+/* DESFECHOS CENTRAL */
+.des3{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;flex-shrink:0;}
+.des{border-radius:7px;padding:8px;text-align:center;border:1px solid transparent;}
+.des.bl{background:rgba(91,168,212,0.07);border-color:rgba(91,168,212,0.13);}
+.des.gn{background:rgba(93,203,138,0.07);border-color:rgba(93,203,138,0.13);}
+.des.rd{background:rgba(240,112,112,0.07);border-color:rgba(240,112,112,0.13);}
+.des-l{font-size:6px;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:3px;}
+.des.bl .des-l{color:rgba(91,168,212,0.55);}
+.des.gn .des-l{color:rgba(93,203,138,0.55);}
+.des.rd .des-l{color:rgba(240,112,112,0.55);}
+.des-v{font-size:22px;font-weight:800;line-height:1;}
+.des.bl .des-v{color:var(--blue);}
+.des.gn .des-v{color:var(--green);}
+.des.rd .des-v{color:var(--red);}
 
 /* SEM DADOS */
-.no-data{display:flex;flex-direction:column;align-items:center;justify-content:center;flex:1;gap:8px;}
-.no-data-text{font-family:'Cormorant Garamond',serif;font-size:16px;font-style:italic;color:rgba(232,213,160,0.2);}
-.no-data-hint{font-family:'Cinzel',serif;font-size:7px;letter-spacing:2px;color:rgba(212,168,71,0.18);text-transform:uppercase;text-align:center;}
+.nodata{display:flex;flex-direction:column;align-items:center;justify-content:center;flex:1;gap:7px;}
+.nodata-t{font-size:14px;font-weight:300;color:rgba(255,255,255,0.15);font-style:italic;}
+.nodata-h{font-size:7px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:rgba(212,168,71,0.15);text-align:center;}
 
 /* FOOTER */
-.ftr{background:var(--navy);border-top:1px solid var(--gold-border);padding:0 32px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;}
-.ftr-txt{font-family:'Cinzel',serif;font-size:7px;letter-spacing:2px;text-transform:uppercase;color:rgba(212,168,71,0.3);}
+.ftr{background:var(--navy);border-top:1px solid var(--goldb);padding:0 28px;display:flex;align-items:center;justify-content:space-between;}
+.ftxt{font-size:7px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:rgba(212,168,71,0.28);}
 </style>
 </head>
 <body>
 <div class="tv">
 
-  <!-- HEADER -->
   <div class="hdr">
-    <span class="hdr-logo">APEX</span>
+    <div style="display:flex;flex-direction:column;line-height:1;">
+      <span class="hdr-logo">APEX</span>
+      <span style="font-size:8px;font-weight:400;color:rgba(212,168,71,0.4);letter-spacing:2px;text-transform:uppercase;margin-top:1px;">powered by Fênix Nefrologia</span>
+    </div>
     <div class="hdr-center">
       <div class="hdr-title">Painel de Indicadores</div>
       <div class="hdr-sub">Terapia Renal Substitutiva — Crônico &amp; Agudo</div>
     </div>
     <div class="hdr-right">
-      <input type="month" id="tv-mes-sel" class="hdr-mes-sel" onchange="trocarMes(this.value)"/>
-      <div class="hdr-clock" id="tv-clock">--:--</div>
+      <div style="display:flex;flex-direction:column;align-items:flex-end;line-height:1;margin-right:8px;">
+        <span style="font-size:16px;font-weight:600;color:#BE9664;letter-spacing:.06em;">FÊNIX</span>
+        <span style="font-size:8px;font-weight:400;color:rgba(190,150,100,0.6);letter-spacing:3px;text-transform:lowercase;margin-top:1px;">nefrologia</span>
+      </div>
+      <div style="width:1px;height:28px;background:rgba(212,168,71,0.2);margin-right:8px;"></div>
+      <input type="month" id="mes-sel" class="mes-sel" onchange="trocarMes(this.value)"/>
+      <div class="clock" id="clock">--:--</div>
     </div>
   </div>
 
-  <!-- BODY -->
   <div class="body">
-
-    <!-- ── COLUNA CRÔNICO ── -->
-    <div class="col" id="col-cronico">
+    <!-- CRÔNICO -->
+    <div class="col">
       <span class="badge badge-gold">TRS Crônico</span>
-      <div id="cron-content" style="display:flex;flex-direction:column;gap:8px;flex:1;overflow:hidden;">
-        <div class="no-data"><div class="no-data-text">Carregando...</div></div>
+      <div id="cron" style="display:flex;flex-direction:column;gap:7px;flex:1;overflow:hidden;">
+        <div class="nodata"><div class="nodata-t">Carregando...</div></div>
       </div>
     </div>
-
-    <div class="divider"></div>
-
-    <!-- ── COLUNA CENTRAL ── -->
-    <div class="col col-center" style="justify-content:center;align-items:center;">
+    <div class="div-line"></div>
+    <!-- CENTRAL -->
+    <div class="col col-mid" style="justify-content:center;align-items:center;">
       <div class="mega">
-        <div class="mega-val" id="c-total">—</div>
-        <div class="mega-lbl">Sessões totais · Crônico + Agudo</div>
+        <div class="mega-v" id="c-tot">—</div>
+        <div class="mega-l">Sessões totais · Crônico + Agudo</div>
       </div>
       <div class="delta-row" style="width:100%;">
-        <div class="delta-card green">
-          <div class="delta-lbl">vs mês anterior</div>
-          <div class="delta-val" id="c-delta">—</div>
-        </div>
-        <div class="delta-card gold">
-          <div class="delta-lbl">crescimento</div>
-          <div class="delta-val" id="c-pct">—</div>
-        </div>
+        <div class="dcard gn"><div class="dlbl">vs mês anterior</div><div class="dval" id="c-delta">—</div></div>
+        <div class="dcard gd"><div class="dlbl">crescimento</div><div class="dval" id="c-pct">—</div></div>
       </div>
-      <div class="distrib-card" style="width:100%;margin-top:4px;">
-        <div class="distrib-lbl">Distribuição de sessões</div>
-        <div class="distrib-row">
-          <span class="distrib-nome" style="color:rgba(212,168,71,0.7);">Crônico</span>
-          <div class="distrib-bar-bg"><div class="distrib-bar-fill" id="c-bar-cron" style="background:var(--gold);width:0%;"></div></div>
-          <span class="distrib-num" style="color:var(--gold);" id="c-num-cron">—</span>
+      <div class="donut-card" style="width:100%;">
+        <div>
+          <div class="donut-lbl">Modalidades</div>
+          <canvas id="c-donut" width="80" height="80"></canvas>
         </div>
-        <div class="distrib-row" style="margin-bottom:0;">
-          <span class="distrib-nome" style="color:rgba(91,168,212,0.7);">Agudo</span>
-          <div class="distrib-bar-bg"><div class="distrib-bar-fill" id="c-bar-agud" style="background:var(--blue);width:0%;"></div></div>
-          <span class="distrib-num" style="color:var(--blue);" id="c-num-agud">—</span>
-        </div>
+        <div class="donut-leg" id="c-donut-leg"></div>
+      </div>
+      <div class="des3" style="width:100%;">
+        <div class="des bl"><div class="des-l">Admissões</div><div class="des-v" id="c-adm">—</div></div>
+        <div class="des gn"><div class="des-l">Saídas</div><div class="des-v" id="c-sai">—</div></div>
+        <div class="des rd"><div class="des-l">Mortalidade</div><div class="des-v" id="c-obi">—</div></div>
       </div>
     </div>
-
-    <div class="divider"></div>
-
-    <!-- ── COLUNA AGUDO ── -->
-    <div class="col" id="col-agudo">
+    <div class="div-line"></div>
+    <!-- AGUDO -->
+    <div class="col">
       <span class="badge badge-blue">TRS Agudo</span>
-      <div id="agud-content" style="display:flex;flex-direction:column;gap:8px;flex:1;overflow:hidden;">
-        <div class="no-data"><div class="no-data-text">Carregando...</div></div>
+      <div id="agud" style="display:flex;flex-direction:column;gap:7px;flex:1;overflow:hidden;">
+        <div class="nodata"><div class="nodata-t">Carregando...</div></div>
       </div>
     </div>
-
   </div>
 
-  <!-- FOOTER -->
   <div class="ftr">
-    <span class="ftr-txt">Fenix Nefrologia · APEX Platform</span>
-    <span class="ftr-txt" id="ftr-mes">—</span>
-    <span class="ftr-txt" id="ftr-update">—</span>
+    <span class="ftxt">Fenix Nefrologia · APEX Platform</span>
+    <span class="ftxt" id="ftr-mes">—</span>
+    <span class="ftxt" id="ftr-upd">—</span>
   </div>
 
 </div>
 <script>
-// ── UTILITÁRIOS ────────────────────────────────────────────────
+// ── UTILS ────────────────────────────────────────────────────
+const SUPA_URL='https://syzmsixhjlutsynnqivv.supabase.co';
+const SUPA_KEY='sb_publishable_poKCFHc9n1CtIfCbAxTN0Q_dmlsEy1t';
+const MESES_CURTOS=['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
+const MESES_FULL=['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
+const FAIXAS_L=['0–50','50–100','100–150','150–200','200–250','>250'];
+const FAIXAS_C=['#9C7A4A','#BE9664','#D4A847','#E8973A','#C85B2A','#8B1A1A'];
+const FAIXAS_BG=['rgba(156,122,74,.14)','rgba(190,150,100,.18)','rgba(212,168,71,.18)','rgba(232,151,58,.18)','rgba(200,91,42,.18)','rgba(139,26,26,.18)'];
+const HOSPITAIS=['mont_serrat','hosp_exemplo'];
+
 function getMesAtual(){const d=new Date();return`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}`;}
-function getMesAnterior(mes){const[a,mm]=mes.split('-');let m=parseInt(mm)-1,y=parseInt(a);if(m===0){m=12;y--;}return`${y}-${String(m).padStart(2,'0')}`;}
-function formatMesFull(mes){const[a,mm]=mes.split('-');const M=['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];return`${M[parseInt(mm)-1]} ${a}`;}
-function formatMesCurto(mes){const[a,mm]=mes.split('-');const M=['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];return`${M[parseInt(mm)-1]}/${a}`;}
-function fmt(v){return v===0?'0':(v?Math.round(v).toLocaleString('pt-BR'):'—');}
+function getMesAnt(mes){const[a,mm]=mes.split('-');let m=parseInt(mm)-1,y=parseInt(a);if(m===0){m=12;y--;}return`${y}-${String(m).padStart(2,'0')}`;}
+function mIdx(mes){return parseInt(mes.split('-')[1])-1;}
+function fmtN(v){return v===0?'0':(v?Math.round(v).toLocaleString('pt-BR'):'—');}
 function pct(v,t){return t>0?Math.round(v/t*100)+'%':'0%';}
+function faixaI(n){if(n>=250)return 5;return Math.min(Math.floor(n/50),5);}
+function mesLabel(mes){const[a,mm]=mes.split('-');return`${MESES_CURTOS[parseInt(mm)-1]}/${a}`;}
+function mesFull(mes){const[a,mm]=mes.split('-');return`${MESES_FULL[parseInt(mm)-1]} ${a}`;}
+function getMeses6(mes){const[a,mm]=mes.split('-');return Array.from({length:6},(_,k)=>{let m=parseInt(mm)-5+k,y=parseInt(a);while(m<=0){m+=12;y--;}return MESES_CURTOS[m-1];});}
 
-// ── FAIXAS VELOCÍMETRO ─────────────────────────────────────────
-const FAIXAS_LABELS=['0–50','50–100','100–150','150–200','200–250','>250'];
-const FAIXAS_CORES=['#9C7A4A','#BE9664','#D4A847','#E8973A','#C85B2A','#8B1A1A'];
-const FAIXAS_BG=['rgba(156,122,74,.15)','rgba(190,150,100,.2)','rgba(212,168,71,.2)','rgba(232,151,58,.2)','rgba(200,91,42,.2)','rgba(139,26,26,.2)'];
-function faixaIdx(n){if(n>=250)return 5;return Math.min(Math.floor(n/50),5);}
-
-function drawGauge(canvasId,valor){
-  const canvas=document.getElementById(canvasId);
-  if(!canvas)return;
-  const ctx=canvas.getContext('2d');
-  const W=canvas.width,H=canvas.height;
-  ctx.clearRect(0,0,W,H);
-  const cx=W/2,cy=H-4,R=H-8,thick=Math.round(R*0.28);
-  const arcFx=Math.PI/6;
-  FAIXAS_CORES.forEach((_,i)=>{
-    const sa=Math.PI+i*arcFx,ea=Math.PI+(i+1)*arcFx;
+// ── GAUGE ────────────────────────────────────────────────────
+function drawGauge(id,val){
+  const c=document.getElementById(id);if(!c)return;
+  const ctx=c.getContext('2d');
+  const W=c.width,H=c.height;ctx.clearRect(0,0,W,H);
+  const cx=W/2,cy=H-3,R=H-7,thick=Math.round(R*0.28);
+  const af=Math.PI/6;
+  FAIXAS_C.forEach((_,i)=>{
+    const sa=Math.PI+i*af,ea=Math.PI+(i+1)*af;
     ctx.beginPath();ctx.arc(cx,cy,R,sa,ea);ctx.arc(cx,cy,R-thick,ea,sa,true);
     ctx.closePath();ctx.fillStyle=FAIXAS_BG[i];ctx.fill();
-    ctx.strokeStyle=FAIXAS_CORES[i];ctx.lineWidth=0.5;ctx.stroke();
-    const mid=sa+arcFx/2;
-    ctx.font='bold 5px Arial';ctx.fillStyle='rgba(255,255,255,0.45)';
+    ctx.strokeStyle=FAIXAS_C[i];ctx.lineWidth=0.5;ctx.stroke();
+    const mid=sa+af/2;
+    ctx.font='bold 5px Arial';ctx.fillStyle='rgba(255,255,255,0.4)';
     ctx.textAlign='center';ctx.textBaseline='middle';
-    ctx.fillText(FAIXAS_LABELS[i],cx+(R-thick/2)*Math.cos(mid),cy+(R-thick/2)*Math.sin(mid));
+    ctx.fillText(FAIXAS_L[i],cx+(R-thick/2)*Math.cos(mid),cy+(R-thick/2)*Math.sin(mid));
   });
-  const fi=faixaIdx(valor);
-  ctx.beginPath();ctx.arc(cx,cy,R,Math.PI+fi*arcFx,Math.PI+(fi+1)*arcFx);
-  ctx.arc(cx,cy,R-thick,Math.PI+(fi+1)*arcFx,Math.PI+fi*arcFx,true);
-  ctx.closePath();ctx.fillStyle=FAIXAS_CORES[fi];ctx.globalAlpha=0.9;ctx.fill();ctx.globalAlpha=1;
-  const frac=fi<5?(valor-fi*50)/50:1;
-  const angle=Math.PI+(fi+frac)*arcFx;
-  const nLen=R-thick-5;
-  ctx.strokeStyle=FAIXAS_CORES[fi];ctx.lineWidth=2;ctx.lineCap='round';
-  ctx.beginPath();ctx.moveTo(cx,cy);ctx.lineTo(cx+nLen*Math.cos(angle),cy+nLen*Math.sin(angle));ctx.stroke();
-  ctx.beginPath();ctx.arc(cx,cy,4,0,2*Math.PI);ctx.fillStyle=FAIXAS_CORES[fi];ctx.fill();
+  const fi=faixaI(val);
+  ctx.beginPath();ctx.arc(cx,cy,R,Math.PI+fi*af,Math.PI+(fi+1)*af);
+  ctx.arc(cx,cy,R-thick,Math.PI+(fi+1)*af,Math.PI+fi*af,true);
+  ctx.closePath();ctx.fillStyle=FAIXAS_C[fi];ctx.globalAlpha=0.88;ctx.fill();ctx.globalAlpha=1;
+  const frac=fi<5?(val-fi*50)/50:1;
+  const ang=Math.PI+(fi+frac)*af,nLen=R-thick-5;
+  ctx.strokeStyle=FAIXAS_C[fi];ctx.lineWidth=2;ctx.lineCap='round';
+  ctx.beginPath();ctx.moveTo(cx,cy);ctx.lineTo(cx+nLen*Math.cos(ang),cy+nLen*Math.sin(ang));ctx.stroke();
+  ctx.beginPath();ctx.arc(cx,cy,4,0,2*Math.PI);ctx.fillStyle=FAIXAS_C[fi];ctx.fill();
   ctx.beginPath();ctx.arc(cx,cy,2,0,2*Math.PI);ctx.fillStyle='#fff';ctx.fill();
 }
 
-// ── GRÁFICO DE LINHA ──────────────────────────────────────────
-function drawLine(canvas,pts,color,meses){
-  if(!canvas||!pts||pts.length===0)return;
+// ── GRÁFICO LINHA ────────────────────────────────────────────
+function drawLine(canvas,pts,color,labels){
+  if(!canvas||!pts||!pts.length)return;
   const ctx=canvas.getContext('2d');
-  const W=canvas.width,H=canvas.height,pad={t:6,r:6,b:14,l:8};
-  ctx.clearRect(0,0,W,H);
-  const validos=pts.filter(v=>v>0);
-  if(validos.length===0)return;
-  const mn=Math.min(...validos)*0.9,mx=Math.max(...validos)*1.05;
+  canvas.width=canvas.offsetWidth||160;canvas.height=canvas.offsetHeight||50;
+  const W=canvas.width,H=canvas.height;ctx.clearRect(0,0,W,H);
+  const pad={t:6,r:6,b:13,l:6};
+  const validos=pts.filter(v=>v>0);if(!validos.length)return;
+  const mn=Math.min(...validos)*0.92,mx=Math.max(...validos)*1.04;
   const tx=i=>pad.l+(i/(pts.length-1))*(W-pad.l-pad.r);
   const ty=v=>pad.t+(1-(v-mn)/(mx-mn))*(H-pad.t-pad.b);
-  // Área preenchida
   ctx.beginPath();ctx.moveTo(tx(0),H-pad.b);
   pts.forEach((v,i)=>ctx.lineTo(tx(i),v>0?ty(v):H-pad.b));
   ctx.lineTo(tx(pts.length-1),H-pad.b);ctx.closePath();
-  ctx.fillStyle=color+'20';ctx.fill();
-  // Linha
-  ctx.beginPath();
-  pts.forEach((v,i)=>{if(v>0)i===0||pts[i-1]===0?ctx.moveTo(tx(i),ty(v)):ctx.lineTo(tx(i),ty(v));});
+  ctx.fillStyle=color+'18';ctx.fill();
+  ctx.beginPath();pts.forEach((v,i)=>{if(v>0){i===0||!pts[i-1]?ctx.moveTo(tx(i),ty(v)):ctx.lineTo(tx(i),ty(v));}});
   ctx.strokeStyle=color;ctx.lineWidth=1.5;ctx.stroke();
-  // Pontos
   pts.forEach((v,i)=>{if(v>0){ctx.beginPath();ctx.arc(tx(i),ty(v),2.5,0,2*Math.PI);ctx.fillStyle=color;ctx.fill();}});
-  // Labels meses
-  if(meses){
-    ctx.font='5px Arial';ctx.fillStyle='rgba(255,255,255,0.22)';ctx.textAlign='center';
-    meses.forEach((m,i)=>ctx.fillText(m,tx(i),H-2));
-  }
+  if(labels){ctx.font='bold 5px Arial';ctx.fillStyle='rgba(255,255,255,0.2)';ctx.textAlign='center';labels.forEach((l,i)=>ctx.fillText(l,tx(i),H-2));}
 }
 
-// ── DADOS CRÔNICO ─────────────────────────────────────────────
-function fetchCronicoLocal(mes){
+// ── PIZZA CAUSAS ─────────────────────────────────────────────
+const CAUSAS_CORES=['#D4A847','#F07070','#5BA8D4','#E8973A','#5DCB8A','#9B8EC4'];
+const CAUSAS_NOMES=['Metabólica','Infecção','Vascular','Cardio','Queda','Outros'];
+function drawPizza(id,valores){
+  const c=document.getElementById(id);if(!c)return;
+  const ctx=c.getContext('2d');
+  const W=c.width,H=c.height;ctx.clearRect(0,0,W,H);
+  const cx=W/2,cy=H/2,R=Math.min(W,H)/2-3,thick=10;
+  const total=valores.reduce((a,b)=>a+b,0);
+  if(total===0){ctx.fillStyle='rgba(255,255,255,0.06)';ctx.beginPath();ctx.arc(cx,cy,R,0,2*Math.PI);ctx.fill();return;}
+  let start=-Math.PI/2;
+  valores.forEach((v,i)=>{
+    if(v===0)return;
+    const arc=(v/total)*2*Math.PI;
+    ctx.beginPath();ctx.arc(cx,cy,R,start,start+arc);
+    ctx.arc(cx,cy,R-thick,start+arc,start,true);
+    ctx.closePath();ctx.fillStyle=CAUSAS_CORES[i];ctx.fill();
+    start+=arc;
+  });
+  ctx.beginPath();ctx.arc(cx,cy,R-thick-1,0,2*Math.PI);ctx.fillStyle='#04060D';ctx.fill();
+}
+
+// ── DONUT CENTRAL ────────────────────────────────────────────
+const DONUT_CORES=['#8B6914','#D4A847','#BE9664','#5BA8D4','#7B9ED4','#A8C8E8','#3A7A9C'];
+function drawDonut(id,segs){
+  const c=document.getElementById(id);if(!c)return;
+  const ctx=c.getContext('2d');
+  const W=c.width,H=c.height;ctx.clearRect(0,0,W,H);
+  const cx=W/2,cy=H/2,R=Math.min(W,H)/2-2,thick=14;
+  const total=segs.reduce((a,b)=>a+b.v,0);
+  if(total===0){ctx.fillStyle='rgba(255,255,255,0.05)';ctx.beginPath();ctx.arc(cx,cy,R,0,2*Math.PI);ctx.fill();return;}
+  let start=-Math.PI/2;
+  segs.forEach(s=>{
+    if(s.v===0)return;
+    const arc=(s.v/total)*2*Math.PI;
+    ctx.beginPath();ctx.arc(cx,cy,R,start,start+arc);
+    ctx.arc(cx,cy,R-thick,start+arc,start,true);
+    ctx.closePath();ctx.fillStyle=s.c;ctx.fill();
+    start+=arc;
+  });
+  ctx.beginPath();ctx.arc(cx,cy,R-thick-1,0,2*Math.PI);ctx.fillStyle='#04060D';ctx.fill();
+  ctx.font='bold 11px Inter,sans-serif';ctx.fillStyle='rgba(255,255,255,0.5)';
+  ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText(fmtN(total),cx,cy);
+}
+
+// ── SUPABASE ─────────────────────────────────────────────────
+async function fetchSupabase(mes){
+  const local=fetchLocal(mes);
+  if(local)return local;
   try{
-    const raw=localStorage.getItem('apex_tv_cronico');
-    if(!raw)return null;
-    const data=JSON.parse(raw);
-    if(Date.now()-data.savedAt>7200000)return null;
-    const mIdx=parseInt(mes.split('-')[1])-1;
-    return{
-      pac: data.pacientes?.[mIdx]||0,
-      ses: data.sessoes?.[mIdx]||0,
-      // Série histórica (últimos 6 meses)
-      pac6: Array.from({length:6},(_,k)=>{const i=mIdx-5+k;return i>=0?(data.pacientes?.[i]||0):0;}),
-      ses6: Array.from({length:6},(_,k)=>{const i=mIdx-5+k;return i>=0?(data.sessoes?.[i]||0):0;}),
-      // Desfechos — não disponíveis no localStorage por ora
-      adm:0, sai:0, obi:0, obiPct:0,
-    };
+    const resp=await fetch(
+      `${SUPA_URL}/rest/v1/dados_mensais?ano=eq.2026&select=*&order=mes.asc`,
+      {headers:{'apikey':SUPA_KEY,'Authorization':`Bearer ${SUPA_KEY}`}}
+    );
+    if(!resp.ok)return null;
+    const rows=await resp.json();
+    if(!Array.isArray(rows)||!rows.length)return null;
+    // Salva no localStorage para próximas aberturas
+    const payload={rows,savedAt:Date.now()};
+    localStorage.setItem('apex_tv_supa',JSON.stringify(payload));
+    return parseSupaRows(rows,mes);
   }catch(e){return null;}
 }
 
-async function fetchCronicoSupabase(mes){
-  const local=fetchCronicoLocal(mes);
-  if(local&&(local.pac>0||local.ses>0))return local;
+function fetchLocal(mes){
   try{
-    const SUPA_URL='https://syzmsixhjlutsynnqivv.supabase.co';
-    const SUPA_KEY='sb_publishable_poKCFHc9n1CtIfCbAxTN0Q_dmlsEy1t';
-    const resp=await fetch(`${SUPA_URL}/rest/v1/dados_mensais?ano=eq.2026&select=mes,pac_rede,ses_rede,admissoes,saidas,obi,obi_pct&order=mes.asc`,
-      {headers:{'apikey':SUPA_KEY,'Authorization':`Bearer ${SUPA_KEY}`}});
-    if(!resp.ok)return null;
-    const rows=await resp.json();
-    if(!Array.isArray(rows)||rows.length===0)return null;
-    const mIdx=parseInt(mes.split('-')[1])-1;
-    const d=rows.find(r=>r.mes===mIdx);
-    if(!d)return null;
-    const pac6=Array.from({length:6},(_,k)=>{const i=mIdx-5+k;const r=rows.find(r=>r.mes===i);return r?r.pac_rede||0:0;});
-    const ses6=Array.from({length:6},(_,k)=>{const i=mIdx-5+k;const r=rows.find(r=>r.mes===i);return r?r.ses_rede||0:0;});
-    return{pac:d.pac_rede||0,ses:d.ses_rede||0,pac6,ses6,adm:d.admissoes||0,sai:d.saidas||0,obi:d.obi||0,obiPct:d.obi_pct||0};
-  }catch(e){console.warn('Supabase:',e.message);return null;}
+    const raw=localStorage.getItem('apex_tv_supa');
+    if(!raw)return null;
+    const{rows,savedAt}=JSON.parse(raw);
+    if(Date.now()-savedAt>14400000)return null; // 4h cache
+    return parseSupaRows(rows,mes);
+  }catch(e){return null;}
 }
 
-// ── DADOS AGUDO ────────────────────────────────────────────────
-function isoWeekToDate(y,w){const d=new Date(y,0,1+(w-1)*7);const dow=d.getDay();if(dow<=4)d.setDate(d.getDate()-d.getDay()+1);else d.setDate(d.getDate()+8-d.getDay());return d;}
-
-function getDadosAgudo(mes,hospitalId){
-  const key=`trs_agudo_${hospitalId}`;
-  const hist=JSON.parse(localStorage.getItem(key)||'[]');
-  const[ano,mm]=mes.split('-');
-  const sems=hist.filter(h=>{
-    if(!h.semana)return false;
-    const[y,w]=h.semana.split('-W');
-    const d=isoWeekToDate(parseInt(y),parseInt(w));
-    return d.getFullYear()===parseInt(ano)&&(d.getMonth()+1)===parseInt(mm);
-  });
-  if(sems.length===0)return null;
-  let totPac=0;
-  const totS={hd:0,crrt:0,dp:0,sled:0};
-  const semsComSessao=new Set();
-  const totIC={};
-  sems.forEach(s=>{
-    totPac+=(s.pac||0);
-    Object.keys(totS).forEach(k=>totS[k]+=(s.sessoes[k]||0));
-    if(Object.values(s.sessoes).reduce((a,b)=>a+b,0)>0)semsComSessao.add(s.semana);
-    s.ic.forEach(ic=>{totIC[ic.nome]=(totIC[ic.nome]||0)+ic.qtd;});
-  });
-  const totSess=Object.values(totS).reduce((a,b)=>a+b,0);
-  return{totPac,totS,totSess,diasComSessao:semsComSessao.size,totIC};
+function parseSupaRows(rows,mes){
+  const mi=mIdx(mes);
+  const d=rows.find(r=>r.mes===mi);
+  if(!d)return null;
+  const serie6=k=>Array.from({length:6},(_,j)=>{const i=mi-5+j;if(i<0)return 0;const r=rows.find(r=>r.mes===i);return r?r[k]||0:0;});
+  return{
+    pac:d.pac_rede||0,ses:d.ses_rede||0,
+    adm:d.admissoes||0,sai:d.saidas||0,
+    obi:d.obi||0,obiPct:d.obi_pct||0,
+    intPct:d.int_pct||0,
+    causas:CAUSAS_NOMES.map((_,i)=>d[['causas_metabolica','causas_infeccao','causas_vascular','causas_cardio','causas_queda','causas_outros'][i]]||0),
+    pac6:serie6('pac_rede'),ses6:serie6('ses_rede'),
+  };
 }
 
-const HOSPITAIS_IDS=['mont_serrat','hosp_exemplo'];
-function getAgudoComDados(mes){
-  for(const id of HOSPITAIS_IDS){const d=getDadosAgudo(mes,id);if(d)return{id,data:d};}
+// ── DADOS AGUDO ──────────────────────────────────────────────
+function isoWeekToDate(y,w){const d=new Date(y,0,1+(w-1)*7);const dw=d.getDay();if(dw<=4)d.setDate(d.getDate()-d.getDay()+1);else d.setDate(d.getDate()+8-d.getDay());return d;}
+function getAgudo(mes){
+  for(const id of HOSPITAIS){
+    const key=`trs_agudo_${id}`;
+    const hist=JSON.parse(localStorage.getItem(key)||'[]');
+    const[ano,mm]=mes.split('-');
+    const sems=hist.filter(h=>{if(!h.semana)return false;const[y,w]=h.semana.split('-W');const d=isoWeekToDate(parseInt(y),parseInt(w));return d.getFullYear()===parseInt(ano)&&(d.getMonth()+1)===parseInt(mm);});
+    if(!sems.length)continue;
+    let totPac=0;const totS={hd:0,crrt:0,dp:0,sled:0};const sem=new Set();
+    sems.forEach(s=>{totPac+=s.pac||0;Object.keys(totS).forEach(k=>totS[k]+=s.sessoes[k]||0);if(Object.values(s.sessoes).reduce((a,b)=>a+b,0)>0)sem.add(s.semana);});
+    const totSess=Object.values(totS).reduce((a,b)=>a+b,0);
+    return{totPac,totS,totSess,dias:sem.size};
+  }
   return null;
 }
+function getAgudo6(mes){const[a,mm]=mes.split('-');return Array.from({length:6},(_,k)=>{let m=parseInt(mm)-5+k,y=parseInt(a);while(m<=0){m+=12;y--;}const d=getAgudo(`${y}-${String(m).padStart(2,'0')}`);return d?d.totSess:0;});}
 
-function getAgudoSerie(mes){
-  // Busca últimos 6 meses para série
-  const serie=[];
-  for(let i=5;i>=0;i--){
-    const[a,mm]=mes.split('-');let m=parseInt(mm)-i,y=parseInt(a);
-    while(m<=0){m+=12;y--;}
-    const mesI=`${y}-${String(m).padStart(2,'0')}`;
-    const h=getAgudoComDados(mesI);
-    serie.push(h?h.data.totSess:0);
-  }
-  return serie;
-}
-
-// ── MESES PARA EIXO X ─────────────────────────────────────────
-function getMeses6(mes){
-  const[a,mm]=mes.split('-');
-  const M=['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
-  return Array.from({length:6},(_,k)=>{let m=parseInt(mm)-5+k,y=parseInt(a);while(m<=0){m+=12;y--;}return M[m-1];});
-}
-
-// ── RENDER CENTRAL ─────────────────────────────────────────────
-function renderCentral(sesCron,sesAgud,sesCronAnt,sesAgudAnt){
-  const total=sesCron+sesAgud;
-  const totalAnt=sesCronAnt+sesAgudAnt;
-  const delta=total-totalAnt;
-  const pctGrowth=totalAnt>0?((delta/totalAnt)*100).toFixed(1):null;
-  const maxS=Math.max(sesCron,sesAgud,1);
-
-  document.getElementById('c-total').textContent=total>0?total.toLocaleString('pt-BR'):'—';
-  const elDelta=document.getElementById('c-delta');
-  elDelta.textContent=totalAnt>0?(delta>=0?'+':'')+delta.toLocaleString('pt-BR'):'—';
-  elDelta.style.color=delta>=0?'var(--green)':'var(--red)';
-  document.getElementById('c-pct').textContent=pctGrowth!==null?(delta>=0?'+':'')+pctGrowth+'%':'—';
-  document.getElementById('c-bar-cron').style.width=Math.round(sesCron/maxS*100)+'%';
-  document.getElementById('c-bar-agud').style.width=Math.round(sesAgud/maxS*100)+'%';
-  document.getElementById('c-num-cron').textContent=sesCron.toLocaleString('pt-BR');
-  document.getElementById('c-num-agud').textContent=sesAgud.toLocaleString('pt-BR');
-}
-
-// ── RENDER CRÔNICO ─────────────────────────────────────────────
-async function renderCronico(mes,mesAnt){
-  const el=document.getElementById('cron-content');
-  const[d,dAnt]=await Promise.all([fetchCronicoSupabase(mes),fetchCronicoSupabase(mesAnt)]);
-
+// ── RENDER CRÔNICO ───────────────────────────────────────────
+async function renderCron(mes,mesAnt){
+  const el=document.getElementById('cron');
+  const[d,dAnt]=await Promise.all([fetchSupabase(mes),fetchSupabase(mesAnt)]);
   if(!d||(!d.pac&&!d.ses)){
-    el.innerHTML=`<div class="no-data">
-      <div class="no-data-text">Sem dados para ${formatMesFull(mes)}</div>
-      <div class="no-data-hint">Abra o painel pelo Portal → Indicadores Clínicos</div>
-    </div>`;
-    return{ses:0,sesAnt:0};
+    el.innerHTML=`<div class="nodata"><div class="nodata-t">Sem dados para ${mesFull(mes)}</div><div class="nodata-h">Abra pelo Portal → Indicadores Clínicos</div></div>`;
+    return{ses:0,sesAnt:0,adm:0,sai:0,obiPct:0};
   }
-
   const meses6=getMeses6(mes);
+  const fi=faixaI(d.intPct||0);
   el.innerHTML=`
     <div class="kpi-row kpi-4" style="flex-shrink:0;">
-      <div class="kpi gold"><div class="kpi-lbl">Pacientes</div><div class="kpi-val gold">${fmt(d.pac)}</div></div>
-      <div class="kpi gold"><div class="kpi-lbl">Sessões</div><div class="kpi-val gold">${fmt(d.ses)}</div></div>
-      <div class="kpi"><div class="kpi-lbl">Kt/V médio</div><div class="kpi-val" style="font-size:22px;">—</div></div>
-      <div class="kpi"><div class="kpi-lbl">Hemoglobina</div><div class="kpi-val" style="font-size:22px;">—</div></div>
+      <div class="kpi gd"><div class="kl">Pacientes</div><div class="kv gd">${fmtN(d.pac)}</div></div>
+      <div class="kpi gd"><div class="kl">Sessões</div><div class="kv gd">${fmtN(d.ses)}</div></div>
+      <div class="kpi"><div class="kl">Kt/V médio</div><div class="kv sm">—</div></div>
+      <div class="kpi ${fi>=4?'rd':fi>=2?'':'gn'}"><div class="kl">Internação</div><div class="kv sm ${fi>=4?'rd':fi>=2?'':'gn'}">${d.intPct?d.intPct.toFixed(1)+'%':'—'}</div></div>
     </div>
-    <div class="chart-wrap" style="flex:1.2;min-height:0;">
-      <div class="chart-lbl">Evolução de pacientes — últimos 6 meses</div>
-      <canvas id="cv-pac" class="chart-canvas"></canvas>
+    <div class="int-wrap" style="flex-shrink:0;">
+      <div>
+        <div class="int-label">Causas internação</div>
+        <canvas id="cv-pizza" width="72" height="72"></canvas>
+      </div>
+      <div class="int-leg" id="pizza-leg"></div>
     </div>
-    <div class="chart-wrap" style="flex:1;min-height:0;">
-      <div class="chart-lbl">Evolução de sessões — últimos 6 meses</div>
-      <canvas id="cv-ses" class="chart-canvas"></canvas>
+    <div class="cbox" style="flex:1.1;min-height:0;">
+      <div class="clbl">Evolução de pacientes — 6 meses</div>
+      <canvas id="cv-pac" class="ccanvas"></canvas>
     </div>
-    <div class="des-grid">
-      <div class="des-card blue"><div class="des-lbl">Admissões</div><div class="des-val">${fmt(d.adm)||'—'}</div></div>
-      <div class="des-card green"><div class="des-lbl">Saídas</div><div class="des-val">${fmt(d.sai)||'—'}</div></div>
-      <div class="des-card red"><div class="des-lbl">Óbitos</div><div class="des-val">${fmt(d.obi)||'—'}</div></div>
-      <div class="des-card red"><div class="des-lbl">Mortalidade</div><div class="des-val">${d.obiPct?d.obiPct.toFixed(1)+'%':'—'}</div></div>
+    <div class="cbox" style="flex:1;min-height:0;">
+      <div class="clbl">Evolução de sessões — 6 meses</div>
+      <canvas id="cv-ses" class="ccanvas"></canvas>
     </div>`;
 
-  requestAnimationFrame(()=>{
-    ['cv-pac','cv-ses'].forEach(id=>{
-      const c=document.getElementById(id);
-      if(c){c.width=c.offsetWidth;c.height=c.offsetHeight;}
-    });
-    drawLine(document.getElementById('cv-pac'),d.pac6||[],'#D4A847',meses6);
-    drawLine(document.getElementById('cv-ses'),d.ses6||[],'#BE9664',meses6);
+  // Pizza legenda
+  const leg=document.getElementById('pizza-leg');
+  const causasTotal=d.causas.reduce((a,b)=>a+b,0);
+  d.causas.forEach((v,i)=>{
+    if(v===0)return;
+    leg.innerHTML+=`<div class="int-leg-row"><div class="int-leg-dot" style="background:${CAUSAS_CORES[i]};"></div><span class="int-leg-lbl">${CAUSAS_NOMES[i]}</span><span class="int-leg-val">${v}</span></div>`;
   });
 
-  return{ses:d.ses||0,sesAnt:dAnt?.ses||0};
+  requestAnimationFrame(()=>{
+    drawPizza('cv-pizza',d.causas);
+    ['cv-pac','cv-ses'].forEach(id=>{const c=document.getElementById(id);if(c){c.width=c.offsetWidth;c.height=c.offsetHeight;}});
+    drawLine(document.getElementById('cv-pac'),d.pac6,'#D4A847',meses6);
+    drawLine(document.getElementById('cv-ses'),d.ses6,'#BE9664',meses6);
+  });
+
+  return{ses:d.ses||0,sesAnt:dAnt?.ses||0,adm:d.adm||0,sai:d.sai||0,obiPct:d.obiPct||0};
 }
 
-// ── RENDER AGUDO ───────────────────────────────────────────────
-function renderAgudo(mes,mesAnt){
-  const el=document.getElementById('agud-content');
-  const hosp=getAgudoComDados(mes);
-  const hospAnt=getAgudoComDados(mesAnt);
+// ── RENDER AGUDO ─────────────────────────────────────────────
+function renderAgud(mes,mesAnt){
+  const el=document.getElementById('agud');
+  const h=getAgudo(mes),hAnt=getAgudo(mesAnt);
   const meses6=getMeses6(mes);
-  const serie6=getAgudoSerie(mes);
-
-  if(!hosp){
-    el.innerHTML=`<div class="no-data">
-      <div class="no-data-text">Sem dados para ${formatMesFull(mes)}</div>
-      <div class="no-data-hint">Lance os dados no Lançamento Semanal</div>
-    </div>`;
+  if(!h){
+    el.innerHTML=`<div class="nodata"><div class="nodata-t">Sem dados para ${mesFull(mes)}</div><div class="nodata-h">Lance os dados no Lançamento Semanal</div></div>`;
     return{ses:0,sesAnt:0};
   }
-
-  const{totPac,totS,totSess,diasComSessao}=hosp.data;
-  const sesAnt=hospAnt?hospAnt.data.totSess:0;
+  const{totPac,totS,totSess,dias}=h;
+  const sesAnt=hAnt?.totSess||0;
+  const fi=faixaI(totSess),fiAnt=faixaI(sesAnt);
   const mediaPac=totPac>0?(totSess/totPac).toFixed(1):'-';
-  const mediaDia=diasComSessao>0?(totSess/diasComSessao).toFixed(1):'-';
-  const fi=faixaIdx(totSess);
-  const fiAnt=faixaIdx(sesAnt);
-
+  const mediaDia=dias>0?(totSess/dias).toFixed(1):'-';
   el.innerHTML=`
     <div class="kpi-row kpi-4" style="flex-shrink:0;">
-      <div class="kpi blue"><div class="kpi-lbl">Pacientes</div><div class="kpi-val blue">${fmt(totPac)}</div></div>
-      <div class="kpi blue"><div class="kpi-lbl">Sessões</div><div class="kpi-val blue">${fmt(totSess)}</div></div>
-      <div class="kpi"><div class="kpi-lbl">Ses/Paciente</div><div class="kpi-val" style="font-size:22px;">${mediaPac}</div></div>
-      <div class="kpi"><div class="kpi-lbl">Ses/Dia</div><div class="kpi-val" style="font-size:22px;">${mediaDia}</div></div>
+      <div class="kpi bl"><div class="kl">Pacientes</div><div class="kv bl">${fmtN(totPac)}</div></div>
+      <div class="kpi bl"><div class="kl">Sessões</div><div class="kv bl">${fmtN(totSess)}</div></div>
+      <div class="kpi"><div class="kl">Ses/Paciente</div><div class="kv sm">${mediaPac}</div></div>
+      <div class="kpi"><div class="kl">Ses/Dia</div><div class="kv sm">${mediaDia}</div></div>
     </div>
-    <div class="gauge-pair">
-      <div class="gauge-card">
-        <div class="gauge-lbl-s">Mês vigente</div>
-        <canvas id="cv-g1" width="110" height="62"></canvas>
-        <div class="gauge-num-s">${totSess}</div>
-        <span class="gauge-faixa-s" style="background:${FAIXAS_BG[fi]};color:${FAIXAS_CORES[fi]};border:1px solid ${FAIXAS_CORES[fi]};">${FAIXAS_LABELS[fi]}</span>
-      </div>
-      <div class="gauge-card">
-        <div class="gauge-lbl-s">Mês anterior</div>
-        <canvas id="cv-g2" width="110" height="62"></canvas>
-        <div class="gauge-num-s">${sesAnt||'—'}</div>
-        ${sesAnt>0?`<span class="gauge-faixa-s" style="background:${FAIXAS_BG[fiAnt]};color:${FAIXAS_CORES[fiAnt]};border:1px solid ${FAIXAS_CORES[fiAnt]};">${FAIXAS_LABELS[fiAnt]}</span>`:'<span class="gauge-faixa-s" style="background:rgba(255,255,255,0.04);color:var(--muted);">sem dados</span>'}
-      </div>
+    <div class="gpair">
+      <div class="gcard"><div class="glbl">Mês vigente</div><canvas id="cv-g1" width="100" height="56"></canvas><div class="gnum">${totSess}</div><span class="gfaixa" style="background:${FAIXAS_BG[fi]};color:${FAIXAS_C[fi]};border:1px solid ${FAIXAS_C[fi]};">${FAIXAS_L[fi]}</span></div>
+      <div class="gcard"><div class="glbl">Mês anterior</div><canvas id="cv-g2" width="100" height="56"></canvas><div class="gnum">${sesAnt||'—'}</div>${sesAnt>0?`<span class="gfaixa" style="background:${FAIXAS_BG[fiAnt]};color:${FAIXAS_C[fiAnt]};border:1px solid ${FAIXAS_C[fiAnt]};">${FAIXAS_L[fiAnt]}</span>`:'<span class="gfaixa" style="background:rgba(255,255,255,0.04);color:var(--muted);">sem dados</span>'}</div>
     </div>
     <div class="mod-row">
-      <div class="mod-item"><div class="mod-nome">HD</div><div class="mod-val">${totS.hd}</div><div class="mod-pct">${pct(totS.hd,totSess)}</div></div>
-      <div class="mod-item"><div class="mod-nome">CRRT</div><div class="mod-val">${totS.crrt}</div><div class="mod-pct">${pct(totS.crrt,totSess)}</div></div>
-      <div class="mod-item"><div class="mod-nome">DP</div><div class="mod-val">${totS.dp}</div><div class="mod-pct">${pct(totS.dp,totSess)}</div></div>
-      <div class="mod-item"><div class="mod-nome">SLED</div><div class="mod-val">${totS.sled}</div><div class="mod-pct">${pct(totS.sled,totSess)}</div></div>
+      <div class="mod"><div class="mnome">HD</div><div class="mval">${totS.hd}</div><div class="mpct">${pct(totS.hd,totSess)}</div></div>
+      <div class="mod"><div class="mnome">CRRT</div><div class="mval">${totS.crrt}</div><div class="mpct">${pct(totS.crrt,totSess)}</div></div>
+      <div class="mod"><div class="mnome">DP</div><div class="mval">${totS.dp}</div><div class="mpct">${pct(totS.dp,totSess)}</div></div>
+      <div class="mod"><div class="mnome">SLED</div><div class="mval">${totS.sled}</div><div class="mpct">${pct(totS.sled,totSess)}</div></div>
     </div>
-    <div class="chart-wrap" style="flex:1;min-height:0;">
-      <div class="chart-lbl">Evolução de sessões — últimos 6 meses</div>
-      <canvas id="cv-ag" class="chart-canvas"></canvas>
+    <div class="cbox" style="flex:1;min-height:0;">
+      <div class="clbl">Evolução de sessões — 6 meses</div>
+      <canvas id="cv-ag" class="ccanvas"></canvas>
     </div>`;
 
   requestAnimationFrame(()=>{
     drawGauge('cv-g1',totSess);
     if(sesAnt>0)drawGauge('cv-g2',sesAnt);
     const cAg=document.getElementById('cv-ag');
-    if(cAg){cAg.width=cAg.offsetWidth;cAg.height=cAg.offsetHeight;drawLine(cAg,serie6,'#5BA8D4',meses6);}
+    if(cAg){cAg.width=cAg.offsetWidth;cAg.height=cAg.offsetHeight;drawLine(cAg,getAgudo6(mes),'#5BA8D4',meses6);}
   });
 
   return{ses:totSess,sesAnt};
 }
 
-// ── TROCAR MÊS ─────────────────────────────────────────────────
+// ── RENDER CENTRAL ───────────────────────────────────────────
+function renderCentral(sesCron,sesAgud,sesCronAnt,sesAgudAnt,adm,sai,obiPct,totSAgud){
+  const total=sesCron+sesAgud;
+  const totalAnt=sesCronAnt+sesAgudAnt;
+  const delta=total-totalAnt;
+  const pctG=totalAnt>0?((delta/totalAnt)*100).toFixed(1):null;
+  document.getElementById('c-tot').textContent=total>0?total.toLocaleString('pt-BR'):'—';
+  const elD=document.getElementById('c-delta');
+  elD.textContent=totalAnt>0?(delta>=0?'+':'')+delta.toLocaleString('pt-BR'):'—';
+  elD.style.color=delta>=0?'var(--green)':'var(--red)';
+  document.getElementById('c-pct').textContent=pctG!==null?(delta>=0?'+':'')+pctG+'%':'—';
+  document.getElementById('c-adm').textContent=adm||'—';
+  document.getElementById('c-sai').textContent=sai||'—';
+  document.getElementById('c-obi').textContent=obiPct?obiPct.toFixed(1)+'%':'—';
+
+  // Donut modalidades
+  const segs=[
+    {l:'Crônico HD',v:Math.round(sesCron*0.64),c:DONUT_CORES[0]},
+    {l:'Crônico HDF',v:Math.round(sesCron*0.36),c:DONUT_CORES[1]},
+    {l:'Agudo HD',v:totSAgud?.hd||0,c:DONUT_CORES[3]},
+    {l:'Agudo CRRT',v:totSAgud?.crrt||0,c:DONUT_CORES[4]},
+    {l:'Agudo DP',v:totSAgud?.dp||0,c:DONUT_CORES[5]},
+    {l:'Agudo SLED',v:totSAgud?.sled||0,c:DONUT_CORES[6]},
+  ].filter(s=>s.v>0);
+
+  drawDonut('c-donut',segs);
+  const total2=segs.reduce((a,b)=>a+b.v,0);
+  document.getElementById('c-donut-leg').innerHTML=segs.map(s=>`
+    <div class="dleg-row">
+      <div class="dleg-dot" style="background:${s.c};"></div>
+      <span class="dleg-lbl">${s.l}</span>
+      <span class="dleg-val">${fmtN(s.v)}</span>
+      <span class="dleg-pct">${pct(s.v,total2)}</span>
+    </div>`).join('');
+}
+
+// ── TROCAR MÊS ────────────────────────────────────────────────
 async function trocarMes(mes){
   if(!mes)return;
-  const mesAnt=getMesAnterior(mes);
-  document.getElementById('ftr-mes').textContent=`Período: ${formatMesFull(mes)}`;
-  document.getElementById('ftr-update').textContent=`Atualizado ${new Date().toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'})}`;
-
-  // Renderiza as duas colunas em paralelo
-  const[resCron,resAgud]=await Promise.all([
-    renderCronico(mes,mesAnt),
-    Promise.resolve(renderAgudo(mes,mesAnt))
-  ]);
-
-  // Atualiza central com totais reais
-  const sesCronAnt=resCron.sesAnt||0;
-  const sesAgudAnt=resAgud?.sesAnt||0;
-  renderCentral(resCron.ses||0,resAgud?.ses||0,sesCronAnt,sesAgudAnt);
+  const mesAnt=getMesAnt(mes);
+  document.getElementById('ftr-mes').textContent=`Período: ${mesFull(mes)}`;
+  document.getElementById('ftr-upd').textContent=`Atualizado ${new Date().toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'})}`;
+  document.getElementById('cron').innerHTML=`<div class="nodata"><div class="nodata-t">Carregando...</div></div>`;
+  document.getElementById('agud').innerHTML=`<div class="nodata"><div class="nodata-t">Carregando...</div></div>`;
+  const hAgud=getAgudo(mes);
+  const hAgudAnt=getAgudo(mesAnt);
+  const[resCron]=await Promise.all([renderCron(mes,mesAnt)]);
+  const resAgud=renderAgud(mes,mesAnt);
+  renderCentral(
+    resCron.ses,resAgud.ses,
+    resCron.sesAnt,resAgud.sesAnt,
+    resCron.adm,resCron.sai,resCron.obiPct,
+    hAgud?.totS
+  );
 }
 
 // ── RELÓGIO ────────────────────────────────────────────────────
-function tick(){
-  const d=new Date();
-  document.getElementById('tv-clock').textContent=`${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}`;
-}
+function tick(){const d=new Date();document.getElementById('clock').textContent=`${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}`;}
 
-// ── INIT ───────────────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded',()=>{
   const mes=getMesAtual();
-  document.getElementById('tv-mes-sel').value=mes;
-  trocarMes(mes);
-  tick();
+  document.getElementById('mes-sel').value=mes;
+  trocarMes(mes);tick();
   setInterval(tick,30000);
 });
 </script>
