@@ -531,6 +531,7 @@ async function fazerLogin(){
     const data=await resp.json();
     if(data.error||!data.access_token){err.textContent='E-mail ou senha incorretos.';btn.disabled=false;btn.textContent='Entrar';return;}
     sessionStorage.setItem('apex_gestor_logado','1');
+    sessionStorage.setItem('apex_access_token',data.access_token);
     fecharLogin();
     abrirIndicadores();
   }catch(e){err.textContent='Erro de conexão.';btn.disabled=false;btn.textContent='Entrar';}

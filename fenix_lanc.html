@@ -355,7 +355,20 @@ const NOMES={rl:'RL — República do Líbano',santos:'Santos — Praiamar',tatu
 const NOME=NOMES[UNIDADE]||UNIDADE.toUpperCase();
 const U=UNIDADE; // sufixo das colunas
 
-// Mapeamento campo → coluna Supabase
+// Pega token de autenticação do sessionStorage (salvo pelo portal no login)
+function getToken(){
+  return sessionStorage.getItem('apex_access_token')||SUPA_KEY;
+}
+
+function getHeaders(extra={}){
+  const token=getToken();
+  return{
+    'apikey':SUPA_KEY,
+    'Authorization':`Bearer ${token}`,
+    'Content-Type':'application/json',
+    ...extra
+  };
+}
 const CAMPOS={
   'f-pac':   `pac_${U}`,
   'f-ses':   `ses_${U}`,
@@ -423,7 +436,7 @@ async function carregarDados(){
   try{
     const resp=await fetch(
       `${SUPA_URL}/rest/v1/dados_mensais?ano=eq.${m.ano}&mes=eq.${m.mes}&select=${cols}`,
-      {headers:{'apikey':SUPA_KEY,'Authorization':`Bearer ${SUPA_KEY}`}}
+      {headers:getHeaders()}
     );
     const rows=await resp.json();
     if(Array.isArray(rows)&&rows.length>0){
@@ -474,12 +487,7 @@ async function salvar(){
   try{
     const resp=await fetch(`${SUPA_URL}/rest/v1/dados_mensais`,{
       method:'POST',
-      headers:{
-        'apikey':SUPA_KEY,
-        'Authorization':`Bearer ${SUPA_KEY}`,
-        'Content-Type':'application/json',
-        'Prefer':'resolution=merge-duplicates',
-      },
+      headers:getHeaders({'Prefer':'resolution=merge-duplicates'}),
       body:JSON.stringify(payload),
     });
 
