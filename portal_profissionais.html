@@ -376,7 +376,7 @@ nav{background:var(--surface);border-bottom:1px solid var(--border);height:56px;
     <h2 class="ind-home-title">O que deseja <strong>acessar?</strong></h2>
     <div class="cron-mid-grid">
 
-      <div class="trs-card cron" onclick="abrirDashboardCron()">
+      <div class="trs-card cron" id="card-cron-dashboard" onclick="abrirDashboardCron()">
         <div class="trs-card-icon">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="2" stroke="#B99454" stroke-width="1.4"/><line x1="3" y1="9" x2="21" y2="9" stroke="#B99454" stroke-width="1.2"/><rect x="6" y="13" width="3" height="5" rx="1" fill="rgba(185,148,84,0.25)" stroke="#B99454" stroke-width="0.8"/><rect x="11" y="11" width="3" height="7" rx="1" fill="rgba(185,148,84,0.15)" stroke="#B99454" stroke-width="0.8"/><rect x="16" y="14" width="3" height="4" rx="1" fill="rgba(185,148,84,0.2)" stroke="#B99454" stroke-width="0.8"/></svg>
         </div>
@@ -389,7 +389,7 @@ nav{background:var(--surface);border-bottom:1px solid var(--border);height:56px;
         </div>
       </div>
 
-      <div class="trs-card cron" onclick="abrirSelecaoUnidade()">
+      <div class="trs-card cron" id="card-cron-lancamento" onclick="abrirSelecaoUnidade()">
         <div class="trs-card-icon">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7" stroke="#B99454" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z" stroke="#B99454" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </div>
@@ -518,6 +518,9 @@ function abrirLogin(){document.getElementById('login-modal').classList.add('show
 function fecharLogin(){document.getElementById('login-modal').classList.remove('show');document.getElementById('login-err').textContent='';}
 function fecharLoginFora(e){if(e.target===document.getElementById('login-modal'))fecharLogin();}
 
+// Perfil do usuário logado
+let PERFIL = null;
+
 async function fazerLogin(){
   const email=document.getElementById('login-email').value.trim();
   const senha=document.getElementById('login-senha').value;
@@ -527,17 +530,95 @@ async function fazerLogin(){
   if(!email||!senha){err.textContent='Preencha e-mail e senha.';return;}
   btn.disabled=true;btn.textContent='Entrando...';
   try{
+    // 1. Autentica
     const resp=await fetch(`${SUPA_URL}/auth/v1/token?grant_type=password`,{method:'POST',headers:{'Content-Type':'application/json','apikey':SUPA_KEY},body:JSON.stringify({email,password:senha})});
     const data=await resp.json();
     if(data.error||!data.access_token){err.textContent='E-mail ou senha incorretos.';btn.disabled=false;btn.textContent='Entrar';return;}
     sessionStorage.setItem('apex_gestor_logado','1');
     sessionStorage.setItem('apex_access_token',data.access_token);
+
+    // 2. Busca perfil do usuário
+    const respPerfil=await fetch(`${SUPA_URL}/rest/v1/perfis?select=nome,unidade,papel`,{
+      headers:{'apikey':SUPA_KEY,'Authorization':`Bearer ${data.access_token}`}
+    });
+    const perfis=await respPerfil.json();
+    if(!Array.isArray(perfis)||perfis.length===0){
+      err.textContent='Usuário sem perfil cadastrado. Fale com o administrador.';
+      btn.disabled=false;btn.textContent='Entrar';
+      return;
+    }
+    PERFIL=perfis[0];
+    sessionStorage.setItem('apex_perfil',JSON.stringify(PERFIL));
+
     fecharLogin();
     abrirIndicadores();
   }catch(e){err.textContent='Erro de conexão.';btn.disabled=false;btn.textContent='Entrar';}
 }
 
-function abrirIndicadores(){document.getElementById('ind-overlay').classList.add('show');voltarHome();}
+function abrirIndicadores(){
+  // Recupera perfil (pode vir do sessionStorage se recarregou)
+  if(!PERFIL){
+    try{PERFIL=JSON.parse(sessionStorage.getItem('apex_perfil'));}catch(e){}
+  }
+
+  const overlay=document.getElementById('ind-overlay');
+  overlay.classList.add('show');
+
+  // Aplica permissões conforme papel
+  if(PERFIL&&PERFIL.papel==='operador'){
+    aplicarPermissoesOperador();
+  } else {
+    aplicarPermissoesGestor();
+  }
+
+  voltarHome();
+}
+
+function aplicarPermissoesGestor(){
+  // Gestor vê tudo — mostra todos os cards
+  document.querySelectorAll('.trs-card').forEach(c=>c.style.display='');
+  document.querySelectorAll('.unit-card:not(.disabled)').forEach(c=>c.style.display='');
+  // Atualiza título com nome
+  if(PERFIL)document.getElementById('ind-nav-title').textContent=`Indicadores Clínicos — ${PERFIL.nome}`;
+}
+
+function aplicarPermissoesOperador(){
+  const unidade=PERFIL.unidade;
+  const nomes={rl:'RL — República do Líbano',santos:'Santos — Praiamar',tatuape:'Tatuapé'};
+
+  // Esconde cards que operador não deve ver na home
+  document.querySelectorAll('.trs-card.agud').forEach(c=>c.style.display='none');
+  document.querySelectorAll('.trs-card.tv').forEach(c=>c.style.display='none');
+
+  // Card TRS Crônico na home vai para tela intermediária (Dashboard + Lançamento)
+  // mas o lançamento vai direto para a unidade do operador
+  const cardCron=document.querySelector('.trs-card.cron');
+  if(cardCron){
+    cardCron.setAttribute('onclick',`abrirCronico()`);
+  }
+
+  // Na tela cron-mid: dashboard disponível, lançamento vai direto para a unidade
+  const cardDash=document.getElementById('card-cron-dashboard');
+  if(cardDash)cardDash.style.display='';
+  const cardLanc=document.getElementById('card-cron-lancamento');
+  if(cardLanc)cardLanc.setAttribute('onclick',`abrirLancamentoDireto('${unidade}')`);
+
+  // Atualiza título
+  document.getElementById('ind-nav-title').textContent=`Lançamento — ${PERFIL.nome}`;
+}
+
+function abrirLancamentoDireto(unidade){
+  // Operador vai direto para o lançamento sem passar pela tela intermediária
+  document.getElementById('ind-home').classList.remove('active');
+  document.getElementById('ind-content').classList.add('active');
+  document.getElementById('btn-voltar').classList.remove('visible'); // operador não volta
+  const nomes={rl:'RL',santos:'Santos',tatuape:'Tatuapé'};
+  document.getElementById('ind-nav-title').textContent=`Lançamento — ${nomes[unidade]}`;
+  document.querySelectorAll('.ind-iframe').forEach(f=>f.classList.remove('active'));
+  const iframe=document.getElementById(`iframe-lanc-${unidade}`);
+  iframe.classList.add('active');
+  if(!iframe.src||iframe.src===window.location.href)iframe.src=`fenix_lanc.html?unidade=${unidade}`;
+}
 
 function voltarHome(){
   document.getElementById('ind-home').classList.add('active');
@@ -614,10 +695,27 @@ function abrirAgudo(){
 }
 
 function sairIndicadores(){
+  PERFIL=null;
   sessionStorage.removeItem('apex_gestor_logado');
+  sessionStorage.removeItem('apex_access_token');
+  sessionStorage.removeItem('apex_perfil');
   document.getElementById('ind-overlay').classList.remove('show');
   document.getElementById('cron-mid').classList.remove('active');
   document.getElementById('unit-sel').classList.remove('active');
+  // Restaura cards ao estado original para o próximo login
+  document.querySelectorAll('.trs-card').forEach(c=>{c.style.display='';});
+  document.querySelectorAll('.unit-card:not(.disabled)').forEach(c=>{c.style.display='';});
+  // Restaura onclick dos cards crônico
+  const cardCron=document.querySelector('.trs-card.cron');
+  if(cardCron){
+    cardCron.querySelector('.trs-card-title').textContent='Gestão TRS Crônico';
+    cardCron.querySelector('.trs-card-desc').textContent='Dashboard mensal e lançamento de dados das unidades RL, Santos e Tatuapé.';
+    cardCron.setAttribute('onclick','abrirCronico()');
+  }
+  const cardDash=document.getElementById('card-cron-dashboard');
+  if(cardDash){cardDash.style.display='';}
+  const cardLanc=document.getElementById('card-cron-lancamento');
+  if(cardLanc){cardLanc.setAttribute('onclick','abrirSelecaoUnidade()');}
   ['iframe-dashboard','iframe-admin','iframe-agudo','iframe-tv','iframe-lanc-rl','iframe-lanc-santos','iframe-lanc-tatuape'].forEach(id=>{
     const el=document.getElementById(id);
     if(el)el.src='';
