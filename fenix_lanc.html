@@ -160,9 +160,54 @@ body{font-family:'Space Grotesk',system-ui,sans-serif;color:var(--text-primary);
         <span class="inp-hint">Óbitos no mês</span>
       </div>
       <div class="campo">
+        <label class="campo-lbl">% Mortalidade <span class="campo-unit">%</span></label>
+        <input type="number" class="inp" id="f-obi-pct" placeholder="0.0" min="0" max="100" step="0.1" oninput="markChanged(this)"/>
+        <span class="inp-hint">Taxa de mortalidade</span>
+      </div>
+      <div class="campo">
         <label class="campo-lbl">Internação <span class="campo-unit">%</span></label>
         <input type="number" class="inp" id="f-int" placeholder="0.0" min="0" max="100" step="0.1" oninput="markChanged(this)"/>
         <span class="inp-hint">Taxa de internação</span>
+      </div>
+      <div class="campo">
+        <label class="campo-lbl">Faltas</label>
+        <input type="number" class="inp" id="f-fal" placeholder="0" min="0" oninput="markChanged(this)"/>
+        <span class="inp-hint">Nº de faltas no mês</span>
+      </div>
+      <div class="campo">
+        <label class="campo-lbl">% Faltas <span class="campo-unit">%</span></label>
+        <input type="number" class="inp" id="f-fal-pct" placeholder="0.0" min="0" max="100" step="0.1" oninput="markChanged(this)"/>
+        <span class="inp-hint">Taxa de faltas</span>
+      </div>
+      <div class="campo">
+        <label class="campo-lbl">Inscrição Tx Renal <span class="campo-unit">%</span></label>
+        <input type="number" class="inp" id="f-tx" placeholder="0" min="0" max="100" oninput="markChanged(this)"/>
+        <span class="inp-hint">Meta ≥55%</span>
+      </div>
+      <div class="campo">
+        <label class="campo-lbl">Evento Adverso Grave</label>
+        <input type="number" class="inp" id="f-eag" placeholder="0" min="0" oninput="markChanged(this)"/>
+        <span class="inp-hint">Meta: zero</span>
+      </div>
+      <div class="campo">
+        <label class="campo-lbl">Risco de Suicídio</label>
+        <input type="number" class="inp" id="f-sui" placeholder="0" min="0" oninput="markChanged(this)"/>
+        <span class="inp-hint">Meta: zero</span>
+      </div>
+      <div class="campo">
+        <label class="campo-lbl">Infecção Corrente Sang.</label>
+        <input type="number" class="inp" id="f-ics" placeholder="0" min="0" oninput="markChanged(this)"/>
+        <span class="inp-hint">Meta: zero</span>
+      </div>
+      <div class="campo">
+        <label class="campo-lbl">Infecção Cateter/FAV</label>
+        <input type="number" class="inp" id="f-icf" placeholder="0" min="0" oninput="markChanged(this)"/>
+        <span class="inp-hint">Meta: zero</span>
+      </div>
+      <div class="campo">
+        <label class="campo-lbl">Queda Interna</label>
+        <input type="number" class="inp" id="f-que" placeholder="0" min="0" oninput="markChanged(this)"/>
+        <span class="inp-hint">Meta: zero</span>
       </div>
     </div>
     <!-- Causas de internação -->
@@ -370,34 +415,43 @@ function getHeaders(extra={}){
   };
 }
 const CAMPOS={
-  'f-pac':   `pac_${U}`,
-  'f-ses':   `ses_${U}`,
-  'f-adm':   `adm_${U}`,
-  'f-sai':   `sai_${U}`,
-  'f-obi':   `obi_${U}`,
-  'f-int':   `int_${U}`,
-  'f-causa-met': `causas_metabolica_${U}`,
-  'f-causa-inf': `causas_infeccao_${U}`,
-  'f-causa-vas': `causas_vascular_${U}`,
-  'f-causa-car': `causas_cardio_${U}`,
-  'f-causa-que': `causas_queda_${U}`,
-  'f-causa-out': `causas_outros_${U}`,
-  'f-ktv':   `ktv_${U}`,
-  'f-vol':   `vol_${U}`,
-  'f-fav':   `fav_${U}`,
-  'f-fos':   `fos_${U}`,
-  'f-pot':   `pot_${U}`,
-  'f-alb':   `alb_${U}`,
-  'f-imc':   `imc_${U}`,
-  'f-hb':    `hb_${U}`,
+  'f-pac':          `pac_${U}`,
+  'f-ses':          `ses_${U}`,
+  'f-adm':          `adm_${U}`,
+  'f-sai':          `sai_${U}`,
+  'f-obi':          `obi_${U}`,
+  'f-obi-pct':      `obi_pct_${U}`,
+  'f-int':          `int_${U}`,
+  'f-fal':          `fal_${U}`,
+  'f-fal-pct':      `fal_pct_${U}`,
+  'f-tx':           `tx_${U}`,
+  'f-eag':          `eag_${U}`,
+  'f-sui':          `sui_${U}`,
+  'f-ics':          `ics_${U}`,
+  'f-icf':          `icf_${U}`,
+  'f-que':          `que_${U}`,
+  'f-causa-met':    `causas_metabolica_${U}`,
+  'f-causa-inf':    `causas_infeccao_${U}`,
+  'f-causa-vas':    `causas_vascular_${U}`,
+  'f-causa-car':    `causas_cardio_${U}`,
+  'f-causa-que':    `causas_queda_${U}`,
+  'f-causa-out':    `causas_outros_${U}`,
+  'f-ktv':          `ktv_${U}`,
+  'f-vol':          `vol_${U}`,
+  'f-fav':          `fav_${U}`,
+  'f-fos':          `fos_${U}`,
+  'f-pot':          `pot_${U}`,
+  'f-alb':          `alb_${U}`,
+  'f-imc':          `imc_${U}`,
+  'f-hb':           `hb_${U}`,
   'f-kdqol-mental': `kdqol_mental_${U}`,
   'f-kdqol-fisico': `kdqol_fisico_${U}`,
-  'f-gpid':  `gpid_${U}`,
-  'f-ecw':   `ecw_${U}`,
-  'f-hbg':   `hbg_${U}`,
-  'f-ang':   `ang_${U}`,
-  'f-fis':   `fis_${U}`,
-  'f-pth':   `pth_${U}`,
+  'f-gpid':         `gpid_${U}`,
+  'f-ecw':          `ecw_${U}`,
+  'f-hbg':          `hbg_${U}`,
+  'f-ang':          `ang_${U}`,
+  'f-fis':          `fis_${U}`,
+  'f-pth':          `pth_${U}`,
 };
 
 // Init
