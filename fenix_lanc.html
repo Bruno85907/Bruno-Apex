@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lançamento Mensal — APEX</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#111111;--surface:#161616;--card:#1E1E1E;--border:#2A2A2A;--border-hover:#3A3A3A;
+  --gold:#B99454;--gold-dim:rgba(185,148,84,0.08);--gold-border:rgba(185,148,84,0.16);--gold-muted:rgba(185,148,84,0.45);
+  --text-primary:#F0EDE8;--text-secondary:rgba(240,237,232,0.45);--text-muted:rgba(240,237,232,0.25);
+  --green:#4CAF7D;--blue:#5BA8D4;--red:#E05555;--amber:#E8973A;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html,body{min-height:100%;background:var(--bg);}
+body{font-family:'Space Grotesk',system-ui,sans-serif;color:var(--text-primary);-webkit-font-smoothing:antialiased;}
+
+/* NAV */
+.apex-nav{background:var(--surface);border-bottom:1px solid var(--border);height:52px;display:flex;align-items:center;padding:0 32px;gap:16px;position:sticky;top:0;z-index:100;}
+.apex-nav-logo{font-size:12px;font-weight:700;color:var(--gold);letter-spacing:5px;text-transform:uppercase;text-decoration:none;}
+.apex-nav-div{width:1px;height:16px;background:var(--border);}
+.apex-nav-title{font-size:11px;font-weight:500;color:var(--text-muted);letter-spacing:1.5px;text-transform:uppercase;}
+.apex-nav-space{flex:1;}
+.apex-nav-back{font-size:11px;font-weight:600;color:var(--text-secondary);letter-spacing:1px;text-decoration:none;background:none;border:1px solid var(--border);cursor:pointer;font-family:inherit;padding:5px 14px;border-radius:5px;transition:color .2s,border-color .2s;}
+.apex-nav-back:hover{color:var(--gold);border-color:var(--gold-border);}
+
+/* PAGE */
+.page{max-width:860px;margin:0 auto;padding:48px 32px 80px;}
+.page-header{margin-bottom:40px;}
+.page-eyebrow{font-size:9px;font-weight:600;letter-spacing:4px;text-transform:uppercase;color:var(--gold-muted);margin-bottom:10px;}
+.page-title{font-size:28px;font-weight:400;color:var(--text-primary);line-height:1.2;margin-bottom:6px;}
+.page-title strong{font-weight:700;color:var(--gold);}
+.page-subtitle{font-size:13px;font-weight:400;color:var(--text-secondary);}
+
+/* MÊS SELETOR */
+.mes-row{display:flex;align-items:center;gap:14px;margin-bottom:40px;padding:16px 20px;background:var(--card);border:1px solid var(--border);border-radius:8px;}
+.mes-lbl{font-size:10px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--gold-muted);}
+.mes-sel{background:#111;border:1px solid var(--border);border-radius:6px;padding:8px 14px;font-family:inherit;font-size:13px;font-weight:500;color:var(--text-primary);outline:none;color-scheme:dark;cursor:pointer;transition:border-color .2s;}
+.mes-sel:focus{border-color:var(--gold);}
+.mes-status{margin-left:auto;font-size:11px;font-weight:500;color:var(--text-muted);}
+.mes-status.loaded{color:var(--green);}
+.mes-status.loading{color:var(--amber);}
+
+/* SEÇÃO */
+.secao{margin-bottom:10px;}
+.secao-header{display:flex;align-items:center;gap:12px;padding:12px 0 10px;border-bottom:1px solid var(--border);margin-bottom:16px;cursor:pointer;user-select:none;}
+.secao-dot{width:6px;height:6px;border-radius:50%;background:var(--gold);flex-shrink:0;}
+.secao-title{font-size:10px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--gold-muted);flex:1;}
+.secao-toggle{font-size:11px;color:var(--text-muted);transition:transform .2s;}
+.secao-toggle.open{transform:rotate(180deg);}
+.secao-body{display:grid;gap:10px;}
+.secao-body.hidden{display:none;}
+
+/* GRID CAMPOS */
+.grid-4{grid-template-columns:repeat(4,1fr);}
+.grid-3{grid-template-columns:repeat(3,1fr);}
+.grid-2{grid-template-columns:repeat(2,1fr);}
+.grid-6{grid-template-columns:repeat(6,1fr);}
+
+/* CAMPO */
+.campo{display:flex;flex-direction:column;gap:6px;}
+.campo-lbl{font-size:10px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--text-muted);}
+.campo-unit{font-size:9px;font-weight:400;color:rgba(185,148,84,0.4);margin-left:4px;}
+.inp{background:#111;border:1px solid var(--border);border-radius:6px;padding:10px 14px;font-family:inherit;font-size:15px;font-weight:500;color:var(--text-primary);outline:none;width:100%;transition:border-color .2s,background .2s;}
+.inp:focus{border-color:var(--gold);background:rgba(185,148,84,0.03);}
+.inp.changed{border-color:rgba(185,148,84,0.5);background:rgba(185,148,84,0.04);}
+.inp.error{border-color:var(--red);}
+.inp::placeholder{color:rgba(255,255,255,0.12);font-size:13px;}
+.inp-hint{font-size:10px;color:var(--text-muted);margin-top:2px;}
+
+/* CAUSAS GRID */
+.causas-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;}
+
+/* AÇÕES */
+.actions{position:fixed;bottom:0;left:0;right:0;background:rgba(17,17,17,0.95);border-top:1px solid var(--border);padding:16px 32px;display:flex;align-items:center;gap:14px;backdrop-filter:blur(8px);z-index:50;}
+.btn-save{background:var(--gold);color:#111;border:none;border-radius:7px;padding:11px 32px;font-family:inherit;font-size:12px;font-weight:700;letter-spacing:1px;cursor:pointer;transition:opacity .2s;}
+.btn-save:hover{opacity:0.88;}
+.btn-save:disabled{opacity:0.45;cursor:default;}
+.btn-clear{background:none;color:var(--text-muted);border:1px solid var(--border);border-radius:7px;padding:11px 22px;font-family:inherit;font-size:12px;font-weight:600;letter-spacing:1px;cursor:pointer;transition:all .2s;}
+.btn-clear:hover{color:var(--text-secondary);border-color:var(--border-hover);}
+.save-status{margin-left:auto;font-size:12px;font-weight:500;color:var(--text-muted);}
+.save-status.ok{color:var(--green);}
+.save-status.err{color:var(--red);}
+.save-status.saving{color:var(--amber);}
+
+/* TOAST */
+.toast{position:fixed;top:70px;right:24px;padding:12px 20px;border-radius:7px;font-size:12px;font-weight:600;letter-spacing:.5px;opacity:0;transform:translateY(-10px);transition:all .3s;z-index:200;pointer-events:none;}
+.toast.show{opacity:1;transform:translateY(0);}
+.toast.ok{background:rgba(76,175,125,0.15);border:1px solid rgba(76,175,125,0.3);color:var(--green);}
+.toast.err{background:rgba(224,85,85,0.12);border:1px solid rgba(224,85,85,0.25);color:var(--red);}
+</style>
+</head>
+<body>
+
+<nav class="apex-nav">
+  <span class="apex-nav-logo">APEX</span>
+  <div class="apex-nav-div"></div>
+  <span class="apex-nav-title" id="nav-title">Lançamento Mensal — TRS Crônico</span>
+  <div class="apex-nav-space"></div>
+  <button class="apex-nav-back" onclick="history.back()">← Voltar</button>
+</nav>
+
+<div class="page">
+  <div class="page-header">
+    <p class="page-eyebrow">TRS Crônico · Lançamento Mensal</p>
+    <h1 class="page-title">Indicadores — <strong id="titulo-unidade">Unidade</strong></h1>
+    <p class="page-subtitle">Preencha os indicadores do mês para esta unidade. Os dados são salvos diretamente no Supabase.</p>
+  </div>
+
+  <!-- SELETOR DE MÊS -->
+  <div class="mes-row">
+    <span class="mes-lbl">Período</span>
+    <input type="month" id="mes-sel" class="mes-sel" onchange="carregarDados()"/>
+    <span class="mes-status" id="mes-status">Selecione o mês</span>
+  </div>
+
+  <!-- ── SEÇÃO 1: ATIVIDADE ── -->
+  <div class="secao">
+    <div class="secao-header" onclick="toggleSecao('s-atividade')">
+      <div class="secao-dot"></div>
+      <span class="secao-title">Atividade</span>
+      <span class="secao-toggle open" id="tog-s-atividade">▾</span>
+    </div>
+    <div class="secao-body grid-4" id="s-atividade">
+      <div class="campo">
+        <label class="campo-lbl">Pacientes</label>
+        <input type="number" class="inp" id="f-pac" placeholder="0" min="0" oninput="markChanged(this)"/>
+        <span class="inp-hint">Total de pacientes ativos</span>
+      </div>
+      <div class="campo">
+        <label class="campo-lbl">Sessões</label>
+        <input type="number" class="inp" id="f-ses" placeholder="0" min="0" oninput="markChanged(this)"/>
+        <span class="inp-hint">Total de sessões no mês</span>
+      </div>
+      <div class="campo">
+        <label class="campo-lbl">Admissões</label>
+        <input type="number" class="inp" id="f-adm" placeholder="0" min="0" oninput="markChanged(this)"/>
+        <span class="inp-hint">Novos pacientes no mês</span>
+      </div>
+      <div class="campo">
+        <label class="campo-lbl">Saídas</label>
+        <input type="number" class="inp" id="f-sai" placeholder="0" min="0" oninput="markChanged(this)"/>
+        <span class="inp-hint">Saídas no mês</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SEÇÃO 2: DESFECHOS ── -->
+  <div class="secao">
+    <div class="secao-header" onclick="toggleSecao('s-desfechos')">
+      <div class="secao-dot"></div>
+      <span class="secao-title">Desfechos Clínicos</span>
+      <span class="secao-toggle open" id="tog-s-desfechos">▾</span>
+    </div>
+    <div class="secao-body grid-4" id="s-desfechos">
+      <div class="campo">
+        <label class="campo-lbl">Óbitos</label>
+        <input type="number" class="inp" id="f-obi" placeholder="0" min="0" oninput="markChanged(this)"/>
+        <span class="inp-hint">Óbitos no mês</span>
+      </div>
+      <div class="campo">
+        <label class="campo-lbl">Internação <span class="campo-unit">%</span></label>
+        <input type="number" class="inp" id="f-int" placeholder="0.0" min="0" max="100" step="0.1" oninput="markChanged(this)"/>
+        <span class="inp-hint">Taxa de internação</span>
+      </div>
+    </div>
+    <!-- Causas de internação -->
+    <div style="margin-top:16px;">
+      <div style="font-size:9px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--text-muted);margin-bottom:12px;">Causas de internação</div>
+      <div class="causas-grid">
+        <div class="campo">
+          <label class="campo-lbl">Metabólica</label>
+          <input type="number" class="inp" id="f-causa-met" placeholder="0" min="0" oninput="markChanged(this)"/>
+        </div>
+        <div class="campo">
+          <label class="campo-lbl">Infecção</label>
+          <input type="number" class="inp" id="f-causa-inf" placeholder="0" min="0" oninput="markChanged(this)"/>
+        </div>
+        <div class="campo">
+          <label class="campo-lbl">Vascular</label>
+          <input type="number" class="inp" id="f-causa-vas" placeholder="0" min="0" oninput="markChanged(this)"/>
+        </div>
+        <div class="campo">
+          <label class="campo-lbl">Cardíaca</label>
+          <input type="number" class="inp" id="f-causa-car" placeholder="0" min="0" oninput="markChanged(this)"/>
+        </div>
+        <div class="campo">
+          <label class="campo-lbl">Queda</label>
+          <input type="number" class="inp" id="f-causa-que" placeholder="0" min="0" oninput="markChanged(this)"/>
+        </div>
+        <div class="campo">
+          <label class="campo-lbl">Outros</label>
+          <input type="number" class="inp" id="f-causa-out" placeholder="0" min="0" oninput="markChanged(this)"/>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SEÇÃO 3: ADEQUAÇÃO ── -->
+  <div class="secao">
+    <div class="secao-header" onclick="toggleSecao('s-adequacao')">
+      <div class="secao-dot"></div>
+      <span class="secao-title">Adequação da Diálise</span>
+      <span class="secao-toggle open" id="tog-s-adequacao">▾</span>
+    </div>
+    <div class="secao-body grid-3" id="s-adequacao">
+      <div class="campo">
+        <label class="campo-lbl">Kt/V ≥1,2 <span class="campo-unit">%</span></label>
+        <input type="number" class="inp" id="f-ktv" placeholder="0" min="0" max="100" oninput="markChanged(this)"/>
+        <span class="inp-hint">Pacientes dentro da meta</span>
+      </div>
+      <div class="campo">
+        <label class="campo-lbl">Volume <span class="campo-unit">%</span></label>
+        <input type="number" class="inp" id="f-vol" placeholder="0" min="0" max="100" oninput="markChanged(this)"/>
+        <span class="inp-hint">Controle volêmico adequado</span>
+      </div>
+      <div class="campo">
+        <label class="campo-lbl">FAV ≥80% <span class="campo-unit">%</span></label>
+        <input type="number" class="inp" id="f-fav" placeholder="0" min="0" max="100" oninput="markChanged(this)"/>
+        <span class="inp-hint">Fístula arteriovenosa</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SEÇÃO 4: NUTRIÇÃO ── -->
+  <div class="secao">
+    <div class="secao-header" onclick="toggleSecao('s-nutricao')">
+      <div class="secao-dot"></div>
+      <span class="secao-title">Nutrição</span>
+      <span class="secao-toggle open" id="tog-s-nutricao">▾</span>
+    </div>
+    <div class="secao-body grid-4" id="s-nutricao">
+      <div class="campo">
+        <label class="campo-lbl">Fósforo <span class="campo-unit">%</span></label>
+        <input type="number" class="inp" id="f-fos" placeholder="0" min="0" max="100" oninput="markChanged(this)"/>
+        <span class="inp-hint">Meta ≥70% em conformidade</span>
+      </div>
+      <div class="campo">
+        <label class="campo-lbl">Potássio <span class="campo-unit">%</span></label>
+        <input type="number" class="inp" id="f-pot" placeholder="0" min="0" max="100" oninput="markChanged(this)"/>
+        <span class="inp-hint">Meta ≥80% em conformidade</span>
+      </div>
+      <div class="campo">
+        <label class="campo-lbl">Albumina <span class="campo-unit">g/dL</span></label>
+        <input type="number" class="inp" id="f-alb" placeholder="0.0" min="0" max="10" step="0.1" oninput="markChanged(this)"/>
+        <span class="inp-hint">Valor médio da unidade</span>
+      </div>
+      <div class="campo">
+        <label class="campo-lbl">IMC <span class="campo-unit">kg/m²</span></label>
+        <input type="number" class="inp" id="f-imc" placeholder="0.0" min="0" max="60" step="0.1" oninput="markChanged(this)"/>
+        <span class="inp-hint">Valor médio da unidade</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SEÇÃO 5: QUALIDADE DE VIDA ── -->
+  <div class="secao">
+    <div class="secao-header" onclick="toggleSecao('s-qol')">
+      <div class="secao-dot"></div>
+      <span class="secao-title">Qualidade de Vida</span>
+      <span class="secao-toggle open" id="tog-s-qol">▾</span>
+    </div>
+    <div class="secao-body grid-3" id="s-qol">
+      <div class="campo">
+        <label class="campo-lbl">Hemoglobina meta <span class="campo-unit">%</span></label>
+        <input type="number" class="inp" id="f-hb" placeholder="0" min="0" max="100" oninput="markChanged(this)"/>
+        <span class="inp-hint">10–12 g/dL — % em meta</span>
+      </div>
+      <div class="campo">
+        <label class="campo-lbl">KDQoL Mental <span class="campo-unit">0-100</span></label>
+        <input type="number" class="inp" id="f-kdqol-mental" placeholder="0" min="0" max="100" step="0.1" oninput="markChanged(this)"/>
+        <span class="inp-hint">Componente mental</span>
+      </div>
+      <div class="campo">
+        <label class="campo-lbl">KDQoL Físico <span class="campo-unit">0-100</span></label>
+        <input type="number" class="inp" id="f-kdqol-fisico" placeholder="0" min="0" max="100" step="0.1" oninput="markChanged(this)"/>
+        <span class="inp-hint">Componente físico</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SEÇÃO 6: CARDIOVASCULAR ── -->
+  <div class="secao">
+    <div class="secao-header" onclick="toggleSecao('s-cardio')">
+      <div class="secao-dot"></div>
+      <span class="secao-title">Cardiovascular</span>
+      <span class="secao-toggle open" id="tog-s-cardio">▾</span>
+    </div>
+    <div class="secao-body grid-3" id="s-cardio">
+      <div class="campo">
+        <label class="campo-lbl">GPID <span class="campo-unit">%</span></label>
+        <input type="number" class="inp" id="f-gpid" placeholder="0" min="0" max="100" oninput="markChanged(this)"/>
+        <span class="inp-hint">Ganho de peso interdialítico</span>
+      </div>
+      <div class="campo">
+        <label class="campo-lbl">ECW <span class="campo-unit">%</span></label>
+        <input type="number" class="inp" id="f-ecw" placeholder="0" min="0" max="100" oninput="markChanged(this)"/>
+        <span class="inp-hint">Água corporal extracelular</span>
+      </div>
+      <div class="campo">
+        <label class="campo-lbl">Hb Global <span class="campo-unit">g/dL</span></label>
+        <input type="number" class="inp" id="f-hbg" placeholder="0.0" min="0" max="20" step="0.1" oninput="markChanged(this)"/>
+        <span class="inp-hint">Hemoglobina — valor médio</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SEÇÃO 7: COMPOSIÇÃO CORPORAL ── -->
+  <div class="secao">
+    <div class="secao-header" onclick="toggleSecao('s-compcorp')">
+      <div class="secao-dot"></div>
+      <span class="secao-title">Composição Corporal</span>
+      <span class="secao-toggle open" id="tog-s-compcorp">▾</span>
+    </div>
+    <div class="secao-body grid-3" id="s-compcorp">
+      <div class="campo">
+        <label class="campo-lbl">Ângulo de fase <span class="campo-unit">%</span></label>
+        <input type="number" class="inp" id="f-ang" placeholder="0" min="0" max="100" oninput="markChanged(this)"/>
+        <span class="inp-hint">Pacientes em conformidade</span>
+      </div>
+      <div class="campo">
+        <label class="campo-lbl">Fisioterapia <span class="campo-unit">%</span></label>
+        <input type="number" class="inp" id="f-fis" placeholder="0" min="0" max="100" oninput="markChanged(this)"/>
+        <span class="inp-hint">Adesão ao programa</span>
+      </div>
+      <div class="campo">
+        <label class="campo-lbl">PTH <span class="campo-unit">pg/mL</span></label>
+        <input type="number" class="inp" id="f-pth" placeholder="0" min="0" step="0.1" oninput="markChanged(this)"/>
+        <span class="inp-hint">Paratormônio — valor médio</span>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- AÇÕES FIXAS -->
+<div class="actions">
+  <button class="btn-save" id="btn-save" onclick="salvar()">Salvar</button>
+  <button class="btn-clear" onclick="limparFormulario()">Limpar</button>
+  <span class="save-status" id="save-status"></span>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script>
+const SUPA_URL='https://syzmsixhjlutsynnqivv.supabase.co';
+const SUPA_KEY='sb_publishable_poKCFHc9n1CtIfCbAxTN0Q_dmlsEy1t';
+
+// Pega unidade da URL
+const params=new URLSearchParams(window.location.search);
+const UNIDADE=params.get('unidade')||'rl';
+const NOMES={rl:'RL — República do Líbano',santos:'Santos — Praiamar',tatuape:'Tatuapé'};
+const NOME=NOMES[UNIDADE]||UNIDADE.toUpperCase();
+const U=UNIDADE; // sufixo das colunas
+
+// Mapeamento campo → coluna Supabase
+const CAMPOS={
+  'f-pac':   `pac_${U}`,
+  'f-ses':   `ses_${U}`,
+  'f-adm':   `adm_${U}`,
+  'f-sai':   `sai_${U}`,
+  'f-obi':   `obi_${U}`,
+  'f-int':   `int_${U}`,
+  'f-causa-met': `causas_metabolica_${U}`,
+  'f-causa-inf': `causas_infeccao_${U}`,
+  'f-causa-vas': `causas_vascular_${U}`,
+  'f-causa-car': `causas_cardio_${U}`,
+  'f-causa-que': `causas_queda_${U}`,
+  'f-causa-out': `causas_outros_${U}`,
+  'f-ktv':   `ktv_${U}`,
+  'f-vol':   `vol_${U}`,
+  'f-fav':   `fav_${U}`,
+  'f-fos':   `fos_${U}`,
+  'f-pot':   `pot_${U}`,
+  'f-alb':   `alb_${U}`,
+  'f-imc':   `imc_${U}`,
+  'f-hb':    `hb_${U}`,
+  'f-kdqol-mental': `kdqol_mental_${U}`,
+  'f-kdqol-fisico': `kdqol_fisico_${U}`,
+  'f-gpid':  `gpid_${U}`,
+  'f-ecw':   `ecw_${U}`,
+  'f-hbg':   `hbg_${U}`,
+  'f-ang':   `ang_${U}`,
+  'f-fis':   `fis_${U}`,
+  'f-pth':   `pth_${U}`,
+};
+
+// Init
+document.addEventListener('DOMContentLoaded',()=>{
+  document.getElementById('titulo-unidade').textContent=NOME;
+  document.getElementById('nav-title').textContent=`Lançamento Mensal — ${NOME}`;
+  const hoje=new Date();
+  document.getElementById('mes-sel').value=`${hoje.getFullYear()}-${String(hoje.getMonth()+1).padStart(2,'0')}`;
+  carregarDados();
+});
+
+function getMes(){
+  const v=document.getElementById('mes-sel').value;
+  if(!v)return null;
+  const[a,mm]=v.split('-');
+  return{ano:parseInt(a),mes:parseInt(mm)-1};
+}
+
+function markChanged(el){el.classList.add('changed');}
+
+function toggleSecao(id){
+  const body=document.getElementById(id);
+  const tog=document.getElementById('tog-'+id);
+  const hidden=body.classList.toggle('hidden');
+  tog.classList.toggle('open',!hidden);
+}
+
+// ── CARREGAR DADOS ────────────────────────────────────────────
+async function carregarDados(){
+  const m=getMes();if(!m)return;
+  const status=document.getElementById('mes-status');
+  status.className='mes-status loading';
+  status.textContent='Carregando...';
+
+  const cols=Object.values(CAMPOS).join(',');
+  try{
+    const resp=await fetch(
+      `${SUPA_URL}/rest/v1/dados_mensais?ano=eq.${m.ano}&mes=eq.${m.mes}&select=${cols}`,
+      {headers:{'apikey':SUPA_KEY,'Authorization':`Bearer ${SUPA_KEY}`}}
+    );
+    const rows=await resp.json();
+    if(Array.isArray(rows)&&rows.length>0){
+      const d=rows[0];
+      Object.entries(CAMPOS).forEach(([fid,col])=>{
+        const el=document.getElementById(fid);
+        if(el&&d[col]!==null&&d[col]!==undefined){
+          el.value=d[col];
+          el.classList.remove('changed');
+        }else if(el){
+          el.value='';
+          el.classList.remove('changed');
+        }
+      });
+      status.className='mes-status loaded';
+      status.textContent='✓ Dados carregados';
+    }else{
+      limparFormulario(false);
+      status.className='mes-status';
+      status.textContent='Mês sem dados — preencha e salve';
+    }
+  }catch(e){
+    status.className='mes-status';
+    status.textContent='Erro ao carregar';
+    showToast('Erro ao carregar dados','err');
+  }
+}
+
+// ── SALVAR ────────────────────────────────────────────────────
+async function salvar(){
+  const m=getMes();
+  if(!m){showToast('Selecione o mês antes de salvar','err');return;}
+
+  const btn=document.getElementById('btn-save');
+  const status=document.getElementById('save-status');
+  btn.disabled=true;btn.textContent='Salvando...';
+  status.className='save-status saving';status.textContent='Salvando...';
+
+  // Monta payload
+  const payload={ano:m.ano,mes:m.mes};
+  Object.entries(CAMPOS).forEach(([fid,col])=>{
+    const el=document.getElementById(fid);
+    if(el&&el.value!==''){
+      payload[col]=parseFloat(el.value)||0;
+    }
+  });
+
+  try{
+    const resp=await fetch(`${SUPA_URL}/rest/v1/dados_mensais`,{
+      method:'POST',
+      headers:{
+        'apikey':SUPA_KEY,
+        'Authorization':`Bearer ${SUPA_KEY}`,
+        'Content-Type':'application/json',
+        'Prefer':'resolution=merge-duplicates',
+      },
+      body:JSON.stringify(payload),
+    });
+
+    if(resp.ok||resp.status===201||resp.status===200){
+      // Limpa marcações de changed
+      Object.keys(CAMPOS).forEach(fid=>{
+        const el=document.getElementById(fid);
+        if(el)el.classList.remove('changed');
+      });
+      status.className='save-status ok';
+      status.textContent=`✓ Salvo às ${new Date().toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'})}`;
+      document.getElementById('mes-status').className='mes-status loaded';
+      document.getElementById('mes-status').textContent='✓ Dados salvos';
+      showToast('Dados salvos com sucesso','ok');
+    }else{
+      const err=await resp.json().catch(()=>({}));
+      throw new Error(err.message||`HTTP ${resp.status}`);
+    }
+  }catch(e){
+    status.className='save-status err';
+    status.textContent=`Erro: ${e.message}`;
+    showToast(`Erro ao salvar: ${e.message}`,'err');
+  }finally{
+    btn.disabled=false;btn.textContent='Salvar';
+  }
+}
+
+// ── LIMPAR ────────────────────────────────────────────────────
+function limparFormulario(confirm=true){
+  if(confirm&&!window.confirm('Limpar todos os campos?'))return;
+  Object.keys(CAMPOS).forEach(fid=>{
+    const el=document.getElementById(fid);
+    if(el){el.value='';el.classList.remove('changed','error');}
+  });
+  document.getElementById('save-status').textContent='';
+  document.getElementById('save-status').className='save-status';
+}
+
+// ── TOAST ─────────────────────────────────────────────────────
+function showToast(msg,type='ok'){
+  const t=document.getElementById('toast');
+  t.textContent=msg;t.className=`toast show ${type}`;
+  setTimeout(()=>t.className='toast',3000);
+}
+</script>
+</body>
+</html>

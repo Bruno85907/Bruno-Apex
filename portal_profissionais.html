@@ -3,152 +3,192 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Portal Profissionais da Saúde — Dr. Bruno Biluca</title>
-<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<title>Portal Profissional — APEX</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
-:root {
-  --navy:#0D1B35; --navy-mid:#1B2A4A; --navy-light:#243357;
-  --gold:#D4A847; --gold-dark:#8B6914; --gold-pale:#E8D5A0;
-  --muted:rgba(232,213,160,0.75); --white:#FFFFFF;
+:root{
+  --bg:#111111;
+  --surface:#161616;
+  --card:#1E1E1E;
+  --card-hover:#222222;
+  --border:#2A2A2A;
+  --border-hover:#3A3A3A;
+  --gold:#B99454;
+  --gold-dim:rgba(185,148,84,0.08);
+  --gold-border:rgba(185,148,84,0.16);
+  --gold-muted:rgba(185,148,84,0.45);
+  --text-primary:#F0EDE8;
+  --text-secondary:rgba(240,237,232,0.45);
+  --text-muted:rgba(240,237,232,0.25);
+  --white:#fff;
+  --green:#4CAF7D;
+  --blue:#5BA8D4;
+  --red:#E05555;
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
-body{font-family:'Inter',sans-serif;background:var(--navy);color:var(--white);min-height:100vh;}
+html{scroll-behavior:smooth;}
+body{font-family:'Space Grotesk',system-ui,sans-serif;background:var(--bg);color:var(--text-primary);min-height:100vh;-webkit-font-smoothing:antialiased;}
 
-nav{background:var(--navy-mid);border-bottom:2px solid rgba(212,168,71,0.12);padding:0 48px;height:58px;display:flex;align-items:center;gap:20px;position:sticky;top:0;z-index:100;}
-.nav-logo{font-family:'Cinzel',serif;font-size:14px;font-weight:700;color:var(--gold);letter-spacing:3px;text-decoration:none;}
-.nav-sep{width:1px;height:22px;background:rgba(212,168,71,0.2);}
-.nav-section{font-family:'Cinzel',serif;font-size:13px;letter-spacing:3px;color:var(--muted);text-transform:uppercase;}
-.nav-back{margin-left:auto;font-family:'Cinzel',serif;font-size:13px;letter-spacing:2px;color:rgba(212,168,71,0.7);text-decoration:none;transition:color .2s;}
+/* ── NAV ── */
+nav{background:var(--surface);border-bottom:1px solid var(--border);height:56px;display:flex;align-items:center;padding:0 40px;gap:20px;position:sticky;top:0;z-index:100;}
+.nav-logo{font-size:13px;font-weight:700;color:var(--gold);letter-spacing:5px;text-decoration:none;text-transform:uppercase;}
+.nav-div{width:1px;height:18px;background:var(--border);}
+.nav-section{font-size:11px;font-weight:500;color:var(--text-muted);letter-spacing:2px;text-transform:uppercase;}
+.nav-back{margin-left:auto;font-size:11px;font-weight:500;color:var(--text-secondary);text-decoration:none;letter-spacing:1px;transition:color .2s;}
 .nav-back:hover{color:var(--gold);}
 
-.hero{padding:64px 60px 48px;display:flex;align-items:center;justify-content:space-between;gap:40px;border-bottom:1px solid rgba(212,168,71,0.08);position:relative;overflow:hidden;}
-.hero-bg{position:absolute;inset:0;pointer-events:none;}
-.hero-text{position:relative;z-index:1;max-width:560px;}
-.hero-eyebrow{font-family:'Cinzel',serif;font-size:13px;letter-spacing:3px;color:var(--gold);opacity:.7;margin-bottom:14px;text-transform:uppercase;}
-.hero-title{font-family:'Cormorant Garamond',serif;font-size:clamp(30px,4vw,50px);font-weight:300;color:var(--white);line-height:1.2;margin-bottom:16px;}
-.hero-title em{color:var(--gold-pale);font-style:italic;}
-.hero-desc{font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:300;font-style:italic;color:var(--muted);line-height:1.8;}
-.hero-ilus{position:relative;z-index:1;opacity:.65;}
+/* ── HERO ── */
+.hero{padding:72px 40px 56px;border-bottom:1px solid var(--border);max-width:900px;}
+.hero-eyebrow{font-size:10px;font-weight:600;letter-spacing:4px;text-transform:uppercase;color:var(--gold-muted);margin-bottom:16px;}
+.hero-title{font-size:clamp(32px,4vw,48px);font-weight:300;color:var(--text-primary);line-height:1.15;margin-bottom:16px;}
+.hero-title strong{font-weight:700;color:var(--gold);}
+.hero-desc{font-size:15px;font-weight:400;color:var(--text-secondary);line-height:1.75;max-width:560px;}
 
-.modulos{padding:56px 60px;max-width:1300px;margin:0 auto;}
-.modulos-label{font-family:'Cinzel',serif;font-size:13px;letter-spacing:3px;color:var(--gold);margin-bottom:12px;text-transform:uppercase;}
-.modulos-title{font-family:'Cormorant Garamond',serif;font-size:clamp(22px,3vw,34px);font-weight:300;color:var(--white);margin-bottom:44px;line-height:1.3;}
-.modulos-title em{color:var(--gold-pale);font-style:italic;}
+/* ── MÓDULOS ── */
+.modulos{padding:48px 40px;max-width:1200px;margin:0 auto;}
+.modulos-header{margin-bottom:32px;}
+.modulos-label{font-size:10px;font-weight:600;letter-spacing:4px;text-transform:uppercase;color:var(--gold-muted);margin-bottom:10px;}
+.modulos-title{font-size:22px;font-weight:400;color:var(--text-primary);}
+.modulos-title strong{font-weight:700;}
 
-.grid-top{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px;}
-.grid-bottom{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;}
+/* ── GRID ── */
+.grid-main{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px;}
+.grid-sub{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;}
 
-.modulo{background:var(--navy-mid);border:1px solid rgba(212,168,71,0.08);border-radius:14px;padding:36px;cursor:pointer;transition:all .35s cubic-bezier(.25,.46,.45,.94);text-decoration:none;display:block;position:relative;overflow:hidden;}
-.modulo::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(212,168,71,0.05) 0%,transparent 60%);opacity:0;transition:opacity .35s;}
-.modulo:hover::before{opacity:1;}
-.modulo::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:var(--gold);transform:scaleX(0);transition:transform .35s;transform-origin:left;}
-.modulo:hover::after{transform:scaleX(1);}
-.modulo:hover{border-color:rgba(212,168,71,0.25);transform:translateY(-3px);}
-.modulo.destaque{background:linear-gradient(160deg,var(--navy-light) 0%,#1a2d52 100%);}
+/* ── CARD ── */
+.card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:28px;cursor:pointer;text-decoration:none;display:block;transition:border-color .25s,background .25s;position:relative;overflow:hidden;}
+.card::after{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--gold);opacity:0;transition:opacity .25s;}
+.card:hover{border-color:var(--border-hover);background:var(--card-hover);}
+.card:hover::after{opacity:0.5;}
+.card.featured{border-color:var(--gold-border);}
+.card.featured::after{opacity:0.35;}
+.card.featured:hover::after{opacity:0.7;}
+.card.disabled{opacity:0.45;cursor:default;pointer-events:none;}
+.card-meta{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;}
+.card-badge{font-size:9px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--text-muted);background:rgba(255,255,255,0.04);border:1px solid var(--border);padding:3px 10px;border-radius:4px;}
+.card-badge.lock{color:var(--gold-muted);background:var(--gold-dim);border-color:var(--gold-border);}
+.card-badge.soon{color:var(--text-muted);}
+.card-icon{width:38px;height:38px;border-radius:8px;background:var(--gold-dim);border:1px solid var(--gold-border);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.card-title{font-size:17px;font-weight:600;color:var(--text-primary);margin-bottom:8px;line-height:1.3;}
+.card-desc{font-size:12px;font-weight:400;color:var(--text-secondary);line-height:1.7;margin-bottom:18px;}
+.card-tags{display:flex;gap:5px;flex-wrap:wrap;}
+.ctag{font-size:9px;font-weight:500;color:var(--gold-muted);background:var(--gold-dim);border:1px solid var(--gold-border);padding:2px 8px;border-radius:4px;}
 
-.modulo-icon{width:60px;height:60px;margin-bottom:24px;opacity:.7;transition:opacity .3s;}
-.modulo:hover .modulo-icon{opacity:1;}
-.modulo-num{font-family:'Cinzel',serif;font-size:13px;letter-spacing:4px;color:var(--gold);opacity:.75;margin-bottom:8px;}
-.modulo-name{font-family:'Cinzel',serif;font-size:17px;font-weight:600;color:var(--white);letter-spacing:2px;margin-bottom:10px;line-height:1.3;}
-.modulo-desc{font-family:'Cormorant Garamond',serif;font-size:15px;font-style:italic;color:var(--muted);line-height:1.7;margin-bottom:20px;}
-.modulo-tags{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:20px;}
-.modulo-tag{font-size:13px;letter-spacing:1.5px;color:var(--gold);border:1px solid rgba(212,168,71,0.2);padding:3px 9px;border-radius:20px;font-family:'Inter',sans-serif;}
-.modulo-link{font-family:'Cinzel',serif;font-size:13px;letter-spacing:2px;color:var(--gold);display:flex;align-items:center;gap:7px;transition:gap .3s;}
-.modulo:hover .modulo-link{gap:12px;}
-
-.lock-badge{position:absolute;top:18px;right:18px;background:rgba(212,168,71,0.1);border:1px solid rgba(212,168,71,0.25);border-radius:20px;padding:4px 12px;font-family:'Cinzel',serif;font-size:13px;letter-spacing:2px;color:var(--gold);}
-.soon-badge{position:absolute;top:18px;right:18px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:20px;padding:4px 12px;font-family:'Cinzel',serif;font-size:13px;letter-spacing:2px;color:rgba(255,255,255,0.25);}
-
-/* MODAL LOGIN */
-.modal-overlay{display:none;position:fixed;inset:0;background:rgba(5,12,25,0.92);z-index:200;align-items:center;justify-content:center;padding:20px;}
-.modal-overlay.show{display:flex;}
-.modal-login{background:var(--navy-mid);border:1px solid rgba(212,168,71,0.15);border-radius:20px;width:100%;max-width:440px;padding:48px;position:relative;}
-.modal-close{position:absolute;top:16px;right:20px;background:transparent;border:none;color:var(--muted);font-size:20px;cursor:pointer;transition:color .2s;}
-.modal-close:hover{color:var(--gold);}
-.modal-login-logo{font-family:'Cinzel',serif;font-size:13px;letter-spacing:3px;color:var(--gold);opacity:.6;margin-bottom:6px;text-transform:uppercase;}
-.modal-login-title{font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:300;color:var(--white);margin-bottom:6px;}
-.modal-login-sub{font-family:'Cormorant Garamond',serif;font-size:15px;font-style:italic;color:var(--muted);margin-bottom:32px;}
+/* ── MODAL LOGIN ── */
+.overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.75);z-index:200;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(4px);}
+.overlay.show{display:flex;}
+.modal{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:40px;width:100%;max-width:400px;position:relative;}
+.modal-close{position:absolute;top:16px;right:16px;background:none;border:none;color:var(--text-muted);font-size:16px;cursor:pointer;padding:4px 8px;border-radius:4px;transition:color .2s;}
+.modal-close:hover{color:var(--text-primary);}
+.modal-eyebrow{font-size:9px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--gold-muted);margin-bottom:12px;}
+.modal-title{font-size:22px;font-weight:600;color:var(--text-primary);margin-bottom:6px;}
+.modal-sub{font-size:13px;font-weight:400;color:var(--text-secondary);margin-bottom:28px;line-height:1.6;}
 .field{margin-bottom:16px;}
-.field label{display:block;font-size:13px;font-weight:500;color:var(--muted);letter-spacing:.05em;margin-bottom:7px;text-transform:uppercase;font-family:'Cinzel',serif;}
-.field input{width:100%;background:rgba(13,27,53,0.7);border:1px solid rgba(212,168,71,0.18);border-radius:8px;padding:12px 14px;font-size:14px;font-family:'Inter',sans-serif;color:var(--white);outline:none;transition:border-color .2s;}
+.field label{display:block;font-size:11px;font-weight:600;letter-spacing:1px;color:var(--text-secondary);margin-bottom:8px;text-transform:uppercase;}
+.field input{width:100%;background:#111;border:1px solid var(--border);border-radius:7px;padding:11px 14px;font-family:inherit;font-size:14px;font-weight:400;color:var(--text-primary);outline:none;transition:border-color .2s;}
 .field input:focus{border-color:var(--gold);}
-.field input::placeholder{color:rgba(255,255,255,0.2);}
-.btn-entrar{width:100%;margin-top:8px;background:var(--gold-dark);color:var(--white);border:none;border-radius:8px;padding:13px;font-size:14px;font-weight:600;font-family:'Cinzel',serif;letter-spacing:3px;text-transform:uppercase;cursor:pointer;transition:background .2s;}
-.btn-entrar:hover{background:var(--gold);}
-.btn-entrar:disabled{background:rgba(139,105,20,0.4);cursor:not-allowed;}
-.login-err{font-size:14px;color:#F07070;margin-top:10px;text-align:center;min-height:18px;font-family:'Inter',sans-serif;}
+.field input::placeholder{color:var(--text-muted);}
+.btn-login{width:100%;background:var(--gold);color:#111;border:none;border-radius:7px;padding:12px;font-family:inherit;font-size:13px;font-weight:700;letter-spacing:1px;cursor:pointer;transition:opacity .2s;margin-top:8px;}
+.btn-login:hover{opacity:0.88;}
+.btn-login:disabled{opacity:0.5;cursor:default;}
+.login-err{font-size:12px;color:var(--red);margin-top:10px;text-align:center;min-height:18px;}
 
-/* OVERLAY INDICADORES */
-.indicadores-overlay{display:none;position:fixed;inset:0;background:var(--navy);z-index:150;flex-direction:column;}
-.indicadores-overlay.show{display:flex;}
-
-/* NAV do overlay */
-.ind-nav{background:var(--navy-mid);border-bottom:2px solid rgba(212,168,71,0.12);padding:0 36px;height:56px;display:flex;align-items:center;gap:16px;flex-shrink:0;}
-.ind-nav-logo{font-family:'Cinzel',serif;font-size:13px;font-weight:700;color:var(--gold);letter-spacing:3px;}
-.ind-nav-sep{width:1px;height:20px;background:rgba(212,168,71,0.2);}
-.ind-nav-title{font-family:'Cinzel',serif;font-size:13px;letter-spacing:3px;color:var(--muted);text-transform:uppercase;}
+/* ── OVERLAY INDICADORES ── */
+.ind-overlay{display:none;position:fixed;inset:0;background:var(--bg);z-index:150;flex-direction:column;}
+.ind-overlay.show{display:flex;}
+.ind-nav{background:var(--surface);border-bottom:1px solid var(--border);height:52px;padding:0 32px;display:flex;align-items:center;gap:16px;flex-shrink:0;}
+.ind-nav-logo{font-size:12px;font-weight:700;color:var(--gold);letter-spacing:4px;text-transform:uppercase;}
+.ind-nav-sep{width:1px;height:16px;background:var(--border);}
+.ind-nav-title{font-size:11px;font-weight:600;color:var(--text-secondary);letter-spacing:1px;}
 .ind-nav-space{flex:1;}
-.ind-nav-btns{display:flex;gap:8px;}
-.ind-btn{font-family:'Cinzel',serif;font-size:11px;letter-spacing:2px;color:var(--muted);background:transparent;border:1px solid rgba(212,168,71,0.15);border-radius:6px;padding:6px 14px;cursor:pointer;transition:all .2s;text-decoration:none;display:flex;align-items:center;gap:6px;}
-.ind-btn.active{background:rgba(212,168,71,0.12);color:var(--gold);border-color:rgba(212,168,71,0.6);}
-.ind-btn:hover:not(.active){color:var(--gold-pale);border-color:rgba(212,168,71,0.2);}
-.ind-btn-sair{color:rgba(255,100,100,0.5);border-color:rgba(255,100,100,0.15);}
-.ind-btn-sair:hover{color:#F07070;border-color:rgba(255,100,100,0.3);}
+.ind-btn{font-family:inherit;font-size:11px;font-weight:600;letter-spacing:1px;color:var(--text-secondary);background:transparent;border:1px solid var(--border);border-radius:6px;padding:5px 14px;cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:6px;}
+.ind-btn:hover{border-color:var(--border-hover);color:var(--text-primary);}
+.ind-btn.active{background:var(--gold-dim);color:var(--gold);border-color:var(--gold-border);}
+.ind-btn-sair{color:rgba(224,85,85,0.5);border-color:rgba(224,85,85,0.15);}
+.ind-btn-sair:hover{color:var(--red);border-color:rgba(224,85,85,0.3);}
 .ind-btn-voltar{display:none;}
 .ind-btn-voltar.visible{display:flex;}
 
-/* HOME do overlay — 2 cards TRS */
-.ind-home{flex:1;overflow-y:auto;padding:56px 60px;display:none;}
-.ind-home.active{display:block;}
-.ind-home-eyebrow{font-family:'Cinzel',serif;font-size:10px;letter-spacing:4px;color:var(--gold);opacity:.6;text-transform:uppercase;margin-bottom:12px;}
-.ind-home-title{font-family:'Cormorant Garamond',serif;font-size:clamp(28px,3.5vw,44px);font-weight:300;color:var(--white);line-height:1.15;margin-bottom:40px;}
-.ind-home-title em{color:var(--gold-pale);font-style:italic;}
-.ind-trs-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:20px;max-width:1100px;}
-.ind-trs-card.tv{border-color:rgba(93,203,138,0.12);}
-.ind-trs-card.tv::after{background:#5DCB8A;}
-.ind-trs-card.tv:hover{border-color:rgba(93,203,138,0.3);}
-.ind-trs-card{background:var(--navy-mid);border:1px solid rgba(212,168,71,0.1);border-radius:16px;padding:36px;cursor:pointer;transition:all .35s;position:relative;overflow:hidden;}
-.ind-trs-card::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(212,168,71,0.05),transparent 60%);opacity:0;transition:opacity .3s;}
-.ind-trs-card:hover::before{opacity:1;}
-.ind-trs-card::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:var(--gold);transform:scaleX(0);transition:transform .35s;transform-origin:left;}
-.ind-trs-card:hover::after{transform:scaleX(1);}
-.ind-trs-card:hover{border-color:rgba(212,168,71,0.3);transform:translateY(-3px);box-shadow:0 16px 40px rgba(0,0,0,0.3);}
-.ind-trs-card.agudo{border-color:rgba(91,168,212,0.12);}
-.ind-trs-card.agudo::after{background:var(--blue, #5BA8D4);}
-.ind-trs-card.agudo:hover{border-color:rgba(91,168,212,0.3);}
-.ind-trs-icon{width:50px;height:50px;border-radius:12px;background:rgba(212,168,71,0.08);border:1px solid rgba(212,168,71,0.2);display:flex;align-items:center;justify-content:center;margin-bottom:20px;}
-.ind-trs-card.agudo .ind-trs-icon{background:rgba(91,168,212,0.08);border-color:rgba(91,168,212,0.2);}
-.ind-trs-label{font-family:'Cinzel',serif;font-size:9px;letter-spacing:3px;color:var(--gold);text-transform:uppercase;margin-bottom:8px;}
-.ind-trs-card.agudo .ind-trs-label{color:#5BA8D4;}
-.ind-trs-title{font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:300;color:var(--white);line-height:1.2;margin-bottom:12px;}
-.ind-trs-title em{color:var(--gold-pale);font-style:italic;}
-.ind-trs-card.agudo .ind-trs-title em{color:#A8D4F0;}
-.ind-trs-desc{font-family:'Cormorant Garamond',serif;font-size:15px;font-style:italic;color:rgba(232,213,160,0.6);line-height:1.7;margin-bottom:18px;}
-.ind-trs-tags{display:flex;gap:7px;flex-wrap:wrap;}
-.ind-trs-tag{font-family:'Cinzel',serif;font-size:8px;letter-spacing:2px;color:var(--gold);background:rgba(212,168,71,0.07);border:1px solid rgba(212,168,71,0.15);padding:3px 10px;border-radius:20px;}
-.ind-trs-card.agudo .ind-trs-tag{color:#5BA8D4;background:rgba(91,168,212,0.07);border-color:rgba(91,168,212,0.15);}
-
-/* Sub-nav TRS Crônico */
-.ind-subnav{display:none;background:rgba(27,42,74,0.7);border-bottom:1px solid rgba(212,168,71,0.08);padding:0 36px;height:46px;align-items:center;gap:10px;flex-shrink:0;}
+/* SUBNAV */
+.ind-subnav{display:none;background:rgba(22,22,22,0.95);border-bottom:1px solid var(--border);height:44px;padding:0 32px;align-items:center;gap:8px;flex-shrink:0;}
 .ind-subnav.visible{display:flex;}
-.ind-subnav-label{font-family:'Cinzel',serif;font-size:9px;letter-spacing:3px;color:rgba(212,168,71,0.4);text-transform:uppercase;}
-.ind-subnav-sep{width:1px;height:16px;background:rgba(212,168,71,0.1);}
-.ind-subnav-btn{font-family:'Cinzel',serif;font-size:10px;letter-spacing:2px;color:rgba(232,213,160,0.5);background:transparent;border:1px solid rgba(212,168,71,0.1);border-radius:5px;padding:5px 12px;cursor:pointer;transition:all .2s;}
-.ind-subnav-btn.active{background:rgba(212,168,71,0.1);color:var(--gold);border-color:rgba(212,168,71,0.4);}
-.ind-subnav-btn:hover:not(.active){color:var(--gold-pale);}
+.ind-subnav-label{font-size:9px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--text-muted);}
+.ind-subnav-btn{font-family:inherit;font-size:10px;font-weight:600;letter-spacing:1px;color:var(--text-secondary);background:transparent;border:1px solid var(--border);border-radius:5px;padding:4px 12px;cursor:pointer;transition:all .2s;}
+.ind-subnav-btn.active{background:var(--gold-dim);color:var(--gold);border-color:var(--gold-border);}
+.ind-subnav-btn:hover:not(.active){color:var(--text-primary);border-color:var(--border-hover);}
 
-/* Iframes */
+/* HOME DO OVERLAY */
+.ind-home{flex:1;overflow-y:auto;padding:52px 40px;display:none;}
+.ind-home.active{display:block;}
+.ind-home-eyebrow{font-size:9px;font-weight:600;letter-spacing:4px;text-transform:uppercase;color:var(--gold-muted);margin-bottom:12px;}
+.ind-home-title{font-size:clamp(24px,3vw,36px);font-weight:400;color:var(--text-primary);margin-bottom:36px;}
+.ind-home-title strong{font-weight:700;color:var(--gold);}
+.ind-trs-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;max-width:1000px;}
+
+/* CARDS TRS */
+.trs-card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:28px;cursor:pointer;transition:border-color .25s,background .25s;position:relative;overflow:hidden;}
+.trs-card::after{content:'';position:absolute;top:0;left:0;right:0;height:2px;opacity:0;transition:opacity .25s;}
+.trs-card.cron::after{background:var(--gold);}
+.trs-card.agud::after{background:var(--blue);}
+.trs-card.tv::after{background:var(--green);}
+.trs-card:hover{border-color:var(--border-hover);background:var(--card-hover);}
+.trs-card.cron:hover::after,.trs-card.cron{border-color:var(--gold-border);}
+.trs-card.cron:hover::after{opacity:0.7;}
+.trs-card.agud{border-color:rgba(91,168,212,0.14);}
+.trs-card.agud:hover::after{opacity:0.7;}
+.trs-card.tv{border-color:rgba(76,175,125,0.14);}
+.trs-card.tv:hover::after{opacity:0.7;}
+.trs-card-icon{width:38px;height:38px;border-radius:8px;display:flex;align-items:center;justify-content:center;margin-bottom:18px;}
+.trs-card.cron .trs-card-icon{background:var(--gold-dim);border:1px solid var(--gold-border);}
+.trs-card.agud .trs-card-icon{background:rgba(91,168,212,0.07);border:1px solid rgba(91,168,212,0.15);}
+.trs-card.tv .trs-card-icon{background:rgba(76,175,125,0.07);border:1px solid rgba(76,175,125,0.15);}
+.trs-card-label{font-size:9px;font-weight:600;letter-spacing:2px;text-transform:uppercase;margin-bottom:8px;}
+.trs-card.cron .trs-card-label{color:var(--gold-muted);}
+.trs-card.agud .trs-card-label{color:rgba(91,168,212,0.55);}
+.trs-card.tv .trs-card-label{color:rgba(76,175,125,0.55);}
+.trs-card-title{font-size:16px;font-weight:600;color:var(--text-primary);margin-bottom:8px;line-height:1.3;}
+.trs-card-desc{font-size:12px;font-weight:400;color:var(--text-secondary);line-height:1.7;margin-bottom:16px;}
+.trs-card-tags{display:flex;gap:5px;flex-wrap:wrap;}
+.trs-tag{font-size:8px;font-weight:500;padding:2px 8px;border-radius:4px;}
+.trs-card.cron .trs-tag{color:var(--gold-muted);background:var(--gold-dim);border:1px solid var(--gold-border);}
+.trs-card.agud .trs-tag{color:rgba(91,168,212,0.6);background:rgba(91,168,212,0.06);border:1px solid rgba(91,168,212,0.14);}
+.trs-card.tv .trs-tag{color:rgba(76,175,125,0.6);background:rgba(76,175,125,0.06);border:1px solid rgba(76,175,125,0.14);}
+
+/* Tela intermediária crônico */
+.cron-mid{flex:1;overflow-y:auto;padding:52px 40px;display:none;}
+.cron-mid.active{display:block;}
+.cron-mid-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;max-width:600px;margin-top:28px;}
+
+/* Tela seleção unidade */
+.unit-sel{flex:1;overflow-y:auto;padding:52px 40px;display:none;}
+.unit-sel.active{display:block;}
+.unit-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;max-width:900px;margin-top:28px;}
+.unit-card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:24px 20px;cursor:pointer;transition:border-color .25s,background .25s;position:relative;overflow:hidden;text-align:center;}
+.unit-card::after{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--gold);opacity:0;transition:opacity .25s;}
+.unit-card:hover{border-color:var(--border-hover);background:var(--card-hover);}
+.unit-card:hover::after{opacity:0.5;}
+.unit-card.featured{border-color:var(--gold-border);}
+.unit-card.featured::after{opacity:0.3;}
+.unit-card.disabled{opacity:0.35;cursor:default;pointer-events:none;}
+.unit-card-icon{width:40px;height:40px;border-radius:8px;background:var(--gold-dim);border:1px solid var(--gold-border);display:flex;align-items:center;justify-content:center;margin:0 auto 14px;}
+.unit-card-name{font-size:14px;font-weight:600;color:var(--text-primary);margin-bottom:5px;}
+.unit-card-sub{font-size:11px;font-weight:400;color:var(--text-secondary);line-height:1.5;}
+
+/* IFRAMES */
 .ind-content{flex:1;overflow:hidden;display:none;}
 .ind-content.active{display:block;}
 .ind-iframe{width:100%;height:100%;border:none;display:none;}
 .ind-iframe.active{display:block;}
 
 @media(max-width:900px){
-  .grid-top,.grid-bottom{grid-template-columns:1fr;}
-  .hero,.modulos{padding:40px 24px;}
   nav{padding:0 20px;}
-  .ind-nav{padding:0 16px;flex-wrap:wrap;height:auto;padding:8px 16px;}
-  .ind-nav-btns{gap:4px;}
+  .hero{padding:48px 20px 40px;}
+  .modulos{padding:36px 20px;}
+  .grid-main{grid-template-columns:1fr;}
+  .grid-sub{grid-template-columns:1fr 1fr;}
+  .ind-trs-grid{grid-template-columns:1fr;}
+  .ind-home{padding:32px 20px;}
+  .ind-nav{padding:0 16px;}
 }
 </style>
 </head>
@@ -156,247 +196,301 @@ nav{background:var(--navy-mid);border-bottom:2px solid rgba(212,168,71,0.12);pad
 
 <nav>
   <a href="index.html" class="nav-logo">APEX</a>
-  <div class="nav-sep"></div>
+  <div class="nav-div"></div>
   <span class="nav-section">Profissionais da Saúde</span>
   <a href="index.html" class="nav-back">← Início</a>
 </nav>
 
-<section class="hero">
-  <div class="hero-bg">
-    <svg width="100%" height="100%" viewBox="0 0 1200 280" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
-      <ellipse cx="1000" cy="140" rx="450" ry="280" fill="rgba(212,168,71,0.03)" transform="rotate(-10 1000 140)"/>
-      <circle cx="1100" cy="140" r="250" fill="none" stroke="rgba(212,168,71,0.05)" stroke-width="1"/>
-      <circle cx="200" cy="140" r="2" fill="rgba(212,168,71,0.2)"/>
-      <circle cx="500" cy="60" r="1.5" fill="rgba(212,168,71,0.15)"/>
-    </svg>
-  </div>
-  <div class="hero-text">
-    <p class="hero-eyebrow">Portal</p>
-    <h1 class="hero-title">Profissionais<br><em>da Saúde</em></h1>
-    <p class="hero-desc">Indicadores clínicos, ferramentas de cálculo, material educativo e protocolos — tudo em um só lugar para o profissional de nefrologia.</p>
-  </div>
-  <svg class="hero-ilus" width="200" height="200" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M65 100C65 70 76 48 88 48C98 48 106 62 106 76C106 90 98 98 93 101C98 104 106 114 106 128C106 142 98 152 88 152C76 152 65 132 65 100Z" fill="none" stroke="#D4A847" stroke-width="1.5" opacity="0.6"/>
-    <ellipse cx="88" cy="101" rx="14" ry="18" fill="none" stroke="#D4A847" stroke-width="1" opacity="0.4"/>
-    <path d="M80 84C75 76 77 68 82 66" stroke="#D4A847" stroke-width="0.8" opacity="0.5"/>
-    <path d="M88 80C88 72 90 66 94 65" stroke="#D4A847" stroke-width="0.8" opacity="0.5"/>
-    <path d="M96 86C102 78 103 70 98 67" stroke="#D4A847" stroke-width="0.8" opacity="0.5"/>
-    <path d="M88 152C88 162 90 170 92 178" stroke="#D4A847" stroke-width="1" stroke-dasharray="4 3" opacity="0.4"/>
-    <circle cx="88" cy="100" r="80" fill="none" stroke="rgba(212,168,71,0.05)" stroke-width="1"/>
-  </svg>
-</section>
+<!-- HERO -->
+<div class="hero">
+  <p class="hero-eyebrow">Portal Profissional da Saúde</p>
+  <h1 class="hero-title">Gestão clínica <strong>integrada</strong><br>para nefrologistas</h1>
+  <p class="hero-desc">Dashboards de indicadores, ferramentas de cálculo, material de apoio e protocolos clínicos — reunidos em uma plataforma dedicada à prática nefrológica.</p>
+</div>
 
+<!-- MÓDULOS -->
 <div class="modulos">
-  <p class="modulos-label">Módulos</p>
-  <h2 class="modulos-title">Ferramentas para sua<br><em>prática clínica</em></h2>
-
-  <div class="grid-top">
-    <!-- 1. Indicadores -->
-    <div class="modulo destaque" onclick="abrirLogin()">
-      <span class="lock-badge">🔒 Acesso restrito</span>
-      <svg class="modulo-icon" viewBox="0 0 60 60" fill="none">
-        <rect x="6" y="14" width="48" height="36" rx="3" stroke="#D4A847" stroke-width="1.2"/>
-        <line x1="6" y1="24" x2="54" y2="24" stroke="#D4A847" stroke-width="1.2"/>
-        <rect x="12" y="31" width="8" height="12" rx="1.5" fill="rgba(212,168,71,0.2)" stroke="#D4A847" stroke-width="0.8"/>
-        <rect x="24" y="35" width="8" height="8" rx="1.5" fill="rgba(212,168,71,0.15)" stroke="#D4A847" stroke-width="0.8"/>
-        <rect x="36" y="29" width="8" height="14" rx="1.5" fill="rgba(212,168,71,0.25)" stroke="#D4A847" stroke-width="0.8"/>
-        <path d="M12 28L16 24L28 30L40 24L48 28" stroke="#D4A847" stroke-width="0.8" stroke-dasharray="2 2" opacity="0.5"/>
-      </svg>
-      <p class="modulo-num">Módulo 01</p>
-      <h3 class="modulo-name">Indicadores Clínicos</h3>
-      <p class="modulo-desc">Dashboard completo da rede Fênix, painel de lançamento mensal e fichas técnicas descritivas de cada indicador.</p>
-      <div class="modulo-tags">
-        <span class="modulo-tag">Dashboard</span>
-        <span class="modulo-tag">Lançamento Mensal</span>
-        <span class="modulo-tag">Fichas Técnicas</span>
-        <span class="modulo-tag">Análise IA</span>
-      </div>
-      <span class="modulo-link">🔒 Acessar com senha →</span>
-    </div>
-
-    <!-- 2. Material de Apoio -->
-    <a href="material_apoio.html" class="modulo">
-      <svg class="modulo-icon" viewBox="0 0 60 60" fill="none">
-        <path d="M22 30C22 20 26 14 30 14C34 14 37 19 37 24C37 29 34 31 32 32C34 33 37 37 37 42C37 47 34 50 30 50C26 50 22 44 22 30Z" fill="none" stroke="#D4A847" stroke-width="1.2"/>
-        <circle cx="18" cy="42" r="8" stroke="#D4A847" stroke-width="1" opacity="0.6"/>
-        <line x1="24" y1="48" x2="30" y2="54" stroke="#D4A847" stroke-width="1.5" stroke-linecap="round" opacity="0.5"/>
-        <path d="M42 16L46 22L52 20L48 26L54 28L48 30L50 36L44 32L40 38L40 32L34 34L38 28L32 24L39 24Z" fill="rgba(212,168,71,0.1)" stroke="#D4A847" stroke-width="0.8" opacity="0.5"/>
-      </svg>
-      <p class="modulo-num">Módulo 02</p>
-      <h3 class="modulo-name">Material de Apoio</h3>
-      <p class="modulo-desc">Ilustrações didáticas para uso em consultas — anatomia renal, diálise, transplante, dieta, acesso vascular e muito mais.</p>
-      <div class="modulo-tags">
-        <span class="modulo-tag">9 Ilustrações</span>
-        <span class="modulo-tag">Didático</span>
-        <span class="modulo-tag">Imprimível</span>
-      </div>
-      <span class="modulo-link">Acessar →</span>
-    </a>
+  <div class="modulos-header">
+    <p class="modulos-label">Módulos disponíveis</p>
+    <h2 class="modulos-title">Selecione uma <strong>ferramenta</strong></h2>
   </div>
 
-  <div class="grid-bottom">
-    <!-- 3. Calculadoras -->
-    <a href="calculadoras.html" class="modulo">
-      <svg class="modulo-icon" viewBox="0 0 60 60" fill="none">
-        <rect x="10" y="8" width="40" height="46" rx="4" stroke="#D4A847" stroke-width="1.2"/>
-        <rect x="15" y="14" width="30" height="12" rx="2" stroke="#D4A847" stroke-width="1" fill="rgba(212,168,71,0.08)"/>
-        <rect x="15" y="30" width="8" height="8" rx="1.5" stroke="#D4A847" stroke-width="0.8" opacity="0.6"/>
-        <rect x="26" y="30" width="8" height="8" rx="1.5" stroke="#D4A847" stroke-width="0.8" opacity="0.6"/>
-        <rect x="37" y="30" width="8" height="8" rx="1.5" stroke="#D4A847" stroke-width="0.8" opacity="0.6"/>
-        <rect x="15" y="42" width="8" height="8" rx="1.5" stroke="#D4A847" stroke-width="0.8" opacity="0.4"/>
-        <rect x="26" y="42" width="8" height="8" rx="1.5" stroke="#D4A847" stroke-width="0.8" opacity="0.4"/>
-        <rect x="37" y="42" width="8" height="18" rx="1.5" stroke="#D4A847" stroke-width="0.8" fill="rgba(212,168,71,0.12)"/>
-      </svg>
-      <p class="modulo-num">Módulo 03</p>
-      <h3 class="modulo-name">Calculadoras</h3>
-      <p class="modulo-desc">CKD-EPI, Kt/V, IMC, risco cardiovascular e dose por função renal.</p>
-      <div class="modulo-tags">
-        <span class="modulo-tag">5 Ferramentas</span>
-        <span class="modulo-tag">CKD-EPI</span>
-        <span class="modulo-tag">Kt/V</span>
+  <div class="grid-main">
+
+    <!-- Módulo 01 — Indicadores Clínicos -->
+    <div class="card featured" onclick="abrirLogin()">
+      <div class="card-meta">
+        <span class="card-badge lock">Acesso restrito</span>
+        <div class="card-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+            <rect x="3" y="3" width="18" height="18" rx="2" stroke="#B99454" stroke-width="1.4"/>
+            <line x1="3" y1="9" x2="21" y2="9" stroke="#B99454" stroke-width="1.2"/>
+            <rect x="6" y="13" width="3" height="5" rx="1" fill="rgba(185,148,84,0.25)" stroke="#B99454" stroke-width="0.8"/>
+            <rect x="11" y="11" width="3" height="7" rx="1" fill="rgba(185,148,84,0.15)" stroke="#B99454" stroke-width="0.8"/>
+            <rect x="16" y="14" width="3" height="4" rx="1" fill="rgba(185,148,84,0.2)" stroke="#B99454" stroke-width="0.8"/>
+          </svg>
+        </div>
       </div>
-      <span class="modulo-link">Acessar →</span>
+      <div class="card-title">Indicadores Clínicos</div>
+      <div class="card-desc">Dashboards de TRS crônico e agudo, lançamento de dados, painel executivo e análise de indicadores da rede Fênix Nefrologia.</div>
+      <div class="card-tags">
+        <span class="ctag">TRS Crônico</span>
+        <span class="ctag">TRS Agudo</span>
+        <span class="ctag">Painel TV</span>
+        <span class="ctag">Análise IA</span>
+      </div>
+    </div>
+
+    <!-- Módulo 02 — Material de Apoio -->
+    <a href="material_apoio.html" class="card">
+      <div class="card-meta">
+        <span class="card-badge">Material educativo</span>
+        <div class="card-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+            <path d="M12 6.5C12 4.5 13 3 14.5 3C16 3 17 4.5 17 6.5C17 8.5 16 9.5 15 10C16 10.5 17 12 17 14C17 16 16 17.5 14.5 17.5C13 17.5 12 16 12 14" stroke="#B99454" stroke-width="1.4" stroke-linecap="round"/>
+            <path d="M12 6.5C12 4.5 11 3 9.5 3C8 3 7 4.5 7 6.5C7 8.5 8 9.5 9 10C8 10.5 7 12 7 14C7 16 8 17.5 9.5 17.5" stroke="#B99454" stroke-width="1.4" stroke-linecap="round"/>
+            <line x1="12" y1="3" x2="12" y2="21" stroke="#B99454" stroke-width="1.2" stroke-dasharray="2 2" opacity="0.4"/>
+          </svg>
+        </div>
+      </div>
+      <div class="card-title">Material de Apoio</div>
+      <div class="card-desc">Ilustrações didáticas para uso em consultas — anatomia renal, diálise, transplante, acesso vascular e orientações ao paciente.</div>
+      <div class="card-tags">
+        <span class="ctag">9 Ilustrações</span>
+        <span class="ctag">Imprimível</span>
+      </div>
     </a>
 
-    <!-- 4. Manual Clínico -->
-    <div class="modulo" style="cursor:default;opacity:.7;">
-      <span class="soon-badge">Em breve</span>
-      <svg class="modulo-icon" viewBox="0 0 60 60" fill="none">
-        <rect x="10" y="6" width="34" height="46" rx="3" stroke="#D4A847" stroke-width="1.2"/>
-        <rect x="14" y="8" width="34" height="46" rx="3" stroke="#D4A847" stroke-width="0.8" opacity="0.3" transform="translate(2,2)"/>
-        <line x1="16" y1="18" x2="36" y2="18" stroke="#D4A847" stroke-width="0.8" opacity="0.6"/>
-        <line x1="16" y1="25" x2="36" y2="25" stroke="#D4A847" stroke-width="0.8" opacity="0.4"/>
-        <line x1="16" y1="32" x2="36" y2="32" stroke="#D4A847" stroke-width="0.8" opacity="0.4"/>
-        <line x1="16" y1="39" x2="28" y2="39" stroke="#D4A847" stroke-width="0.8" opacity="0.3"/>
-        <path d="M27 10L27 16M24 13L30 13" stroke="#D4A847" stroke-width="1.5" stroke-linecap="round"/>
-      </svg>
-      <p class="modulo-num">Módulo 04</p>
-      <h3 class="modulo-name">Manual Clínico</h3>
-      <p class="modulo-desc">Protocolos, diretrizes e condutas em nefrologia para toda a equipe.</p>
-      <div class="modulo-tags">
-        <span class="modulo-tag">Protocolos</span>
-        <span class="modulo-tag">Diretrizes</span>
+  </div>
+
+  <div class="grid-sub">
+
+    <!-- Módulo 03 — Calculadoras -->
+    <a href="calculadoras.html" class="card">
+      <div class="card-meta">
+        <span class="card-badge">Ferramentas</span>
+        <div class="card-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+            <rect x="4" y="2" width="16" height="20" rx="2" stroke="#B99454" stroke-width="1.4"/>
+            <rect x="7" y="6" width="10" height="4" rx="1" stroke="#B99454" stroke-width="1" fill="rgba(185,148,84,0.1)"/>
+            <rect x="7" y="13" width="3" height="3" rx="0.5" stroke="#B99454" stroke-width="0.8" opacity="0.6"/>
+            <rect x="10.5" y="13" width="3" height="3" rx="0.5" stroke="#B99454" stroke-width="0.8" opacity="0.6"/>
+            <rect x="14" y="13" width="3" height="3" rx="0.5" stroke="#B99454" stroke-width="0.8" opacity="0.6"/>
+            <rect x="7" y="17" width="3" height="3" rx="0.5" stroke="#B99454" stroke-width="0.8" opacity="0.4"/>
+            <rect x="10.5" y="17" width="3" height="3" rx="0.5" stroke="#B99454" stroke-width="0.8" opacity="0.4"/>
+            <rect x="14" y="17" width="3" height="6" rx="0.5" stroke="#B99454" stroke-width="0.8" fill="rgba(185,148,84,0.15)"/>
+          </svg>
+        </div>
       </div>
-      <span class="modulo-link" style="opacity:.65;">Em breve →</span>
+      <div class="card-title">Calculadoras</div>
+      <div class="card-desc">CKD-EPI, Kt/V, IMC, risco cardiovascular e ajuste de dose por função renal.</div>
+      <div class="card-tags">
+        <span class="ctag">5 ferramentas</span>
+        <span class="ctag">CKD-EPI</span>
+        <span class="ctag">Kt/V</span>
+      </div>
+    </a>
+
+    <!-- Módulo 04 — Manual Clínico -->
+    <div class="card disabled">
+      <div class="card-meta">
+        <span class="card-badge soon">Em breve</span>
+        <div class="card-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+            <path d="M4 19.5A2.5 2.5 0 016.5 17H20" stroke="#B99454" stroke-width="1.4" stroke-linecap="round"/>
+            <path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z" stroke="#B99454" stroke-width="1.4"/>
+            <line x1="8" y1="7" x2="16" y2="7" stroke="#B99454" stroke-width="0.8" opacity="0.5"/>
+            <line x1="8" y1="11" x2="16" y2="11" stroke="#B99454" stroke-width="0.8" opacity="0.4"/>
+            <line x1="8" y1="15" x2="13" y2="15" stroke="#B99454" stroke-width="0.8" opacity="0.3"/>
+          </svg>
+        </div>
+      </div>
+      <div class="card-title">Manual Clínico</div>
+      <div class="card-desc">Protocolos, diretrizes e condutas em nefrologia para toda a equipe assistencial.</div>
+      <div class="card-tags">
+        <span class="ctag">Protocolos</span>
+        <span class="ctag">Diretrizes</span>
+      </div>
     </div>
 
-    <!-- 5. Fichas Técnicas -->
-    <div class="modulo" style="cursor:default;opacity:.7;">
-      <span class="soon-badge">Em breve</span>
-      <svg class="modulo-icon" viewBox="0 0 60 60" fill="none">
-        <rect x="8" y="8" width="44" height="44" rx="4" stroke="#D4A847" stroke-width="1.2"/>
-        <line x1="8" y1="20" x2="52" y2="20" stroke="#D4A847" stroke-width="1"/>
-        <line x1="28" y1="20" x2="28" y2="52" stroke="#D4A847" stroke-width="1"/>
-        <text x="18" y="32" font-family="Georgia,serif" font-size="7" fill="#D4A847" text-anchor="middle" opacity="0.6">Ind.</text>
-        <text x="40" y="32" font-family="Georgia,serif" font-size="7" fill="#D4A847" text-anchor="middle" opacity="0.6">Meta</text>
-        <rect x="12" y="35" width="12" height="4" rx="1" fill="rgba(212,168,71,0.15)" stroke="#D4A847" stroke-width="0.6" opacity="0.6"/>
-        <rect x="32" y="35" width="16" height="4" rx="1" fill="rgba(45,106,79,0.2)" stroke="#2D6A4F" stroke-width="0.6" opacity="0.6"/>
-        <rect x="12" y="42" width="12" height="4" rx="1" fill="rgba(212,168,71,0.15)" stroke="#D4A847" stroke-width="0.6" opacity="0.6"/>
-        <rect x="32" y="42" width="16" height="4" rx="1" fill="rgba(45,106,79,0.2)" stroke="#2D6A4F" stroke-width="0.6" opacity="0.6"/>
-      </svg>
-      <p class="modulo-num">Módulo 05</p>
-      <h3 class="modulo-name">Fichas Técnicas</h3>
-      <p class="modulo-desc">Descrição detalhada de cada indicador — metodologia, meta e interpretação.</p>
-      <div class="modulo-tags">
-        <span class="modulo-tag">Indicadores</span>
-        <span class="modulo-tag">Metodologia</span>
+    <!-- Módulo 05 — Fichas Técnicas -->
+    <div class="card disabled">
+      <div class="card-meta">
+        <span class="card-badge soon">Em breve</span>
+        <div class="card-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+            <rect x="3" y="3" width="18" height="18" rx="2" stroke="#B99454" stroke-width="1.4"/>
+            <line x1="3" y1="9" x2="21" y2="9" stroke="#B99454" stroke-width="1"/>
+            <line x1="12" y1="9" x2="12" y2="21" stroke="#B99454" stroke-width="1"/>
+            <text x="7.5" y="15.5" font-family="inherit" font-size="4.5" fill="#B99454" text-anchor="middle" opacity="0.5">Ind.</text>
+            <text x="16.5" y="15.5" font-family="inherit" font-size="4.5" fill="#B99454" text-anchor="middle" opacity="0.5">Meta</text>
+          </svg>
+        </div>
       </div>
-      <span class="modulo-link" style="opacity:.85;">Em breve →</span>
+      <div class="card-title">Fichas Técnicas</div>
+      <div class="card-desc">Descrição detalhada de cada indicador — metodologia, meta e interpretação clínica.</div>
+      <div class="card-tags">
+        <span class="ctag">Indicadores</span>
+        <span class="ctag">Metodologia</span>
+      </div>
     </div>
+
   </div>
 </div>
 
 <!-- MODAL LOGIN -->
-<div class="modal-overlay" id="login-modal" onclick="fecharLoginFora(event)">
-  <div class="modal-login">
+<div class="overlay" id="login-modal" onclick="fecharLoginFora(event)">
+  <div class="modal">
     <button class="modal-close" onclick="fecharLogin()">✕</button>
-    <p class="modal-login-logo">Indicadores Clínicos · Fênix</p>
-    <h2 class="modal-login-title">Acesso Restrito</h2>
-    <p class="modal-login-sub">Entre com suas credenciais para continuar</p>
+    <p class="modal-eyebrow">Indicadores Clínicos · Fênix</p>
+    <h2 class="modal-title">Acesso restrito</h2>
+    <p class="modal-sub">Entre com suas credenciais para continuar</p>
     <div class="field">
       <label>E-mail</label>
-      <input type="email" id="login-email" placeholder="seu@email.com"/>
+      <input type="email" id="login-email" placeholder="seu@email.com" onkeydown="if(event.key==='Enter')fazerLogin()"/>
     </div>
     <div class="field">
       <label>Senha</label>
       <input type="password" id="login-senha" placeholder="••••••••" onkeydown="if(event.key==='Enter')fazerLogin()"/>
     </div>
-    <button class="btn-entrar" id="btn-login" onclick="fazerLogin()">Entrar</button>
+    <button class="btn-login" id="btn-login" onclick="fazerLogin()">Entrar</button>
     <div class="login-err" id="login-err"></div>
   </div>
 </div>
 
 <!-- OVERLAY INDICADORES -->
-<div class="indicadores-overlay" id="ind-overlay">
+<div class="ind-overlay" id="ind-overlay">
 
-  <!-- NAV -->
   <div class="ind-nav">
     <span class="ind-nav-logo">APEX</span>
     <div class="ind-nav-sep"></div>
     <span class="ind-nav-title" id="ind-nav-title">Indicadores Clínicos</span>
     <div class="ind-nav-space"></div>
-    <div class="ind-nav-btns">
-      <button class="ind-btn ind-btn-voltar" id="btn-voltar" onclick="voltarHome()">← Início</button>
-      <button class="ind-btn ind-btn-sair" onclick="sairIndicadores()">✕ Sair</button>
+    <button class="ind-btn ind-btn-voltar" id="btn-voltar" onclick="voltarHome()">← Início</button>
+    <button class="ind-btn ind-btn-sair" onclick="sairIndicadores()">✕ Sair</button>
+  </div>
+
+  <!-- TELA INTERMEDIÁRIA: TRS CRÔNICO -->
+  <div class="cron-mid" id="cron-mid">
+    <p class="ind-home-eyebrow">TRS Crônico</p>
+    <h2 class="ind-home-title">O que deseja <strong>acessar?</strong></h2>
+    <div class="cron-mid-grid">
+
+      <div class="trs-card cron" onclick="abrirDashboardCron()">
+        <div class="trs-card-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="2" stroke="#B99454" stroke-width="1.4"/><line x1="3" y1="9" x2="21" y2="9" stroke="#B99454" stroke-width="1.2"/><rect x="6" y="13" width="3" height="5" rx="1" fill="rgba(185,148,84,0.25)" stroke="#B99454" stroke-width="0.8"/><rect x="11" y="11" width="3" height="7" rx="1" fill="rgba(185,148,84,0.15)" stroke="#B99454" stroke-width="0.8"/><rect x="16" y="14" width="3" height="4" rx="1" fill="rgba(185,148,84,0.2)" stroke="#B99454" stroke-width="0.8"/></svg>
+        </div>
+        <div class="trs-card-label">Visualização</div>
+        <div class="trs-card-title">Dashboard</div>
+        <div class="trs-card-desc">Indicadores consolidados da rede — gráficos, metas e evolução mensal.</div>
+        <div class="trs-card-tags">
+          <span class="trs-tag">Rede completa</span>
+          <span class="trs-tag">Por unidade</span>
+        </div>
+      </div>
+
+      <div class="trs-card cron" onclick="abrirSelecaoUnidade()">
+        <div class="trs-card-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7" stroke="#B99454" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z" stroke="#B99454" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div class="trs-card-label">Entrada de dados</div>
+        <div class="trs-card-title">Lançamento Mensal</div>
+        <div class="trs-card-desc">Preenchimento dos indicadores mensais por unidade — RL, Santos e Tatuapé.</div>
+        <div class="trs-card-tags">
+          <span class="trs-tag">Por unidade</span>
+          <span class="trs-tag">Supabase</span>
+        </div>
+      </div>
+
     </div>
   </div>
 
-  <!-- SUB-NAV TRS CRÔNICO -->
-  <div class="ind-subnav" id="ind-subnav">
-    <span class="ind-subnav-label">TRS Crônico</span>
-    <div class="ind-nav-sep"></div>
-    <button class="ind-subnav-btn active" id="sub-dash" onclick="trocarSubView('dashboard')">▦ Dashboard</button>
-    <button class="ind-subnav-btn" id="sub-admin" onclick="trocarSubView('admin')">✎ Lançamento Mensal</button>
+  <!-- TELA SELEÇÃO DE UNIDADE -->
+  <div class="unit-sel" id="unit-sel">
+    <p class="ind-home-eyebrow">Lançamento Mensal — TRS Crônico</p>
+    <h2 class="ind-home-title">Selecione a <strong>unidade</strong></h2>
+    <div class="unit-grid">
+
+      <div class="unit-card featured" onclick="abrirLancamento('rl')">
+        <div class="unit-card-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" stroke="#B99454" stroke-width="1.4" stroke-linejoin="round"/><polyline points="9 22 9 12 15 12 15 22" stroke="#B99454" stroke-width="1.4" stroke-linejoin="round"/></svg>
+        </div>
+        <div class="unit-card-name">RL</div>
+        <div class="unit-card-sub">República do Líbano<br>São Paulo · SP</div>
+      </div>
+
+      <div class="unit-card featured" onclick="abrirLancamento('santos')">
+        <div class="unit-card-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" stroke="#B99454" stroke-width="1.4" stroke-linejoin="round"/><polyline points="9 22 9 12 15 12 15 22" stroke="#B99454" stroke-width="1.4" stroke-linejoin="round"/></svg>
+        </div>
+        <div class="unit-card-name">Santos</div>
+        <div class="unit-card-sub">Praiamar<br>Santos · SP</div>
+      </div>
+
+      <div class="unit-card featured" onclick="abrirLancamento('tatuape')">
+        <div class="unit-card-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" stroke="#B99454" stroke-width="1.4" stroke-linejoin="round"/><polyline points="9 22 9 12 15 12 15 22" stroke="#B99454" stroke-width="1.4" stroke-linejoin="round"/></svg>
+        </div>
+        <div class="unit-card-name">Tatuapé</div>
+        <div class="unit-card-sub">São Paulo · SP</div>
+      </div>
+
+      <div class="unit-card disabled">
+        <div class="unit-card-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="#B99454" stroke-width="1.4"/><line x1="12" y1="8" x2="12" y2="12" stroke="#B99454" stroke-width="1.4" stroke-linecap="round"/><line x1="12" y1="16" x2="12.01" y2="16" stroke="#B99454" stroke-width="1.4" stroke-linecap="round"/></svg>
+        </div>
+        <div class="unit-card-name">Nova unidade</div>
+        <div class="unit-card-sub">Em breve</div>
+      </div>
+
+    </div>
   </div>
 
-  <!-- HOME — 3 CARDS TRS -->
+  <!-- HOME -->
   <div class="ind-home active" id="ind-home">
     <p class="ind-home-eyebrow">Indicadores Clínicos</p>
-    <h2 class="ind-home-title">Selecione o <em>serviço</em></h2>
+    <h2 class="ind-home-title">Selecione um <strong>serviço</strong></h2>
     <div class="ind-trs-grid">
 
-      <!-- TRS CRÔNICO -->
-      <div class="ind-trs-card" onclick="abrirCronico()">
-        <div class="ind-trs-icon">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="2" stroke="#D4A847" stroke-width="1.4"/><line x1="3" y1="9" x2="21" y2="9" stroke="#D4A847" stroke-width="1.2"/><rect x="6" y="13" width="3" height="5" rx="1" fill="rgba(212,168,71,0.3)" stroke="#D4A847" stroke-width="0.8"/><rect x="11" y="11" width="3" height="7" rx="1" fill="rgba(212,168,71,0.2)" stroke="#D4A847" stroke-width="0.8"/><rect x="16" y="14" width="3" height="4" rx="1" fill="rgba(212,168,71,0.25)" stroke="#D4A847" stroke-width="0.8"/></svg>
+      <div class="trs-card cron" onclick="abrirCronico()">
+        <div class="trs-card-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="2" stroke="#B99454" stroke-width="1.4"/><line x1="3" y1="9" x2="21" y2="9" stroke="#B99454" stroke-width="1.2"/><rect x="6" y="13" width="3" height="5" rx="1" fill="rgba(185,148,84,0.25)" stroke="#B99454" stroke-width="0.8"/><rect x="11" y="11" width="3" height="7" rx="1" fill="rgba(185,148,84,0.15)" stroke="#B99454" stroke-width="0.8"/><rect x="16" y="14" width="3" height="4" rx="1" fill="rgba(185,148,84,0.2)" stroke="#B99454" stroke-width="0.8"/></svg>
         </div>
-        <p class="ind-trs-label">Terapia Renal Substitutiva</p>
-        <h3 class="ind-trs-title">Gestão <em>TRS Crônico</em></h3>
-        <p class="ind-trs-desc">Dashboard de indicadores mensais e lançamento de dados por unidade.</p>
-        <div class="ind-trs-tags">
-          <span class="ind-trs-tag">Dashboard</span>
-          <span class="ind-trs-tag">Lançamento Mensal</span>
-          <span class="ind-trs-tag">Por Unidade</span>
-        </div>
-      </div>
-
-      <!-- TRS AGUDO -->
-      <div class="ind-trs-card agudo" onclick="abrirAgudo()">
-        <div class="ind-trs-icon">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M12 3L3 7.5l9 4.5 9-4.5L12 3z" stroke="#5BA8D4" stroke-width="1.4" stroke-linejoin="round"/><path d="M3 16.5l9 4.5 9-4.5M3 12l9 4.5 9-4.5" stroke="#5BA8D4" stroke-width="1.4" stroke-linejoin="round"/></svg>
-        </div>
-        <p class="ind-trs-label">Terapia Renal Substitutiva</p>
-        <h3 class="ind-trs-title">Gestão <em>TRS Agudo</em></h3>
-        <p class="ind-trs-desc">Lançamento semanal de sessões por modalidade, acessos venosos e intercorrências clínicas.</p>
-        <div class="ind-trs-tags">
-          <span class="ind-trs-tag">HD · CRRT · DP · SLED</span>
-          <span class="ind-trs-tag">Intercorrências</span>
-          <span class="ind-trs-tag">Por Hospital</span>
+        <div class="trs-card-label">Terapia Renal Substitutiva</div>
+        <div class="trs-card-title">Gestão TRS Crônico</div>
+        <div class="trs-card-desc">Dashboard mensal e lançamento de dados das unidades RL, Santos e Tatuapé.</div>
+        <div class="trs-card-tags">
+          <span class="trs-tag">Dashboard</span>
+          <span class="trs-tag">Lançamento</span>
+          <span class="trs-tag">Por unidade</span>
         </div>
       </div>
 
-      <!-- PAINEL TV -->
-      <div class="ind-trs-card tv" onclick="abrirPainelTV()">
-        <div class="ind-trs-icon" style="background:rgba(93,203,138,0.08);border-color:rgba(93,203,138,0.2);">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><rect x="2" y="3" width="20" height="14" rx="2" stroke="#5DCB8A" stroke-width="1.4"/><path d="M8 21h8M12 17v4" stroke="#5DCB8A" stroke-width="1.4" stroke-linecap="round"/><rect x="5" y="6" width="4" height="3" rx="1" fill="rgba(93,203,138,0.3)" stroke="#5DCB8A" stroke-width="0.7"/><rect x="10" y="6" width="9" height="1.5" rx="0.75" fill="rgba(93,203,138,0.4)"/><rect x="10" y="9" width="6" height="1.5" rx="0.75" fill="rgba(93,203,138,0.25)"/></svg>
+      <div class="trs-card agud" onclick="abrirAgudo()">
+        <div class="trs-card-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M12 3L3 7.5l9 4.5 9-4.5L12 3z" stroke="#5BA8D4" stroke-width="1.4" stroke-linejoin="round"/><path d="M3 16.5l9 4.5 9-4.5M3 12l9 4.5 9-4.5" stroke="#5BA8D4" stroke-width="1.4" stroke-linejoin="round"/></svg>
         </div>
-        <p class="ind-trs-label" style="color:#5DCB8A;">Sala da Diretoria</p>
-        <h3 class="ind-trs-title">Painel de <em style="color:#A8E8C4;">Indicadores</em></h3>
-        <p class="ind-trs-desc">Visualização em TV — Crônico e Agudo lado a lado, otimizado para 16:9 com alto contraste.</p>
-        <div class="ind-trs-tags">
-          <span class="ind-trs-tag" style="color:#5DCB8A;background:rgba(93,203,138,0.07);border-color:rgba(93,203,138,0.15);">Crônico + Agudo</span>
-          <span class="ind-trs-tag" style="color:#5DCB8A;background:rgba(93,203,138,0.07);border-color:rgba(93,203,138,0.15);">TV 16:9</span>
-          <span class="ind-trs-tag" style="color:#5DCB8A;background:rgba(93,203,138,0.07);border-color:rgba(93,203,138,0.15);">Tempo real</span>
+        <div class="trs-card-label">Terapia Renal Substitutiva</div>
+        <div class="trs-card-title">Gestão TRS Agudo</div>
+        <div class="trs-card-desc">Lançamento semanal, acessos venosos e intercorrências por hospital.</div>
+        <div class="trs-card-tags">
+          <span class="trs-tag">HD · CRRT · DP · SLED</span>
+          <span class="trs-tag">Intercorrências</span>
+          <span class="trs-tag">Por hospital</span>
+        </div>
+      </div>
+
+      <div class="trs-card tv" onclick="abrirPainelTV()">
+        <div class="trs-card-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><rect x="2" y="3" width="20" height="14" rx="2" stroke="#4CAF7D" stroke-width="1.4"/><path d="M8 21h8M12 17v4" stroke="#4CAF7D" stroke-width="1.4" stroke-linecap="round"/><rect x="5" y="6" width="4" height="3" rx="1" fill="rgba(76,175,125,0.2)" stroke="#4CAF7D" stroke-width="0.7"/><rect x="10" y="6" width="9" height="1.5" rx="0.75" fill="rgba(76,175,125,0.35)"/><rect x="10" y="9" width="6" height="1.5" rx="0.75" fill="rgba(76,175,125,0.2)"/></svg>
+        </div>
+        <div class="trs-card-label">Sala da Diretoria</div>
+        <div class="trs-card-title">Painel de Indicadores</div>
+        <div class="trs-card-desc">Visão executiva em TV 16:9 — Crônico e Agudo em tempo real com atualização automática.</div>
+        <div class="trs-card-tags">
+          <span class="trs-tag">Crônico + Agudo</span>
+          <span class="trs-tag">TV 16:9</span>
+          <span class="trs-tag">Auto-atualização</span>
         </div>
       </div>
 
@@ -409,149 +503,128 @@ nav{background:var(--navy-mid);border-bottom:2px solid rgba(212,168,71,0.12);pad
     <iframe id="iframe-admin" class="ind-iframe" src=""></iframe>
     <iframe id="iframe-agudo" class="ind-iframe" src=""></iframe>
     <iframe id="iframe-tv" class="ind-iframe" src=""></iframe>
+    <iframe id="iframe-lanc-rl" class="ind-iframe" src=""></iframe>
+    <iframe id="iframe-lanc-santos" class="ind-iframe" src=""></iframe>
+    <iframe id="iframe-lanc-tatuape" class="ind-iframe" src=""></iframe>
   </div>
 
 </div>
 
 <script>
-const SUPA_URL = 'https://syzmsixhjlutsynnqivv.supabase.co';
-const SUPA_KEY = 'sb_publishable_poKCFHc9n1CtIfCbAxTN0Q_dmlsEy1t';
+const SUPA_URL='https://syzmsixhjlutsynnqivv.supabase.co';
+const SUPA_KEY='sb_publishable_poKCFHc9n1CtIfCbAxTN0Q_dmlsEy1t';
 
-function abrirLogin() {
-  document.getElementById('login-modal').classList.add('show');
-  setTimeout(() => document.getElementById('login-email').focus(), 100);
-}
-function fecharLogin() {
-  document.getElementById('login-modal').classList.remove('show');
-  document.getElementById('login-err').textContent = '';
-}
-function fecharLoginFora(e) {
-  if(e.target === document.getElementById('login-modal')) fecharLogin();
-}
+function abrirLogin(){document.getElementById('login-modal').classList.add('show');setTimeout(()=>document.getElementById('login-email').focus(),100);}
+function fecharLogin(){document.getElementById('login-modal').classList.remove('show');document.getElementById('login-err').textContent='';}
+function fecharLoginFora(e){if(e.target===document.getElementById('login-modal'))fecharLogin();}
 
-async function fazerLogin() {
-  const email = document.getElementById('login-email').value.trim();
-  const senha = document.getElementById('login-senha').value;
-  const err = document.getElementById('login-err');
-  const btn = document.getElementById('btn-login');
-  err.textContent = '';
-  if(!email || !senha){ err.textContent = 'Preencha e-mail e senha.'; return; }
-  btn.disabled = true; btn.textContent = 'Entrando...';
-  try {
-    const resp = await fetch(`${SUPA_URL}/auth/v1/token?grant_type=password`, {
-      method:'POST',
-      headers:{'Content-Type':'application/json','apikey':SUPA_KEY},
-      body:JSON.stringify({email, password:senha})
-    });
-    const data = await resp.json();
-    if(data.error || !data.access_token){
-      err.textContent = 'E-mail ou senha incorretos.';
-      btn.disabled = false; btn.textContent = 'Entrar';
-      return;
-    }
+async function fazerLogin(){
+  const email=document.getElementById('login-email').value.trim();
+  const senha=document.getElementById('login-senha').value;
+  const err=document.getElementById('login-err');
+  const btn=document.getElementById('btn-login');
+  err.textContent='';
+  if(!email||!senha){err.textContent='Preencha e-mail e senha.';return;}
+  btn.disabled=true;btn.textContent='Entrando...';
+  try{
+    const resp=await fetch(`${SUPA_URL}/auth/v1/token?grant_type=password`,{method:'POST',headers:{'Content-Type':'application/json','apikey':SUPA_KEY},body:JSON.stringify({email,password:senha})});
+    const data=await resp.json();
+    if(data.error||!data.access_token){err.textContent='E-mail ou senha incorretos.';btn.disabled=false;btn.textContent='Entrar';return;}
     sessionStorage.setItem('apex_gestor_logado','1');
     fecharLogin();
     abrirIndicadores();
-  } catch(e) {
-    err.textContent = 'Erro de conexão.';
-    btn.disabled = false; btn.textContent = 'Entrar';
-  }
+  }catch(e){err.textContent='Erro de conexão.';btn.disabled=false;btn.textContent='Entrar';}
 }
 
-function abrirIndicadores() {
-  document.getElementById('ind-overlay').classList.add('show');
-  voltarHome();
-}
+function abrirIndicadores(){document.getElementById('ind-overlay').classList.add('show');voltarHome();}
 
-function voltarHome() {
-  // Mostra home, esconde content e subnav
+function voltarHome(){
   document.getElementById('ind-home').classList.add('active');
+  document.getElementById('cron-mid').classList.remove('active');
+  document.getElementById('unit-sel').classList.remove('active');
   document.getElementById('ind-content').classList.remove('active');
-  document.getElementById('ind-subnav').classList.remove('visible');
   document.getElementById('btn-voltar').classList.remove('visible');
-  document.getElementById('ind-nav-title').textContent = 'Indicadores Clínicos';
+  document.getElementById('ind-nav-title').textContent='Indicadores Clínicos';
 }
 
-function abrirCronico() {
+function abrirCronico(){
+  // Agora vai para tela intermediária
   document.getElementById('ind-home').classList.remove('active');
-  document.getElementById('ind-content').classList.add('active');
-  document.getElementById('ind-subnav').classList.add('visible');
+  document.getElementById('unit-sel').classList.remove('active');
+  document.getElementById('ind-content').classList.remove('active');
+  document.getElementById('cron-mid').classList.add('active');
   document.getElementById('btn-voltar').classList.add('visible');
-  document.getElementById('ind-nav-title').textContent = 'TRS Crônico';
-  trocarSubView('dashboard');
+  document.getElementById('ind-nav-title').textContent='TRS Crônico';
 }
 
-function abrirPainelTV() {
-  // Salva dados do crônico no localStorage para o painel TV ler
+function abrirDashboardCron(){
+  document.getElementById('cron-mid').classList.remove('active');
+  document.getElementById('ind-content').classList.add('active');
+  document.getElementById('ind-nav-title').textContent='Dashboard — TRS Crônico';
+  document.querySelectorAll('.ind-iframe').forEach(f=>f.classList.remove('active'));
+  const iframe=document.getElementById('iframe-dashboard');
+  iframe.classList.add('active');
+  if(!iframe.src||iframe.src===window.location.href)iframe.src='dashboard_fenix_C-Espacoso.html';
+}
+
+function abrirSelecaoUnidade(){
+  document.getElementById('cron-mid').classList.remove('active');
+  document.getElementById('unit-sel').classList.add('active');
+  document.getElementById('ind-nav-title').textContent='Lançamento Mensal — Selecione a unidade';
+}
+
+function abrirLancamento(unidade){
+  const nomes={rl:'RL — República do Líbano',santos:'Santos — Praiamar',tatuape:'Tatuapé'};
+  document.getElementById('unit-sel').classList.remove('active');
+  document.getElementById('ind-content').classList.add('active');
+  document.getElementById('ind-nav-title').textContent=`Lançamento — ${nomes[unidade]}`;
+  document.querySelectorAll('.ind-iframe').forEach(f=>f.classList.remove('active'));
+  const iframe=document.getElementById(`iframe-lanc-${unidade}`);
+  iframe.classList.add('active');
+  if(!iframe.src||iframe.src===window.location.href)iframe.src=`fenix_lanc.html?unidade=${unidade}`;
+}
+
+function abrirPainelTV(){
   try{
-    if(typeof BASE !== 'undefined' && BASE.pacientes){
-      const payload = {
-        pacientes: BASE.pacientes.rede,
-        sessoes:   BASE.sessoes.rede,
-        savedAt:   Date.now()
-      };
-      localStorage.setItem('apex_tv_cronico', JSON.stringify(payload));
+    if(typeof BASE!=='undefined'&&BASE.pacientes){
+      const payload={pacientes:BASE.pacientes.rede,sessoes:BASE.sessoes.rede,savedAt:Date.now()};
+      localStorage.setItem('apex_tv_cronico',JSON.stringify(payload));
     }
   }catch(e){}
-
-  // Abre dentro do overlay (igual agudo/crônico — sem abrir nova aba)
   document.getElementById('ind-home').classList.remove('active');
   document.getElementById('ind-content').classList.add('active');
-  document.getElementById('ind-subnav').classList.remove('visible');
   document.getElementById('btn-voltar').classList.add('visible');
-  document.getElementById('ind-nav-title').textContent = 'Painel de Indicadores';
-
-  const iframe = document.getElementById('iframe-tv');
-  document.querySelectorAll('.ind-iframe').forEach(f => f.classList.remove('active'));
+  document.getElementById('ind-nav-title').textContent='Painel de Indicadores';
+  const iframe=document.getElementById('iframe-tv');
+  document.querySelectorAll('.ind-iframe').forEach(f=>f.classList.remove('active'));
   iframe.classList.add('active');
-  if(!iframe.src || iframe.src === window.location.href) {
-    iframe.src = 'tv.html';
-  }
+  if(!iframe.src||iframe.src===window.location.href)iframe.src='tv.html';
 }
 
-function abrirAgudo() {
+function abrirAgudo(){
   document.getElementById('ind-home').classList.remove('active');
   document.getElementById('ind-content').classList.add('active');
-  document.getElementById('ind-subnav').classList.remove('visible');
   document.getElementById('btn-voltar').classList.add('visible');
-  document.getElementById('ind-nav-title').textContent = 'TRS Agudo';
-  // Carrega seletor de hospitais no iframe-agudo
-  const iframe = document.getElementById('iframe-agudo');
-  document.querySelectorAll('.ind-iframe').forEach(f => f.classList.remove('active'));
+  document.getElementById('ind-nav-title').textContent='TRS Agudo';
+  const iframe=document.getElementById('iframe-agudo');
+  document.querySelectorAll('.ind-iframe').forEach(f=>f.classList.remove('active'));
   iframe.classList.add('active');
-  if(!iframe.src || iframe.src === window.location.href) {
-    iframe.src = 'trs_agudo.html';
-  }
+  if(!iframe.src||iframe.src===window.location.href)iframe.src='trs_agudo.html';
 }
 
-function trocarSubView(view) {
-  const config = {
-    dashboard: { btn:'sub-dash', iframe:'iframe-dashboard', src:'dashboard_fenix_C-Espacoso.html' },
-    admin:     { btn:'sub-admin', iframe:'iframe-admin',    src:'fenix_admin.html' },
-  };
-  Object.entries(config).forEach(([k, c]) => {
-    document.getElementById(c.btn).classList.toggle('active', k === view);
-    const iframe = document.getElementById(c.iframe);
-    iframe.classList.toggle('active', k === view);
-    if(k === view && (!iframe.src || iframe.src === window.location.href)) {
-      iframe.src = c.src;
-    }
-  });
-  // Garante que agudo está desativo
-  document.getElementById('iframe-agudo').classList.remove('active');
-}
-
-function sairIndicadores() {
+function sairIndicadores(){
   sessionStorage.removeItem('apex_gestor_logado');
   document.getElementById('ind-overlay').classList.remove('show');
-  document.getElementById('iframe-dashboard').src = '';
-  document.getElementById('iframe-admin').src = '';
-  document.getElementById('iframe-agudo').src = '';
-  document.getElementById('iframe-tv').src = '';
-  document.getElementById('btn-login').disabled = false;
-  document.getElementById('btn-login').textContent = 'Entrar';
-  document.getElementById('login-email').value = '';
-  document.getElementById('login-senha').value = '';
+  document.getElementById('cron-mid').classList.remove('active');
+  document.getElementById('unit-sel').classList.remove('active');
+  ['iframe-dashboard','iframe-admin','iframe-agudo','iframe-tv','iframe-lanc-rl','iframe-lanc-santos','iframe-lanc-tatuape'].forEach(id=>{
+    const el=document.getElementById(id);
+    if(el)el.src='';
+  });
+  document.getElementById('btn-login').disabled=false;
+  document.getElementById('btn-login').textContent='Entrar';
+  document.getElementById('login-email').value='';
+  document.getElementById('login-senha').value='';
 }
 </script>
 </body>
