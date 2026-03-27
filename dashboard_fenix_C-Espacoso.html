@@ -138,25 +138,23 @@ canvas{display:block;width:100%;}
 <body>
 
 <!-- BARRA NAVEGAÇÃO PORTAL -->
-<div class="portal-nav">
-  <a href="portal_gestor.html" class="portal-nav-logo">APEX</a>
-  <div class="portal-nav-sep"></div>
-  <a href="dashboard_fenix_C-Espacoso.html" class="portal-nav-btn active">
-    ▦ Dashboard
-  </a>
-  <a href="fenix_admin.html" class="portal-nav-btn inactive">
-    ✎ Lançamento Mensal
-  </a>
-  <a href="portal_gestor.html" class="portal-nav-back">← Portal Gestor</a>
-</div>
-
-<div class="header">
-  <div>
-    <h1>Dashboard de Indicadores Clínicos</h1>
-    <p id="header-unidade-label">República do Libano &nbsp;·&nbsp; Praiamar (Santos) &nbsp;·&nbsp; Tatuapé</p>
-  </div>
-  <div class="header-logo">FÊNIX nefrologia</div>
-</div>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+.apex-nav{background:#161616;border-bottom:1px solid #2A2A2A;height:52px;display:flex;align-items:center;padding:0 32px;gap:16px;position:sticky;top:0;z-index:100;font-family:'Space Grotesk',system-ui,sans-serif;}
+.apex-nav-logo{font-size:12px;font-weight:700;color:#B99454;letter-spacing:5px;text-transform:uppercase;text-decoration:none;flex-shrink:0;}
+.apex-nav-div{width:1px;height:16px;background:#2A2A2A;flex-shrink:0;}
+.apex-nav-title{font-size:11px;font-weight:500;color:rgba(240,237,232,0.4);letter-spacing:1.5px;text-transform:uppercase;}
+.apex-nav-space{flex:1;}
+.apex-nav-back{font-size:11px;font-weight:600;color:rgba(240,237,232,0.4);letter-spacing:1px;text-decoration:none;background:none;border:1px solid #2A2A2A;cursor:pointer;font-family:inherit;padding:5px 14px;border-radius:5px;transition:color .2s,border-color .2s;}
+.apex-nav-back:hover{color:#B99454;border-color:rgba(185,148,84,0.3);}
+</style>
+<nav class="apex-nav">
+  <a href="portal_profissionais.html" class="apex-nav-logo">APEX</a>
+  <div class="apex-nav-div"></div>
+  <span class="apex-nav-title">Dashboard — TRS Crônico</span>
+  <div class="apex-nav-space"></div>
+  <a href="portal_profissionais.html" class="apex-nav-back">← Voltar</a>
+</nav>
 
 <!-- FILTRO DE UNIDADE -->
 <div style="background:#fff;border-bottom:1px solid #e8ddd0;padding:10px 36px;display:flex;align-items:center;gap:8px;flex-wrap:wrap;">

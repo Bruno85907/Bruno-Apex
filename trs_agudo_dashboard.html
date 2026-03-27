@@ -4,7 +4,16 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Dashboard TRS Agudo — APEX</title>
-<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+.apex-nav{background:#161616;border-bottom:1px solid #2A2A2A;height:52px;display:flex;align-items:center;padding:0 32px;gap:16px;font-family:'Space Grotesk',system-ui,sans-serif;}
+.apex-nav-logo{font-size:12px;font-weight:700;color:#B99454;letter-spacing:5px;text-transform:uppercase;text-decoration:none;flex-shrink:0;}
+.apex-nav-div{width:1px;height:16px;background:#2A2A2A;flex-shrink:0;}
+.apex-nav-title{font-size:11px;font-weight:500;color:rgba(240,237,232,0.4);letter-spacing:1.5px;text-transform:uppercase;}
+.apex-nav-space{flex:1;}
+.apex-nav-back{font-size:11px;font-weight:600;color:rgba(240,237,232,0.4);letter-spacing:1px;text-decoration:none;background:none;border:1px solid #2A2A2A;cursor:pointer;font-family:inherit;padding:5px 14px;border-radius:5px;transition:color .2s,border-color .2s;}
+.apex-nav-back:hover{color:#B99454;border-color:rgba(185,148,84,0.3);}
+</style>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
 body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Arial,sans-serif;background:#f0ebe3;color:#1c1c1e;font-size:15px;}
@@ -114,23 +123,13 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Arial,sans-serif;ba
 <body>
 
 <!-- HEADER COM LOGOS -->
-<div class="header">
-  <div class="header-left">
-    <div class="header-title">Dashboard — TRS Agudo</div>
-    <div class="header-sub" id="header-sub">Hospital · Visualização Mensal</div>
-  </div>
-  <div class="header-logos">
-    <div class="logo-fenix">
-      <div class="logo-fenix-main">FÊNIX</div>
-      <div class="logo-fenix-sub">nefrologia</div>
-    </div>
-    <div class="logo-divider"></div>
-    <div class="logo-hospital">
-      <div class="logo-hospital-main" id="logo-hosp-nome">Hospital Mont Serrat</div>
-      <div class="logo-hospital-sub">TRS Agudo</div>
-    </div>
-  </div>
-</div>
+<nav class="apex-nav">
+  <a href="portal_profissionais.html" class="apex-nav-logo">APEX</a>
+  <div class="apex-nav-div"></div>
+  <span class="apex-nav-title" id="header-sub">Dashboard — TRS Agudo</span>
+  <div class="apex-nav-space"></div>
+  <a href="trs_agudo.html" class="apex-nav-back">← Voltar</a>
+</nav>
 
 <!-- CONTROLES -->
 <div class="ctrl-bar">
@@ -153,8 +152,7 @@ const HOSPITAL_ID=params.get('hospital')||'mont_serrat';
 const HOSPITAL_NOME=params.get('nome')||'Hospital Mont Serrat';
 const STORAGE_KEY=`trs_agudo_${HOSPITAL_ID}`;
 
-document.getElementById('header-sub').textContent=`${HOSPITAL_NOME} · Visualização Mensal`;
-document.getElementById('logo-hosp-nome').textContent=HOSPITAL_NOME;
+document.getElementById('header-sub').textContent=`${HOSPITAL_NOME} · Dashboard TRS Agudo`;
 document.title=`Dashboard TRS Agudo — ${HOSPITAL_NOME}`;
 
 function isoWeekToDate(y,w){
