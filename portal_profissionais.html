@@ -608,16 +608,23 @@ function aplicarPermissoesOperador(){
 }
 
 function abrirLancamentoDireto(unidade){
-  // Operador vai direto para o lançamento sem passar pela tela intermediária
-  document.getElementById('ind-home').classList.remove('active');
-  document.getElementById('ind-content').classList.add('active');
-  document.getElementById('btn-voltar').classList.remove('visible'); // operador não volta
   const nomes={rl:'RL',santos:'Santos',tatuape:'Tatuapé'};
-  document.getElementById('ind-nav-title').textContent=`Lançamento — ${nomes[unidade]}`;
+  // Esconde todas as telas internas
+  document.getElementById('ind-home').classList.remove('active');
+  document.getElementById('cron-mid').classList.remove('active');
+  document.getElementById('unit-sel').classList.remove('active');
+  // Mostra área de iframes
+  document.getElementById('ind-content').classList.add('active');
+  // Operador tem botão voltar para ir ao início
+  document.getElementById('btn-voltar').classList.add('visible');
+  document.getElementById('ind-nav-title').textContent=`Lançamento — ${nomes[unidade]||unidade}`;
+  // Ativa o iframe correto
   document.querySelectorAll('.ind-iframe').forEach(f=>f.classList.remove('active'));
   const iframe=document.getElementById(`iframe-lanc-${unidade}`);
-  iframe.classList.add('active');
-  if(!iframe.src||iframe.src===window.location.href)iframe.src=`fenix_lanc.html?unidade=${unidade}`;
+  if(iframe){
+    iframe.classList.add('active');
+    if(!iframe.src||iframe.src===window.location.href)iframe.src=`fenix_lanc.html?unidade=${unidade}`;
+  }
 }
 
 function voltarHome(){
