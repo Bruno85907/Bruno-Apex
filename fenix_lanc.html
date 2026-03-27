@@ -569,5 +569,16 @@ function showToast(msg,type='ok'){
   setTimeout(()=>t.className='toast',3000);
 }
 </script>
+
+<script>
+// Esconde navbar quando aberto como iframe (embed=1)
+if(new URLSearchParams(window.location.search).get('embed')==='1'){
+  document.addEventListener('DOMContentLoaded',()=>{
+    const nav=document.querySelector('.apex-nav,nav.apex-nav,nav');
+    if(nav)nav.style.display='none';
+    document.body.style.paddingTop='0';
+  });
+}
+</script>
 </body>
 </html>

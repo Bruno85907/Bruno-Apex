@@ -69,17 +69,17 @@ nav{background:var(--surface);border-bottom:1px solid var(--border);height:52px;
 .login-err{font-size:11px;color:var(--red);margin-top:8px;text-align:center;min-height:18px;}
 .ind-overlay{display:none;position:fixed;inset:0;background:var(--bg);z-index:150;flex-direction:column;}
 .ind-overlay.show{display:flex;}
-.ind-nav{background:var(--surface);border-bottom:1px solid var(--border);height:52px;padding:0 32px;display:flex;align-items:center;gap:14px;flex-shrink:0;}
-.ind-nav-logo{font-size:12px;font-weight:700;color:var(--gold);letter-spacing:4px;text-transform:uppercase;}
-.ind-nav-sep{width:1px;height:16px;background:var(--border);}
-.ind-nav-title{font-size:11px;font-weight:500;color:var(--text-secondary);letter-spacing:1px;}
-.ind-nav-space{flex:1;}
+
+
+
+
+
 .ind-btn{font-family:inherit;font-size:11px;font-weight:600;letter-spacing:1px;color:var(--text-secondary);background:transparent;border:1px solid var(--border);border-radius:5px;padding:5px 13px;cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:5px;}
 .ind-btn:hover{border-color:var(--border-hover);color:var(--text-primary);}
 .ind-btn-sair{color:rgba(192,57,43,0.6);border-color:rgba(192,57,43,0.2);}
 .ind-btn-sair:hover{color:var(--red);border-color:rgba(192,57,43,0.4);}
-.ind-btn-voltar{display:none;}
-.ind-btn-voltar.visible{display:flex;}
+
+
 .ind-subnav{display:none;background:var(--surface);border-bottom:1px solid var(--border);height:44px;padding:0 32px;align-items:center;gap:8px;flex-shrink:0;}
 .ind-subnav.visible{display:flex;}
 .ind-subnav-label{font-size:9px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--text-muted);}
@@ -146,8 +146,21 @@ nav{background:var(--surface);border-bottom:1px solid var(--border);height:52px;
   .grid-sub{grid-template-columns:1fr 1fr;}
   .ind-trs-grid{grid-template-columns:1fr;}
   .ind-home,.cron-mid,.unit-sel{padding:32px 20px;}
-  .ind-nav{padding:0 16px;}
+  
 }
+
+.ind-nav{background:var(--surface);border-bottom:1px solid var(--border);height:52px;padding:0 32px;display:flex;align-items:center;gap:14px;flex-shrink:0;z-index:151;}
+.ind-breadcrumb{display:flex;align-items:center;gap:6px;flex:1;overflow:hidden;}
+.ind-bc-item{font-size:11px;font-weight:500;color:var(--text-muted);white-space:nowrap;cursor:pointer;transition:color .2s;text-decoration:none;background:none;border:none;font-family:inherit;padding:0;}
+.ind-bc-item:hover{color:var(--accent);}
+.ind-bc-item.active{color:var(--text-primary);font-weight:600;cursor:default;}
+.ind-bc-sep{font-size:10px;color:var(--border-hover);flex-shrink:0;}
+.ind-nav-logo{font-size:12px;font-weight:700;color:var(--accent);letter-spacing:4px;text-transform:uppercase;cursor:pointer;flex-shrink:0;}
+.ind-nav-sep{width:1px;height:16px;background:var(--border);flex-shrink:0;}
+.ind-btn{font-family:inherit;font-size:11px;font-weight:600;letter-spacing:1px;color:var(--text-secondary);background:transparent;border:1px solid var(--border);border-radius:5px;padding:5px 13px;cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:5px;}
+.ind-btn:hover{border-color:var(--border-hover);color:var(--text-primary);}
+.ind-btn-sair{color:rgba(192,57,43,0.6);border-color:rgba(192,57,43,0.2);}
+.ind-btn-sair:hover{color:var(--red);border-color:rgba(192,57,43,0.4);}
 </style>
 </head>
 <body>
@@ -320,11 +333,11 @@ nav{background:var(--surface);border-bottom:1px solid var(--border);height:52px;
 <div class="ind-overlay" id="ind-overlay">
 
   <div class="ind-nav">
-    <span class="ind-nav-logo">APEX</span>
+    <span class="ind-nav-logo" onclick="voltarHome()">APEX</span>
     <div class="ind-nav-sep"></div>
-    <span class="ind-nav-title" id="ind-nav-title">Indicadores Clínicos</span>
-    <div class="ind-nav-space"></div>
-    <button class="ind-btn ind-btn-voltar" id="btn-voltar" onclick="voltarHome()">← Início</button>
+    <nav class="ind-breadcrumb" id="ind-breadcrumb">
+      <span class="ind-bc-item active">Indicadores Clínicos</span>
+    </nav>
     <button class="ind-btn ind-btn-sair" onclick="sairIndicadores()">✕ Sair</button>
   </div>
 
@@ -479,6 +492,43 @@ function fecharLoginFora(e){if(e.target===document.getElementById('login-modal')
 // Perfil do usuário logado
 let PERFIL = null;
 
+// ── BREADCRUMB ────────────────────────────────────────────────
+function setBreadcrumb(items){
+  // items = [{label, onclick}] — último item é sempre ativo
+  const bc = document.getElementById('ind-breadcrumb');
+  bc.innerHTML = items.map((item, i) => {
+    const isLast = i === items.length - 1;
+    const sep = i > 0 ? '<span class="ind-bc-sep">›</span>' : '';
+    if(isLast){
+      return `${sep}<span class="ind-bc-item active">${item.label}</span>`;
+    }
+    return `${sep}<button class="ind-bc-item" onclick="${item.onclick}">${item.label}</button>`;
+  }).join('');
+}
+
+// ── BREADCRUMB ────────────────────────────────────────────────
+const BC_HOME = {label:'Indicadores Clínicos', fn:'voltarHome'};
+let BC_TRAIL = [BC_HOME];
+
+function setBreadcrumb(items){
+  // items = [{label, fn}] — fn é nome de função ou null para item ativo
+  BC_TRAIL = [BC_HOME, ...items];
+  renderBreadcrumb();
+}
+
+function renderBreadcrumb(){
+  const el = document.getElementById('ind-breadcrumb');
+  if(!el) return;
+  el.innerHTML = BC_TRAIL.map((item, i) => {
+    const isLast = i === BC_TRAIL.length - 1;
+    const sep = i > 0 ? '<span class="ind-bc-sep">›</span>' : '';
+    if(isLast){
+      return sep + `<span class="ind-bc-item active">${item.label}</span>`;
+    }
+    return sep + `<button class="ind-bc-item" onclick="${item.fn}()">${item.label}</button>`;
+  }).join('');
+}
+
 async function fazerLogin(){
   const email=document.getElementById('login-email').value.trim();
   const senha=document.getElementById('login-senha').value;
@@ -537,7 +587,7 @@ function aplicarPermissoesGestor(){
   document.querySelectorAll('.trs-card').forEach(c=>c.style.display='');
   document.querySelectorAll('.unit-card:not(.disabled)').forEach(c=>c.style.display='');
   // Atualiza título com nome
-  if(PERFIL)document.getElementById('ind-nav-title').textContent=`Indicadores Clínicos — ${PERFIL.nome}`;
+  setBreadcrumb([]);
 }
 
 function aplicarPermissoesOperador(){
@@ -562,26 +612,24 @@ function aplicarPermissoesOperador(){
   if(cardLanc)cardLanc.setAttribute('onclick',`abrirLancamentoDireto('${unidade}')`);
 
   // Atualiza título
-  document.getElementById('ind-nav-title').textContent=`Lançamento — ${PERFIL.nome}`;
+  setBreadcrumb([{label:`Lançamento — ${PERFIL.nome}`,fn:null}]);
 }
 
 function abrirLancamentoDireto(unidade){
   const nomes={rl:'RL',santos:'Santos',tatuape:'Tatuapé'};
-  // Esconde todas as telas internas
   document.getElementById('ind-home').classList.remove('active');
   document.getElementById('cron-mid').classList.remove('active');
   document.getElementById('unit-sel').classList.remove('active');
-  // Mostra área de iframes
   document.getElementById('ind-content').classList.add('active');
-  // Operador tem botão voltar para ir ao início
-  document.getElementById('btn-voltar').classList.add('visible');
-  document.getElementById('ind-nav-title').textContent=`Lançamento — ${nomes[unidade]||unidade}`;
-  // Ativa o iframe correto
+  setBreadcrumb([
+    {label:'TRS Crônico', onclick:'abrirCronico()'},
+    {label:'Lançamento — '+(nomes[unidade]||unidade)}
+  ]);
   document.querySelectorAll('.ind-iframe').forEach(f=>f.classList.remove('active'));
   const iframe=document.getElementById(`iframe-lanc-${unidade}`);
   if(iframe){
     iframe.classList.add('active');
-    if(!iframe.src||iframe.src===window.location.href)iframe.src=`fenix_lanc.html?unidade=${unidade}`;
+    if(!iframe.src||iframe.src===window.location.href)iframe.src=`fenix_lanc.html?unidade=${unidade}&embed=1`;
   }
 }
 
@@ -590,45 +638,58 @@ function voltarHome(){
   document.getElementById('cron-mid').classList.remove('active');
   document.getElementById('unit-sel').classList.remove('active');
   document.getElementById('ind-content').classList.remove('active');
-  document.getElementById('btn-voltar').classList.remove('visible');
-  document.getElementById('ind-nav-title').textContent='Indicadores Clínicos';
+  setBreadcrumb([{label:'Indicadores Clínicos'}]);
 }
 
 function abrirCronico(){
-  // Agora vai para tela intermediária
   document.getElementById('ind-home').classList.remove('active');
   document.getElementById('unit-sel').classList.remove('active');
   document.getElementById('ind-content').classList.remove('active');
   document.getElementById('cron-mid').classList.add('active');
-  document.getElementById('btn-voltar').classList.add('visible');
-  document.getElementById('ind-nav-title').textContent='TRS Crônico';
+  setBreadcrumb([
+    {label:'Indicadores Clínicos', onclick:'voltarHome()'},
+    {label:'TRS Crônico'}
+  ]);
 }
 
 function abrirDashboardCron(){
   document.getElementById('cron-mid').classList.remove('active');
   document.getElementById('ind-content').classList.add('active');
-  document.getElementById('ind-nav-title').textContent='Dashboard — TRS Crônico';
+  setBreadcrumb([
+    {label:'Indicadores Clínicos', onclick:'voltarHome()'},
+    {label:'TRS Crônico', onclick:'abrirCronico()'},
+    {label:'Dashboard'}
+  ]);
   document.querySelectorAll('.ind-iframe').forEach(f=>f.classList.remove('active'));
   const iframe=document.getElementById('iframe-dashboard');
   iframe.classList.add('active');
-  if(!iframe.src||iframe.src===window.location.href)iframe.src='dashboard_fenix_C-Espacoso.html';
+  if(!iframe.src||iframe.src===window.location.href)iframe.src='dashboard_fenix_C-Espacoso.html?embed=1';
 }
 
 function abrirSelecaoUnidade(){
   document.getElementById('cron-mid').classList.remove('active');
   document.getElementById('unit-sel').classList.add('active');
-  document.getElementById('ind-nav-title').textContent='Lançamento Mensal — Selecione a unidade';
+  setBreadcrumb([
+    {label:'Indicadores Clínicos', onclick:'voltarHome()'},
+    {label:'TRS Crônico', onclick:'abrirCronico()'},
+    {label:'Lançamento Mensal'}
+  ]);
 }
 
 function abrirLancamento(unidade){
-  const nomes={rl:'RL — República do Líbano',santos:'Santos — Praiamar',tatuape:'Tatuapé'};
+  const nomes={rl:'RL',santos:'Santos',tatuape:'Tatuapé'};
   document.getElementById('unit-sel').classList.remove('active');
   document.getElementById('ind-content').classList.add('active');
-  document.getElementById('ind-nav-title').textContent=`Lançamento — ${nomes[unidade]}`;
+  setBreadcrumb([
+    {label:'Indicadores Clínicos', onclick:'voltarHome()'},
+    {label:'TRS Crônico', onclick:'abrirCronico()'},
+    {label:'Lançamento Mensal', onclick:'abrirSelecaoUnidade()'},
+    {label:nomes[unidade]||unidade}
+  ]);
   document.querySelectorAll('.ind-iframe').forEach(f=>f.classList.remove('active'));
   const iframe=document.getElementById(`iframe-lanc-${unidade}`);
   iframe.classList.add('active');
-  if(!iframe.src||iframe.src===window.location.href)iframe.src=`fenix_lanc.html?unidade=${unidade}`;
+  if(!iframe.src||iframe.src===window.location.href)iframe.src=`fenix_lanc.html?unidade=${unidade}&embed=1`;
 }
 
 function abrirPainelTV(){
@@ -640,8 +701,10 @@ function abrirPainelTV(){
   }catch(e){}
   document.getElementById('ind-home').classList.remove('active');
   document.getElementById('ind-content').classList.add('active');
-  document.getElementById('btn-voltar').classList.add('visible');
-  document.getElementById('ind-nav-title').textContent='Painel de Indicadores';
+  setBreadcrumb([
+    {label:'Indicadores Clínicos', onclick:'voltarHome()'},
+    {label:'Painel de Indicadores'}
+  ]);
   const iframe=document.getElementById('iframe-tv');
   document.querySelectorAll('.ind-iframe').forEach(f=>f.classList.remove('active'));
   iframe.classList.add('active');
@@ -651,12 +714,14 @@ function abrirPainelTV(){
 function abrirAgudo(){
   document.getElementById('ind-home').classList.remove('active');
   document.getElementById('ind-content').classList.add('active');
-  document.getElementById('btn-voltar').classList.add('visible');
-  document.getElementById('ind-nav-title').textContent='TRS Agudo';
+  setBreadcrumb([
+    {label:'Indicadores Clínicos', onclick:'voltarHome()'},
+    {label:'TRS Agudo'}
+  ]);
   const iframe=document.getElementById('iframe-agudo');
   document.querySelectorAll('.ind-iframe').forEach(f=>f.classList.remove('active'));
   iframe.classList.add('active');
-  if(!iframe.src||iframe.src===window.location.href)iframe.src='trs_agudo.html';
+  if(!iframe.src||iframe.src===window.location.href)iframe.src='trs_agudo.html?embed=1';
 }
 
 function sairIndicadores(){
