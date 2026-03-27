@@ -485,7 +485,7 @@ async function salvar(){
   });
 
   try{
-    const resp=await fetch(`${SUPA_URL}/rest/v1/dados_mensais`,{
+    const resp=await fetch(`${SUPA_URL}/rest/v1/dados_mensais?on_conflict=ano,mes`,{
       method:'POST',
       headers:getHeaders({'Prefer':'resolution=merge-duplicates'}),
       body:JSON.stringify(payload),
