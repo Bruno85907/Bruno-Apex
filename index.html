@@ -3,231 +3,521 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Dr. Bruno Biluca — Medicina · Movimento · Propósito</title>
-<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<title>Dr. Bruno P. Biluca — Medicina · Movimento · Propósito</title>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root{
-  --bg:#F5F5F5;--surface:#FFF;--border:#E8E8E8;--border-hover:#D0D0D0;
-  --gold:#B99454;--gold-dim:#FDF8F0;--gold-border:#EDD9A3;
-  --text-primary:#111;--text-secondary:#555;--text-muted:#999;
-  --green:#2D7A4F;--red:#C0392B;
+  --bg:#FFFFFF;--surface:#FAFAFA;--border:#E8E8E8;--border-hover:#D0D0D0;
+  --gold:#B99454;--gold-dim:#FDF8F0;--gold-border:#EDD9A3;--gold-text:#7A6030;
+  --text-primary:#111111;--text-secondary:#555555;--text-muted:#999999;
+  --navy:#1B2A4A;--green:#2D7A4F;--red:#C0392B;
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
 html{scroll-behavior:smooth;}
 body{font-family:'Space Grotesk',system-ui,sans-serif;background:var(--bg);color:var(--text-primary);overflow-x:hidden;-webkit-font-smoothing:antialiased;}
 
-/* NAV */
-.nav{background:var(--surface);border-bottom:1px solid var(--border);position:fixed;top:0;left:0;right:0;z-index:100;height:52px;display:flex;align-items:center;padding:0 40px;gap:20px;}
+/* ── NAV ── */
+nav{background:#fff;border-bottom:1px solid var(--border);position:sticky;top:0;z-index:100;height:52px;display:flex;align-items:center;padding:0 40px;gap:20px;}
 .nav-logo{font-size:12px;font-weight:700;color:var(--gold);letter-spacing:5px;text-decoration:none;text-transform:uppercase;}
 .nav-div{width:1px;height:16px;background:var(--border);}
-.nav-links{display:flex;gap:6px;margin-left:auto;}
-.nav-link{font-size:11px;font-weight:500;color:var(--text-secondary);text-decoration:none;padding:6px 14px;border-radius:5px;border:1px solid transparent;transition:all .2s;}
+.nav-section{font-size:10px;font-weight:500;color:var(--text-muted);letter-spacing:2px;text-transform:uppercase;}
+.nav-links{margin-left:auto;display:flex;gap:6px;}
+.nav-link{font-size:11px;font-weight:500;color:var(--text-secondary);text-decoration:none;padding:5px 14px;border-radius:5px;border:1px solid transparent;transition:all .2s;}
 .nav-link:hover{border-color:var(--border);color:var(--text-primary);}
 .nav-link.cta{background:var(--gold);color:#fff;border-color:var(--gold);}
 .nav-link.cta:hover{opacity:0.88;}
 
-/* HERO */
-.hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:100px 40px 60px;max-width:1000px;margin:0 auto;}
-.hero-eyebrow{font-size:9px;font-weight:600;letter-spacing:4px;text-transform:uppercase;color:var(--gold);opacity:0.7;margin-bottom:20px;}
-.hero-title{font-size:clamp(36px,6vw,72px);font-weight:300;color:var(--text-primary);line-height:1.1;margin-bottom:20px;}
-.hero-title strong{font-weight:700;}
-.hero-desc{font-size:16px;color:var(--text-secondary);line-height:1.8;max-width:560px;margin-bottom:36px;}
-.hero-ctas{display:flex;gap:12px;flex-wrap:wrap;}
-.hero-cta{font-size:12px;font-weight:700;letter-spacing:1px;text-decoration:none;padding:12px 28px;border-radius:6px;transition:all .2s;}
-.hero-cta.primary{background:var(--gold);color:#fff;}
-.hero-cta.primary:hover{opacity:0.88;}
-.hero-cta.secondary{background:transparent;color:var(--text-secondary);border:1px solid var(--border);}
-.hero-cta.secondary:hover{border-color:var(--border-hover);color:var(--text-primary);}
+/* ── BLOCO 1: HERO IDENTIDADE ── */
+.hero{min-height:100vh;display:grid;grid-template-columns:1fr 1fr;align-items:center;padding:80px 40px 60px;max-width:1200px;margin:0 auto;gap:80px;}
+.hero-left{display:flex;flex-direction:column;gap:28px;}
+.hero-eyebrow{font-size:9px;font-weight:600;letter-spacing:4px;text-transform:uppercase;color:var(--gold);opacity:0.75;}
+.hero-name{font-size:clamp(36px,5vw,64px);font-weight:300;color:var(--text-primary);line-height:1.05;}
+.hero-name strong{font-weight:700;display:block;}
+.hero-name em{font-style:normal;color:var(--gold);font-weight:400;}
+.hero-desc{font-size:15px;color:var(--text-secondary);line-height:1.8;max-width:440px;}
+.hero-tags{display:flex;gap:8px;flex-wrap:wrap;}
+.htag{font-size:9px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--gold-text);background:var(--gold-dim);border:1px solid var(--gold-border);padding:5px 12px;border-radius:4px;}
+.hero-ctas{display:flex;gap:10px;margin-top:8px;}
+.cta-btn{font-size:12px;font-weight:700;letter-spacing:1px;text-decoration:none;padding:11px 24px;border-radius:6px;transition:all .2s;border:1px solid transparent;}
+.cta-btn.primary{background:var(--gold);color:#fff;border-color:var(--gold);}
+.cta-btn.primary:hover{opacity:0.88;}
+.cta-btn.secondary{background:transparent;color:var(--text-secondary);border-color:var(--border);}
+.cta-btn.secondary:hover{border-color:var(--border-hover);color:var(--text-primary);}
 
-/* PORTAIS */
-.portais{padding:80px 40px;max-width:1200px;margin:0 auto;}
-.section-label{font-size:9px;font-weight:600;letter-spacing:4px;text-transform:uppercase;color:var(--text-muted);margin-bottom:8px;}
-.section-title{font-size:28px;font-weight:400;color:var(--text-primary);margin-bottom:36px;}
-.section-title strong{font-weight:700;}
-.portais-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;}
-.portal-card{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:28px;text-decoration:none;display:block;transition:border-color .2s,box-shadow .2s;position:relative;overflow:hidden;}
-.portal-card::after{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--gold);opacity:0;transition:opacity .2s;}
-.portal-card:hover{border-color:var(--border-hover);box-shadow:0 2px 16px rgba(0,0,0,0.06);}
-.portal-card:hover::after{opacity:1;}
-.portal-card.featured{border-color:var(--gold-border);}
-.portal-card.featured::after{opacity:0.5;}
-.portal-icon{width:40px;height:40px;border-radius:8px;background:var(--gold-dim);border:1px solid var(--gold-border);display:flex;align-items:center;justify-content:center;margin-bottom:18px;}
-.portal-label{font-size:8px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--gold);opacity:0.65;margin-bottom:7px;}
-.portal-name{font-size:17px;font-weight:600;color:var(--text-primary);margin-bottom:7px;}
-.portal-desc{font-size:12px;color:var(--text-secondary);line-height:1.7;}
+/* Cruz SVG container */
+.hero-right{display:flex;align-items:center;justify-content:center;}
+.cruz-wrap{width:100%;max-width:420px;}
 
-/* FOOTER */
-.footer{border-top:1px solid var(--border);padding:28px 40px;display:flex;align-items:center;justify-content:space-between;}
-.footer-logo{font-size:11px;font-weight:700;color:var(--gold);letter-spacing:4px;text-transform:uppercase;}
-.footer-copy{font-size:11px;color:var(--text-muted);}
+/* Divisor */
+.divider{border:none;border-top:1px solid var(--border);max-width:1200px;margin:0 auto;}
 
-@media(max-width:768px){
-  .nav{padding:0 20px;}
-  .hero{padding:80px 20px 40px;}
-  .portais{padding:60px 20px;}
-  .portais-grid{grid-template-columns:1fr;}
-  .footer{padding:20px;flex-direction:column;gap:8px;text-align:center;}
+/* ── BLOCO 2: BIG NUMBERS ── */
+.numbers{padding:80px 40px;max-width:1200px;margin:0 auto;}
+.numbers-eyebrow{font-size:9px;font-weight:600;letter-spacing:4px;text-transform:uppercase;color:var(--text-muted);margin-bottom:14px;}
+.numbers-title{font-size:28px;font-weight:400;color:var(--text-primary);margin-bottom:52px;line-height:1.3;}
+.numbers-title strong{font-weight:700;}
+.numbers-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border);border:1px solid var(--border);border-radius:8px;overflow:hidden;}
+.num-card{background:#fff;padding:36px 28px;position:relative;}
+.num-card::after{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--gold);}
+.num-val{font-size:clamp(40px,5vw,64px);font-weight:300;color:var(--gold);line-height:1;margin-bottom:8px;}
+.num-val strong{font-weight:700;}
+.num-label{font-size:11px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-muted);line-height:1.5;}
+.num-sub{font-size:12px;color:var(--text-secondary);margin-top:6px;line-height:1.5;}
+.num-badge{display:inline-block;font-size:8px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;background:var(--gold-dim);color:var(--gold-text);border:1px solid var(--gold-border);padding:3px 8px;border-radius:3px;margin-top:8px;}
+
+/* ── BLOCO 3: CARROSSEL ── */
+.carrossel{padding:80px 40px;background:var(--surface);border-top:1px solid var(--border);border-bottom:1px solid var(--border);}
+.carr-header{max-width:1200px;margin:0 auto 40px;}
+.carr-eyebrow{font-size:9px;font-weight:600;letter-spacing:4px;text-transform:uppercase;color:var(--text-muted);margin-bottom:10px;}
+.carr-title{font-size:28px;font-weight:400;color:var(--text-primary);}
+.carr-title strong{font-weight:700;}
+.carr-track-wrap{overflow:hidden;max-width:1200px;margin:0 auto;position:relative;}
+.carr-track-wrap::before,.carr-track-wrap::after{content:'';position:absolute;top:0;bottom:0;width:60px;z-index:2;pointer-events:none;}
+.carr-track-wrap::before{left:0;background:linear-gradient(to right,var(--surface),transparent);}
+.carr-track-wrap::after{right:0;background:linear-gradient(to left,var(--surface),transparent);}
+.carr-track{display:flex;gap:16px;animation:slide 28s linear infinite;}
+.carr-track:hover{animation-play-state:paused;}
+@keyframes slide{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+.carr-card{flex-shrink:0;width:280px;background:#fff;border:1px solid var(--border);border-radius:8px;overflow:hidden;transition:border-color .2s,box-shadow .2s;text-decoration:none;display:block;}
+.carr-card:hover{border-color:var(--gold-border);box-shadow:0 2px 12px rgba(0,0,0,0.06);}
+.carr-img{height:160px;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;}
+.carr-img-label{position:absolute;bottom:10px;left:12px;font-size:8px;font-weight:700;letter-spacing:2px;text-transform:uppercase;background:rgba(255,255,255,0.9);color:var(--gold-text);padding:3px 8px;border-radius:3px;}
+.carr-body{padding:16px;}
+.carr-cat{font-size:8px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:6px;}
+.carr-title-card{font-size:13px;font-weight:600;color:var(--text-primary);line-height:1.4;margin-bottom:6px;}
+.carr-excerpt{font-size:11px;color:var(--text-secondary);line-height:1.6;}
+.carr-controls{display:flex;justify-content:center;gap:8px;margin-top:28px;}
+.carr-dot{width:6px;height:6px;border-radius:50%;background:var(--border);border:none;cursor:pointer;transition:background .2s;}
+.carr-dot.active{background:var(--gold);}
+.carr-pause{font-size:10px;font-weight:600;letter-spacing:1px;color:var(--text-muted);background:none;border:1px solid var(--border);padding:5px 14px;border-radius:4px;cursor:pointer;margin-left:12px;transition:all .2s;font-family:inherit;}
+.carr-pause:hover{color:var(--text-primary);border-color:var(--border-hover);}
+
+/* ── BLOCO 4: PARCERIAS ── */
+.parcerias{padding:80px 40px;max-width:1200px;margin:0 auto;}
+.parc-eyebrow{font-size:9px;font-weight:600;letter-spacing:4px;text-transform:uppercase;color:var(--text-muted);margin-bottom:10px;}
+.parc-title{font-size:28px;font-weight:400;color:var(--text-primary);margin-bottom:48px;}
+.parc-title strong{font-weight:700;}
+.parc-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;}
+.parc-card{background:#fff;border:1px solid var(--border);border-radius:8px;padding:28px 20px;text-align:center;transition:border-color .2s,box-shadow .2s;position:relative;overflow:hidden;}
+.parc-card::after{content:'';position:absolute;top:0;left:0;right:0;height:2px;opacity:0;transition:opacity .2s;}
+.parc-card:hover{border-color:var(--border-hover);box-shadow:0 2px 12px rgba(0,0,0,0.06);}
+.parc-card:hover::after{opacity:1;}
+.parc-card.fenix::after{background:#B99454;}
+.parc-card.mont::after{background:#2460A7;}
+.parc-card.idr::after{background:#4CAF8A;}
+.parc-card.gsi::after{background:#1B2A4A;}
+.parc-logo{font-size:11px;font-weight:700;letter-spacing:3px;text-transform:uppercase;margin-bottom:8px;}
+.parc-card.fenix .parc-logo{color:#B99454;}
+.parc-card.mont .parc-logo{color:#2460A7;}
+.parc-card.idr .parc-logo{color:#4CAF8A;}
+.parc-card.gsi .parc-logo{color:#1B2A4A;}
+.parc-name{font-size:14px;font-weight:600;color:var(--text-primary);margin-bottom:6px;line-height:1.3;}
+.parc-desc{font-size:11px;color:var(--text-secondary);line-height:1.6;}
+.parc-tag{display:inline-block;font-size:8px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;margin-top:10px;padding:3px 8px;border-radius:3px;}
+.parc-card.fenix .parc-tag{color:#7A6030;background:#FDF8F0;border:1px solid #EDD9A3;}
+.parc-card.mont .parc-tag{color:#1A4070;background:#EBF3FB;border:1px solid #9DC0E8;}
+.parc-card.idr .parc-tag{color:#1A5C3A;background:#EAF5EE;border:1px solid rgba(76,175,138,0.3);}
+.parc-card.gsi .parc-tag{color:#1B2A4A;background:#EEF1F7;border:1px solid rgba(27,42,74,0.2);}
+
+/* ── FOOTER ── */
+footer{border-top:1px solid var(--border);padding:28px 40px;display:flex;align-items:center;justify-content:space-between;background:#fff;}
+.foot-brand{font-size:11px;font-weight:700;color:var(--gold);letter-spacing:4px;text-transform:uppercase;}
+.foot-copy{font-size:11px;color:var(--text-muted);}
+.foot-links{display:flex;gap:20px;}
+.foot-link{font-size:11px;color:var(--text-secondary);text-decoration:none;transition:color .2s;}
+.foot-link:hover{color:var(--gold);}
+
+/* ── RESPONSIVO ── */
+@media(max-width:900px){
+  nav{padding:0 20px;}
+  .hero{grid-template-columns:1fr;min-height:auto;padding:80px 20px 40px;gap:40px;}
+  .hero-right{order:-1;}
+  .cruz-wrap{max-width:280px;margin:0 auto;}
+  .numbers{padding:60px 20px;}
+  .numbers-grid{grid-template-columns:1fr 1fr;}
+  .carrossel{padding:60px 20px;}
+  .parcerias{padding:60px 20px;}
+  .parc-grid{grid-template-columns:1fr 1fr;}
+  footer{flex-direction:column;gap:12px;text-align:center;padding:24px 20px;}
 }
 </style>
 </head>
 <body>
 
 <!-- NAV -->
-<nav class="nav">
+<nav>
   <a href="index.html" class="nav-logo">APEX</a>
   <div class="nav-div"></div>
+  <span class="nav-section">Dr. Bruno P. Biluca</span>
   <div class="nav-links">
-    <a href="portal_profissionais.html" class="nav-link">Profissionais</a>
-    <a href="portal_pacientes.html" class="nav-link">Pacientes</a>
-    <a href="portal_profissionais.html" class="nav-link cta">Acessar Portal</a>
+    <a href="portal_saude_performance.html" class="nav-link">Saúde & Performance</a>
+    <a href="portal_pacientes.html" class="nav-link">Para Pacientes</a>
+    <a href="portal_profissionais.html" class="nav-link cta">Profissionais</a>
   </div>
 </nav>
 
-<!-- HERO -->
+<!-- ═══════════════════════════════════════════════════════
+     BLOCO 1 — IDENTIDADE
+═══════════════════════════════════════════════════════ -->
 <section class="hero">
-  <p class="hero-eyebrow">Plataforma de Gestão em Saúde</p>
-  <h1 class="hero-title">Dados clínicos que<br><strong>geram decisões</strong></h1>
-  <p class="hero-desc">Dashboards, indicadores e ferramentas para equipes de nefrologia — integrados, seguros e acessíveis.</p>
-  <div class="hero-ctas">
-    <a href="portal_profissionais.html" class="hero-cta primary">Acessar Portal Profissional</a>
-    <a href="portal_pacientes.html" class="hero-cta secondary">Portal do Paciente</a>
+  <div class="hero-left">
+    <p class="hero-eyebrow">Nefrologista · Medicina · Movimento · Propósito</p>
+    <h1 class="hero-name">
+      <em>Dr. Bruno P.</em>
+      <strong>Biluca</strong>
+    </h1>
+    <p class="hero-desc">Médico nefrologista dedicado ao cuidado integral do paciente renal. Acredito que medicina de excelência começa pela escuta, é sustentada pela evidência e se completa com propósito.</p>
+    <div class="hero-tags">
+      <span class="htag">Nefrologia</span>
+      <span class="htag">TRS Crônico</span>
+      <span class="htag">TRS Agudo</span>
+      <span class="htag">Medicina de Performance</span>
+    </div>
+    <div class="hero-ctas">
+      <a href="portal_profissionais.html" class="cta-btn primary">Área Profissional</a>
+      <a href="portal_saude_performance.html" class="cta-btn secondary">Saúde & Performance</a>
+    </div>
+  </div>
+
+  <div class="hero-right">
+    <div class="cruz-wrap">
+      <!-- Cruz Matheus × Beatriz — versão final com halo dourado -->
+      <svg width="100%" viewBox="0 0 680 820" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <style>.ltr{font-family:Georgia,'Times New Roman',serif;font-weight:700;fill:#2D4270;}.ltr-t{font-family:Georgia,'Times New Roman',serif;font-weight:700;fill:#B99454;}</style>
+        </defs>
+        <!-- Halo externo -->
+        <rect x="288" y="162" width="104" height="460" rx="52" fill="none" stroke="#B99454" stroke-width="1" opacity="0.4"/>
+        <rect x="72" y="316" width="536" height="84" rx="42" fill="none" stroke="#B99454" stroke-width="1" opacity="0.4"/>
+        <ellipse cx="340" cy="140" rx="38" ry="30" fill="none" stroke="#B99454" stroke-width="1" opacity="0.4"/>
+        <ellipse cx="340" cy="662" rx="38" ry="30" fill="none" stroke="#B99454" stroke-width="1" opacity="0.4"/>
+        <ellipse cx="82" cy="358" rx="24" ry="36" fill="none" stroke="#B99454" stroke-width="1" opacity="0.4"/>
+        <ellipse cx="598" cy="358" rx="24" ry="36" fill="none" stroke="#B99454" stroke-width="1" opacity="0.4"/>
+        <!-- Halo interno -->
+        <rect x="298" y="170" width="84" height="444" rx="42" fill="none" stroke="#B99454" stroke-width="1.5" opacity="0.7"/>
+        <rect x="88" y="324" width="504" height="68" rx="34" fill="none" stroke="#B99454" stroke-width="1.5" opacity="0.7"/>
+        <ellipse cx="340" cy="152" rx="28" ry="22" fill="none" stroke="#B99454" stroke-width="1.5" opacity="0.7"/>
+        <ellipse cx="340" cy="656" rx="28" ry="22" fill="none" stroke="#B99454" stroke-width="1.5" opacity="0.7"/>
+        <ellipse cx="96" cy="358" rx="18" ry="28" fill="none" stroke="#B99454" stroke-width="1.5" opacity="0.7"/>
+        <ellipse cx="584" cy="358" rx="18" ry="28" fill="none" stroke="#B99454" stroke-width="1.5" opacity="0.7"/>
+        <!-- Haste vertical — MATHEUS -->
+        <rect x="306" y="176" width="68" height="436" fill="#1B2A4A"/>
+        <ellipse cx="340" cy="162" rx="24" ry="20" fill="#1B2A4A"/>
+        <ellipse cx="318" cy="168" rx="16" ry="16" fill="#1B2A4A"/>
+        <ellipse cx="362" cy="168" rx="16" ry="16" fill="#1B2A4A"/>
+        <ellipse cx="340" cy="146" rx="14" ry="16" fill="#1B2A4A"/>
+        <ellipse cx="340" cy="630" rx="24" ry="20" fill="#1B2A4A"/>
+        <ellipse cx="318" cy="624" rx="16" ry="16" fill="#1B2A4A"/>
+        <ellipse cx="362" cy="624" rx="16" ry="16" fill="#1B2A4A"/>
+        <ellipse cx="340" cy="648" rx="14" ry="16" fill="#1B2A4A"/>
+        <line x1="340" y1="172" x2="340" y2="316" stroke="#B99454" stroke-width="0.8" opacity="0.35"/>
+        <line x1="340" y1="406" x2="340" y2="616" stroke="#B99454" stroke-width="0.8" opacity="0.35"/>
+        <text x="340" y="230" class="ltr" font-size="30" text-anchor="middle">M</text>
+        <text x="340" y="296" class="ltr" font-size="30" text-anchor="middle">A</text>
+        <text x="340" y="432" class="ltr" font-size="30" text-anchor="middle">H</text>
+        <text x="340" y="480" class="ltr" font-size="30" text-anchor="middle">E</text>
+        <text x="340" y="526" class="ltr" font-size="30" text-anchor="middle">U</text>
+        <text x="340" y="570" class="ltr" font-size="30" text-anchor="middle">S</text>
+        <!-- Haste horizontal — BEATRIZ -->
+        <rect x="112" y="324" width="456" height="68" fill="#1B2A4A"/>
+        <ellipse cx="100" cy="358" rx="20" ry="24" fill="#1B2A4A"/>
+        <ellipse cx="106" cy="336" rx="14" ry="14" fill="#1B2A4A"/>
+        <ellipse cx="106" cy="380" rx="14" ry="14" fill="#1B2A4A"/>
+        <ellipse cx="86" cy="358" rx="14" ry="14" fill="#1B2A4A"/>
+        <ellipse cx="580" cy="358" rx="20" ry="24" fill="#1B2A4A"/>
+        <ellipse cx="574" cy="336" rx="14" ry="14" fill="#1B2A4A"/>
+        <ellipse cx="574" cy="380" rx="14" ry="14" fill="#1B2A4A"/>
+        <ellipse cx="594" cy="358" rx="14" ry="14" fill="#1B2A4A"/>
+        <line x1="142" y1="358" x2="304" y2="358" stroke="#B99454" stroke-width="0.8" opacity="0.35"/>
+        <line x1="376" y1="358" x2="538" y2="358" stroke="#B99454" stroke-width="0.8" opacity="0.35"/>
+        <text x="162" y="371" class="ltr" font-size="28" text-anchor="middle">B</text>
+        <text x="214" y="371" class="ltr" font-size="28" text-anchor="middle">E</text>
+        <text x="270" y="371" class="ltr" font-size="28" text-anchor="middle">A</text>
+        <text x="412" y="371" class="ltr" font-size="28" text-anchor="middle">R</text>
+        <text x="466" y="371" class="ltr" font-size="28" text-anchor="middle">I</text>
+        <text x="518" y="371" class="ltr" font-size="28" text-anchor="middle">Z</text>
+        <!-- Interseção — T dourado -->
+        <rect x="306" y="324" width="68" height="68" fill="#1B2A4A"/>
+        <text x="340" y="371" class="ltr-t" font-size="44" text-anchor="middle">T</text>
+        <!-- APEX -->
+        <text x="340" y="748" font-family="'Space Grotesk',Georgia,serif" font-size="38" font-weight="700" fill="#111111" text-anchor="middle" letter-spacing="14">APEX</text>
+        <line x1="192" y1="758" x2="288" y2="758" stroke="#B99454" stroke-width="1.5"/>
+        <circle cx="188" cy="758" r="3" fill="#B99454"/>
+        <circle cx="340" cy="758" r="3" fill="#B99454"/>
+        <line x1="392" y1="758" x2="488" y2="758" stroke="#B99454" stroke-width="1.5"/>
+        <circle cx="492" cy="758" r="3" fill="#B99454"/>
+        <text x="340" y="780" font-family="'Space Grotesk',Georgia,serif" font-size="10" fill="#999" text-anchor="middle" letter-spacing="3">medicina · fé · movimento</text>
+      </svg>
+    </div>
   </div>
 </section>
 
-<!-- NÚMEROS -->
-<section class="numeros">
-  <div class="numero"><div class="numero-val">3</div><div class="numero-label">Unidades</div></div>
-  <div class="numero"><div class="numero-val">+500</div><div class="numero-label">Pacientes</div></div>
-  <div class="numero"><div class="numero-val">15+</div><div class="numero-label">Anos de experiência</div></div>
-  <div class="numero"><div class="numero-val">2026</div><div class="numero-label">APEX</div></div>
-</section>
+<hr class="divider"/>
 
-<!-- PORTAIS -->
-<section class="portais">
-  <p class="section-label">Plataforma</p>
-  <h2 class="section-title">Nossos <strong>portais</strong></h2>
-  <div class="portais-grid">
-
-    <a href="portal_profissionais.html" class="portal-card featured">
-      <div class="portal-icon">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="2" stroke="#B99454" stroke-width="1.4"/><line x1="3" y1="9" x2="21" y2="9" stroke="#B99454" stroke-width="1.2"/><rect x="6" y="13" width="3" height="5" rx="1" fill="rgba(185,148,84,0.25)" stroke="#B99454" stroke-width="0.8"/><rect x="11" y="11" width="3" height="7" rx="1" fill="rgba(185,148,84,0.15)" stroke="#B99454" stroke-width="0.8"/><rect x="16" y="14" width="3" height="4" rx="1" fill="rgba(185,148,84,0.2)" stroke="#B99454" stroke-width="0.8"/></svg>
-      </div>
-      <p class="portal-label">Equipe Clínica</p>
-      <h3 class="portal-name">Portal Profissional</h3>
-      <p class="portal-desc">Indicadores de TRS crônico e agudo, lançamento de dados e painel executivo para nefrologistas.</p>
-    </a>
-
-    <a href="portal_pacientes.html" class="portal-card">
-      <div class="portal-icon">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="4" stroke="#B99454" stroke-width="1.4"/><path d="M4 20c0-3.314 3.582-6 8-6s8 2.686 8 6" stroke="#B99454" stroke-width="1.4" stroke-linecap="round"/></svg>
-      </div>
-      <p class="portal-label">Pacientes</p>
-      <h3 class="portal-name">Portal do Paciente</h3>
-      <p class="portal-desc">Acompanhamento de indicadores pessoais, evolução e comunicação com a equipe assistencial.</p>
-    </a>
-
-    <a href="portal_saude_performance.html" class="portal-card">
-      <div class="portal-icon">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12" stroke="#B99454" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </div>
-      <p class="portal-label">Performance</p>
-      <h3 class="portal-name">Saúde &amp; Performance</h3>
-      <p class="portal-desc">Monitoramento contínuo com wearables, HRV e indicadores de performance para pacientes crônicos.</p>
-    </a>
-
-  </div>
-</section>
-      <!-- Gradiente decorativo canto -->
-      <div class="portal-glow" style="background:radial-gradient(circle at 80% 20%, rgba(45,106,79,0.25) 0%, transparent 60%);"></div>
-      <div class="portal-content">
-        <!-- Ícone minimalista -->
-        <div class="portal-icon-wrap">
-          <svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <circle cx="18" cy="11" r="6" stroke="#D4A847" stroke-width="1.4"/>
-            <path d="M6 31c0-6.627 5.373-12 12-12s12 5.373 12 12" stroke="#D4A847" stroke-width="1.4" stroke-linecap="round"/>
-            <path d="M4 24l3 0 2-4 3 8 2-5 2 3 2 0 2-2 3 0" stroke="#D4A847" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </div>
-        <p class="portal-num">01</p>
-        <h3 class="portal-name">Público<br>Geral</h3>
-        <p class="portal-desc">Informação de saúde acessível. Conteúdo sobre doenças crônicas, longevidade e qualidade de vida.</p>
-        <div class="portal-tags">
-          <span class="portal-tag">Saúde</span>
-          <span class="portal-tag">Longevidade</span>
-          <span class="portal-tag">Bem-estar</span>
-        </div>
-        <span class="portal-link">Acessar →</span>
-      </div>
-    </a>
-
-    <!-- Portal 2: Profissionais -->
-    <a href="portal_profissionais.html" class="portal portal-img featured"
-       style="--img:url('https://images.unsplash.com/photo-1582750433449-648ed127bb54?auto=format&fit=crop&w=800&q=80')">
-      <div class="portal-overlay"></div>
-      <div class="portal-glow" style="background:radial-gradient(circle at 20% 80%, rgba(212,168,71,0.2) 0%, transparent 60%);"></div>
-      <div class="portal-content">
-        <div class="portal-icon-wrap">
-          <svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <rect x="4" y="8" width="28" height="22" rx="2" stroke="#D4A847" stroke-width="1.4"/>
-            <line x1="4" y1="16" x2="32" y2="16" stroke="#D4A847" stroke-width="1.2"/>
-            <rect x="8" y="20" width="5" height="8" rx="1" fill="rgba(212,168,71,0.25)" stroke="#D4A847" stroke-width="0.8"/>
-            <rect x="15" y="23" width="5" height="5" rx="1" fill="rgba(212,168,71,0.15)" stroke="#D4A847" stroke-width="0.8"/>
-            <rect x="22" y="18" width="5" height="10" rx="1" fill="rgba(212,168,71,0.35)" stroke="#D4A847" stroke-width="0.8"/>
-          </svg>
-        </div>
-        <p class="portal-num">02</p>
-        <h3 class="portal-name">Profissionais<br>da Saúde</h3>
-        <p class="portal-desc">Indicadores clínicos, calculadoras, material de apoio e protocolos para a equipe de nefrologia.</p>
-        <div class="portal-tags">
-          <span class="portal-tag">Dashboard</span>
-          <span class="portal-tag">Calculadoras</span>
-          <span class="portal-tag">Protocolos</span>
-        </div>
-        <span class="portal-link">Acessar →</span>
-      </div>
-    </a>
-
-    <!-- Portal 3: Saúde & Performance -->
-    <a href="portal_saude_performance.html" class="portal portal-img"
-       style="--img:url('https://images.unsplash.com/photo-1461896836934-ffe607ba8211?auto=format&fit=crop&w=800&q=80')">
-      <div class="portal-overlay"></div>
-      <div class="portal-glow" style="background:radial-gradient(circle at 80% 80%, rgba(212,168,71,0.18) 0%, transparent 60%);"></div>
-      <div class="portal-content">
-        <div class="portal-icon-wrap">
-          <svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M20 4L10 20h9l-3 12L26 16h-9z" stroke="#D4A847" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" fill="rgba(212,168,71,0.08)"/>
-          </svg>
-        </div>
-        <p class="portal-num">03</p>
-        <h3 class="portal-name">Saúde &<br>Performance</h3>
-        <p class="portal-desc">Vida em movimento. Rotinas, treinos e a prova de que saúde crônica não é o fim — é o começo.</p>
-        <div class="portal-tags">
-          <span class="portal-tag">Movimento</span>
-          <span class="portal-tag">Longevidade</span>
-          <span class="portal-tag">Estilo de Vida</span>
-        </div>
-        <span class="portal-link">Em breve →</span>
-      </div>
-    </a>
-
+<!-- ═══════════════════════════════════════════════════════
+     BLOCO 2 — BIG NUMBERS
+═══════════════════════════════════════════════════════ -->
+<section class="numbers">
+  <p class="numbers-eyebrow">A rede em números</p>
+  <h2 class="numbers-title">Três décadas de cuidado renal <strong>integrado</strong></h2>
+  <div class="numbers-grid">
+    <div class="num-card">
+      <div class="num-val"><strong>30</strong></div>
+      <div class="num-label">Anos de Fênix</div>
+      <div class="num-sub">A Fênix Nefrologia completa 30 anos em 2025, referência em terapia renal substitutiva em São Paulo.</div>
+      <span class="num-badge">Est. 1995</span>
+    </div>
+    <div class="num-card">
+      <div class="num-val"><strong>3</strong></div>
+      <div class="num-label">Unidades ativas</div>
+      <div class="num-sub">RL · Santos · Tatuapé — clínicas integradas com protocolo unificado de qualidade e indicadores.</div>
+      <span class="num-badge">Rede Fênix</span>
+    </div>
+    <div class="num-card">
+      <div class="num-val"><strong>15<em style="font-size:0.55em;font-style:normal;">+</em></strong></div>
+      <div class="num-label">Anos de experiência</div>
+      <div class="num-sub">Prática clínica dedicada à nefrologia, TRS crônico e agudo, com foco em medicina baseada em evidências.</div>
+      <span class="num-badge">Nefrologista</span>
+    </div>
+    <div class="num-card">
+      <div class="num-val"><strong>+<em style="font-size:0.6em;font-style:normal;">220</em></strong></div>
+      <div class="num-label">Pacientes na rede</div>
+      <div class="num-sub">Pacientes em hemodiálise acompanhados mensalmente com indicadores clínicos monitorados em tempo real.</div>
+      <span class="num-badge">TRS Crônico</span>
+    </div>
   </div>
 </section>
 
-<!-- FRASE -->
-<section class="frase" id="sobre">
-  <p class="frase-text">
-    "Tratar a doença é o mínimo.<br>
-    Ensinar a <em>viver com leveza</em> é o propósito."
-  </p>
-  <p class="frase-author">— Dr. Bruno Biluca · Medicina · Movimento · Propósito</p>
+<hr class="divider"/>
+
+<!-- ═══════════════════════════════════════════════════════
+     BLOCO 3 — CARROSSEL (conteúdo Saúde & Performance)
+═══════════════════════════════════════════════════════ -->
+<section class="carrossel">
+  <div class="carr-header">
+    <p class="carr-eyebrow">Saúde & Performance</p>
+    <h2 class="carr-title">Conteúdo médico <strong>baseado em evidência</strong></h2>
+  </div>
+  <div class="carr-track-wrap">
+    <div class="carr-track" id="carr-track">
+
+      <!-- Card 1 -->
+      <a href="portal_saude_performance.html" class="carr-card">
+        <div class="carr-img" style="background:linear-gradient(135deg,#1B3A5A,#0D2040);">
+          <svg width="48" height="48" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="#B99454" stroke-width="1.2"/><path d="M12 7v5l3 3" stroke="#B99454" stroke-width="1.3" stroke-linecap="round"/></svg>
+          <span class="carr-img-label">Wearables</span>
+        </div>
+        <div class="carr-body">
+          <p class="carr-cat">Wearables · Monitoramento</p>
+          <h3 class="carr-title-card">HRV: o que seu coração está te dizendo</h3>
+          <p class="carr-excerpt">A variabilidade da FC é o dado mais importante do seu wearable. Como interpretar e usar na prática.</p>
+        </div>
+      </a>
+
+      <!-- Card 2 -->
+      <a href="artigo_exercicio_drc.html" class="carr-card">
+        <div class="carr-img" style="background:linear-gradient(135deg,#1A3A20,#0A2010);">
+          <svg width="48" height="48" viewBox="0 0 24 24" fill="none"><path d="M13 4v7l4 2-4 7V14l-4-2 4-8z" stroke="#4CAF8A" stroke-width="1.2" stroke-linejoin="round"/></svg>
+          <span class="carr-img-label">Atividade Física</span>
+        </div>
+        <div class="carr-body">
+          <p class="carr-cat">Atividade Física · DRC</p>
+          <h3 class="carr-title-card">Exercício na doença renal: o que André me ensinou</h3>
+          <p class="carr-excerpt">41 anos, em diálise, completou 42km na Maratona de SP. A história e o protocolo.</p>
+        </div>
+      </a>
+
+      <!-- Card 3 -->
+      <a href="portal_saude_performance.html" class="carr-card">
+        <div class="carr-img" style="background:linear-gradient(135deg,#2A1A3A,#1A0A2A);">
+          <svg width="48" height="48" viewBox="0 0 24 24" fill="none"><rect x="2" y="7" width="20" height="14" rx="3" stroke="#9B8ED4" stroke-width="1.2"/><path d="M8 7V5a4 4 0 018 0v2" stroke="#9B8ED4" stroke-width="1.2" stroke-linecap="round"/></svg>
+          <span class="carr-img-label">Sono</span>
+        </div>
+        <div class="carr-body">
+          <p class="carr-cat">Sono & Recuperação</p>
+          <h3 class="carr-title-card">O que seu wearable diz sobre seu sono</h3>
+          <p class="carr-excerpt">Sleep score, sono profundo, REM — como interpretar cada métrica e o que realmente importa.</p>
+        </div>
+      </a>
+
+      <!-- Card 4 -->
+      <a href="portal_saude_performance.html" class="carr-card">
+        <div class="carr-img" style="background:linear-gradient(135deg,#3A2A1A,#2A1A0A);">
+          <svg width="48" height="48" viewBox="0 0 24 24" fill="none"><path d="M12 2l3 7h7l-5.5 4 2 7L12 16l-6.5 4 2-7L2 9h7z" stroke="#D4A847" stroke-width="1.2" stroke-linejoin="round"/></svg>
+          <span class="carr-img-label">Longevidade</span>
+        </div>
+        <div class="carr-body">
+          <p class="carr-cat">Longevidade</p>
+          <h3 class="carr-title-card">Exercício como remédio: o que a ciência diz</h3>
+          <p class="carr-excerpt">Dose, tipo e frequência ideais para quem quer viver mais e melhor, com ou sem comorbidades.</p>
+        </div>
+      </a>
+
+      <!-- Card 5 -->
+      <a href="portal_saude_performance.html" class="carr-card">
+        <div class="carr-img" style="background:linear-gradient(135deg,#1A3050,#0D1A30);">
+          <svg width="48" height="48" viewBox="0 0 24 24" fill="none"><path d="M22 12h-4l-3 9L9 3l-3 9H2" stroke="#5BA8D4" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span class="carr-img-label">Métricas</span>
+        </div>
+        <div class="carr-body">
+          <p class="carr-cat">Métricas · Wearables</p>
+          <h3 class="carr-title-card">VO₂ máximo estimado: confiável ou não?</h3>
+          <p class="carr-excerpt">Garmin e Apple Watch estimam seu VO₂ máx sem ergômetro. Qual a precisão — e quando isso importa.</p>
+        </div>
+      </a>
+
+      <!-- Card 6 -->
+      <a href="portal_saude_performance.html" class="carr-card">
+        <div class="carr-img" style="background:linear-gradient(135deg,#3A1A1A,#2A0A0A);">
+          <svg width="48" height="48" viewBox="0 0 24 24" fill="none"><path d="M10 2v7.27a2 2 0 01-.55 1.38l-5.9 5.9A2 2 0 005 20h14a2 2 0 001.45-3.45l-5.9-5.9A2 2 0 0114 9.27V2" stroke="#F07070" stroke-width="1.2" stroke-linecap="round"/><path d="M8.5 2h7" stroke="#F07070" stroke-width="1.2" stroke-linecap="round"/></svg>
+          <span class="carr-img-label">Anti-inflamatórios</span>
+        </div>
+        <div class="carr-body">
+          <p class="carr-cat">Anti-inflamatórios & Rim</p>
+          <h3 class="carr-title-card">Anti-inflamatório e rim: uma combinação perigosa</h3>
+          <p class="carr-excerpt">O que acontece dentro dos glomérulos cada vez que você toma um ibuprofeno.</p>
+        </div>
+      </a>
+
+      <!-- Card 7 -->
+      <a href="portal_saude_performance.html" class="carr-card">
+        <div class="carr-img" style="background:linear-gradient(135deg,#1A3A5A,#0D2040);">
+          <svg width="48" height="48" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="#60B8D4" stroke-width="1.2"/><path d="M12 8v4l2 2" stroke="#60B8D4" stroke-width="1.3" stroke-linecap="round"/></svg>
+          <span class="carr-img-label">Hidratação</span>
+        </div>
+        <div class="carr-body">
+          <p class="carr-cat">Hidratação</p>
+          <h3 class="carr-title-card">Sinais ocultos de desidratação</h3>
+          <p class="carr-excerpt">Antes da sede chegar, seu corpo já está desidratado. Os sinais que impactam função renal.</p>
+        </div>
+      </a>
+
+      <!-- Duplicatas para loop contínuo -->
+      <a href="portal_saude_performance.html" class="carr-card">
+        <div class="carr-img" style="background:linear-gradient(135deg,#1B3A5A,#0D2040);">
+          <svg width="48" height="48" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="#B99454" stroke-width="1.2"/><path d="M12 7v5l3 3" stroke="#B99454" stroke-width="1.3" stroke-linecap="round"/></svg>
+          <span class="carr-img-label">Wearables</span>
+        </div>
+        <div class="carr-body">
+          <p class="carr-cat">Wearables · Monitoramento</p>
+          <h3 class="carr-title-card">HRV: o que seu coração está te dizendo</h3>
+          <p class="carr-excerpt">A variabilidade da FC é o dado mais importante do seu wearable. Como interpretar e usar na prática.</p>
+        </div>
+      </a>
+
+      <a href="artigo_exercicio_drc.html" class="carr-card">
+        <div class="carr-img" style="background:linear-gradient(135deg,#1A3A20,#0A2010);">
+          <svg width="48" height="48" viewBox="0 0 24 24" fill="none"><path d="M13 4v7l4 2-4 7V14l-4-2 4-8z" stroke="#4CAF8A" stroke-width="1.2" stroke-linejoin="round"/></svg>
+          <span class="carr-img-label">Atividade Física</span>
+        </div>
+        <div class="carr-body">
+          <p class="carr-cat">Atividade Física · DRC</p>
+          <h3 class="carr-title-card">Exercício na doença renal: o que André me ensinou</h3>
+          <p class="carr-excerpt">41 anos, em diálise, completou 42km na Maratona de SP. A história e o protocolo.</p>
+        </div>
+      </a>
+
+      <a href="portal_saude_performance.html" class="carr-card">
+        <div class="carr-img" style="background:linear-gradient(135deg,#2A1A3A,#1A0A2A);">
+          <svg width="48" height="48" viewBox="0 0 24 24" fill="none"><rect x="2" y="7" width="20" height="14" rx="3" stroke="#9B8ED4" stroke-width="1.2"/><path d="M8 7V5a4 4 0 018 0v2" stroke="#9B8ED4" stroke-width="1.2" stroke-linecap="round"/></svg>
+          <span class="carr-img-label">Sono</span>
+        </div>
+        <div class="carr-body">
+          <p class="carr-cat">Sono & Recuperação</p>
+          <h3 class="carr-title-card">O que seu wearable diz sobre seu sono</h3>
+          <p class="carr-excerpt">Sleep score, sono profundo, REM — como interpretar cada métrica.</p>
+        </div>
+      </a>
+
+      <a href="portal_saude_performance.html" class="carr-card">
+        <div class="carr-img" style="background:linear-gradient(135deg,#3A2A1A,#2A1A0A);">
+          <svg width="48" height="48" viewBox="0 0 24 24" fill="none"><path d="M12 2l3 7h7l-5.5 4 2 7L12 16l-6.5 4 2-7L2 9h7z" stroke="#D4A847" stroke-width="1.2" stroke-linejoin="round"/></svg>
+          <span class="carr-img-label">Longevidade</span>
+        </div>
+        <div class="carr-body">
+          <p class="carr-cat">Longevidade</p>
+          <h3 class="carr-title-card">Exercício como remédio: o que a ciência diz</h3>
+          <p class="carr-excerpt">Dose, tipo e frequência ideais para viver mais e melhor.</p>
+        </div>
+      </a>
+
+      <a href="portal_saude_performance.html" class="carr-card">
+        <div class="carr-img" style="background:linear-gradient(135deg,#3A1A1A,#2A0A0A);">
+          <svg width="48" height="48" viewBox="0 0 24 24" fill="none"><path d="M10 2v7.27a2 2 0 01-.55 1.38l-5.9 5.9A2 2 0 005 20h14a2 2 0 001.45-3.45l-5.9-5.9A2 2 0 0114 9.27V2" stroke="#F07070" stroke-width="1.2" stroke-linecap="round"/><path d="M8.5 2h7" stroke="#F07070" stroke-width="1.2" stroke-linecap="round"/></svg>
+          <span class="carr-img-label">Anti-inflamatórios</span>
+        </div>
+        <div class="carr-body">
+          <p class="carr-cat">Anti-inflamatórios & Rim</p>
+          <h3 class="carr-title-card">Anti-inflamatório e rim: uma combinação perigosa</h3>
+          <p class="carr-excerpt">O que acontece dentro dos glomérulos cada vez que você toma ibuprofeno.</p>
+        </div>
+      </a>
+
+    </div>
+  </div>
+  <div class="carr-controls">
+    <button class="carr-pause" id="carr-pause" onclick="togglePause()">⏸ Pausar</button>
+  </div>
+</section>
+
+<hr class="divider"/>
+
+<!-- ═══════════════════════════════════════════════════════
+     BLOCO 4 — PARCERIAS
+═══════════════════════════════════════════════════════ -->
+<section class="parcerias">
+  <p class="parc-eyebrow">Parcerias & Instituições</p>
+  <h2 class="parc-title">Clínicas e hospitais <strong>parceiros</strong></h2>
+  <div class="parc-grid">
+    <div class="parc-card fenix">
+      <p class="parc-logo">Fênix</p>
+      <h3 class="parc-name">Fênix Nefrologia</h3>
+      <p class="parc-desc">Referência em terapia renal substitutiva há 30 anos. Três unidades em São Paulo com protocolo integrado de qualidade.</p>
+      <span class="parc-tag">30 anos · TRS Crônico</span>
+    </div>
+    <div class="parc-card mont">
+      <p class="parc-logo">Mont Serrat</p>
+      <h3 class="parc-name">Hospital Mont Serrat</h3>
+      <p class="parc-desc">Parceria para TRS agudo e diálise hospitalar. Atendimento a pacientes críticos com hemodiálise, CRRT e DP.</p>
+      <span class="parc-tag">TRS Agudo · UTI</span>
+    </div>
+    <div class="parc-card idr">
+      <p class="parc-logo">IDR</p>
+      <h3 class="parc-name">IDR</h3>
+      <p class="parc-desc">Instituto especializado em doenças renais. Atendimento ambulatorial e suporte clínico integrado ao programa de diálise.</p>
+      <span class="parc-tag">Ambulatório · DRC</span>
+    </div>
+    <div class="parc-card gsi">
+      <p class="parc-logo">GSI Renal</p>
+      <h3 class="parc-name">GSI Renal</h3>
+      <p class="parc-desc">Gestão em saúde integrada com foco em indicadores de qualidade e protocolos assistenciais para pacientes renais.</p>
+      <span class="parc-tag">Gestão · Qualidade</span>
+    </div>
+  </div>
 </section>
 
 <!-- FOOTER -->
-<footer class="footer">
-  <span class="footer-logo">APEX</span>
-  <span class="footer-copy">© 2026 APEX · Plataforma de Gestão em Saúde</span>
+<footer>
+  <span class="foot-brand">APEX</span>
+  <div class="foot-links">
+    <a href="portal_saude_performance.html" class="foot-link">Saúde & Performance</a>
+    <a href="portal_pacientes.html" class="foot-link">Para Pacientes</a>
+    <a href="portal_profissionais.html" class="foot-link">Profissionais</a>
+  </div>
+  <span class="foot-copy">© 2026 Dr. Bruno P. Biluca · Medicina · Movimento · Propósito</span>
 </footer>
+
+<script>
+let paused = false;
+const track = document.getElementById('carr-track');
+const btn = document.getElementById('carr-pause');
+
+function togglePause(){
+  paused = !paused;
+  track.style.animationPlayState = paused ? 'paused' : 'running';
+  btn.textContent = paused ? '▶ Continuar' : '⏸ Pausar';
+}
+</script>
 
 </body>
 </html>
