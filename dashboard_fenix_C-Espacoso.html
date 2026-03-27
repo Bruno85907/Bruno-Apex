@@ -689,22 +689,24 @@ async function carregarDadosSupabase() {
       BASE.pacientes.rl[m]     = d.pac_rl     || 0;
       BASE.pacientes.santos[m] = d.pac_santos || 0;
       BASE.pacientes.tatuape[m]= d.pac_tatuape|| 0;
-      BASE.pacientes.rede[m]   = d.pac_rede   || 0;
+      // pac_rede: usa campo direto se existir, senão soma unidades
+      BASE.pacientes.rede[m]   = d.pac_rede || (d.pac_rl||0)+(d.pac_santos||0)+(d.pac_tatuape||0);
 
       BASE.sessoes.rl[m]     = d.ses_rl     || 0;
       BASE.sessoes.santos[m] = d.ses_santos || 0;
       BASE.sessoes.tatuape[m]= d.ses_tatuape|| 0;
-      BASE.sessoes.rede[m]   = d.ses_rede   || 0;
+      // ses_rede: usa campo direto se existir, senão soma unidades
+      BASE.sessoes.rede[m]   = d.ses_rede || (d.ses_rl||0)+(d.ses_santos||0)+(d.ses_tatuape||0);
 
-      BASE.admissoes[m] = d.admissoes || 0;
-      BASE.saidas[m]    = d.saidas    || 0;
+      BASE.admissoes[m] = (d.adm_rl||0) + (d.adm_santos||0) + (d.adm_tatuape||0) || d.admissoes || 0;
+      BASE.saidas[m]    = (d.sai_rl||0) + (d.sai_santos||0) + (d.sai_tatuape||0) || d.saidas    || 0;
       BASE.sesExtras[m] = d.ses_extras|| 0;
       BASE.consEsp[m]   = d.cons_esp  || 0;
       BASE.consNefro[m] = d.cons_nefro|| 0;
 
       BASE.def.eag[m]    = d.eag    || 0;
       BASE.def.sui[m]    = d.sui    || 0;
-      BASE.def.obi[m]    = d.obi    || 0;
+      BASE.def.obi[m]    = (d.obi_rl||0) + (d.obi_santos||0) + (d.obi_tatuape||0) || d.obi    || 0;
       BASE.def.obiPct[m] = d.obi_pct|| 0;
       BASE.def.fal[m]    = d.fal    || 0;
       BASE.def.falPct[m] = d.fal_pct|| 0;
@@ -712,8 +714,18 @@ async function carregarDadosSupabase() {
       BASE.def.ics[m]    = d.ics    || 0;
       BASE.def.icf[m]    = d.icf    || 0;
       BASE.def.que[m]    = d.que    || 0;
-      BASE.def.intPct[m] = d.int_pct|| 0;
-      BASE.def.causas[m] = [d.causas_metabolica||0, d.causas_infeccao||0, d.causas_vascular||0, d.causas_cardio||0, d.causas_queda||0, d.causas_outros||0];
+      // int_pct: média das unidades se disponível, senão campo legado
+      const intVals=[d.int_rl,d.int_santos,d.int_tatuape].filter(v=>v!=null&&v>0);
+      BASE.def.intPct[m] = intVals.length>0 ? intVals.reduce((a,b)=>a+b,0)/intVals.length : (d.int_pct||0);
+      // causas: soma das unidades se disponível, senão campos legados
+      BASE.def.causas[m] = [
+        (d.causas_metabolica_rl||0)+(d.causas_metabolica_santos||0)+(d.causas_metabolica_tatuape||0) || d.causas_metabolica||0,
+        (d.causas_infeccao_rl||0)+(d.causas_infeccao_santos||0)+(d.causas_infeccao_tatuape||0)       || d.causas_infeccao||0,
+        (d.causas_vascular_rl||0)+(d.causas_vascular_santos||0)+(d.causas_vascular_tatuape||0)       || d.causas_vascular||0,
+        (d.causas_cardio_rl||0)+(d.causas_cardio_santos||0)+(d.causas_cardio_tatuape||0)             || d.causas_cardio||0,
+        (d.causas_queda_rl||0)+(d.causas_queda_santos||0)+(d.causas_queda_tatuape||0)               || d.causas_queda||0,
+        (d.causas_outros_rl||0)+(d.causas_outros_santos||0)+(d.causas_outros_tatuape||0)             || d.causas_outros||0,
+      ];
 
       BASE.nutri.fos.rl[m]     = d.fos_rl     || 0;
       BASE.nutri.fos.santos[m] = d.fos_santos || 0;
