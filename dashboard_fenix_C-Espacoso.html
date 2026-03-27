@@ -727,55 +727,61 @@ async function carregarDadosSupabase() {
         (d.causas_outros_rl||0)+(d.causas_outros_santos||0)+(d.causas_outros_tatuape||0)             || d.causas_outros||0,
       ];
 
+      // Helper: média de valores não-zero
+      function mediaUnid(a,b,c){const v=[a,b,c].filter(x=>x>0);return v.length?v.reduce((s,x)=>s+x,0)/v.length:0;}
+
       BASE.nutri.fos.rl[m]     = d.fos_rl     || 0;
       BASE.nutri.fos.santos[m] = d.fos_santos || 0;
       BASE.nutri.fos.tatuape[m]= d.fos_tatuape|| 0;
-      BASE.nutri.fos.rede[m]   = d.fos_rede   || 0;
+      BASE.nutri.fos.rede[m]   = d.fos_rede   || mediaUnid(d.fos_rl,d.fos_santos,d.fos_tatuape);
       BASE.nutri.pot.rl[m]     = d.pot_rl     || 0;
       BASE.nutri.pot.santos[m] = d.pot_santos || 0;
       BASE.nutri.pot.tatuape[m]= d.pot_tatuape|| 0;
-      BASE.nutri.pot.rede[m]   = d.pot_rede   || 0;
-      BASE.nutri.alb.rede[m]   = d.alb_rede;
-      BASE.nutri.imc.rede[m]   = d.imc_rede;
+      BASE.nutri.pot.rede[m]   = d.pot_rede   || mediaUnid(d.pot_rl,d.pot_santos,d.pot_tatuape);
+      BASE.nutri.alb.rede[m]   = d.alb_rede   || mediaUnid(d.alb_rl,d.alb_santos,d.alb_tatuape);
+      BASE.nutri.imc.rede[m]   = d.imc_rede   || mediaUnid(d.imc_rl,d.imc_santos,d.imc_tatuape);
 
       BASE.adequ.ktv.rl[m]     = d.ktv_rl     || 0;
       BASE.adequ.ktv.santos[m] = d.ktv_santos || 0;
       BASE.adequ.ktv.tatuape[m]= d.ktv_tatuape|| 0;
-      BASE.adequ.ktv.rede[m]   = d.ktv_rede   || 0;
+      BASE.adequ.ktv.rede[m]   = d.ktv_rede   || mediaUnid(d.ktv_rl,d.ktv_santos,d.ktv_tatuape);
       BASE.adequ.vol.rl[m]     = d.vol_rl     || 0;
       BASE.adequ.vol.santos[m] = d.vol_santos || 0;
       BASE.adequ.vol.tatuape[m]= d.vol_tatuape|| 0;
-      BASE.adequ.vol.rede[m]   = d.vol_rede   || 0;
+      BASE.adequ.vol.rede[m]   = d.vol_rede   || mediaUnid(d.vol_rl,d.vol_santos,d.vol_tatuape);
       BASE.adequ.fav.rl[m]     = d.fav_rl     || 0;
       BASE.adequ.fav.santos[m] = d.fav_santos || 0;
       BASE.adequ.fav.tatuape[m]= d.fav_tatuape|| 0;
-      BASE.adequ.fav.rede[m]   = d.fav_rede   || 0;
+      BASE.adequ.fav.rede[m]   = d.fav_rede   || mediaUnid(d.fav_rl,d.fav_santos,d.fav_tatuape);
 
-      BASE.qol.kdqol[m] = { label: ['Jan/26','Fev/26','Mar/26','Abr/26','Mai/26','Jun/26','Jul/26','Ago/26','Set/26','Out/26','Nov/26','Dez/26'][m], mental: d.kdqol_mental||0, fisico: d.kdqol_fisico||0 };
+      // KDQoL: média das unidades se disponível, senão campo legado
+      const kdqolMental = mediaUnid(d.kdqol_mental_rl,d.kdqol_mental_santos,d.kdqol_mental_tatuape) || d.kdqol_mental||0;
+      const kdqolFisico = mediaUnid(d.kdqol_fisico_rl,d.kdqol_fisico_santos,d.kdqol_fisico_tatuape) || d.kdqol_fisico||0;
+      BASE.qol.kdqol[m] = { label: ['Jan/26','Fev/26','Mar/26','Abr/26','Mai/26','Jun/26','Jul/26','Ago/26','Set/26','Out/26','Nov/26','Dez/26'][m], mental: kdqolMental, fisico: kdqolFisico };
       BASE.qol.hb.rl[m]     = d.hb_rl     || 0;
       BASE.qol.hb.santos[m] = d.hb_santos || 0;
       BASE.qol.hb.tatuape[m]= d.hb_tatuape|| 0;
-      BASE.qol.hb.rede[m]   = d.hb_rede   || 0;
+      BASE.qol.hb.rede[m]   = d.hb_rede   || mediaUnid(d.hb_rl,d.hb_santos,d.hb_tatuape);
 
       BASE.cardio.gpid.rl[m]     = d.gpid_rl     || 0;
       BASE.cardio.gpid.santos[m] = d.gpid_santos || 0;
       BASE.cardio.gpid.tatuape[m]= d.gpid_tatuape|| 0;
-      BASE.cardio.gpid.rede[m]   = d.gpid_rede   || 0;
+      BASE.cardio.gpid.rede[m]   = d.gpid_rede   || mediaUnid(d.gpid_rl,d.gpid_santos,d.gpid_tatuape);
       BASE.cardio.ecw.rl[m]      = d.ecw_rl      || 0;
       BASE.cardio.ecw.santos[m]  = d.ecw_santos  || 0;
       BASE.cardio.ecw.tatuape[m] = d.ecw_tatuape || 0;
-      BASE.cardio.ecw.rede[m]    = d.ecw_rede    || 0;
-      BASE.cardio.hbg.rede[m]    = d.hbg_rede;
+      BASE.cardio.ecw.rede[m]    = d.ecw_rede    || mediaUnid(d.ecw_rl,d.ecw_santos,d.ecw_tatuape);
+      BASE.cardio.hbg.rede[m]    = d.hbg_rede    || mediaUnid(d.hbg_rl,d.hbg_santos,d.hbg_tatuape);
 
       BASE.compcorp.ang.rl[m]     = d.ang_rl     || 0;
       BASE.compcorp.ang.santos[m] = d.ang_santos || 0;
       BASE.compcorp.ang.tatuape[m]= d.ang_tatuape|| 0;
-      BASE.compcorp.ang.rede[m]   = d.ang_rede   || 0;
+      BASE.compcorp.ang.rede[m]   = d.ang_rede   || mediaUnid(d.ang_rl,d.ang_santos,d.ang_tatuape);
       BASE.compcorp.fis.rl[m]     = d.fis_rl     || 0;
       BASE.compcorp.fis.santos[m] = d.fis_santos || 0;
       BASE.compcorp.fis.tatuape[m]= d.fis_tatuape|| 0;
-      BASE.compcorp.fis.rede[m]   = d.fis_rede   || 0;
-      BASE.compcorp.pth.rede[m]   = d.pth_rede;
+      BASE.compcorp.fis.rede[m]   = d.fis_rede   || mediaUnid(d.fis_rl,d.fis_santos,d.fis_tatuape);
+      BASE.compcorp.pth.rede[m]   = d.pth_rede   || mediaUnid(d.pth_rl,d.pth_santos,d.pth_tatuape);
 
       /* Análises clínicas salvas */
       const blocos = ['vol','def','nutri','adequ','qol','cardio','compcorp'];
