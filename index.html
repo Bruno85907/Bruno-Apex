@@ -541,7 +541,9 @@ const earthMat = new THREE.MeshPhongMaterial({
   normalScale:new THREE.Vector2(0.7,0.7),
 });
 const earth = new THREE.Mesh(earthGeo,earthMat);
-earth.rotation.y = -2.234; // Brazil facing roughly center
+// Brazil lon=-52 → phi=2.234rad. Camera at +Z sees phi=PI/2.
+// rotation.y = PI/2 - phi_brazil = 1.5708 - 2.234 = -0.663
+earth.rotation.y = -0.663;
 scene.add(earth);
 
 // Brazil overlay
@@ -551,19 +553,14 @@ const brMat = new THREE.MeshBasicMaterial({
 });
 earth.add(new THREE.Mesh(new THREE.SphereGeometry(1.003,72,72),brMat));
 
-// Atmosphere Fresnel
-const mkAtm=(r,c,p,side)=>{
-  const m=new THREE.ShaderMaterial({
-    uniforms:{c:{value:c},p:{value:p},glowColor:{value:new THREE.Color(0x3388ff)}},
-    vertexShader:`varying vec3 vN,vV;void main(){vN=normalize(normalMatrix*normal);vV=normalize(-(modelViewMatrix*vec4(position,1.)).xyz);gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.);}`,
-    fragmentShader:`uniform float c,p;uniform vec3 glowColor;varying vec3 vN,vV;void main(){float f=c*pow(1.-dot(vN,vV),p);gl_FragColor=vec4(glowColor,f);}`,
-    side,blending:THREE.AdditiveBlending,transparent:true,depthWrite:false
-  });
-  scene.add(new THREE.Mesh(new THREE.SphereGeometry(r,48,48),m));
-  return m;
-};
-mkAtm(1.032,0.58,4.5,THREE.FrontSide);
-mkAtm(1.11, 0.14,3.8,THREE.BackSide);
+// Atmosphere — FrontSide only, very subtle rim glow (no BackSide = no blue disc)
+const atmMat = new THREE.ShaderMaterial({
+  uniforms:{c:{value:0.28},p:{value:6.5},glowColor:{value:new THREE.Color(0x2255cc)}},
+  vertexShader:`varying vec3 vN,vV;void main(){vN=normalize(normalMatrix*normal);vV=normalize(-(modelViewMatrix*vec4(position,1.)).xyz);gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.);}`,
+  fragmentShader:`uniform float c,p;uniform vec3 glowColor;varying vec3 vN,vV;void main(){float f=c*pow(1.-dot(vN,vV),p);gl_FragColor=vec4(glowColor,f*0.7);}`,
+  side:THREE.FrontSide,blending:THREE.AdditiveBlending,transparent:true,depthWrite:false
+});
+scene.add(new THREE.Mesh(new THREE.SphereGeometry(1.028,48,48),atmMat));
 
 // ── Camera keyframes ──
 // Globe starts at right of screen (camera offset to the left)
