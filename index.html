@@ -283,31 +283,35 @@ footer{position:relative;z-index:10;background:rgba(3,3,8,.97);border-top:1px so
 <!-- ═══ HERO ═══ -->
 <section id="s-hero">
 
-  <!-- Big identity: Cross (same height as APEX) | bar | APEX -->
-  <div class="hero-identity">
-    <!-- Cross SVG — scales with APEX font size -->
-    <svg id="hero-cross-svg"
-      style="width:clamp(72px,9vw,140px);height:clamp(72px,9vw,140px);flex-shrink:0"
-      viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <!-- vertical bar -->
-      <rect x="40" y="6" width="20" height="88" rx="10" stroke="#B99454" stroke-width="2.5" opacity=".85"/>
-      <!-- horizontal bar -->
-      <rect x="6" y="40" width="88" height="20" rx="10" stroke="#B99454" stroke-width="2.5" opacity=".85"/>
-      <!-- inner glow lines -->
-      <rect x="40" y="6" width="20" height="88" rx="10" stroke="#B99454" stroke-width="0.8" opacity=".3"/>
-      <rect x="6" y="40" width="88" height="20" rx="10" stroke="#B99454" stroke-width="0.8" opacity=".3"/>
-      <!-- T letter -->
-      <text x="50" y="58" font-family="Georgia,serif" font-size="22" font-weight="700"
-        fill="#B99454" text-anchor="middle" opacity=".9">T</text>
-    </svg>
+  <!-- Identity: Opção 3 — branco com E dourado + tagline integrada -->
+  <div class="hero-identity" style="flex-direction:column;align-items:flex-start;gap:0">
 
-    <div class="hero-ident-bar" style="height:clamp(72px,9vw,140px)"></div>
+    <!-- Eyebrow -->
+    <div style="font-size:9px;font-weight:500;letter-spacing:6px;text-transform:uppercase;color:rgba(185,148,84,0.5);margin-bottom:12px;opacity:0;animation:rise .7s .2s forwards">Fênix Nefrologia</div>
 
-    <div class="hero-apex">APEX</div>
+    <!-- Cruz + APEX na mesma linha -->
+    <div style="display:flex;align-items:center;gap:22px">
+      <svg style="width:clamp(68px,8.5vw,130px);height:clamp(68px,8.5vw,130px);flex-shrink:0" viewBox="0 0 100 100" fill="none">
+        <rect x="40" y="6" width="20" height="88" rx="10" stroke="#B99454" stroke-width="2.2" opacity=".78"/>
+        <rect x="6" y="40" width="88" height="20" rx="10" stroke="#B99454" stroke-width="2.2" opacity=".78"/>
+        <rect x="40" y="6" width="20" height="88" rx="10" stroke="#B99454" stroke-width="0.7" opacity=".22"/>
+        <rect x="6" y="40" width="88" height="20" rx="10" stroke="#B99454" stroke-width="0.7" opacity=".22"/>
+        <text x="50" y="58" font-family="Georgia,serif" font-size="22" font-weight="700" fill="#B99454" text-anchor="middle" opacity=".85">T</text>
+      </svg>
+
+      <div class="hero-ident-bar" style="height:clamp(68px,8.5vw,130px)"></div>
+
+      <!-- APEX branco com E dourado -->
+      <div style="font-size:clamp(72px,9vw,140px);font-weight:700;letter-spacing:-2px;text-transform:uppercase;line-height:1;color:#ffffff;font-family:'Space Grotesk',sans-serif">
+        AP<span style="color:#B99454">E</span>X
+      </div>
+    </div>
+
+    <!-- Tagline com linha separadora -->
+    <div style="margin-top:16px;padding-top:12px;border-top:1px solid rgba(185,148,84,0.16);width:100%;max-width:600px;font-size:9px;font-weight:400;letter-spacing:4px;text-transform:uppercase;color:rgba(255,255,255,0.18);opacity:0;animation:rise .7s .72s forwards">
+      Dr. Bruno P. Biluca &nbsp;·&nbsp; Medicina &nbsp;·&nbsp; Movimento &nbsp;·&nbsp; Propósito
+    </div>
   </div>
-
-  <!-- Powered by — minimal, subtle -->
-  <div class="hero-powered">Powered by Fênix Nefrologia &nbsp;·&nbsp; Dr. Bruno P. Biluca</div>
 
   <!-- Metrics -->
   <div class="metrics-band">
@@ -553,14 +557,7 @@ const brMat = new THREE.MeshBasicMaterial({
 });
 earth.add(new THREE.Mesh(new THREE.SphereGeometry(1.003,72,72),brMat));
 
-// Atmosphere — FrontSide only, very subtle rim glow (no BackSide = no blue disc)
-const atmMat = new THREE.ShaderMaterial({
-  uniforms:{c:{value:0.28},p:{value:6.5},glowColor:{value:new THREE.Color(0x2255cc)}},
-  vertexShader:`varying vec3 vN,vV;void main(){vN=normalize(normalMatrix*normal);vV=normalize(-(modelViewMatrix*vec4(position,1.)).xyz);gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.);}`,
-  fragmentShader:`uniform float c,p;uniform vec3 glowColor;varying vec3 vN,vV;void main(){float f=c*pow(1.-dot(vN,vV),p);gl_FragColor=vec4(glowColor,f*0.7);}`,
-  side:THREE.FrontSide,blending:THREE.AdditiveBlending,transparent:true,depthWrite:false
-});
-scene.add(new THREE.Mesh(new THREE.SphereGeometry(1.028,48,48),atmMat));
+// Atmosphere removed — clean sphere, no halo
 
 // ── Camera keyframes ──
 // Globe starts at right of screen (camera offset to the left)
@@ -577,7 +574,7 @@ function lv(a,b,t){return new THREE.Vector3().lerpVectors(a,b,t)}
 // At scroll=1.0: earth centered but camera far back
 
 const KF = [
-  {t:0.00, camZ:12,  camX:0,  earthX:2.4,  earthY:0.2},
+  {t:0.00, camZ:7.5,  camX:0,  earthX:2.4,  earthY:0.2},
   {t:0.28, camZ:9,   camX:0,  earthX:0,    earthY:0},
   {t:0.52, camZ:2.5, camX:0,  earthX:0,    earthY:0},
   {t:0.75, camZ:2.5, camX:0,  earthX:0,    earthY:0},
