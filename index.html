@@ -286,8 +286,7 @@ footer{position:relative;z-index:10;background:rgba(3,3,8,.97);border-top:1px so
   <!-- Identity: Opção 3 — branco com E dourado + tagline integrada -->
   <div class="hero-identity" style="flex-direction:column;align-items:flex-start;gap:0">
 
-    <!-- Eyebrow -->
-    <div style="font-size:9px;font-weight:500;letter-spacing:6px;text-transform:uppercase;color:rgba(185,148,84,0.5);margin-bottom:12px;opacity:0;animation:rise .7s .2s forwards">Fênix Nefrologia</div>
+    <!-- Eyebrow removido -->
 
     <!-- Cruz + APEX na mesma linha -->
     <div style="display:flex;align-items:center;gap:22px">
@@ -309,7 +308,7 @@ footer{position:relative;z-index:10;background:rgba(3,3,8,.97);border-top:1px so
 
     <!-- Tagline com linha separadora -->
     <div style="margin-top:16px;padding-top:12px;border-top:1px solid rgba(185,148,84,0.16);width:100%;max-width:600px;font-size:9px;font-weight:400;letter-spacing:4px;text-transform:uppercase;color:rgba(255,255,255,0.18);opacity:0;animation:rise .7s .72s forwards">
-      Dr. Bruno P. Biluca &nbsp;·&nbsp; Medicina &nbsp;·&nbsp; Movimento &nbsp;·&nbsp; Propósito
+      Powered by Fênix &nbsp;·&nbsp; Dr. Bruno Biluca
     </div>
   </div>
 
@@ -616,7 +615,7 @@ function render(ts) {
 
   // Slow Earth rotation — pauses when very close
   const closeT = cl((sp-0.45)/0.12);
-  earth.rotation.y += 0.00032 * (1 - closeT * 0.88);
+  earth.rotation.y += 0.0008 * (1 - closeT * 0.88);
 
   // Stars opacity: start at 0.35, peak 0.55 in space (sp 0-0.45), fade near Earth, return at sp>0.8
   if(window._starsMat){
