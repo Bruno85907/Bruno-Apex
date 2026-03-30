@@ -1251,8 +1251,9 @@ async function abrirFicha(id, nome, diag){
   document.getElementById('ficha-nome').textContent = nome;
   document.getElementById('ficha-diag').textContent = diag||'—';
   setBreadcrumb([{label:'Gestão de Pacientes',fn:'abrirPacientes'},{label:nome,fn:`abrirPacientes`}]);
-  abrirTab('perfil', document.querySelector('.pac-tab'));
+  abrirTab('anamnese', document.querySelector('.pac-tab'));
   await carregarPerfil();
+  carregarApiKeyProf();
   await verificarMsgNaoLidas();
 }
 
@@ -1262,6 +1263,7 @@ function abrirTab(id, btn){
   document.getElementById('tab-'+id).classList.add('active');
   if(btn) btn.classList.add('active');
   if(PAC_ATUAL?.id){
+    if(id==='anamnese'){ carregarAnamnese(); carregarApiKeyProf(); }
     if(id==='exames') carregarExames();
     if(id==='consultas') carregarConsultas();
     if(id==='metas') carregarMetas();
@@ -1954,13 +1956,6 @@ function carregarApiKeyProf(){
   if(inp) inp.value = k;
   if(st)  st.textContent = k ? '✓ Configurada' : '';
 }
-
-/* Carregar anamnese ao abrir aba */
-const _abrirTabOrig = abrirTab;
-abrirTab = function(id, btn){
-  _abrirTabOrig(id, btn);
-  if(id==='anamnese'&&PAC_ATUAL?.id){ carregarAnamnese(); carregarApiKeyProf(); }
-};
 
 /* planejamento — dias da semana no carregamento inicial */
 function initPlanDias(){
