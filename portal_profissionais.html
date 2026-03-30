@@ -1610,14 +1610,6 @@ let AN_DIAS         = new Set();
 let AN_DRC_ESTAGIO  = '';
 let PROTOCOLO_GERADO = null;
 
-function toggleCheck(el, key){
-  el.classList.toggle('checked');
-  const cb = el.querySelector('input[type=checkbox]');
-  cb.checked = !cb.checked;
-  if(AN_COMORBIDADES.has(key)) AN_COMORBIDADES.delete(key);
-  else AN_COMORBIDADES.add(key);
-}
-
 function toggleCheckDRC(el){
   el.classList.toggle('checked');
   const cb = el.querySelector('input[type=checkbox]');
@@ -1950,6 +1942,8 @@ abrirTab = function(id, btn){
   if(id==='anamnese'&&PAC_ATUAL?.id) carregarAnamnese();
 };
 
+/* planejamento — dias da semana no carregamento inicial */
+function initPlanDias(){
   const dias=['Segunda','Terça','Quarta','Quinta','Sexta','Sábado','Domingo'];
   const el=document.getElementById('plan-dias');
   if(!el) return;
