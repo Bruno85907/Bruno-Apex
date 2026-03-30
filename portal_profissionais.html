@@ -161,6 +161,62 @@ nav{background:var(--surface);border-bottom:1px solid var(--border);height:52px;
 .ind-btn:hover{border-color:var(--border-hover);color:var(--text-primary);}
 .ind-btn-sair{color:rgba(192,57,43,0.6);border-color:rgba(192,57,43,0.2);}
 .ind-btn-sair:hover{color:var(--red);border-color:rgba(192,57,43,0.4);}
+
+/* ── GESTÃO DE PACIENTES ── */
+.pac-screen{flex:1;overflow-y:auto;padding:40px;display:none;background:var(--bg);}
+.pac-screen.active{display:block;}
+.pac-header{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:28px;gap:16px;}
+.pac-title{font-size:22px;font-weight:700;color:var(--text-primary);margin-bottom:4px;}
+.pac-sub{font-size:12px;color:var(--text-secondary);}
+.pac-btn{font-family:inherit;font-size:11px;font-weight:600;letter-spacing:.5px;background:var(--gold);color:#fff;border:none;border-radius:6px;padding:8px 16px;cursor:pointer;transition:opacity .2s;white-space:nowrap;}
+.pac-btn:hover{opacity:.85;}
+.pac-btn.sec{background:transparent;color:var(--text-secondary);border:1px solid var(--border);}
+.pac-btn.sec:hover{border-color:var(--border-hover);color:var(--text-primary);}
+.pac-btn.danger{background:#fff;color:var(--red);border:1px solid rgba(192,57,43,0.25);}
+.pac-btn.danger:hover{background:rgba(192,57,43,0.05);}
+.pac-list-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;}
+@media(max-width:900px){.pac-list-grid{grid-template-columns:1fr 1fr;}}
+.pac-card{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:18px;cursor:pointer;transition:border-color .2s,box-shadow .2s;}
+.pac-card:hover{border-color:var(--gold-border);box-shadow:0 2px 10px rgba(0,0,0,.06);}
+.pac-card-name{font-size:14px;font-weight:600;color:var(--text-primary);margin-bottom:4px;}
+.pac-card-diag{font-size:11px;color:var(--text-secondary);margin-bottom:8px;}
+.pac-card-meta{display:flex;gap:6px;flex-wrap:wrap;}
+.pac-tag{font-size:9px;font-weight:500;padding:2px 8px;border-radius:4px;color:#7A6030;background:var(--gold-dim);border:1px solid var(--gold-border);}
+.pac-empty{text-align:center;padding:60px 20px;color:var(--text-muted);font-size:13px;}
+/* tabs */
+.pac-tabs{display:flex;gap:2px;border-bottom:1px solid var(--border);margin-bottom:24px;overflow-x:auto;flex-shrink:0;}
+.pac-tab{font-family:inherit;font-size:11px;font-weight:500;color:var(--text-muted);background:transparent;border:none;padding:9px 14px;cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px;white-space:nowrap;transition:color .15s;}
+.pac-tab:hover{color:var(--text-primary);}
+.pac-tab.active{color:var(--gold);border-bottom-color:var(--gold);font-weight:600;}
+.pac-tab-content{display:none;}
+.pac-tab-content.active{display:block;}
+/* form fields */
+.f-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px;}
+.f-row.f3{grid-template-columns:1fr 1fr 1fr;}
+.f-row.f1{grid-template-columns:1fr;}
+.f-group{display:flex;flex-direction:column;gap:5px;}
+.f-group label{font-size:9px;font-weight:600;letter-spacing:1px;color:var(--text-secondary);text-transform:uppercase;}
+.f-group input,.f-group select,.f-group textarea{font-family:inherit;font-size:13px;color:var(--text-primary);background:#FAFAFA;border:1px solid var(--border);border-radius:6px;padding:8px 11px;outline:none;transition:border-color .15s;}
+.f-group input:focus,.f-group select:focus,.f-group textarea:focus{border-color:var(--gold);background:#fff;}
+.f-group textarea{resize:vertical;min-height:72px;}
+.f-section{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--text-muted);margin:20px 0 12px;padding-bottom:6px;border-bottom:1px solid var(--border);}
+.f-card{background:#fff;border:1px solid var(--border);border-radius:8px;padding:16px;margin-bottom:10px;}
+.f-card-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;}
+.f-card-title{font-size:13px;font-weight:600;color:var(--text-primary);}
+.f-add-btn{font-family:inherit;font-size:11px;font-weight:600;color:var(--gold);background:var(--gold-dim);border:1px solid var(--gold-border);border-radius:5px;padding:5px 12px;cursor:pointer;}
+.f-add-btn:hover{opacity:.8;}
+.f-remove-btn{font-family:inherit;font-size:10px;color:var(--red);background:transparent;border:none;cursor:pointer;opacity:.6;}
+.f-remove-btn:hover{opacity:1;}
+.f-list{display:flex;flex-direction:column;gap:8px;}
+.f-list-item{display:grid;grid-template-columns:1fr 1fr 1fr auto;gap:8px;align-items:end;}
+.f-save-bar{display:flex;gap:10px;align-items:center;margin-top:20px;padding-top:16px;border-top:1px solid var(--border);}
+.f-save-msg{font-size:11px;color:var(--green);}
+/* msg thread */
+.msg-thread{display:flex;flex-direction:column;gap:10px;max-height:360px;overflow-y:auto;margin-bottom:14px;background:#FAFAFA;border:1px solid var(--border);border-radius:8px;padding:14px;}
+.msg-b{max-width:72%;padding:9px 13px;border-radius:10px;font-size:12px;line-height:1.6;}
+.msg-b.clinic{background:var(--gold-dim);border:1px solid var(--gold-border);align-self:flex-end;}
+.msg-b.patient{background:#fff;border:1px solid var(--border);align-self:flex-start;}
+.msg-b-time{font-size:9px;color:var(--text-muted);margin-top:4px;}
 </style>
 </head>
 <body>
@@ -465,6 +521,19 @@ nav{background:var(--surface);border-bottom:1px solid var(--border);height:52px;
         </div>
       </div>
 
+      <div class="trs-card" style="border-color:rgba(20,184,166,0.25);" onclick="abrirPacientes()">
+        <div class="trs-card-icon" style="background:rgba(20,184,166,0.08);border:1px solid rgba(20,184,166,0.2);">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><circle cx="9" cy="7" r="4" stroke="#14b8a6" stroke-width="1.4"/><path d="M2 21v-1a7 7 0 0114 0v1" stroke="#14b8a6" stroke-width="1.4" stroke-linecap="round"/><path d="M19 8v6M22 11h-6" stroke="#14b8a6" stroke-width="1.4" stroke-linecap="round"/></svg>
+        </div>
+        <div class="trs-card-label" style="color:rgba(20,184,166,0.7);">Protocolos & Acompanhamento</div>
+        <div class="trs-card-title">Gestão de Pacientes</div>
+        <div class="trs-card-desc">Cadastro, protocolo clínico, exames, dieta, treino, suplementação e mensagens por paciente.</div>
+        <div class="trs-card-tags">
+          <span class="trs-tag" style="color:#0f766e;background:rgba(20,184,166,0.08);border-color:rgba(20,184,166,0.2);">Protocolo completo</span>
+          <span class="trs-tag" style="color:#0f766e;background:rgba(20,184,166,0.08);border-color:rgba(20,184,166,0.2);">Mensagens</span>
+        </div>
+      </div>
+
     </div>
   </div>
 
@@ -479,7 +548,171 @@ nav{background:var(--surface);border-bottom:1px solid var(--border);height:52px;
     <iframe id="iframe-lanc-tatuape" class="ind-iframe" src=""></iframe>
   </div>
 
-</div>
+  <!-- LISTA DE PACIENTES -->
+  <div class="pac-screen" id="pac-list">
+    <div class="pac-header">
+      <div>
+        <div class="pac-title">Gestão de Pacientes</div>
+        <div class="pac-sub">Cadastro, protocolos e acompanhamento individual</div>
+      </div>
+      <button class="pac-btn" onclick="abrirNovoPaciente()">+ Novo paciente</button>
+    </div>
+    <div id="pac-list-grid" class="pac-list-grid">
+      <div class="pac-empty">Carregando...</div>
+    </div>
+  </div>
+
+  <!-- FICHA DO PACIENTE -->
+  <div class="pac-screen" id="pac-ficha">
+    <div class="pac-header">
+      <div>
+        <div class="pac-title" id="ficha-nome">—</div>
+        <div class="pac-sub" id="ficha-diag">—</div>
+      </div>
+      <button class="pac-btn sec" onclick="abrirPacientes()">← Voltar</button>
+    </div>
+
+    <div class="pac-tabs">
+      <button class="pac-tab active" onclick="abrirTab('perfil',this)">Perfil</button>
+      <button class="pac-tab" onclick="abrirTab('exames',this)">Exames</button>
+      <button class="pac-tab" onclick="abrirTab('consultas',this)">Consultas</button>
+      <button class="pac-tab" onclick="abrirTab('metas',this)">Metas</button>
+      <button class="pac-tab" onclick="abrirTab('medicamentos',this)">Medicamentos</button>
+      <button class="pac-tab" onclick="abrirTab('dieta',this)">Dieta & Macros</button>
+      <button class="pac-tab" onclick="abrirTab('suplementacao',this)">Suplementação</button>
+      <button class="pac-tab" onclick="abrirTab('treino',this)">Treino</button>
+      <button class="pac-tab" onclick="abrirTab('planejamento',this)">Planejamento</button>
+      <button class="pac-tab" onclick="abrirTab('mensagens',this)">Mensagens <span id="msg-cnt" style="display:none;background:#ef4444;color:#fff;font-size:9px;padding:1px 5px;border-radius:8px;margin-left:3px;">0</span></button>
+    </div>
+
+    <!-- TAB PERFIL -->
+    <div class="pac-tab-content active" id="tab-perfil">
+      <div class="f-section">Dados clínicos</div>
+      <div class="f-row"><div class="f-group"><label>Nome completo</label><input type="text" id="p-nome"></div><div class="f-group"><label>Data de nascimento</label><input type="date" id="p-nasc"></div></div>
+      <div class="f-row"><div class="f-group"><label>Diagnóstico principal</label><input type="text" id="p-diag" placeholder="DRC estágio 3, HAS, DM2..."></div><div class="f-group"><label>Unidade</label><select id="p-unidade"><option value="rl">RL</option><option value="santos">Santos</option><option value="tatuape">Tatuapé</option><option value="todas">Todas</option></select></div></div>
+      <div class="f-row f3"><div class="f-group"><label>Peso (kg)</label><input type="number" id="p-peso" step="0.1"></div><div class="f-group"><label>Altura (cm)</label><input type="number" id="p-altura"></div><div class="f-group"><label>Meta proteína/dia (g)</label><input type="number" id="p-prot"></div></div>
+      <div class="f-section">Parâmetros wearable</div>
+      <div class="f-row f3"><div class="f-group"><label>HRV baseline (ms)</label><input type="number" id="p-hrv"></div><div class="f-group"><label>RHR baseline (bpm)</label><input type="number" id="p-rhr"></div><div class="f-group"><label>Meta atividade/semana (km)</label><input type="number" id="p-km" step="0.5"></div></div>
+      <div class="f-section">Meta de performance</div>
+      <div class="f-row f3"><div class="f-group"><label>Descrição</label><input type="text" id="p-meta-desc" placeholder="Caminhar 5km sem parar"></div><div class="f-group"><label>Alvo</label><input type="text" id="p-meta-alvo" placeholder="60 minutos"></div><div class="f-group"><label>Prazo</label><input type="date" id="p-meta-prazo"></div></div>
+      <div class="f-save-bar">
+        <button class="pac-btn" onclick="salvarPerfil()">Salvar perfil</button>
+        <span class="f-save-msg" id="msg-perfil"></span>
+      </div>
+    </div>
+
+    <!-- TAB EXAMES -->
+    <div class="pac-tab-content" id="tab-exames">
+      <div class="f-section">Registrar novo exame</div>
+      <div class="f-card">
+        <div class="f-row f3"><div class="f-group"><label>Data da coleta</label><input type="date" id="ex-data"></div><div class="f-group"><label>Tipo</label><input type="text" id="ex-tipo" placeholder="Bioquímica, Hemograma..."></div><div class="f-group"><label>Observação</label><input type="text" id="ex-obs" placeholder="Opcional"></div></div>
+        <div class="f-section" style="margin-top:12px;">Parâmetros</div>
+        <div id="ex-params-list" class="f-list"></div>
+        <button class="f-add-btn" onclick="addParam()" style="margin-top:8px;">+ Parâmetro</button>
+        <div class="f-save-bar"><button class="pac-btn" onclick="salvarExame()">Registrar exame</button><span class="f-save-msg" id="msg-exame"></span></div>
+      </div>
+      <div class="f-section">Histórico</div>
+      <div id="ex-historico"></div>
+    </div>
+
+    <!-- TAB CONSULTAS -->
+    <div class="pac-tab-content" id="tab-consultas">
+      <div class="f-section">Registrar consulta</div>
+      <div class="f-card">
+        <div class="f-row f3"><div class="f-group"><label>Data</label><input type="date" id="co-data"></div><div class="f-group"><label>Tipo</label><select id="co-tipo"><option value="presencial">Presencial</option><option value="teleconsulta">Teleconsulta</option></select></div><div class="f-group"><label>Retorno em</label><input type="date" id="co-retorno"></div></div>
+        <div class="f-row f1"><div class="f-group"><label>Motivo / queixa principal</label><input type="text" id="co-motivo" placeholder="Consulta de rotina, reavaliação..."></div></div>
+        <div class="f-row f1"><div class="f-group"><label>Resumo clínico</label><textarea id="co-resumo" placeholder="Evolução, ajustes, observações..."></textarea></div></div>
+        <div class="f-save-bar"><button class="pac-btn" onclick="salvarConsulta()">Registrar consulta</button><span class="f-save-msg" id="msg-consulta"></span></div>
+      </div>
+      <div class="f-section">Histórico</div>
+      <div id="co-historico"></div>
+    </div>
+
+    <!-- TAB METAS -->
+    <div class="pac-tab-content" id="tab-metas">
+      <div class="f-section">Nova meta</div>
+      <div class="f-card">
+        <div class="f-row f3"><div class="f-group"><label>Categoria</label><select id="me-cat"><option value="pressao">Pressão arterial</option><option value="peso">Peso</option><option value="laboratorial">Laboratorial</option><option value="atividade">Atividade física</option><option value="medicacao">Medicação</option></select></div><div class="f-group"><label>Valor alvo</label><input type="text" id="me-alvo" placeholder="ex: 130/80 mmHg"></div><div class="f-group"><label>Prazo</label><input type="date" id="me-prazo"></div></div>
+        <div class="f-row f1"><div class="f-group"><label>Descrição da meta</label><input type="text" id="me-desc" placeholder="Manter PA controlada abaixo de 130/80 mmHg"></div></div>
+        <div class="f-save-bar"><button class="pac-btn" onclick="salvarMeta()">Adicionar meta</button><span class="f-save-msg" id="msg-meta"></span></div>
+      </div>
+      <div class="f-section">Metas ativas</div>
+      <div id="me-lista"></div>
+    </div>
+
+    <!-- TAB MEDICAMENTOS -->
+    <div class="pac-tab-content" id="tab-medicamentos">
+      <div class="f-section">Protocolo de medicamentos</div>
+      <div id="med-lista" class="f-list" style="margin-bottom:10px;"></div>
+      <button class="f-add-btn" onclick="addMed()">+ Medicamento</button>
+      <div class="f-save-bar"><button class="pac-btn" onclick="salvarProtocolo('medicamentos')">Salvar medicamentos</button><span class="f-save-msg" id="msg-medicamentos"></span></div>
+    </div>
+
+    <!-- TAB DIETA -->
+    <div class="pac-tab-content" id="tab-dieta">
+      <div class="f-section">Macros prescritos</div>
+      <div class="f-row f3">
+        <div class="f-group"><label>Calorias/dia (kcal)</label><input type="number" id="d-kcal"></div>
+        <div class="f-group"><label>Proteína/dia (g)</label><input type="number" id="d-prot"></div>
+        <div class="f-group"><label>Carboidrato/dia (g)</label><input type="number" id="d-carb"></div>
+      </div>
+      <div class="f-row f3">
+        <div class="f-group"><label>Gordura/dia (g)</label><input type="number" id="d-gord"></div>
+        <div class="f-group"><label>Potássio máx/dia (mg)</label><input type="number" id="d-pot" placeholder="opcional"></div>
+        <div class="f-group"><label>Fósforo máx/dia (mg)</label><input type="number" id="d-fos" placeholder="opcional"></div>
+      </div>
+      <div class="f-section">Restrições e orientações</div>
+      <div class="f-row f1"><div class="f-group"><label>Alimentos restritos</label><textarea id="d-restr" placeholder="Ex: embutidos, laticínios em excesso, banana..."></textarea></div></div>
+      <div class="f-row f1"><div class="f-group"><label>Alimentos recomendados</label><textarea id="d-rec" placeholder="Ex: arroz, frango grelhado, azeite, legumes..."></textarea></div></div>
+      <div class="f-row f1"><div class="f-group"><label>Observações nutricionais</label><textarea id="d-obs" placeholder="Timing, jejum, refeições especiais..."></textarea></div></div>
+      <div class="f-save-bar"><button class="pac-btn" onclick="salvarProtocolo('dieta')">Salvar dieta</button><span class="f-save-msg" id="msg-dieta"></span></div>
+    </div>
+
+    <!-- TAB SUPLEMENTAÇÃO -->
+    <div class="pac-tab-content" id="tab-suplementacao">
+      <div class="f-section">Suplementos prescritos</div>
+      <div id="sup-lista" class="f-list" style="margin-bottom:10px;"></div>
+      <button class="f-add-btn" onclick="addSup()">+ Suplemento</button>
+      <div class="f-row f1" style="margin-top:14px;"><div class="f-group"><label>Observações gerais</label><textarea id="sup-obs" placeholder="Interações, cuidados, ordem de uso..."></textarea></div></div>
+      <div class="f-save-bar"><button class="pac-btn" onclick="salvarProtocolo('suplementacao')">Salvar suplementação</button><span class="f-save-msg" id="msg-suplementacao"></span></div>
+    </div>
+
+    <!-- TAB TREINO -->
+    <div class="pac-tab-content" id="tab-treino">
+      <div class="f-section">Protocolo de atividade física</div>
+      <div class="f-row f3"><div class="f-group"><label>Modalidade principal</label><input type="text" id="tr-mod" placeholder="Caminhada, musculação, natação..."></div><div class="f-group"><label>Frequência semanal</label><input type="text" id="tr-freq" placeholder="3x por semana"></div><div class="f-group"><label>Duração por sessão</label><input type="text" id="tr-dur" placeholder="30–45 minutos"></div></div>
+      <div class="f-row f3"><div class="f-group"><label>Intensidade</label><select id="tr-int"><option value="">Selecione...</option><option value="leve">Leve (conversa fácil)</option><option value="moderada">Moderada (algum esforço)</option><option value="vigorosa">Vigorosa (difícil falar)</option></select></div><div class="f-group"><label>FC alvo (bpm)</label><input type="text" id="tr-fc" placeholder="ex: 100–130 bpm"></div><div class="f-group"><label>Meta km ou min/semana</label><input type="text" id="tr-meta" placeholder="ex: 15km ou 150min"></div></div>
+      <div class="f-section">Sessões da semana</div>
+      <div id="tr-sessoes" class="f-list" style="margin-bottom:10px;"></div>
+      <button class="f-add-btn" onclick="addSessao()">+ Sessão</button>
+      <div class="f-row f1" style="margin-top:14px;"><div class="f-group"><label>Restrições e precauções</label><textarea id="tr-restr" placeholder="Evitar esforço em dias de diálise, monitorar FC, sinais de alerta..."></textarea></div></div>
+      <div class="f-save-bar"><button class="pac-btn" onclick="salvarProtocolo('treino')">Salvar treino</button><span class="f-save-msg" id="msg-treino"></span></div>
+    </div>
+
+    <!-- TAB PLANEJAMENTO -->
+    <div class="pac-tab-content" id="tab-planejamento">
+      <div class="f-section">Estrutura semanal</div>
+      <div id="plan-dias"></div>
+      <div class="f-section" style="margin-top:16px;">Fases do protocolo</div>
+      <div id="plan-fases" class="f-list" style="margin-bottom:10px;"></div>
+      <button class="f-add-btn" onclick="addFase()">+ Fase</button>
+      <div class="f-row f1" style="margin-top:14px;"><div class="f-group"><label>Observações gerais do plano</label><textarea id="plan-obs" placeholder="Progressão esperada, marcos, reavaliações..."></textarea></div></div>
+      <div class="f-save-bar"><button class="pac-btn" onclick="salvarProtocolo('planejamento')">Salvar planejamento</button><span class="f-save-msg" id="msg-planejamento"></span></div>
+    </div>
+
+    <!-- TAB MENSAGENS -->
+    <div class="pac-tab-content" id="tab-mensagens">
+      <div class="msg-thread" id="msg-thread">
+        <div style="text-align:center;font-size:12px;color:var(--text-muted);padding:20px;">Carregando...</div>
+      </div>
+      <div style="display:flex;gap:8px;">
+        <textarea id="msg-resp" rows="2" style="flex:1;font-family:inherit;font-size:12px;color:var(--text-primary);background:#FAFAFA;border:1px solid var(--border);border-radius:6px;padding:8px 11px;outline:none;resize:none;" placeholder="Responda ao paciente..."></textarea>
+        <button class="pac-btn" onclick="enviarResposta()" style="align-self:flex-end;">Enviar</button>
+      </div>
+      <div style="font-size:10px;color:var(--text-muted);margin-top:6px;">Visível imediatamente no portal do paciente.</div>
+    </div>
+
+  </div><!-- /pac-ficha -->
 
 <script>
 const SUPA_URL='https://syzmsixhjlutsynnqivv.supabase.co';
@@ -754,6 +987,436 @@ function sairIndicadores(){
   document.getElementById('btn-login').textContent='Entrar';
   document.getElementById('login-email').value='';
   document.getElementById('login-senha').value='';
+}
+
+/* ══ GESTÃO DE PACIENTES ════════════════════════════════════════ */
+let PAC_ATUAL = null;
+const TOKEN = () => sessionStorage.getItem('apex_access_token')||'';
+const H = () => ({'apikey':SUPA_KEY,'Authorization':`Bearer ${TOKEN()}`,'Content-Type':'application/json'});
+const fmtD = d => d ? new Date(d+'T12:00:00').toLocaleDateString('pt-BR',{day:'2-digit',month:'short',year:'numeric'}) : '—';
+
+function hidePacScreens(){
+  document.querySelectorAll('.pac-screen').forEach(s=>s.classList.remove('active'));
+}
+
+async function abrirPacientes(){
+  document.getElementById('ind-home').classList.remove('active');
+  document.getElementById('cron-mid').classList.remove('active');
+  document.getElementById('unit-sel').classList.remove('active');
+  document.getElementById('ind-content').classList.remove('active');
+  hidePacScreens();
+  document.getElementById('pac-list').classList.add('active');
+  setBreadcrumb([{label:'Gestão de Pacientes',fn:'abrirPacientes'}]);
+  await carregarListaPacientes();
+}
+
+async function carregarListaPacientes(){
+  const grid = document.getElementById('pac-list-grid');
+  grid.innerHTML='<div class="pac-empty">Carregando...</div>';
+  const r = await fetch(`${SUPA_URL}/rest/v1/pacientes?select=id,nome,diagnostico_principal,unidade,meta_performance_descricao&order=nome`,{headers:H()});
+  const data = await r.json();
+  if(!Array.isArray(data)||!data.length){
+    grid.innerHTML='<div class="pac-empty">Nenhum paciente cadastrado ainda.<br>Clique em "+ Novo paciente" para começar.</div>';
+    return;
+  }
+  const unLabel = u=>({rl:'RL',santos:'Santos',tatuape:'Tatuapé',todas:'Todas'})[u]||'—';
+  grid.innerHTML = data.map(p=>`
+    <div class="pac-card" onclick="abrirFicha('${p.id}','${escH(p.nome)}','${escH(p.diagnostico_principal||'')}')">
+      <div class="pac-card-name">${escH(p.nome)}</div>
+      <div class="pac-card-diag">${escH(p.diagnostico_principal||'—')}</div>
+      <div class="pac-card-meta">
+        <span class="pac-tag">${unLabel(p.unidade)}</span>
+        ${p.meta_performance_descricao?`<span class="pac-tag" style="background:rgba(20,184,166,0.08);color:#0f766e;border-color:rgba(20,184,166,0.2);">🎯 ${escH(p.meta_performance_descricao)}</span>`:''}
+      </div>
+    </div>`).join('');
+}
+
+function abrirNovoPaciente(){
+  PAC_ATUAL={id:null};
+  hidePacScreens();
+  document.getElementById('pac-ficha').classList.add('active');
+  document.getElementById('ficha-nome').textContent='Novo paciente';
+  document.getElementById('ficha-diag').textContent='Preencha os dados abaixo e salve';
+  limparFormPerfil();
+  abrirTab('perfil', document.querySelector('.pac-tab'));
+  setBreadcrumb([{label:'Gestão de Pacientes',fn:'abrirPacientes'},{label:'Novo paciente',fn:'abrirNovoPaciente'}]);
+}
+
+async function abrirFicha(id, nome, diag){
+  PAC_ATUAL = {id};
+  hidePacScreens();
+  document.getElementById('pac-ficha').classList.add('active');
+  document.getElementById('ficha-nome').textContent = nome;
+  document.getElementById('ficha-diag').textContent = diag||'—';
+  setBreadcrumb([{label:'Gestão de Pacientes',fn:'abrirPacientes'},{label:nome,fn:`abrirPacientes`}]);
+  abrirTab('perfil', document.querySelector('.pac-tab'));
+  await carregarPerfil();
+  await verificarMsgNaoLidas();
+}
+
+function abrirTab(id, btn){
+  document.querySelectorAll('.pac-tab-content').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.pac-tab').forEach(b=>b.classList.remove('active'));
+  document.getElementById('tab-'+id).classList.add('active');
+  if(btn) btn.classList.add('active');
+  if(PAC_ATUAL?.id){
+    if(id==='exames') carregarExames();
+    if(id==='consultas') carregarConsultas();
+    if(id==='metas') carregarMetas();
+    if(id==='medicamentos') carregarProtocolo('medicamentos');
+    if(id==='dieta') carregarProtocolo('dieta');
+    if(id==='suplementacao') carregarProtocolo('suplementacao');
+    if(id==='treino') carregarProtocolo('treino');
+    if(id==='planejamento') carregarProtocolo('planejamento');
+    if(id==='mensagens') carregarMensagens();
+  }
+}
+
+function escH(s){ return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+
+/* ── PERFIL ── */
+function limparFormPerfil(){
+  ['p-nome','p-nasc','p-diag','p-peso','p-altura','p-prot','p-hrv','p-rhr','p-km','p-meta-desc','p-meta-alvo','p-meta-prazo'].forEach(id=>{
+    const el=document.getElementById(id); if(el) el.value='';
+  });
+}
+
+async function carregarPerfil(){
+  if(!PAC_ATUAL?.id) return;
+  const r = await fetch(`${SUPA_URL}/rest/v1/pacientes?id=eq.${PAC_ATUAL.id}&select=*`,{headers:H()});
+  const data = await r.json();
+  if(!data?.[0]) return;
+  const p = data[0];
+  const set = (id,v) => { const el=document.getElementById(id); if(el&&v!=null) el.value=v; };
+  set('p-nome',p.nome); set('p-nasc',p.data_nascimento); set('p-diag',p.diagnostico_principal);
+  set('p-unidade',p.unidade); set('p-peso',p.peso_inicial); set('p-altura',p.altura);
+  set('p-prot',p.meta_proteina_dia); set('p-hrv',p.hrv_baseline); set('p-rhr',p.rhr_baseline);
+  set('p-km',p.meta_km_semana); set('p-meta-desc',p.meta_performance_descricao);
+  set('p-meta-alvo',p.meta_performance_alvo); set('p-meta-prazo',p.meta_performance_prazo);
+  document.getElementById('ficha-nome').textContent = p.nome;
+  document.getElementById('ficha-diag').textContent = p.diagnostico_principal||'—';
+}
+
+async function salvarPerfil(){
+  const g = id => document.getElementById(id)?.value||null;
+  const body = {
+    nome:g('p-nome'), data_nascimento:g('p-nasc'), diagnostico_principal:g('p-diag'),
+    unidade:g('p-unidade'), peso_inicial:g('p-peso')?+g('p-peso'):null,
+    altura:g('p-altura')?+g('p-altura'):null, meta_proteina_dia:g('p-prot')?+g('p-prot'):null,
+    hrv_baseline:g('p-hrv')?+g('p-hrv'):null, rhr_baseline:g('p-rhr')?+g('p-rhr'):null,
+    meta_km_semana:g('p-km')?+g('p-km'):null, meta_performance_descricao:g('p-meta-desc'),
+    meta_performance_alvo:g('p-meta-alvo'), meta_performance_prazo:g('p-meta-prazo')
+  };
+  if(!body.nome){ showMsg('msg-perfil','Nome obrigatório','erro'); return; }
+  let r;
+  if(PAC_ATUAL?.id){
+    r = await fetch(`${SUPA_URL}/rest/v1/pacientes?id=eq.${PAC_ATUAL.id}`,{method:'PATCH',headers:H(),body:JSON.stringify(body)});
+  } else {
+    body.medico_responsavel='Dr. Bruno P. Biluca';
+    r = await fetch(`${SUPA_URL}/rest/v1/pacientes`,{method:'POST',headers:{...H(),'Prefer':'return=representation'},body:JSON.stringify(body)});
+    if(r.ok){ const d=await r.json(); if(d?.[0]) PAC_ATUAL.id=d[0].id; }
+  }
+  if(r.ok){ showMsg('msg-perfil','Salvo ✓'); document.getElementById('ficha-nome').textContent=body.nome; document.getElementById('ficha-diag').textContent=body.diagnostico_principal||'—'; }
+  else showMsg('msg-perfil','Erro ao salvar','erro');
+}
+
+/* ── EXAMES ── */
+function addParam(){
+  const list=document.getElementById('ex-params-list');
+  const div=document.createElement('div');
+  div.className='f-list-item';
+  div.innerHTML=`<div class="f-group"><label>Parâmetro</label><input type="text" placeholder="Creatinina"></div><div class="f-group"><label>Valor</label><input type="text" placeholder="2.1"></div><div class="f-group"><label>Unidade</label><input type="text" placeholder="mg/dL"></div><button class="f-remove-btn" onclick="this.parentElement.remove()">✕</button>`;
+  list.appendChild(div);
+}
+
+async function salvarExame(){
+  if(!PAC_ATUAL?.id){ showMsg('msg-exame','Salve o perfil primeiro','erro'); return; }
+  const data=document.getElementById('ex-data').value;
+  const tipo=document.getElementById('ex-tipo').value;
+  if(!data||!tipo){ showMsg('msg-exame','Data e tipo obrigatórios','erro'); return; }
+  const params={};
+  document.querySelectorAll('#ex-params-list .f-list-item').forEach(row=>{
+    const inputs=row.querySelectorAll('input');
+    const k=inputs[0].value.trim().toLowerCase();
+    if(k) params[k]=inputs[1].value.trim()+(inputs[2].value?' '+inputs[2].value.trim():'');
+  });
+  const body={paciente_id:PAC_ATUAL.id,data_coleta:data,tipo,parametros:params,observacao:document.getElementById('ex-obs').value||null,inserido_por:'Dr. Bruno P. Biluca'};
+  const r=await fetch(`${SUPA_URL}/rest/v1/exames`,{method:'POST',headers:H(),body:JSON.stringify(body)});
+  if(r.ok){ showMsg('msg-exame','Registrado ✓'); document.getElementById('ex-data').value=''; document.getElementById('ex-tipo').value=''; document.getElementById('ex-obs').value=''; document.getElementById('ex-params-list').innerHTML=''; await carregarExames(); }
+  else showMsg('msg-exame','Erro','erro');
+}
+
+async function carregarExames(){
+  if(!PAC_ATUAL?.id) return;
+  const r=await fetch(`${SUPA_URL}/rest/v1/exames?paciente_id=eq.${PAC_ATUAL.id}&order=data_coleta.desc`,{headers:H()});
+  const data=await r.json();
+  const el=document.getElementById('ex-historico');
+  if(!data?.length){ el.innerHTML='<div style="color:var(--text-muted);font-size:12px;padding:10px 0;">Nenhum exame registrado.</div>'; return; }
+  el.innerHTML=data.map(e=>{
+    const params=Object.entries(e.parametros||{}).map(([k,v])=>`<span style="font-size:11px;margin-right:10px;"><b>${k}:</b> ${v}</span>`).join('');
+    return `<div class="f-card"><div class="f-card-head"><span class="f-card-title">${fmtD(e.data_coleta)} · ${escH(e.tipo)}</span></div><div>${params}</div>${e.observacao?`<div style="font-size:11px;color:var(--text-muted);margin-top:6px;">${escH(e.observacao)}</div>`:''}</div>`;
+  }).join('');
+}
+
+/* ── CONSULTAS ── */
+async function salvarConsulta(){
+  if(!PAC_ATUAL?.id){ showMsg('msg-consulta','Salve o perfil primeiro','erro'); return; }
+  const data=document.getElementById('co-data').value;
+  if(!data){ showMsg('msg-consulta','Data obrigatória','erro'); return; }
+  const body={paciente_id:PAC_ATUAL.id,data,tipo:document.getElementById('co-tipo').value,motivo:document.getElementById('co-motivo').value||null,resumo_clinico:document.getElementById('co-resumo').value||null,retorno_em:document.getElementById('co-retorno').value||null,inserido_por:'Dr. Bruno P. Biluca'};
+  const r=await fetch(`${SUPA_URL}/rest/v1/consultas`,{method:'POST',headers:H(),body:JSON.stringify(body)});
+  if(r.ok){ showMsg('msg-consulta','Registrado ✓'); ['co-data','co-motivo','co-resumo','co-retorno'].forEach(id=>document.getElementById(id).value=''); await carregarConsultas(); }
+  else showMsg('msg-consulta','Erro','erro');
+}
+
+async function carregarConsultas(){
+  if(!PAC_ATUAL?.id) return;
+  const r=await fetch(`${SUPA_URL}/rest/v1/consultas?paciente_id=eq.${PAC_ATUAL.id}&order=data.desc`,{headers:H()});
+  const data=await r.json();
+  const el=document.getElementById('co-historico');
+  if(!data?.length){ el.innerHTML='<div style="color:var(--text-muted);font-size:12px;padding:10px 0;">Nenhuma consulta registrada.</div>'; return; }
+  el.innerHTML=data.map(c=>`
+    <div class="f-card">
+      <div class="f-card-head"><span class="f-card-title">${fmtD(c.data)} · ${c.tipo==='presencial'?'Presencial':'Teleconsulta'}</span>${c.retorno_em?`<span style="font-size:11px;color:var(--text-muted);">Retorno: ${fmtD(c.retorno_em)}</span>`:''}</div>
+      <div style="font-size:12px;font-weight:600;margin-bottom:4px;">${escH(c.motivo||'Consulta')}</div>
+      <div style="font-size:12px;color:var(--text-secondary);">${escH(c.resumo_clinico||'—')}</div>
+    </div>`).join('');
+}
+
+/* ── METAS ── */
+async function salvarMeta(){
+  if(!PAC_ATUAL?.id){ showMsg('msg-meta','Salve o perfil primeiro','erro'); return; }
+  const desc=document.getElementById('me-desc').value;
+  if(!desc){ showMsg('msg-meta','Descrição obrigatória','erro'); return; }
+  const body={paciente_id:PAC_ATUAL.id,categoria:document.getElementById('me-cat').value,descricao_meta:desc,valor_alvo:document.getElementById('me-alvo').value||null,prazo:document.getElementById('me-prazo').value||null,status:'ativa'};
+  const r=await fetch(`${SUPA_URL}/rest/v1/metas_clinicas`,{method:'POST',headers:H(),body:JSON.stringify(body)});
+  if(r.ok){ showMsg('msg-meta','Adicionado ✓'); ['me-desc','me-alvo','me-prazo'].forEach(id=>document.getElementById(id).value=''); await carregarMetas(); }
+  else showMsg('msg-meta','Erro','erro');
+}
+
+async function carregarMetas(){
+  if(!PAC_ATUAL?.id) return;
+  const r=await fetch(`${SUPA_URL}/rest/v1/metas_clinicas?paciente_id=eq.${PAC_ATUAL.id}&order=status,categoria`,{headers:H()});
+  const data=await r.json();
+  const el=document.getElementById('me-lista');
+  if(!data?.length){ el.innerHTML='<div style="color:var(--text-muted);font-size:12px;padding:10px 0;">Nenhuma meta cadastrada.</div>'; return; }
+  const icons={pressao:'💓',peso:'⚖️',laboratorial:'🧪',atividade:'🏃',medicacao:'💊'};
+  el.innerHTML=data.map(m=>`
+    <div class="f-card" style="display:flex;justify-content:space-between;align-items:flex-start;">
+      <div>
+        <div style="font-size:9px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.8px;margin-bottom:3px;">${icons[m.categoria]||'◎'} ${m.categoria}</div>
+        <div style="font-size:13px;font-weight:600;">${escH(m.descricao_meta)}</div>
+        ${m.valor_alvo?`<div style="font-size:11px;color:var(--gold);margin-top:3px;">Alvo: ${escH(m.valor_alvo)}</div>`:''}
+        ${m.prazo?`<div style="font-size:11px;color:var(--text-muted);">Prazo: ${fmtD(m.prazo)}</div>`:''}
+      </div>
+      <div style="display:flex;gap:6px;align-items:center;flex-shrink:0;">
+        <select onchange="atualizarStatusMeta('${m.id}',this.value)" style="font-family:inherit;font-size:10px;border:1px solid var(--border);border-radius:4px;padding:3px 6px;background:#fff;">
+          <option value="ativa" ${m.status==='ativa'?'selected':''}>Ativa</option>
+          <option value="atingida" ${m.status==='atingida'?'selected':''}>Atingida</option>
+          <option value="revisada" ${m.status==='revisada'?'selected':''}>Revisada</option>
+        </select>
+      </div>
+    </div>`).join('');
+}
+
+async function atualizarStatusMeta(id,status){
+  await fetch(`${SUPA_URL}/rest/v1/metas_clinicas?id=eq.${id}`,{method:'PATCH',headers:H(),body:JSON.stringify({status})});
+}
+
+/* ── PROTOCOLOS JSONB ── */
+function addMed(){
+  const list=document.getElementById('med-lista');
+  const div=document.createElement('div');
+  div.className='f-list-item';
+  div.style.gridTemplateColumns='1fr 1fr 1fr 1fr auto';
+  div.innerHTML=`<div class="f-group"><label>Medicamento</label><input type="text" placeholder="Losartana"></div><div class="f-group"><label>Dose</label><input type="text" placeholder="50mg"></div><div class="f-group"><label>Horário</label><input type="text" placeholder="com almoço"></div><div class="f-group"><label>Alerta</label><input type="text" placeholder="Não em jejum"></div><button class="f-remove-btn" onclick="this.parentElement.remove()">✕</button>`;
+  list.appendChild(div);
+}
+
+function addSup(){
+  const list=document.getElementById('sup-lista');
+  const div=document.createElement('div');
+  div.className='f-list-item';
+  div.innerHTML=`<div class="f-group"><label>Suplemento</label><input type="text" placeholder="Creatina"></div><div class="f-group"><label>Dose</label><input type="text" placeholder="3g/dia"></div><div class="f-group"><label>Horário</label><input type="text" placeholder="Pré-treino"></div><button class="f-remove-btn" onclick="this.parentElement.remove()">✕</button>`;
+  list.appendChild(div);
+}
+
+function addSessao(){
+  const dias=['Segunda','Terça','Quarta','Quinta','Sexta','Sábado','Domingo'];
+  const list=document.getElementById('tr-sessoes');
+  const div=document.createElement('div');
+  div.className='f-list-item';
+  div.innerHTML=`<div class="f-group"><label>Dia</label><select>${dias.map(d=>`<option>${d}</option>`).join('')}</select></div><div class="f-group"><label>Atividade</label><input type="text" placeholder="Corrida leve 30min"></div><div class="f-group"><label>Obs</label><input type="text" placeholder="Opcional"></div><button class="f-remove-btn" onclick="this.parentElement.remove()">✕</button>`;
+  list.appendChild(div);
+}
+
+function addFase(){
+  const list=document.getElementById('plan-fases');
+  const div=document.createElement('div');
+  div.className='f-list-item';
+  div.innerHTML=`<div class="f-group"><label>Fase</label><input type="text" placeholder="Fase 1 — Adaptação"></div><div class="f-group"><label>Período</label><input type="text" placeholder="Abr–Jun 2026"></div><div class="f-group"><label>Objetivo</label><input type="text" placeholder="Estabelecer rotina de exercícios"></div><button class="f-remove-btn" onclick="this.parentElement.remove()">✕</button>`;
+  list.appendChild(div);
+}
+
+async function carregarProtocolo(tipo){
+  if(!PAC_ATUAL?.id) return;
+  const r=await fetch(`${SUPA_URL}/rest/v1/protocolos?paciente_id=eq.${PAC_ATUAL.id}&tipo=eq.${tipo}`,{headers:H()});
+  const data=await r.json();
+  if(!data?.[0]?.conteudo) return;
+  const c=data[0].conteudo;
+  if(tipo==='dieta'){
+    const set=(id,v)=>{const el=document.getElementById(id);if(el&&v!=null)el.value=v;};
+    set('d-kcal',c.kcal);set('d-prot',c.prot);set('d-carb',c.carb);
+    set('d-gord',c.gord);set('d-pot',c.pot);set('d-fos',c.fos);
+    set('d-restr',c.restr);set('d-rec',c.rec);set('d-obs',c.obs);
+  }
+  if(tipo==='treino'){
+    const set=(id,v)=>{const el=document.getElementById(id);if(el&&v!=null)el.value=v;};
+    set('tr-mod',c.modalidade);set('tr-freq',c.frequencia);set('tr-dur',c.duracao);
+    set('tr-int',c.intensidade);set('tr-fc',c.fc_alvo);set('tr-meta',c.meta);set('tr-restr',c.restricoes);
+    const list=document.getElementById('tr-sessoes');
+    list.innerHTML='';
+    (c.sessoes||[]).forEach(s=>{
+      const div=document.createElement('div');
+      div.className='f-list-item';
+      const dias=['Segunda','Terça','Quarta','Quinta','Sexta','Sábado','Domingo'];
+      div.innerHTML=`<div class="f-group"><label>Dia</label><select>${dias.map(d=>`<option${d===s.dia?' selected':''}>${d}</option>`).join('')}</select></div><div class="f-group"><label>Atividade</label><input type="text" value="${escH(s.atividade||'')}"></div><div class="f-group"><label>Obs</label><input type="text" value="${escH(s.obs||'')}"></div><button class="f-remove-btn" onclick="this.parentElement.remove()">✕</button>`;
+      list.appendChild(div);
+    });
+  }
+  if(tipo==='medicamentos'){
+    const list=document.getElementById('med-lista');
+    list.innerHTML='';
+    (c.itens||[]).forEach(m=>{
+      const div=document.createElement('div');
+      div.className='f-list-item';
+      div.style.gridTemplateColumns='1fr 1fr 1fr 1fr auto';
+      div.innerHTML=`<div class="f-group"><label>Medicamento</label><input type="text" value="${escH(m.nome||'')}"></div><div class="f-group"><label>Dose</label><input type="text" value="${escH(m.dose||'')}"></div><div class="f-group"><label>Horário</label><input type="text" value="${escH(m.horario||'')}"></div><div class="f-group"><label>Alerta</label><input type="text" value="${escH(m.alerta||'')}"></div><button class="f-remove-btn" onclick="this.parentElement.remove()">✕</button>`;
+      list.appendChild(div);
+    });
+  }
+  if(tipo==='suplementacao'){
+    const list=document.getElementById('sup-lista');
+    list.innerHTML='';
+    (c.itens||[]).forEach(s=>{
+      const div=document.createElement('div');
+      div.className='f-list-item';
+      div.innerHTML=`<div class="f-group"><label>Suplemento</label><input type="text" value="${escH(s.nome||'')}"></div><div class="f-group"><label>Dose</label><input type="text" value="${escH(s.dose||'')}"></div><div class="f-group"><label>Horário</label><input type="text" value="${escH(s.horario||'')}"></div><button class="f-remove-btn" onclick="this.parentElement.remove()">✕</button>`;
+      list.appendChild(div);
+    });
+    const el=document.getElementById('sup-obs');
+    if(el) el.value=c.obs||'';
+  }
+  if(tipo==='planejamento'){
+    const el=document.getElementById('plan-obs');
+    if(el) el.value=c.obs||'';
+    const list=document.getElementById('plan-fases');
+    list.innerHTML='';
+    (c.fases||[]).forEach(f=>{
+      const div=document.createElement('div');
+      div.className='f-list-item';
+      div.innerHTML=`<div class="f-group"><label>Fase</label><input type="text" value="${escH(f.nome||'')}"></div><div class="f-group"><label>Período</label><input type="text" value="${escH(f.periodo||'')}"></div><div class="f-group"><label>Objetivo</label><input type="text" value="${escH(f.objetivo||'')}"></div><button class="f-remove-btn" onclick="this.parentElement.remove()">✕</button>`;
+      list.appendChild(div);
+    });
+    const planDias=document.getElementById('plan-dias');
+    const dias=['Segunda','Terça','Quarta','Quinta','Sexta','Sábado','Domingo'];
+    planDias.innerHTML=dias.map(d=>`
+      <div style="display:flex;align-items:baseline;gap:10px;margin-bottom:10px;">
+        <div style="width:70px;font-size:10px;font-weight:600;color:var(--text-muted);text-transform:uppercase;">${d}</div>
+        <div class="f-group" style="flex:1;margin:0;"><input type="text" id="plan-${d.toLowerCase()}" value="${escH((c.dias||{})[d]||'')}" placeholder="Atividade, consulta, descanso..."></div>
+      </div>`).join('');
+  }
+}
+
+async function salvarProtocolo(tipo){
+  if(!PAC_ATUAL?.id){ showMsg('msg-'+tipo,'Salve o perfil primeiro','erro'); return; }
+  let conteudo={};
+  if(tipo==='dieta'){
+    const g=id=>document.getElementById(id)?.value||null;
+    conteudo={kcal:g('d-kcal')?+g('d-kcal'):null,prot:g('d-prot')?+g('d-prot'):null,carb:g('d-carb')?+g('d-carb'):null,gord:g('d-gord')?+g('d-gord'):null,pot:g('d-pot')||null,fos:g('d-fos')||null,restr:g('d-restr'),rec:g('d-rec'),obs:g('d-obs')};
+  }
+  if(tipo==='treino'){
+    const g=id=>document.getElementById(id)?.value||null;
+    const sessoes=[]; document.querySelectorAll('#tr-sessoes .f-list-item').forEach(row=>{const sels=row.querySelectorAll('select,input');sessoes.push({dia:sels[0].value,atividade:sels[1].value,obs:sels[2].value});});
+    conteudo={modalidade:g('tr-mod'),frequencia:g('tr-freq'),duracao:g('tr-dur'),intensidade:g('tr-int'),fc_alvo:g('tr-fc'),meta:g('tr-meta'),restricoes:g('tr-restr'),sessoes};
+  }
+  if(tipo==='medicamentos'){
+    const itens=[]; document.querySelectorAll('#med-lista .f-list-item').forEach(row=>{const ins=row.querySelectorAll('input');if(ins[0].value)itens.push({nome:ins[0].value,dose:ins[1].value,horario:ins[2].value,alerta:ins[3].value});});
+    conteudo={itens};
+  }
+  if(tipo==='suplementacao'){
+    const itens=[]; document.querySelectorAll('#sup-lista .f-list-item').forEach(row=>{const ins=row.querySelectorAll('input');if(ins[0].value)itens.push({nome:ins[0].value,dose:ins[1].value,horario:ins[2].value});});
+    conteudo={itens,obs:document.getElementById('sup-obs')?.value||null};
+  }
+  if(tipo==='planejamento'){
+    const dias={}; ['Segunda','Terça','Quarta','Quinta','Sexta','Sábado','Domingo'].forEach(d=>{const el=document.getElementById('plan-'+d.toLowerCase());if(el)dias[d]=el.value;});
+    const fases=[]; document.querySelectorAll('#plan-fases .f-list-item').forEach(row=>{const ins=row.querySelectorAll('input');if(ins[0].value)fases.push({nome:ins[0].value,periodo:ins[1].value,objetivo:ins[2].value});});
+    conteudo={dias,fases,obs:document.getElementById('plan-obs')?.value||null};
+  }
+  const body={paciente_id:PAC_ATUAL.id,tipo,conteudo,atualizado_por:'Dr. Bruno P. Biluca',atualizado_em:new Date().toISOString()};
+  const r=await fetch(`${SUPA_URL}/rest/v1/protocolos`,{method:'POST',headers:{...H(),'Prefer':'resolution=merge-duplicates'},body:JSON.stringify(body)});
+  if(r.ok||r.status===201||r.status===204) showMsg('msg-'+tipo,'Salvo ✓');
+  else showMsg('msg-'+tipo,'Erro ao salvar','erro');
+}
+
+/* ── MENSAGENS ── */
+async function verificarMsgNaoLidas(){
+  if(!PAC_ATUAL?.id) return;
+  const r=await fetch(`${SUPA_URL}/rest/v1/mensagens?paciente_id=eq.${PAC_ATUAL.id}&remetente=eq.paciente&lida=eq.false&select=id`,{headers:{...H(),'Prefer':'count=exact'}});
+  const cnt=parseInt(r.headers.get('Content-Range')?.split('/')[1]||'0');
+  const badge=document.getElementById('msg-cnt');
+  if(cnt>0){badge.textContent=cnt;badge.style.display='inline';}else badge.style.display='none';
+}
+
+async function carregarMensagens(){
+  if(!PAC_ATUAL?.id) return;
+  const r=await fetch(`${SUPA_URL}/rest/v1/mensagens?paciente_id=eq.${PAC_ATUAL.id}&order=criado_em.asc`,{headers:H()});
+  const data=await r.json();
+  const el=document.getElementById('msg-thread');
+  if(!data?.length){ el.innerHTML='<div style="text-align:center;font-size:12px;color:var(--text-muted);padding:20px;">Sem mensagens ainda.</div>'; return; }
+  el.innerHTML=data.map(m=>`
+    <div style="display:flex;justify-content:${m.remetente==='clinica'?'flex-end':'flex-start'};">
+      <div class="msg-b ${m.remetente==='clinica'?'clinic':'patient'}">
+        <div style="font-size:10px;font-weight:600;color:var(--text-muted);margin-bottom:4px;">${m.remetente==='clinica'?'Dr. Bruno':'Paciente'}</div>
+        ${escH(m.texto)}
+        <div class="msg-b-time">${new Date(m.criado_em).toLocaleString('pt-BR',{day:'2-digit',month:'short',hour:'2-digit',minute:'2-digit'})}</div>
+      </div>
+    </div>`).join('');
+  el.scrollTop=el.scrollHeight;
+  // Marcar msgs do paciente como lidas
+  await fetch(`${SUPA_URL}/rest/v1/mensagens?paciente_id=eq.${PAC_ATUAL.id}&remetente=eq.paciente&lida=eq.false`,{method:'PATCH',headers:H(),body:JSON.stringify({lida:true})});
+  document.getElementById('msg-cnt').style.display='none';
+}
+
+async function enviarResposta(){
+  if(!PAC_ATUAL?.id) return;
+  const input=document.getElementById('msg-resp');
+  const texto=input.value.trim();
+  if(!texto) return;
+  const body={paciente_id:PAC_ATUAL.id,remetente:'clinica',texto,lida:false};
+  const r=await fetch(`${SUPA_URL}/rest/v1/mensagens`,{method:'POST',headers:H(),body:JSON.stringify(body)});
+  if(r.ok||r.status===201){ input.value=''; await carregarMensagens(); }
+}
+
+/* ── UTILS ── */
+function showMsg(id,txt,tipo){
+  const el=document.getElementById(id);
+  if(!el) return;
+  el.textContent=txt;
+  el.style.color=tipo==='erro'?'var(--red)':'var(--green)';
+  setTimeout(()=>el.textContent='',3000);
+}
+
+/* planejamento — dias da semana no carregamento inicial */
+function initPlanDias(){
+  const dias=['Segunda','Terça','Quarta','Quinta','Sexta','Sábado','Domingo'];
+  const el=document.getElementById('plan-dias');
+  if(!el) return;
+  el.innerHTML=dias.map(d=>`
+    <div style="display:flex;align-items:baseline;gap:10px;margin-bottom:10px;">
+      <div style="width:70px;font-size:10px;font-weight:600;color:var(--text-muted);text-transform:uppercase;">${d}</div>
+      <div class="f-group" style="flex:1;margin:0;"><input type="text" id="plan-${d.toLowerCase()}" placeholder="Atividade, consulta, descanso..."></div>
+    </div>`).join('');
 }
 </script>
 </body>

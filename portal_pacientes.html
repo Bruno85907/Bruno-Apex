@@ -5,168 +5,125 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Portal do Paciente · APEX</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/chart.js@4/dist/chart.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
 /* ── TOKENS ── */
 :root{
-  --bg:#f8f8f6;--bg2:#ffffff;--bg3:#f2f1ef;--bg4:#eae9e6;
+  --bg:#f8f8f6;--bg2:#ffffff;--bg3:#f2f1ef;--bg4:#eae9e6;--bg5:#e0deda;
   --c:#1a1917;--c2:#4a4845;--c3:#7a7875;--c4:#a8a6a3;
   --br:rgba(0,0,0,0.08);--br2:rgba(0,0,0,0.05);
   --sb:#0D0D0F;--sb2:#171719;--sb3:#1e1e21;
-  --sbr:rgba(255,255,255,0.07);
+  --sbr:rgba(255,255,255,0.07);--sbr2:rgba(255,255,255,0.04);
   --sbc:#ffffff;--sbc2:rgba(255,255,255,0.58);--sbc3:rgba(255,255,255,0.32);--sbc4:rgba(255,255,255,0.18);
-  --gold:#E4BA64;--gold2:#D4A840;
+  --gold:#E4BA64;--gold2:#D4A840;--gold3:#C49830;
   --golddim:rgba(228,186,100,0.12);--goldbr:rgba(228,186,100,0.28);
   --G:#22c55e;--Gdim:rgba(34,197,94,0.09);--Gbr:rgba(34,197,94,0.25);
   --B:#3b82f6;--Bdim:rgba(59,130,246,0.09);--Bbr:rgba(59,130,246,0.25);
   --A:#f59e0b;--Adim:rgba(245,158,11,0.09);--Abr:rgba(245,158,11,0.25);
   --R:#ef4444;--Rdim:rgba(239,68,68,0.09);--Rbr:rgba(239,68,68,0.25);
+  --P:#a855f7;--Pdim:rgba(168,85,247,0.09);--Pbr:rgba(168,85,247,0.25);
+  --T:#14b8a6;--Tdim:rgba(20,184,166,0.09);--Tbr:rgba(20,184,166,0.25);
   --mono:'JetBrains Mono',monospace;
   --sans:'Plus Jakarta Sans',sans-serif;
-  --r:8px;--r2:12px;
+  --r:8px;--r2:12px;--r3:16px;
 }
 *{box-sizing:border-box;margin:0;padding:0;}
 body{background:var(--sb);color:var(--c);font-family:var(--sans);font-size:14px;line-height:1.6;min-height:100vh;}
 
 /* ══ LOGIN ══════════════════════════════════════════════════════ */
-#login-screen{
-  display:flex;align-items:center;justify-content:center;
-  min-height:100vh;background:var(--sb);padding:24px;
-}
-.login-box{
-  background:var(--sb2);border:1px solid var(--sbr);border-radius:16px;
-  padding:36px 32px;width:100%;max-width:380px;
-}
+#login-screen{display:flex;align-items:center;justify-content:center;min-height:100vh;background:var(--sb);padding:24px;}
+.login-box{background:var(--sb2);border:1px solid var(--sbr);border-radius:16px;padding:36px 32px;width:100%;max-width:380px;}
 .login-brand{display:flex;align-items:center;gap:10px;margin-bottom:28px;}
-.login-icon{
-  width:34px;height:34px;border:1.5px solid var(--gold);border-radius:7px;
-  display:flex;align-items:center;justify-content:center;
-  font-family:var(--mono);font-size:14px;font-weight:700;color:var(--gold);flex-shrink:0;
-}
-.login-brand-text .t1{font-size:14px;font-weight:700;color:var(--sbc);letter-spacing:-.2px;}
+.login-icon{width:34px;height:34px;border:1.5px solid var(--gold);border-radius:7px;display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:14px;font-weight:700;color:var(--gold);}
+.login-brand-text .t1{font-size:14px;font-weight:700;color:var(--sbc);}
 .login-brand-text .t2{font-size:9px;color:var(--sbc4);font-family:var(--mono);letter-spacing:.8px;}
-.login-title{font-size:19px;font-weight:800;color:var(--sbc);margin-bottom:5px;letter-spacing:-.3px;}
+.login-title{font-size:19px;font-weight:800;color:var(--sbc);margin-bottom:5px;}
 .login-desc{font-size:12px;color:var(--sbc3);margin-bottom:24px;line-height:1.6;}
 .lf{margin-bottom:14px;}
 .lf label{font-size:9px;font-family:var(--mono);color:var(--sbc4);text-transform:uppercase;letter-spacing:1.2px;display:block;margin-bottom:6px;}
-.lf input{
-  width:100%;background:var(--sb3);border:1px solid var(--sbr);
-  border-radius:var(--r);padding:10px 13px;color:var(--sbc);
-  font-family:var(--sans);font-size:13px;outline:none;transition:.15s;
-}
-.lf input:focus{border-color:var(--goldbr);background:rgba(228,186,100,0.04);}
-.login-btn{
-  width:100%;background:var(--gold2);border:none;border-radius:var(--r);
-  padding:11px;color:#1a1917;font-family:var(--sans);font-size:13px;
-  font-weight:700;cursor:pointer;transition:.15s;margin-top:4px;letter-spacing:-.1px;
-}
+.lf input{width:100%;background:var(--sb3);border:1px solid var(--sbr);border-radius:var(--r);padding:10px 13px;color:var(--sbc);font-family:var(--sans);font-size:13px;outline:none;transition:.15s;}
+.lf input:focus{border-color:var(--goldbr);}
+.login-btn{width:100%;background:var(--gold2);border:none;border-radius:var(--r);padding:11px;color:#1a1917;font-family:var(--sans);font-size:13px;font-weight:700;cursor:pointer;transition:.15s;margin-top:4px;}
 .login-btn:hover{background:var(--gold);}
 .login-btn:disabled{opacity:.45;cursor:not-allowed;}
-.login-err{
-  background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.28);
-  border-radius:var(--r);padding:9px 13px;font-size:12px;color:#fca5a5;
-  margin-top:12px;display:none;
-}
+.login-err{background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,.28);border-radius:var(--r);padding:9px 13px;font-size:12px;color:#fca5a5;margin-top:12px;display:none;}
 .login-footer{margin-top:20px;font-size:10px;color:var(--sbc4);text-align:center;line-height:1.7;}
 
-/* ══ APP LAYOUT ═════════════════════════════════════════════════ */
+/* ══ APP ════════════════════════════════════════════════════════ */
 #app{display:none;height:100vh;overflow:hidden;}
 #app.on{display:flex;}
 body:has(#app.on){background:var(--bg);}
 
 /* ══ SIDEBAR ════════════════════════════════════════════════════ */
-.sidebar{
-  width:224px;background:var(--sb);border-right:1px solid var(--sbr);
-  display:flex;flex-direction:column;flex-shrink:0;overflow-y:auto;
-}
-.sb-top{padding:16px 14px 13px;border-bottom:1px solid var(--sbr);}
+.sidebar{width:224px;background:var(--sb);border-right:1px solid var(--sbr);display:flex;flex-direction:column;flex-shrink:0;overflow-y:auto;}
+.sb-top{padding:18px 16px 14px;border-bottom:1px solid var(--sbr);}
 .sb-brand{display:flex;align-items:center;gap:8px;margin-bottom:12px;}
-.sb-brand-icon{
-  width:22px;height:22px;border:1px solid var(--gold);border-radius:4px;
-  display:flex;align-items:center;justify-content:center;
-  font-family:var(--mono);font-size:9px;font-weight:700;color:var(--gold);
-}
-.sb-brand-name{font-size:11px;font-weight:600;color:var(--sbc);letter-spacing:-.1px;}
-.sb-patient{
-  background:var(--golddim);border:1px solid var(--goldbr);
-  border-radius:6px;padding:8px 10px;
-}
+.sb-brand-icon{width:22px;height:22px;border:1px solid var(--gold);border-radius:4px;display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:9px;font-weight:700;color:var(--gold);}
+.sb-brand-name{font-size:11px;font-weight:600;color:var(--sbc);}
+.sb-patient{background:var(--golddim);border:1px solid var(--goldbr);border-radius:6px;padding:8px 10px;}
 .sb-patient-name{font-size:12px;font-weight:600;color:var(--sbc);line-height:1.3;}
 .sb-patient-meta{font-family:var(--mono);font-size:9px;color:var(--sbc4);margin-top:2px;}
+.sb-goal{margin-top:6px;padding-top:6px;border-top:1px solid var(--goldbr);}
+.sb-goal .gl{font-size:8px;font-family:var(--mono);color:var(--gold);text-transform:uppercase;letter-spacing:1px;}
+.sb-goal .gv{font-size:11px;font-weight:500;color:var(--sbc);margin-top:1px;}
+.sb-phase{padding:10px 12px;border-top:1px solid var(--sbr);}
+.ph-ind{border-radius:var(--r);padding:7px 10px;margin-bottom:6px;background:var(--golddim);border:1px solid var(--goldbr);}
+.ph-ind .phl{font-size:8px;font-family:var(--mono);text-transform:uppercase;letter-spacing:1px;margin-bottom:1px;color:var(--gold);}
+.ph-ind .phv{font-size:11px;font-weight:500;color:var(--sbc);}
+.dots{display:flex;gap:4px;margin-top:6px;}
+.dot{width:22px;height:3px;border-radius:2px;background:var(--sb3);}
+.dot.on{background:var(--gold);}
 .sb-nav{padding:8px;flex:1;}
-.nav-sec{
-  font-size:8px;font-family:var(--mono);color:var(--sbc3);
-  text-transform:uppercase;letter-spacing:2px;
-  padding:10px 8px 4px;margin-top:2px;
-}
-.nav-it{
-  display:flex;align-items:center;gap:8px;
-  padding:7px 9px;border-radius:var(--r);cursor:pointer;
-  font-size:12px;color:var(--sbc2);transition:.12s;
-  margin-bottom:1px;border:1px solid transparent;
-}
+.nav-sec{font-size:8px;font-family:var(--mono);color:var(--sbc3);text-transform:uppercase;letter-spacing:2px;padding:10px 8px 4px;margin-top:4px;}
+.nav-it{display:flex;align-items:center;gap:8px;padding:7px 9px;border-radius:var(--r);cursor:pointer;font-size:12px;font-weight:400;color:var(--sbc2);transition:.12s;margin-bottom:1px;border:1px solid transparent;}
 .nav-it:hover{background:var(--sb2);color:rgba(255,255,255,.82);}
 .nav-it.on{background:var(--golddim);color:var(--gold);border-color:var(--goldbr);font-weight:500;}
-.nav-it .ni{font-size:13px;width:16px;text-align:center;flex-shrink:0;}
-.nav-badge{
-  margin-left:auto;background:var(--R);color:#fff;
-  font-size:9px;font-family:var(--mono);padding:1px 6px;
-  border-radius:10px;font-weight:600;
-}
+.nav-it .ni{font-size:12px;width:16px;text-align:center;}
+.nav-badge{margin-left:auto;background:var(--R);color:#fff;font-size:9px;font-family:var(--mono);padding:1px 6px;border-radius:10px;font-weight:600;}
 .sb-bottom{padding:10px 12px;border-top:1px solid var(--sbr);}
-.sb-logout{
-  display:flex;align-items:center;gap:7px;padding:7px 9px;
-  border-radius:var(--r);cursor:pointer;font-size:11px;
-  color:var(--sbc4);transition:.12s;
-}
+.sb-logout{display:flex;align-items:center;gap:7px;padding:7px 9px;border-radius:var(--r);cursor:pointer;font-size:11px;color:var(--sbc4);transition:.12s;}
 .sb-logout:hover{background:rgba(239,68,68,.1);color:#fca5a5;}
 
-/* ══ MAIN AREA ══════════════════════════════════════════════════ */
+/* ══ MAIN ════════════════════════════════════════════════════════ */
 .main{flex:1;overflow-y:auto;background:var(--bg);}
 .pg{display:none;padding:26px 30px;max-width:980px;}
 .pg.on{display:block;}
-.eyebrow{
-  font-family:var(--mono);font-size:9px;color:var(--c3);
-  letter-spacing:2px;text-transform:uppercase;margin-bottom:7px;
-}
+.eyebrow{font-family:var(--mono);font-size:9px;color:var(--c3);letter-spacing:2px;text-transform:uppercase;margin-bottom:7px;}
 .pg-title{font-size:21px;font-weight:800;letter-spacing:-.4px;margin-bottom:3px;}
 .pg-sub{font-size:12px;color:var(--c2);margin-bottom:20px;}
-h3{
-  font-size:10px;font-weight:600;color:var(--c3);
-  text-transform:uppercase;letter-spacing:1.5px;
-  margin-bottom:12px;font-family:var(--mono);
-}
+h3{font-size:10px;font-weight:600;color:var(--c3);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:12px;font-family:var(--mono);}
 .divider{height:1px;background:var(--br);margin:20px 0;}
 
 /* ══ COMPONENTS ═════════════════════════════════════════════════ */
-.card{
-  background:var(--bg2);border:1px solid var(--br);
-  border-radius:var(--r2);padding:16px 18px;margin-bottom:12px;
-}
-.card-sm{
-  background:var(--bg3);border:1px solid var(--br2);
-  border-radius:var(--r);padding:11px 13px;
-}
-.g2{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
-.g4{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;}
-
-/* metric */
-.mc{
-  text-align:center;background:var(--bg3);border:1px solid var(--br);
-  border-radius:var(--r2);padding:14px 10px;
-}
-.mc .mv{font-family:var(--mono);font-size:22px;font-weight:700;color:var(--gold2);}
-.mc .mu{font-size:9px;color:var(--c4);margin-top:1px;font-family:var(--mono);}
-.mc .ml{font-size:11px;color:var(--c2);margin-top:4px;}
-
-/* badges */
+.card{background:var(--bg2);border:1px solid var(--br);border-radius:var(--r2);padding:16px 18px;margin-bottom:12px;}
+.card-sm{background:var(--bg3);border:1px solid var(--br2);border-radius:var(--r);padding:11px 13px;}
+.alert{padding:11px 15px;border-radius:var(--r);font-size:12px;line-height:1.6;margin-bottom:14px;border-left:3px solid;}
+.al-g{background:rgba(34,197,94,0.08);border-color:var(--G);color:#166534;}
+.al-a{background:rgba(245,158,11,0.08);border-color:var(--A);color:#92400e;}
+.al-r{background:rgba(239,68,68,0.08);border-color:var(--R);color:#991b1b;}
+.al-b{background:rgba(59,130,246,0.08);border-color:var(--B);color:#1e40af;}
+.alert strong{color:var(--c);}
 .badge{display:inline-block;font-size:10px;font-weight:600;padding:2px 9px;border-radius:20px;font-family:var(--mono);}
-.b-gold{background:var(--golddim);color:var(--gold2);border:1px solid var(--goldbr);}
-.b-g{background:var(--Gdim);color:var(--G);border:1px solid var(--Gbr);}
+.b-g{background:var(--golddim);color:var(--gold2);border:1px solid var(--goldbr);}
 .b-b{background:var(--Bdim);color:var(--B);border:1px solid var(--Bbr);}
-.b-n{background:var(--bg4);color:var(--c2);border:1px solid var(--br);}
+.b-a{background:var(--Adim);color:var(--A);border:1px solid var(--Abr);}
 .b-r{background:var(--Rdim);color:var(--R);border:1px solid var(--Rbr);}
+.b-p{background:var(--Pdim);color:var(--P);border:1px solid var(--Pbr);}
+.b-t{background:var(--Tdim);color:var(--T);border:1px solid var(--Tbr);}
+.b-n{background:var(--bg4);color:var(--c2);border:1px solid var(--br);}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;}
+.g4{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;}
+@media(max-width:720px){.g2,.g3,.g4{grid-template-columns:1fr 1fr!important;}.app{flex-direction:column;height:auto;}.sidebar{width:100%;}.main{height:auto;}}
+
+/* metric card */
+.mc{text-align:center;background:var(--bg3);border:1px solid var(--br);border-radius:var(--r2);padding:13px 10px;}
+.mc .mv{font-family:var(--mono);font-size:21px;font-weight:700;color:var(--gold2);}
+.mc .mc-label,.mc .mu{font-size:9px;color:var(--c3);margin-top:1px;font-family:var(--mono);}
+.mc .ml{font-size:11px;color:var(--c2);margin-top:4px;}
+.mc input{background:none;border:none;color:var(--gold2);font-family:var(--mono);font-size:21px;font-weight:700;width:100%;text-align:center;padding:0;outline:none;}
+.mc input::placeholder{color:var(--c4);font-size:15px;}
 
 /* timeline */
 .tl{position:relative;padding-left:20px;}
@@ -188,105 +145,99 @@ h3{
 .tp-n{background:var(--bg4);color:var(--c2);}
 
 /* table */
+.tbl-wrap{background:var(--bg2);border:1px solid var(--br);border-radius:var(--r2);overflow:hidden;margin-bottom:14px;}
 .tbl{width:100%;border-collapse:collapse;font-size:12px;}
-.tbl th{
-  font-family:var(--mono);font-size:9px;text-transform:uppercase;
-  letter-spacing:1.2px;color:var(--c3);padding:8px 10px;
-  border-bottom:1px solid var(--br);text-align:left;font-weight:500;
-}
-.tbl td{padding:9px 10px;border-bottom:1px solid var(--br2);vertical-align:middle;}
+.tbl th{font-family:var(--mono);font-size:9px;color:var(--c3);text-transform:uppercase;letter-spacing:1px;padding:8px 12px;border-bottom:1px solid var(--br);text-align:left;background:var(--bg4);}
+.tbl td{padding:9px 12px;border-bottom:1px solid var(--br2);color:var(--c2);vertical-align:top;}
 .tbl tr:last-child td{border-bottom:none;}
-.tbl tr.exam-row{cursor:pointer;}
-.tbl tr.exam-row:hover td{background:var(--bg3);}
+.tbl tr.clickable{cursor:pointer;}
+.tbl tr.clickable:hover td{background:var(--bg3);}
 
-/* exam expand */
-.exam-params{padding:10px 2px 4px;border-top:1px solid var(--br2);}
-.ep-row{display:flex;justify-content:space-between;align-items:center;padding:4px 0;font-size:12px;}
-.ep-name{color:var(--c2);}
-.ep-val{font-family:var(--mono);font-size:12px;font-weight:600;}
-.ep-ref{font-size:10px;color:var(--c4);margin-left:6px;}
+/* exam params */
+.ep-row{display:flex;justify-content:space-between;align-items:center;padding:5px 0;font-size:12px;border-bottom:1px solid var(--br2);}
+.ep-row:last-child{border-bottom:none;}
+.ep-name{color:var(--c2);text-transform:capitalize;}
+.ep-val{font-family:var(--mono);font-weight:600;}
+.ep-ref{font-size:10px;color:var(--c4);margin-left:5px;}
 .val-ok{color:var(--G);}
 .val-alt{color:var(--A);}
 .val-crit{color:var(--R);}
 
 /* metas */
-.meta-card{
-  background:var(--bg2);border:1px solid var(--br);
-  border-radius:var(--r2);padding:14px 16px;margin-bottom:10px;
-}
-.meta-cat{
-  font-family:var(--mono);font-size:9px;text-transform:uppercase;
-  letter-spacing:1.2px;color:var(--c3);margin-bottom:4px;
-}
+.meta-card{background:var(--bg2);border:1px solid var(--br);border-radius:var(--r2);padding:14px 16px;margin-bottom:10px;}
+.meta-cat{font-family:var(--mono);font-size:9px;text-transform:uppercase;letter-spacing:1.2px;color:var(--c3);margin-bottom:4px;}
 .meta-desc{font-size:13px;font-weight:600;color:var(--c);margin-bottom:8px;}
 .meta-footer{display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
 .meta-alvo{font-family:var(--mono);font-size:11px;color:var(--gold2);}
 .meta-prazo{font-size:11px;color:var(--c3);}
 
 /* mensagens */
-.msg-wrap{
-  display:flex;flex-direction:column;gap:10px;
-  max-height:420px;overflow-y:auto;margin-bottom:14px;
-  padding-right:2px;
-}
+.msg-wrap{display:flex;flex-direction:column;gap:10px;max-height:420px;overflow-y:auto;margin-bottom:14px;}
 .msg-bub{max-width:75%;padding:10px 14px;border-radius:12px;font-size:12px;line-height:1.6;}
-.msg-clinic{
-  background:var(--bg3);border:1px solid var(--br);
-  color:var(--c);align-self:flex-start;border-bottom-left-radius:3px;
-}
-.msg-patient{
-  background:var(--golddim);border:1px solid var(--goldbr);
-  color:var(--c);align-self:flex-end;border-bottom-right-radius:3px;
-}
+.msg-clinic{background:var(--bg3);border:1px solid var(--br);color:var(--c);align-self:flex-start;border-bottom-left-radius:3px;}
+.msg-patient{background:var(--golddim);border:1px solid var(--goldbr);color:var(--c);align-self:flex-end;border-bottom-right-radius:3px;}
 .msg-time{font-family:var(--mono);font-size:9px;color:var(--c4);margin-top:5px;}
 .msg-input-row{display:flex;gap:8px;}
-.msg-input{
-  flex:1;background:var(--bg2);border:1px solid var(--br);
-  border-radius:var(--r);padding:9px 12px;font-family:var(--sans);
-  font-size:12px;color:var(--c);outline:none;resize:none;
-}
+.msg-input{flex:1;background:var(--bg2);border:1px solid var(--br);border-radius:var(--r);padding:9px 12px;font-family:var(--sans);font-size:12px;color:var(--c);outline:none;resize:none;}
 .msg-input:focus{border-color:var(--goldbr);}
-.msg-btn{
-  background:var(--gold2);border:none;border-radius:var(--r);
-  padding:9px 18px;color:#1a1917;font-weight:700;font-size:12px;
-  cursor:pointer;transition:.15s;white-space:nowrap;align-self:flex-end;
-}
-.msg-btn:hover{background:var(--gold);}
-.msg-btn:disabled{opacity:.45;cursor:not-allowed;}
 
-/* empty state */
+/* tracker */
+.field{margin-bottom:12px;}
+.field label{font-size:9px;font-family:var(--mono);color:var(--c3);text-transform:uppercase;letter-spacing:1px;display:block;margin-bottom:6px;}
+.field input,.field select,.field textarea{width:100%;background:var(--bg3);border:1px solid var(--br);border-radius:var(--r);padding:8px 11px;color:var(--c);font-family:var(--sans);font-size:12px;outline:none;transition:.12s;}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--goldbr);background:var(--bg2);}
+.field textarea{resize:vertical;min-height:62px;}
+.score-row{display:flex;gap:4px;flex-wrap:wrap;}
+.sc-btn{background:var(--bg4);border:1px solid var(--br);border-radius:5px;color:var(--c3);font-family:var(--mono);font-size:11px;padding:4px 7px;cursor:pointer;transition:.12s;}
+.sc-btn:hover{background:var(--bg5);}
+.sc-btn.sel{background:var(--golddim);border-color:var(--goldbr);color:var(--gold2);font-weight:600;}
+
+/* AI box */
+.ai-box{background:var(--sb2);border:1px solid var(--goldbr);border-radius:var(--r2);overflow:hidden;margin-top:14px;}
+.ai-head{display:flex;align-items:center;gap:10px;padding:10px 16px;border-bottom:1px solid var(--sbr);font-size:12px;font-weight:600;color:var(--sbc);}
+.ai-head span{font-size:16px;}
+.ai-head em{font-size:9px;font-family:var(--mono);color:var(--sbc4);font-style:normal;margin-left:4px;}
+.ai-body{padding:14px 16px;font-size:12px;color:rgba(255,255,255,.78);line-height:1.75;}
+.ai-body h4{color:var(--gold);font-size:12px;font-weight:700;margin:12px 0 5px;letter-spacing:.2px;}
+.ai-body h4:first-child{margin-top:0;}
+.ai-body strong{color:var(--sbc);}
+.ai-body ul{margin:6px 0 6px 14px;}
+.ai-body li{margin-bottom:4px;}
+.sk{background:rgba(255,255,255,.07);border-radius:4px;height:11px;margin-bottom:8px;}
+.w80{width:80%;}.w60{width:60%;}.w45{width:45%;}
+
+/* chart */
+.chart-wrap{background:var(--bg2);border:1px solid var(--br);border-radius:var(--r2);padding:14px 16px;margin-bottom:12px;}
+.chart-title{font-size:9px;font-family:var(--mono);color:var(--c3);text-transform:uppercase;letter-spacing:1px;margin-bottom:10px;}
+
+/* history */
+.hist-it{background:var(--bg2);border:1px solid var(--br);border-radius:var(--r2);padding:12px 14px;margin-bottom:8px;cursor:pointer;transition:.12s;}
+.hist-it:hover{border-color:var(--goldbr);}
+.hist-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:5px;}
+.hist-date{font-size:12px;font-weight:600;color:var(--c);}
+.hist-score{font-family:var(--mono);font-size:15px;font-weight:700;}
+.hist-chips{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:5px;}
+.hchip{font-size:10px;padding:2px 8px;border-radius:10px;font-weight:500;}
+.hist-prev{font-size:11px;color:var(--c3);line-height:1.5;margin-top:4px;}
+
+/* sbtn */
+.sbtn{display:inline-flex;align-items:center;gap:6px;background:var(--gold2);border:none;border-radius:var(--r);padding:9px 18px;color:#1a1917;font-family:var(--sans);font-size:12px;font-weight:700;cursor:pointer;transition:.15s;}
+.sbtn:hover{background:var(--gold);}
+.sbtn:disabled{opacity:.45;cursor:not-allowed;}
+.sbtn.loading .bt{opacity:.5;}
+.sp{width:12px;height:12px;border:2px solid rgba(26,25,23,.3);border-top-color:#1a1917;border-radius:50%;display:none;animation:spin .7s linear infinite;}
+.sbtn.loading .sp{display:block;}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* empty */
 .empty{text-align:center;padding:40px 20px;}
 .empty-icon{font-size:28px;margin-bottom:10px;opacity:.35;}
 .empty-title{font-size:13px;font-weight:600;color:var(--c2);margin-bottom:4px;}
 .empty-desc{font-size:12px;color:var(--c3);}
 
-/* chart */
-.chart-box{
-  background:var(--bg2);border:1px solid var(--br);
-  border-radius:var(--r2);padding:16px 18px;margin-bottom:14px;
-}
-canvas{max-height:200px;}
-
-/* skeleton */
-.skel{
-  background:linear-gradient(90deg,var(--bg3) 25%,var(--bg4) 50%,var(--bg3) 75%);
-  background-size:200% 100%;animation:sk 1.4s infinite;
-  border-radius:var(--r);height:14px;margin-bottom:8px;
-}
-@keyframes sk{0%{background-position:200% 0}100%{background-position:-200% 0}}
-
-/* alert */
-.alert{padding:10px 14px;border-radius:var(--r);font-size:12px;line-height:1.6;margin-bottom:12px;border-left:3px solid;}
-.al-a{background:rgba(245,158,11,0.08);border-color:var(--A);color:#92400e;}
-.al-r{background:rgba(239,68,68,0.08);border-color:var(--R);color:#991b1b;}
-
-@media(max-width:720px){
-  .g2,.g4{grid-template-columns:1fr 1fr!important;}
-  #app{flex-direction:column;height:auto;}
-  .sidebar{width:100%;height:auto;}
-  .main{height:auto;}
-  .pg{padding:16px 14px;}
-}
+/* api input */
+.api-inp{width:100%;background:var(--bg3);border:1px solid var(--br);border-radius:var(--r);padding:8px 11px;color:var(--c);font-family:var(--mono);font-size:12px;outline:none;}
+.api-inp:focus{border-color:var(--goldbr);}
 </style>
 </head>
 <body>
@@ -301,33 +252,27 @@ canvas{max-height:200px;}
         <div class="t2">FÊNIX NEFROLOGIA</div>
       </div>
     </div>
-
     <div class="login-title">Acesse sua área</div>
-    <div class="login-desc">Seus exames, consultas e plano de cuidado em um só lugar. O acesso é criado pela equipe da clínica.</div>
-
+    <div class="login-desc">Seus exames, consultas e acompanhamento de saúde em um só lugar.</div>
     <div class="lf">
-      <label for="l-email">E-mail</label>
+      <label>E-mail</label>
       <input type="email" id="l-email" placeholder="seu@email.com" autocomplete="email"
         onkeydown="if(event.key==='Enter')document.getElementById('l-pass').focus()">
     </div>
     <div class="lf">
-      <label for="l-pass">Senha</label>
-      <input type="password" id="l-pass" placeholder="••••••••" autocomplete="current-password"
+      <label>Senha</label>
+      <input type="password" id="l-pass" placeholder="••••••••"
         onkeydown="if(event.key==='Enter')doLogin()">
     </div>
-
     <button class="login-btn" id="login-btn" onclick="doLogin()">Entrar</button>
     <div class="login-err" id="login-err"></div>
-    <div class="login-footer">
-      Problemas com o acesso? Fale com a equipe da Fênix Nefrologia.<br>
-      <span style="color:var(--sbc3);">Dr. Bruno P. Biluca · CRM-SP 151.041</span>
-    </div>
+    <div class="login-footer">Acesso criado pela equipe da Fênix Nefrologia.<br>
+      <span style="color:var(--sbc3);">Dr. Bruno P. Biluca · CRM-SP 151.041</span></div>
   </div>
 </div>
 
 <!-- ══ APP ════════════════════════════════════════════════════════ -->
 <div id="app">
-
   <!-- SIDEBAR -->
   <div class="sidebar">
     <div class="sb-top">
@@ -337,19 +282,42 @@ canvas{max-height:200px;}
       </div>
       <div class="sb-patient">
         <div class="sb-patient-name" id="sb-nome">—</div>
-        <div class="sb-patient-meta" id="sb-meta">Fênix Nefrologia</div>
+        <div class="sb-patient-meta" id="sb-diag">Fênix Nefrologia</div>
+        <div class="sb-goal" id="sb-goal-wrap" style="display:none;">
+          <div class="gl">Meta</div>
+          <div class="gv" id="sb-goal-txt">—</div>
+        </div>
       </div>
     </div>
+
     <div class="sb-nav">
-      <div class="nav-sec">Portal</div>
-      <div class="nav-it on"  data-pg="home"       onclick="nav('home')">      <span class="ni">⌂</span> Início</div>
-      <div class="nav-it"     data-pg="exames"      onclick="nav('exames')">    <span class="ni">🧪</span> Meus Exames</div>
-      <div class="nav-it"     data-pg="consultas"   onclick="nav('consultas')"> <span class="ni">📋</span> Consultas</div>
-      <div class="nav-it"     data-pg="metas"       onclick="nav('metas')">     <span class="ni">◎</span> Plano de Cuidado</div>
-      <div class="nav-it"     data-pg="mensagens"   onclick="nav('mensagens')"> <span class="ni">✉</span> Mensagens
+      <div class="nav-sec">Minha Saúde</div>
+      <div class="nav-it on"  data-pg="home"      onclick="nav('home')">      <span class="ni">⌂</span> Início</div>
+      <div class="nav-it"     data-pg="exames"     onclick="nav('exames')">    <span class="ni">🧪</span> Meus Exames</div>
+      <div class="nav-it"     data-pg="consultas"  onclick="nav('consultas')"> <span class="ni">📋</span> Consultas</div>
+      <div class="nav-it"     data-pg="metas"      onclick="nav('metas')">     <span class="ni">◎</span> Plano de Cuidado</div>
+      <div class="nav-it"     data-pg="mensagens"  onclick="nav('mensagens')"> <span class="ni">✉</span> Mensagens
         <span class="nav-badge" id="msg-badge" style="display:none">0</span>
       </div>
+      <div class="nav-sec">Meu Desempenho</div>
+      <div class="nav-it"     data-pg="tracker"    onclick="nav('tracker')">   <span class="ni">📊</span> Revisão Semanal</div>
+      <div class="nav-it"     data-pg="historico"  onclick="nav('historico')"> <span class="ni">📅</span> Histórico</div>
+      <div class="nav-it"     data-pg="graficos"   onclick="nav('graficos')">  <span class="ni">📈</span> Gráficos</div>
+      <div class="nav-sec">Sistema</div>
+      <div class="nav-it"     data-pg="config"     onclick="nav('config')">    <span class="ni">⚙</span> Configurações</div>
     </div>
+
+    <div class="sb-phase" id="sb-phase" style="display:none;">
+      <div class="ph-ind">
+        <div class="phl">Fase atual</div>
+        <div class="phv" id="sb-fase-txt">—</div>
+      </div>
+      <div class="dots">
+        <div class="dot" id="d1"></div><div class="dot" id="d2"></div>
+        <div class="dot" id="d3"></div><div class="dot" id="d4"></div>
+      </div>
+    </div>
+
     <div class="sb-bottom">
       <div class="sb-logout" onclick="doLogout()">↩&nbsp; Sair</div>
     </div>
@@ -362,39 +330,27 @@ canvas{max-height:200px;}
     <div class="pg on" id="pg-home">
       <div class="eyebrow">Portal do Paciente</div>
       <div class="pg-title" id="h-titulo">Bem-vindo</div>
-      <div class="pg-sub" id="h-sub">Carregando informações...</div>
-
+      <div class="pg-sub" id="h-sub">Carregando...</div>
       <div class="g4" style="margin-bottom:20px;">
         <div class="mc"><div class="mv" id="hm-ex">—</div><div class="mu">exames</div><div class="ml">Registros</div></div>
         <div class="mc"><div class="mv" id="hm-co">—</div><div class="mu">consultas</div><div class="ml">Histórico</div></div>
         <div class="mc"><div class="mv" id="hm-me">—</div><div class="mu">metas ativas</div><div class="ml">Plano de cuidado</div></div>
-        <div class="mc"><div class="mv" id="hm-ms">—</div><div class="mu">não lidas</div><div class="ml">Mensagens</div></div>
+        <div class="mc"><div class="mv" id="hm-tr">—</div><div class="mu">semanas</div><div class="ml">Tracker</div></div>
       </div>
-
       <div class="g2">
         <div>
           <h3>Última consulta</h3>
-          <div class="card" id="h-ultima">
-            <div class="skel" style="width:55%"></div>
-            <div class="skel" style="width:80%"></div>
-          </div>
-
+          <div class="card" id="h-ultima"><div style="font-size:12px;color:var(--c3);">Carregando...</div></div>
           <h3>Próximo retorno</h3>
-          <div class="card" id="h-retorno">
-            <div class="skel" style="width:45%"></div>
-          </div>
+          <div class="card" id="h-retorno"><div style="font-size:12px;color:var(--c3);">Carregando...</div></div>
         </div>
-
         <div>
           <h3>Metas ativas</h3>
-          <div id="h-metas">
-            <div class="skel"></div>
-            <div class="skel" style="width:70%"></div>
-          </div>
+          <div id="h-metas"><div style="font-size:12px;color:var(--c3);">Carregando...</div></div>
           <div class="divider"></div>
           <h3>Médico responsável</h3>
           <div class="card-sm">
-            <div style="font-size:13px;font-weight:700;color:var(--c);">Dr. Bruno P. Biluca</div>
+            <div style="font-size:13px;font-weight:700;">Dr. Bruno P. Biluca</div>
             <div style="font-family:var(--mono);font-size:10px;color:var(--c3);margin-top:2px;">CRM-SP 151.041 · RQE 70145</div>
             <div style="font-size:11px;color:var(--c3);margin-top:5px;">Nefrologista · Fênix Nefrologia</div>
           </div>
@@ -406,22 +362,16 @@ canvas{max-height:200px;}
     <div class="pg" id="pg-exames">
       <div class="eyebrow">Histórico Laboratorial</div>
       <div class="pg-title">Meus Exames</div>
-      <div class="pg-sub">Resultados inseridos pela equipe após cada coleta. Clique em uma linha para ver os detalhes.</div>
-
+      <div class="pg-sub">Resultados inseridos pela equipe após cada coleta. Clique em uma linha para ver os parâmetros.</div>
       <div id="chart-creat-wrap" style="display:none;">
         <h3>Evolução — Creatinina (mg/dL)</h3>
-        <div class="chart-box"><canvas id="ch-creat" height="180"></canvas></div>
+        <div class="chart-wrap"><div style="position:relative;height:180px;"><canvas id="ch-creat"></canvas></div></div>
       </div>
-
       <h3>Todos os exames</h3>
-      <div class="card" style="padding:0;overflow:hidden;">
+      <div class="tbl-wrap">
         <table class="tbl">
-          <thead><tr>
-            <th>Data</th><th>Tipo</th><th>Parâmetros</th><th></th>
-          </tr></thead>
-          <tbody id="ex-body">
-            <tr><td colspan="4" style="padding:28px;text-align:center;color:var(--c3);font-size:12px;">Carregando...</td></tr>
-          </tbody>
+          <thead><tr><th>Data</th><th>Tipo</th><th>Parâmetros</th><th></th></tr></thead>
+          <tbody id="ex-body"><tr><td colspan="4" style="padding:24px;text-align:center;color:var(--c3);">Carregando...</td></tr></tbody>
         </table>
       </div>
     </div>
@@ -430,18 +380,16 @@ canvas{max-height:200px;}
     <div class="pg" id="pg-consultas">
       <div class="eyebrow">Histórico</div>
       <div class="pg-title">Minhas Consultas</div>
-      <div class="pg-sub">Atendimentos registrados pela equipe clínica após cada consulta.</div>
-      <div class="tl" id="co-tl">
-        <div style="color:var(--c3);font-size:12px;padding:10px 0;">Carregando...</div>
-      </div>
+      <div class="pg-sub">Atendimentos registrados pela equipe clínica.</div>
+      <div class="tl" id="co-tl"><div style="font-size:12px;color:var(--c3);">Carregando...</div></div>
     </div>
 
     <!-- ── METAS ── -->
     <div class="pg" id="pg-metas">
       <div class="eyebrow">Plano de Cuidado</div>
       <div class="pg-title">Minhas Metas Clínicas</div>
-      <div class="pg-sub">Objetivos definidos em consulta com o Dr. Bruno. Atualizados a cada retorno.</div>
-      <div id="me-lista"><div style="color:var(--c3);font-size:12px;">Carregando...</div></div>
+      <div class="pg-sub">Objetivos definidos em consulta com o Dr. Bruno.</div>
+      <div id="me-lista"><div style="font-size:12px;color:var(--c3);">Carregando...</div></div>
     </div>
 
     <!-- ── MENSAGENS ── -->
@@ -450,16 +398,174 @@ canvas{max-height:200px;}
       <div class="pg-title">Mensagens</div>
       <div class="pg-sub">Canal direto com a equipe da Fênix Nefrologia.</div>
       <div class="card">
-        <div class="msg-wrap" id="ms-lista">
-          <div style="text-align:center;color:var(--c3);font-size:12px;padding:20px;">Carregando...</div>
-        </div>
+        <div class="msg-wrap" id="ms-lista"><div style="font-size:12px;color:var(--c3);text-align:center;padding:20px;">Carregando...</div></div>
         <div class="msg-input-row">
-          <textarea class="msg-input" id="ms-input" placeholder="Escreva sua mensagem para a equipe..." rows="2"></textarea>
-          <button class="msg-btn" id="ms-btn" onclick="sendMsg()">Enviar</button>
+          <textarea class="msg-input" id="ms-input" rows="2" placeholder="Escreva sua mensagem para a equipe..."></textarea>
+          <button class="sbtn" id="ms-btn" onclick="sendMsg()" style="align-self:flex-end;">Enviar</button>
         </div>
-        <div style="font-size:10px;color:var(--c4);margin-top:8px;">
-          Respondido pela equipe em horário comercial (seg–sex, 8h–18h).
+        <div style="font-size:10px;color:var(--c4);margin-top:8px;">Respondido em horário comercial (seg–sex, 8h–18h).</div>
+      </div>
+    </div>
+
+    <!-- ── TRACKER ── -->
+    <div class="pg" id="pg-tracker">
+      <div class="eyebrow">preencher toda segunda-feira · análise pelo Claude</div>
+      <div class="pg-title">Revisão Semanal</div>
+      <div class="pg-sub" id="tracker-date">—</div>
+
+      <div class="card">
+        <h3>📊 Biométricas — média Oura da semana</h3>
+        <div class="g4">
+          <div class="mc"><input type="number" id="t-hrv" placeholder="—" min="15" max="150"><div class="mc-label">HRV médio (ms)</div></div>
+          <div class="mc"><input type="number" id="t-rhr" placeholder="—" min="35" max="80"><div class="mc-label">RHR médio (bpm)</div></div>
+          <div class="mc"><input type="number" id="t-sleep" placeholder="—" step="0.1"><div class="mc-label">Sono médio (h)</div></div>
+          <div class="mc"><input type="number" id="t-peso" placeholder="—" step="0.1"><div class="mc-label">Peso (kg)</div></div>
         </div>
+        <div class="g2" style="margin-top:10px;">
+          <div class="field"><label>Readiness médio (Oura)</label><input type="number" id="t-ready" placeholder="ex: 82" min="0" max="100"></div>
+          <div class="field"><label>Sleep Score médio (Oura)</label><input type="number" id="t-sleepscore" placeholder="ex: 78" min="0" max="100"></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>🏃 Atividade</h3>
+        <div class="g2">
+          <div class="field"><label>Km percorridos / atividade</label><input type="number" id="t-km" placeholder="ex: 15" step="0.5"></div>
+          <div class="field"><label>Sessões de exercício (0–7)</label><input type="number" id="t-gym" placeholder="ex: 3" min="0" max="7"></div>
+        </div>
+        <div class="field">
+          <label>Atividade principal da semana</label>
+          <select id="t-longrun">
+            <option value="">Selecione...</option>
+            <option value="completo">✅ Completou conforme o planejado</option>
+            <option value="reduzido">⚠️ Reduziu (cansaço / desconforto)</option>
+            <option value="cancelado">❌ Cancelou</option>
+            <option value="nao-havia">— Semana de descanso</option>
+          </select>
+        </div>
+        <div class="field"><label>Dores, limitações ou desconfortos</label><textarea id="t-dores" placeholder="Descreva qualquer desconforto. 'Nenhum' se estiver bem."></textarea></div>
+      </div>
+
+      <div class="card">
+        <h3>🥗 Nutrição & Adesão</h3>
+        <div class="g2">
+          <div class="field"><label>Proteína média diária (g)</label><input type="number" id="t-prot" placeholder="meta definida pelo Dr."></div>
+          <div class="field">
+            <label>Hidratação</label>
+            <select id="t-agua">
+              <option value="">Selecione...</option>
+              <option value="ótima">✅ Meta todos os dias</option>
+              <option value="boa">⚠️ Na maioria dos dias</option>
+              <option value="insuficiente">❌ Abaixo da meta</option>
+            </select>
+          </div>
+        </div>
+        <div class="g2">
+          <div class="field">
+            <label>Adesão à dieta prescrita</label>
+            <select id="t-jejum">
+              <option value="">Selecione...</option>
+              <option value="completo">✅ Seguiu integralmente</option>
+              <option value="parcial">⚠️ Parcialmente</option>
+              <option value="nao-fez">❌ Dificuldades importantes</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>Uso de medicamentos</label>
+            <select id="t-supp">
+              <option value="">Selecione...</option>
+              <option value="perfeita">✅ Todos os dias, horários corretos</option>
+              <option value="boa">⚠️ Esqueceu 1–2x</option>
+              <option value="inconsistente">❌ Inconsistente</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>🧠 Bem-estar</h3>
+        <div class="g2" style="margin-bottom:10px;">
+          <div class="field"><label>Motivação (1–10)</label><div class="score-row" id="sel-motiv"></div></div>
+          <div class="field"><label>Estresse (1–10)</label><div class="score-row" id="sel-stress"></div></div>
+        </div>
+        <div class="field"><label>Qualidade de vida percebida (1–7)</label><div class="score-row" id="sel-habits"></div></div>
+        <div class="field" style="margin-top:10px;"><label>Reflexão da semana</label><textarea id="t-reflex" placeholder="Como foi a semana? Algo que impactou sua disposição ou rotina?"></textarea></div>
+      </div>
+
+      <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:14px;">
+        <button class="sbtn" id="analyze-btn" onclick="analyzeWeek()">
+          <span class="bt">✨ Analisar com Claude</span><div class="sp"></div>
+        </button>
+        <span style="font-size:11px;color:var(--c3);">Análise personalizada baseada no seu perfil clínico</span>
+      </div>
+      <div id="ai-area" style="display:none;">
+        <div class="ai-box">
+          <div class="ai-head"><span>🤖</span><div><strong>Análise — Claude</strong><em id="ai-date-lbl"></em></div></div>
+          <div id="ai-skel" style="padding:14px 16px;"><div class="sk w60"></div><div class="sk w80"></div><div class="sk w45"></div><div class="sk w80" style="margin-top:10px;"></div><div class="sk w60"></div></div>
+          <div id="ai-content" class="ai-body" style="display:none;"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── HISTÓRICO ── -->
+    <div class="pg" id="pg-historico">
+      <div class="eyebrow">dados salvos no Supabase</div>
+      <div class="pg-title">Histórico de Semanas</div>
+      <div class="pg-sub">Clique em uma semana para ver a análise completa.</div>
+      <div id="hist-list"><div style="color:var(--c3);font-size:13px;padding:20px 0;">Nenhuma semana registrada ainda.</div></div>
+    </div>
+
+    <!-- ── GRÁFICOS ── -->
+    <div class="pg" id="pg-graficos">
+      <div class="eyebrow">evolução semanal</div>
+      <div class="pg-title">Gráficos de Evolução</div>
+      <div class="pg-sub">HRV, sono, atividade, proteína e score ao longo das semanas.</div>
+      <div id="charts-empty" style="color:var(--c3);font-size:13px;padding:20px 0;">Registre pelo menos 2 semanas para ver os gráficos.</div>
+      <div id="charts-wrap" style="display:none;">
+        <div class="chart-wrap"><div class="chart-title">HRV médio (ms)</div><div style="position:relative;height:190px;"><canvas id="ch-hrv"></canvas></div></div>
+        <div class="chart-wrap"><div class="chart-title">Sono médio (h) · meta 8h</div><div style="position:relative;height:170px;"><canvas id="ch-sleep"></canvas></div></div>
+        <div class="chart-wrap"><div class="chart-title">Km / Atividade semanal</div><div style="position:relative;height:170px;"><canvas id="ch-km"></canvas></div></div>
+        <div class="chart-wrap"><div class="chart-title">Proteína média (g/dia)</div><div style="position:relative;height:170px;"><canvas id="ch-prot"></canvas></div></div>
+        <div class="chart-wrap"><div class="chart-title">Score semanal geral</div><div style="position:relative;height:190px;"><canvas id="ch-score"></canvas></div></div>
+      </div>
+    </div>
+
+    <!-- ── CONFIG ── -->
+    <div class="pg" id="pg-config">
+      <div class="eyebrow">personalização</div>
+      <div class="pg-title">Configurações</div>
+      <div class="pg-sub">Chave de API para análises e parâmetros pessoais do tracker.</div>
+      <div class="card">
+        <h3>🔑 API Anthropic</h3>
+        <div style="font-size:12px;color:var(--c2);margin-bottom:8px;line-height:1.6;">Necessária para análises automáticas. Obtenha em <a href="https://console.anthropic.com" target="_blank" style="color:var(--B);">console.anthropic.com</a>. Salva apenas no seu navegador.</div>
+        <input class="api-inp" type="password" id="api-key-inp" placeholder="sk-ant-..." oninput="saveApiKey()">
+        <div id="api-status" style="font-size:9px;font-family:var(--mono);color:var(--c3);margin-top:4px;"></div>
+      </div>
+      <div class="card">
+        <h3>Parâmetros do tracker</h3>
+        <div style="font-size:12px;color:var(--c3);margin-bottom:10px;">Estes valores são preenchidos pelo Dr. Bruno no seu cadastro. Você pode ajustá-los localmente se necessário.</div>
+        <div class="g2">
+          <div class="field"><label>HRV baseline (ms)</label><input type="number" id="cfg-hrv" placeholder="do cadastro"></div>
+          <div class="field"><label>RHR baseline (bpm)</label><input type="number" id="cfg-rhr" placeholder="do cadastro"></div>
+        </div>
+        <div class="g2">
+          <div class="field">
+            <label>Fase atual</label>
+            <select id="cfg-fase">
+              <option value="1">Fase 1 — Início / Adaptação</option>
+              <option value="2">Fase 2 — Progressão</option>
+              <option value="3">Fase 3 — Consolidação</option>
+              <option value="4">Fase 4 — Meta final</option>
+            </select>
+          </div>
+          <div class="field"><label>Meta de atividade semanal (km ou min)</label><input type="number" id="cfg-km" placeholder="do cadastro"></div>
+        </div>
+        <button class="sbtn" onclick="saveConfig()">💾 Salvar</button>
+      </div>
+      <div class="card">
+        <h3>Dados</h3>
+        <div style="font-size:12px;color:var(--c2);margin-bottom:10px;">Seu histórico fica salvo no Supabase e persiste em qualquer dispositivo.</div>
+        <button class="sbtn" onclick="exportData()" style="background:var(--B);">📤 Exportar JSON</button>
       </div>
     </div>
 
@@ -467,112 +573,124 @@ canvas{max-height:200px;}
 </div><!-- /app -->
 
 <script>
-/* ══ SUPABASE ══════════════════════════════════════════════════ */
+/* ══ SUPABASE ════════════════════════════════════════════════════ */
 const SB_URL = 'https://syzmsixhjlutsynnqivv.supabase.co';
 const SB_KEY = 'sb_publishable_poKCFHc9n1CtIfCbAxTN0Q_dmlsEy1t';
 const sb = supabase.createClient(SB_URL, SB_KEY);
 
 let patient = null;
-let charts  = {};
+let trackerHistory = [];
+let charts = {};
 
-/* ══ AUTH ════════════════════════════════════════════════════ */
-async function doLogin() {
+/* ══ HELPERS ════════════════════════════════════════════════════ */
+const q  = s => document.querySelector(s);
+const qq = s => document.querySelectorAll(s);
+function firstName(n){ return n ? n.split(' ')[0] : 'Paciente'; }
+function unLabel(u){ return ({rl:'Unidade RL',santos:'Santos',tatuape:'Tatuapé',todas:'Fênix Nefrologia'})[u]||'Fênix Nefrologia'; }
+function fmtD(d){ return d ? new Date(d+'T12:00:00').toLocaleDateString('pt-BR',{day:'2-digit',month:'short',year:'numeric'}) : '—'; }
+function fmtDT(d){ return d ? new Date(d).toLocaleDateString('pt-BR',{day:'2-digit',month:'short',year:'numeric',hour:'2-digit',minute:'2-digit'}) : '—'; }
+function escHtml(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+function getCfg(){ try{ return JSON.parse(localStorage.getItem('apexCfg')||'{}'); }catch{ return{}; } }
+
+/* ══ AUTH ═════════════════════════════════════════════════════ */
+async function doLogin(){
   const email = q('#l-email').value.trim();
   const pass  = q('#l-pass').value;
   const btn   = q('#login-btn');
   const err   = q('#login-err');
-  if (!email || !pass) { showErr('Preencha e-mail e senha.'); return; }
-  btn.disabled = true; btn.textContent = 'Entrando...'; err.style.display = 'none';
-  const { error } = await sb.auth.signInWithPassword({ email, password: pass });
-  if (error) {
+  if(!email||!pass){ showErr('Preencha e-mail e senha.'); return; }
+  btn.disabled=true; btn.textContent='Entrando...'; err.style.display='none';
+  const {error} = await sb.auth.signInWithPassword({email, password:pass});
+  if(error){
     showErr('E-mail ou senha incorretos. Verifique os dados ou fale com a clínica.');
-    btn.disabled = false; btn.textContent = 'Entrar';
+    btn.disabled=false; btn.textContent='Entrar';
   } else {
     await bootApp();
   }
 }
 
-function showErr(msg) {
-  const err = q('#login-err');
-  err.textContent = msg; err.style.display = 'block';
-}
+function showErr(msg){ const e=q('#login-err'); e.textContent=msg; e.style.display='block'; }
 
-async function doLogout() {
+async function doLogout(){
   await sb.auth.signOut();
   q('#app').classList.remove('on');
-  q('#login-screen').style.display = 'flex';
-  q('#login-btn').disabled = false; q('#login-btn').textContent = 'Entrar';
-  patient = null;
+  q('#login-screen').style.display='flex';
+  q('#login-btn').disabled=false; q('#login-btn').textContent='Entrar';
+  patient=null; trackerHistory=[];
 }
 
-async function initAuth() {
-  const { data: { session } } = await sb.auth.getSession();
-  if (session) await bootApp();
+async function initAuth(){
+  const {data:{session}} = await sb.auth.getSession();
+  if(session) await bootApp();
 }
 
-/* ══ BOOT ════════════════════════════════════════════════════ */
-async function bootApp() {
-  q('#login-screen').style.display = 'none';
+/* ══ BOOT ═════════════════════════════════════════════════════ */
+async function bootApp(){
+  q('#login-screen').style.display='none';
   q('#app').classList.add('on');
 
-  const { data: { user } } = await sb.auth.getUser();
-  const { data: p } = await sb.from('pacientes').select('*').eq('user_id', user.id).single();
+  const {data:{user}} = await sb.auth.getUser();
+  const {data:p} = await sb.from('pacientes').select('*').eq('user_id',user.id).single();
   patient = p;
 
-  if (p) {
+  if(p){
     q('#sb-nome').textContent = p.nome;
-    q('#sb-meta').textContent = (p.diagnostico_principal || '') + (p.unidade ? ' · ' + unLabel(p.unidade) : '');
-    q('#h-titulo').textContent = 'Olá, ' + firstName(p.nome);
-    q('#h-sub').textContent = 'Bem-vindo ao seu portal de saúde · ' +
-      new Date().toLocaleDateString('pt-BR', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+    q('#sb-diag').textContent = (p.diagnostico_principal||'') + (p.unidade ? ' · '+unLabel(p.unidade) : '');
+    if(p.meta_performance_descricao){
+      q('#sb-goal-txt').textContent = p.meta_performance_descricao + (p.meta_performance_alvo ? ' — '+p.meta_performance_alvo : '');
+      q('#sb-goal-wrap').style.display='block';
+    }
+    q('#h-titulo').textContent = 'Olá, '+firstName(p.nome);
+    q('#h-sub').textContent = new Date().toLocaleDateString('pt-BR',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
+
+    // pré-preencher cfg com valores do cadastro
+    const cfg = getCfg();
+    if(!cfg.hrvBase && p.hrv_baseline)  { cfg.hrvBase = p.hrv_baseline; }
+    if(!cfg.rhrBase && p.rhr_baseline)  { cfg.rhrBase = p.rhr_baseline; }
+    if(!cfg.kmMeta && p.meta_km_semana) { cfg.kmMeta  = p.meta_km_semana; }
+    if(!cfg.protMeta && p.meta_proteina_dia){ cfg.protMeta = p.meta_proteina_dia; }
+    localStorage.setItem('apexCfg', JSON.stringify(cfg));
   } else {
     q('#sb-nome').textContent = user.email;
     q('#h-titulo').textContent = 'Bem-vindo ao APEX';
-    q('#h-sub').textContent = 'Seu perfil está sendo configurado pela equipe. Em breve tudo estará disponível.';
+    q('#h-sub').textContent = 'Seu perfil está sendo configurado pela equipe.';
   }
 
-  await loadHome();
+  await Promise.all([loadHome(), loadTrackerHistory()]);
   refreshBadge();
+  initTracker();
+  initSelectors();
+  loadConfig();
 }
 
-/* ══ HELPERS ════════════════════════════════════════════════ */
-const q  = s => document.querySelector(s);
-const qq = s => document.querySelectorAll(s);
-function firstName(n) { return n ? n.split(' ')[0] : 'Paciente'; }
-function unLabel(u)   { return ({rl:'Unidade RL',santos:'Santos',tatuape:'Tatuapé',todas:'Fênix Nefrologia'})[u] || 'Fênix Nefrologia'; }
-function fmtD(d)  { return d ? new Date(d + 'T12:00:00').toLocaleDateString('pt-BR', {day:'2-digit',month:'short',year:'numeric'}) : '—'; }
-function fmtDT(d) { return d ? new Date(d).toLocaleDateString('pt-BR', {day:'2-digit',month:'short',year:'numeric',hour:'2-digit',minute:'2-digit'}) : '—'; }
-
-/* ══ HOME ════════════════════════════════════════════════════ */
-async function loadHome() {
-  if (!patient) { clearHome(); return; }
+/* ══ HOME ═════════════════════════════════════════════════════ */
+async function loadHome(){
+  if(!patient){ return; }
   const pid = patient.id;
-  const [exR, coR, meR, msR] = await Promise.all([
+  const [exR, coR, meR, trR] = await Promise.all([
     sb.from('exames').select('id',{count:'exact'}).eq('paciente_id',pid),
     sb.from('consultas').select('*').eq('paciente_id',pid).order('data',{ascending:false}).limit(1),
     sb.from('metas_clinicas').select('*').eq('paciente_id',pid).eq('status','ativa'),
-    sb.from('mensagens').select('id',{count:'exact'}).eq('paciente_id',pid).eq('remetente','clinica').eq('lida',false)
+    sb.from('tracker_semanal').select('id',{count:'exact'}).eq('paciente_id',pid)
   ]);
 
-  q('#hm-ex').textContent = exR.count ?? '0';
-  q('#hm-co').textContent = coR.data?.length ?? '0';
-  q('#hm-me').textContent = meR.data?.length ?? '0';
-  q('#hm-ms').textContent = msR.count ?? '0';
+  q('#hm-ex').textContent = exR.count??'0';
+  q('#hm-co').textContent = coR.data?.length??'0';
+  q('#hm-me').textContent = meR.data?.length??'0';
+  q('#hm-tr').textContent = trR.count??'0';
 
-  // última consulta
   const uc = coR.data?.[0];
   q('#h-ultima').innerHTML = uc
-    ? `<div style="font-family:var(--mono);font-size:10px;color:var(--c3);margin-bottom:4px;">${fmtD(uc.data)} · <span class="badge ${uc.tipo==='presencial'?'b-gold':'b-b'}" style="font-size:9px;">${uc.tipo}</span></div>
-       <div style="font-size:13px;font-weight:600;margin-bottom:4px;">${uc.motivo || 'Consulta'}</div>
-       <div style="font-size:12px;color:var(--c2);">${uc.resumo_clinico || '—'}</div>`
-    : `<div class="empty"><div class="empty-icon">📋</div><div class="empty-desc">Nenhuma consulta registrada ainda.</div></div>`;
+    ? `<div style="font-family:var(--mono);font-size:10px;color:var(--c3);margin-bottom:4px;">${fmtD(uc.data)} · <span class="badge ${uc.tipo==='presencial'?'b-g':'b-b'}" style="font-size:9px;">${uc.tipo}</span></div>
+       <div style="font-size:13px;font-weight:600;margin-bottom:4px;">${uc.motivo||'Consulta'}</div>
+       <div style="font-size:12px;color:var(--c2);">${uc.resumo_clinico||'—'}</div>`
+    : `<div class="empty"><div class="empty-icon">📋</div><div class="empty-desc">Nenhuma consulta registrada.</div></div>`;
 
-  // próximo retorno
   const rt = uc?.retorno_em;
-  if (rt) {
-    const diff = Math.ceil((new Date(rt) - new Date()) / 86400000);
-    const cor = diff <= 7 ? 'var(--A)' : 'var(--G)';
-    const txt = diff > 0 ? `em ${diff} dias` : diff === 0 ? 'hoje' : 'data passada';
+  if(rt){
+    const diff = Math.ceil((new Date(rt)-new Date())/86400000);
+    const cor = diff<=7?'var(--A)':'var(--G)';
+    const txt = diff>0?`em ${diff} dias`:diff===0?'hoje':'data passada';
     q('#h-retorno').innerHTML = `<div style="display:flex;align-items:baseline;gap:10px;">
       <span style="font-family:var(--mono);font-size:17px;font-weight:700;color:${cor};">${fmtD(rt)}</span>
       <span style="font-size:11px;color:var(--c3);">${txt}</span></div>`;
@@ -580,199 +698,132 @@ async function loadHome() {
     q('#h-retorno').innerHTML = `<div style="font-size:12px;color:var(--c3);">Sem retorno agendado.</div>`;
   }
 
-  // metas ativas
-  const metas = meR.data || [];
+  const metas = meR.data||[];
+  const icons = {pressao:'💓',peso:'⚖️',laboratorial:'🧪',atividade:'🏃',medicacao:'💊'};
   q('#h-metas').innerHTML = metas.length
-    ? metas.slice(0,4).map(m => `
+    ? metas.slice(0,4).map(m=>`
         <div style="background:var(--bg2);border:1px solid var(--br);border-radius:var(--r);padding:10px 12px;margin-bottom:8px;">
-          <div style="font-size:9px;font-family:var(--mono);color:var(--c3);text-transform:uppercase;letter-spacing:.8px;">${m.categoria}</div>
-          <div style="font-size:12px;color:var(--c);margin-top:2px;">${m.descricao_meta}</div>
-          ${m.valor_alvo ? `<div style="font-family:var(--mono);font-size:10px;color:var(--gold2);margin-top:3px;">Alvo: ${m.valor_alvo} ${m.unidade||''}</div>` : ''}
+          <div style="font-size:9px;font-family:var(--mono);color:var(--c3);text-transform:uppercase;">${icons[m.categoria]||'◎'} ${m.categoria}</div>
+          <div style="font-size:12px;margin-top:2px;">${m.descricao_meta}</div>
+          ${m.valor_alvo?`<div style="font-family:var(--mono);font-size:10px;color:var(--gold2);margin-top:3px;">Alvo: ${m.valor_alvo} ${m.unidade||''}</div>`:''}
         </div>`).join('')
-    : `<div style="font-size:12px;color:var(--c3);padding:6px 0;">Nenhuma meta registrada ainda.</div>`;
-}
-
-function clearHome() {
-  ['#hm-ex','#hm-co','#hm-me','#hm-ms'].forEach(s => q(s).textContent = '—');
-  q('#h-ultima').innerHTML = '<div class="empty"><div class="empty-desc">Perfil em configuração.</div></div>';
-  q('#h-retorno').innerHTML = '<div style="font-size:12px;color:var(--c3);">—</div>';
-  q('#h-metas').innerHTML = '';
+    : `<div style="font-size:12px;color:var(--c3);">Nenhuma meta registrada.</div>`;
 }
 
 /* ══ EXAMES ══════════════════════════════════════════════════ */
-async function loadExames() {
-  if (!patient) return;
-  const { data } = await sb.from('exames').select('*').eq('paciente_id', patient.id).order('data_coleta',{ascending:false});
+async function loadExames(){
+  if(!patient) return;
+  const {data} = await sb.from('exames').select('*').eq('paciente_id',patient.id).order('data_coleta',{ascending:false});
   const tbody = q('#ex-body');
-
-  if (!data?.length) {
-    tbody.innerHTML = `<tr><td colspan="4">
-      <div class="empty"><div class="empty-icon">🧪</div>
-        <div class="empty-title">Nenhum exame registrado</div>
-        <div class="empty-desc">Os resultados são inseridos pela equipe após cada coleta.</div>
-      </div></td></tr>`;
+  if(!data?.length){
+    tbody.innerHTML=`<tr><td colspan="4"><div class="empty"><div class="empty-icon">🧪</div><div class="empty-title">Nenhum exame registrado</div><div class="empty-desc">Os resultados são inseridos pela equipe após cada coleta.</div></div></td></tr>`;
     return;
   }
-
-  // gráfico creatinina
-  const creat = data.filter(e => e.parametros?.creatinina)
-    .map(e => ({ x: e.data_coleta, y: parseFloat(e.parametros.creatinina) })).reverse();
-  if (creat.length >= 2) {
-    q('#chart-creat-wrap').style.display = 'block';
-    if (charts['creat']) charts['creat'].destroy();
-    charts['creat'] = new Chart(q('#ch-creat'), {
-      type: 'line',
-      data: {
-        labels: creat.map(p => new Date(p.x+'T12:00:00').toLocaleDateString('pt-BR',{day:'2-digit',month:'2-digit'})),
-        datasets: [
-          { label:'Creatinina (mg/dL)', data: creat.map(p=>p.y),
-            borderColor:'#D4A840', backgroundColor:'rgba(212,168,64,0.1)',
-            tension:.3, fill:true, pointRadius:4, pointBackgroundColor:'#D4A840' },
-          { label:'Limite superior', data: creat.map(()=>1.2),
-            borderColor:'rgba(239,68,68,.35)', borderDash:[5,4],
-            pointRadius:0, fill:false }
+  const creat = data.filter(e=>e.parametros?.creatinina)
+    .map(e=>({x:e.data_coleta,y:parseFloat(e.parametros.creatinina)})).reverse();
+  if(creat.length>=2){
+    q('#chart-creat-wrap').style.display='block';
+    if(charts['creat']) charts['creat'].destroy();
+    charts['creat'] = new Chart(q('#ch-creat'),{
+      type:'line',
+      data:{
+        labels:creat.map(p=>new Date(p.x+'T12:00:00').toLocaleDateString('pt-BR',{day:'2-digit',month:'2-digit'})),
+        datasets:[
+          {label:'Creatinina',data:creat.map(p=>p.y),borderColor:'#D4A840',backgroundColor:'rgba(212,168,64,.1)',tension:.3,fill:true,pointRadius:4,pointBackgroundColor:'#D4A840'},
+          {label:'Ref. máx.',data:creat.map(()=>1.2),borderColor:'rgba(239,68,68,.35)',borderDash:[5,4],pointRadius:0,fill:false}
         ]
       },
-      options:{ responsive:true, maintainAspectRatio:false,
-        plugins:{ legend:{ labels:{ font:{size:10}, color:'#7a7875' } } },
-        scales:{
-          x:{ ticks:{ color:'#7a7875', font:{size:9} } },
-          y:{ ticks:{ color:'#7a7875', font:{size:9} } }
-        }
-      }
+      options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{labels:{font:{size:10},color:'#7a7875'}}},scales:{x:{ticks:{color:'#7a7875',font:{size:9}}},y:{ticks:{color:'#7a7875',font:{size:9}}}}}
     });
   }
-
-  tbody.innerHTML = data.map((e,i) => {
-    const params = e.parametros || {};
+  tbody.innerHTML = data.map((e,i)=>{
+    const params = e.parametros||{};
     const count  = Object.keys(params).length;
-    const detail = Object.entries(params).map(([k,v]) =>
-      `<div class="ep-row">
-        <span class="ep-name">${k}</span>
-        <span><span class="ep-val ${valClass(k,v)}">${v}</span>
-        <span class="ep-ref">${valRef(k)}</span></span>
-      </div>`).join('') +
-      (e.observacao ? `<div style="font-size:11px;color:var(--c3);margin-top:8px;padding-top:8px;border-top:1px solid var(--br2);">Obs: ${e.observacao}</div>` : '');
-
-    return `<tr class="exam-row" onclick="toggleEx(${i},this)">
-        <td><span style="font-family:var(--mono);font-size:11px;">${fmtD(e.data_coleta)}</span></td>
-        <td><span class="badge b-gold">${e.tipo||'Lab'}</span></td>
-        <td style="color:var(--c3);font-size:11px;">${count} parâmetro${count!==1?'s':''}</td>
-        <td style="text-align:right;color:var(--c4);font-size:11px;" id="ex-arr-${i}">▾</td>
-      </tr>
-      <tr id="ex-det-${i}" style="display:none;">
-        <td colspan="4"><div class="exam-params">${detail}</div></td>
-      </tr>`;
+    const detail = Object.entries(params).map(([k,v])=>
+      `<div class="ep-row"><span class="ep-name">${k}</span>
+       <span><span class="ep-val ${valClass(k,v)}">${v}</span><span class="ep-ref">${valRef(k)}</span></span></div>`
+    ).join('')+(e.observacao?`<div style="font-size:11px;color:var(--c3);margin-top:8px;padding-top:8px;border-top:1px solid var(--br2);">Obs: ${e.observacao}</div>`:'');
+    return `<tr class="clickable" onclick="toggleEx(${i},this)">
+      <td><span style="font-family:var(--mono);font-size:11px;">${fmtD(e.data_coleta)}</span></td>
+      <td><span class="badge b-g">${e.tipo||'Lab'}</span></td>
+      <td style="color:var(--c3);font-size:11px;">${count} parâmetro${count!==1?'s':''}</td>
+      <td style="text-align:right;color:var(--c4);font-size:11px;" id="ex-arr-${i}">▾</td>
+    </tr>
+    <tr id="ex-det-${i}" style="display:none;"><td colspan="4" style="padding:10px 12px 14px;">${detail}</td></tr>`;
   }).join('');
 }
 
-function toggleEx(i, row) {
-  const det = q(`#ex-det-${i}`);
-  const arr = q(`#ex-arr-${i}`);
-  const open = det.style.display !== 'none';
-  det.style.display = open ? 'none' : 'table-row';
-  arr.textContent   = open ? '▾' : '▴';
+function toggleEx(i){
+  const det=q(`#ex-det-${i}`), arr=q(`#ex-arr-${i}`);
+  const open=det.style.display!=='none';
+  det.style.display=open?'none':'table-row';
+  arr.textContent=open?'▾':'▴';
 }
 
-const REFS = {
-  creatinina:[0.6,1.2,'mg/dL'], ureia:[15,45,'mg/dL'],
-  potassio:[3.5,5.0,'mEq/L'], sodio:[136,145,'mEq/L'],
-  hemoglobina:[12,17,'g/dL'], albumina:[3.5,5.5,'g/dL'],
-  fosforo:[2.5,4.5,'mg/dL'], calcio:[8.5,10.5,'mg/dL'],
+const REFS={
+  creatinina:[0.6,1.2,'mg/dL'],ureia:[15,45,'mg/dL'],potassio:[3.5,5.0,'mEq/L'],
+  sodio:[136,145,'mEq/L'],hemoglobina:[12,17,'g/dL'],albumina:[3.5,5.5,'g/dL'],
+  fosforo:[2.5,4.5,'mg/dL'],calcio:[8.5,10.5,'mg/dL']
 };
-
-function findRef(k) {
-  const key = k.toLowerCase().replace(/[^a-záéíóúãõç]/g,'');
-  for (const [rk, v] of Object.entries(REFS)) {
-    if (key.includes(rk) || rk.includes(key)) return { lo:v[0], hi:v[1], unit:v[2] };
-  }
-  return null;
-}
-
-function valClass(k, v) {
-  const val = parseFloat(String(v).replace(',','.'));
-  if (isNaN(val)) return '';
-  const ref = findRef(k);
-  if (!ref) return '';
-  if (val >= ref.lo && val <= ref.hi) return 'val-ok';
-  const span = ref.hi - ref.lo;
-  return Math.abs(val - (val < ref.lo ? ref.lo : ref.hi)) > span * 0.3 ? 'val-crit' : 'val-alt';
-}
-
-function valRef(k) {
-  const ref = findRef(k);
-  return ref ? `ref: ${ref.lo}–${ref.hi} ${ref.unit}` : '';
-}
+function findRef(k){ const key=k.toLowerCase().replace(/[^a-záéíóúãõç]/g,''); for(const[rk,v]of Object.entries(REFS)){if(key.includes(rk)||rk.includes(key))return{lo:v[0],hi:v[1],unit:v[2]};} return null; }
+function valClass(k,v){ const val=parseFloat(String(v).replace(',','.')); if(isNaN(val)) return ''; const ref=findRef(k); if(!ref) return ''; if(val>=ref.lo&&val<=ref.hi) return 'val-ok'; return Math.abs(val-(val<ref.lo?ref.lo:ref.hi))>(ref.hi-ref.lo)*0.3?'val-crit':'val-alt'; }
+function valRef(k){ const ref=findRef(k); return ref?`ref: ${ref.lo}–${ref.hi} ${ref.unit}`:''; }
 
 /* ══ CONSULTAS ═══════════════════════════════════════════════ */
-async function loadConsultas() {
-  if (!patient) return;
-  const { data } = await sb.from('consultas').select('*').eq('paciente_id',patient.id).order('data',{ascending:false});
+async function loadConsultas(){
+  if(!patient) return;
+  const {data} = await sb.from('consultas').select('*').eq('paciente_id',patient.id).order('data',{ascending:false});
   const tl = q('#co-tl');
-  if (!data?.length) {
-    tl.innerHTML = `<div class="empty"><div class="empty-icon">📋</div>
-      <div class="empty-title">Nenhuma consulta registrada</div>
-      <div class="empty-desc">O histórico é preenchido após cada atendimento.</div></div>`;
+  if(!data?.length){
+    tl.innerHTML=`<div class="empty"><div class="empty-icon">📋</div><div class="empty-title">Nenhuma consulta registrada</div><div class="empty-desc">O histórico é preenchido após cada atendimento.</div></div>`;
     return;
   }
-  tl.innerHTML = data.map(c => `
+  tl.innerHTML = data.map(c=>`
     <div class="tl-item">
       <div class="tl-line"></div>
       <div class="tl-dot ${c.tipo==='presencial'?'dc-g':'dc-b'}"></div>
       <div class="tl-time">${fmtD(c.data)}</div>
-      <div class="tl-title">${c.motivo || 'Consulta'}</div>
-      <div class="tl-body">${c.resumo_clinico || '—'}</div>
+      <div class="tl-title">${c.motivo||'Consulta'}</div>
+      <div class="tl-body">${c.resumo_clinico||'—'}</div>
       <div class="tl-chips">
         <span class="tp ${c.tipo==='presencial'?'tp-g':'tp-b'}">${c.tipo==='presencial'?'Presencial':'Teleconsulta'}</span>
-        ${c.retorno_em ? `<span class="tp tp-n">Retorno: ${fmtD(c.retorno_em)}</span>` : ''}
+        ${c.retorno_em?`<span class="tp tp-n">Retorno: ${fmtD(c.retorno_em)}</span>`:''}
       </div>
     </div>`).join('');
 }
 
-/* ══ METAS ═══════════════════════════════════════════════════ */
-async function loadMetas() {
-  if (!patient) return;
-  const { data } = await sb.from('metas_clinicas').select('*').eq('paciente_id',patient.id)
-    .order('status').order('categoria');
+/* ══ METAS ════════════════════════════════════════════════════ */
+async function loadMetas(){
+  if(!patient) return;
+  const {data} = await sb.from('metas_clinicas').select('*').eq('paciente_id',patient.id).order('status').order('categoria');
   const el = q('#me-lista');
-  if (!data?.length) {
-    el.innerHTML = `<div class="empty"><div class="empty-icon">◎</div>
-      <div class="empty-title">Nenhuma meta definida ainda</div>
-      <div class="empty-desc">O plano de cuidado é estabelecido em consulta com o Dr. Bruno.</div></div>`;
+  if(!data?.length){
+    el.innerHTML=`<div class="empty"><div class="empty-icon">◎</div><div class="empty-title">Nenhuma meta definida</div><div class="empty-desc">O plano de cuidado é estabelecido em consulta com o Dr. Bruno.</div></div>`;
     return;
   }
-  const icons = {pressao:'💓',peso:'⚖️',laboratorial:'🧪',atividade:'🏃',medicacao:'💊'};
-  const statusBadge = s => ({
-    ativa:    '<span class="badge b-gold">Ativa</span>',
-    atingida: '<span class="badge b-g">Atingida</span>',
-    revisada: '<span class="badge b-n">Revisada</span>'
-  })[s] || '';
-
-  el.innerHTML = data.map(m => `
+  const icons={pressao:'💓',peso:'⚖️',laboratorial:'🧪',atividade:'🏃',medicacao:'💊'};
+  const sb2={ativa:'<span class="badge b-g">Ativa</span>',atingida:'<span class="badge" style="background:var(--Gdim);color:var(--G);border:1px solid var(--Gbr);">Atingida</span>',revisada:'<span class="badge b-n">Revisada</span>'};
+  el.innerHTML = data.map(m=>`
     <div class="meta-card">
       <div class="meta-cat">${icons[m.categoria]||'◎'} ${m.categoria}</div>
       <div class="meta-desc">${m.descricao_meta}</div>
       <div class="meta-footer">
-        ${m.valor_alvo ? `<span class="meta-alvo">Alvo: ${m.valor_alvo} ${m.unidade||''}</span>` : ''}
-        ${m.prazo ? `<span class="meta-prazo">· Prazo: ${fmtD(m.prazo)}</span>` : ''}
-        <span style="margin-left:auto;">${statusBadge(m.status)}</span>
+        ${m.valor_alvo?`<span class="meta-alvo">Alvo: ${m.valor_alvo} ${m.unidade||''}</span>`:''}
+        ${m.prazo?`<span class="meta-prazo">· Prazo: ${fmtD(m.prazo)}</span>`:''}
+        <span style="margin-left:auto;">${sb2[m.status]||''}</span>
       </div>
     </div>`).join('');
 }
 
-/* ══ MENSAGENS ═══════════════════════════════════════════════ */
-async function loadMensagens() {
-  if (!patient) return;
-  const { data } = await sb.from('mensagens').select('*')
-    .eq('paciente_id',patient.id).order('criado_em',{ascending:true});
+/* ══ MENSAGENS ════════════════════════════════════════════════ */
+async function loadMensagens(){
+  if(!patient) return;
+  const {data} = await sb.from('mensagens').select('*').eq('paciente_id',patient.id).order('criado_em',{ascending:true});
   const el = q('#ms-lista');
-
-  if (!data?.length) {
-    el.innerHTML = `<div class="empty"><div class="empty-icon">✉</div>
-      <div class="empty-title">Nenhuma mensagem ainda</div>
-      <div class="empty-desc">Use o campo abaixo para enviar uma mensagem à equipe.</div></div>`;
+  if(!data?.length){
+    el.innerHTML=`<div class="empty"><div class="empty-icon">✉</div><div class="empty-title">Nenhuma mensagem</div><div class="empty-desc">Use o campo abaixo para enviar uma mensagem à equipe.</div></div>`;
   } else {
-    el.innerHTML = data.map(m => `
+    el.innerHTML = data.map(m=>`
       <div>
         <div class="msg-bub ${m.remetente==='clinica'?'msg-clinic':'msg-patient'}">
           ${escHtml(m.texto)}
@@ -781,52 +832,334 @@ async function loadMensagens() {
       </div>`).join('');
     el.scrollTop = el.scrollHeight;
   }
-
-  // marcar como lidas
-  await sb.from('mensagens').update({lida:true})
-    .eq('paciente_id',patient.id).eq('remetente','clinica').eq('lida',false);
+  await sb.from('mensagens').update({lida:true}).eq('paciente_id',patient.id).eq('remetente','clinica').eq('lida',false);
   refreshBadge();
 }
 
-async function sendMsg() {
-  if (!patient) return;
-  const input = q('#ms-input');
-  const btn   = q('#ms-btn');
-  const text  = input.value.trim();
-  if (!text) return;
-  btn.disabled = true; btn.textContent = 'Enviando...';
-  const { error } = await sb.from('mensagens').insert({
-    paciente_id: patient.id, remetente:'paciente', texto:text, lida:false
+async function sendMsg(){
+  if(!patient) return;
+  const input=q('#ms-input'), btn=q('#ms-btn');
+  const text=input.value.trim();
+  if(!text) return;
+  btn.disabled=true; btn.textContent='Enviando...';
+  const {error} = await sb.from('mensagens').insert({paciente_id:patient.id,remetente:'paciente',texto:text,lida:false});
+  if(!error){ input.value=''; await loadMensagens(); }
+  btn.disabled=false; btn.textContent='Enviar';
+}
+
+async function refreshBadge(){
+  if(!patient) return;
+  const {count} = await sb.from('mensagens').select('id',{count:'exact'}).eq('paciente_id',patient.id).eq('remetente','clinica').eq('lida',false);
+  const badge=q('#msg-badge');
+  if(count>0){badge.textContent=count;badge.style.display='inline';}else badge.style.display='none';
+}
+
+/* ══ TRACKER ══════════════════════════════════════════════════ */
+function initTracker(){
+  const now=new Date();
+  q('#tracker-date').textContent='Semana de '+now.toLocaleDateString('pt-BR',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
+}
+
+function initSelectors(){
+  [['sel-motiv',10],['sel-stress',10],['sel-habits',7]].forEach(([id,max])=>{
+    const el=q('#'+id);
+    el.innerHTML='';
+    for(let i=1;i<=max;i++){
+      const b=document.createElement('button');
+      b.className='sc-btn'; b.dataset.v=i; b.textContent=i;
+      b.onclick=()=>{el.querySelectorAll('.sc-btn').forEach(x=>x.classList.remove('sel'));b.classList.add('sel');};
+      el.appendChild(b);
+    }
   });
-  if (!error) { input.value = ''; await loadMensagens(); }
-  btn.disabled = false; btn.textContent = 'Enviar';
 }
 
-async function refreshBadge() {
-  if (!patient) return;
-  const { count } = await sb.from('mensagens').select('id',{count:'exact'})
-    .eq('paciente_id',patient.id).eq('remetente','clinica').eq('lida',false);
-  const badge = q('#msg-badge');
-  if (count > 0) { badge.textContent = count; badge.style.display = 'inline'; }
-  else badge.style.display = 'none';
+function collectForm(){
+  const v=id=>{ const el=q('#'+id); return el?el.value:''; };
+  const sel=id=>{ const s=q(`#${id} .sc-btn.sel`); return s?+s.dataset.v:null; };
+  return{
+    date:new Date().toISOString(),
+    hrv:parseFloat(v('t-hrv'))||null, rhr:parseFloat(v('t-rhr'))||null,
+    sleep:parseFloat(v('t-sleep'))||null, peso:parseFloat(v('t-peso'))||null,
+    ready:parseFloat(v('t-ready'))||null, sleepScore:parseFloat(v('t-sleepscore'))||null,
+    km:parseFloat(v('t-km'))||null, gym:parseFloat(v('t-gym'))||null,
+    longrun:v('t-longrun'), dores:v('t-dores'),
+    prot:parseFloat(v('t-prot'))||null, agua:v('t-agua'),
+    jejum:v('t-jejum'), supp:v('t-supp'),
+    motiv:sel('sel-motiv'), stress:sel('sel-stress'), habits:sel('sel-habits'),
+    reflex:v('t-reflex')
+  };
 }
 
-function escHtml(s) {
-  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+function calcWeekScore(d){
+  const cfg=getCfg();
+  let pts=0,tot=0;
+  if(d.sleep!=null){tot+=15;pts+=(d.sleep>=8?15:d.sleep>=7?10:d.sleep>=6?5:0);}
+  if(d.km!=null&&cfg.kmMeta){tot+=15;pts+=Math.min(15,Math.round(d.km/cfg.kmMeta*15));}
+  if(d.gym!=null){tot+=10;pts+=(d.gym>=3?10:d.gym===2?7:d.gym===1?3:0);}
+  if(d.ready!=null){tot+=15;pts+=(d.ready>=85?15:d.ready>=75?10:d.ready>=65?6:2);}
+  if(d.prot!=null&&cfg.protMeta){tot+=10;pts+=(d.prot>=cfg.protMeta?10:d.prot>=cfg.protMeta*.8?7:d.prot>=cfg.protMeta*.6?4:1);}
+  if(d.agua){tot+=5;pts+=(d.agua==='ótima'?5:d.agua==='boa'?3:1);}
+  if(d.jejum){tot+=5;pts+=(d.jejum==='completo'?5:d.jejum==='parcial'?3:1);}
+  if(d.supp){tot+=10;pts+=(d.supp==='perfeita'?10:d.supp==='boa'?6:2);}
+  if(d.longrun){tot+=10;pts+=(d.longrun==='completo'?10:d.longrun==='reduzido'?6:d.longrun==='nao-havia'?8:1);}
+  if(d.motiv!=null){tot+=5;pts+=(d.motiv>=8?5:d.motiv>=6?3:d.motiv>=4?1:0);}
+  if(d.stress!=null){tot+=5;pts+=(d.stress<=3?5:d.stress<=5?3:d.stress<=7?1:0);}
+  if(d.habits!=null){tot+=5;pts+=(d.habits>=6?5:d.habits>=4?3:d.habits>=2?1:0);}
+  return tot>0?Math.round(pts/tot*100):0;
+}
+
+function buildPrompt(d){
+  const cfg = getCfg();
+  const p = patient||{};
+  const Hb = cfg.hrvBase||p.hrv_baseline||60;
+  const Rb = cfg.rhrBase||p.rhr_baseline||70;
+  const Hpct = d.hrv&&Hb ? Math.round((d.hrv-Hb)/Hb*100) : null;
+  const RHRd = d.rhr&&Rb ? d.rhr-Rb : null;
+  const hist  = trackerHistory.slice(-3).map((w,i)=>
+    `Semana -${3-i}: HRV ${w.hrv||'?'}ms, sono ${w.sono||'?'}h, km ${w.km||'?'}, score ${w.score||'?'}/100`
+  ).join('\n')||'(sem histórico anterior)';
+
+  const metaTexto = p.meta_performance_descricao
+    ? `Meta de performance: ${p.meta_performance_descricao}${p.meta_performance_alvo?' — alvo: '+p.meta_performance_alvo:''}`
+    : 'Meta de performance não definida';
+
+  const diag = p.diagnostico_principal||'Doença renal crônica';
+  const kmMeta = cfg.kmMeta||p.meta_km_semana||'não definida';
+  const protMeta = cfg.protMeta||p.meta_proteina_dia||'não definida';
+
+  return `Você é um assistente de saúde especializado no acompanhamento de pacientes com doenças crônicas (DRC, HAS, DM) que estão trabalhando metas de desempenho físico compatíveis com seu quadro clínico. Analise os dados da semana e forneça orientações práticas e encorajadoras.
+
+PERFIL DO PACIENTE:
+- Diagnóstico principal: ${diag}
+- ${metaTexto}
+- HRV baseline: ${Hb}ms | RHR baseline: ${Rb}bpm
+- Meta de atividade semanal: ${kmMeta} km/min
+- Meta de proteína: ${protMeta}g/dia
+- Médico responsável: Dr. Bruno P. Biluca — Nefrologista
+
+DADOS DESTA SEMANA:
+- HRV médio: ${d.hrv||'n/i'}ms${Hpct!==null?` (${Hpct>=0?'+':''}${Hpct}% vs baseline)`:''}
+- RHR médio: ${d.rhr||'n/i'}bpm${RHRd!==null?` (${RHRd>=0?'+':''}${RHRd} vs baseline)`:''}
+- Sono médio: ${d.sleep||'n/i'}h
+- Readiness Oura: ${d.ready||'n/i'}
+- Sleep Score Oura: ${d.sleepScore||'n/i'}
+- Peso: ${d.peso||'n/i'}kg
+- Atividade: ${d.km||'n/i'}km/min (meta: ${kmMeta})
+- Sessões exercício: ${d.gym||'n/i'} sessões
+- Atividade principal: ${d.longrun||'n/i'}
+- Proteína média: ${d.prot||'n/i'}g/dia
+- Hidratação: ${d.agua||'n/i'}
+- Adesão à dieta: ${d.jejum||'n/i'}
+- Uso de medicamentos: ${d.supp||'n/i'}
+- Motivação: ${d.motiv||'n/i'}/10 | Estresse: ${d.stress||'n/i'}/10
+- Bem-estar geral: ${d.habits||'n/i'}/7
+- Dores/limitações: ${d.dores||'Nenhuma'}
+- Reflexão: "${d.reflex||'Nenhuma'}"
+
+HISTÓRICO RECENTE:
+${hist}
+
+Responda em português brasileiro. Seja direto, específico, encorajador e clinicamente responsável. Use este formato:
+
+### 📊 Score da semana: ${calcWeekScore(d)}/100
+[Explique brevemente o que o score representa]
+
+### ✅ O que funcionou bem
+[2–4 pontos positivos baseados nos dados reais]
+
+### ⚠️ Pontos de atenção
+[Alertas específicos comparando com baseline e metas — considere a condição clínica]
+
+### 🎯 Recomendações para a próxima semana
+[3–5 ações práticas e específicas com justificativa]
+
+### 💙 Palavra do Dr. Bruno
+[Uma frase de encorajamento conectando os dados à jornada do paciente — tom de acolhimento]
+
+Seja como um coach de saúde que conhece este paciente e respeita seus limites clínicos. Nunca prescreva medicamentos. Nunca contradiga orientações médicas.`;
+}
+
+async function analyzeWeek(){
+  const data = collectForm();
+  const apiKey = localStorage.getItem('apexApiKey')||'';
+  const btn = q('#analyze-btn');
+  btn.disabled=true; btn.classList.add('loading');
+  const area=q('#ai-area'), skel=q('#ai-skel'), content=q('#ai-content');
+  area.style.display='block'; skel.style.display='block'; content.style.display='none';
+  q('#ai-date-lbl').textContent=' · '+new Date().toLocaleDateString('pt-BR');
+  area.scrollIntoView({behavior:'smooth',block:'start'});
+  try{
+    const res=await fetch('https://api.anthropic.com/v1/messages',{
+      method:'POST',
+      headers:{'Content-Type':'application/json',...(apiKey?{'x-api-key':apiKey}:{})},
+      body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1200,messages:[{role:'user',content:buildPrompt(data)}]})
+    });
+    const json=await res.json();
+    if(json.error) throw new Error(json.error.message);
+    const text=json.content.map(b=>b.text||'').join('');
+    const score=calcWeekScore(data);
+    data.score=score; data.aiAnalysis=text;
+    await saveWeek(data);
+    skel.style.display='none'; content.style.display='block';
+    content.innerHTML=mdToHtml(text);
+  }catch(err){
+    skel.style.display='none'; content.style.display='block';
+    const score=calcWeekScore(data); data.score=score; data.aiAnalysis='';
+    await saveWeek(data);
+    content.innerHTML=`<div class="alert al-r"><strong>Erro na análise:</strong> ${err.message}<br><br>Configure sua chave de API em Configurações. Score calculado: <strong>${score}/100</strong>.</div>`;
+  }
+  btn.disabled=false; btn.classList.remove('loading');
+}
+
+async function saveWeek(d){
+  if(!patient) return;
+  const monday = getMonday(new Date(d.date));
+  const row = {
+    paciente_id:patient.id, data_semana:monday,
+    hrv:d.hrv, rhr:d.rhr, sono:d.sleep, peso:d.peso, readiness:d.ready, sleep_score:d.sleepScore,
+    km:d.km, gym:d.gym, longrun:d.longrun||null, dores:d.dores||null,
+    proteina:d.prot, agua:d.agua||null, jejum:d.jejum||null, suplementacao:d.supp||null,
+    motivacao:d.motiv, estresse:d.stress, habitos:d.habits, reflexao:d.reflex||null,
+    score:d.score||null, ai_analysis:d.aiAnalysis||null
+  };
+  await sb.from('tracker_semanal').upsert(row,{onConflict:'paciente_id,data_semana'});
+  await loadTrackerHistory();
+}
+
+function getMonday(d){
+  const day=d.getDay(), diff=d.getDate()-day+(day===0?-6:1);
+  const mon=new Date(d.setDate(diff));
+  return mon.toISOString().split('T')[0];
+}
+
+async function loadTrackerHistory(){
+  if(!patient) return;
+  const {data} = await sb.from('tracker_semanal').select('*').eq('paciente_id',patient.id).order('data_semana',{ascending:true});
+  trackerHistory = data||[];
+}
+
+function mdToHtml(t){
+  return t.replace(/### (.*)/g,'<h4>$1</h4>')
+    .replace(/## (.*)/g,'<h4>$1</h4>')
+    .replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>')
+    .replace(/^- (.*)/gm,'<li>$1</li>')
+    .replace(/(<li>.*?<\/li>)/gs,'<ul>$1</ul>')
+    .replace(/\n\n/g,'<br>');
+}
+
+/* ══ HISTÓRICO ════════════════════════════════════════════════ */
+async function renderHistory(){
+  await loadTrackerHistory();
+  const list=q('#hist-list');
+  const h=[...trackerHistory].reverse();
+  if(!h.length){list.innerHTML='<div style="color:var(--c3);font-size:13px;padding:20px 0;">Nenhuma semana registrada ainda.</div>';return;}
+  list.innerHTML=h.map((w,i)=>{
+    const d=new Date(w.data_semana+'T12:00:00');
+    const sc=w.score||0;
+    const col=sc>=80?'var(--gold2)':sc>=60?'var(--A)':'var(--R)';
+    const idx=trackerHistory.length-1-i;
+    return `<div class="hist-it" onclick="showHistDetail(${idx})">
+      <div class="hist-top">
+        <span class="hist-date">${d.toLocaleDateString('pt-BR',{weekday:'short',day:'numeric',month:'short',year:'numeric'})}</span>
+        <span class="hist-score" style="color:${col};">${sc}/100</span>
+      </div>
+      <div class="hist-chips">
+        ${w.hrv?`<span class="hchip" style="background:var(--golddim);color:var(--gold2);">HRV ${w.hrv}ms</span>`:''}
+        ${w.sono?`<span class="hchip" style="background:var(--Bdim);color:var(--B);">Sono ${w.sono}h</span>`:''}
+        ${w.km?`<span class="hchip" style="background:var(--Pdim);color:var(--P);">${w.km}km</span>`:''}
+        ${w.proteina?`<span class="hchip" style="background:var(--Adim);color:var(--A);">${w.proteina}g prot</span>`:''}
+      </div>
+      ${w.ai_analysis?`<div class="hist-prev">${w.ai_analysis.replace(/<[^>]*>/g,'').slice(0,120)}…</div>`:''}
+    </div>`;
+  }).join('');
+}
+
+function showHistDetail(idx){
+  const w=trackerHistory[idx];
+  const d=new Date(w.data_semana+'T12:00:00');
+  const sc=w.score||0;
+  const col=sc>=80?'var(--G)':sc>=60?'var(--A)':'var(--R)';
+  const modal=document.createElement('div');
+  modal.style.cssText='position:fixed;inset:0;background:rgba(0,0,0,.8);z-index:200;display:flex;align-items:center;justify-content:center;padding:16px;';
+  modal.innerHTML=`<div style="background:var(--bg3);border:1px solid var(--br);border-radius:14px;padding:20px 22px;max-width:580px;width:100%;max-height:82vh;overflow-y:auto;">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;">
+      <div>
+        <div style="font-size:15px;font-weight:800;">${d.toLocaleDateString('pt-BR',{weekday:'long',day:'numeric',month:'long',year:'numeric'})}</div>
+        <div style="font-family:var(--mono);font-size:18px;font-weight:700;color:${col};margin-top:3px;">${sc}/100</div>
+      </div>
+      <button onclick="this.closest('[style]').remove()" style="background:none;border:none;color:var(--c3);font-size:20px;cursor:pointer;">✕</button>
+    </div>
+    <div style="font-size:12px;color:var(--c2);line-height:1.75;">${w.ai_analysis?mdToHtml(w.ai_analysis):'<em style="color:var(--c3);">Sem análise disponível</em>'}</div>
+  </div>`;
+  modal.onclick=e=>{if(e.target===modal)modal.remove();};
+  document.body.appendChild(modal);
+}
+
+/* ══ GRÁFICOS ════════════════════════════════════════════════ */
+async function renderCharts(){
+  await loadTrackerHistory();
+  const h=trackerHistory;
+  if(h.length<2){q('#charts-empty').style.display='block';q('#charts-wrap').style.display='none';return;}
+  q('#charts-empty').style.display='none'; q('#charts-wrap').style.display='block';
+  const labels=h.map(w=>new Date(w.data_semana+'T12:00:00').toLocaleDateString('pt-BR',{day:'2-digit',month:'2-digit'}));
+  const cfg=getCfg();
+  const mk=(id,data,color,label,type,target)=>{
+    if(charts[id]) charts[id].destroy();
+    const ds=[{label,data,borderColor:color,backgroundColor:color+'28',tension:.3,fill:type!=='bar',pointRadius:3}];
+    if(target) ds.push({label:'Meta',data:h.map(()=>target),borderColor:'rgba(0,0,0,.15)',borderDash:[4,4],pointRadius:0,fill:false});
+    charts[id]=new Chart(q('#'+id),{type:type||'line',data:{labels,datasets:ds},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{ticks:{color:'#7a7875',font:{size:9}}},y:{ticks:{color:'#7a7875',font:{size:9}},grid:{color:'rgba(0,0,0,.04)'}}}}});
+  };
+  mk('ch-hrv',h.map(w=>w.hrv),'#D4A840','HRV (ms)','line',cfg.hrvBase||null);
+  mk('ch-sleep',h.map(w=>w.sono),'#3b82f6','Sono (h)','line',8);
+  mk('ch-km',h.map(w=>w.km),'#a855f7','Km/Atividade','bar',cfg.kmMeta||null);
+  mk('ch-prot',h.map(w=>w.proteina),'#f59e0b','Proteína (g)','line',cfg.protMeta||null);
+  mk('ch-score',h.map(w=>w.score||0),'#D4A840','Score','line');
+}
+
+/* ══ CONFIG ══════════════════════════════════════════════════ */
+function loadConfig(){
+  const c=getCfg();
+  if(q('#cfg-hrv')) q('#cfg-hrv').value=c.hrvBase||patient?.hrv_baseline||'';
+  if(q('#cfg-rhr')) q('#cfg-rhr').value=c.rhrBase||patient?.rhr_baseline||'';
+  if(q('#cfg-fase')&&c.fase) q('#cfg-fase').value=c.fase;
+  if(q('#cfg-km')) q('#cfg-km').value=c.kmMeta||patient?.meta_km_semana||'';
+  const k=localStorage.getItem('apexApiKey')||'';
+  if(q('#api-key-inp')) q('#api-key-inp').value=k;
+  if(k&&q('#api-status')) q('#api-status').textContent='✓ Chave configurada';
+}
+
+function saveConfig(){
+  const c={
+    hrvBase:+q('#cfg-hrv').value||null, rhrBase:+q('#cfg-rhr').value||null,
+    fase:+q('#cfg-fase').value||1, kmMeta:+q('#cfg-km').value||null
+  };
+  localStorage.setItem('apexCfg',JSON.stringify(c));
+  alert('Configurações salvas!');
+}
+
+function saveApiKey(){
+  const k=q('#api-key-inp').value;
+  localStorage.setItem('apexApiKey',k);
+  if(q('#api-status')) q('#api-status').textContent=k?'✓ Chave salva':'';
+}
+
+async function exportData(){
+  const data={paciente:patient,historico:trackerHistory,exportado_em:new Date().toISOString()};
+  const b=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(b);
+  a.download=`apex_tracker_${new Date().toISOString().slice(0,10)}.json`;
+  a.click();
 }
 
 /* ══ NAVIGATION ══════════════════════════════════════════════ */
-const PAGES = ['home','exames','consultas','metas','mensagens'];
-const LOADERS = { exames:loadExames, consultas:loadConsultas, metas:loadMetas, mensagens:loadMensagens };
+const PAGES=['home','exames','consultas','metas','mensagens','tracker','historico','graficos','config'];
+const LOADERS={exames:loadExames,consultas:loadConsultas,metas:loadMetas,mensagens:loadMensagens,historico:renderHistory,graficos:renderCharts,config:loadConfig};
 
-function nav(pg) {
-  PAGES.forEach(p => {
-    q(`#pg-${p}`).classList.toggle('on', p === pg);
-  });
-  qq('.nav-it').forEach(el => {
-    el.classList.toggle('on', el.dataset.pg === pg);
-  });
-  if (LOADERS[pg]) LOADERS[pg]();
+function nav(pg){
+  PAGES.forEach(p=>{q(`#pg-${p}`)?.classList.toggle('on',p===pg);});
+  qq('.nav-it').forEach(el=>el.classList.toggle('on',el.dataset.pg===pg));
+  if(LOADERS[pg]) LOADERS[pg]();
 }
 
 /* ══ INIT ════════════════════════════════════════════════════ */
