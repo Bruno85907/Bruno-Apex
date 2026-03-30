@@ -217,6 +217,64 @@ nav{background:var(--surface);border-bottom:1px solid var(--border);height:52px;
 .msg-b.clinic{background:var(--gold-dim);border:1px solid var(--gold-border);align-self:flex-end;}
 .msg-b.patient{background:#fff;border:1px solid var(--border);align-self:flex-start;}
 .msg-b-time{font-size:9px;color:var(--text-muted);margin-top:4px;}
+
+/* ANAMNESE */
+.check-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:14px;}
+.check-item{display:flex;align-items:center;gap:8px;background:#FAFAFA;border:1px solid var(--border);border-radius:6px;padding:8px 11px;cursor:pointer;transition:border-color .15s;}
+.check-item:hover{border-color:var(--border-hover);}
+.check-item.checked{background:var(--gold-dim);border-color:var(--gold-border);}
+.check-item input[type=checkbox]{accent-color:var(--gold);width:14px;height:14px;flex-shrink:0;}
+.check-item label{font-size:12px;font-weight:500;cursor:pointer;color:var(--text-secondary);}
+.check-item.checked label{color:#7A6030;}
+.drc-sel{margin-top:6px;padding:8px 10px;background:var(--gold-dim);border:1px solid var(--gold-border);border-radius:6px;}
+.drc-sel label{font-size:9px;font-weight:600;letter-spacing:1px;color:var(--gold-muted);text-transform:uppercase;display:block;margin-bottom:5px;}
+.drc-stages{display:flex;gap:5px;flex-wrap:wrap;}
+.drc-stage{font-family:inherit;font-size:10px;font-weight:600;padding:3px 9px;border-radius:4px;border:1px solid var(--gold-border);background:#fff;color:#7A6030;cursor:pointer;transition:.12s;}
+.drc-stage.sel{background:var(--gold);color:#fff;border-color:var(--gold);}
+.obj-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px;}
+.dias-grid{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:6px;}
+.dia-btn{font-family:inherit;font-size:11px;font-weight:600;padding:5px 11px;border-radius:5px;border:1px solid var(--border);background:#fff;color:var(--text-muted);cursor:pointer;transition:.12s;}
+.dia-btn.sel{background:var(--gold-dim);border-color:var(--gold-border);color:#7A6030;}
+
+/* GERAR PROTOCOLO IA */
+.ai-gen-bar{display:flex;align-items:center;gap:12px;background:linear-gradient(135deg,#1a1917,#2a2825);border:1px solid rgba(228,186,100,.3);border-radius:10px;padding:16px 20px;margin:20px 0;}
+.ai-gen-bar .ai-icon{font-size:22px;flex-shrink:0;}
+.ai-gen-bar .ai-txt{flex:1;}
+.ai-gen-bar .ai-txt strong{display:block;font-size:13px;font-weight:700;color:#fff;margin-bottom:2px;}
+.ai-gen-bar .ai-txt span{font-size:11px;color:rgba(255,255,255,.5);}
+.ai-gen-btn{font-family:inherit;font-size:12px;font-weight:700;background:var(--gold);color:#1a1917;border:none;border-radius:7px;padding:10px 20px;cursor:pointer;white-space:nowrap;transition:.15s;display:flex;align-items:center;gap:6px;}
+.ai-gen-btn:hover{background:#c9a040;}
+.ai-gen-btn:disabled{opacity:.45;cursor:not-allowed;}
+.ai-gen-spin{width:13px;height:13px;border:2px solid rgba(26,25,23,.3);border-top-color:#1a1917;border-radius:50%;display:none;animation:agspin .7s linear infinite;}
+.ai-gen-btn.loading .ai-gen-spin{display:inline-block;}
+@keyframes agspin{to{transform:rotate(360deg)}}
+.ai-preview{background:#FAFAFA;border:1px solid var(--border);border-radius:8px;padding:14px 16px;margin-bottom:14px;font-size:12px;color:var(--text-secondary);line-height:1.7;display:none;}
+.ai-preview.show{display:block;}
+.ai-preview h4{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--text-muted);margin:10px 0 4px;}
+.ai-preview h4:first-child{margin-top:0;}
+
+/* PRESCRIÇÃO PDF */
+.rx-modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:300;align-items:center;justify-content:center;padding:20px;}
+.rx-modal.show{display:flex;}
+.rx-box{background:#fff;border-radius:10px;padding:32px;max-width:560px;width:100%;max-height:88vh;overflow-y:auto;}
+.rx-header{border-bottom:2px solid #111;padding-bottom:14px;margin-bottom:18px;}
+.rx-medico{font-size:13px;font-weight:700;color:#111;margin-bottom:2px;}
+.rx-crm{font-size:11px;color:#555;}
+.rx-paciente{font-size:12px;color:#333;margin-bottom:18px;padding:10px 0;border-bottom:1px solid #E8E8E8;}
+.rx-items{margin-bottom:20px;}
+.rx-item{margin-bottom:14px;padding-bottom:14px;border-bottom:1px solid #F0F0F0;}
+.rx-item:last-child{border-bottom:none;}
+.rx-item-nome{font-size:13px;font-weight:700;color:#111;}
+.rx-item-dose{font-size:12px;color:#555;margin-top:2px;}
+.rx-footer{border-top:1px solid #E8E8E8;padding-top:14px;display:flex;justify-content:space-between;align-items:flex-end;}
+.rx-assinatura{font-size:11px;color:#555;text-align:center;}
+.rx-linha{width:160px;border-top:1px solid #111;margin-bottom:4px;}
+.rx-actions{display:flex;gap:8px;margin-top:16px;justify-content:flex-end;}
+.rx-btn{font-family:inherit;font-size:11px;font-weight:600;padding:8px 16px;border-radius:6px;cursor:pointer;transition:.15s;}
+.rx-btn.primary{background:var(--gold);color:#fff;border:none;}
+.rx-btn.primary:hover{background:#c9a040;}
+.rx-btn.sec{background:#fff;color:var(--text-secondary);border:1px solid var(--border);}
+.rx-btn.sec:hover{border-color:var(--border-hover);}
 </style>
 </head>
 <body>
@@ -573,7 +631,8 @@ nav{background:var(--surface);border-bottom:1px solid var(--border);height:52px;
     </div>
 
     <div class="pac-tabs">
-      <button class="pac-tab active" onclick="abrirTab('perfil',this)">Perfil</button>
+      <button class="pac-tab active" onclick="abrirTab('anamnese',this)">Anamnese</button>
+      <button class="pac-tab" onclick="abrirTab('perfil',this)">Perfil</button>
       <button class="pac-tab" onclick="abrirTab('exames',this)">Exames</button>
       <button class="pac-tab" onclick="abrirTab('consultas',this)">Consultas</button>
       <button class="pac-tab" onclick="abrirTab('metas',this)">Metas</button>
@@ -585,8 +644,115 @@ nav{background:var(--surface);border-bottom:1px solid var(--border);height:52px;
       <button class="pac-tab" onclick="abrirTab('mensagens',this)">Mensagens <span id="msg-cnt" style="display:none;background:#ef4444;color:#fff;font-size:9px;padding:1px 5px;border-radius:8px;margin-left:3px;">0</span></button>
     </div>
 
+    <!-- TAB ANAMNESE -->
+    <div class="pac-tab-content active" id="tab-anamnese">
+
+      <!-- BLOCO 1: HISTÓRIA PREGRESSA -->
+      <div class="f-section">História Pregressa</div>
+      <div class="f-row f1"><div class="f-group"><textarea id="an-historia" rows="5" placeholder="Descreva a história clínica pregressa do paciente: queixas principais, evolução da doença, internações anteriores, cirurgias, alergias, histórico familiar relevante..."></textarea></div></div>
+
+      <!-- BLOCO 2: COMORBIDADES -->
+      <div class="f-section">Comorbidades</div>
+      <div class="check-grid">
+        <div class="check-item" id="chk-has" onclick="toggleCheck(this,'has')">
+          <input type="checkbox" id="cb-has"><label for="cb-has">Hipertensão (HAS)</label>
+        </div>
+        <div class="check-item" id="chk-dm" onclick="toggleCheck(this,'dm')">
+          <input type="checkbox" id="cb-dm"><label for="cb-dm">Diabetes (DM)</label>
+        </div>
+        <div class="check-item" id="chk-obs" onclick="toggleCheck(this,'obesidade')">
+          <input type="checkbox" id="cb-obs"><label for="cb-obs">Obesidade</label>
+        </div>
+        <div class="check-item" id="chk-tab" onclick="toggleCheck(this,'tabagismo')">
+          <input type="checkbox" id="cb-tab"><label for="cb-tab">Tabagismo</label>
+        </div>
+        <div class="check-item" id="chk-drc" onclick="toggleCheckDRC(this)">
+          <input type="checkbox" id="cb-drc"><label for="cb-drc">Doença Renal Crônica (DRC)</label>
+        </div>
+        <div class="check-item" id="chk-icc" onclick="toggleCheck(this,'icc')">
+          <input type="checkbox" id="cb-icc"><label for="cb-icc">Insuficiência Cardíaca</label>
+        </div>
+      </div>
+      <div class="drc-sel" id="drc-estagio-wrap" style="display:none;">
+        <label>Estágio da DRC</label>
+        <div class="drc-stages">
+          <button class="drc-stage" onclick="selDRC(this,'1')">Estágio 1</button>
+          <button class="drc-stage" onclick="selDRC(this,'2')">Estágio 2</button>
+          <button class="drc-stage" onclick="selDRC(this,'3')">Estágio 3</button>
+          <button class="drc-stage" onclick="selDRC(this,'4')">Estágio 4</button>
+          <button class="drc-stage" onclick="selDRC(this,'5')">Estágio 5</button>
+          <button class="drc-stage" onclick="selDRC(this,'5D')">Estágio 5D (Diálise)</button>
+        </div>
+      </div>
+      <div class="f-row f1" style="margin-top:12px;"><div class="f-group"><label>Outras comorbidades</label><input type="text" id="an-outras" placeholder="Ex: dislipidemia, hiperuricemia, apneia do sono..."></div></div>
+
+      <!-- BLOCO 3: OBJETIVOS -->
+      <div class="f-section">Objetivos do Paciente</div>
+      <div class="obj-grid">
+        <div class="check-item" id="chk-emagrecimento" onclick="toggleCheck(this,'emagrecimento')">
+          <input type="checkbox" id="cb-emag"><label for="cb-emag">⚖️ Emagrecimento</label>
+        </div>
+        <div class="check-item" id="chk-tabagismo-obj" onclick="toggleCheck(this,'cessar_tabagismo')">
+          <input type="checkbox" id="cb-tabobj"><label for="cb-tabobj">🚭 Cessar tabagismo</label>
+        </div>
+        <div class="check-item" id="chk-pressao-obj" onclick="toggleCheck(this,'controle_pressao')">
+          <input type="checkbox" id="cb-paobj"><label for="cb-paobj">💓 Controle pressórico</label>
+        </div>
+        <div class="check-item" id="chk-dm-obj" onclick="toggleCheck(this,'controle_dm')">
+          <input type="checkbox" id="cb-dmobj"><label for="cb-dmobj">🩸 Controle da DM</label>
+        </div>
+        <div class="check-item" id="chk-esporte-obj" onclick="toggleCheck(this,'meta_esportiva')">
+          <input type="checkbox" id="cb-esobj"><label for="cb-esobj">🏃 Meta esportiva</label>
+        </div>
+        <div class="check-item" id="chk-qualidade-obj" onclick="toggleCheck(this,'qualidade_vida')">
+          <input type="checkbox" id="cb-qvobj"><label for="cb-qvobj">✨ Qualidade de vida</label>
+        </div>
+      </div>
+      <div class="f-row f1" id="meta-esportiva-detalhe" style="display:none;"><div class="f-group"><label>Descreva a meta esportiva</label><input type="text" id="an-meta-esportiva" placeholder="Ex: Correr 5km, completar uma caminhada de 30min sem parar..."></div></div>
+      <div class="f-section">Disponibilidade para treinos</div>
+      <div style="font-size:11px;color:var(--text-muted);margin-bottom:8px;">Selecione os dias disponíveis:</div>
+      <div class="dias-grid">
+        <button class="dia-btn" onclick="toggleDia(this,'seg')">SEG</button>
+        <button class="dia-btn" onclick="toggleDia(this,'ter')">TER</button>
+        <button class="dia-btn" onclick="toggleDia(this,'qua')">QUA</button>
+        <button class="dia-btn" onclick="toggleDia(this,'qui')">QUI</button>
+        <button class="dia-btn" onclick="toggleDia(this,'sex')">SEX</button>
+        <button class="dia-btn" onclick="toggleDia(this,'sab')">SÁB</button>
+        <button class="dia-btn" onclick="toggleDia(this,'dom')">DOM</button>
+      </div>
+      <div class="f-row f1" style="margin-top:10px;"><div class="f-group"><label>Observações sobre disponibilidade</label><input type="text" id="an-disp-obs" placeholder="Ex: só pela manhã, após diálise não pode treinar..."></div></div>
+
+      <!-- SALVAR ANAMNESE -->
+      <div class="f-save-bar" style="margin-top:16px;">
+        <button class="pac-btn" onclick="salvarAnamnese()">Salvar anamnese</button>
+        <span class="f-save-msg" id="msg-anamnese"></span>
+      </div>
+
+      <!-- GERADOR DE PROTOCOLO IA -->
+      <div class="ai-gen-bar">
+        <div class="ai-icon">🤖</div>
+        <div class="ai-txt">
+          <strong>Gerar Protocolo Completo com IA</strong>
+          <span>Com base na anamnese, gera dieta, suplementação, treino e plano de 12 meses baseado em evidências</span>
+        </div>
+        <button class="ai-gen-btn" id="ai-gen-btn" onclick="gerarProtocoloIA()">
+          <span class="ai-gen-txt">✨ Gerar protocolo</span>
+          <div class="ai-gen-spin"></div>
+        </button>
+      </div>
+      <div class="ai-preview" id="ai-preview"></div>
+      <div id="ai-gen-actions" style="display:none;">
+        <div class="f-save-bar">
+          <button class="pac-btn" onclick="salvarProtocoloGerado()">✅ Salvar protocolo nas abas</button>
+          <button class="pac-btn sec" onclick="descartarProtocolo()" style="margin-left:6px;">Descartar</button>
+          <span class="f-save-msg" id="msg-protocolo-gerado"></span>
+        </div>
+      </div>
+
+    </div><!-- /tab-anamnese -->
+
     <!-- TAB PERFIL -->
-    <div class="pac-tab-content active" id="tab-perfil">
+    <div class="pac-tab-content" id="tab-perfil">
       <div class="f-section">Dados clínicos</div>
       <div class="f-row"><div class="f-group"><label>Nome completo</label><input type="text" id="p-nome"></div><div class="f-group"><label>Data de nascimento</label><input type="date" id="p-nasc"></div></div>
       <div class="f-row"><div class="f-group"><label>Diagnóstico principal</label><input type="text" id="p-diag" placeholder="DRC estágio 3, HAS, DM2..."></div><div class="f-group"><label>Unidade</label><select id="p-unidade"><option value="rl">RL</option><option value="santos">Santos</option><option value="tatuape">Tatuapé</option><option value="todas">Todas</option></select></div></div>
@@ -645,7 +811,11 @@ nav{background:var(--surface);border-bottom:1px solid var(--border);height:52px;
       <div class="f-section">Protocolo de medicamentos</div>
       <div id="med-lista" class="f-list" style="margin-bottom:10px;"></div>
       <button class="f-add-btn" onclick="addMed()">+ Medicamento</button>
-      <div class="f-save-bar"><button class="pac-btn" onclick="salvarProtocolo('medicamentos')">Salvar medicamentos</button><span class="f-save-msg" id="msg-medicamentos"></span></div>
+      <div class="f-save-bar">
+        <button class="pac-btn" onclick="salvarProtocolo('medicamentos')">Salvar medicamentos</button>
+        <button class="pac-btn sec" onclick="abrirPrescricao()" style="margin-left:8px;">📄 Gerar Prescrição PDF</button>
+        <span class="f-save-msg" id="msg-medicamentos"></span>
+      </div>
     </div>
 
     <!-- TAB DIETA -->
@@ -713,6 +883,32 @@ nav{background:var(--surface);border-bottom:1px solid var(--border);height:52px;
     </div>
 
   </div><!-- /pac-ficha -->
+
+  <!-- MODAL PRESCRIÇÃO -->
+  <div class="rx-modal" id="rx-modal" onclick="if(event.target===this)fecharPrescricao()">
+    <div class="rx-box" id="rx-content">
+      <div class="rx-header">
+        <div class="rx-medico">Dr. Bruno P. Biluca</div>
+        <div class="rx-crm">CRM-SP 151.041 · RQE 70145 · Nefrologista</div>
+        <div class="rx-crm" style="margin-top:2px;">Fênix Nefrologia · São Paulo - SP</div>
+      </div>
+      <div class="rx-paciente" id="rx-paciente-info"></div>
+      <div class="f-section" style="margin-bottom:10px;">Prescrição Médica</div>
+      <div class="rx-items" id="rx-items"></div>
+      <div class="rx-footer">
+        <div style="font-size:11px;color:#555;">Data: <span id="rx-data"></span></div>
+        <div class="rx-assinatura">
+          <div class="rx-linha"></div>
+          <div>Dr. Bruno P. Biluca</div>
+          <div style="font-size:10px;color:#888;">CRM-SP 151.041</div>
+        </div>
+      </div>
+      <div class="rx-actions">
+        <button class="rx-btn sec" onclick="fecharPrescricao()">Fechar</button>
+        <button class="rx-btn primary" onclick="imprimirPrescricao()">🖨️ Imprimir / PDF</button>
+      </div>
+    </div>
+  </div>
 
 <script>
 const SUPA_URL='https://syzmsixhjlutsynnqivv.supabase.co';
@@ -1407,8 +1603,353 @@ function showMsg(id,txt,tipo){
   setTimeout(()=>el.textContent='',3000);
 }
 
-/* planejamento — dias da semana no carregamento inicial */
-function initPlanDias(){
+/* ── ANAMNESE ─────────────────────────────────────────────── */
+let AN_COMORBIDADES = new Set();
+let AN_OBJETIVOS    = new Set();
+let AN_DIAS         = new Set();
+let AN_DRC_ESTAGIO  = '';
+let PROTOCOLO_GERADO = null;
+
+function toggleCheck(el, key){
+  el.classList.toggle('checked');
+  const cb = el.querySelector('input[type=checkbox]');
+  cb.checked = !cb.checked;
+  if(AN_COMORBIDADES.has(key)) AN_COMORBIDADES.delete(key);
+  else AN_COMORBIDADES.add(key);
+}
+
+function toggleCheckDRC(el){
+  el.classList.toggle('checked');
+  const cb = el.querySelector('input[type=checkbox]');
+  cb.checked = !cb.checked;
+  if(AN_COMORBIDADES.has('drc')) AN_COMORBIDADES.delete('drc');
+  else AN_COMORBIDADES.add('drc');
+  document.getElementById('drc-estagio-wrap').style.display = cb.checked ? 'block' : 'none';
+}
+
+function selDRC(btn, estagio){
+  document.querySelectorAll('.drc-stage').forEach(b=>b.classList.remove('sel'));
+  btn.classList.add('sel');
+  AN_DRC_ESTAGIO = estagio;
+}
+
+function toggleCheck(el, key){
+  // unified for both comorbidades and objetivos
+  el.classList.toggle('checked');
+  const cb = el.querySelector('input[type=checkbox]');
+  if(cb) cb.checked = !cb.checked;
+  const set = (el.id.startsWith('chk-') && (el.id.includes('obj') || ['chk-emagrecimento','chk-tabagismo-obj','chk-pressao-obj','chk-dm-obj','chk-esporte-obj','chk-qualidade-obj'].includes(el.id))) ? AN_OBJETIVOS : AN_COMORBIDADES;
+  if(set.has(key)) set.delete(key); else set.add(key);
+  if(key==='meta_esportiva') document.getElementById('meta-esportiva-detalhe').style.display = AN_OBJETIVOS.has('meta_esportiva') ? 'block' : 'none';
+}
+
+function toggleDia(btn, dia){
+  btn.classList.toggle('sel');
+  if(AN_DIAS.has(dia)) AN_DIAS.delete(dia); else AN_DIAS.add(dia);
+}
+
+async function salvarAnamnese(){
+  if(!PAC_ATUAL?.id){ showMsg('msg-anamnese','Salve o perfil primeiro','erro'); return; }
+  const conteudo = {
+    historia: document.getElementById('an-historia')?.value||'',
+    comorbidades: Array.from(AN_COMORBIDADES),
+    drc_estagio: AN_DRC_ESTAGIO,
+    outras: document.getElementById('an-outras')?.value||'',
+    objetivos: Array.from(AN_OBJETIVOS),
+    meta_esportiva: document.getElementById('an-meta-esportiva')?.value||'',
+    dias_treino: Array.from(AN_DIAS),
+    disp_obs: document.getElementById('an-disp-obs')?.value||''
+  };
+  const body = {paciente_id:PAC_ATUAL.id, tipo:'anamnese', conteudo, atualizado_por:'Dr. Bruno P. Biluca', atualizado_em:new Date().toISOString()};
+  const r = await fetch(`${SUPA_URL}/rest/v1/protocolos`, {method:'POST', headers:{...H(),'Prefer':'resolution=merge-duplicates'}, body:JSON.stringify(body)});
+  if(r.ok||r.status===201||r.status===204) showMsg('msg-anamnese','Salvo ✓');
+  else showMsg('msg-anamnese','Erro ao salvar','erro');
+}
+
+async function carregarAnamnese(){
+  if(!PAC_ATUAL?.id) return;
+  const r = await fetch(`${SUPA_URL}/rest/v1/protocolos?paciente_id=eq.${PAC_ATUAL.id}&tipo=eq.anamnese`, {headers:H()});
+  const data = await r.json();
+  if(!data?.[0]?.conteudo) return;
+  const c = data[0].conteudo;
+  const set = (id,v) => { const el=document.getElementById(id); if(el&&v!=null) el.value=v; };
+  set('an-historia', c.historia);
+  set('an-outras', c.outras);
+  set('an-meta-esportiva', c.meta_esportiva);
+  set('an-disp-obs', c.disp_obs);
+  AN_COMORBIDADES = new Set(c.comorbidades||[]);
+  AN_OBJETIVOS    = new Set(c.objetivos||[]);
+  AN_DIAS         = new Set(c.dias_treino||[]);
+  AN_DRC_ESTAGIO  = c.drc_estagio||'';
+  // Restaurar checkboxes comorbidades
+  const mapComorb = {has:'chk-has',dm:'chk-dm',obesidade:'chk-obs',tabagismo:'chk-tab',drc:'chk-drc',icc:'chk-icc'};
+  Object.entries(mapComorb).forEach(([key,id])=>{
+    if(AN_COMORBIDADES.has(key)){
+      const el=document.getElementById(id);
+      if(el){ el.classList.add('checked'); const cb=el.querySelector('input'); if(cb) cb.checked=true; }
+    }
+  });
+  if(AN_COMORBIDADES.has('drc')){
+    document.getElementById('drc-estagio-wrap').style.display='block';
+    if(AN_DRC_ESTAGIO) document.querySelectorAll('.drc-stage').forEach(b=>{ if(b.textContent.includes(AN_DRC_ESTAGIO)) b.classList.add('sel'); });
+  }
+  // Restaurar objetivos
+  const mapObj = {emagrecimento:'chk-emagrecimento',cessar_tabagismo:'chk-tabagismo-obj',controle_pressao:'chk-pressao-obj',controle_dm:'chk-dm-obj',meta_esportiva:'chk-esporte-obj',qualidade_vida:'chk-qualidade-obj'};
+  Object.entries(mapObj).forEach(([key,id])=>{
+    if(AN_OBJETIVOS.has(key)){
+      const el=document.getElementById(id);
+      if(el){ el.classList.add('checked'); const cb=el.querySelector('input'); if(cb) cb.checked=true; }
+    }
+  });
+  if(AN_OBJETIVOS.has('meta_esportiva')) document.getElementById('meta-esportiva-detalhe').style.display='block';
+  // Restaurar dias
+  document.querySelectorAll('.dia-btn').forEach(btn=>{
+    const dia=btn.getAttribute('onclick')?.match(/'(\w+)'/)?.[1];
+    if(dia&&AN_DIAS.has(dia)) btn.classList.add('sel');
+  });
+}
+
+/* ── GERADOR DE PROTOCOLO IA ──────────────────────────────── */
+function buildAnamnesePrompt(){
+  const p = PAC_ATUAL||{};
+  const nome = document.getElementById('p-nome')?.value || p.nome || 'Paciente';
+  const peso = document.getElementById('p-peso')?.value || '';
+  const altura = document.getElementById('p-altura')?.value || '';
+  const imc = peso&&altura ? (peso/((altura/100)**2)).toFixed(1) : 'não informado';
+  const historia = document.getElementById('an-historia')?.value||'';
+  const outras = document.getElementById('an-outras')?.value||'';
+  const metaEsportiva = document.getElementById('an-meta-esportiva')?.value||'';
+  const diasObs = document.getElementById('an-disp-obs')?.value||'';
+  const comorb = Array.from(AN_COMORBIDADES).join(', ')||'nenhuma';
+  const drcTxt = AN_COMORBIDADES.has('drc')&&AN_DRC_ESTAGIO ? ` (DRC estágio ${AN_DRC_ESTAGIO})` : '';
+  const obj = Array.from(AN_OBJETIVOS).join(', ')||'não especificados';
+  const dias = Array.from(AN_DIAS).join(', ')||'não informado';
+
+  return `Você é o Dr. Bruno P. Biluca, nefrologista (CRM-SP 151.041), especialista em medicina renal e performance humana. Com base na anamnese abaixo, gere um protocolo clínico completo e baseado em evidências para este paciente.
+
+DADOS DO PACIENTE:
+- Nome: ${nome}
+- Peso: ${peso}kg | Altura: ${altura}cm | IMC: ${imc}
+- Comorbidades: ${comorb}${drcTxt}
+- Outras: ${outras}
+- História pregressa: ${historia}
+- Objetivos: ${obj}
+- Meta esportiva: ${metaEsportiva||'não definida'}
+- Dias disponíveis para treino: ${dias}
+- Observações: ${diasObs}
+
+Responda APENAS com um JSON válido (sem markdown, sem backticks, sem texto fora do JSON) com esta estrutura exata:
+
+{
+  "dieta": {
+    "kcal": 1800,
+    "prot": 80,
+    "carb": 220,
+    "gord": 55,
+    "pot": null,
+    "fos": null,
+    "restr": "Alimentos restritos separados por vírgula",
+    "rec": "Alimentos recomendados separados por vírgula",
+    "obs": "Observações nutricionais importantes"
+  },
+  "suplementacao": {
+    "itens": [
+      {"nome": "Nome do suplemento", "dose": "dose", "horario": "horário"}
+    ],
+    "obs": "Alertas de interação ou contraindicações importantes"
+  },
+  "treino": {
+    "modalidade": "Modalidade principal",
+    "frequencia": "Xх por semana",
+    "duracao": "XX–XX minutos",
+    "intensidade": "leve|moderada|vigorosa",
+    "fc_alvo": "XXX–XXX bpm",
+    "meta": "meta semanal",
+    "sessoes": [
+      {"dia": "Segunda", "atividade": "descrição", "obs": "observação"}
+    ],
+    "restricoes": "Restrições e cuidados importantes"
+  },
+  "planejamento": {
+    "obs": "Observações gerais do plano de 12 meses",
+    "fases": [
+      {"nome": "Fase 1 — Adaptação", "periodo": "Meses 1–3", "objetivo": "Objetivo desta fase"},
+      {"nome": "Fase 2 — Progressão", "periodo": "Meses 4–6", "objetivo": "Objetivo desta fase"},
+      {"nome": "Fase 3 — Consolidação", "periodo": "Meses 7–9", "objetivo": "Objetivo desta fase"},
+      {"nome": "Fase 4 — Manutenção", "periodo": "Meses 10–12", "objetivo": "Objetivo desta fase"}
+    ],
+    "dias": {
+      "Segunda": "atividade",
+      "Terça": "atividade",
+      "Quarta": "atividade",
+      "Quinta": "atividade",
+      "Sexta": "atividade",
+      "Sábado": "atividade",
+      "Domingo": "atividade"
+    }
+  },
+  "metas": [
+    {"categoria": "pressao|peso|laboratorial|atividade|medicacao", "descricao_meta": "descrição", "valor_alvo": "valor", "unidade": "unidade"},
+    {"categoria": "laboratorial", "descricao_meta": "descrição", "valor_alvo": "valor", "unidade": "unidade"}
+  ],
+  "interacoes": "Texto sobre interações medicamentosas e alertas clínicos relevantes"
+}
+
+Base suas recomendações nas diretrizes KDIGO (DRC), JNC 8 (HAS), ADA (DM), ACSM (exercício) e ISSN (nutrição esportiva). Considere SEMPRE as limitações impostas pelas comorbidades. Para DRC: limite proteína conforme estágio, atenção ao potássio e fósforo. Para HAS: dieta DASH adaptada. Para DM: controle glicêmico e índice glicêmico. Para obesidade: déficit calórico sustentável.`;
+}
+
+async function gerarProtocoloIA(){
+  const apiKey = localStorage.getItem('brunoApiKey')||localStorage.getItem('apexApiKey')||'';
+  if(!apiKey){ alert('Configure sua chave de API Anthropic em Configurações primeiro.'); return; }
+  if(!PAC_ATUAL?.id){ alert('Abra a ficha de um paciente primeiro.'); return; }
+
+  const btn = document.getElementById('ai-gen-btn');
+  btn.disabled=true; btn.classList.add('loading');
+  btn.querySelector('.ai-gen-txt').textContent='Gerando...';
+
+  try{
+    const res = await fetch('https://api.anthropic.com/v1/messages',{
+      method:'POST',
+      headers:{'Content-Type':'application/json','x-api-key':apiKey},
+      body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:4000,messages:[{role:'user',content:buildAnamnesePrompt()}]})
+    });
+    const json = await res.json();
+    if(json.error) throw new Error(json.error.message);
+    const text = json.content.map(b=>b.text||'').join('').trim();
+    const clean = text.replace(/```json|```/g,'').trim();
+    PROTOCOLO_GERADO = JSON.parse(clean);
+    mostrarPreviewProtocolo(PROTOCOLO_GERADO);
+  }catch(err){
+    const preview = document.getElementById('ai-preview');
+    preview.classList.add('show');
+    preview.innerHTML=`<div style="color:#C0392B;font-size:12px;"><strong>Erro:</strong> ${err.message}</div>`;
+  }
+  btn.disabled=false; btn.classList.remove('loading');
+  btn.querySelector('.ai-gen-txt').textContent='✨ Gerar protocolo';
+}
+
+function mostrarPreviewProtocolo(p){
+  const preview = document.getElementById('ai-preview');
+  preview.classList.add('show');
+  const d = p.dieta||{};
+  const t = p.treino||{};
+  const sup = p.suplementacao||{};
+  const metas = p.metas||[];
+  preview.innerHTML=`
+    <h4>🥗 Dieta</h4>
+    <div>${d.kcal||'—'} kcal · ${d.prot||'—'}g prot · ${d.carb||'—'}g carb · ${d.gord||'—'}g gord${d.pot?` · K máx ${d.pot}mg`:''}${d.fos?` · P máx ${d.fos}mg`:''}</div>
+    ${d.restr?`<div style="margin-top:4px;color:#C0392B;font-size:11px;">⚠️ Restritos: ${d.restr}</div>`:''}
+    <h4>💊 Suplementação</h4>
+    <div>${(sup.itens||[]).map(s=>`${s.nome} ${s.dose}`).join(' · ')||'—'}</div>
+    ${sup.obs?`<div style="margin-top:4px;color:#C0392B;font-size:11px;">⚠️ ${sup.obs}</div>`:''}
+    <h4>🏃 Treino</h4>
+    <div>${t.modalidade||'—'} · ${t.frequencia||'—'} · ${t.duracao||'—'} · ${t.intensidade||'—'}</div>
+    <h4>🎯 Metas geradas (${metas.length})</h4>
+    <div>${metas.map(m=>`${m.descricao_meta} → ${m.valor_alvo} ${m.unidade||''}`).join(' · ')||'—'}</div>
+    ${p.interacoes?`<h4>⚠️ Interações e alertas clínicos</h4><div style="color:#C0392B;">${p.interacoes}</div>`:''}
+    <div style="margin-top:10px;padding-top:10px;border-top:1px solid var(--border);font-size:11px;color:var(--text-muted);">Revise o protocolo antes de salvar. Você poderá editar em cada aba individualmente após salvar.</div>`;
+  document.getElementById('ai-gen-actions').style.display='block';
+}
+
+async function salvarProtocoloGerado(){
+  if(!PROTOCOLO_GERADO||!PAC_ATUAL?.id) return;
+  const p = PROTOCOLO_GERADO;
+  const btn = document.querySelector('#ai-gen-actions .pac-btn');
+  btn.textContent='Salvando...'; btn.disabled=true;
+
+  const salvar = async (tipo, conteudo) => {
+    await fetch(`${SUPA_URL}/rest/v1/protocolos`,{method:'POST',headers:{...H(),'Prefer':'resolution=merge-duplicates'},body:JSON.stringify({paciente_id:PAC_ATUAL.id,tipo,conteudo,atualizado_por:'Dr. Bruno P. Biluca',atualizado_em:new Date().toISOString()})});
+  };
+
+  await salvar('dieta', p.dieta||{});
+  await salvar('suplementacao', p.suplementacao||{});
+  await salvar('treino', p.treino||{});
+  await salvar('planejamento', p.planejamento||{});
+
+  // Salvar metas no banco
+  for(const m of (p.metas||[])){
+    if(m.descricao_meta) await fetch(`${SUPA_URL}/rest/v1/metas_clinicas`,{method:'POST',headers:H(),body:JSON.stringify({paciente_id:PAC_ATUAL.id,categoria:m.categoria||'laboratorial',descricao_meta:m.descricao_meta,valor_alvo:m.valor_alvo||'',unidade:m.unidade||'',status:'ativa'})});
+  }
+
+  showMsg('msg-protocolo-gerado','Protocolo salvo em todas as abas ✓');
+  btn.textContent='✅ Salvar protocolo nas abas'; btn.disabled=false;
+  PROTOCOLO_GERADO=null;
+  document.getElementById('ai-gen-actions').style.display='none';
+  document.getElementById('ai-preview').classList.remove('show');
+}
+
+function descartarProtocolo(){
+  PROTOCOLO_GERADO=null;
+  document.getElementById('ai-preview').classList.remove('show');
+  document.getElementById('ai-gen-actions').style.display='none';
+}
+
+/* ── PRESCRIÇÃO PDF ──────────────────────────────────────── */
+async function abrirPrescricao(){
+  if(!PAC_ATUAL?.id){ alert('Abra a ficha de um paciente.'); return; }
+  // Buscar dados do paciente e medicamentos
+  const [rPac, rMed] = await Promise.all([
+    fetch(`${SUPA_URL}/rest/v1/pacientes?id=eq.${PAC_ATUAL.id}&select=nome,data_nascimento,diagnostico_principal`,{headers:H()}),
+    fetch(`${SUPA_URL}/rest/v1/protocolos?paciente_id=eq.${PAC_ATUAL.id}&tipo=eq.medicamentos`,{headers:H()})
+  ]);
+  const [pacs, meds] = await Promise.all([rPac.json(), rMed.json()]);
+  const pac = pacs?.[0]||{};
+  const itens = meds?.[0]?.conteudo?.itens||[];
+
+  // Também pega os itens do formulário atual se houver
+  const itensForms = [];
+  document.querySelectorAll('#med-lista .f-list-item').forEach(row=>{
+    const ins=row.querySelectorAll('input');
+    if(ins[0]?.value) itensForms.push({nome:ins[0].value,dose:ins[1]?.value||'',horario:ins[2]?.value||''});
+  });
+  const listaFinal = itensForms.length ? itensForms : itens;
+
+  // Preencher modal
+  const idade = pac.data_nascimento ? Math.floor((new Date()-new Date(pac.data_nascimento))/31557600000) : '';
+  document.getElementById('rx-paciente-info').innerHTML=`<strong>Paciente:</strong> ${pac.nome||'—'}${idade?' · '+idade+' anos':''}<br><strong>Diagnóstico:</strong> ${pac.diagnostico_principal||'—'}`;
+  document.getElementById('rx-data').textContent=new Date().toLocaleDateString('pt-BR');
+  document.getElementById('rx-items').innerHTML=listaFinal.length
+    ? listaFinal.map((m,i)=>`<div class="rx-item"><div class="rx-item-nome">${i+1}. ${escH(m.nome)}${m.dose?' — '+escH(m.dose):''}</div><div class="rx-item-dose">${m.horario?'Posologia: '+escH(m.horario):''}${m.alerta?'<br><span style="color:#C0392B;font-size:10px;">⚠️ '+escH(m.alerta)+'</span>':''}</div></div>`).join('')
+    : '<div style="color:#999;font-size:12px;">Nenhum medicamento cadastrado.</div>';
+
+  document.getElementById('rx-modal').classList.add('show');
+}
+
+function fecharPrescricao(){
+  document.getElementById('rx-modal').classList.remove('show');
+}
+
+function imprimirPrescricao(){
+  const content = document.getElementById('rx-content').innerHTML;
+  const win = window.open('','_blank');
+  win.document.write(`<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Prescrição — APEX</title>
+  <style>body{font-family:'Helvetica Neue',Arial,sans-serif;max-width:560px;margin:40px auto;color:#111;font-size:13px;line-height:1.6;}
+  .rx-header{border-bottom:2px solid #111;padding-bottom:14px;margin-bottom:18px;}
+  .rx-medico{font-size:14px;font-weight:700;}
+  .rx-crm{font-size:11px;color:#555;}
+  .rx-paciente{font-size:12px;color:#333;margin-bottom:18px;padding:10px 0;border-bottom:1px solid #E8E8E8;}
+  .f-section{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:#999;margin:16px 0 8px;padding-bottom:5px;border-bottom:1px solid #EEE;}
+  .rx-item{margin-bottom:14px;padding-bottom:14px;border-bottom:1px dashed #EEE;}
+  .rx-item:last-child{border-bottom:none;}
+  .rx-item-nome{font-size:13px;font-weight:700;}
+  .rx-item-dose{font-size:12px;color:#555;margin-top:2px;}
+  .rx-footer{border-top:1px solid #E8E8E8;padding-top:14px;display:flex;justify-content:space-between;align-items:flex-end;margin-top:20px;}
+  .rx-assinatura{text-align:center;font-size:11px;color:#555;}
+  .rx-linha{width:160px;border-top:1px solid #111;margin-bottom:4px;}
+  .rx-actions{display:none;}
+  </style></head><body>${content}</body></html>`);
+  win.document.close();
+  win.focus();
+  setTimeout(()=>{win.print();win.close();},400);
+}
+
+/* Carregar anamnese ao abrir aba */
+const _abrirTabOrig = abrirTab;
+abrirTab = function(id, btn){
+  _abrirTabOrig(id, btn);
+  if(id==='anamnese'&&PAC_ATUAL?.id) carregarAnamnese();
+};
+
   const dias=['Segunda','Terça','Quarta','Quinta','Sexta','Sábado','Domingo'];
   const el=document.getElementById('plan-dias');
   if(!el) return;
