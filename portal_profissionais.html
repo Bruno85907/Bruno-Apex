@@ -736,9 +736,15 @@ nav{background:var(--surface);border-bottom:1px solid var(--border);height:52px;
           <span>Com base na anamnese, gera dieta, suplementação, treino e plano de 12 meses baseado em evidências</span>
         </div>
         <button class="ai-gen-btn" id="ai-gen-btn" onclick="gerarProtocoloIA()">
-          <span class="ai-gen-txt">✨ Gerar protocolo</span>
+          <span class="ai-gen-txt">GERAR PROTOCOLO</span>
           <div class="ai-gen-spin"></div>
         </button>
+      </div>
+      <div style="background:#FAFAFA;border:1px solid var(--border);border-radius:7px;padding:10px 14px;margin-bottom:14px;display:flex;align-items:center;gap:10px;">
+        <span style="font-size:11px;color:var(--text-muted);white-space:nowrap;">🔑 Chave API Anthropic</span>
+        <input type="password" id="prof-api-key" placeholder="sk-ant-..." oninput="salvarApiKeyProf(this.value)"
+          style="flex:1;font-family:monospace;font-size:11px;background:#fff;border:1px solid var(--border);border-radius:5px;padding:6px 10px;outline:none;color:var(--text-primary);">
+        <span id="prof-api-status" style="font-size:10px;color:var(--green);white-space:nowrap;"></span>
       </div>
       <div class="ai-preview" id="ai-preview"></div>
       <div id="ai-gen-actions" style="display:none;">
@@ -1935,11 +1941,25 @@ function imprimirPrescricao(){
   setTimeout(()=>{win.print();win.close();},400);
 }
 
+function salvarApiKeyProf(val){
+  localStorage.setItem('brunoApiKey', val);
+  const st = document.getElementById('prof-api-status');
+  if(st) st.textContent = val ? '✓ Salva' : '';
+}
+
+function carregarApiKeyProf(){
+  const k = localStorage.getItem('brunoApiKey')||localStorage.getItem('apexApiKey')||'';
+  const inp = document.getElementById('prof-api-key');
+  const st  = document.getElementById('prof-api-status');
+  if(inp) inp.value = k;
+  if(st)  st.textContent = k ? '✓ Configurada' : '';
+}
+
 /* Carregar anamnese ao abrir aba */
 const _abrirTabOrig = abrirTab;
 abrirTab = function(id, btn){
   _abrirTabOrig(id, btn);
-  if(id==='anamnese'&&PAC_ATUAL?.id) carregarAnamnese();
+  if(id==='anamnese'&&PAC_ATUAL?.id){ carregarAnamnese(); carregarApiKeyProf(); }
 };
 
 /* planejamento — dias da semana no carregamento inicial */
