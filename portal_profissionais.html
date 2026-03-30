@@ -1558,7 +1558,7 @@ async function salvarProtocolo(tipo){
     conteudo={dias,fases,obs:document.getElementById('plan-obs')?.value||null};
   }
   const body={paciente_id:PAC_ATUAL.id,tipo,conteudo,atualizado_por:'Dr. Bruno P. Biluca',atualizado_em:new Date().toISOString()};
-  const r=await fetch(`${SUPA_URL}/rest/v1/protocolos`,{method:'POST',headers:{...H(),'Prefer':'resolution=merge-duplicates'},body:JSON.stringify(body)});
+  const r=await fetch(`${SUPA_URL}/rest/v1/protocolos?on_conflict=paciente_id,tipo`,{method:'POST',headers:{...H(),'Prefer':'resolution=merge-duplicates,return=minimal'},body:JSON.stringify(body)});
   if(r.ok||r.status===201||r.status===204) showMsg('msg-'+tipo,'Salvo ✓');
   else showMsg('msg-'+tipo,'Erro ao salvar','erro');
 }
@@ -1661,7 +1661,7 @@ async function salvarAnamnese(){
     disp_obs: document.getElementById('an-disp-obs')?.value||''
   };
   const body = {paciente_id:PAC_ATUAL.id, tipo:'anamnese', conteudo, atualizado_por:'Dr. Bruno P. Biluca', atualizado_em:new Date().toISOString()};
-  const r = await fetch(`${SUPA_URL}/rest/v1/protocolos`, {method:'POST', headers:{...H(),'Prefer':'resolution=merge-duplicates'}, body:JSON.stringify(body)});
+  const r = await fetch(`${SUPA_URL}/rest/v1/protocolos?on_conflict=paciente_id,tipo`, {method:'POST', headers:{...H(),'Prefer':'resolution=merge-duplicates,return=minimal'}, body:JSON.stringify(body)});
   if(r.ok||r.status===201||r.status===204) showMsg('msg-anamnese','Salvo ✓');
   else showMsg('msg-anamnese','Erro ao salvar','erro');
 }
@@ -1858,7 +1858,7 @@ async function salvarProtocoloGerado(){
   btn.textContent='Salvando...'; btn.disabled=true;
 
   const salvar = async (tipo, conteudo) => {
-    await fetch(`${SUPA_URL}/rest/v1/protocolos`,{method:'POST',headers:{...H(),'Prefer':'resolution=merge-duplicates'},body:JSON.stringify({paciente_id:PAC_ATUAL.id,tipo,conteudo,atualizado_por:'Dr. Bruno P. Biluca',atualizado_em:new Date().toISOString()})});
+    await fetch(`${SUPA_URL}/rest/v1/protocolos?on_conflict=paciente_id,tipo`,{method:'POST',headers:{...H(),'Prefer':'resolution=merge-duplicates,return=minimal'},body:JSON.stringify({paciente_id:PAC_ATUAL.id,tipo,conteudo,atualizado_por:'Dr. Bruno P. Biluca',atualizado_em:new Date().toISOString()})});
   };
 
   await salvar('dieta', p.dieta||{});
