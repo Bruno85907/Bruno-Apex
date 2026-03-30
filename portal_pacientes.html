@@ -3,209 +3,834 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Portal Pacientes — Dr. Bruno Biluca</title>
-<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<title>Portal do Paciente · APEX</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4/dist/chart.umd.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
-:root {
-  --navy:#0D1B35; --navy-mid:#1B2A4A; --navy-light:#243357;
-  --gold:#D4A847; --gold-dark:#8B6914; --gold-pale:#E8D5A0;
-  --muted:rgba(232,213,160,0.75); --white:#FFFFFF;
+/* ── TOKENS ── */
+:root{
+  --bg:#f8f8f6;--bg2:#ffffff;--bg3:#f2f1ef;--bg4:#eae9e6;
+  --c:#1a1917;--c2:#4a4845;--c3:#7a7875;--c4:#a8a6a3;
+  --br:rgba(0,0,0,0.08);--br2:rgba(0,0,0,0.05);
+  --sb:#0D0D0F;--sb2:#171719;--sb3:#1e1e21;
+  --sbr:rgba(255,255,255,0.07);
+  --sbc:#ffffff;--sbc2:rgba(255,255,255,0.58);--sbc3:rgba(255,255,255,0.32);--sbc4:rgba(255,255,255,0.18);
+  --gold:#E4BA64;--gold2:#D4A840;
+  --golddim:rgba(228,186,100,0.12);--goldbr:rgba(228,186,100,0.28);
+  --G:#22c55e;--Gdim:rgba(34,197,94,0.09);--Gbr:rgba(34,197,94,0.25);
+  --B:#3b82f6;--Bdim:rgba(59,130,246,0.09);--Bbr:rgba(59,130,246,0.25);
+  --A:#f59e0b;--Adim:rgba(245,158,11,0.09);--Abr:rgba(245,158,11,0.25);
+  --R:#ef4444;--Rdim:rgba(239,68,68,0.09);--Rbr:rgba(239,68,68,0.25);
+  --mono:'JetBrains Mono',monospace;
+  --sans:'Plus Jakarta Sans',sans-serif;
+  --r:8px;--r2:12px;
 }
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
-body{font-family:'Inter',sans-serif;background:var(--navy);color:var(--white);min-height:100vh;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--sb);color:var(--c);font-family:var(--sans);font-size:14px;line-height:1.6;min-height:100vh;}
 
-nav{background:var(--navy-mid);border-bottom:2px solid rgba(212,168,71,0.12);padding:0 48px;height:58px;display:flex;align-items:center;gap:20px;position:sticky;top:0;z-index:100;}
-.nav-logo{font-family:'Cinzel',serif;font-size:14px;font-weight:700;color:var(--gold);letter-spacing:3px;text-decoration:none;}
-.nav-sep{width:1px;height:22px;background:rgba(212,168,71,0.2);}
-.nav-section{font-family:'Cinzel',serif;font-size:13px;letter-spacing:3px;color:var(--muted);text-transform:uppercase;}
-.nav-back{margin-left:auto;font-family:'Cinzel',serif;font-size:13px;letter-spacing:2px;color:rgba(212,168,71,0.7);text-decoration:none;transition:color .2s;}
-.nav-back:hover{color:var(--gold);}
-
-/* HERO */
-.hero{
-  min-height:calc(100vh - 58px);
-  display:flex;flex-direction:column;align-items:center;justify-content:center;
-  text-align:center;padding:60px 40px;position:relative;overflow:hidden;
+/* ══ LOGIN ══════════════════════════════════════════════════════ */
+#login-screen{
+  display:flex;align-items:center;justify-content:center;
+  min-height:100vh;background:var(--sb);padding:24px;
 }
-.hero-bg{position:absolute;inset:0;pointer-events:none;}
-
-.hero-badge{
-  display:inline-flex;align-items:center;gap:10px;
-  border:1px solid rgba(212,168,71,0.2);border-radius:30px;
-  padding:8px 20px;margin-bottom:32px;
-  font-family:'Cinzel',serif;font-size:13px;letter-spacing:4px;color:var(--gold);
-  text-transform:uppercase;opacity:.7;
+.login-box{
+  background:var(--sb2);border:1px solid var(--sbr);border-radius:16px;
+  padding:36px 32px;width:100%;max-width:380px;
 }
-.hero-badge-dot{width:6px;height:6px;border-radius:50%;background:var(--gold);animation:pulse 2s infinite;}
-@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
-
-.hero-title{
-  font-family:'Cormorant Garamond',serif;
-  font-size:clamp(36px,6vw,72px);font-weight:300;
-  color:var(--white);line-height:1.1;margin-bottom:20px;
+.login-brand{display:flex;align-items:center;gap:10px;margin-bottom:28px;}
+.login-icon{
+  width:34px;height:34px;border:1.5px solid var(--gold);border-radius:7px;
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--mono);font-size:14px;font-weight:700;color:var(--gold);flex-shrink:0;
 }
-.hero-title em{color:var(--gold-pale);font-style:italic;display:block;}
-
-.hero-sub{
-  font-family:'Cormorant Garamond',serif;
-  font-size:clamp(16px,2vw,22px);font-weight:300;font-style:italic;
-  color:var(--muted);max-width:560px;line-height:1.7;margin-bottom:48px;
+.login-brand-text .t1{font-size:14px;font-weight:700;color:var(--sbc);letter-spacing:-.2px;}
+.login-brand-text .t2{font-size:9px;color:var(--sbc4);font-family:var(--mono);letter-spacing:.8px;}
+.login-title{font-size:19px;font-weight:800;color:var(--sbc);margin-bottom:5px;letter-spacing:-.3px;}
+.login-desc{font-size:12px;color:var(--sbc3);margin-bottom:24px;line-height:1.6;}
+.lf{margin-bottom:14px;}
+.lf label{font-size:9px;font-family:var(--mono);color:var(--sbc4);text-transform:uppercase;letter-spacing:1.2px;display:block;margin-bottom:6px;}
+.lf input{
+  width:100%;background:var(--sb3);border:1px solid var(--sbr);
+  border-radius:var(--r);padding:10px 13px;color:var(--sbc);
+  font-family:var(--sans);font-size:13px;outline:none;transition:.15s;
 }
+.lf input:focus{border-color:var(--goldbr);background:rgba(228,186,100,0.04);}
+.login-btn{
+  width:100%;background:var(--gold2);border:none;border-radius:var(--r);
+  padding:11px;color:#1a1917;font-family:var(--sans);font-size:13px;
+  font-weight:700;cursor:pointer;transition:.15s;margin-top:4px;letter-spacing:-.1px;
+}
+.login-btn:hover{background:var(--gold);}
+.login-btn:disabled{opacity:.45;cursor:not-allowed;}
+.login-err{
+  background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.28);
+  border-radius:var(--r);padding:9px 13px;font-size:12px;color:#fca5a5;
+  margin-top:12px;display:none;
+}
+.login-footer{margin-top:20px;font-size:10px;color:var(--sbc4);text-align:center;line-height:1.7;}
 
-/* Cards em construção */
-.cards{display:flex;gap:16px;flex-wrap:wrap;justify-content:center;margin-bottom:56px;}
+/* ══ APP LAYOUT ═════════════════════════════════════════════════ */
+#app{display:none;height:100vh;overflow:hidden;}
+#app.on{display:flex;}
+body:has(#app.on){background:var(--bg);}
+
+/* ══ SIDEBAR ════════════════════════════════════════════════════ */
+.sidebar{
+  width:224px;background:var(--sb);border-right:1px solid var(--sbr);
+  display:flex;flex-direction:column;flex-shrink:0;overflow-y:auto;
+}
+.sb-top{padding:16px 14px 13px;border-bottom:1px solid var(--sbr);}
+.sb-brand{display:flex;align-items:center;gap:8px;margin-bottom:12px;}
+.sb-brand-icon{
+  width:22px;height:22px;border:1px solid var(--gold);border-radius:4px;
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--mono);font-size:9px;font-weight:700;color:var(--gold);
+}
+.sb-brand-name{font-size:11px;font-weight:600;color:var(--sbc);letter-spacing:-.1px;}
+.sb-patient{
+  background:var(--golddim);border:1px solid var(--goldbr);
+  border-radius:6px;padding:8px 10px;
+}
+.sb-patient-name{font-size:12px;font-weight:600;color:var(--sbc);line-height:1.3;}
+.sb-patient-meta{font-family:var(--mono);font-size:9px;color:var(--sbc4);margin-top:2px;}
+.sb-nav{padding:8px;flex:1;}
+.nav-sec{
+  font-size:8px;font-family:var(--mono);color:var(--sbc3);
+  text-transform:uppercase;letter-spacing:2px;
+  padding:10px 8px 4px;margin-top:2px;
+}
+.nav-it{
+  display:flex;align-items:center;gap:8px;
+  padding:7px 9px;border-radius:var(--r);cursor:pointer;
+  font-size:12px;color:var(--sbc2);transition:.12s;
+  margin-bottom:1px;border:1px solid transparent;
+}
+.nav-it:hover{background:var(--sb2);color:rgba(255,255,255,.82);}
+.nav-it.on{background:var(--golddim);color:var(--gold);border-color:var(--goldbr);font-weight:500;}
+.nav-it .ni{font-size:13px;width:16px;text-align:center;flex-shrink:0;}
+.nav-badge{
+  margin-left:auto;background:var(--R);color:#fff;
+  font-size:9px;font-family:var(--mono);padding:1px 6px;
+  border-radius:10px;font-weight:600;
+}
+.sb-bottom{padding:10px 12px;border-top:1px solid var(--sbr);}
+.sb-logout{
+  display:flex;align-items:center;gap:7px;padding:7px 9px;
+  border-radius:var(--r);cursor:pointer;font-size:11px;
+  color:var(--sbc4);transition:.12s;
+}
+.sb-logout:hover{background:rgba(239,68,68,.1);color:#fca5a5;}
+
+/* ══ MAIN AREA ══════════════════════════════════════════════════ */
+.main{flex:1;overflow-y:auto;background:var(--bg);}
+.pg{display:none;padding:26px 30px;max-width:980px;}
+.pg.on{display:block;}
+.eyebrow{
+  font-family:var(--mono);font-size:9px;color:var(--c3);
+  letter-spacing:2px;text-transform:uppercase;margin-bottom:7px;
+}
+.pg-title{font-size:21px;font-weight:800;letter-spacing:-.4px;margin-bottom:3px;}
+.pg-sub{font-size:12px;color:var(--c2);margin-bottom:20px;}
+h3{
+  font-size:10px;font-weight:600;color:var(--c3);
+  text-transform:uppercase;letter-spacing:1.5px;
+  margin-bottom:12px;font-family:var(--mono);
+}
+.divider{height:1px;background:var(--br);margin:20px 0;}
+
+/* ══ COMPONENTS ═════════════════════════════════════════════════ */
 .card{
-  background:var(--navy-mid);border:1px solid rgba(212,168,71,0.08);
-  border-radius:14px;padding:32px 28px;width:220px;text-align:left;
-  position:relative;overflow:hidden;
+  background:var(--bg2);border:1px solid var(--br);
+  border-radius:var(--r2);padding:16px 18px;margin-bottom:12px;
 }
-.card::after{
-  content:'Em breve';position:absolute;top:14px;right:14px;
-  font-family:'Cinzel',serif;font-size:13px;letter-spacing:2px;
-  color:rgba(255,255,255,0.2);border:1px solid rgba(255,255,255,0.1);
-  border-radius:20px;padding:3px 8px;
+.card-sm{
+  background:var(--bg3);border:1px solid var(--br2);
+  border-radius:var(--r);padding:11px 13px;
 }
-.card-icon{width:40px;height:40px;margin-bottom:18px;opacity:.75;}
-.card-title{font-family:'Cinzel',serif;font-size:14px;font-weight:600;color:var(--white);letter-spacing:2px;margin-bottom:8px;opacity:.7;}
-.card-desc{font-family:'Cormorant Garamond',serif;font-size:14px;font-style:italic;color:var(--muted);line-height:1.6;opacity:.7;}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+.g4{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;}
 
-/* Notificação */
-.notify-box{
-  background:var(--navy-mid);border:1px solid rgba(212,168,71,0.15);
-  border-radius:16px;padding:32px 40px;max-width:480px;text-align:center;
+/* metric */
+.mc{
+  text-align:center;background:var(--bg3);border:1px solid var(--br);
+  border-radius:var(--r2);padding:14px 10px;
 }
-.notify-title{font-family:'Cinzel',serif;font-size:14px;letter-spacing:3px;color:var(--gold);margin-bottom:10px;text-transform:uppercase;}
-.notify-text{font-family:'Cormorant Garamond',serif;font-size:16px;font-style:italic;color:var(--muted);line-height:1.7;margin-bottom:20px;}
-.notify-input{
-  width:100%;background:rgba(13,27,53,0.7);border:1px solid rgba(212,168,71,0.2);
-  border-radius:8px;padding:12px 14px;font-size:14px;
-  font-family:'Inter',sans-serif;color:var(--white);outline:none;
-  transition:border-color .2s;margin-bottom:10px;
-}
-.notify-input:focus{border-color:var(--gold);}
-.notify-input::placeholder{color:rgba(255,255,255,0.2);}
-.btn-notify{
-  width:100%;background:var(--gold-dark);color:var(--white);border:none;
-  border-radius:8px;padding:12px;font-size:14px;font-weight:600;
-  font-family:'Cinzel',serif;letter-spacing:3px;cursor:pointer;
-  transition:background .2s;
-}
-.btn-notify:hover{background:var(--gold);}
-.notify-ok{display:none;font-family:'Cormorant Garamond',serif;font-size:15px;font-style:italic;color:#5DCB8A;margin-top:12px;}
+.mc .mv{font-family:var(--mono);font-size:22px;font-weight:700;color:var(--gold2);}
+.mc .mu{font-size:9px;color:var(--c4);margin-top:1px;font-family:var(--mono);}
+.mc .ml{font-size:11px;color:var(--c2);margin-top:4px;}
 
-@media(max-width:600px){
-  nav{padding:0 20px;}
-  .cards{flex-direction:column;align-items:center;}
-  .notify-box{padding:24px;}
+/* badges */
+.badge{display:inline-block;font-size:10px;font-weight:600;padding:2px 9px;border-radius:20px;font-family:var(--mono);}
+.b-gold{background:var(--golddim);color:var(--gold2);border:1px solid var(--goldbr);}
+.b-g{background:var(--Gdim);color:var(--G);border:1px solid var(--Gbr);}
+.b-b{background:var(--Bdim);color:var(--B);border:1px solid var(--Bbr);}
+.b-n{background:var(--bg4);color:var(--c2);border:1px solid var(--br);}
+.b-r{background:var(--Rdim);color:var(--R);border:1px solid var(--Rbr);}
+
+/* timeline */
+.tl{position:relative;padding-left:20px;}
+.tl-item{position:relative;padding-bottom:18px;}
+.tl-item:last-child{padding-bottom:0;}
+.tl-line{position:absolute;left:-15px;top:14px;bottom:0;width:1px;background:var(--br);}
+.tl-item:last-child .tl-line{display:none;}
+.tl-dot{width:8px;height:8px;border-radius:50%;border:2px solid;position:absolute;left:-20px;top:4px;}
+.dc-g{border-color:var(--gold2);background:var(--golddim);}
+.dc-b{border-color:var(--B);background:var(--Bdim);}
+.dc-n{border-color:var(--c3);background:var(--bg4);}
+.tl-time{font-family:var(--mono);font-size:10px;color:var(--c3);margin-bottom:2px;}
+.tl-title{font-size:13px;font-weight:600;color:var(--c);margin-bottom:3px;}
+.tl-body{font-size:12px;color:var(--c2);line-height:1.6;}
+.tl-chips{display:flex;gap:5px;flex-wrap:wrap;margin-top:6px;}
+.tp{font-size:10px;padding:2px 8px;border-radius:10px;font-weight:500;}
+.tp-g{background:var(--golddim);color:var(--gold2);}
+.tp-b{background:var(--Bdim);color:#93c5fd;}
+.tp-n{background:var(--bg4);color:var(--c2);}
+
+/* table */
+.tbl{width:100%;border-collapse:collapse;font-size:12px;}
+.tbl th{
+  font-family:var(--mono);font-size:9px;text-transform:uppercase;
+  letter-spacing:1.2px;color:var(--c3);padding:8px 10px;
+  border-bottom:1px solid var(--br);text-align:left;font-weight:500;
+}
+.tbl td{padding:9px 10px;border-bottom:1px solid var(--br2);vertical-align:middle;}
+.tbl tr:last-child td{border-bottom:none;}
+.tbl tr.exam-row{cursor:pointer;}
+.tbl tr.exam-row:hover td{background:var(--bg3);}
+
+/* exam expand */
+.exam-params{padding:10px 2px 4px;border-top:1px solid var(--br2);}
+.ep-row{display:flex;justify-content:space-between;align-items:center;padding:4px 0;font-size:12px;}
+.ep-name{color:var(--c2);}
+.ep-val{font-family:var(--mono);font-size:12px;font-weight:600;}
+.ep-ref{font-size:10px;color:var(--c4);margin-left:6px;}
+.val-ok{color:var(--G);}
+.val-alt{color:var(--A);}
+.val-crit{color:var(--R);}
+
+/* metas */
+.meta-card{
+  background:var(--bg2);border:1px solid var(--br);
+  border-radius:var(--r2);padding:14px 16px;margin-bottom:10px;
+}
+.meta-cat{
+  font-family:var(--mono);font-size:9px;text-transform:uppercase;
+  letter-spacing:1.2px;color:var(--c3);margin-bottom:4px;
+}
+.meta-desc{font-size:13px;font-weight:600;color:var(--c);margin-bottom:8px;}
+.meta-footer{display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+.meta-alvo{font-family:var(--mono);font-size:11px;color:var(--gold2);}
+.meta-prazo{font-size:11px;color:var(--c3);}
+
+/* mensagens */
+.msg-wrap{
+  display:flex;flex-direction:column;gap:10px;
+  max-height:420px;overflow-y:auto;margin-bottom:14px;
+  padding-right:2px;
+}
+.msg-bub{max-width:75%;padding:10px 14px;border-radius:12px;font-size:12px;line-height:1.6;}
+.msg-clinic{
+  background:var(--bg3);border:1px solid var(--br);
+  color:var(--c);align-self:flex-start;border-bottom-left-radius:3px;
+}
+.msg-patient{
+  background:var(--golddim);border:1px solid var(--goldbr);
+  color:var(--c);align-self:flex-end;border-bottom-right-radius:3px;
+}
+.msg-time{font-family:var(--mono);font-size:9px;color:var(--c4);margin-top:5px;}
+.msg-input-row{display:flex;gap:8px;}
+.msg-input{
+  flex:1;background:var(--bg2);border:1px solid var(--br);
+  border-radius:var(--r);padding:9px 12px;font-family:var(--sans);
+  font-size:12px;color:var(--c);outline:none;resize:none;
+}
+.msg-input:focus{border-color:var(--goldbr);}
+.msg-btn{
+  background:var(--gold2);border:none;border-radius:var(--r);
+  padding:9px 18px;color:#1a1917;font-weight:700;font-size:12px;
+  cursor:pointer;transition:.15s;white-space:nowrap;align-self:flex-end;
+}
+.msg-btn:hover{background:var(--gold);}
+.msg-btn:disabled{opacity:.45;cursor:not-allowed;}
+
+/* empty state */
+.empty{text-align:center;padding:40px 20px;}
+.empty-icon{font-size:28px;margin-bottom:10px;opacity:.35;}
+.empty-title{font-size:13px;font-weight:600;color:var(--c2);margin-bottom:4px;}
+.empty-desc{font-size:12px;color:var(--c3);}
+
+/* chart */
+.chart-box{
+  background:var(--bg2);border:1px solid var(--br);
+  border-radius:var(--r2);padding:16px 18px;margin-bottom:14px;
+}
+canvas{max-height:200px;}
+
+/* skeleton */
+.skel{
+  background:linear-gradient(90deg,var(--bg3) 25%,var(--bg4) 50%,var(--bg3) 75%);
+  background-size:200% 100%;animation:sk 1.4s infinite;
+  border-radius:var(--r);height:14px;margin-bottom:8px;
+}
+@keyframes sk{0%{background-position:200% 0}100%{background-position:-200% 0}}
+
+/* alert */
+.alert{padding:10px 14px;border-radius:var(--r);font-size:12px;line-height:1.6;margin-bottom:12px;border-left:3px solid;}
+.al-a{background:rgba(245,158,11,0.08);border-color:var(--A);color:#92400e;}
+.al-r{background:rgba(239,68,68,0.08);border-color:var(--R);color:#991b1b;}
+
+@media(max-width:720px){
+  .g2,.g4{grid-template-columns:1fr 1fr!important;}
+  #app{flex-direction:column;height:auto;}
+  .sidebar{width:100%;height:auto;}
+  .main{height:auto;}
+  .pg{padding:16px 14px;}
 }
 </style>
 </head>
 <body>
 
-<nav>
-  <a href="index.html" class="nav-logo">APEX</a>
-  <div class="nav-sep"></div>
-  <span class="nav-section">Portal Pacientes</span>
-  <a href="index.html" class="nav-back">← Início</a>
-</nav>
+<!-- ══ LOGIN ══════════════════════════════════════════════════════ -->
+<div id="login-screen">
+  <div class="login-box">
+    <div class="login-brand">
+      <div class="login-icon">A</div>
+      <div class="login-brand-text">
+        <div class="t1">APEX · Portal do Paciente</div>
+        <div class="t2">FÊNIX NEFROLOGIA</div>
+      </div>
+    </div>
 
-<section class="hero">
-  <div class="hero-bg">
-    <svg width="100%" height="100%" viewBox="0 0 1200 800" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
-      <ellipse cx="600" cy="400" rx="500" ry="350" fill="rgba(212,168,71,0.02)" transform="rotate(-15 600 400)"/>
-      <circle cx="600" cy="400" r="300" fill="none" stroke="rgba(212,168,71,0.04)" stroke-width="1"/>
-      <circle cx="600" cy="400" r="400" fill="none" stroke="rgba(212,168,71,0.02)" stroke-width="1"/>
-      <circle cx="200" cy="150" r="2" fill="rgba(212,168,71,0.2)"/>
-      <circle cx="1000" cy="250" r="1.5" fill="rgba(212,168,71,0.15)"/>
-      <circle cx="150" cy="600" r="2" fill="rgba(212,168,71,0.15)"/>
-      <circle cx="1050" cy="650" r="1.5" fill="rgba(212,168,71,0.2)"/>
-    </svg>
+    <div class="login-title">Acesse sua área</div>
+    <div class="login-desc">Seus exames, consultas e plano de cuidado em um só lugar. O acesso é criado pela equipe da clínica.</div>
+
+    <div class="lf">
+      <label for="l-email">E-mail</label>
+      <input type="email" id="l-email" placeholder="seu@email.com" autocomplete="email"
+        onkeydown="if(event.key==='Enter')document.getElementById('l-pass').focus()">
+    </div>
+    <div class="lf">
+      <label for="l-pass">Senha</label>
+      <input type="password" id="l-pass" placeholder="••••••••" autocomplete="current-password"
+        onkeydown="if(event.key==='Enter')doLogin()">
+    </div>
+
+    <button class="login-btn" id="login-btn" onclick="doLogin()">Entrar</button>
+    <div class="login-err" id="login-err"></div>
+    <div class="login-footer">
+      Problemas com o acesso? Fale com a equipe da Fênix Nefrologia.<br>
+      <span style="color:var(--sbc3);">Dr. Bruno P. Biluca · CRM-SP 151.041</span>
+    </div>
   </div>
+</div>
 
-  <div class="hero-badge">
-    <div class="hero-badge-dot"></div>
-    Em desenvolvimento
-  </div>
+<!-- ══ APP ════════════════════════════════════════════════════════ -->
+<div id="app">
 
-  <h1 class="hero-title">
-    Seu espaço de
-    <em>cuidado personalizado</em>
-  </h1>
-
-  <p class="hero-sub">
-    Em breve você terá acesso aos seus protocolos clínicos, resultados de exames, orientações e muito mais — tudo em um só lugar.
-  </p>
-
-  <!-- Cards do que virá -->
-  <div class="cards">
-    <div class="card">
-      <svg class="card-icon" viewBox="0 0 40 40" fill="none">
-        <rect x="6" y="4" width="28" height="32" rx="3" stroke="#D4A847" stroke-width="1.2"/>
-        <line x1="11" y1="13" x2="29" y2="13" stroke="#D4A847" stroke-width="0.8" opacity="0.6"/>
-        <line x1="11" y1="19" x2="29" y2="19" stroke="#D4A847" stroke-width="0.8" opacity="0.4"/>
-        <line x1="11" y1="25" x2="22" y2="25" stroke="#D4A847" stroke-width="0.8" opacity="0.4"/>
-        <path d="M20 8L20 12M18 10L22 10" stroke="#D4A847" stroke-width="1.2" stroke-linecap="round"/>
-      </svg>
-      <h3 class="card-title">Meu Protocolo</h3>
-      <p class="card-desc">Seu plano clínico personalizado e orientações do seu médico.</p>
+  <!-- SIDEBAR -->
+  <div class="sidebar">
+    <div class="sb-top">
+      <div class="sb-brand">
+        <div class="sb-brand-icon">A</div>
+        <div class="sb-brand-name">APEX</div>
+      </div>
+      <div class="sb-patient">
+        <div class="sb-patient-name" id="sb-nome">—</div>
+        <div class="sb-patient-meta" id="sb-meta">Fênix Nefrologia</div>
+      </div>
     </div>
-
-    <div class="card">
-      <svg class="card-icon" viewBox="0 0 40 40" fill="none">
-        <circle cx="20" cy="16" r="8" stroke="#D4A847" stroke-width="1.2"/>
-        <path d="M8 36c0-6.627 5.373-12 12-12s12 5.373 12 12" stroke="#D4A847" stroke-width="1.2" stroke-linecap="round"/>
-        <path d="M20 12v4M18 15l2 2 2-2" stroke="#D4A847" stroke-width="1" stroke-linecap="round"/>
-      </svg>
-      <h3 class="card-title">Meus Resultados</h3>
-      <p class="card-desc">Acompanhe seus exames e evolução clínica ao longo do tempo.</p>
+    <div class="sb-nav">
+      <div class="nav-sec">Portal</div>
+      <div class="nav-it on"  data-pg="home"       onclick="nav('home')">      <span class="ni">⌂</span> Início</div>
+      <div class="nav-it"     data-pg="exames"      onclick="nav('exames')">    <span class="ni">🧪</span> Meus Exames</div>
+      <div class="nav-it"     data-pg="consultas"   onclick="nav('consultas')"> <span class="ni">📋</span> Consultas</div>
+      <div class="nav-it"     data-pg="metas"       onclick="nav('metas')">     <span class="ni">◎</span> Plano de Cuidado</div>
+      <div class="nav-it"     data-pg="mensagens"   onclick="nav('mensagens')"> <span class="ni">✉</span> Mensagens
+        <span class="nav-badge" id="msg-badge" style="display:none">0</span>
+      </div>
     </div>
-
-    <div class="card">
-      <svg class="card-icon" viewBox="0 0 40 40" fill="none">
-        <path d="M20 6C20 6 8 12 8 22a12 12 0 0024 0C32 12 20 6 20 6z" stroke="#D4A847" stroke-width="1.2" fill="none"/>
-        <path d="M15 22l4 4 6-6" stroke="#D4A847" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
-      <h3 class="card-title">Orientações</h3>
-      <p class="card-desc">Dicas de dieta, medicamentos e cuidados com sua saúde renal.</p>
-    </div>
-
-    <div class="card">
-      <svg class="card-icon" viewBox="0 0 40 40" fill="none">
-        <rect x="6" y="8" width="28" height="26" rx="3" stroke="#D4A847" stroke-width="1.2"/>
-        <line x1="6" y1="16" x2="34" y2="16" stroke="#D4A847" stroke-width="1"/>
-        <line x1="14" y1="8" x2="14" y2="16" stroke="#D4A847" stroke-width="1"/>
-        <line x1="26" y1="8" x2="26" y2="16" stroke="#D4A847" stroke-width="1"/>
-        <circle cx="14" cy="24" r="2" fill="rgba(212,168,71,0.6)" stroke="#D4A847" stroke-width="0.8"/>
-        <circle cx="20" cy="24" r="2" fill="none" stroke="#D4A847" stroke-width="0.8"/>
-        <circle cx="26" cy="24" r="2" fill="none" stroke="#D4A847" stroke-width="0.8"/>
-      </svg>
-      <h3 class="card-title">Consultas</h3>
-      <p class="card-desc">Histórico de atendimentos e próximas consultas agendadas.</p>
+    <div class="sb-bottom">
+      <div class="sb-logout" onclick="doLogout()">↩&nbsp; Sair</div>
     </div>
   </div>
 
-  <!-- Notificação -->
-  <div class="notify-box">
-    <p class="notify-title">Seja notificado</p>
-    <p class="notify-text">Deixe seu e-mail e avise quando o portal estiver disponível para seus pacientes.</p>
-    <input type="email" class="notify-input" id="notify-email" placeholder="seu@email.com"/>
-    <button class="btn-notify" onclick="notificar()">Quero ser notificado</button>
-    <p class="notify-ok" id="notify-ok">✓ Ótimo! Você será notificado em breve.</p>
-  </div>
+  <!-- MAIN -->
+  <div class="main">
 
-</section>
+    <!-- ── HOME ── -->
+    <div class="pg on" id="pg-home">
+      <div class="eyebrow">Portal do Paciente</div>
+      <div class="pg-title" id="h-titulo">Bem-vindo</div>
+      <div class="pg-sub" id="h-sub">Carregando informações...</div>
+
+      <div class="g4" style="margin-bottom:20px;">
+        <div class="mc"><div class="mv" id="hm-ex">—</div><div class="mu">exames</div><div class="ml">Registros</div></div>
+        <div class="mc"><div class="mv" id="hm-co">—</div><div class="mu">consultas</div><div class="ml">Histórico</div></div>
+        <div class="mc"><div class="mv" id="hm-me">—</div><div class="mu">metas ativas</div><div class="ml">Plano de cuidado</div></div>
+        <div class="mc"><div class="mv" id="hm-ms">—</div><div class="mu">não lidas</div><div class="ml">Mensagens</div></div>
+      </div>
+
+      <div class="g2">
+        <div>
+          <h3>Última consulta</h3>
+          <div class="card" id="h-ultima">
+            <div class="skel" style="width:55%"></div>
+            <div class="skel" style="width:80%"></div>
+          </div>
+
+          <h3>Próximo retorno</h3>
+          <div class="card" id="h-retorno">
+            <div class="skel" style="width:45%"></div>
+          </div>
+        </div>
+
+        <div>
+          <h3>Metas ativas</h3>
+          <div id="h-metas">
+            <div class="skel"></div>
+            <div class="skel" style="width:70%"></div>
+          </div>
+          <div class="divider"></div>
+          <h3>Médico responsável</h3>
+          <div class="card-sm">
+            <div style="font-size:13px;font-weight:700;color:var(--c);">Dr. Bruno P. Biluca</div>
+            <div style="font-family:var(--mono);font-size:10px;color:var(--c3);margin-top:2px;">CRM-SP 151.041 · RQE 70145</div>
+            <div style="font-size:11px;color:var(--c3);margin-top:5px;">Nefrologista · Fênix Nefrologia</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── EXAMES ── -->
+    <div class="pg" id="pg-exames">
+      <div class="eyebrow">Histórico Laboratorial</div>
+      <div class="pg-title">Meus Exames</div>
+      <div class="pg-sub">Resultados inseridos pela equipe após cada coleta. Clique em uma linha para ver os detalhes.</div>
+
+      <div id="chart-creat-wrap" style="display:none;">
+        <h3>Evolução — Creatinina (mg/dL)</h3>
+        <div class="chart-box"><canvas id="ch-creat" height="180"></canvas></div>
+      </div>
+
+      <h3>Todos os exames</h3>
+      <div class="card" style="padding:0;overflow:hidden;">
+        <table class="tbl">
+          <thead><tr>
+            <th>Data</th><th>Tipo</th><th>Parâmetros</th><th></th>
+          </tr></thead>
+          <tbody id="ex-body">
+            <tr><td colspan="4" style="padding:28px;text-align:center;color:var(--c3);font-size:12px;">Carregando...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ── CONSULTAS ── -->
+    <div class="pg" id="pg-consultas">
+      <div class="eyebrow">Histórico</div>
+      <div class="pg-title">Minhas Consultas</div>
+      <div class="pg-sub">Atendimentos registrados pela equipe clínica após cada consulta.</div>
+      <div class="tl" id="co-tl">
+        <div style="color:var(--c3);font-size:12px;padding:10px 0;">Carregando...</div>
+      </div>
+    </div>
+
+    <!-- ── METAS ── -->
+    <div class="pg" id="pg-metas">
+      <div class="eyebrow">Plano de Cuidado</div>
+      <div class="pg-title">Minhas Metas Clínicas</div>
+      <div class="pg-sub">Objetivos definidos em consulta com o Dr. Bruno. Atualizados a cada retorno.</div>
+      <div id="me-lista"><div style="color:var(--c3);font-size:12px;">Carregando...</div></div>
+    </div>
+
+    <!-- ── MENSAGENS ── -->
+    <div class="pg" id="pg-mensagens">
+      <div class="eyebrow">Comunicação</div>
+      <div class="pg-title">Mensagens</div>
+      <div class="pg-sub">Canal direto com a equipe da Fênix Nefrologia.</div>
+      <div class="card">
+        <div class="msg-wrap" id="ms-lista">
+          <div style="text-align:center;color:var(--c3);font-size:12px;padding:20px;">Carregando...</div>
+        </div>
+        <div class="msg-input-row">
+          <textarea class="msg-input" id="ms-input" placeholder="Escreva sua mensagem para a equipe..." rows="2"></textarea>
+          <button class="msg-btn" id="ms-btn" onclick="sendMsg()">Enviar</button>
+        </div>
+        <div style="font-size:10px;color:var(--c4);margin-top:8px;">
+          Respondido pela equipe em horário comercial (seg–sex, 8h–18h).
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /main -->
+</div><!-- /app -->
 
 <script>
-function notificar() {
-  const email = document.getElementById('notify-email').value.trim();
-  if(!email || !email.includes('@')){ 
-    document.getElementById('notify-email').style.borderColor = '#F07070';
-    return; 
+/* ══ SUPABASE ══════════════════════════════════════════════════ */
+const SB_URL = 'https://syzmsixhjlutsynnqivv.supabase.co';
+const SB_KEY = 'sb_publishable_poKCFHc9n1CtIfCbAxTN0Q_dmlsEy1t';
+const sb = supabase.createClient(SB_URL, SB_KEY);
+
+let patient = null;
+let charts  = {};
+
+/* ══ AUTH ════════════════════════════════════════════════════ */
+async function doLogin() {
+  const email = q('#l-email').value.trim();
+  const pass  = q('#l-pass').value;
+  const btn   = q('#login-btn');
+  const err   = q('#login-err');
+  if (!email || !pass) { showErr('Preencha e-mail e senha.'); return; }
+  btn.disabled = true; btn.textContent = 'Entrando...'; err.style.display = 'none';
+  const { error } = await sb.auth.signInWithPassword({ email, password: pass });
+  if (error) {
+    showErr('E-mail ou senha incorretos. Verifique os dados ou fale com a clínica.');
+    btn.disabled = false; btn.textContent = 'Entrar';
+  } else {
+    await bootApp();
   }
-  document.getElementById('notify-email').style.display = 'none';
-  document.querySelector('.btn-notify').style.display = 'none';
-  document.getElementById('notify-ok').style.display = 'block';
 }
+
+function showErr(msg) {
+  const err = q('#login-err');
+  err.textContent = msg; err.style.display = 'block';
+}
+
+async function doLogout() {
+  await sb.auth.signOut();
+  q('#app').classList.remove('on');
+  q('#login-screen').style.display = 'flex';
+  q('#login-btn').disabled = false; q('#login-btn').textContent = 'Entrar';
+  patient = null;
+}
+
+async function initAuth() {
+  const { data: { session } } = await sb.auth.getSession();
+  if (session) await bootApp();
+}
+
+/* ══ BOOT ════════════════════════════════════════════════════ */
+async function bootApp() {
+  q('#login-screen').style.display = 'none';
+  q('#app').classList.add('on');
+
+  const { data: { user } } = await sb.auth.getUser();
+  const { data: p } = await sb.from('pacientes').select('*').eq('user_id', user.id).single();
+  patient = p;
+
+  if (p) {
+    q('#sb-nome').textContent = p.nome;
+    q('#sb-meta').textContent = (p.diagnostico_principal || '') + (p.unidade ? ' · ' + unLabel(p.unidade) : '');
+    q('#h-titulo').textContent = 'Olá, ' + firstName(p.nome);
+    q('#h-sub').textContent = 'Bem-vindo ao seu portal de saúde · ' +
+      new Date().toLocaleDateString('pt-BR', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+  } else {
+    q('#sb-nome').textContent = user.email;
+    q('#h-titulo').textContent = 'Bem-vindo ao APEX';
+    q('#h-sub').textContent = 'Seu perfil está sendo configurado pela equipe. Em breve tudo estará disponível.';
+  }
+
+  await loadHome();
+  refreshBadge();
+}
+
+/* ══ HELPERS ════════════════════════════════════════════════ */
+const q  = s => document.querySelector(s);
+const qq = s => document.querySelectorAll(s);
+function firstName(n) { return n ? n.split(' ')[0] : 'Paciente'; }
+function unLabel(u)   { return ({rl:'Unidade RL',santos:'Santos',tatuape:'Tatuapé',todas:'Fênix Nefrologia'})[u] || 'Fênix Nefrologia'; }
+function fmtD(d)  { return d ? new Date(d + 'T12:00:00').toLocaleDateString('pt-BR', {day:'2-digit',month:'short',year:'numeric'}) : '—'; }
+function fmtDT(d) { return d ? new Date(d).toLocaleDateString('pt-BR', {day:'2-digit',month:'short',year:'numeric',hour:'2-digit',minute:'2-digit'}) : '—'; }
+
+/* ══ HOME ════════════════════════════════════════════════════ */
+async function loadHome() {
+  if (!patient) { clearHome(); return; }
+  const pid = patient.id;
+  const [exR, coR, meR, msR] = await Promise.all([
+    sb.from('exames').select('id',{count:'exact'}).eq('paciente_id',pid),
+    sb.from('consultas').select('*').eq('paciente_id',pid).order('data',{ascending:false}).limit(1),
+    sb.from('metas_clinicas').select('*').eq('paciente_id',pid).eq('status','ativa'),
+    sb.from('mensagens').select('id',{count:'exact'}).eq('paciente_id',pid).eq('remetente','clinica').eq('lida',false)
+  ]);
+
+  q('#hm-ex').textContent = exR.count ?? '0';
+  q('#hm-co').textContent = coR.data?.length ?? '0';
+  q('#hm-me').textContent = meR.data?.length ?? '0';
+  q('#hm-ms').textContent = msR.count ?? '0';
+
+  // última consulta
+  const uc = coR.data?.[0];
+  q('#h-ultima').innerHTML = uc
+    ? `<div style="font-family:var(--mono);font-size:10px;color:var(--c3);margin-bottom:4px;">${fmtD(uc.data)} · <span class="badge ${uc.tipo==='presencial'?'b-gold':'b-b'}" style="font-size:9px;">${uc.tipo}</span></div>
+       <div style="font-size:13px;font-weight:600;margin-bottom:4px;">${uc.motivo || 'Consulta'}</div>
+       <div style="font-size:12px;color:var(--c2);">${uc.resumo_clinico || '—'}</div>`
+    : `<div class="empty"><div class="empty-icon">📋</div><div class="empty-desc">Nenhuma consulta registrada ainda.</div></div>`;
+
+  // próximo retorno
+  const rt = uc?.retorno_em;
+  if (rt) {
+    const diff = Math.ceil((new Date(rt) - new Date()) / 86400000);
+    const cor = diff <= 7 ? 'var(--A)' : 'var(--G)';
+    const txt = diff > 0 ? `em ${diff} dias` : diff === 0 ? 'hoje' : 'data passada';
+    q('#h-retorno').innerHTML = `<div style="display:flex;align-items:baseline;gap:10px;">
+      <span style="font-family:var(--mono);font-size:17px;font-weight:700;color:${cor};">${fmtD(rt)}</span>
+      <span style="font-size:11px;color:var(--c3);">${txt}</span></div>`;
+  } else {
+    q('#h-retorno').innerHTML = `<div style="font-size:12px;color:var(--c3);">Sem retorno agendado.</div>`;
+  }
+
+  // metas ativas
+  const metas = meR.data || [];
+  q('#h-metas').innerHTML = metas.length
+    ? metas.slice(0,4).map(m => `
+        <div style="background:var(--bg2);border:1px solid var(--br);border-radius:var(--r);padding:10px 12px;margin-bottom:8px;">
+          <div style="font-size:9px;font-family:var(--mono);color:var(--c3);text-transform:uppercase;letter-spacing:.8px;">${m.categoria}</div>
+          <div style="font-size:12px;color:var(--c);margin-top:2px;">${m.descricao_meta}</div>
+          ${m.valor_alvo ? `<div style="font-family:var(--mono);font-size:10px;color:var(--gold2);margin-top:3px;">Alvo: ${m.valor_alvo} ${m.unidade||''}</div>` : ''}
+        </div>`).join('')
+    : `<div style="font-size:12px;color:var(--c3);padding:6px 0;">Nenhuma meta registrada ainda.</div>`;
+}
+
+function clearHome() {
+  ['#hm-ex','#hm-co','#hm-me','#hm-ms'].forEach(s => q(s).textContent = '—');
+  q('#h-ultima').innerHTML = '<div class="empty"><div class="empty-desc">Perfil em configuração.</div></div>';
+  q('#h-retorno').innerHTML = '<div style="font-size:12px;color:var(--c3);">—</div>';
+  q('#h-metas').innerHTML = '';
+}
+
+/* ══ EXAMES ══════════════════════════════════════════════════ */
+async function loadExames() {
+  if (!patient) return;
+  const { data } = await sb.from('exames').select('*').eq('paciente_id', patient.id).order('data_coleta',{ascending:false});
+  const tbody = q('#ex-body');
+
+  if (!data?.length) {
+    tbody.innerHTML = `<tr><td colspan="4">
+      <div class="empty"><div class="empty-icon">🧪</div>
+        <div class="empty-title">Nenhum exame registrado</div>
+        <div class="empty-desc">Os resultados são inseridos pela equipe após cada coleta.</div>
+      </div></td></tr>`;
+    return;
+  }
+
+  // gráfico creatinina
+  const creat = data.filter(e => e.parametros?.creatinina)
+    .map(e => ({ x: e.data_coleta, y: parseFloat(e.parametros.creatinina) })).reverse();
+  if (creat.length >= 2) {
+    q('#chart-creat-wrap').style.display = 'block';
+    if (charts['creat']) charts['creat'].destroy();
+    charts['creat'] = new Chart(q('#ch-creat'), {
+      type: 'line',
+      data: {
+        labels: creat.map(p => new Date(p.x+'T12:00:00').toLocaleDateString('pt-BR',{day:'2-digit',month:'2-digit'})),
+        datasets: [
+          { label:'Creatinina (mg/dL)', data: creat.map(p=>p.y),
+            borderColor:'#D4A840', backgroundColor:'rgba(212,168,64,0.1)',
+            tension:.3, fill:true, pointRadius:4, pointBackgroundColor:'#D4A840' },
+          { label:'Limite superior', data: creat.map(()=>1.2),
+            borderColor:'rgba(239,68,68,.35)', borderDash:[5,4],
+            pointRadius:0, fill:false }
+        ]
+      },
+      options:{ responsive:true, maintainAspectRatio:false,
+        plugins:{ legend:{ labels:{ font:{size:10}, color:'#7a7875' } } },
+        scales:{
+          x:{ ticks:{ color:'#7a7875', font:{size:9} } },
+          y:{ ticks:{ color:'#7a7875', font:{size:9} } }
+        }
+      }
+    });
+  }
+
+  tbody.innerHTML = data.map((e,i) => {
+    const params = e.parametros || {};
+    const count  = Object.keys(params).length;
+    const detail = Object.entries(params).map(([k,v]) =>
+      `<div class="ep-row">
+        <span class="ep-name">${k}</span>
+        <span><span class="ep-val ${valClass(k,v)}">${v}</span>
+        <span class="ep-ref">${valRef(k)}</span></span>
+      </div>`).join('') +
+      (e.observacao ? `<div style="font-size:11px;color:var(--c3);margin-top:8px;padding-top:8px;border-top:1px solid var(--br2);">Obs: ${e.observacao}</div>` : '');
+
+    return `<tr class="exam-row" onclick="toggleEx(${i},this)">
+        <td><span style="font-family:var(--mono);font-size:11px;">${fmtD(e.data_coleta)}</span></td>
+        <td><span class="badge b-gold">${e.tipo||'Lab'}</span></td>
+        <td style="color:var(--c3);font-size:11px;">${count} parâmetro${count!==1?'s':''}</td>
+        <td style="text-align:right;color:var(--c4);font-size:11px;" id="ex-arr-${i}">▾</td>
+      </tr>
+      <tr id="ex-det-${i}" style="display:none;">
+        <td colspan="4"><div class="exam-params">${detail}</div></td>
+      </tr>`;
+  }).join('');
+}
+
+function toggleEx(i, row) {
+  const det = q(`#ex-det-${i}`);
+  const arr = q(`#ex-arr-${i}`);
+  const open = det.style.display !== 'none';
+  det.style.display = open ? 'none' : 'table-row';
+  arr.textContent   = open ? '▾' : '▴';
+}
+
+const REFS = {
+  creatinina:[0.6,1.2,'mg/dL'], ureia:[15,45,'mg/dL'],
+  potassio:[3.5,5.0,'mEq/L'], sodio:[136,145,'mEq/L'],
+  hemoglobina:[12,17,'g/dL'], albumina:[3.5,5.5,'g/dL'],
+  fosforo:[2.5,4.5,'mg/dL'], calcio:[8.5,10.5,'mg/dL'],
+};
+
+function findRef(k) {
+  const key = k.toLowerCase().replace(/[^a-záéíóúãõç]/g,'');
+  for (const [rk, v] of Object.entries(REFS)) {
+    if (key.includes(rk) || rk.includes(key)) return { lo:v[0], hi:v[1], unit:v[2] };
+  }
+  return null;
+}
+
+function valClass(k, v) {
+  const val = parseFloat(String(v).replace(',','.'));
+  if (isNaN(val)) return '';
+  const ref = findRef(k);
+  if (!ref) return '';
+  if (val >= ref.lo && val <= ref.hi) return 'val-ok';
+  const span = ref.hi - ref.lo;
+  return Math.abs(val - (val < ref.lo ? ref.lo : ref.hi)) > span * 0.3 ? 'val-crit' : 'val-alt';
+}
+
+function valRef(k) {
+  const ref = findRef(k);
+  return ref ? `ref: ${ref.lo}–${ref.hi} ${ref.unit}` : '';
+}
+
+/* ══ CONSULTAS ═══════════════════════════════════════════════ */
+async function loadConsultas() {
+  if (!patient) return;
+  const { data } = await sb.from('consultas').select('*').eq('paciente_id',patient.id).order('data',{ascending:false});
+  const tl = q('#co-tl');
+  if (!data?.length) {
+    tl.innerHTML = `<div class="empty"><div class="empty-icon">📋</div>
+      <div class="empty-title">Nenhuma consulta registrada</div>
+      <div class="empty-desc">O histórico é preenchido após cada atendimento.</div></div>`;
+    return;
+  }
+  tl.innerHTML = data.map(c => `
+    <div class="tl-item">
+      <div class="tl-line"></div>
+      <div class="tl-dot ${c.tipo==='presencial'?'dc-g':'dc-b'}"></div>
+      <div class="tl-time">${fmtD(c.data)}</div>
+      <div class="tl-title">${c.motivo || 'Consulta'}</div>
+      <div class="tl-body">${c.resumo_clinico || '—'}</div>
+      <div class="tl-chips">
+        <span class="tp ${c.tipo==='presencial'?'tp-g':'tp-b'}">${c.tipo==='presencial'?'Presencial':'Teleconsulta'}</span>
+        ${c.retorno_em ? `<span class="tp tp-n">Retorno: ${fmtD(c.retorno_em)}</span>` : ''}
+      </div>
+    </div>`).join('');
+}
+
+/* ══ METAS ═══════════════════════════════════════════════════ */
+async function loadMetas() {
+  if (!patient) return;
+  const { data } = await sb.from('metas_clinicas').select('*').eq('paciente_id',patient.id)
+    .order('status').order('categoria');
+  const el = q('#me-lista');
+  if (!data?.length) {
+    el.innerHTML = `<div class="empty"><div class="empty-icon">◎</div>
+      <div class="empty-title">Nenhuma meta definida ainda</div>
+      <div class="empty-desc">O plano de cuidado é estabelecido em consulta com o Dr. Bruno.</div></div>`;
+    return;
+  }
+  const icons = {pressao:'💓',peso:'⚖️',laboratorial:'🧪',atividade:'🏃',medicacao:'💊'};
+  const statusBadge = s => ({
+    ativa:    '<span class="badge b-gold">Ativa</span>',
+    atingida: '<span class="badge b-g">Atingida</span>',
+    revisada: '<span class="badge b-n">Revisada</span>'
+  })[s] || '';
+
+  el.innerHTML = data.map(m => `
+    <div class="meta-card">
+      <div class="meta-cat">${icons[m.categoria]||'◎'} ${m.categoria}</div>
+      <div class="meta-desc">${m.descricao_meta}</div>
+      <div class="meta-footer">
+        ${m.valor_alvo ? `<span class="meta-alvo">Alvo: ${m.valor_alvo} ${m.unidade||''}</span>` : ''}
+        ${m.prazo ? `<span class="meta-prazo">· Prazo: ${fmtD(m.prazo)}</span>` : ''}
+        <span style="margin-left:auto;">${statusBadge(m.status)}</span>
+      </div>
+    </div>`).join('');
+}
+
+/* ══ MENSAGENS ═══════════════════════════════════════════════ */
+async function loadMensagens() {
+  if (!patient) return;
+  const { data } = await sb.from('mensagens').select('*')
+    .eq('paciente_id',patient.id).order('criado_em',{ascending:true});
+  const el = q('#ms-lista');
+
+  if (!data?.length) {
+    el.innerHTML = `<div class="empty"><div class="empty-icon">✉</div>
+      <div class="empty-title">Nenhuma mensagem ainda</div>
+      <div class="empty-desc">Use o campo abaixo para enviar uma mensagem à equipe.</div></div>`;
+  } else {
+    el.innerHTML = data.map(m => `
+      <div>
+        <div class="msg-bub ${m.remetente==='clinica'?'msg-clinic':'msg-patient'}">
+          ${escHtml(m.texto)}
+          <div class="msg-time">${fmtDT(m.criado_em)}</div>
+        </div>
+      </div>`).join('');
+    el.scrollTop = el.scrollHeight;
+  }
+
+  // marcar como lidas
+  await sb.from('mensagens').update({lida:true})
+    .eq('paciente_id',patient.id).eq('remetente','clinica').eq('lida',false);
+  refreshBadge();
+}
+
+async function sendMsg() {
+  if (!patient) return;
+  const input = q('#ms-input');
+  const btn   = q('#ms-btn');
+  const text  = input.value.trim();
+  if (!text) return;
+  btn.disabled = true; btn.textContent = 'Enviando...';
+  const { error } = await sb.from('mensagens').insert({
+    paciente_id: patient.id, remetente:'paciente', texto:text, lida:false
+  });
+  if (!error) { input.value = ''; await loadMensagens(); }
+  btn.disabled = false; btn.textContent = 'Enviar';
+}
+
+async function refreshBadge() {
+  if (!patient) return;
+  const { count } = await sb.from('mensagens').select('id',{count:'exact'})
+    .eq('paciente_id',patient.id).eq('remetente','clinica').eq('lida',false);
+  const badge = q('#msg-badge');
+  if (count > 0) { badge.textContent = count; badge.style.display = 'inline'; }
+  else badge.style.display = 'none';
+}
+
+function escHtml(s) {
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+/* ══ NAVIGATION ══════════════════════════════════════════════ */
+const PAGES = ['home','exames','consultas','metas','mensagens'];
+const LOADERS = { exames:loadExames, consultas:loadConsultas, metas:loadMetas, mensagens:loadMensagens };
+
+function nav(pg) {
+  PAGES.forEach(p => {
+    q(`#pg-${p}`).classList.toggle('on', p === pg);
+  });
+  qq('.nav-it').forEach(el => {
+    el.classList.toggle('on', el.dataset.pg === pg);
+  });
+  if (LOADERS[pg]) LOADERS[pg]();
+}
+
+/* ══ INIT ════════════════════════════════════════════════════ */
+initAuth();
 </script>
 </body>
 </html>
