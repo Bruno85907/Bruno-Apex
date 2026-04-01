@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Diagnóstico TRS Agudo — APEX</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Space Grotesk',system-ui,sans-serif;background:#F5F5F5;color:#111;min-height:100vh;}
+.nav{background:#FFF;border-bottom:2px solid #C0392B;height:52px;display:flex;align-items:center;padding:0 32px;gap:16px;}
+.nav-logo{font-size:12px;font-weight:700;color:#C0392B;letter-spacing:5px;text-transform:uppercase;}
+.nav-title{font-size:11px;font-weight:500;color:#555;letter-spacing:1.5px;text-transform:uppercase;}
+.nav-div{width:1px;height:16px;background:#E8E8E8;}
+.page{max-width:1100px;margin:0 auto;padding:24px 28px;}
+h2{font-size:15px;font-weight:600;color:#1A4070;margin:24px 0 10px;display:flex;align-items:center;gap:10px;}
+h2::after{content:'';flex:1;height:1px;background:#E8D5B0;}
+.box{background:#FFF;border:1px solid #E8D5B0;border-radius:10px;padding:16px 20px;margin-bottom:14px;font-size:13px;line-height:1.6;}
+.box strong{color:#1A4070;}
+.box.ok{border-left:4px solid #2D7A4F;}
+.box.warn{border-left:4px solid #E8973A;}
+.box.err{border-left:4px solid #C0392B;}
+table{width:100%;border-collapse:collapse;font-size:12px;margin:10px 0;background:#FFF;border-radius:8px;overflow:hidden;border:1px solid #E8D5B0;}
+th{font-size:10px;font-weight:600;color:#6B4E24;text-transform:uppercase;letter-spacing:.04em;padding:8px;border-bottom:2px solid #2460A7;text-align:center;background:#F7F0E4;}
+th:first-child{text-align:left;padding-left:12px;}
+td{padding:7px 8px;border-bottom:1px solid #F0E8DC;text-align:center;color:#333;}
+td:first-child{text-align:left;font-weight:600;color:#1A4070;padding-left:12px;}
+.total td{font-weight:700;color:#1A4070;background:#F7F0E4;border-top:2px solid #2460A7;}
+.match{color:#2D7A4F;}
+.mismatch{color:#C0392B;font-weight:700;}
+pre{background:#1A1A2E;color:#E8D5B0;padding:14px;border-radius:8px;font-size:11px;overflow-x:auto;max-height:300px;overflow-y:auto;margin:10px 0;}
+.actions{display:flex;gap:12px;margin:20px 0;flex-wrap:wrap;}
+.btn{border:none;border-radius:8px;padding:12px 24px;font-family:'Space Grotesk',system-ui,sans-serif;font-size:12px;font-weight:600;cursor:pointer;transition:all .2s;}
+.btn-primary{background:#1A4070;color:#FFF;}
+.btn-primary:hover{background:#2460A7;}
+.btn-danger{background:#C0392B;color:#FFF;}
+.btn-danger:hover{background:#E74C3C;}
+</style>
+</head>
+<body>
+<div class="nav">
+  <span class="nav-logo">APEX</span>
+  <div class="nav-div"></div>
+  <span class="nav-title">Diagnóstico — localStorage TRS Agudo</span>
+</div>
+<div class="page">
+  <div id="output"></div>
+  <div class="actions">
+    <button class="btn btn-primary" onclick="rodar()">Atualizar diagnóstico</button>
+    <button class="btn btn-danger" onclick="if(confirm('Limpar TODOS os dados de TRS Agudo?')){localStorage.removeItem('trs_agudo_mont_serrat');rodar();}">Limpar localStorage</button>
+  </div>
+</div>
+<script>
+function isoWeekToDate(y,w){
+  const d=new Date(y,0,1+(w-1)*7);
+  const dow=d.getDay();
+  if(dow<=4)d.setDate(d.getDate()-d.getDay()+1);
+  else d.setDate(d.getDate()+8-d.getDay());
+  return d;
+}
+
+function rodar(){
+  const KEY='trs_agudo_mont_serrat';
+  const raw=localStorage.getItem(KEY);
+  let html='';
+
+  // 1. Existe?
+  html+=`<h2>1. localStorage existe?</h2>`;
+  if(!raw){
+    html+=`<div class="box err"><strong>NÃO ENCONTRADO.</strong> A chave <code>trs_agudo_mont_serrat</code> não existe no localStorage deste domínio (${location.hostname}).</div>`;
+    document.getElementById('output').innerHTML=html;
+    return;
+  }
+  html+=`<div class="box ok"><strong>SIM</strong> — chave encontrada em <code>${location.hostname}</code>. Tamanho: ${raw.length} caracteres.</div>`;
+
+  // 2. Parse
+  let data;
+  try{ data=JSON.parse(raw); }catch(e){
+    html+=`<div class="box err"><strong>ERRO DE PARSE:</strong> ${e.message}</div>`;
+    html+=`<pre>${raw.substring(0,500)}...</pre>`;
+    document.getElementById('output').innerHTML=html;
+    return;
+  }
+  html+=`<div class="box ok"><strong>${data.length} semanas</strong> gravadas no localStorage.</div>`;
+
+  // 3. Dados brutos
+  html+=`<h2>2. Dados brutos por semana</h2>`;
+  html+=`<table><thead><tr><th>Semana</th><th>Pac</th><th>HD</th><th>CRRT</th><th>DP</th><th>SLED</th><th>Total Ses.</th><th>FAV</th><th>Perm.</th><th>CDL</th><th>Intercorr.</th></tr></thead><tbody>`;
+  data.forEach(s=>{
+    const ts=Object.values(s.sessoes).reduce((a,b)=>a+b,0);
+    const ti=s.ic.reduce((a,ic)=>a+ic.qtd,0);
+    const ics=s.ic.map(ic=>`${ic.nome} ×${ic.qtd}`).join(', ')||'—';
+    html+=`<tr><td>${s.semana}</td><td>${s.pac}</td><td>${s.sessoes.hd}</td><td>${s.sessoes.crrt}</td><td>${s.sessoes.dp}</td><td>${s.sessoes.sled}</td><td><strong>${ts}</strong></td><td>${s.acessos.fav}</td><td>${s.acessos.permcath}</td><td>${s.acessos.cdl}</td><td style="text-align:left;font-size:11px;">${ics}</td></tr>`;
+  });
+  html+=`</tbody></table>`;
+
+  // 4. Mapeamento semana → mês (mesma lógica do dashboard)
+  html+=`<h2>3. Mapeamento Semana → Mês (lógica do dashboard)</h2>`;
+  html+=`<table><thead><tr><th>Semana</th><th>isoWeekToDate</th><th>Mês calculado</th><th>Atribuído a</th></tr></thead><tbody>`;
+  const porMes={};
+  data.forEach(s=>{
+    const[y,w]=s.semana.split('-W');
+    const d=isoWeekToDate(parseInt(y),parseInt(w));
+    const mesCalc=d.getMonth()+1;
+    const anoCalc=d.getFullYear();
+    const mesKey=`${anoCalc}-${String(mesCalc).padStart(2,'0')}`;
+    if(!porMes[mesKey])porMes[mesKey]=[];
+    porMes[mesKey].push(s);
+    html+=`<tr><td>${s.semana}</td><td>${d.toISOString().slice(0,10)}</td><td>${mesCalc}/${anoCalc}</td><td><strong>${mesKey}</strong></td></tr>`;
+  });
+  html+=`</tbody></table>`;
+
+  // 5. Consolidado por mês
+  html+=`<h2>4. Consolidado por mês (o que o dashboard mostraria)</h2>`;
+
+  const esperado={
+    '2026-02':{pac:4,ses:14,fav:6,perm:2,cdl:6,ic:1},
+    '2026-03':{pac:13,ses:54,fav:4,perm:16,cdl:34,ic:7}
+  };
+
+  for(const[mes,sems] of Object.entries(porMes).sort()){
+    let tPac=0,tSes=0,tFav=0,tPerm=0,tCdl=0,tIC=0;
+    sems.forEach(s=>{
+      tPac+=s.pac||0;
+      tSes+=Object.values(s.sessoes).reduce((a,b)=>a+b,0);
+      tFav+=s.acessos.fav||0;
+      tPerm+=s.acessos.permcath||0;
+      tCdl+=s.acessos.cdl||0;
+      tIC+=s.ic.reduce((a,ic)=>a+ic.qtd,0);
+    });
+
+    const esp=esperado[mes];
+    const check=(v,e)=>v===e?`<span class="match">✓ ${v}</span>`:`<span class="mismatch">✕ ${v} (esperado: ${e})</span>`;
+
+    html+=`<div class="box ${esp?(tPac===esp.pac&&tSes===esp.ses?'ok':'err'):'warn'}">`;
+    html+=`<strong>${mes}</strong> — ${sems.length} semanas (${sems.map(s=>s.semana).join(', ')})<br>`;
+    if(esp){
+      html+=`Pacientes: ${check(tPac,esp.pac)}<br>`;
+      html+=`Sessões: ${check(tSes,esp.ses)}<br>`;
+      html+=`FAV: ${check(tFav,esp.fav)} · Permcath: ${check(tPerm,esp.perm)} · CDL: ${check(tCdl,esp.cdl)}<br>`;
+      html+=`Intercorrências: ${check(tIC,esp.ic)}`;
+    }else{
+      html+=`Pacientes: ${tPac} · Sessões: ${tSes} · FAV: ${tFav} · Perm: ${tPerm} · CDL: ${tCdl} · IC: ${tIC}<br>`;
+      html+=`<em>(mês sem valores esperados definidos)</em>`;
+    }
+    html+=`</div>`;
+  }
+
+  // 6. JSON bruto
+  html+=`<h2>5. JSON bruto (para debug)</h2>`;
+  html+=`<pre>${JSON.stringify(data,null,2)}</pre>`;
+
+  document.getElementById('output').innerHTML=html;
+}
+
+document.addEventListener('DOMContentLoaded',rodar);
+</script>
+</body>
+</html>
