@@ -119,7 +119,6 @@ nav{background:rgba(13,27,53,0.97);border-bottom:1px solid rgba(212,168,71,0.12)
 .cat-combinada{color:#C084FC;} .cat-combinada .a-cat{color:#C084FC;}
 .cat-pratica{color:#5DCB8A;} .cat-pratica .a-cat{color:#5DCB8A;}
 .cat-antiinflamatorio{color:#F07070;} .cat-antiinflamatorio .a-cat{color:#F07070;}
-.cat-antiinflamatorio{color:#F07070;} .cat-antiinflamatorio .a-cat{color:#F07070;}
 
 /* Mensagem sem resultados */
 .no-results{text-align:center;padding:60px 20px;font-family:'Cormorant Garamond',serif;font-size:18px;font-style:italic;color:rgba(232,213,160,0.35);}
@@ -419,11 +418,8 @@ footer{padding:30px 60px;display:flex;align-items:center;justify-content:space-b
 
     <a href="#" class="artigo-item cat-pratica" data-cat="pratica"><div class="a-num">53</div><div class="a-body"><p class="a-cat">Aplicação Prática</p><h3 class="a-title">Como criar sua linha de base pessoal</h3><p class="a-excerpt">Sem sua linha de base, qualquer dado é inútil. Como estabelecer seus valores de referência em 30 dias — e por que isso muda tudo.</p><div class="a-meta"><span>7 min</span></div><span class="a-soon">Em breve</span></div></a>
 
-  </div>
-  <div class="no-results" id="no-results" style="display:none;">Nenhum artigo encontrado nessa categoria ainda.</div>
-
-    <!-- ANTI-INFLAMATÓRIOS -->
-    <a href="#" class="artigo-item cat-antiinflamatorio" data-cat="antiinflamatorio"><div class="a-num">54</div><div class="a-body"><p class="a-cat">Anti-inflamatórios & Rim</p><h3 class="a-title">Anti-inflamatório e rim: uma combinação perigosa</h3><p class="a-excerpt">Ibuprofeno, diclofenaco e naproxeno são alguns dos medicamentos mais vendidos no Brasil — e alguns dos mais nocivos para os rins. O que acontece dentro dos glomérulos quando você toma um analgésico.</p><div class="a-meta"><span>10 min</span></div><span class="a-soon">Em breve</span></div></a>
+    <!-- ANTI-INFLAMATÓRIOS & RIM -->
+    <a href="artigo_antiinflamatorio_rim.html" class="artigo-item cat-antiinflamatorio" data-cat="antiinflamatorio"><div class="a-num">54</div><div class="a-body"><p class="a-cat">Anti-inflamatórios & Rim</p><h3 class="a-title">Anti-inflamatório e rim: uma combinação perigosa</h3><p class="a-excerpt">Ibuprofeno, diclofenaco e naproxeno são alguns dos medicamentos mais vendidos no Brasil — e alguns dos mais nocivos para os rins. O que acontece dentro dos glomérulos quando você toma um analgésico.</p><div class="a-meta"><span>10 min</span><div class="a-dot"></div><span style="color:#5DCB8A;">● Publicado</span></div></div></a>
 
     <a href="#" class="artigo-item cat-antiinflamatorio" data-cat="antiinflamatorio"><div class="a-num">55</div><div class="a-body"><p class="a-cat">Anti-inflamatórios & Rim</p><h3 class="a-title">Quem não pode usar anti-inflamatório — e quase ninguém sabe</h3><p class="a-excerpt">Hipertensos, diabéticos, idosos e pacientes com DRC têm risco muito maior de lesão renal aguda com AINEs. A lista de quem precisa de alternativas.</p><div class="a-meta"><span>8 min</span></div><span class="a-soon">Em breve</span></div></a>
 
@@ -432,6 +428,9 @@ footer{padding:30px 60px;display:flex;align-items:center;justify-content:space-b
     <a href="#" class="artigo-item cat-antiinflamatorio" data-cat="antiinflamatorio"><div class="a-num">57</div><div class="a-body"><p class="a-cat">Anti-inflamatórios & Rim</p><h3 class="a-title">Alternativas seguras ao anti-inflamatório</h3><p class="a-excerpt">Paracetamol, fisioterapia, crioterapia e outras opções com perfil renal mais seguro. O que usar no lugar — e em quais situações.</p><div class="a-meta"><span>7 min</span></div><span class="a-soon">Em breve</span></div></a>
 
     <a href="#" class="artigo-item cat-antiinflamatorio" data-cat="antiinflamatorio"><div class="a-num">58</div><div class="a-body"><p class="a-cat">Anti-inflamatórios & Rim</p><h3 class="a-title">Posso tomar anti-inflamatório após treino?</h3><p class="a-excerpt">A prática comum entre atletas de usar AINE após treino intenso pode bloquear adaptações musculares e prejudicar os rins. O que a ciência diz.</p><div class="a-meta"><span>6 min</span></div><span class="a-soon">Em breve</span></div></a>
+
+  </div>
+  <div class="no-results" id="no-results" style="display:none;">Nenhum artigo encontrado nessa categoria ainda.</div>
 
 </div>
 
@@ -448,7 +447,6 @@ footer{padding:30px 60px;display:flex;align-items:center;justify-content:space-b
       <span class="section-count">6 episódios · Em breve</span>
     </div>
 
-    <!-- Banner da série -->
     <div class="serie-banner">
       <span class="serie-badge">SÉRIE EXCLUSIVA</span>
       <div class="serie-info">
@@ -567,7 +565,6 @@ const DESTAQUE = document.getElementById('artigo-destaque');
 const NO_RESULTS = document.getElementById('no-results');
 
 function filtrar(cat, btn) {
-  /* Atualiza botão ativo */
   document.querySelectorAll('.filtro-btn').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
 
@@ -580,7 +577,6 @@ function filtrar(cat, btn) {
     if(mostrar) visiveis++;
   });
 
-  /* Destaque: mostra se todos ou se categoria bate com o destaque */
   const destacatCat = DESTAQUE.dataset.cat;
   if(cat === 'todos' || cat === destacatCat) {
     DESTAQUE.style.display = '';
@@ -588,14 +584,11 @@ function filtrar(cat, btn) {
     DESTAQUE.style.display = 'none';
   }
 
-  /* Sem resultados */
   NO_RESULTS.style.display = visiveis === 0 ? 'block' : 'none';
 
-  /* Contador */
-  const total = cat === 'todos' ? 54 : visiveis + (cat === 'wearables' ? 1 : 0);
+  const total = cat === 'todos' ? 58 : visiveis + (cat === destacatCat ? 1 : 0);
   document.getElementById('artigos-count').textContent = total + ' artigos · Em breve';
 
-  /* Scroll suave */
   document.getElementById('artigos').scrollIntoView({behavior:'smooth', block:'start'});
 }
 
