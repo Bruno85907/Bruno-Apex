@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Importar Dados TRS Agudo (Corrigido) — APEX</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Space Grotesk',system-ui,sans-serif;background:#F5F5F5;color:#111;min-height:100vh;}
+.nav{background:#FFF;border-bottom:2px solid #2460A7;height:52px;display:flex;align-items:center;padding:0 32px;gap:16px;}
+.nav-logo{font-size:12px;font-weight:700;color:#2460A7;letter-spacing:5px;text-transform:uppercase;}
+.nav-div{width:1px;height:16px;background:#E8E8E8;}
+.nav-title{font-size:11px;font-weight:500;color:#555;letter-spacing:1.5px;text-transform:uppercase;}
+.page{max-width:1100px;margin:0 auto;padding:32px 28px;}
+.alert{background:#FFF7E6;border:1px solid #E8D5B0;border-left:4px solid #2460A7;border-radius:8px;padding:16px 20px;margin-bottom:24px;font-size:13px;color:#555;line-height:1.6;}
+.alert strong{color:#1A4070;}
+.alert code{background:#F0EBE3;padding:2px 6px;border-radius:4px;font-size:12px;color:#1A4070;}
+h2{font-size:16px;font-weight:600;color:#1A4070;margin:28px 0 14px;display:flex;align-items:center;gap:10px;}
+h2::after{content:'';flex:1;height:1px;background:#E8D5B0;}
+.mes-label{font-size:11px;font-weight:600;color:#2460A7;letter-spacing:2px;text-transform:uppercase;margin:20px 0 10px;padding:6px 14px;background:rgba(36,96,167,0.06);border-radius:6px;display:inline-block;}
+table{width:100%;border-collapse:collapse;font-size:13px;margin-bottom:8px;background:#FFF;border-radius:10px;overflow:hidden;border:1px solid #E8D5B0;}
+thead th{font-size:10px;font-weight:600;color:#6B4E24;text-transform:uppercase;letter-spacing:.04em;padding:10px 8px;border-bottom:2px solid #2460A7;text-align:center;background:#F7F0E4;}
+thead th:first-child{text-align:left;padding-left:14px;}
+tbody td{padding:9px 8px;border-bottom:1px solid #F0E8DC;text-align:center;color:#333;}
+tbody td:first-child{text-align:left;font-weight:600;color:#1A4070;padding-left:14px;}
+tbody tr:hover td{background:#FAF5EF;}
+.ic-cell{text-align:left!important;font-size:11px;line-height:1.5;}
+.ic-tag{display:inline-block;background:rgba(36,96,167,0.08);border:1px solid rgba(36,96,167,0.15);border-radius:4px;padding:2px 8px;margin:2px 3px;font-size:10px;color:#1A4070;white-space:nowrap;}
+.total-row td{font-weight:700;color:#1A4070;border-top:2px solid #2460A7;background:#F7F0E4;}
+.actions{display:flex;gap:14px;margin:28px 0;justify-content:center;flex-wrap:wrap;}
+.btn{border:none;border-radius:8px;padding:14px 32px;font-family:'Space Grotesk',system-ui,sans-serif;font-size:13px;font-weight:600;letter-spacing:.04em;cursor:pointer;transition:all .2s;}
+.btn-primary{background:#1A4070;color:#FFF;}
+.btn-primary:hover{background:#2460A7;}
+.btn-primary:disabled{background:#CCC;cursor:not-allowed;}
+.btn-secondary{background:transparent;color:#1A4070;border:1.5px solid #2460A7;}
+.btn-secondary:hover{background:#F7F0E4;}
+.btn-danger{background:transparent;color:#C0392B;border:1.5px solid #C0392B;}
+.btn-danger:hover{background:rgba(192,57,43,0.05);}
+.status{text-align:center;padding:16px;font-size:14px;border-radius:10px;margin:18px 0;display:none;}
+.status.ok{display:block;background:#E8F5E9;border:1px solid #81C784;color:#2D7A4F;}
+.status.warn{display:block;background:#FFF3E0;border:1px solid #FFB74D;color:#9A6B1A;}
+.status.err{display:block;background:#FFEBEE;border:1px solid #EF9A9A;color:#C0392B;}
+.existing{margin:14px 0;padding:14px 18px;background:#FFF;border:1px solid #E8D5B0;border-radius:8px;font-size:12px;color:#555;}
+.existing strong{color:#1A4070;}
+.note{font-size:11px;color:#999;margin-top:4px;padding-left:14px;}
+</style>
+</head>
+<body>
+
+<div class="nav">
+  <span class="nav-logo">APEX</span>
+  <div class="nav-div"></div>
+  <span class="nav-title">Importação Corrigida — TRS Agudo · Mont Serrat</span>
+</div>
+
+<div class="page">
+  <div class="alert">
+    <strong>Versão corrigida.</strong> Pacientes únicos contados apenas na primeira semana em que aparecem — soma mensal = total real. Mapeamentos aplicados: UF→HD, Cateter curta permanência→CDL, Mau Funcionamento do Cateter→Cateter disfuncionante.<br><br>
+    <strong>Abra no mesmo navegador</strong> onde acessa o APEX. A importação <u>substitui</u> dados anteriores das mesmas semanas.
+  </div>
+
+  <div id="existing-check"></div>
+
+  <h2>Fevereiro 2026</h2>
+
+  <div class="mes-label">4 pacientes · 14 sessões · 1 intercorrência</div>
+  <table>
+    <thead><tr>
+      <th>Semana</th><th>Pac.*</th><th>HD</th><th>CRRT</th><th>DP</th><th>SLED</th>
+      <th>Total</th><th>FAV</th><th>Perm.</th><th>CDL</th><th style="text-align:left;padding-left:12px;">Intercorrências</th>
+    </tr></thead>
+    <tbody>
+      <tr>
+        <td>Sem 08</td><td>1</td>
+        <td>1</td><td>0</td><td>0</td><td>0</td><td>1</td>
+        <td>1</td><td>0</td><td>0</td>
+        <td class="ic-cell">Nenhuma</td>
+      </tr>
+      <tr>
+        <td>Sem 09</td><td>3</td>
+        <td>13</td><td>0</td><td>0</td><td>0</td><td>13</td>
+        <td>5</td><td>2</td><td>6</td>
+        <td class="ic-cell"><span class="ic-tag">Cateter disfuncionante ×1</span></td>
+      </tr>
+      <tr class="total-row">
+        <td>Total Fev</td><td>4</td>
+        <td>14</td><td>0</td><td>0</td><td>0</td><td>14</td>
+        <td>6</td><td>2</td><td>6</td>
+        <td class="ic-cell">1 intercorrência</td>
+      </tr>
+    </tbody>
+  </table>
+  <p class="note">* Pac. = pacientes novos nesta semana (cada paciente contado uma única vez no mês)</p>
+
+  <h2>Março 2026</h2>
+
+  <div class="mes-label">13 pacientes · 54 sessões · 7 intercorrências</div>
+  <table>
+    <thead><tr>
+      <th>Semana</th><th>Pac.*</th><th>HD</th><th>CRRT</th><th>DP</th><th>SLED</th>
+      <th>Total</th><th>FAV</th><th>Perm.</th><th>CDL</th><th style="text-align:left;padding-left:12px;">Intercorrências</th>
+    </tr></thead>
+    <tbody>
+      <tr>
+        <td>Sem 10</td><td>7</td>
+        <td>16</td><td>0</td><td>0</td><td>0</td><td>16</td>
+        <td>2</td><td>5</td><td>9</td>
+        <td class="ic-cell"><span class="ic-tag">Hipotensão ×1</span> <span class="ic-tag">Cateter disfuncionante ×1</span></td>
+      </tr>
+      <tr>
+        <td>Sem 11</td><td>2</td>
+        <td>15</td><td>0</td><td>0</td><td>0</td><td>15</td>
+        <td>0</td><td>3</td><td>12</td>
+        <td class="ic-cell"><span class="ic-tag">Hipotensão ×1</span> <span class="ic-tag">Cateter disfuncionante ×1</span></td>
+      </tr>
+      <tr>
+        <td>Sem 12</td><td>0</td>
+        <td>12</td><td>0</td><td>0</td><td>0</td><td>12</td>
+        <td>1</td><td>2</td><td>9</td>
+        <td class="ic-cell">Nenhuma</td>
+      </tr>
+      <tr>
+        <td>Sem 13</td><td>4</td>
+        <td>6</td><td>0</td><td>0</td><td>2</td><td>8</td>
+        <td>1</td><td>4</td><td>3</td>
+        <td class="ic-cell"><span class="ic-tag">Hipotensão ×2</span> <span class="ic-tag">Desconforto respiratório ×1</span></td>
+      </tr>
+      <tr>
+        <td>Sem 14</td><td>0</td>
+        <td>3</td><td>0</td><td>0</td><td>0</td><td>3</td>
+        <td>0</td><td>2</td><td>1</td>
+        <td class="ic-cell">Nenhuma</td>
+      </tr>
+      <tr class="total-row">
+        <td>Total Mar</td><td>13</td>
+        <td>52</td><td>0</td><td>0</td><td>2</td><td>54</td>
+        <td>4</td><td>16</td><td>34</td>
+        <td class="ic-cell">7 intercorrências</td>
+      </tr>
+    </tbody>
+  </table>
+  <p class="note">* Pac. = pacientes novos nesta semana (7+2+0+4+0 = 13 únicos)</p>
+
+  <div id="status"></div>
+
+  <div class="actions">
+    <button class="btn btn-primary" id="btn-import" onclick="importar()">Limpar anteriores e importar 7 semanas →</button>
+    <button class="btn btn-secondary" onclick="verificar()">Verificar dados existentes</button>
+  </div>
+</div>
+
+<script>
+const STORAGE_KEY = 'trs_agudo_mont_serrat';
+
+const DADOS = [
+  // FEVEREIRO
+  {
+    semana: '2026-W08',
+    pac: 1,
+    sessoes: { hd: 1, crrt: 0, dp: 0, sled: 0 },
+    acessos: { fav: 1, permcath: 0, cdl: 0 },
+    ic: [],
+    ts: Date.now()
+  },
+  {
+    semana: '2026-W09',
+    pac: 3,
+    sessoes: { hd: 13, crrt: 0, dp: 0, sled: 0 },
+    acessos: { fav: 5, permcath: 2, cdl: 6 },
+    ic: [{ nome: 'Cateter disfuncionante', qtd: 1 }],
+    ts: Date.now()
+  },
+  // MARÇO
+  {
+    semana: '2026-W10',
+    pac: 7,
+    sessoes: { hd: 16, crrt: 0, dp: 0, sled: 0 },
+    acessos: { fav: 2, permcath: 5, cdl: 9 },
+    ic: [{ nome: 'Hipotensão', qtd: 1 }, { nome: 'Cateter disfuncionante', qtd: 1 }],
+    ts: Date.now()
+  },
+  {
+    semana: '2026-W11',
+    pac: 2,
+    sessoes: { hd: 15, crrt: 0, dp: 0, sled: 0 },
+    acessos: { fav: 0, permcath: 3, cdl: 12 },
+    ic: [{ nome: 'Hipotensão', qtd: 1 }, { nome: 'Cateter disfuncionante', qtd: 1 }],
+    ts: Date.now()
+  },
+  {
+    semana: '2026-W12',
+    pac: 0,
+    sessoes: { hd: 12, crrt: 0, dp: 0, sled: 0 },
+    acessos: { fav: 1, permcath: 2, cdl: 9 },
+    ic: [],
+    ts: Date.now()
+  },
+  {
+    semana: '2026-W13',
+    pac: 4,
+    sessoes: { hd: 6, crrt: 0, dp: 0, sled: 2 },
+    acessos: { fav: 1, permcath: 4, cdl: 3 },
+    ic: [{ nome: 'Hipotensão', qtd: 2 }, { nome: 'Desconforto respiratório', qtd: 1 }],
+    ts: Date.now()
+  },
+  {
+    semana: '2026-W14',
+    pac: 0,
+    sessoes: { hd: 3, crrt: 0, dp: 0, sled: 0 },
+    acessos: { fav: 0, permcath: 2, cdl: 1 },
+    ic: [],
+    ts: Date.now()
+  }
+];
+
+function showStatus(msg, type) {
+  const el = document.getElementById('status');
+  el.className = 'status ' + type;
+  el.innerHTML = msg;
+}
+
+function verificar() {
+  const existing = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+  const el = document.getElementById('existing-check');
+  if (existing.length === 0) {
+    el.innerHTML = '<div class="existing"><strong>localStorage vazio</strong> — pronto para importação.</div>';
+  } else {
+    const semanas = existing.map(h => h.semana).join(', ');
+    el.innerHTML = `<div class="existing"><strong>${existing.length} semana(s) existentes:</strong> ${semanas}</div>`;
+  }
+}
+
+function importar() {
+  try {
+    // Limpa dados anteriores e importa do zero
+    const sorted = [...DADOS].sort((a, b) => b.semana.localeCompare(a.semana));
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(sorted));
+
+    // Verificação
+    const check = JSON.parse(localStorage.getItem(STORAGE_KEY));
+    const totalPacFev = check.filter(s => s.semana.startsWith('2026-W08') || s.semana.startsWith('2026-W09')).reduce((a,s) => a + s.pac, 0);
+    const totalPacMar = check.filter(s => ['2026-W10','2026-W11','2026-W12','2026-W13','2026-W14'].includes(s.semana)).reduce((a,s) => a + s.pac, 0);
+    const totalSesFev = check.filter(s => s.semana.startsWith('2026-W08') || s.semana.startsWith('2026-W09')).reduce((a,s) => a + Object.values(s.sessoes).reduce((x,y)=>x+y,0), 0);
+    const totalSesMar = check.filter(s => ['2026-W10','2026-W11','2026-W12','2026-W13','2026-W14'].includes(s.semana)).reduce((a,s) => a + Object.values(s.sessoes).reduce((x,y)=>x+y,0), 0);
+
+    showStatus(
+      `✓ Importação concluída — 7 semanas gravadas.<br><br>` +
+      `<strong>Verificação:</strong><br>` +
+      `Fev: ${totalPacFev} pacientes · ${totalSesFev} sessões ${totalPacFev===4 && totalSesFev===14 ? '✓' : '✕'}<br>` +
+      `Mar: ${totalPacMar} pacientes · ${totalSesMar} sessões ${totalPacMar===13 && totalSesMar===54 ? '✓' : '✕'}<br><br>` +
+      `Abra o <strong>Dashboard TRS Agudo</strong> e gere Fevereiro ou Março 2026.`,
+      'ok'
+    );
+
+    document.getElementById('btn-import').disabled = true;
+    document.getElementById('btn-import').textContent = '✓ Importado';
+    verificar();
+  } catch (e) {
+    showStatus('✕ Erro: ' + e.message, 'err');
+  }
+}
+
+document.addEventListener('DOMContentLoaded', verificar);
+</script>
+</body>
+</html>
