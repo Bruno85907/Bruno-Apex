@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Anti-inflamatório e rim — Dr. Bruno Biluca</title>
+<meta name="description" content="O que acontece com seus rins cada vez que você toma ibuprofeno. Por Dr. Bruno Biluca, nefrologista.">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Space+Grotesk:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --gold:#B99454;--gold-dim:#FDF8F0;--gold-bd:#EDD9A3;--gold-txt:#7A6030;
+  --dark:#111111;--dark2:#333333;--mid:#555555;--muted:#888888;
+  --border:#E8E8E8;--bg:#F5F5F5;--white:#FFFFFF;
+  --green:#2D7A4F;--red-soft:#C0392B;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:'Space Grotesk',sans-serif;background:var(--white);color:var(--dark);min-height:100vh;}
+
+nav{background:rgba(255,255,255,0.97);border-bottom:1px solid var(--border);padding:0 48px;height:58px;display:flex;align-items:center;gap:20px;position:sticky;top:0;z-index:100;backdrop-filter:blur(8px);}
+.nav-logo{font-family:'Cinzel',serif;font-size:13px;font-weight:700;color:var(--gold);letter-spacing:6px;text-decoration:none;}
+.nav-sep{width:1px;height:22px;background:var(--border);}
+.nav-section{font-family:'Cinzel',serif;font-size:11px;letter-spacing:3px;color:var(--muted);text-transform:uppercase;}
+.nav-back{margin-left:auto;font-family:'Cinzel',serif;font-size:10px;letter-spacing:2px;color:var(--muted);text-decoration:none;transition:color .2s;}
+.nav-back:hover{color:var(--gold);}
+
+.artigo-hero{padding:64px 0 0;border-bottom:1px solid var(--border);background:var(--white);}
+.artigo-hero-inner{max-width:780px;margin:0 auto;padding:0 40px 52px;}
+.artigo-cat-breadcrumb{display:flex;align-items:center;gap:10px;margin-bottom:20px;}
+.breadcrumb-link{font-family:'Cinzel',serif;font-size:10px;letter-spacing:2px;color:var(--muted);text-decoration:none;transition:color .2s;}
+.breadcrumb-link:hover{color:var(--gold);}
+.breadcrumb-sep{color:var(--border);font-size:12px;}
+.breadcrumb-current{font-family:'Cinzel',serif;font-size:10px;letter-spacing:2px;color:var(--gold);}
+.artigo-cat-tag{display:inline-block;background:var(--gold-dim);border:1px solid var(--gold-bd);color:var(--gold-txt);font-family:'Cinzel',serif;font-size:9px;letter-spacing:2px;padding:4px 14px;border-radius:20px;margin-bottom:20px;}
+.artigo-titulo{font-family:'Cormorant Garamond',serif;font-size:clamp(30px,5vw,52px);font-weight:300;color:var(--dark);line-height:1.1;margin-bottom:16px;}
+.artigo-titulo em{color:var(--gold);font-style:italic;}
+.artigo-subtitulo{font-family:'Cormorant Garamond',serif;font-size:clamp(16px,2vw,20px);font-weight:300;font-style:italic;color:var(--mid);line-height:1.65;margin-bottom:32px;}
+.artigo-meta-bar{display:flex;align-items:center;gap:16px;flex-wrap:wrap;padding-top:24px;border-top:1px solid var(--border);}
+.meta-autor{display:flex;align-items:center;gap:10px;}
+.meta-autor-avatar{width:38px;height:38px;border-radius:50%;background:var(--gold-dim);border:1.5px solid var(--gold-bd);display:flex;align-items:center;justify-content:center;font-family:'Cinzel',serif;font-size:12px;color:var(--gold-txt);font-weight:700;}
+.meta-autor-name{font-family:'Space Grotesk',sans-serif;font-size:13px;font-weight:500;color:var(--dark);}
+.meta-autor-title{font-family:'Space Grotesk',sans-serif;font-size:11px;color:var(--muted);}
+.meta-sep{width:1px;height:32px;background:var(--border);}
+.meta-info{font-family:'Space Grotesk',sans-serif;font-size:12px;color:var(--muted);}
+.meta-info strong{color:var(--dark2);}
+
+.artigo-body{max-width:780px;margin:0 auto;padding:60px 40px;}
+.artigo-body p{font-family:'Cormorant Garamond',serif;font-size:19px;font-weight:400;color:var(--dark2);line-height:1.85;margin-bottom:24px;}
+.artigo-body h2{font-family:'Cinzel',serif;font-size:12px;font-weight:600;letter-spacing:3px;color:var(--gold);text-transform:uppercase;margin:52px 0 20px;display:flex;align-items:center;gap:12px;}
+.artigo-body h2::after{content:'';flex:1;height:1px;background:var(--border);}
+.artigo-body strong{color:var(--dark);font-weight:600;}
+.artigo-body em{color:var(--gold-txt);font-style:italic;}
+
+.artigo-quote{border-left:3px solid var(--gold);padding:20px 28px;margin:36px 0;background:var(--gold-dim);border-radius:0 8px 8px 0;}
+.artigo-quote p{font-family:'Cormorant Garamond',serif;font-size:21px;font-style:italic;color:var(--gold-txt);line-height:1.65;margin-bottom:0;}
+
+.artigo-destaque-box{background:var(--bg);border:1px solid var(--border);border-left:3px solid var(--gold);border-radius:0 10px 10px 0;padding:28px 32px;margin:36px 0;}
+.artigo-destaque-box h4{font-family:'Cinzel',serif;font-size:10px;letter-spacing:3px;color:var(--gold);text-transform:uppercase;margin-bottom:16px;}
+.artigo-destaque-box ul{list-style:none;display:flex;flex-direction:column;gap:12px;}
+.artigo-destaque-box li{font-family:'Cormorant Garamond',serif;font-size:17px;color:var(--dark2);display:flex;align-items:flex-start;gap:12px;line-height:1.65;}
+.artigo-destaque-box li::before{content:'→';color:var(--gold);flex-shrink:0;margin-top:2px;}
+
+.artigo-alerta{background:#FEF5F5;border:1px solid rgba(192,57,43,0.15);border-left:3px solid var(--red-soft);border-radius:0 10px 10px 0;padding:28px 32px;margin:36px 0;}
+.artigo-alerta h4{font-family:'Cinzel',serif;font-size:10px;letter-spacing:3px;color:var(--red-soft);text-transform:uppercase;margin-bottom:16px;}
+.artigo-alerta ul{list-style:none;display:flex;flex-direction:column;gap:10px;}
+.artigo-alerta li{font-family:'Cormorant Garamond',serif;font-size:17px;color:var(--dark2);display:flex;align-items:flex-start;gap:12px;line-height:1.65;}
+.artigo-alerta li::before{content:'⚠';flex-shrink:0;font-size:14px;}
+
+.artigo-resumo{background:var(--gold-dim);border:1px solid var(--gold-bd);border-radius:10px;padding:32px 36px;margin:48px 0;}
+.artigo-resumo h4{font-family:'Cinzel',serif;font-size:10px;letter-spacing:3px;color:var(--gold-txt);text-transform:uppercase;margin-bottom:20px;}
+.artigo-resumo ul{list-style:none;display:flex;flex-direction:column;gap:12px;}
+.artigo-resumo li{font-family:'Cormorant Garamond',serif;font-size:17px;color:var(--dark2);display:flex;align-items:flex-start;gap:12px;line-height:1.65;}
+.artigo-resumo li::before{content:'✓';color:var(--green);font-size:14px;flex-shrink:0;margin-top:3px;}
+
+.artigo-cta{background:var(--dark);border-radius:10px;padding:36px 40px;margin:48px 0;text-align:center;}
+.artigo-cta p{font-family:'Cormorant Garamond',serif;font-size:20px;font-style:italic;color:rgba(255,255,255,0.80);line-height:1.7;margin-bottom:20px;}
+.artigo-cta a{display:inline-block;font-family:'Cinzel',serif;font-size:10px;letter-spacing:3px;color:var(--dark);background:var(--gold);padding:12px 28px;border-radius:4px;text-decoration:none;text-transform:uppercase;transition:opacity .2s;}
+.artigo-cta a:hover{opacity:0.88;}
+
+.artigo-refs{margin-top:52px;padding-top:32px;border-top:1px solid var(--border);}
+.artigo-refs h4{font-family:'Cinzel',serif;font-size:10px;letter-spacing:3px;color:var(--muted);text-transform:uppercase;margin-bottom:16px;}
+.artigo-refs ol{list-style:decimal;padding-left:20px;display:flex;flex-direction:column;gap:8px;}
+.artigo-refs li{font-family:'Space Grotesk',sans-serif;font-size:12px;color:var(--muted);line-height:1.6;}
+
+.artigo-share{display:flex;align-items:center;gap:12px;margin-top:48px;padding-top:32px;border-top:1px solid var(--border);flex-wrap:wrap;}
+.share-label{font-family:'Cinzel',serif;font-size:10px;letter-spacing:3px;color:var(--muted);text-transform:uppercase;}
+.share-btn{font-family:'Cinzel',serif;font-size:10px;letter-spacing:2px;color:var(--gold-txt);border:1px solid var(--gold-bd);padding:8px 16px;border-radius:20px;text-decoration:none;transition:all .2s;cursor:pointer;background:transparent;}
+.share-btn:hover{background:var(--gold-dim);border-color:var(--gold);}
+
+.artigo-nav{max-width:780px;margin:0 auto;padding:40px 40px 64px;display:flex;justify-content:space-between;gap:16px;border-top:1px solid var(--border);}
+.artigo-nav-link{font-family:'Cinzel',serif;font-size:10px;letter-spacing:2px;color:var(--gold);text-decoration:none;display:flex;flex-direction:column;gap:4px;transition:opacity .2s;}
+.artigo-nav-link:hover{opacity:0.75;}
+.artigo-nav-link span{font-family:'Cormorant Garamond',serif;font-size:15px;font-style:italic;color:var(--mid);font-weight:400;}
+
+@media(max-width:700px){
+  nav{padding:0 20px;}
+  .artigo-hero-inner,.artigo-body,.artigo-nav{padding-left:24px;padding-right:24px;}
+  .artigo-body p{font-size:17px;}
+  .artigo-titulo{font-size:28px;}
+  .artigo-cta{padding:28px 24px;}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">APEX</a>
+  <div class="nav-sep"></div>
+  <span class="nav-section">Saúde & Performance</span>
+  <a href="portal_saude_performance.html" class="nav-back">← Voltar aos artigos</a>
+</nav>
+
+<div class="artigo-hero">
+  <div class="artigo-hero-inner">
+    <div class="artigo-cat-breadcrumb">
+      <a href="portal_saude_performance.html" class="breadcrumb-link">Saúde & Performance</a>
+      <span class="breadcrumb-sep">›</span>
+      <a href="portal_saude_performance.html" class="breadcrumb-link">Medicamentos & Rim</a>
+      <span class="breadcrumb-sep">›</span>
+      <span class="breadcrumb-current">Artigo</span>
+    </div>
+    <span class="artigo-cat-tag">Medicamentos · Doença Renal</span>
+    <h1 class="artigo-titulo">
+      O que acontece com seus rins<br>
+      <em>cada vez que você toma anti-inflamatório?</em>
+    </h1>
+    <p class="artigo-subtitulo">
+      77% dos brasileiros já se automedicaram com anti-inflamatório sem orientação médica. O ibuprofeno é o mais vendido da classe — sem receita, sem aviso. O que ele faz nos seus rins merece uma conversa honesta.
+    </p>
+    <div class="artigo-meta-bar">
+      <div class="meta-autor">
+        <div class="meta-autor-avatar">BB</div>
+        <div>
+          <div class="meta-autor-name">Dr. Bruno Biluca</div>
+          <div class="meta-autor-title">Nefrologista · CRM-SP 151.041 · RQE 70145</div>
+        </div>
+      </div>
+      <div class="meta-sep"></div>
+      <div class="meta-info"><strong>Medicamentos & Rim</strong></div>
+      <div class="meta-sep"></div>
+      <div class="meta-info">⏱ 5 min de leitura</div>
+      <div class="meta-sep"></div>
+      <div class="meta-info">Abril 2026</div>
+    </div>
+  </div>
+</div>
+
+<div class="artigo-body">
+
+  <h2>Um frasco com mil comprimidos</h2>
+  <p>Existe, à venda em farmácias e sites de e-commerce, um frasco de ibuprofeno com mil comprimidos. Não é para uso hospitalar. É para o consumidor comum.</p>
+  <p>Esse detalhe diz mais sobre a nossa relação com o medicamento do que qualquer bula. Uma pesquisa do Conselho Federal de Farmácia mostrou que mais de 77% dos brasileiros já se automedicaram com anti-inflamatório sem orientação médica. O ibuprofeno é o mais consumido da classe — disponível sem receita, barato, e com uma reputação de inofensivo que a medicina levou décadas para questionar.</p>
+  <div class="artigo-quote">
+    <p>"Doutor, tomei só um que fica em cima da geladeira." — Dita com leveza, quase como desculpa. Mas o que acontece nos seus rins nas horas seguintes a essa dose merece uma conversa honesta.</p>
+  </div>
+
+  <h2>Os rins não são apenas um filtro</h2>
+  <p>Antes de falar sobre o medicamento, preciso explicar uma coisa sobre como os rins funcionam — e porque eles são mais vulneráveis do que parecem.</p>
+  <p>Seus dois rins filtram, juntos, cerca de 180 litros de sangue por dia. Para fazer isso com eficiência, eles precisam de uma pressão muito precisa dentro dos seus próprios vasos internos. Não a pressão do braço que se mede no consultório — uma pressão interna, microscópica, controlada por substâncias que o próprio rim produz.</p>
+  <p>Entre essas substâncias estão as <strong>prostaglandinas</strong>. Elas funcionam como reguladores locais de pressão: quando o fluxo de sangue para os rins cai — por desidratação, por uma pressão arterial baixa, por qualquer estresse circulatório — as prostaglandinas agem para dilatar os vasos renais e manter o filtro funcionando. É um mecanismo de proteção que trabalha em silêncio, o tempo todo.</p>
+
+  <h2>O que o anti-inflamatório faz quando entra na corrente sanguínea</h2>
+  <p>Os anti-inflamatórios não esteroidais — ibuprofeno, naproxeno, diclofenaco, cetoprofeno, entre outros — funcionam bloqueando as enzimas responsáveis pela produção de prostaglandinas. É exatamente esse bloqueio que alivia a dor e a inflamação. O problema é que esse bloqueio não é seletivo: atinge as prostaglandinas do joelho inflamado <em>e</em> as prostaglandinas dos rins.</p>
+  <p>Quando isso acontece, os vasos renais perdem sua capacidade de autorregulação. O fluxo de sangue que chega ao filtro cai. A taxa de filtração diminui. Em pessoas com rins saudáveis e bem hidratadas, o organismo consegue compensar essa queda temporária sem deixar rastros.</p>
+  <p>Mas em quem já tem algum grau de vulnerabilidade renal, esse mecanismo de compensação pode não ser suficiente.</p>
+
+  <h2>Quem corre mais risco — e por quê</h2>
+  <p>Não existe dose completamente segura de anti-inflamatório para determinados grupos.</p>
+  <div class="artigo-destaque-box">
+    <h4>Grupos de maior risco</h4>
+    <ul>
+      <li><strong>Hipertensos</strong> usam com frequência medicamentos que já alteram o fluxo renal: inibidores da ECA (captopril, enalapril e etc.), bloqueadores do receptor da angiotensina, diuréticos. A combinação com um anti-inflamatório cria uma pressão tripla sobre os rins — e pode reduzir o efeito dos anti-hipertensivos.</li>
+      <li><strong>Diabéticos</strong> frequentemente já têm algum grau de lesão nos pequenos vasos renais, mesmo antes de qualquer exame mostrar alteração. Os rins ainda funcionam bem no papel — mas têm uma reserva menor para lidar com qualquer agressão adicional.</li>
+      <li><strong>Pacientes com doença renal crônica</strong>, em qualquer estágio, têm rins que já trabalham com capacidade reduzida. Qualquer queda adicional na filtração pode acelerar a progressão da doença.</li>
+      <li><strong>Idosos</strong> combinam vários desses fatores: mais doenças crônicas, mais medicamentos, menor reserva renal associada à própria idade, e maior suscetibilidade à desidratação.</li>
+      <li><strong>Pessoas desidratadas</strong> — seja por diarreia, vômito, calor intenso ou simplesmente por não beber água suficiente — têm os rins funcionando com pressão de perfusão reduzida. Exatamente o momento em que as prostaglandinas são mais necessárias. Exatamente o momento em que um anti-inflamatório faz mais estrago.</li>
+    </ul>
+  </div>
+
+  <h2>O que pode acontecer na prática</h2>
+  <p>O desfecho mais comum é uma <strong>insuficiência renal aguda</strong> — uma queda brusca na função dos rins que, na maioria das vezes, é reversível se o medicamento for suspenso a tempo. Os sinais costumam ser sutis: inchaço nos tornozelos, diminuição do volume de urina, cansaço fora do comum, pressão que sobe sem explicação.</p>
+  <p>Menos frequente, mas possível, é a <strong>nefrite intersticial</strong> — uma reação inflamatória dentro do tecido renal que pode persistir mesmo após suspender o medicamento.</p>
+  <p>Em uso crônico — aqueles casos em que o anti-inflamatório virou rotina para dor nas costas, artrose ou enxaqueca frequente — o risco é de <strong>nefropatia por analgésico</strong>: uma lesão progressiva e silenciosa que vai comprometendo a função renal ao longo de meses ou anos.</p>
+
+  <h2>O que você pode tomar no lugar</h2>
+  <p>A pergunta que invariavelmente vem depois dessa explicação é: <em>"Então o que eu tomo, doutor?"</em></p>
+  <p><strong>Paracetamol</strong> é a primeira escolha para dor e febre em quem tem risco renal — desde que usado nas doses corretas e sem frequência excessiva. Não é inofensivo em doses altas (tem seu próprio impacto hepático), mas não interfere nas prostaglandinas renais da mesma forma que os anti-inflamatórios.</p>
+  <p><strong>Dipirona</strong> tem perfil renal mais favorável para uso pontual, embora também não seja isenta de riscos em uso prolongado e em doses elevadas.</p>
+  <p>O que não tem substituto fácil é o controle da causa da dor. Artrose, tendinite, lombalgia crônica — tratar com anti-inflamatório repetido é tratar o sintoma enquanto o problema avança. Fisioterapia, controle de peso, atividade física adequada e, quando indicado, outras classes de medicamentos costumam oferecer mais resultado com menos custo renal.</p>
+
+  <h2>Três perguntas antes de abrir a cartela</h2>
+  <p>Antes de tomar o próximo anti-inflamatório, vale se fazer três perguntas simples:</p>
+  <div class="artigo-destaque-box">
+    <h4>Verifique antes de tomar</h4>
+    <ul>
+      <li>Tenho pressão alta, diabetes ou alguma alteração no exame de rim?</li>
+      <li>Estou tomando diurético, captopril, losartana ou similar?</li>
+      <li>Estou bem hidratado hoje?</li>
+    </ul>
+  </div>
+  <p>Se a resposta para qualquer uma dessas for sim — ou se você simplesmente não sabe — essa é uma conversa que vale ter com um médico antes de repetir o hábito.</p>
+
+  <div class="artigo-alerta">
+    <h4>⚠ Atenção</h4>
+    <ul>
+      <li>Os rins não doem quando estão sendo lesados. Essa é a característica mais traiçoeira da doença renal: ela avança em silêncio, enquanto a vida continua normal.</li>
+      <li>A maioria dos meus pacientes só descobre que algo estava errado quando o exame de rotina mostra uma creatinina que já não era nova.</li>
+    </ul>
+  </div>
+
+  <div class="artigo-resumo">
+    <h4>Pontos essenciais deste artigo</h4>
+    <ul>
+      <li>77% dos brasileiros já tomaram anti-inflamatório sem orientação — o ibuprofeno é o mais consumido, sem receita.</li>
+      <li>Os anti-inflamatórios bloqueiam as prostaglandinas renais, reduzindo o fluxo de sangue e comprometendo a autorregulação dos rins.</li>
+      <li>Hipertensos, diabéticos, pacientes com DRC, idosos e pessoas desidratadas correm risco significativamente maior.</li>
+      <li>Os desfechos vão de insuficiência renal aguda (reversível) à nefropatia por analgésico (progressiva e silenciosa) em uso crônico.</li>
+      <li>Paracetamol e dipirona têm perfil renal mais favorável para uso pontual em quem tem risco renal.</li>
+      <li>Os rins não doem quando estão sendo lesados — a lesão aparece só no exame de rotina, meses ou anos depois.</li>
+    </ul>
+  </div>
+
+  <div class="artigo-cta">
+    <p>Se você tem dúvida sobre como os medicamentos que usa habitualmente afetam sua função renal — ou quer entender melhor o que seus exames significam — essa conversa pode fazer diferença antes que os números mudem.</p>
+    <a href="https://wa.me/5511999999999" target="_blank">Agendar consulta</a>
+  </div>
+
+  <div class="artigo-refs">
+    <h4>Referências</h4>
+    <ol>
+      <li>Conselho Federal de Farmácia. Pesquisa sobre automedicação no Brasil. Brasília, 2023.</li>
+      <li>Whelton A. Nephrotoxicity of nonsteroidal anti-inflammatory drugs. Am J Med. 1999;106(5B):13S–24S.</li>
+      <li>Harirforoosh S, Jamali F. Renal adverse effects of nonsteroidal anti-inflammatory drugs. Expert Opin Drug Saf. 2009;8(6):669–681.</li>
+      <li>KDIGO 2022 Clinical Practice Guideline for Diabetes Management in Chronic Kidney Disease. Kidney Int. 2022;102(5S):S1–S127.</li>
+      <li>Ungprasert P, et al. Individual non-steroidal anti-inflammatory drugs and risk of acute kidney injury. Eur J Intern Med. 2015;26(4):285–291.</li>
+    </ol>
+  </div>
+
+  <div class="artigo-share">
+    <span class="share-label">Compartilhar</span>
+    <a href="https://wa.me/?text=O que acontece com seus rins cada vez que você toma anti-inflamatório — Dr. Bruno Biluca: https://apex.med.br/artigo_antiinflamatorio_rim.html" target="_blank" class="share-btn">WhatsApp</a>
+    <a href="https://www.linkedin.com/sharing/share-offsite/?url=https://apex.med.br/artigo_antiinflamatorio_rim.html" target="_blank" class="share-btn">LinkedIn</a>
+    <button class="share-btn" onclick="navigator.clipboard.writeText(window.location.href);this.textContent='Copiado!';setTimeout(()=>this.textContent='Copiar link',2000)">Copiar link</button>
+  </div>
+
+</div>
+
+<div class="artigo-nav">
+  <a href="portal_saude_performance.html" class="artigo-nav-link prev">
+    ← Voltar
+    <span>Todos os artigos</span>
+  </a>
+  <a href="artigo_exercicio_drc.html" class="artigo-nav-link next">
+    Próximo artigo →
+    <span>Exercício na doença renal crônica</span>
+  </a>
+</div>
+
+</body>
+</html>

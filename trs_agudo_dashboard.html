@@ -293,6 +293,7 @@ function top3Border(i){
   return['#C85B2A','#2460A7','#2D6A4F'][i];
 }
 
+function diasNoMes(mes){const[a,mm]=mes.split('-');return new Date(parseInt(a),parseInt(mm),0).getDate();}
 function pct(v,t){return t>0?Math.round(v/t*100)+'%':'0%';}
 function taxa(v,t){return t>0?(v/t*100).toFixed(1):'-';}
 
@@ -317,7 +318,7 @@ function gerar(){
   const icAntMap=agAnt?agAnt.totIC:{};
 
   const mediaSessPac=totPac>0?(totSess/totPac).toFixed(1):'-';
-  const mediaSessDia=diasComSessao>0?(totSess/diasComSessao).toFixed(1):'-';
+  const mediaSessDia=totSess>0?(totSess/diasNoMes(mes)).toFixed(1):'-';
   const taxaGlobal=taxa(totICval,totSess);
   const icList=Object.entries(totIC).sort((a,b)=>b[1]-a[1]);
   const maxIC=icList.length>0?icList[0][1]:1;
@@ -345,7 +346,7 @@ function gerar(){
       <div class="kpi-card">
         <div class="kpi-lbl">Sessões / Dia</div>
         <div class="kpi-val">${mediaSessDia}</div>
-        <div class="kpi-sub">média por dia com sessões</div>
+        <div class="kpi-sub">média diária no mês</div>
       </div>
     </div>
 
