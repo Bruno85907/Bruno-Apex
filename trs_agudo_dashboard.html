@@ -486,5 +486,19 @@ document.addEventListener('DOMContentLoaded',()=>{
   document.getElementById('mes-ref').value=`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}`;
 });
 </script>
+
+<!-- Embed: esconde nav quando carregado dentro do portal -->
+<script>
+(function(){
+  var ps=new URLSearchParams(window.location.search);
+  if(ps.get("embed")==="1"){
+    document.addEventListener("DOMContentLoaded",function(){
+      var navs=document.querySelectorAll(".apex-nav,nav,.portal-nav,.nav");
+      navs.forEach(function(n){n.style.display="none";});
+      document.body.style.paddingTop="0";
+    });
+  }
+})();
+</script>
 </body>
 </html>

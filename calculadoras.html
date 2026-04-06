@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Calculadoras Clínicas — Dr. Bruno Biluca</title>
-<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?display=swap" rel="stylesheet">
 <style>
 :root {
   --navy:#0D1B35; --navy-mid:#1B2A4A; --navy-light:#243357;
@@ -15,24 +15,24 @@
   --bad:#A32D2D; --bad-bg:rgba(163,45,45,0.15);
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
-body{font-family:'Inter',sans-serif;background:var(--navy);color:var(--white);min-height:100vh;}
+body{font-family:'Space Grotesk',sans-serif;background:var(--navy);color:var(--white);min-height:100vh;}
 
-nav{background:var(--navy-mid);border-bottom:2px solid rgba(212,168,71,0.12);padding:0 48px;height:58px;display:flex;align-items:center;gap:20px;position:sticky;top:0;z-index:100;}
-.nav-logo{font-family:'Cinzel',serif;font-size:14px;font-weight:700;color:var(--gold);letter-spacing:3px;text-decoration:none;}
-.nav-sep{width:1px;height:22px;background:rgba(212,168,71,0.2);}
-.nav-section{font-family:'Cinzel',serif;font-size:13px;letter-spacing:3px;color:var(--muted);text-transform:uppercase;}
-.nav-back{margin-left:auto;font-family:'Cinzel',serif;font-size:13px;letter-spacing:2px;color:rgba(212,168,71,0.7);text-decoration:none;transition:color .2s;}
-.nav-back:hover{color:var(--gold);}
+nav{background:#FFF;border-bottom:1px solid #e8e6e1;padding:0 32px;height:52px;display:flex;align-items:center;gap:16px;position:sticky;top:0;z-index:100;}
+.nav-logo{font-size:12px;font-weight:700;color:#B99454;letter-spacing:5px;text-transform:uppercase;text-decoration:none;flex-shrink:0;}
+.nav-sep{width:1px;height:16px;background:#e8e6e1;}
+.nav-section{font-size:11px;font-weight:500;color:#777;letter-spacing:1.5px;text-transform:uppercase;}
+.nav-back{margin-left:auto;font-size:11px;font-weight:500;color:#777;letter-spacing:1px;text-decoration:none;transition:color .2s;}
+.nav-back:hover{color:#B99454;}
 
 .page{max-width:1200px;margin:0 auto;padding:52px 48px;}
-.page-eyebrow{font-family:'Cinzel',serif;font-size:13px;letter-spacing:3px;color:var(--gold);margin-bottom:12px;text-transform:uppercase;}
-.page-title{font-family:'Cormorant Garamond',serif;font-size:clamp(28px,4vw,44px);font-weight:300;color:var(--white);margin-bottom:8px;line-height:1.2;}
+.page-eyebrow{font-family:'Space Grotesk',sans-serif;font-size:13px;letter-spacing:3px;color:var(--gold);margin-bottom:12px;text-transform:uppercase;}
+.page-title{font-family:'Space Grotesk',sans-serif;font-size:clamp(28px,4vw,44px);font-weight:300;color:var(--white);margin-bottom:8px;line-height:1.2;}
 .page-title em{color:var(--gold-pale);font-style:italic;}
-.page-sub{font-family:'Cormorant Garamond',serif;font-size:17px;font-style:italic;color:var(--muted);margin-bottom:52px;}
+.page-sub{font-family:'Space Grotesk',sans-serif;font-size:17px;font-style:italic;color:var(--muted);margin-bottom:52px;}
 
 /* Tabs */
 .tabs{display:flex;gap:4px;margin-bottom:36px;flex-wrap:wrap;}
-.tab{font-family:'Cinzel',serif;font-size:13px;letter-spacing:2px;color:var(--muted);background:transparent;border:1px solid rgba(212,168,71,0.15);border-radius:6px;padding:8px 16px;cursor:pointer;transition:all .2s;text-transform:uppercase;}
+.tab{font-family:'Space Grotesk',sans-serif;font-size:13px;letter-spacing:2px;color:var(--muted);background:transparent;border:1px solid rgba(212,168,71,0.15);border-radius:6px;padding:8px 16px;cursor:pointer;transition:all .2s;text-transform:uppercase;}
 .tab.active{background:rgba(212,168,71,0.12);color:var(--gold);border-color:rgba(212,168,71,0.65);}
 .tab:hover:not(.active){color:var(--gold-pale);border-color:rgba(212,168,71,0.25);}
 
@@ -44,15 +44,15 @@ nav{background:var(--navy-mid);border-bottom:2px solid rgba(212,168,71,0.12);pad
 .calc-form{background:var(--navy-mid);border:1px solid rgba(212,168,71,0.1);border-radius:16px;padding:36px;}
 .calc-result{background:var(--navy-mid);border:1px solid rgba(212,168,71,0.1);border-radius:16px;padding:36px;display:flex;flex-direction:column;}
 
-.calc-title{font-family:'Cinzel',serif;font-size:14px;font-weight:600;color:var(--white);letter-spacing:2px;margin-bottom:6px;}
-.calc-subtitle{font-family:'Cormorant Garamond',serif;font-size:15px;font-style:italic;color:var(--muted);margin-bottom:28px;}
+.calc-title{font-family:'Space Grotesk',sans-serif;font-size:14px;font-weight:600;color:var(--white);letter-spacing:2px;margin-bottom:6px;}
+.calc-subtitle{font-family:'Space Grotesk',sans-serif;font-size:15px;font-style:italic;color:var(--muted);margin-bottom:28px;}
 
 .field{margin-bottom:18px;}
 .field label{display:block;font-size:14px;font-weight:500;color:var(--muted);letter-spacing:.05em;margin-bottom:7px;text-transform:uppercase;}
 .field input,.field select{
   width:100%;background:rgba(13,27,53,0.6);border:1px solid rgba(212,168,71,0.18);
   border-radius:8px;padding:11px 14px;font-size:14px;
-  font-family:'Inter',sans-serif;color:var(--white);outline:none;transition:border-color .2s;
+  font-family:'Space Grotesk',sans-serif;color:var(--white);outline:none;transition:border-color .2s;
 }
 .field input:focus,.field select:focus{border-color:var(--gold);}
 .field select option{background:var(--navy-mid);}
@@ -61,7 +61,7 @@ nav{background:var(--navy-mid);border-bottom:2px solid rgba(212,168,71,0.12);pad
 .btn-calc{
   width:100%;margin-top:8px;background:var(--gold-dark);color:var(--white);
   border:none;border-radius:8px;padding:13px;font-size:14px;font-weight:600;
-  font-family:'Cinzel',serif;letter-spacing:3px;text-transform:uppercase;
+  font-family:'Space Grotesk',sans-serif;letter-spacing:3px;text-transform:uppercase;
   cursor:pointer;transition:background .2s;
 }
 .btn-calc:hover{background:var(--gold);}
@@ -72,7 +72,7 @@ nav{background:var(--navy-mid);border-bottom:2px solid rgba(212,168,71,0.12);pad
   opacity:.65;text-align:center;gap:12px;
 }
 .result-empty svg{opacity:.75;}
-.result-empty p{font-family:'Cormorant Garamond',serif;font-size:16px;font-style:italic;color:var(--muted);}
+.result-empty p{font-family:'Space Grotesk',sans-serif;font-size:16px;font-style:italic;color:var(--muted);}
 
 .result-content{display:none;flex-direction:column;gap:20px;}
 .result-content.show{display:flex;}
@@ -82,25 +82,25 @@ nav{background:var(--navy-mid);border-bottom:2px solid rgba(212,168,71,0.12);pad
   background:rgba(13,27,53,0.5);border-radius:12px;
   border:1px solid rgba(212,168,71,0.1);
 }
-.result-num{font-family:'Cinzel',serif;font-size:48px;font-weight:700;color:var(--gold);line-height:1;}
-.result-unit{font-family:'Cormorant Garamond',serif;font-size:16px;font-style:italic;color:var(--muted);margin-top:6px;}
+.result-num{font-family:'Space Grotesk',sans-serif;font-size:48px;font-weight:700;color:var(--gold);line-height:1;}
+.result-unit{font-family:'Space Grotesk',sans-serif;font-size:16px;font-style:italic;color:var(--muted);margin-top:6px;}
 
 .result-stage{
   padding:16px 20px;border-radius:10px;
-  font-family:'Inter',sans-serif;font-size:13px;font-weight:500;
+  font-family:'Space Grotesk',sans-serif;font-size:13px;font-weight:500;
   display:flex;align-items:center;gap:10px;
 }
 .result-stage.ok{background:var(--ok-bg);color:#5DCB8A;border:1px solid rgba(45,106,79,0.3);}
 .result-stage.warn{background:var(--warn-bg);color:#E8B84A;border:1px solid rgba(156,100,0,0.3);}
 .result-stage.bad{background:var(--bad-bg);color:#F07070;border:1px solid rgba(163,45,45,0.3);}
 
-.result-info{font-family:'Cormorant Garamond',serif;font-size:15px;font-style:italic;color:var(--muted);line-height:1.7;}
+.result-info{font-family:'Space Grotesk',sans-serif;font-size:15px;font-style:italic;color:var(--muted);line-height:1.7;}
 
 .result-stages{margin-top:4px;}
 .stage-row{
   display:flex;justify-content:space-between;align-items:center;
   padding:8px 12px;border-radius:6px;margin-bottom:4px;
-  font-size:14px;font-family:'Inter',sans-serif;
+  font-size:14px;font-family:'Space Grotesk',sans-serif;
   border-left:3px solid transparent;
 }
 .stage-row.active-stage{background:rgba(212,168,71,0.08);border-left-color:var(--gold);}
@@ -121,7 +121,7 @@ nav{background:var(--navy-mid);border-bottom:2px solid rgba(212,168,71,0.12);pad
   <a href="index.html" class="nav-logo">APEX</a>
   <div class="nav-sep"></div>
   <span class="nav-section">Utilidades</span>
-  <a href="portal_profissionais.html" class="nav-back">← Profissionais</a>
+  <a href="javascript:history.back()" class="nav-back">← Voltar</a>
 </nav>
 
 <div class="page">
@@ -304,11 +304,11 @@ nav{background:var(--navy-mid);border-bottom:2px solid rgba(212,168,71,0.12);pad
       <!-- Toggle 4 vs 8 variáveis -->
       <div style="display:flex;gap:8px;margin-bottom:20px;">
         <button id="kfre-btn4" onclick="kfreMode(4)"
-          style="flex:1;padding:8px;border-radius:6px;font-family:'Cinzel',serif;font-size:13px;letter-spacing:2px;cursor:pointer;transition:all .2s;background:rgba(212,168,71,0.12);color:#D4A847;border:1px solid rgba(212,168,71,0.65);">
+          style="flex:1;padding:8px;border-radius:6px;font-family:'Space Grotesk',sans-serif;font-size:13px;letter-spacing:2px;cursor:pointer;transition:all .2s;background:rgba(212,168,71,0.12);color:#D4A847;border:1px solid rgba(212,168,71,0.65);">
           4 Variáveis
         </button>
         <button id="kfre-btn8" onclick="kfreMode(8)"
-          style="flex:1;padding:8px;border-radius:6px;font-family:'Cinzel',serif;font-size:13px;letter-spacing:2px;cursor:pointer;transition:all .2s;background:transparent;color:rgba(232,213,160,0.7);border:1px solid rgba(212,168,71,0.15);">
+          style="flex:1;padding:8px;border-radius:6px;font-family:'Space Grotesk',sans-serif;font-size:13px;letter-spacing:2px;cursor:pointer;transition:all .2s;background:transparent;color:rgba(232,213,160,0.7);border:1px solid rgba(212,168,71,0.15);">
           8 Variáveis
         </button>
       </div>
@@ -322,7 +322,7 @@ nav{background:var(--navy-mid);border-bottom:2px solid rgba(212,168,71,0.12);pad
       <!-- Campos extras — só visíveis no modo 8 -->
       <div id="kfre-extra" style="display:none;">
         <div style="height:1px;background:rgba(212,168,71,0.1);margin:14px 0;"></div>
-        <p style="font-size:13px;font-family:'Cinzel',serif;letter-spacing:2px;color:rgba(212,168,71,0.5);margin-bottom:12px;text-transform:uppercase;">Variáveis adicionais</p>
+        <p style="font-size:13px;font-family:'Space Grotesk',sans-serif;letter-spacing:2px;color:rgba(212,168,71,0.5);margin-bottom:12px;text-transform:uppercase;">Variáveis adicionais</p>
         <div class="field-row">
           <div class="field"><label>Albumina sérica (g/dL)</label><input type="number" id="kfre-alb" placeholder="3.5" step="0.1"></div>
           <div class="field"><label>Fósforo (mg/dL)</label><input type="number" id="kfre-fos" placeholder="4.0" step="0.1"></div>
@@ -333,7 +333,7 @@ nav{background:var(--navy-mid);border-bottom:2px solid rgba(212,168,71,0.12);pad
         </div>
       </div>
       <button class="btn-calc" onclick="calcKFRE()" style="margin-top:16px;">Calcular Risco</button>
-      <p id="kfre-formula-note" style="font-size:14px;color:rgba(232,213,160,0.65);margin-top:12px;font-family:'Cormorant Garamond',serif;font-style:italic;">Fórmula de 4 variáveis (Tangri et al., 2011)</p>
+      <p id="kfre-formula-note" style="font-size:14px;color:rgba(232,213,160,0.65);margin-top:12px;font-family:'Space Grotesk',sans-serif;font-style:italic;">Fórmula de 4 variáveis (Tangri et al., 2011)</p>
     </div>
     <div class="calc-result">
       <div class="result-empty" id="kfre-empty">
@@ -343,12 +343,12 @@ nav{background:var(--navy-mid);border-bottom:2px solid rgba(212,168,71,0.12);pad
       <div class="result-content" id="kfre-result">
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px;">
           <div class="result-value" style="padding:20px;">
-            <div style="font-size:14px;font-family:'Cinzel',serif;letter-spacing:2px;color:var(--muted);margin-bottom:8px;">2 ANOS</div>
+            <div style="font-size:14px;font-family:'Space Grotesk',sans-serif;letter-spacing:2px;color:var(--muted);margin-bottom:8px;">2 ANOS</div>
             <div class="result-num" id="kfre-2yr" style="font-size:36px;">—</div>
             <div class="result-unit">%</div>
           </div>
           <div class="result-value" style="padding:20px;">
-            <div style="font-size:14px;font-family:'Cinzel',serif;letter-spacing:2px;color:var(--muted);margin-bottom:8px;">5 ANOS</div>
+            <div style="font-size:14px;font-family:'Space Grotesk',sans-serif;letter-spacing:2px;color:var(--muted);margin-bottom:8px;">5 ANOS</div>
             <div class="result-num" id="kfre-5yr" style="font-size:36px;">—</div>
             <div class="result-unit">%</div>
           </div>
@@ -371,7 +371,7 @@ nav{background:var(--navy-mid);border-bottom:2px solid rgba(212,168,71,0.12);pad
       </div>
       <div class="field"><label>Raça</label><select id="mdrd-raca"><option value="other">Não negra</option><option value="black">Negra</option></select></div>
       <button class="btn-calc" onclick="calcMDRD()">Calcular</button>
-      <p style="font-size:14px;color:rgba(232,213,160,0.65);margin-top:12px;font-family:'Cormorant Garamond',serif;font-style:italic;">Nota: CKD-EPI 2021 é preferível ao MDRD na maioria dos casos clínicos.</p>
+      <p style="font-size:14px;color:rgba(232,213,160,0.65);margin-top:12px;font-family:'Space Grotesk',sans-serif;font-style:italic;">Nota: CKD-EPI 2021 é preferível ao MDRD na maioria dos casos clínicos.</p>
     </div>
     <div class="calc-result">
       <div class="result-empty" id="mdrd-empty">
@@ -401,7 +401,7 @@ nav{background:var(--navy-mid);border-bottom:2px solid rgba(212,168,71,0.12);pad
         <div class="field"><label>Sexo</label><select id="cc-sexo"><option value="M">Masculino</option><option value="F">Feminino</option></select></div>
       </div>
       <button class="btn-calc" onclick="calcCistC()">Calcular</button>
-      <p style="font-size:14px;color:rgba(232,213,160,0.65);margin-top:12px;font-family:'Cormorant Garamond',serif;font-style:italic;">Indicada quando há suspeita de creatinina não confiável (massa muscular alterada, amputados, desnutrição).</p>
+      <p style="font-size:14px;color:rgba(232,213,160,0.65);margin-top:12px;font-family:'Space Grotesk',sans-serif;font-style:italic;">Indicada quando há suspeita de creatinina não confiável (massa muscular alterada, amputados, desnutrição).</p>
     </div>
     <div class="calc-result">
       <div class="result-empty" id="cistc-empty">
@@ -847,6 +847,20 @@ function calcCistC() {
 
   showResult('cistc');
 }
+</script>
+
+<!-- Embed: esconde nav quando carregado dentro do portal -->
+<script>
+(function(){
+  var ps=new URLSearchParams(window.location.search);
+  if(ps.get("embed")==="1"){
+    document.addEventListener("DOMContentLoaded",function(){
+      var navs=document.querySelectorAll(".apex-nav,nav,.portal-nav,.nav");
+      navs.forEach(function(n){n.style.display="none";});
+      document.body.style.paddingTop="0";
+    });
+  }
+})();
 </script>
 </body>
 </html>

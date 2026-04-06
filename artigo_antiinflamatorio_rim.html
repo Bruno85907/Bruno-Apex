@@ -5,39 +5,39 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Anti-inflamatório e rim — Dr. Bruno Biluca</title>
 <meta name="description" content="O que acontece com seus rins cada vez que você toma ibuprofeno. Por Dr. Bruno Biluca, nefrologista.">
-<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Space+Grotesk:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
 :root{
   --gold:#B99454;--gold-dim:#FDF8F0;--gold-bd:#EDD9A3;--gold-txt:#7A6030;
   --dark:#111111;--dark2:#333333;--mid:#555555;--muted:#888888;
-  --border:#E8E8E8;--bg:#F5F5F5;--white:#FFFFFF;
+  --border:#e8e6e1;--bg:#F5F5F5;--white:#FFFFFF;
   --green:#2D7A4F;--red-soft:#C0392B;
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
 html{scroll-behavior:smooth;}
 body{font-family:'Space Grotesk',sans-serif;background:var(--white);color:var(--dark);min-height:100vh;}
 
-nav{background:rgba(255,255,255,0.97);border-bottom:1px solid var(--border);padding:0 48px;height:58px;display:flex;align-items:center;gap:20px;position:sticky;top:0;z-index:100;backdrop-filter:blur(8px);}
-.nav-logo{font-family:'Cinzel',serif;font-size:13px;font-weight:700;color:var(--gold);letter-spacing:6px;text-decoration:none;}
-.nav-sep{width:1px;height:22px;background:var(--border);}
-.nav-section{font-family:'Cinzel',serif;font-size:11px;letter-spacing:3px;color:var(--muted);text-transform:uppercase;}
-.nav-back{margin-left:auto;font-family:'Cinzel',serif;font-size:10px;letter-spacing:2px;color:var(--muted);text-decoration:none;transition:color .2s;}
-.nav-back:hover{color:var(--gold);}
+nav{background:#FFF;border-bottom:1px solid #e8e6e1;padding:0 32px;height:52px;display:flex;align-items:center;gap:16px;position:sticky;top:0;z-index:100;}
+.nav-logo{font-size:12px;font-weight:700;color:#B99454;letter-spacing:5px;text-transform:uppercase;text-decoration:none;flex-shrink:0;}
+.nav-sep{width:1px;height:16px;background:#e8e6e1;}
+.nav-section{font-size:11px;font-weight:500;color:#777;letter-spacing:1.5px;text-transform:uppercase;}
+.nav-back{margin-left:auto;font-size:11px;font-weight:500;color:#777;letter-spacing:1px;text-decoration:none;transition:color .2s;}
+.nav-back:hover{color:#B99454;}
 
 .artigo-hero{padding:64px 0 0;border-bottom:1px solid var(--border);background:var(--white);}
 .artigo-hero-inner{max-width:780px;margin:0 auto;padding:0 40px 52px;}
 .artigo-cat-breadcrumb{display:flex;align-items:center;gap:10px;margin-bottom:20px;}
-.breadcrumb-link{font-family:'Cinzel',serif;font-size:10px;letter-spacing:2px;color:var(--muted);text-decoration:none;transition:color .2s;}
+.breadcrumb-link{font-family:'Space Grotesk',sans-serif;font-size:10px;letter-spacing:2px;color:var(--muted);text-decoration:none;transition:color .2s;}
 .breadcrumb-link:hover{color:var(--gold);}
 .breadcrumb-sep{color:var(--border);font-size:12px;}
-.breadcrumb-current{font-family:'Cinzel',serif;font-size:10px;letter-spacing:2px;color:var(--gold);}
-.artigo-cat-tag{display:inline-block;background:var(--gold-dim);border:1px solid var(--gold-bd);color:var(--gold-txt);font-family:'Cinzel',serif;font-size:9px;letter-spacing:2px;padding:4px 14px;border-radius:20px;margin-bottom:20px;}
-.artigo-titulo{font-family:'Cormorant Garamond',serif;font-size:clamp(30px,5vw,52px);font-weight:300;color:var(--dark);line-height:1.1;margin-bottom:16px;}
+.breadcrumb-current{font-family:'Space Grotesk',sans-serif;font-size:10px;letter-spacing:2px;color:var(--gold);}
+.artigo-cat-tag{display:inline-block;background:var(--gold-dim);border:1px solid var(--gold-bd);color:var(--gold-txt);font-family:'Space Grotesk',sans-serif;font-size:9px;letter-spacing:2px;padding:4px 14px;border-radius:20px;margin-bottom:20px;}
+.artigo-titulo{font-family:'Space Grotesk',sans-serif;font-size:clamp(30px,5vw,52px);font-weight:300;color:var(--dark);line-height:1.1;margin-bottom:16px;}
 .artigo-titulo em{color:var(--gold);font-style:italic;}
-.artigo-subtitulo{font-family:'Cormorant Garamond',serif;font-size:clamp(16px,2vw,20px);font-weight:300;font-style:italic;color:var(--mid);line-height:1.65;margin-bottom:32px;}
+.artigo-subtitulo{font-family:'Space Grotesk',sans-serif;font-size:clamp(16px,2vw,20px);font-weight:300;font-style:italic;color:var(--mid);line-height:1.65;margin-bottom:32px;}
 .artigo-meta-bar{display:flex;align-items:center;gap:16px;flex-wrap:wrap;padding-top:24px;border-top:1px solid var(--border);}
 .meta-autor{display:flex;align-items:center;gap:10px;}
-.meta-autor-avatar{width:38px;height:38px;border-radius:50%;background:var(--gold-dim);border:1.5px solid var(--gold-bd);display:flex;align-items:center;justify-content:center;font-family:'Cinzel',serif;font-size:12px;color:var(--gold-txt);font-weight:700;}
+.meta-autor-avatar{width:38px;height:38px;border-radius:50%;background:var(--gold-dim);border:1.5px solid var(--gold-bd);display:flex;align-items:center;justify-content:center;font-family:'Space Grotesk',sans-serif;font-size:12px;color:var(--gold-txt);font-weight:700;}
 .meta-autor-name{font-family:'Space Grotesk',sans-serif;font-size:13px;font-weight:500;color:var(--dark);}
 .meta-autor-title{font-family:'Space Grotesk',sans-serif;font-size:11px;color:var(--muted);}
 .meta-sep{width:1px;height:32px;background:var(--border);}
@@ -45,52 +45,52 @@ nav{background:rgba(255,255,255,0.97);border-bottom:1px solid var(--border);padd
 .meta-info strong{color:var(--dark2);}
 
 .artigo-body{max-width:780px;margin:0 auto;padding:60px 40px;}
-.artigo-body p{font-family:'Cormorant Garamond',serif;font-size:19px;font-weight:400;color:var(--dark2);line-height:1.85;margin-bottom:24px;}
-.artigo-body h2{font-family:'Cinzel',serif;font-size:12px;font-weight:600;letter-spacing:3px;color:var(--gold);text-transform:uppercase;margin:52px 0 20px;display:flex;align-items:center;gap:12px;}
+.artigo-body p{font-family:'Space Grotesk',sans-serif;font-size:19px;font-weight:400;color:var(--dark2);line-height:1.85;margin-bottom:24px;}
+.artigo-body h2{font-family:'Space Grotesk',sans-serif;font-size:12px;font-weight:600;letter-spacing:3px;color:var(--gold);text-transform:uppercase;margin:52px 0 20px;display:flex;align-items:center;gap:12px;}
 .artigo-body h2::after{content:'';flex:1;height:1px;background:var(--border);}
 .artigo-body strong{color:var(--dark);font-weight:600;}
 .artigo-body em{color:var(--gold-txt);font-style:italic;}
 
 .artigo-quote{border-left:3px solid var(--gold);padding:20px 28px;margin:36px 0;background:var(--gold-dim);border-radius:0 8px 8px 0;}
-.artigo-quote p{font-family:'Cormorant Garamond',serif;font-size:21px;font-style:italic;color:var(--gold-txt);line-height:1.65;margin-bottom:0;}
+.artigo-quote p{font-family:'Space Grotesk',sans-serif;font-size:21px;font-style:italic;color:var(--gold-txt);line-height:1.65;margin-bottom:0;}
 
 .artigo-destaque-box{background:var(--bg);border:1px solid var(--border);border-left:3px solid var(--gold);border-radius:0 10px 10px 0;padding:28px 32px;margin:36px 0;}
-.artigo-destaque-box h4{font-family:'Cinzel',serif;font-size:10px;letter-spacing:3px;color:var(--gold);text-transform:uppercase;margin-bottom:16px;}
+.artigo-destaque-box h4{font-family:'Space Grotesk',sans-serif;font-size:10px;letter-spacing:3px;color:var(--gold);text-transform:uppercase;margin-bottom:16px;}
 .artigo-destaque-box ul{list-style:none;display:flex;flex-direction:column;gap:12px;}
-.artigo-destaque-box li{font-family:'Cormorant Garamond',serif;font-size:17px;color:var(--dark2);display:flex;align-items:flex-start;gap:12px;line-height:1.65;}
+.artigo-destaque-box li{font-family:'Space Grotesk',sans-serif;font-size:17px;color:var(--dark2);display:flex;align-items:flex-start;gap:12px;line-height:1.65;}
 .artigo-destaque-box li::before{content:'→';color:var(--gold);flex-shrink:0;margin-top:2px;}
 
 .artigo-alerta{background:#FEF5F5;border:1px solid rgba(192,57,43,0.15);border-left:3px solid var(--red-soft);border-radius:0 10px 10px 0;padding:28px 32px;margin:36px 0;}
-.artigo-alerta h4{font-family:'Cinzel',serif;font-size:10px;letter-spacing:3px;color:var(--red-soft);text-transform:uppercase;margin-bottom:16px;}
+.artigo-alerta h4{font-family:'Space Grotesk',sans-serif;font-size:10px;letter-spacing:3px;color:var(--red-soft);text-transform:uppercase;margin-bottom:16px;}
 .artigo-alerta ul{list-style:none;display:flex;flex-direction:column;gap:10px;}
-.artigo-alerta li{font-family:'Cormorant Garamond',serif;font-size:17px;color:var(--dark2);display:flex;align-items:flex-start;gap:12px;line-height:1.65;}
+.artigo-alerta li{font-family:'Space Grotesk',sans-serif;font-size:17px;color:var(--dark2);display:flex;align-items:flex-start;gap:12px;line-height:1.65;}
 .artigo-alerta li::before{content:'⚠';flex-shrink:0;font-size:14px;}
 
 .artigo-resumo{background:var(--gold-dim);border:1px solid var(--gold-bd);border-radius:10px;padding:32px 36px;margin:48px 0;}
-.artigo-resumo h4{font-family:'Cinzel',serif;font-size:10px;letter-spacing:3px;color:var(--gold-txt);text-transform:uppercase;margin-bottom:20px;}
+.artigo-resumo h4{font-family:'Space Grotesk',sans-serif;font-size:10px;letter-spacing:3px;color:var(--gold-txt);text-transform:uppercase;margin-bottom:20px;}
 .artigo-resumo ul{list-style:none;display:flex;flex-direction:column;gap:12px;}
-.artigo-resumo li{font-family:'Cormorant Garamond',serif;font-size:17px;color:var(--dark2);display:flex;align-items:flex-start;gap:12px;line-height:1.65;}
+.artigo-resumo li{font-family:'Space Grotesk',sans-serif;font-size:17px;color:var(--dark2);display:flex;align-items:flex-start;gap:12px;line-height:1.65;}
 .artigo-resumo li::before{content:'✓';color:var(--green);font-size:14px;flex-shrink:0;margin-top:3px;}
 
 .artigo-cta{background:var(--dark);border-radius:10px;padding:36px 40px;margin:48px 0;text-align:center;}
-.artigo-cta p{font-family:'Cormorant Garamond',serif;font-size:20px;font-style:italic;color:rgba(255,255,255,0.80);line-height:1.7;margin-bottom:20px;}
-.artigo-cta a{display:inline-block;font-family:'Cinzel',serif;font-size:10px;letter-spacing:3px;color:var(--dark);background:var(--gold);padding:12px 28px;border-radius:4px;text-decoration:none;text-transform:uppercase;transition:opacity .2s;}
+.artigo-cta p{font-family:'Space Grotesk',sans-serif;font-size:20px;font-style:italic;color:rgba(255,255,255,0.80);line-height:1.7;margin-bottom:20px;}
+.artigo-cta a{display:inline-block;font-family:'Space Grotesk',sans-serif;font-size:10px;letter-spacing:3px;color:var(--dark);background:var(--gold);padding:12px 28px;border-radius:4px;text-decoration:none;text-transform:uppercase;transition:opacity .2s;}
 .artigo-cta a:hover{opacity:0.88;}
 
 .artigo-refs{margin-top:52px;padding-top:32px;border-top:1px solid var(--border);}
-.artigo-refs h4{font-family:'Cinzel',serif;font-size:10px;letter-spacing:3px;color:var(--muted);text-transform:uppercase;margin-bottom:16px;}
+.artigo-refs h4{font-family:'Space Grotesk',sans-serif;font-size:10px;letter-spacing:3px;color:var(--muted);text-transform:uppercase;margin-bottom:16px;}
 .artigo-refs ol{list-style:decimal;padding-left:20px;display:flex;flex-direction:column;gap:8px;}
 .artigo-refs li{font-family:'Space Grotesk',sans-serif;font-size:12px;color:var(--muted);line-height:1.6;}
 
 .artigo-share{display:flex;align-items:center;gap:12px;margin-top:48px;padding-top:32px;border-top:1px solid var(--border);flex-wrap:wrap;}
-.share-label{font-family:'Cinzel',serif;font-size:10px;letter-spacing:3px;color:var(--muted);text-transform:uppercase;}
-.share-btn{font-family:'Cinzel',serif;font-size:10px;letter-spacing:2px;color:var(--gold-txt);border:1px solid var(--gold-bd);padding:8px 16px;border-radius:20px;text-decoration:none;transition:all .2s;cursor:pointer;background:transparent;}
+.share-label{font-family:'Space Grotesk',sans-serif;font-size:10px;letter-spacing:3px;color:var(--muted);text-transform:uppercase;}
+.share-btn{font-family:'Space Grotesk',sans-serif;font-size:10px;letter-spacing:2px;color:var(--gold-txt);border:1px solid var(--gold-bd);padding:8px 16px;border-radius:20px;text-decoration:none;transition:all .2s;cursor:pointer;background:transparent;}
 .share-btn:hover{background:var(--gold-dim);border-color:var(--gold);}
 
 .artigo-nav{max-width:780px;margin:0 auto;padding:40px 40px 64px;display:flex;justify-content:space-between;gap:16px;border-top:1px solid var(--border);}
-.artigo-nav-link{font-family:'Cinzel',serif;font-size:10px;letter-spacing:2px;color:var(--gold);text-decoration:none;display:flex;flex-direction:column;gap:4px;transition:opacity .2s;}
+.artigo-nav-link{font-family:'Space Grotesk',sans-serif;font-size:10px;letter-spacing:2px;color:var(--gold);text-decoration:none;display:flex;flex-direction:column;gap:4px;transition:opacity .2s;}
 .artigo-nav-link:hover{opacity:0.75;}
-.artigo-nav-link span{font-family:'Cormorant Garamond',serif;font-size:15px;font-style:italic;color:var(--mid);font-weight:400;}
+.artigo-nav-link span{font-family:'Space Grotesk',sans-serif;font-size:15px;font-style:italic;color:var(--mid);font-weight:400;}
 
 @media(max-width:700px){
   nav{padding:0 20px;}
@@ -107,7 +107,7 @@ nav{background:rgba(255,255,255,0.97);border-bottom:1px solid var(--border);padd
   <a href="index.html" class="nav-logo">APEX</a>
   <div class="nav-sep"></div>
   <span class="nav-section">Saúde & Performance</span>
-  <a href="portal_saude_performance.html" class="nav-back">← Voltar aos artigos</a>
+  <a href="javascript:history.back()" class="nav-back">← Voltar</a>
 </nav>
 
 <div class="artigo-hero">
@@ -256,5 +256,19 @@ nav{background:rgba(255,255,255,0.97);border-bottom:1px solid var(--border);padd
   </a>
 </div>
 
+
+<!-- Embed: esconde nav quando carregado dentro do portal -->
+<script>
+(function(){
+  var ps=new URLSearchParams(window.location.search);
+  if(ps.get("embed")==="1"){
+    document.addEventListener("DOMContentLoaded",function(){
+      var navs=document.querySelectorAll(".apex-nav,nav,.portal-nav,.nav");
+      navs.forEach(function(n){n.style.display="none";});
+      document.body.style.paddingTop="0";
+    });
+  }
+})();
+</script>
 </body>
 </html>

@@ -7,51 +7,47 @@
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
-body{font-family:'Space Grotesk',system-ui,sans-serif;background:#F5F5F5;color:#111;min-height:100vh;}
-.nav{background:#FFF;border-bottom:2px solid #2460A7;height:52px;display:flex;align-items:center;padding:0 32px;gap:16px;}
-.nav-logo{font-size:12px;font-weight:700;color:#2460A7;letter-spacing:5px;text-transform:uppercase;}
-.nav-div{width:1px;height:16px;background:#E8E8E8;}
-.nav-title{font-size:11px;font-weight:500;color:#555;letter-spacing:1.5px;text-transform:uppercase;}
+body{font-family:'Space Grotesk',system-ui,sans-serif;background:#f6f5f3;color:#111;min-height:100vh;}
 .page{max-width:1100px;margin:0 auto;padding:32px 28px;}
-.alert{background:#FFF7E6;border:1px solid #E8D5B0;border-left:4px solid #2460A7;border-radius:8px;padding:16px 20px;margin-bottom:24px;font-size:13px;color:#555;line-height:1.6;}
-.alert strong{color:#1A4070;}
-.alert code{background:#F0EBE3;padding:2px 6px;border-radius:4px;font-size:12px;color:#1A4070;}
-h2{font-size:16px;font-weight:600;color:#1A4070;margin:28px 0 14px;display:flex;align-items:center;gap:10px;}
-h2::after{content:'';flex:1;height:1px;background:#E8D5B0;}
+.alert{background:#FFF7E6;border:1px solid #e8e6e1;border-left:4px solid #2460A7;border-radius:8px;padding:16px 20px;margin-bottom:24px;font-size:13px;color:#555;line-height:1.6;}
+.alert strong{color:#2460A7;}
+.alert code{background:#F0EBE3;padding:2px 6px;border-radius:4px;font-size:12px;color:#2460A7;}
+h2{font-size:16px;font-weight:600;color:#2460A7;margin:28px 0 14px;display:flex;align-items:center;gap:10px;}
+h2::after{content:'';flex:1;height:1px;background:#e8e6e1;}
 .mes-label{font-size:11px;font-weight:600;color:#2460A7;letter-spacing:2px;text-transform:uppercase;margin:20px 0 10px;padding:6px 14px;background:rgba(36,96,167,0.06);border-radius:6px;display:inline-block;}
-table{width:100%;border-collapse:collapse;font-size:13px;margin-bottom:8px;background:#FFF;border-radius:10px;overflow:hidden;border:1px solid #E8D5B0;}
-thead th{font-size:10px;font-weight:600;color:#6B4E24;text-transform:uppercase;letter-spacing:.04em;padding:10px 8px;border-bottom:2px solid #2460A7;text-align:center;background:#F7F0E4;}
+table{width:100%;border-collapse:collapse;font-size:13px;margin-bottom:8px;background:#FFF;border-radius:10px;overflow:hidden;border:1px solid #e8e6e1;}
+thead th{font-size:10px;font-weight:600;color:#555;text-transform:uppercase;letter-spacing:.04em;padding:10px 8px;border-bottom:2px solid #2460A7;text-align:center;background:#f6f5f3;}
 thead th:first-child{text-align:left;padding-left:14px;}
-tbody td{padding:9px 8px;border-bottom:1px solid #F0E8DC;text-align:center;color:#333;}
-tbody td:first-child{text-align:left;font-weight:600;color:#1A4070;padding-left:14px;}
+tbody td{padding:9px 8px;border-bottom:1px solid #e8e6e1;text-align:center;color:#333;}
+tbody td:first-child{text-align:left;font-weight:600;color:#2460A7;padding-left:14px;}
 tbody tr:hover td{background:#FAF5EF;}
 .ic-cell{text-align:left!important;font-size:11px;line-height:1.5;}
-.ic-tag{display:inline-block;background:rgba(36,96,167,0.08);border:1px solid rgba(36,96,167,0.15);border-radius:4px;padding:2px 8px;margin:2px 3px;font-size:10px;color:#1A4070;white-space:nowrap;}
-.total-row td{font-weight:700;color:#1A4070;border-top:2px solid #2460A7;background:#F7F0E4;}
+.ic-tag{display:inline-block;background:rgba(36,96,167,0.08);border:1px solid rgba(36,96,167,0.15);border-radius:4px;padding:2px 8px;margin:2px 3px;font-size:10px;color:#2460A7;white-space:nowrap;}
+.total-row td{font-weight:700;color:#2460A7;border-top:2px solid #2460A7;background:#f6f5f3;}
 .actions{display:flex;gap:14px;margin:28px 0;justify-content:center;flex-wrap:wrap;}
 .btn{border:none;border-radius:8px;padding:14px 32px;font-family:'Space Grotesk',system-ui,sans-serif;font-size:13px;font-weight:600;letter-spacing:.04em;cursor:pointer;transition:all .2s;}
-.btn-primary{background:#1A4070;color:#FFF;}
+.btn-primary{background:#2460A7;color:#FFF;}
 .btn-primary:hover{background:#2460A7;}
 .btn-primary:disabled{background:#CCC;cursor:not-allowed;}
-.btn-secondary{background:transparent;color:#1A4070;border:1.5px solid #2460A7;}
-.btn-secondary:hover{background:#F7F0E4;}
+.btn-secondary{background:transparent;color:#2460A7;border:1.5px solid #2460A7;}
+.btn-secondary:hover{background:#f6f5f3;}
 .btn-danger{background:transparent;color:#C0392B;border:1.5px solid #C0392B;}
 .btn-danger:hover{background:rgba(192,57,43,0.05);}
 .status{text-align:center;padding:16px;font-size:14px;border-radius:10px;margin:18px 0;display:none;}
 .status.ok{display:block;background:#E8F5E9;border:1px solid #81C784;color:#2D7A4F;}
 .status.warn{display:block;background:#FFF3E0;border:1px solid #FFB74D;color:#9A6B1A;}
 .status.err{display:block;background:#FFEBEE;border:1px solid #EF9A9A;color:#C0392B;}
-.existing{margin:14px 0;padding:14px 18px;background:#FFF;border:1px solid #E8D5B0;border-radius:8px;font-size:12px;color:#555;}
-.existing strong{color:#1A4070;}
+.existing{margin:14px 0;padding:14px 18px;background:#FFF;border:1px solid #e8e6e1;border-radius:8px;font-size:12px;color:#555;}
+.existing strong{color:#2460A7;}
 .note{font-size:11px;color:#999;margin-top:4px;padding-left:14px;}
 </style>
 </head>
 <body>
 
-<div class="nav">
-  <span class="nav-logo">APEX</span>
-  <div class="nav-div"></div>
-  <span class="nav-title">Importação Corrigida — TRS Agudo · Mont Serrat</span>
+<nav class="apex-nav">
+  <a href="index.html" class="apex-nav-logo">APEX</a>
+  <div class="apex-nav-div"></div>
+  <span class="apex-nav-title">Importação — TRS Agudo · Mont Serrat</span><div class="apex-nav-space"></div><a href="javascript:history.back()" class="apex-nav-back">← Voltar</a>
 </div>
 
 <div class="page">
@@ -262,6 +258,20 @@ function importar() {
 }
 
 document.addEventListener('DOMContentLoaded', verificar);
+</script>
+
+<!-- Embed: esconde nav quando carregado dentro do portal -->
+<script>
+(function(){
+  var ps=new URLSearchParams(window.location.search);
+  if(ps.get("embed")==="1"){
+    document.addEventListener("DOMContentLoaded",function(){
+      var navs=document.querySelectorAll(".apex-nav,nav,.portal-nav,.nav");
+      navs.forEach(function(n){n.style.display="none";});
+      document.body.style.paddingTop="0";
+    });
+  }
+})();
 </script>
 </body>
 </html>

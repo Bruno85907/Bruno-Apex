@@ -111,9 +111,10 @@ function selecionar(i){
   document.querySelectorAll('.hospital-card').forEach(c=>c.classList.remove('selected'));
   document.getElementById(`hosp-${i}`).classList.add('selected');
   const h=HOSPITAIS[i];
+  const emb=new URLSearchParams(window.location.search).get('embed')==='1'?'&embed=1':'';
   document.getElementById('acoes-sep').textContent=`${h.nome} — ${h.cidade}`;
-  document.getElementById('btn-admin').href=`trs_agudo_admin.html?hospital=${h.id}&nome=${encodeURIComponent(h.nome)}`;
-  document.getElementById('btn-dash').href=`trs_agudo_dashboard.html?hospital=${h.id}&nome=${encodeURIComponent(h.nome)}`;
+  document.getElementById('btn-admin').href=`trs_agudo_admin.html?hospital=${h.id}&nome=${encodeURIComponent(h.nome)}${emb}`;
+  document.getElementById('btn-dash').href=`trs_agudo_dashboard.html?hospital=${h.id}&nome=${encodeURIComponent(h.nome)}${emb}`;
   document.getElementById('acoes').classList.add('visible');
   setTimeout(()=>document.getElementById('acoes').scrollIntoView({behavior:'smooth',block:'nearest'}),150);
 }
