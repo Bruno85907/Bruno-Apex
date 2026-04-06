@@ -7,8 +7,8 @@
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root{
-  --bg:#F5F5F5;--surface:#FFFFFF;--card:#FFFFFF;--card-hover:#FAFAFA;
-  --border:#E8E8E8;--border-hover:#D0D0D0;
+  --bg:#f6f5f3;--surface:#FFFFFF;--card:#FFFFFF;--card-hover:#FAFAFA;
+  --border:#e8e6e1;--border-hover:#D0D0D0;
   --gold:#B99454;--gold-dim:#FDF8F0;--gold-border:#EDD9A3;--gold-muted:rgba(185,148,84,0.65);
   --text-primary:#111111;--text-secondary:#555555;--text-muted:#999999;
   --white:#fff;--green:#2D7A4F;--blue:#1A6A9A;--red:#C0392B;
@@ -42,7 +42,7 @@ nav{background:var(--surface);border-bottom:1px solid var(--border);height:52px;
 .card.featured::after{opacity:0.5;}
 .card.disabled{opacity:0.4;cursor:default;pointer-events:none;}
 .card-meta{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;}
-.card-badge{font-size:8px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-muted);background:#F5F5F5;border:1px solid var(--border);padding:3px 9px;border-radius:4px;}
+.card-badge{font-size:8px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-muted);background:#f6f5f3;border:1px solid var(--border);padding:3px 9px;border-radius:4px;}
 .card-badge.lock{color:#7A6030;background:var(--gold-dim);border-color:var(--gold-border);}
 .card-badge.soon{color:var(--text-muted);}
 .card-icon{width:36px;height:36px;border-radius:7px;background:var(--gold-dim);border:1px solid var(--gold-border);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
@@ -260,13 +260,13 @@ nav{background:var(--surface);border-bottom:1px solid var(--border);height:52px;
 .rx-header{border-bottom:2px solid #111;padding-bottom:14px;margin-bottom:18px;}
 .rx-medico{font-size:13px;font-weight:700;color:#111;margin-bottom:2px;}
 .rx-crm{font-size:11px;color:#555;}
-.rx-paciente{font-size:12px;color:#333;margin-bottom:18px;padding:10px 0;border-bottom:1px solid #E8E8E8;}
+.rx-paciente{font-size:12px;color:#333;margin-bottom:18px;padding:10px 0;border-bottom:1px solid #e8e6e1;}
 .rx-items{margin-bottom:20px;}
 .rx-item{margin-bottom:14px;padding-bottom:14px;border-bottom:1px solid #F0F0F0;}
 .rx-item:last-child{border-bottom:none;}
 .rx-item-nome{font-size:13px;font-weight:700;color:#111;}
 .rx-item-dose{font-size:12px;color:#555;margin-top:2px;}
-.rx-footer{border-top:1px solid #E8E8E8;padding-top:14px;display:flex;justify-content:space-between;align-items:flex-end;}
+.rx-footer{border-top:1px solid #e8e6e1;padding-top:14px;display:flex;justify-content:space-between;align-items:flex-end;}
 .rx-assinatura{font-size:11px;color:#555;text-align:center;}
 .rx-linha{width:160px;border-top:1px solid #111;margin-bottom:4px;}
 .rx-actions{display:flex;gap:8px;margin-top:16px;justify-content:flex-end;}
@@ -283,7 +283,7 @@ nav{background:var(--surface);border-bottom:1px solid var(--border);height:52px;
   <a href="index.html" class="nav-logo">APEX</a>
   <div class="nav-div"></div>
   <span class="nav-section">Profissionais da Saúde</span>
-  <a href="index.html" class="nav-back">← Início</a>
+  <a href="javascript:history.back()" class="nav-back">← Voltar</a>
 </nav>
 
 <!-- HERO -->
@@ -1927,13 +1927,13 @@ function imprimirPrescricao(){
   .rx-header{border-bottom:2px solid #111;padding-bottom:14px;margin-bottom:18px;}
   .rx-medico{font-size:14px;font-weight:700;}
   .rx-crm{font-size:11px;color:#555;}
-  .rx-paciente{font-size:12px;color:#333;margin-bottom:18px;padding:10px 0;border-bottom:1px solid #E8E8E8;}
+  .rx-paciente{font-size:12px;color:#333;margin-bottom:18px;padding:10px 0;border-bottom:1px solid #e8e6e1;}
   .f-section{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:#999;margin:16px 0 8px;padding-bottom:5px;border-bottom:1px solid #EEE;}
   .rx-item{margin-bottom:14px;padding-bottom:14px;border-bottom:1px dashed #EEE;}
   .rx-item:last-child{border-bottom:none;}
   .rx-item-nome{font-size:13px;font-weight:700;}
   .rx-item-dose{font-size:12px;color:#555;margin-top:2px;}
-  .rx-footer{border-top:1px solid #E8E8E8;padding-top:14px;display:flex;justify-content:space-between;align-items:flex-end;margin-top:20px;}
+  .rx-footer{border-top:1px solid #e8e6e1;padding-top:14px;display:flex;justify-content:space-between;align-items:flex-end;margin-top:20px;}
   .rx-assinatura{text-align:center;font-size:11px;color:#555;}
   .rx-linha{width:160px;border-top:1px solid #111;margin-bottom:4px;}
   .rx-actions{display:none;}

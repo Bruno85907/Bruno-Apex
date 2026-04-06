@@ -7,13 +7,13 @@
 <style>
 
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
-body{font-family:'Space Grotesk',system-ui,sans-serif;background:#F5F5F5;color:#111;font-size:15px;}
+body{font-family:'Space Grotesk',system-ui,sans-serif;background:#f6f5f3;color:#111;font-size:15px;}
 .header{background:#fff;border-bottom:3px solid #BE9664;padding:18px 36px;display:flex;align-items:center;justify-content:space-between;}
 .header h1{font-size:24px;font-weight:600;color:#8B6914;}
 .header p{font-size:13px;color:#9C7A4A;margin-top:2px;}
 .header-logo{font-size:22px;font-weight:600;color:#BE9664;letter-spacing:.06em;}
 .mes-bar{background:#fff;padding:11px 36px;border-bottom:1px solid #E8D5B0;display:flex;align-items:center;gap:14px;}
-.mes-bar label{font-size:12px;color:#6B4E24;font-weight:600;text-transform:uppercase;letter-spacing:.04em;}
+.mes-bar label{font-size:12px;color:#555;font-weight:600;text-transform:uppercase;letter-spacing:.04em;}
 .mes-bar select{border:1.5px solid #BE9664;border-radius:8px;padding:5px 13px;font-size:13px;color:#8B6914;font-weight:600;background:#F7F0E4;cursor:pointer;outline:none;}
 .mes-info{font-size:11px;color:#9C7A4A;margin-left:auto;}
 .dashboard{max-width:1500px;margin:0 auto;padding:28px 36px;display:flex;flex-direction:column;gap:24px;}
@@ -23,11 +23,11 @@ body{font-family:'Space Grotesk',system-ui,sans-serif;background:#F5F5F5;color:#
 .sec-bar{height:2px;background:#BE9664;margin-bottom:18px;}
 .cards-vol{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:10px;margin-bottom:22px;}
 .card-vol{background:#F7F0E4;border-radius:12px;border-left:4px solid #BE9664;padding:14px 16px;}
-.card-vol .lbl{font-size:13px;color:#6B4E24;margin:0 0 6px;font-weight:600;text-transform:uppercase;letter-spacing:.04em;}
+.card-vol .lbl{font-size:13px;color:#555;margin:0 0 6px;font-weight:600;text-transform:uppercase;letter-spacing:.04em;}
 .card-vol .val{font-size:38px;font-weight:600;margin:0;color:#1c1c1e;line-height:1;}
 .charts-row{display:grid;grid-template-columns:1fr 1fr;gap:22px;}
 .chart-ttl{font-size:15px;font-weight:600;color:#1c1c1e;margin-bottom:8px;}
-.chart-leg{display:flex;flex-wrap:wrap;gap:12px;margin-bottom:9px;font-size:12px;color:#6B4E24;}
+.chart-leg{display:flex;flex-wrap:wrap;gap:12px;margin-bottom:9px;font-size:12px;color:#555;}
 .chart-leg span{display:flex;align-items:center;gap:4px;}
 .ldot{width:10px;height:10px;border-radius:2px;display:inline-block;flex-shrink:0;}
 .lline{width:16px;height:3px;display:inline-block;flex-shrink:0;}
@@ -35,7 +35,7 @@ canvas{display:block;width:100%;}
 .cards-def{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-bottom:18px;}
 .card-def{background:#F7F0E4;border-radius:12px;padding:14px 16px;}
 .card-def .top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:7px;gap:4px;}
-.card-def .dlbl{font-size:12px;color:#6B4E24;margin:0;font-weight:600;text-transform:uppercase;letter-spacing:.04em;flex:1;line-height:1.3;}
+.card-def .dlbl{font-size:12px;color:#555;margin:0;font-weight:600;text-transform:uppercase;letter-spacing:.04em;flex:1;line-height:1.3;}
 .badge{font-size:11px;padding:3px 10px;border-radius:20px;font-weight:600;white-space:nowrap;flex-shrink:0;}
 .b-ok{background:#D8F3DC;color:#2D6A4F;}
 .b-bad{background:#FCEBEB;color:#A32D2D;}
@@ -44,12 +44,12 @@ canvas{display:block;width:100%;}
 .int-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
 .int-card{background:#F7F0E4;border-radius:12px;padding:18px;display:flex;flex-direction:column;align-items:center;}
 .pizza-card{background:#F7F0E4;border-radius:12px;padding:18px;}
-.pizza-leg{display:flex;flex-wrap:wrap;gap:9px;margin-bottom:12px;font-size:12px;color:#6B4E24;justify-content:center;}
+.pizza-leg{display:flex;flex-wrap:wrap;gap:9px;margin-bottom:12px;font-size:12px;color:#555;justify-content:center;}
 .pizza-leg span{display:flex;align-items:center;gap:3px;}
 .analytic-box{margin-top:16px;background:#FFFDF9;border-radius:10px;border-left:4px solid #BE9664;padding:14px 18px;}
 .analytic-box .atitle{font-size:12px;font-weight:600;color:#8B6914;margin:0 0 8px;display:flex;align-items:center;gap:8px;}
 .analytic-box .atitle span{font-size:10px;background:#F7F0E4;color:#9C7A4A;padding:2px 8px;border-radius:20px;font-weight:400;}
-.analytic-box textarea{width:100%;border:1px solid #E8D5B0;border-radius:8px;padding:10px 12px;font-size:13px;color:#3D2B0E;background:#fff;resize:vertical;min-height:70px;font-family:inherit;line-height:1.6;outline:none;}
+.analytic-box textarea{width:100%;border:1px solid #E8D5B0;border-radius:8px;padding:10px 12px;font-size:13px;color:#3a3a3a;background:#fff;resize:vertical;min-height:70px;font-family:inherit;line-height:1.6;outline:none;}
 .analytic-box textarea:focus{border-color:#BE9664;}
 .analytic-box .ai-btn{background:#8B6914;color:#fff;border:none;border-radius:8px;padding:7px 16px;font-size:12px;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:6px;margin-top:8px;}
 .analytic-box .ai-btn:hover{background:#A67C3D;}
@@ -58,10 +58,10 @@ canvas{display:block;width:100%;}
 
 /* ── BARRA DE NAVEGAÇÃO PORTAL ── */
 .portal-nav {
-  background: #0D1B35;
-  border-bottom: 1px solid rgba(212,168,71,0.15);
+  background: #FFFFFF;
+  border-bottom: 1px solid #e8e6e1;
   padding: 0 32px;
-  height: 48px;
+  height: 52px;
   display: flex;
   align-items: center;
   gap: 8px;
@@ -70,15 +70,16 @@ canvas{display:block;width:100%;}
   z-index: 200;
 }
 .portal-nav-logo {
-  font-family: 'Georgia', serif;
-  font-size: 14px;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 12px;
   font-weight: 700;
-  color: #D4A847;
-  letter-spacing: 6px;
+  color: #B99454;
+  letter-spacing: 5px;
+  text-transform: uppercase;
   margin-right: 16px;
   text-decoration: none;
 }
-.portal-nav-sep { width: 1px; height: 20px; background: rgba(212,168,71,0.2); margin: 0 8px; }
+.portal-nav-sep { width: 1px; height: 16px; background: #e8e6e1; margin: 0 8px; }
 .portal-nav-btn {
   display: flex;
   align-items: center;
@@ -92,21 +93,21 @@ canvas{display:block;width:100%;}
   cursor: pointer;
   border: none;
   transition: all .2s;
-  font-family: 'Georgia', serif;
+  font-family: 'Space Grotesk', sans-serif;
 }
 .portal-nav-btn.active {
-  background: rgba(212,168,71,0.15);
-  color: #D4A847;
-  border: 1px solid rgba(212,168,71,0.3);
+  background: rgba(185,148,84,0.1);
+  color: #B99454;
+  border: 1px solid rgba(185,148,84,0.25);
 }
 .portal-nav-btn.inactive {
   background: transparent;
-  color: rgba(232,213,160,0.45);
+  color: #777;
   border: 1px solid transparent;
 }
 .portal-nav-btn.inactive:hover {
-  color: #D4A847;
-  border-color: rgba(212,168,71,0.2);
+  color: #B99454;
+  border-color: rgba(185,148,84,0.2);
 }
 .portal-nav-back {
   margin-left: auto;
@@ -114,13 +115,13 @@ canvas{display:block;width:100%;}
   align-items: center;
   gap: 6px;
   font-size: 11px;
-  color: rgba(212,168,71,0.4);
+  color: #777;
   text-decoration: none;
-  font-family: 'Georgia', serif;
+  font-family: 'Space Grotesk', sans-serif;
   letter-spacing: 1px;
   transition: color .2s;
 }
-.portal-nav-back:hover { color: #D4A847; }
+.portal-nav-back:hover { color: #B99454; }
 
 @media print{
   body{background:#fff;}
@@ -140,25 +141,25 @@ canvas{display:block;width:100%;}
 <!-- BARRA NAVEGAÇÃO PORTAL -->
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-.apex-nav{background:#161616;border-bottom:1px solid #2A2A2A;height:52px;display:flex;align-items:center;padding:0 32px;gap:16px;position:sticky;top:0;z-index:100;font-family:'Space Grotesk',system-ui,sans-serif;}
+.apex-nav{background:#FFF;border-bottom:1px solid #e8e6e1;height:52px;display:flex;align-items:center;padding:0 32px;gap:16px;position:sticky;top:0;z-index:100;font-family:'Space Grotesk',system-ui,sans-serif;}
 .apex-nav-logo{font-size:12px;font-weight:700;color:#B99454;letter-spacing:5px;text-transform:uppercase;text-decoration:none;flex-shrink:0;}
-.apex-nav-div{width:1px;height:16px;background:#2A2A2A;flex-shrink:0;}
-.apex-nav-title{font-size:11px;font-weight:500;color:rgba(240,237,232,0.4);letter-spacing:1.5px;text-transform:uppercase;}
+.apex-nav-div{width:1px;height:16px;background:#e8e6e1;flex-shrink:0;}
+.apex-nav-title{font-size:11px;font-weight:500;color:#777;letter-spacing:1.5px;text-transform:uppercase;}
 .apex-nav-space{flex:1;}
-.apex-nav-back{font-size:11px;font-weight:600;color:rgba(240,237,232,0.4);letter-spacing:1px;text-decoration:none;background:none;border:1px solid #2A2A2A;cursor:pointer;font-family:inherit;padding:5px 14px;border-radius:5px;transition:color .2s,border-color .2s;}
-.apex-nav-back:hover{color:#B99454;border-color:rgba(185,148,84,0.3);}
+.apex-nav-back{font-size:11px;font-weight:500;color:#777;letter-spacing:1px;text-decoration:none;transition:color .2s;}
+.apex-nav-back:hover{color:#B99454;}
 </style>
 <nav class="apex-nav">
-  <a href="portal_profissionais.html" class="apex-nav-logo">APEX</a>
+  <a href="index.html" class="apex-nav-logo">APEX</a>
   <div class="apex-nav-div"></div>
   <span class="apex-nav-title">Dashboard — TRS Crônico</span>
   <div class="apex-nav-space"></div>
-  <a href="portal_profissionais.html" class="apex-nav-back">← Voltar</a>
+  <a href="javascript:history.back()" class="apex-nav-back">← Voltar</a>
 </nav>
 
 <!-- FILTRO DE UNIDADE -->
-<div style="background:#fff;border-bottom:1px solid #e8ddd0;padding:10px 36px;display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
-  <span style="font-size:11px;font-weight:600;color:#9C7A4A;letter-spacing:1px;text-transform:uppercase;margin-right:4px;">Visualizar:</span>
+<div style="background:#fff;border-bottom:1px solid #e8e6e1;padding:10px 36px;display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
+  <span style="font-size:11px;font-weight:600;color:#777;letter-spacing:1px;text-transform:uppercase;margin-right:4px;">Visualizar:</span>
   <button class="filtro-unid active" id="fu-rede" onclick="filtrarUnidade('rede')">⬡ Rede Completa</button>
   <button class="filtro-unid" id="fu-rl" onclick="filtrarUnidade('rl')">RL</button>
   <button class="filtro-unid" id="fu-santos" onclick="filtrarUnidade('santos')">Santos</button>
@@ -252,13 +253,13 @@ canvas{display:block;width:100%;}
     </div>
     <div class="int-row">
       <div class="int-card">
-        <p style="font-size:10px;font-weight:600;color:#6B4E24;text-transform:uppercase;letter-spacing:.04em;margin:0 0 10px;">Taxa de Internação — Rede</p>
+        <p style="font-size:10px;font-weight:600;color:#555;text-transform:uppercase;letter-spacing:.04em;margin:0 0 10px;">Taxa de Internação — Rede</p>
         <canvas id="gauge" height="140" style="max-width:240px;"></canvas>
         <p style="font-size:34px;font-weight:600;color:#1c1c1e;margin:4px 0 0;line-height:1;" id="v-int-pct">—</p>
         <span class="badge" id="bg-int"></span>
       </div>
       <div class="pizza-card">
-        <p style="font-size:10px;font-weight:600;color:#6B4E24;text-transform:uppercase;letter-spacing:.04em;margin:0 0 10px;text-align:center;">Causas de Internação</p>
+        <p style="font-size:10px;font-weight:600;color:#555;text-transform:uppercase;letter-spacing:.04em;margin:0 0 10px;text-align:center;">Causas de Internação</p>
         <div class="pizza-leg">
           <span><span class="ldot" style="background:#04342C;"></span>Metabólica</span>
           <span><span class="ldot" style="background:#0F6E56;"></span>Infecção</span>
@@ -307,7 +308,7 @@ canvas{display:block;width:100%;}
     <div style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;">
 
       <div style="background:#F7F0E4;border-radius:10px;border-top:3px solid #BE9664;padding:10px 12px;">
-        <p style="font-size:13px;font-weight:600;color:#6B4E24;text-transform:uppercase;letter-spacing:.04em;margin:0 0 8px;">Fósforo ≤5,5 mg/dl</p>
+        <p style="font-size:13px;font-weight:600;color:#555;text-transform:uppercase;letter-spacing:.04em;margin:0 0 8px;">Fósforo ≤5,5 mg/dl</p>
         <div style="display:flex;align-items:center;gap:10px;">
           <div style="flex-shrink:0;width:66px;height:66px;"><canvas id="dn-fos" width="66" height="66" style="width:66px;height:66px;display:block;"></canvas></div>
           <div style="flex:1;min-width:0;overflow:hidden;">
@@ -319,7 +320,7 @@ canvas{display:block;width:100%;}
       </div>
 
       <div style="background:#F7F0E4;border-radius:10px;border-top:3px solid #BE9664;padding:10px 12px;">
-        <p style="font-size:13px;font-weight:600;color:#6B4E24;text-transform:uppercase;letter-spacing:.04em;margin:0 0 8px;">Potássio &lt;6,0 mmol/L</p>
+        <p style="font-size:13px;font-weight:600;color:#555;text-transform:uppercase;letter-spacing:.04em;margin:0 0 8px;">Potássio &lt;6,0 mmol/L</p>
         <div style="display:flex;align-items:center;gap:10px;">
           <div style="flex-shrink:0;width:66px;height:66px;"><canvas id="dn-pot" width="66" height="66" style="width:66px;height:66px;display:block;"></canvas></div>
           <div style="flex:1;min-width:0;overflow:hidden;">
@@ -331,7 +332,7 @@ canvas{display:block;width:100%;}
       </div>
 
       <div style="background:#F7F0E4;border-radius:10px;border-top:3px solid #BE9664;padding:10px 12px;">
-        <p style="font-size:13px;font-weight:600;color:#6B4E24;text-transform:uppercase;letter-spacing:.04em;margin:0 0 8px;">Albumina ≥3,5 mg/dl ★</p>
+        <p style="font-size:13px;font-weight:600;color:#555;text-transform:uppercase;letter-spacing:.04em;margin:0 0 8px;">Albumina ≥3,5 mg/dl ★</p>
         <div style="display:flex;align-items:center;gap:10px;">
           <div style="flex-shrink:0;width:66px;height:66px;"><canvas id="dn-alb" width="66" height="66" style="width:66px;height:66px;display:block;"></canvas></div>
           <div style="flex:1;min-width:0;overflow:hidden;">
@@ -343,7 +344,7 @@ canvas{display:block;width:100%;}
       </div>
 
       <div style="background:#F7F0E4;border-radius:10px;border-top:3px solid #BE9664;padding:10px 12px;">
-        <p style="font-size:13px;font-weight:600;color:#6B4E24;text-transform:uppercase;letter-spacing:.04em;margin:0 0 8px;">IMC eutrófico ★</p>
+        <p style="font-size:13px;font-weight:600;color:#555;text-transform:uppercase;letter-spacing:.04em;margin:0 0 8px;">IMC eutrófico ★</p>
         <div style="display:flex;align-items:center;gap:10px;">
           <div style="flex-shrink:0;width:66px;height:66px;"><canvas id="dn-imc" width="66" height="66" style="width:66px;height:66px;display:block;"></canvas></div>
           <div style="flex:1;min-width:0;overflow:hidden;">
@@ -378,7 +379,7 @@ canvas{display:block;width:100%;}
     </div>
     <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:10px;">
       <div style="background:#F7F0E4;border-radius:10px;border-top:3px solid #BE9664;padding:10px 12px;">
-        <p style="font-size:10px;font-weight:600;color:#6B4E24;text-transform:uppercase;letter-spacing:.04em;margin:0 0 8px;">Kt/V ≥1,2</p>
+        <p style="font-size:10px;font-weight:600;color:#555;text-transform:uppercase;letter-spacing:.04em;margin:0 0 8px;">Kt/V ≥1,2</p>
         <div style="display:flex;align-items:center;gap:8px;">
           <div style="flex-shrink:0;width:72px;height:72px;"><canvas id="dn-ktv" width="72" height="72" style="width:72px;height:72px;display:block;"></canvas></div>
           <div style="flex:1;min-width:0;overflow:hidden;">
@@ -389,7 +390,7 @@ canvas{display:block;width:100%;}
         </div>
       </div>
       <div style="background:#F7F0E4;border-radius:10px;border-top:3px solid #BE9664;padding:10px 12px;">
-        <p style="font-size:13px;font-weight:600;color:#6B4E24;text-transform:uppercase;letter-spacing:.04em;margin:0 0 8px;">Vol. Convectivo ≥69L</p>
+        <p style="font-size:13px;font-weight:600;color:#555;text-transform:uppercase;letter-spacing:.04em;margin:0 0 8px;">Vol. Convectivo ≥69L</p>
         <div style="display:flex;align-items:center;gap:8px;">
           <div style="flex-shrink:0;width:72px;height:72px;"><canvas id="dn-vol" width="72" height="72" style="width:72px;height:72px;display:block;"></canvas></div>
           <div style="flex:1;min-width:0;overflow:hidden;">
@@ -400,13 +401,13 @@ canvas{display:block;width:100%;}
         </div>
       </div>
       <div style="background:#F7F0E4;border-radius:10px;border-top:3px solid #BE9664;padding:10px 12px;display:flex;flex-direction:column;align-items:center;">
-        <p style="font-size:13px;font-weight:600;color:#6B4E24;text-transform:uppercase;letter-spacing:.04em;margin:0 0 6px;text-align:center;">FAV / Prótese</p>
+        <p style="font-size:13px;font-weight:600;color:#555;text-transform:uppercase;letter-spacing:.04em;margin:0 0 6px;text-align:center;">FAV / Prótese</p>
         <canvas id="gauge-fav" height="90" style="max-width:160px;width:100%;"></canvas>
         <p style="font-size:34px;font-weight:600;color:#1c1c1e;margin:4px 0 0;line-height:1;" id="v-fav">—</p>
         <span class="badge" id="bg-fav"></span>
       </div>
       <div style="background:#F7F0E4;border-radius:10px;border-top:3px solid #BE9664;padding:10px 12px;">
-        <p style="font-size:13px;font-weight:600;color:#6B4E24;text-transform:uppercase;letter-spacing:.04em;margin:0 0 8px;">FAV / Prótese</p>
+        <p style="font-size:13px;font-weight:600;color:#555;text-transform:uppercase;letter-spacing:.04em;margin:0 0 8px;">FAV / Prótese</p>
         <div style="display:flex;align-items:center;gap:8px;">
           <div style="flex-shrink:0;width:72px;height:72px;"><canvas id="dn-fav" width="72" height="72" style="width:72px;height:72px;display:block;"></canvas></div>
           <div style="flex:1;min-width:0;overflow:hidden;">
@@ -450,7 +451,7 @@ canvas{display:block;width:100%;}
 
         <!-- Card velocímetro Hemoglobina -->
         <div style="background:#F7F0E4;border-radius:10px;border-top:3px solid #BE9664;padding:14px;display:flex;flex-direction:column;align-items:center;">
-          <p style="font-size:13px;font-weight:600;color:#6B4E24;text-transform:uppercase;letter-spacing:.04em;margin:0 0 6px;">Hemoglobina 10-12 g/dL (% conformidade)</p>
+          <p style="font-size:13px;font-weight:600;color:#555;text-transform:uppercase;letter-spacing:.04em;margin:0 0 6px;">Hemoglobina 10-12 g/dL (% conformidade)</p>
           <canvas id="gauge-hb" height="100" style="max-width:180px;width:100%;"></canvas>
           <p style="font-size:34px;font-weight:600;color:#1c1c1e;margin:4px 0 0;line-height:1;" id="v-hb">—</p>
           <span class="badge" id="bg-hb"></span>
@@ -458,7 +459,7 @@ canvas{display:block;width:100%;}
 
         <!-- Card CBD hemoglobina -->
         <div style="background:#F7F0E4;border-radius:10px;border-top:3px solid #BE9664;padding:10px 12px;">
-          <p style="font-size:13px;font-weight:600;color:#6B4E24;text-transform:uppercase;letter-spacing:.04em;margin:0 0 8px;">Hemoglobina — Comparativo CBD</p>
+          <p style="font-size:13px;font-weight:600;color:#555;text-transform:uppercase;letter-spacing:.04em;margin:0 0 8px;">Hemoglobina — Comparativo CBD</p>
           <div style="display:flex;align-items:center;gap:8px;">
             <div style="flex-shrink:0;width:66px;height:66px;"><canvas id="dn-hb" width="66" height="66" style="width:66px;height:66px;display:block;"></canvas></div>
             <div style="flex:1;min-width:0;overflow:hidden;">
@@ -486,21 +487,21 @@ canvas{display:block;width:100%;}
     <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;">
 
       <div style="background:#F7F0E4;border-radius:10px;border-top:3px solid #BE9664;padding:12px;display:flex;flex-direction:column;align-items:center;">
-        <p style="font-size:13px;font-weight:600;color:#6B4E24;text-transform:uppercase;letter-spacing:.04em;margin:0 0 6px;text-align:center;">Ganho de Peso Interdialítico</p>
+        <p style="font-size:13px;font-weight:600;color:#555;text-transform:uppercase;letter-spacing:.04em;margin:0 0 6px;text-align:center;">Ganho de Peso Interdialítico</p>
         <canvas id="gauge-gpid" height="100" style="max-width:180px;width:100%;"></canvas>
         <p style="font-size:34px;font-weight:600;color:#1c1c1e;margin:4px 0 0;line-height:1;" id="v-gpid">—</p>
         <span class="badge" id="bg-gpid" style="margin-top:5px;"></span>
       </div>
 
       <div style="background:#F7F0E4;border-radius:10px;border-top:3px solid #BE9664;padding:12px;display:flex;flex-direction:column;align-items:center;">
-        <p style="font-size:13px;font-weight:600;color:#6B4E24;text-transform:uppercase;letter-spacing:.04em;margin:0 0 6px;text-align:center;">Água Extracelular (ECW) &lt;15%</p>
+        <p style="font-size:13px;font-weight:600;color:#555;text-transform:uppercase;letter-spacing:.04em;margin:0 0 6px;text-align:center;">Água Extracelular (ECW) &lt;15%</p>
         <canvas id="gauge-ecw" height="100" style="max-width:180px;width:100%;"></canvas>
         <p style="font-size:34px;font-weight:600;color:#1c1c1e;margin:4px 0 0;line-height:1;" id="v-ecw">—</p>
         <span class="badge" id="bg-ecw" style="margin-top:5px;"></span>
       </div>
 
       <div style="background:#F7F0E4;border-radius:10px;border-top:3px solid #BE9664;padding:12px;display:flex;flex-direction:column;align-items:center;">
-        <p style="font-size:13px;font-weight:600;color:#6B4E24;text-transform:uppercase;letter-spacing:.04em;margin:0 0 6px;text-align:center;">Hb Glicada ★</p>
+        <p style="font-size:13px;font-weight:600;color:#555;text-transform:uppercase;letter-spacing:.04em;margin:0 0 6px;text-align:center;">Hb Glicada ★</p>
         <canvas id="gauge-hbg" height="100" style="max-width:180px;width:100%;"></canvas>
         <p style="font-size:34px;font-weight:600;color:#1c1c1e;margin:4px 0 0;line-height:1;" id="v-hbg">—</p>
         <span class="badge" id="bg-hbg" style="margin-top:5px;"></span>
@@ -523,7 +524,7 @@ canvas{display:block;width:100%;}
 
       <!-- Ângulo de fase -->
       <div style="background:#F7F0E4;border-radius:10px;border-top:3px solid #BE9664;padding:12px;">
-        <p style="font-size:13px;font-weight:600;color:#6B4E24;text-transform:uppercase;letter-spacing:.04em;margin:0 0 8px;">Ângulo de Fase &gt;4°</p>
+        <p style="font-size:13px;font-weight:600;color:#555;text-transform:uppercase;letter-spacing:.04em;margin:0 0 8px;">Ângulo de Fase &gt;4°</p>
         <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
           <span style="font-size:32px;font-weight:600;" id="v-ang">—</span>
           <span class="badge" id="bg-ang"></span>
@@ -538,7 +539,7 @@ canvas{display:block;width:100%;}
 
       <!-- Fisioterapia -->
       <div style="background:#F7F0E4;border-radius:10px;border-top:3px solid #BE9664;padding:12px;">
-        <p style="font-size:13px;font-weight:600;color:#6B4E24;text-transform:uppercase;letter-spacing:.04em;margin:0 0 8px;">Fisioterapia</p>
+        <p style="font-size:13px;font-weight:600;color:#555;text-transform:uppercase;letter-spacing:.04em;margin:0 0 8px;">Fisioterapia</p>
         <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
           <span style="font-size:32px;font-weight:600;" id="v-fis">—</span>
           <span class="badge" id="bg-fis"></span>
@@ -553,7 +554,7 @@ canvas{display:block;width:100%;}
 
       <!-- PTH com CBD -->
       <div style="background:#F7F0E4;border-radius:10px;border-top:3px solid #BE9664;padding:12px;">
-        <p style="font-size:13px;font-weight:600;color:#6B4E24;text-transform:uppercase;letter-spacing:.04em;margin:0 0 8px;">PTH 130-585 pg/ml ★</p>
+        <p style="font-size:13px;font-weight:600;color:#555;text-transform:uppercase;letter-spacing:.04em;margin:0 0 8px;">PTH 130-585 pg/ml ★</p>
         <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
           <span style="font-size:32px;font-weight:600;" id="v-pth">—</span>
           <span class="badge" id="bg-pth"></span>
@@ -1311,7 +1312,7 @@ function miniDonut(canvasId, val, color) {
   ctx.fillStyle='#F7F0E4'; ctx.fill();
 
   const fontSize = Math.round(S*0.22);
-  ctx.font=`bold ${fontSize}px Arial`; ctx.fillStyle='#3D2B0E';
+  ctx.font=`bold ${fontSize}px Arial`; ctx.fillStyle='#3a3a3a';
   ctx.textAlign='center'; ctx.textBaseline='middle';
   ctx.fillText(val!==null&&val!==undefined ? val+'%' : 'n.a.', cx, cy);
 }
@@ -1574,7 +1575,7 @@ function drawKdqol() {
       ctx.closePath(); ctx.fill();
 
       /* Value label on top */
-      ctx.font='bold 9px Arial'; ctx.fillStyle='#3D2B0E';
+      ctx.font='bold 9px Arial'; ctx.fillStyle='#3a3a3a';
       ctx.textAlign='center';
       ctx.fillText(val, x+bW/2, y-4);
     });

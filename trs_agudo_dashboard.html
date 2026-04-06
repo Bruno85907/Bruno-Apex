@@ -4,19 +4,19 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Dashboard TRS Agudo — APEX</title>
-<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-.apex-nav{background:#FFF;border-bottom:1px solid #E8E8E8;height:52px;display:flex;align-items:center;padding:0 32px;gap:16px;font-family:'Space Grotesk',system-ui,sans-serif;}
-.apex-nav-logo{font-size:12px;font-weight:700;color:#2460A7;letter-spacing:5px;text-transform:uppercase;text-decoration:none;flex-shrink:0;}
-.apex-nav-div{width:1px;height:16px;background:#2A2A2A;flex-shrink:0;}
+.apex-nav{background:#FFF;border-bottom:1px solid #e8e6e1;height:52px;display:flex;align-items:center;padding:0 32px;gap:16px;font-family:'Space Grotesk',system-ui,sans-serif;}
+.apex-nav-logo{font-size:12px;font-weight:700;color:#B99454;letter-spacing:5px;text-transform:uppercase;text-decoration:none;flex-shrink:0;}
+.apex-nav-div{width:1px;height:16px;background:#e8e6e1;flex-shrink:0;}
 .apex-nav-title{font-size:11px;font-weight:500;color:#999;letter-spacing:1.5px;text-transform:uppercase;}
 .apex-nav-space{flex:1;}
-.apex-nav-back{font-size:11px;font-weight:600;color:#999;letter-spacing:1px;text-decoration:none;background:none;border:1px solid #2A2A2A;cursor:pointer;font-family:inherit;padding:5px 14px;border-radius:5px;transition:color .2s,border-color .2s;}
-.apex-nav-back:hover{color:#2460A7;border-color:rgba(185,148,84,0.3);}
+.apex-nav-back{font-size:11px;font-weight:600;color:#999;letter-spacing:1px;text-decoration:none;background:none;border:1px solid #e8e6e1;cursor:pointer;font-family:inherit;padding:5px 14px;border-radius:5px;transition:color .2s,border-color .2s;}
+.apex-nav-back:hover{color:#2460A7;}
 </style>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
-body{font-family:'Space Grotesk',system-ui,sans-serif;background:#F5F5F5;color:#111;font-size:15px;}
+body{font-family:'Space Grotesk',system-ui,sans-serif;background:#f6f5f3;color:#111;font-size:15px;}
 
 /* HEADER */
 .header{background:#fff;border-bottom:3px solid #2460A7;padding:16px 36px;display:flex;align-items:center;justify-content:space-between;gap:20px;}
@@ -29,12 +29,12 @@ body{font-family:'Space Grotesk',system-ui,sans-serif;background:#F5F5F5;color:#
 .logo-fenix-sub{font-size:9px;letter-spacing:.18em;color:#555;text-transform:uppercase;margin-top:1px;}
 .logo-divider{width:1px;height:36px;background:#E8D5B0;}
 .logo-hospital{display:flex;flex-direction:column;align-items:flex-start;}
-.logo-hospital-main{font-size:13px;font-weight:700;color:#6B4E24;letter-spacing:.04em;line-height:1;}
+.logo-hospital-main{font-size:13px;font-weight:700;color:#555;letter-spacing:.04em;line-height:1;}
 .logo-hospital-sub{font-size:9px;letter-spacing:.12em;color:#555;text-transform:uppercase;margin-top:2px;}
 
 /* BARRA DE CONTROLES */
 .ctrl-bar{background:#fff;padding:10px 36px;border-bottom:1px solid #E8D5B0;display:flex;align-items:center;gap:12px;flex-wrap:wrap;}
-.ctrl-label{font-size:11px;color:#6B4E24;font-weight:600;text-transform:uppercase;letter-spacing:.04em;}
+.ctrl-label{font-size:11px;color:#555;font-weight:600;text-transform:uppercase;letter-spacing:.04em;}
 .ctrl-in{border:1.5px solid #2460A7;border-radius:8px;padding:5px 12px;font-size:13px;color:#1A4070;font-weight:600;background:#F7F0E4;cursor:pointer;outline:none;}
 .ctrl-in:focus{border-color:#1A4070;}
 .ctrl-btn{background:#1A4070;color:#fff;border:none;border-radius:8px;padding:7px 18px;font-size:11px;font-weight:600;letter-spacing:.04em;cursor:pointer;transition:background .2s;}
@@ -55,7 +55,7 @@ body{font-family:'Space Grotesk',system-ui,sans-serif;background:#F5F5F5;color:#
 /* KPI GRID */
 .kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:18px;}
 .kpi-card{background:#F7F0E4;border-radius:12px;border-left:4px solid #2460A7;padding:14px 18px;}
-.kpi-lbl{font-size:10px;color:#6B4E24;font-weight:600;text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px;}
+.kpi-lbl{font-size:10px;color:#555;font-weight:600;text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px;}
 .kpi-val{font-size:38px;font-weight:600;color:#1c1c1e;line-height:1;}
 .kpi-val small{font-size:15px;color:#555;font-weight:400;}
 .kpi-sub{font-size:11px;color:#555;margin-top:5px;}
@@ -74,7 +74,7 @@ body{font-family:'Space Grotesk',system-ui,sans-serif;background:#F5F5F5;color:#
 /* MODALIDADES */
 .mod-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;}
 .mod-item{background:#F7F0E4;border-radius:10px;padding:14px;text-align:center;border-top:3px solid #2460A7;}
-.mod-nome{font-size:10px;font-weight:600;color:#6B4E24;text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px;}
+.mod-nome{font-size:10px;font-weight:600;color:#555;text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px;}
 .mod-val{font-size:34px;font-weight:600;color:#1c1c1e;line-height:1;}
 .mod-pct{font-size:11px;color:#555;margin-top:4px;}
 
@@ -88,18 +88,18 @@ body{font-family:'Space Grotesk',system-ui,sans-serif;background:#F5F5F5;color:#
 .ic-layout{display:grid;grid-template-columns:1fr 260px;gap:20px;}
 .ic-barras{display:flex;flex-direction:column;gap:7px;}
 .ic-barra-row{display:grid;grid-template-columns:148px 1fr 58px;gap:8px;align-items:center;}
-.ic-barra-nome{font-size:12px;color:#3D2B0E;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.ic-barra-nome{font-size:12px;color:#3a3a3a;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 .ic-barra-bg{background:#F0E8DC;border-radius:5px;height:18px;overflow:hidden;}
 .ic-barra-fill{height:100%;border-radius:5px;}
-.ic-barra-taxa{font-size:10px;font-weight:600;color:#6B4E24;text-align:right;}
+.ic-barra-taxa{font-size:10px;font-weight:600;color:#555;text-align:right;}
 .ic-right{display:flex;flex-direction:column;gap:14px;}
 .ic-taxa-global{background:linear-gradient(160deg,#F7F0E4,#EDE3D4);border:1px solid #E8D5B0;border-radius:12px;padding:18px;text-align:center;border-top:4px solid #2460A7;}
 .ic-taxa-num{font-size:50px;font-weight:700;color:#1A4070;line-height:1;}
 .ic-taxa-label{font-size:10px;font-weight:600;color:#555;text-transform:uppercase;letter-spacing:.06em;margin-top:5px;}
-.ic-top3-title{font-size:10px;font-weight:600;color:#6B4E24;text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px;}
+.ic-top3-title{font-size:10px;font-weight:600;color:#555;text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px;}
 .ic-top3-item{display:flex;align-items:center;gap:8px;padding:9px 12px;background:#F7F0E4;border-radius:10px;border-left:3px solid #ccc;margin-bottom:6px;}
 .ic-top3-rank{font-size:13px;font-weight:700;min-width:16px;}
-.ic-top3-nome{font-size:11px;color:#3D2B0E;flex:1;line-height:1.3;}
+.ic-top3-nome{font-size:11px;color:#3a3a3a;flex:1;line-height:1.3;}
 .ic-top3-n{font-size:20px;font-weight:700;color:#1c1c1e;}
 .ic-top3-trend{font-size:10px;font-weight:600;display:flex;align-items:center;gap:2px;min-width:36px;justify-content:flex-end;}
 .trend-up{color:#A32D2D;}
@@ -109,9 +109,9 @@ body{font-family:'Space Grotesk',system-ui,sans-serif;background:#F5F5F5;color:#
 
 /* TABELA SEMANAS */
 .sem-table{width:100%;border-collapse:collapse;font-size:12px;}
-.sem-table th{font-size:10px;font-weight:600;color:#6B4E24;text-transform:uppercase;letter-spacing:.04em;padding:7px 10px;border-bottom:1.5px solid #2460A7;text-align:center;background:#F7F0E4;}
+.sem-table th{font-size:10px;font-weight:600;color:#555;text-transform:uppercase;letter-spacing:.04em;padding:7px 10px;border-bottom:1.5px solid #2460A7;text-align:center;background:#F7F0E4;}
 .sem-table th:first-child{text-align:left;border-radius:8px 0 0 0;}
-.sem-table td{padding:8px 10px;border-bottom:1px solid #F0E8DC;color:#3D2B0E;text-align:center;}
+.sem-table td{padding:8px 10px;border-bottom:1px solid #F0E8DC;color:#3a3a3a;text-align:center;}
 .sem-table td:first-child{text-align:left;font-weight:600;color:#1A4070;}
 .sem-table tr:hover td{background:#FAF5EF;}
 .sem-table .col-total{font-weight:700;color:#1A4070;}
@@ -124,11 +124,11 @@ body{font-family:'Space Grotesk',system-ui,sans-serif;background:#F5F5F5;color:#
 
 <!-- HEADER COM LOGOS -->
 <nav class="apex-nav">
-  <a href="portal_profissionais.html" class="apex-nav-logo">APEX</a>
+  <a href="index.html" class="apex-nav-logo">APEX</a>
   <div class="apex-nav-div"></div>
   <span class="apex-nav-title" id="header-sub">Dashboard — TRS Agudo</span>
   <div class="apex-nav-space"></div>
-  <a href="trs_agudo.html" class="apex-nav-back">← Voltar</a>
+  <a href="javascript:history.back()" class="apex-nav-back">← Voltar</a>
 </nav>
 
 <!-- CONTROLES -->

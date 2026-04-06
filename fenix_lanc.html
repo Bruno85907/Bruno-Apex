@@ -7,8 +7,8 @@
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root{
-  --bg:#F5F5F5;--surface:#FFFFFF;--card:#FFFFFF;
-  --border:#E8E8E8;--border-hover:#D0D0D0;
+  --bg:#f6f5f3;--surface:#FFFFFF;--card:#FFFFFF;
+  --border:#e8e6e1;--border-hover:#D0D0D0;
   --gold:#B99454;--gold-dim:#FDF8F0;--gold-border:#EDD9A3;--gold-muted:rgba(185,148,84,0.65);
   --text-primary:#111111;--text-secondary:#555555;--text-muted:#999999;
   --green:#2D7A4F;--red:#C0392B;--amber:#9A6B1A;
@@ -21,8 +21,8 @@ body{font-family:'Space Grotesk',system-ui,sans-serif;color:var(--text-primary);
 .apex-nav-div{width:1px;height:16px;background:var(--border);}
 .apex-nav-title{font-size:11px;font-weight:500;color:var(--text-muted);letter-spacing:1.5px;text-transform:uppercase;}
 .apex-nav-space{flex:1;}
-.apex-nav-back{font-size:11px;font-weight:600;color:var(--text-secondary);letter-spacing:1px;text-decoration:none;background:none;border:1px solid var(--border);cursor:pointer;font-family:inherit;padding:5px 14px;border-radius:5px;transition:color .2s,border-color .2s;}
-.apex-nav-back:hover{color:var(--gold);border-color:var(--gold-border);}
+.apex-nav-back{font-size:11px;font-weight:500;color:var(--text-secondary);letter-spacing:1px;text-decoration:none;transition:color .2s;}
+.apex-nav-back:hover{color:var(--gold);}
 .page{max-width:860px;margin:0 auto;padding:48px 32px 80px;}
 .page-header{margin-bottom:36px;}
 .page-eyebrow{font-size:9px;font-weight:600;letter-spacing:4px;text-transform:uppercase;color:var(--gold-muted);margin-bottom:10px;}
@@ -76,11 +76,11 @@ body{font-family:'Space Grotesk',system-ui,sans-serif;color:var(--text-primary);
 <body>
 
 <nav class="apex-nav">
-  <span class="apex-nav-logo">APEX</span>
+  <a href="index.html" class="apex-nav-logo">APEX</a>
   <div class="apex-nav-div"></div>
   <span class="apex-nav-title" id="nav-title">Lançamento Mensal — TRS Crônico</span>
   <div class="apex-nav-space"></div>
-  <button class="apex-nav-back" onclick="history.back()">← Voltar</button>
+  <a href="javascript:history.back()" class="apex-nav-back">← Voltar</a>
 </nav>
 
 <div class="page">

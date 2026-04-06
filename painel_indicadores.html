@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Painel Indicadores — APEX</title>
-<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root{
   --black:#080C14;--navy:#0D1B35;--navy-mid:#1B2A4A;
@@ -14,7 +14,7 @@
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
 html,body{width:100%;height:100%;overflow:hidden;background:var(--black);}
-body{font-family:'Inter',sans-serif;color:var(--white);}
+body{font-family:'Space Grotesk',sans-serif;color:var(--white);}
 
 /* LAYOUT PRINCIPAL 16:9 */
 .tv{
@@ -32,13 +32,13 @@ body{font-family:'Inter',sans-serif;color:var(--white);}
   background:rgba(13,27,53,0.6);
   flex-shrink:0;
 }
-.tv-logo{font-family:'Cinzel',serif;font-size:16px;font-weight:700;color:var(--gold);letter-spacing:4px;}
+.tv-logo{font-family:'Space Grotesk',sans-serif;font-size:16px;font-weight:700;color:var(--gold);letter-spacing:4px;}
 .tv-header-center{display:flex;flex-direction:column;align-items:center;gap:1px;}
-.tv-header-title{font-family:'Cinzel',serif;font-size:12px;letter-spacing:4px;color:var(--gold);text-transform:uppercase;}
-.tv-header-sub{font-family:'Cormorant Garamond',serif;font-size:12px;font-style:italic;color:var(--muted);}
+.tv-header-title{font-family:'Space Grotesk',sans-serif;font-size:12px;letter-spacing:4px;color:var(--gold);text-transform:uppercase;}
+.tv-header-sub{font-family:'Space Grotesk',sans-serif;font-size:12px;font-style:italic;color:var(--muted);}
 .tv-header-right{display:flex;align-items:center;gap:16px;}
-.tv-mes{font-family:'Cinzel',serif;font-size:10px;letter-spacing:3px;color:var(--muted);text-transform:uppercase;}
-.tv-clock{font-family:'Cinzel',serif;font-size:15px;font-weight:600;color:var(--gold);letter-spacing:2px;min-width:55px;text-align:right;}
+.tv-mes{font-family:'Space Grotesk',sans-serif;font-size:10px;letter-spacing:3px;color:var(--muted);text-transform:uppercase;}
+.tv-clock{font-family:'Space Grotesk',sans-serif;font-size:15px;font-weight:600;color:var(--gold);letter-spacing:2px;min-width:55px;text-align:right;}
 
 /* CORPO PRINCIPAL */
 .tv-body{
@@ -60,12 +60,12 @@ body{font-family:'Inter',sans-serif;color:var(--white);}
   flex-shrink:0;
 }
 .col-badge{
-  font-family:'Cinzel',serif;font-size:8px;letter-spacing:3px;
+  font-family:'Space Grotesk',sans-serif;font-size:8px;letter-spacing:3px;
   text-transform:uppercase;padding:2px 10px;border-radius:20px;
 }
 .badge-cronico{background:rgba(212,168,71,0.15);color:var(--gold);border:1px solid rgba(212,168,71,0.3);}
 .badge-agudo{background:rgba(91,168,212,0.12);color:var(--blue);border:1px solid rgba(91,168,212,0.25);}
-.col-title{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:300;color:var(--white);}
+.col-title{font-family:'Space Grotesk',sans-serif;font-size:20px;font-weight:300;color:var(--white);}
 .col-title em{color:var(--gold-pale);font-style:italic;}
 
 /* KPI GRID */
@@ -75,38 +75,38 @@ body{font-family:'Inter',sans-serif;color:var(--white);}
   padding:10px 14px;position:relative;overflow:hidden;
 }
 .kpi::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--gold);opacity:.5;}
-.kpi-lbl{font-family:'Cinzel',serif;font-size:7px;letter-spacing:2px;color:rgba(212,168,71,0.55);text-transform:uppercase;margin-bottom:4px;}
-.kpi-val{font-family:'Cormorant Garamond',serif;font-size:38px;font-weight:300;color:var(--white);line-height:1;}
+.kpi-lbl{font-family:'Space Grotesk',sans-serif;font-size:7px;letter-spacing:2px;color:rgba(212,168,71,0.55);text-transform:uppercase;margin-bottom:4px;}
+.kpi-val{font-family:'Space Grotesk',sans-serif;font-size:38px;font-weight:300;color:var(--white);line-height:1;}
 .kpi-val.big{font-size:42px;}
-.kpi-sub{font-family:'Inter',sans-serif;font-size:9px;color:var(--muted);margin-top:2px;}
+.kpi-sub{font-family:'Space Grotesk',sans-serif;font-size:9px;color:var(--muted);margin-top:2px;}
 
 /* GAUGE */
 .gauge-row{display:grid;grid-template-columns:1fr 1fr;gap:8px;flex-shrink:0;}
 .gauge-card{background:var(--navy-mid);border:1px solid var(--border);border-radius:8px;padding:10px 12px;display:flex;flex-direction:column;align-items:center;}
-.gauge-lbl{font-family:'Cinzel',serif;font-size:7px;letter-spacing:2px;color:rgba(212,168,71,0.55);text-transform:uppercase;margin-bottom:4px;text-align:center;}
+.gauge-lbl{font-family:'Space Grotesk',sans-serif;font-size:7px;letter-spacing:2px;color:rgba(212,168,71,0.55);text-transform:uppercase;margin-bottom:4px;text-align:center;}
 .gauge-wrap{width:140px;height:76px;position:relative;}
-.gauge-num{font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:300;color:var(--white);text-align:center;margin-top:2px;line-height:1;}
-.gauge-faixa{font-family:'Cinzel',serif;font-size:7px;letter-spacing:2px;padding:2px 8px;border-radius:20px;margin-top:3px;display:inline-block;}
+.gauge-num{font-family:'Space Grotesk',sans-serif;font-size:28px;font-weight:300;color:var(--white);text-align:center;margin-top:2px;line-height:1;}
+.gauge-faixa{font-family:'Space Grotesk',sans-serif;font-size:7px;letter-spacing:2px;padding:2px 8px;border-radius:20px;margin-top:3px;display:inline-block;}
 
 /* MODALIDADES */
 .mod-row{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;flex-shrink:0;}
 .mod-item{background:var(--gold-dim);border:1px solid rgba(212,168,71,0.12);border-radius:7px;padding:8px;text-align:center;}
-.mod-nome{font-family:'Cinzel',serif;font-size:7px;letter-spacing:3px;color:var(--gold);text-transform:uppercase;margin-bottom:3px;}
-.mod-val{font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:300;color:var(--white);line-height:1;}
-.mod-pct{font-family:'Inter',sans-serif;font-size:9px;color:var(--muted);margin-top:1px;}
+.mod-nome{font-family:'Space Grotesk',sans-serif;font-size:7px;letter-spacing:3px;color:var(--gold);text-transform:uppercase;margin-bottom:3px;}
+.mod-val{font-family:'Space Grotesk',sans-serif;font-size:26px;font-weight:300;color:var(--white);line-height:1;}
+.mod-pct{font-family:'Space Grotesk',sans-serif;font-size:9px;color:var(--muted);margin-top:1px;}
 
 /* COMPARATIVO — ocupa o espaço restante */
 .comp-card{
   background:var(--navy-mid);border:1px solid var(--border);border-radius:8px;
   padding:10px 14px;flex:1;min-height:0;overflow:hidden;
 }
-.comp-title{font-family:'Cinzel',serif;font-size:7px;letter-spacing:3px;color:rgba(212,168,71,0.55);text-transform:uppercase;margin-bottom:8px;}
+.comp-title{font-family:'Space Grotesk',sans-serif;font-size:7px;letter-spacing:3px;color:rgba(212,168,71,0.55);text-transform:uppercase;margin-bottom:8px;}
 .comp-row{display:flex;align-items:center;gap:8px;margin-bottom:6px;}
-.comp-label{font-family:'Inter',sans-serif;font-size:10px;color:var(--muted);min-width:90px;}
+.comp-label{font-family:'Space Grotesk',sans-serif;font-size:10px;color:var(--muted);min-width:90px;}
 .comp-bar-bg{flex:1;background:rgba(255,255,255,0.06);border-radius:3px;height:18px;overflow:hidden;}
 .comp-bar-fill{height:100%;border-radius:3px;display:flex;align-items:center;padding-left:7px;min-width:36px;}
-.comp-bar-val{font-family:'Cinzel',serif;font-size:8px;font-weight:600;color:var(--black);}
-.comp-delta{font-family:'Cinzel',serif;font-size:9px;font-weight:600;min-width:44px;text-align:right;}
+.comp-bar-val{font-family:'Space Grotesk',sans-serif;font-size:8px;font-weight:600;color:var(--black);}
+.comp-delta{font-family:'Space Grotesk',sans-serif;font-size:9px;font-weight:600;min-width:44px;text-align:right;}
 .delta-up{color:var(--green);}
 .delta-down{color:var(--red);}
 .delta-eq{color:var(--muted);}
@@ -119,14 +119,14 @@ body{font-family:'Inter',sans-serif;color:var(--white);}
   background:rgba(13,27,53,0.4);
   flex-shrink:0;
 }
-.tv-footer-left{font-family:'Cinzel',serif;font-size:8px;letter-spacing:3px;color:rgba(212,168,71,0.4);text-transform:uppercase;}
-.tv-footer-right{font-family:'Inter',sans-serif;font-size:10px;color:var(--muted);}
-.tv-update{font-family:'Inter',sans-serif;font-size:9px;color:rgba(212,168,71,0.4);}
+.tv-footer-left{font-family:'Space Grotesk',sans-serif;font-size:8px;letter-spacing:3px;color:rgba(212,168,71,0.4);text-transform:uppercase;}
+.tv-footer-right{font-family:'Space Grotesk',sans-serif;font-size:10px;color:var(--muted);}
+.tv-update{font-family:'Space Grotesk',sans-serif;font-size:9px;color:rgba(212,168,71,0.4);}
 
 /* SEM DADOS */
 .no-data{display:flex;flex-direction:column;align-items:center;justify-content:center;flex:1;gap:10px;}
-.no-data-text{font-family:'Cormorant Garamond',serif;font-size:18px;font-style:italic;color:rgba(232,213,160,0.25);}
-.no-data-hint{font-family:'Cinzel',serif;font-size:8px;letter-spacing:3px;color:rgba(212,168,71,0.2);text-transform:uppercase;}
+.no-data-text{font-family:'Space Grotesk',sans-serif;font-size:18px;font-style:italic;color:rgba(232,213,160,0.25);}
+.no-data-hint{font-family:'Space Grotesk',sans-serif;font-size:8px;letter-spacing:3px;color:rgba(212,168,71,0.2);text-transform:uppercase;}
 </style>
 </head>
 <body>
@@ -141,7 +141,7 @@ body{font-family:'Inter',sans-serif;color:var(--white);}
       <div class="tv-header-sub" id="tv-sub">Terapia Renal Substitutiva — Crônico &amp; Agudo</div>
     </div>
     <div class="tv-header-right">
-      <input type="month" id="tv-mes-sel" style="background:rgba(13,27,53,0.8);border:1px solid rgba(212,168,71,0.3);border-radius:6px;padding:4px 10px;font-family:'Cinzel',serif;font-size:11px;color:var(--gold);letter-spacing:1px;outline:none;color-scheme:dark;cursor:pointer;" onchange="trocarMes(this.value)"/>
+      <input type="month" id="tv-mes-sel" style="background:rgba(13,27,53,0.8);border:1px solid rgba(212,168,71,0.3);border-radius:6px;padding:4px 10px;font-family:'Space Grotesk',sans-serif;font-size:11px;color:var(--gold);letter-spacing:1px;outline:none;color-scheme:dark;cursor:pointer;" onchange="trocarMes(this.value)"/>
       <div class="tv-clock" id="tv-clock">--:--</div>
     </div>
   </div>

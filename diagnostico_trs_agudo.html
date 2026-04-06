@@ -8,41 +8,46 @@
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
 body{font-family:'Space Grotesk',system-ui,sans-serif;background:#F5F5F5;color:#111;min-height:100vh;}
-.nav{background:#FFF;border-bottom:2px solid #C0392B;height:52px;display:flex;align-items:center;padding:0 32px;gap:16px;}
-.nav-logo{font-size:12px;font-weight:700;color:#C0392B;letter-spacing:5px;text-transform:uppercase;}
-.nav-title{font-size:11px;font-weight:500;color:#555;letter-spacing:1.5px;text-transform:uppercase;}
-.nav-div{width:1px;height:16px;background:#E8E8E8;}
+.apex-nav{background:#FFF;border-bottom:1px solid #e8e6e1;height:52px;display:flex;align-items:center;padding:0 32px;gap:16px;position:sticky;top:0;z-index:100;}
+.apex-nav-logo{font-size:12px;font-weight:700;color:#B99454;letter-spacing:5px;text-transform:uppercase;text-decoration:none;flex-shrink:0;}
+.apex-nav-div{width:1px;height:16px;background:#e8e6e1;flex-shrink:0;}
+.apex-nav-title{font-size:11px;font-weight:500;color:#777;letter-spacing:1.5px;text-transform:uppercase;}
+.apex-nav-space{flex:1;}
+.apex-nav-back{font-size:11px;font-weight:500;color:#777;letter-spacing:1px;text-decoration:none;transition:color .2s;}
+.apex-nav-back:hover{color:#2460A7;}
 .page{max-width:1100px;margin:0 auto;padding:24px 28px;}
-h2{font-size:15px;font-weight:600;color:#1A4070;margin:24px 0 10px;display:flex;align-items:center;gap:10px;}
-h2::after{content:'';flex:1;height:1px;background:#E8D5B0;}
-.box{background:#FFF;border:1px solid #E8D5B0;border-radius:10px;padding:16px 20px;margin-bottom:14px;font-size:13px;line-height:1.6;}
-.box strong{color:#1A4070;}
+h2{font-size:15px;font-weight:600;color:#2460A7;margin:24px 0 10px;display:flex;align-items:center;gap:10px;}
+h2::after{content:'';flex:1;height:1px;background:#e8e6e1;}
+.box{background:#FFF;border:1px solid #e8e6e1;border-radius:10px;padding:16px 20px;margin-bottom:14px;font-size:13px;line-height:1.6;}
+.box strong{color:#2460A7;}
 .box.ok{border-left:4px solid #2D7A4F;}
 .box.warn{border-left:4px solid #E8973A;}
 .box.err{border-left:4px solid #C0392B;}
-table{width:100%;border-collapse:collapse;font-size:12px;margin:10px 0;background:#FFF;border-radius:8px;overflow:hidden;border:1px solid #E8D5B0;}
-th{font-size:10px;font-weight:600;color:#6B4E24;text-transform:uppercase;letter-spacing:.04em;padding:8px;border-bottom:2px solid #2460A7;text-align:center;background:#F7F0E4;}
+table{width:100%;border-collapse:collapse;font-size:12px;margin:10px 0;background:#FFF;border-radius:8px;overflow:hidden;border:1px solid #e8e6e1;}
+th{font-size:10px;font-weight:600;color:#555;text-transform:uppercase;letter-spacing:.04em;padding:8px;border-bottom:2px solid #2460A7;text-align:center;background:#f6f5f3;}
 th:first-child{text-align:left;padding-left:12px;}
-td{padding:7px 8px;border-bottom:1px solid #F0E8DC;text-align:center;color:#333;}
-td:first-child{text-align:left;font-weight:600;color:#1A4070;padding-left:12px;}
-.total td{font-weight:700;color:#1A4070;background:#F7F0E4;border-top:2px solid #2460A7;}
+td{padding:7px 8px;border-bottom:1px solid #e8e6e1;text-align:center;color:#333;}
+td:first-child{text-align:left;font-weight:600;color:#2460A7;padding-left:12px;}
+.total td{font-weight:700;color:#2460A7;background:#f6f5f3;border-top:2px solid #2460A7;}
 .match{color:#2D7A4F;}
 .mismatch{color:#C0392B;font-weight:700;}
-pre{background:#1A1A2E;color:#E8D5B0;padding:14px;border-radius:8px;font-size:11px;overflow-x:auto;max-height:300px;overflow-y:auto;margin:10px 0;}
+pre{background:#0d0d0d;color:#e8e6e1;padding:14px;border-radius:8px;font-size:11px;overflow-x:auto;max-height:300px;overflow-y:auto;margin:10px 0;}
 .actions{display:flex;gap:12px;margin:20px 0;flex-wrap:wrap;}
 .btn{border:none;border-radius:8px;padding:12px 24px;font-family:'Space Grotesk',system-ui,sans-serif;font-size:12px;font-weight:600;cursor:pointer;transition:all .2s;}
-.btn-primary{background:#1A4070;color:#FFF;}
+.btn-primary{background:#2460A7;color:#FFF;}
 .btn-primary:hover{background:#2460A7;}
 .btn-danger{background:#C0392B;color:#FFF;}
 .btn-danger:hover{background:#E74C3C;}
 </style>
 </head>
 <body>
-<div class="nav">
-  <span class="nav-logo">APEX</span>
-  <div class="nav-div"></div>
-  <span class="nav-title">Diagnóstico — localStorage TRS Agudo</span>
-</div>
+<nav class="apex-nav">
+  <a href="index.html" class="apex-nav-logo">APEX</a>
+  <div class="apex-nav-div"></div>
+  <span class="apex-nav-title">Diagnóstico — localStorage TRS Agudo</span>
+  <div class="apex-nav-space"></div>
+  <a href="javascript:history.back()" class="apex-nav-back">← Voltar</a>
+</nav>
 <div class="page">
   <div id="output"></div>
   <div class="actions">
