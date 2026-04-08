@@ -1,0 +1,929 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Relatório por Plano de Saúde — Fênix Nefrologia</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Cinzel:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --gold: #B99454;
+    --gold-light: #d4b97a;
+    --gold-pale: #f5eedd;
+    --dark: #111111;
+    --mid: #555555;
+    --light: #999999;
+    --border: #e8e6e1;
+    --bg: #ffffff;
+    --bg2: #f8f6f2;
+    --blue-good: #2460A7;
+    --green-good: #3a8f5e;
+    --red-alert: #c0392b;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Space Grotesk', sans-serif;
+    background: var(--bg2);
+    color: var(--dark);
+    min-height: 100vh;
+  }
+
+  /* ── CONTROLS BAR ── */
+  .controls-bar {
+    background: var(--dark);
+    padding: 16px 32px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
+  .controls-bar label {
+    color: var(--gold);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  .controls-bar select,
+  .controls-bar input[type="text"],
+  .controls-bar input[type="month"] {
+    background: #1e1e1e;
+    border: 1px solid #333;
+    color: #fff;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 13px;
+    padding: 7px 12px;
+    border-radius: 4px;
+    outline: none;
+    min-width: 160px;
+  }
+
+  .controls-bar select:focus,
+  .controls-bar input:focus {
+    border-color: var(--gold);
+  }
+
+  .btn {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 9px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    border: none;
+    transition: opacity 0.15s;
+  }
+  .btn:hover { opacity: 0.85; }
+
+  .btn-gold { background: var(--gold); color: #fff; }
+  .btn-outline { background: transparent; color: var(--gold); border: 1px solid var(--gold); }
+  .btn-save { background: #2a7a4a; color: #fff; }
+
+  .controls-spacer { flex: 1; }
+
+  /* ── REPORT WRAPPER ── */
+  .report-wrap {
+    max-width: 900px;
+    margin: 32px auto;
+    padding: 0 24px 64px;
+  }
+
+  /* ── REPORT HEADER ── */
+  .report-header {
+    background: var(--dark);
+    border-radius: 8px 8px 0 0;
+    padding: 32px 40px 28px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .report-header::before {
+    content: '';
+    position: absolute;
+    top: 0; right: 0;
+    width: 200px; height: 100%;
+    background: linear-gradient(135deg, transparent 40%, rgba(185,148,84,0.12));
+    pointer-events: none;
+  }
+
+  .header-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 24px;
+  }
+
+  .header-brand {
+    font-family: 'Cinzel', serif;
+    font-size: 13px;
+    color: var(--gold);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    line-height: 1.8;
+  }
+
+  .header-brand span {
+    display: block;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 10px;
+    color: #666;
+    letter-spacing: 0.08em;
+    font-weight: 400;
+  }
+
+  .header-badge {
+    background: rgba(185,148,84,0.15);
+    border: 1px solid rgba(185,148,84,0.3);
+    border-radius: 4px;
+    padding: 8px 16px;
+    text-align: right;
+  }
+
+  .header-badge .badge-label {
+    font-size: 9px;
+    color: var(--gold);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    font-weight: 600;
+  }
+
+  .header-badge .badge-value {
+    font-size: 13px;
+    color: #fff;
+    font-weight: 500;
+    margin-top: 2px;
+  }
+
+  .report-title-area {
+    border-top: 1px solid rgba(255,255,255,0.08);
+    padding-top: 20px;
+  }
+
+  .report-subtitle {
+    font-size: 10px;
+    color: var(--gold);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    font-weight: 600;
+    margin-bottom: 6px;
+  }
+
+  .report-title {
+    font-size: 26px;
+    color: #fff;
+    font-weight: 600;
+    line-height: 1.2;
+  }
+
+  .report-meta {
+    display: flex;
+    gap: 24px;
+    margin-top: 12px;
+  }
+
+  .meta-item {
+    font-size: 11px;
+    color: #888;
+  }
+
+  .meta-item strong {
+    color: #ccc;
+    font-weight: 500;
+  }
+
+  /* ── SECTION ── */
+  .section {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-top: none;
+    padding: 28px 40px;
+  }
+
+  .section:last-child {
+    border-radius: 0 0 8px 8px;
+  }
+
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .section-icon {
+    width: 32px;
+    height: 32px;
+    background: var(--gold-pale);
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 15px;
+  }
+
+  .section-title {
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--dark);
+  }
+
+  .section-number {
+    margin-left: auto;
+    font-size: 10px;
+    color: var(--light);
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  /* ── GRID DE CAMPOS ── */
+  .col-headers {
+    display: grid;
+    grid-template-columns: 1fr 160px 160px;
+    gap: 12px;
+    margin-bottom: 8px;
+    padding: 0 0 6px;
+  }
+
+  .col-header {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--light);
+    text-align: center;
+  }
+
+  .col-header.plano-col { color: var(--gold); }
+  .col-header.total-col { color: var(--blue-good); }
+
+  .field-row {
+    display: grid;
+    grid-template-columns: 1fr 160px 160px;
+    gap: 12px;
+    align-items: center;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--bg2);
+  }
+
+  .field-label {
+    font-size: 13px;
+    color: var(--mid);
+    font-weight: 400;
+  }
+
+  .field-label small {
+    display: block;
+    font-size: 10px;
+    color: var(--light);
+    margin-top: 1px;
+  }
+
+  .field-input {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    text-align: center;
+    padding: 8px 10px;
+    border-radius: 5px;
+    border: 1.5px solid var(--border);
+    color: var(--dark);
+    background: var(--bg);
+    width: 100%;
+    outline: none;
+    transition: border-color 0.15s;
+  }
+
+  .field-input:focus { border-color: var(--gold); }
+
+  .field-input.plano-input:focus { border-color: var(--gold); background: #fffdf7; }
+  .field-input.total-input { background: #f4f8ff; }
+  .field-input.total-input:focus { border-color: var(--blue-good); }
+
+  /* Delta badge */
+  .delta-row {
+    display: grid;
+    grid-template-columns: 1fr 160px 160px;
+    gap: 12px;
+    align-items: center;
+    padding: 4px 0 12px;
+  }
+
+  .delta-badge {
+    text-align: center;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 3px 8px;
+    border-radius: 3px;
+    display: inline-block;
+  }
+
+  .delta-pos { background: #e8f5ee; color: var(--green-good); }
+  .delta-neg { background: #fdecea; color: var(--red-alert); }
+  .delta-neutral { background: var(--bg2); color: var(--light); }
+
+  /* ── OBSERVATIONS ── */
+  .obs-area {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-top: none;
+    padding: 24px 40px;
+  }
+
+  .obs-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 8px;
+  }
+
+  .obs-textarea {
+    width: 100%;
+    min-height: 80px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 13px;
+    color: var(--dark);
+    background: var(--bg2);
+    border: 1.5px solid var(--border);
+    border-radius: 5px;
+    padding: 12px;
+    resize: vertical;
+    outline: none;
+  }
+
+  .obs-textarea:focus { border-color: var(--gold); }
+
+  /* ── ASSINATURA ── */
+  .signature-bar {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-top: none;
+    border-radius: 0 0 8px 8px;
+    padding: 28px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 32px;
+  }
+
+  .sig-block {
+    flex: 1;
+    text-align: center;
+  }
+
+  .sig-line {
+    border-top: 1px solid var(--border);
+    padding-top: 8px;
+    font-size: 12px;
+    color: var(--mid);
+  }
+
+  .sig-name {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--dark);
+    margin-bottom: 2px;
+  }
+
+  .sig-crm {
+    font-size: 10px;
+    color: var(--light);
+    letter-spacing: 0.06em;
+  }
+
+  /* ── TOAST ── */
+  .toast {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    background: #1e2a1e;
+    color: #7fce8f;
+    font-size: 13px;
+    font-weight: 500;
+    padding: 12px 20px;
+    border-radius: 6px;
+    border: 1px solid #3a8f5e;
+    opacity: 0;
+    transform: translateY(8px);
+    transition: all 0.25s;
+    z-index: 999;
+    pointer-events: none;
+  }
+
+  .toast.show { opacity: 1; transform: translateY(0); }
+
+  /* ── PRINT ── */
+  @media print {
+    * { print-color-adjust: exact; -webkit-print-color-adjust: exact; }
+
+    body { background: #fff; }
+
+    .controls-bar, .no-print { display: none !important; }
+
+    .report-wrap { margin: 0; padding: 0; max-width: 100%; }
+
+    .field-input {
+      border: none;
+      border-bottom: 1px solid #ddd;
+      border-radius: 0;
+      font-size: 13px;
+      padding: 4px 6px;
+      background: transparent !important;
+    }
+
+    .obs-textarea {
+      border: none;
+      border-bottom: 1px solid #ddd;
+      background: transparent;
+      min-height: 60px;
+    }
+
+    .section { page-break-inside: avoid; }
+    .signature-bar { page-break-inside: avoid; margin-top: 32px; }
+
+    .delta-badge { border: 1px solid currentColor; }
+  }
+</style>
+</head>
+<body>
+
+<!-- CONTROLS BAR (hidden on print) -->
+<div class="controls-bar no-print">
+  <label>
+    Plano de Saúde
+    <select id="ctrl-plano" onchange="onPlanoChange()">
+      <option value="">— selecione —</option>
+      <option value="Santa Saúde">Santa Saúde</option>
+      <option value="Bluemed">Bluemed</option>
+      <option value="Bradesco Saúde">Bradesco Saúde</option>
+      <option value="Amafresp">Amafresp</option>
+      <option value="Unimed">Unimed</option>
+      <option value="SulAmérica">SulAmérica</option>
+      <option value="Amil">Amil</option>
+      <option value="Casembrapa">Casembrapa</option>
+      <option value="GEAP">GEAP</option>
+      <option value="outro">✏️ Outro (digitar)</option>
+    </select>
+  </label>
+
+  <label id="custom-plano-wrap" style="display:none;">
+    Nome do plano
+    <input type="text" id="ctrl-plano-custom" placeholder="Nome do plano..." oninput="onPlanoChange()">
+  </label>
+
+  <label>
+    Unidade
+    <select id="ctrl-unidade" onchange="loadData()">
+      <option value="RL">RL</option>
+      <option value="Santos">Santos</option>
+      <option value="Tatuapé">Tatuapé</option>
+      <option value="Consolidado">Consolidado (todas)</option>
+    </select>
+  </label>
+
+  <label>
+    Mês de referência
+    <input type="month" id="ctrl-mes" onchange="loadData()">
+  </label>
+
+  <div class="controls-spacer"></div>
+
+  <button class="btn btn-save" onclick="saveData()">💾 Salvar dados</button>
+  <button class="btn btn-gold" onclick="window.print()">🖨️ Gerar PDF</button>
+</div>
+
+<!-- REPORT -->
+<div class="report-wrap">
+
+  <!-- HEADER -->
+  <div class="report-header">
+    <div class="header-top">
+      <div class="header-brand">
+        Fênix Nefrologia
+        <span>Relatório de Indicadores Clínicos por Plano de Saúde</span>
+      </div>
+      <div class="header-badge">
+        <div class="badge-label">Período</div>
+        <div class="badge-value" id="display-mes">—</div>
+      </div>
+    </div>
+    <div class="report-title-area">
+      <div class="report-subtitle">Plano de saúde</div>
+      <div class="report-title" id="display-plano">Selecione um plano</div>
+      <div class="report-meta">
+        <div class="meta-item">Unidade: <strong id="display-unidade">—</strong></div>
+        <div class="meta-item">Emissão: <strong id="display-emissao">—</strong></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- COL HEADERS FIXO -->
+  <div class="section" style="padding: 12px 40px; background: #faf8f4; border-bottom: none;">
+    <div class="col-headers" style="margin-bottom: 0;">
+      <div class="col-header" style="text-align:left;">Indicador</div>
+      <div class="col-header plano-col">◉ Plano</div>
+      <div class="col-header total-col">◈ Total clínica</div>
+    </div>
+  </div>
+
+  <!-- S1: POPULAÇÃO -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-icon">👥</div>
+      <div class="section-title">1. População</div>
+      <div class="section-number">Seção 01 / 06</div>
+    </div>
+
+    <div class="field-row">
+      <div class="field-label">Pacientes em programa<small>Ativos no mês de referência</small></div>
+      <input class="field-input plano-input" type="number" id="s1_pac_plano" placeholder="0" oninput="updateDelta('s1_pac')">
+      <input class="field-input total-input" type="number" id="s1_pac_total" placeholder="0" oninput="updateDelta('s1_pac')">
+    </div>
+    <div class="delta-row">
+      <div></div>
+      <div id="delta-s1_pac" class="delta-badge delta-neutral" style="font-size:10px; color: var(--light);">% do total</div>
+      <div></div>
+    </div>
+
+    <div class="field-row">
+      <div class="field-label">Sessões realizadas<small>Total de sessões no mês</small></div>
+      <input class="field-input plano-input" type="number" id="s1_sess_plano" placeholder="0" oninput="updateDelta('s1_sess')">
+      <input class="field-input total-input" type="number" id="s1_sess_total" placeholder="0" oninput="updateDelta('s1_sess')">
+    </div>
+    <div class="delta-row">
+      <div></div>
+      <div id="delta-s1_sess" class="delta-badge delta-neutral" style="font-size:10px; color: var(--light);">% do total</div>
+      <div></div>
+    </div>
+
+    <div class="field-row">
+      <div class="field-label">Sessões / paciente / mês<small>Adequação de frequência</small></div>
+      <input class="field-input plano-input" type="number" step="0.1" id="s1_freq_plano" placeholder="—">
+      <input class="field-input total-input" type="number" step="0.1" id="s1_freq_total" placeholder="—">
+    </div>
+  </div>
+
+  <!-- S2: ADEQUAÇÃO DE DIÁLISE -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-icon">📊</div>
+      <div class="section-title">2. Adequação de Diálise</div>
+      <div class="section-number">Seção 02 / 06</div>
+    </div>
+
+    <div class="field-row">
+      <div class="field-label">Kt/V médio<small>Meta: ≥ 1,4</small></div>
+      <input class="field-input plano-input" type="number" step="0.01" id="s2_ktv_plano" placeholder="0,00">
+      <input class="field-input total-input" type="number" step="0.01" id="s2_ktv_total" placeholder="0,00">
+    </div>
+
+    <div class="field-row">
+      <div class="field-label">% pacientes com Kt/V ≥ 1,4<small>Benchmark CBD 2025: ≥ 75%</small></div>
+      <input class="field-input plano-input" type="number" step="0.1" id="s2_ktv_meta_plano" placeholder="0%">
+      <input class="field-input total-input" type="number" step="0.1" id="s2_ktv_meta_total" placeholder="0%">
+    </div>
+
+    <div class="field-row">
+      <div class="field-label">Tempo de sessão médio (min)<small>Meta: ≥ 180 min</small></div>
+      <input class="field-input plano-input" type="number" id="s2_tempo_plano" placeholder="0">
+      <input class="field-input total-input" type="number" id="s2_tempo_total" placeholder="0">
+    </div>
+  </div>
+
+  <!-- S3: DESFECHOS CLÍNICOS -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-icon">🏥</div>
+      <div class="section-title">3. Desfechos Clínicos</div>
+      <div class="section-number">Seção 03 / 06</div>
+    </div>
+
+    <div class="field-row">
+      <div class="field-label">Hospitalizações<small>Internações no mês</small></div>
+      <input class="field-input plano-input" type="number" id="s3_hosp_plano" placeholder="0">
+      <input class="field-input total-input" type="number" id="s3_hosp_total" placeholder="0">
+    </div>
+
+    <div class="field-row">
+      <div class="field-label">Taxa de hospitalização (%)<small>Hospitalizações / pacientes × 100</small></div>
+      <input class="field-input plano-input" type="number" step="0.1" id="s3_taxahosp_plano" placeholder="0%">
+      <input class="field-input total-input" type="number" step="0.1" id="s3_taxahosp_total" placeholder="0%">
+    </div>
+
+    <div class="field-row">
+      <div class="field-label">Dias de internação (total)<small>Total de diárias no mês</small></div>
+      <input class="field-input plano-input" type="number" id="s3_dias_plano" placeholder="0">
+      <input class="field-input total-input" type="number" id="s3_dias_total" placeholder="0">
+    </div>
+
+    <div class="field-row">
+      <div class="field-label">Óbitos<small>No mês de referência</small></div>
+      <input class="field-input plano-input" type="number" id="s3_obito_plano" placeholder="0">
+      <input class="field-input total-input" type="number" id="s3_obito_total" placeholder="0">
+    </div>
+
+    <div class="field-row">
+      <div class="field-label">Transplantes realizados<small>No mês de referência</small></div>
+      <input class="field-input plano-input" type="number" id="s3_tx_plano" placeholder="0">
+      <input class="field-input total-input" type="number" id="s3_tx_total" placeholder="0">
+    </div>
+  </div>
+
+  <!-- S4: ACESSO VASCULAR -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-icon">🩺</div>
+      <div class="section-title">4. Acesso Vascular</div>
+      <div class="section-number">Seção 04 / 06</div>
+    </div>
+
+    <div class="field-row">
+      <div class="field-label">% Fístula arteriovenosa (FAV)<small>Meta: ≥ 60% — CBD 2025</small></div>
+      <input class="field-input plano-input" type="number" step="0.1" id="s4_fav_plano" placeholder="0%">
+      <input class="field-input total-input" type="number" step="0.1" id="s4_fav_total" placeholder="0%">
+    </div>
+
+    <div class="field-row">
+      <div class="field-label">% Cateter de duplo lúmen (CDL)<small>Meta: &lt; 20% — CBD 2025</small></div>
+      <input class="field-input plano-input" type="number" step="0.1" id="s4_cdl_plano" placeholder="0%">
+      <input class="field-input total-input" type="number" step="0.1" id="s4_cdl_total" placeholder="0%">
+    </div>
+
+    <div class="field-row">
+      <div class="field-label">% Cateter longa permanência (Permcath)<small>Pacientes sem acesso definitivo</small></div>
+      <input class="field-input plano-input" type="number" step="0.1" id="s4_perm_plano" placeholder="0%">
+      <input class="field-input total-input" type="number" step="0.1" id="s4_perm_total" placeholder="0%">
+    </div>
+
+    <div class="field-row">
+      <div class="field-label">Infecções de acesso vascular<small>Número de episódios no mês</small></div>
+      <input class="field-input plano-input" type="number" id="s4_infec_plano" placeholder="0">
+      <input class="field-input total-input" type="number" id="s4_infec_total" placeholder="0">
+    </div>
+  </div>
+
+  <!-- S5: NUTRIÇÃO -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-icon">🧪</div>
+      <div class="section-title">5. Indicadores Nutricionais</div>
+      <div class="section-number">Seção 05 / 06</div>
+    </div>
+
+    <div class="field-row">
+      <div class="field-label">Albumina média (g/dL)<small>Meta: ≥ 3,8 g/dL — CBD 2025</small></div>
+      <input class="field-input plano-input" type="number" step="0.01" id="s5_alb_plano" placeholder="0,00">
+      <input class="field-input total-input" type="number" step="0.01" id="s5_alb_total" placeholder="0,00">
+    </div>
+
+    <div class="field-row">
+      <div class="field-label">% pacientes com albumina ≥ 3,8<small>Benchmark CBD 2025: ≥ 65%</small></div>
+      <input class="field-input plano-input" type="number" step="0.1" id="s5_alb_meta_plano" placeholder="0%">
+      <input class="field-input total-input" type="number" step="0.1" id="s5_alb_meta_total" placeholder="0%">
+    </div>
+
+    <div class="field-row">
+      <div class="field-label">IMC médio (kg/m²)<small>Referência: 18,5 – 24,9</small></div>
+      <input class="field-input plano-input" type="number" step="0.1" id="s5_imc_plano" placeholder="0,0">
+      <input class="field-input total-input" type="number" step="0.1" id="s5_imc_total" placeholder="0,0">
+    </div>
+
+    <div class="field-row">
+      <div class="field-label">Ganho de peso interdialítico médio (kg)<small>Meta: &lt; 3 kg ou &lt; 5% do peso seco</small></div>
+      <input class="field-input plano-input" type="number" step="0.1" id="s5_gpid_plano" placeholder="0,0">
+      <input class="field-input total-input" type="number" step="0.1" id="s5_gpid_total" placeholder="0,0">
+    </div>
+  </div>
+
+  <!-- S6: QUALIDADE DE VIDA / ABSENTEÍSMO -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-icon">📋</div>
+      <div class="section-title">6. Qualidade de Vida / Absenteísmo</div>
+      <div class="section-number">Seção 06 / 06</div>
+    </div>
+
+    <div class="field-row">
+      <div class="field-label">Taxa de absenteísmo (%)<small>Faltas / sessões previstas × 100</small></div>
+      <input class="field-input plano-input" type="number" step="0.1" id="s6_abs_plano" placeholder="0%">
+      <input class="field-input total-input" type="number" step="0.1" id="s6_abs_total" placeholder="0%">
+    </div>
+
+    <div class="field-row">
+      <div class="field-label">Sessões abreviadas (&lt; 180 min)<small>Número de sessões com tempo reduzido</small></div>
+      <input class="field-input plano-input" type="number" id="s6_abrev_plano" placeholder="0">
+      <input class="field-input total-input" type="number" id="s6_abrev_total" placeholder="0">
+    </div>
+
+    <div class="field-row">
+      <div class="field-label">Score KDQoL (QV) médio<small>0–100 · se aplicado no mês</small></div>
+      <input class="field-input plano-input" type="number" step="0.1" id="s6_kdqol_plano" placeholder="—">
+      <input class="field-input total-input" type="number" step="0.1" id="s6_kdqol_total" placeholder="—">
+    </div>
+
+    <div class="field-row">
+      <div class="field-label">Intercorrências nas sessões<small>Hipotensão, cãibras, náuseas, etc.</small></div>
+      <input class="field-input plano-input" type="number" id="s6_intercorr_plano" placeholder="0">
+      <input class="field-input total-input" type="number" id="s6_intercorr_total" placeholder="0">
+    </div>
+  </div>
+
+  <!-- OBSERVAÇÕES -->
+  <div class="obs-area section" style="border-top: 1px solid var(--border);">
+    <div class="obs-label">Observações / Destaques para a reunião</div>
+    <textarea class="obs-textarea" id="obs-text" placeholder="Pontos de atenção, metas acordadas, ações propostas..."></textarea>
+  </div>
+
+  <!-- ASSINATURA -->
+  <div class="signature-bar">
+    <div class="sig-block">
+      <div style="height:40px;"></div>
+      <div class="sig-line">
+        <div class="sig-name">Dr. Bruno P. Biluca</div>
+        <div class="sig-crm">CRM-SP 151.041 · RQE 70145 · Nefrologista</div>
+      </div>
+    </div>
+    <div class="sig-block">
+      <div style="height:40px;"></div>
+      <div class="sig-line">
+        <div class="sig-name">Representante do Plano</div>
+        <div class="sig-crm" id="sig-plano-name">—</div>
+      </div>
+    </div>
+    <div class="sig-block">
+      <div style="height:40px;"></div>
+      <div class="sig-line">
+        <div class="sig-name">Data</div>
+        <div class="sig-crm" id="sig-data">—</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast">✓ Dados salvos com sucesso</div>
+
+<script>
+// ── STATE ──
+const FIELDS = [
+  's1_pac','s1_sess','s1_freq',
+  's2_ktv','s2_ktv_meta','s2_tempo',
+  's3_hosp','s3_taxahosp','s3_dias','s3_obito','s3_tx',
+  's4_fav','s4_cdl','s4_perm','s4_infec',
+  's5_alb','s5_alb_meta','s5_imc','s5_gpid',
+  's6_abs','s6_abrev','s6_kdqol','s6_intercorr'
+];
+
+function getPlano() {
+  const sel = document.getElementById('ctrl-plano').value;
+  if (sel === 'outro') return document.getElementById('ctrl-plano-custom').value.trim();
+  return sel;
+}
+
+function getMes() { return document.getElementById('ctrl-mes').value; }
+function getUnidade() { return document.getElementById('ctrl-unidade').value; }
+
+function storageKey() {
+  return `relatorio_plano::${getPlano()}::${getUnidade()}::${getMes()}`;
+}
+
+function onPlanoChange() {
+  const sel = document.getElementById('ctrl-plano').value;
+  document.getElementById('custom-plano-wrap').style.display = sel === 'outro' ? '' : 'none';
+  updateHeader();
+  loadData();
+}
+
+function updateHeader() {
+  const plano = getPlano();
+  const mes = getMes();
+  const unidade = getUnidade();
+
+  document.getElementById('display-plano').textContent = plano || 'Selecione um plano';
+  document.getElementById('display-unidade').textContent = unidade || '—';
+  document.getElementById('sig-plano-name').textContent = plano || '—';
+
+  if (mes) {
+    const [y, m] = mes.split('-');
+    const meses = ['','Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
+    document.getElementById('display-mes').textContent = `${meses[+m]} ${y}`;
+    document.getElementById('sig-data').textContent = new Date().toLocaleDateString('pt-BR');
+  }
+
+  document.getElementById('display-emissao').textContent = new Date().toLocaleDateString('pt-BR');
+}
+
+function saveData() {
+  if (!getPlano()) { alert('Selecione ou digite o plano de saúde.'); return; }
+  if (!getMes())   { alert('Selecione o mês de referência.'); return; }
+
+  const data = { obs: document.getElementById('obs-text').value };
+  FIELDS.forEach(f => {
+    data[f + '_plano'] = document.getElementById(f + '_plano')?.value || '';
+    data[f + '_total'] = document.getElementById(f + '_total')?.value || '';
+  });
+
+  localStorage.setItem(storageKey(), JSON.stringify(data));
+  showToast('✓ Dados salvos com sucesso');
+}
+
+function loadData() {
+  updateHeader();
+  const key = storageKey();
+  if (!getPlano() || !getMes()) return;
+
+  const raw = localStorage.getItem(key);
+  if (!raw) {
+    // clear fields
+    FIELDS.forEach(f => {
+      const ep = document.getElementById(f + '_plano');
+      const et = document.getElementById(f + '_total');
+      if (ep) ep.value = '';
+      if (et) et.value = '';
+    });
+    document.getElementById('obs-text').value = '';
+    clearDeltas();
+    return;
+  }
+
+  const data = JSON.parse(raw);
+  FIELDS.forEach(f => {
+    const ep = document.getElementById(f + '_plano');
+    const et = document.getElementById(f + '_total');
+    if (ep) ep.value = data[f + '_plano'] || '';
+    if (et) et.value = data[f + '_total'] || '';
+  });
+  document.getElementById('obs-text').value = data.obs || '';
+  updateDelta('s1_pac');
+  updateDelta('s1_sess');
+}
+
+function updateDelta(id) {
+  const pEl = document.getElementById(id + '_plano');
+  const tEl = document.getElementById(id + '_total');
+  const dEl = document.getElementById('delta-' + id);
+  if (!pEl || !tEl || !dEl) return;
+
+  const p = parseFloat(pEl.value);
+  const t = parseFloat(tEl.value);
+
+  if (!isNaN(p) && !isNaN(t) && t > 0) {
+    const pct = ((p / t) * 100).toFixed(1);
+    dEl.textContent = pct + '% do total';
+    dEl.className = 'delta-badge delta-neutral';
+    dEl.style.background = '#f0eee8';
+    dEl.style.color = '#888';
+  } else {
+    dEl.textContent = '% do total';
+    dEl.className = 'delta-badge delta-neutral';
+    dEl.style.background = '';
+    dEl.style.color = '';
+  }
+}
+
+function clearDeltas() {
+  ['s1_pac','s1_sess'].forEach(id => {
+    const el = document.getElementById('delta-' + id);
+    if (el) { el.textContent = '% do total'; el.className = 'delta-badge delta-neutral'; }
+  });
+}
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2800);
+}
+
+// ── INIT ──
+(function init() {
+  // set current month
+  const now = new Date();
+  const y = now.getFullYear();
+  const m = String(now.getMonth() + 1).padStart(2, '0');
+  document.getElementById('ctrl-mes').value = `${y}-${m}`;
+  updateHeader();
+})();
+</script>
+
+</body>
+</html>
