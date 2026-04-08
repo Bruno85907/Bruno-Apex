@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Importar Dados TRS Agudo (v3) — APEX</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Space Grotesk',system-ui,sans-serif;background:#F5F5F5;color:#111;min-height:100vh;}
+.nav{background:#FFF;border-bottom:2px solid #2460A7;height:52px;display:flex;align-items:center;padding:0 32px;gap:16px;}
+.nav-logo{font-size:12px;font-weight:700;color:#2460A7;letter-spacing:5px;text-transform:uppercase;}
+.nav-div{width:1px;height:16px;background:#E8E8E8;}
+.nav-title{font-size:11px;font-weight:500;color:#555;letter-spacing:1.5px;text-transform:uppercase;}
+.page{max-width:1100px;margin:0 auto;padding:32px 28px;}
+.alert{background:#FFF7E6;border:1px solid #E8D5B0;border-left:4px solid #2460A7;border-radius:8px;padding:16px 20px;margin-bottom:24px;font-size:13px;color:#555;line-height:1.6;}
+.alert strong{color:#1A4070;}
+h2{font-size:15px;font-weight:600;color:#1A4070;margin:24px 0 10px;display:flex;align-items:center;gap:10px;}
+h2::after{content:'';flex:1;height:1px;background:#E8D5B0;}
+.mes-label{font-size:11px;font-weight:600;color:#2460A7;letter-spacing:2px;text-transform:uppercase;margin:20px 0 10px;padding:6px 14px;background:rgba(36,96,167,0.06);border-radius:6px;display:inline-block;}
+table{width:100%;border-collapse:collapse;font-size:13px;margin-bottom:8px;background:#FFF;border-radius:10px;overflow:hidden;border:1px solid #E8D5B0;}
+thead th{font-size:10px;font-weight:600;color:#6B4E24;text-transform:uppercase;letter-spacing:.04em;padding:10px 8px;border-bottom:2px solid #2460A7;text-align:center;background:#F7F0E4;}
+thead th:first-child{text-align:left;padding-left:14px;}
+tbody td{padding:9px 8px;border-bottom:1px solid #F0E8DC;text-align:center;color:#333;}
+tbody td:first-child{text-align:left;font-weight:600;color:#1A4070;padding-left:14px;}
+.total-row td{font-weight:700;color:#1A4070;border-top:2px solid #2460A7;background:#F7F0E4;}
+.ic-cell{text-align:left!important;font-size:11px;}
+.ic-tag{display:inline-block;background:rgba(36,96,167,0.08);border:1px solid rgba(36,96,167,0.15);border-radius:4px;padding:2px 8px;margin:2px 3px;font-size:10px;color:#1A4070;}
+.note{font-size:11px;color:#999;margin-top:4px;padding-left:14px;}
+.actions{display:flex;gap:14px;margin:28px 0;justify-content:center;}
+.btn{border:none;border-radius:8px;padding:14px 32px;font-family:'Space Grotesk',system-ui,sans-serif;font-size:13px;font-weight:600;cursor:pointer;transition:all .2s;}
+.btn-primary{background:#1A4070;color:#FFF;}
+.btn-primary:hover{background:#2460A7;}
+.btn-primary:disabled{background:#CCC;cursor:not-allowed;}
+.btn-secondary{background:transparent;color:#1A4070;border:1.5px solid #2460A7;}
+.btn-secondary:hover{background:#F7F0E4;}
+.status{text-align:center;padding:16px;font-size:14px;border-radius:10px;margin:18px 0;display:none;}
+.status.ok{display:block;background:#E8F5E9;border:1px solid #81C784;color:#2D7A4F;}
+.status.err{display:block;background:#FFEBEE;border:1px solid #EF9A9A;color:#C0392B;}
+.existing{margin:14px 0;padding:14px 18px;background:#FFF;border:1px solid #E8D5B0;border-radius:8px;font-size:12px;color:#555;}
+.existing strong{color:#1A4070;}
+</style>
+</head>
+<body>
+<div class="nav">
+  <span class="nav-logo">APEX</span>
+  <div class="nav-div"></div>
+  <span class="nav-title">Importação v3 — TRS Agudo · Mont Serrat</span>
+</div>
+<div class="page">
+  <div class="alert">
+    <strong>Versão v3 — Planilha atualizada até 08/Abr/2026.</strong><br>
+    Semana 14 (quebrada Mar/Abr) dividida: sessões de Mar 30-31 agrupadas na W13, sessões de Abr 1-5 agrupadas na W15.<br>
+    Pacientes únicos contados apenas na primeira semana de aparição no mês.<br><br>
+    <strong>Esta importação SUBSTITUI todos os dados anteriores.</strong>
+  </div>
+
+  <div id="existing-check"></div>
+
+  <h2>Fevereiro 2026</h2>
+  <div class="mes-label">4 pacientes · 15 sessões · 0 intercorrências</div>
+  <table>
+    <thead><tr><th>Semana</th><th>Pac.*</th><th>HD</th><th>CRRT</th><th>DP</th><th>SLED</th><th>Total</th><th>FAV</th><th>Perm.</th><th>CDL</th><th style="text-align:left;padding-left:12px;">Intercorrências</th></tr></thead>
+    <tbody>
+      <tr><td>W08 (22/Fev)</td><td>1</td><td>2</td><td>0</td><td>0</td><td>0</td><td>2</td><td>2</td><td>0</td><td>0</td><td class="ic-cell">Nenhuma</td></tr>
+      <tr><td>W09 (23-28/Fev)</td><td>3</td><td>13</td><td>0</td><td>0</td><td>0</td><td>13</td><td>5</td><td>2</td><td>6</td><td class="ic-cell">Nenhuma</td></tr>
+      <tr class="total-row"><td>Total Fev</td><td>4</td><td>15</td><td>0</td><td>0</td><td>0</td><td>15</td><td>7</td><td>2</td><td>6</td><td class="ic-cell">0</td></tr>
+    </tbody>
+  </table>
+  <p class="note">* Pac. = pacientes novos nesta semana (contados uma única vez no mês)</p>
+
+  <h2>Março 2026</h2>
+  <div class="mes-label">14 pacientes · 54 sessões · 3 intercorrências</div>
+  <table>
+    <thead><tr><th>Semana</th><th>Pac.*</th><th>HD</th><th>CRRT</th><th>DP</th><th>SLED</th><th>Total</th><th>FAV</th><th>Perm.</th><th>CDL</th><th style="text-align:left;padding-left:12px;">Intercorrências</th></tr></thead>
+    <tbody>
+      <tr><td>W10 (02-08/Mar)</td><td>7</td><td>16</td><td>0</td><td>0</td><td>0</td><td>16</td><td>2</td><td>5</td><td>9</td><td class="ic-cell">Nenhuma</td></tr>
+      <tr><td>W11 (09-15/Mar)</td><td>3</td><td>15</td><td>0</td><td>0</td><td>0</td><td>15</td><td>0</td><td>2</td><td>13</td><td class="ic-cell">Nenhuma</td></tr>
+      <tr><td>W12 (16-20/Mar)</td><td>0</td><td>12</td><td>0</td><td>0</td><td>0</td><td>12</td><td>1</td><td>1</td><td>10</td><td class="ic-cell">Nenhuma</td></tr>
+      <tr><td>W13 (23-31/Mar)</td><td>4</td><td>9</td><td>0</td><td>0</td><td>2</td><td>11</td><td>1</td><td>6</td><td>4</td><td class="ic-cell"><span class="ic-tag">Hipotensão ×2</span> <span class="ic-tag">Desconforto respiratório ×1</span></td></tr>
+      <tr class="total-row"><td>Total Mar</td><td>14</td><td>52</td><td>0</td><td>0</td><td>2</td><td>54</td><td>4</td><td>14</td><td>36</td><td class="ic-cell">3</td></tr>
+    </tbody>
+  </table>
+  <p class="note">* W13 inclui Mar 30-31 (da semana ISO 14 quebrada)</p>
+
+  <h2>Abril 2026 (parcial)</h2>
+  <div class="mes-label">7 pacientes · 14 sessões · 2 intercorrências</div>
+  <table>
+    <thead><tr><th>Semana</th><th>Pac.*</th><th>HD</th><th>CRRT</th><th>DP</th><th>SLED</th><th>Total</th><th>FAV</th><th>Perm.</th><th>CDL</th><th style="text-align:left;padding-left:12px;">Intercorrências</th></tr></thead>
+    <tbody>
+      <tr><td>W15 (01-08/Abr)</td><td>7</td><td>14</td><td>0</td><td>0</td><td>0</td><td>14</td><td>5</td><td>7</td><td>2</td><td class="ic-cell"><span class="ic-tag">Hipertensão ×1</span> <span class="ic-tag">Hipotensão ×1</span></td></tr>
+      <tr class="total-row"><td>Total Abr</td><td>7</td><td>14</td><td>0</td><td>0</td><td>0</td><td>14</td><td>5</td><td>7</td><td>2</td><td class="ic-cell">2</td></tr>
+    </tbody>
+  </table>
+  <p class="note">* W15 inclui Abr 1-5 (da semana ISO 14 quebrada) + Abr 6-8</p>
+
+  <div id="status"></div>
+  <div class="actions">
+    <button class="btn btn-primary" id="btn-import" onclick="importar()">Limpar tudo e importar 7 semanas →</button>
+    <button class="btn btn-secondary" onclick="verificar()">Verificar localStorage</button>
+  </div>
+</div>
+
+<script>
+var STORAGE_KEY = 'trs_agudo_mont_serrat';
+
+var DADOS = [
+  // FEVEREIRO
+  { semana:'2026-W08', pac:1, sessoes:{hd:2,crrt:0,dp:0,sled:0}, acessos:{fav:2,permcath:0,cdl:0}, ic:[], ts:Date.now() },
+  { semana:'2026-W09', pac:3, sessoes:{hd:13,crrt:0,dp:0,sled:0}, acessos:{fav:5,permcath:2,cdl:6}, ic:[], ts:Date.now() },
+  // MARÇO
+  { semana:'2026-W10', pac:7, sessoes:{hd:16,crrt:0,dp:0,sled:0}, acessos:{fav:2,permcath:5,cdl:9}, ic:[], ts:Date.now() },
+  { semana:'2026-W11', pac:3, sessoes:{hd:15,crrt:0,dp:0,sled:0}, acessos:{fav:0,permcath:2,cdl:13}, ic:[], ts:Date.now() },
+  { semana:'2026-W12', pac:0, sessoes:{hd:12,crrt:0,dp:0,sled:0}, acessos:{fav:1,permcath:1,cdl:10}, ic:[], ts:Date.now() },
+  { semana:'2026-W13', pac:4, sessoes:{hd:9,crrt:0,dp:0,sled:2}, acessos:{fav:1,permcath:6,cdl:4}, ic:[{nome:'Hipotensão',qtd:2},{nome:'Desconforto respiratório',qtd:1}], ts:Date.now() },
+  // ABRIL (W15 = Abr 1-8, inclui parte da W14 quebrada)
+  { semana:'2026-W15', pac:7, sessoes:{hd:14,crrt:0,dp:0,sled:0}, acessos:{fav:5,permcath:7,cdl:2}, ic:[{nome:'Hipertensão',qtd:1},{nome:'Hipotensão',qtd:1}], ts:Date.now() }
+];
+
+function showStatus(msg, type) {
+  var el = document.getElementById('status');
+  el.className = 'status ' + type;
+  el.innerHTML = msg;
+}
+
+function verificar() {
+  var existing = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+  var el = document.getElementById('existing-check');
+  if (existing.length === 0) {
+    el.innerHTML = '<div class="existing"><strong>localStorage vazio</strong> — pronto para importação.</div>';
+  } else {
+    var semanas = existing.map(function(h){ return h.semana; }).join(', ');
+    el.innerHTML = '<div class="existing"><strong>' + existing.length + ' semana(s) existentes:</strong> ' + semanas + '</div>';
+  }
+}
+
+function importar() {
+  try {
+    var sorted = DADOS.slice().sort(function(a,b){ return b.semana.localeCompare(a.semana); });
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(sorted));
+
+    // Verificação
+    var check = JSON.parse(localStorage.getItem(STORAGE_KEY));
+    var tFev=0, tMar=0, tAbr=0, pFev=0, pMar=0, pAbr=0;
+    check.forEach(function(s){
+      var ses = s.sessoes.hd + s.sessoes.crrt + s.sessoes.dp + s.sessoes.sled;
+      var w = parseInt(s.semana.split('-W')[1]);
+      if(w <= 9){ tFev += ses; pFev += s.pac; }
+      else if(w <= 13){ tMar += ses; pMar += s.pac; }
+      else { tAbr += ses; pAbr += s.pac; }
+    });
+
+    var ok = (pFev===4 && tFev===15 && pMar===14 && tMar===54 && pAbr===7 && tAbr===14);
+
+    showStatus(
+      '✓ Importação concluída — 7 semanas gravadas.<br><br>' +
+      '<strong>Verificação:</strong><br>' +
+      'Fev: ' + pFev + ' pac · ' + tFev + ' ses ' + (pFev===4&&tFev===15?'✓':'✕') + '<br>' +
+      'Mar: ' + pMar + ' pac · ' + tMar + ' ses ' + (pMar===14&&tMar===54?'✓':'✕') + '<br>' +
+      'Abr: ' + pAbr + ' pac · ' + tAbr + ' ses ' + (pAbr===7&&tAbr===14?'✓':'✕') + '<br><br>' +
+      (ok ? 'Todos os valores conferem. Abra o Dashboard e gere o mês desejado.' : '⚠️ Algum valor não confere — verifique.'),
+      ok ? 'ok' : 'err'
+    );
+
+    document.getElementById('btn-import').disabled = true;
+    document.getElementById('btn-import').textContent = '✓ Importado';
+    verificar();
+  } catch(e) {
+    showStatus('✕ Erro: ' + e.message, 'err');
+  }
+}
+
+document.addEventListener('DOMContentLoaded', verificar);
+</script>
+</body>
+</html>
