@@ -159,7 +159,6 @@ const HOSPITAL_NOME=params.get('nome')||'Hospital Mont Serrat';
 const STORAGE_KEY=`trs_agudo_${HOSPITAL_ID}`;
 
 document.getElementById('nav-hosp').textContent=HOSPITAL_NOME;
-document.getElementById('pg-eyebrow').textContent=`${HOSPITAL_NOME} · Lançamento Semanal`;
 
 function renderIC(){
   document.getElementById('ic-grid').innerHTML=IC.map((nome,i)=>`
