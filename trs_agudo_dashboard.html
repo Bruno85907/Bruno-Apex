@@ -207,25 +207,13 @@ function drawGauge(canvasId,valor){
   const canvas=document.getElementById(canvasId);if(!canvas)return;const ctx=canvas.getContext('2d');
   const W=220,H=120;canvas.width=W;canvas.height=H;ctx.clearRect(0,0,W,H);
   const cx=W/2,cy=H-8,R=95,thick=26,arcFx=Math.PI/6;
-  // Subtle shadow under arc
-  ctx.save();ctx.shadowColor='rgba(0,0,0,0.06)';ctx.shadowBlur=8;ctx.shadowOffsetY=2;
-  ctx.beginPath();ctx.arc(cx,cy,R+1,Math.PI,2*Math.PI);ctx.arc(cx,cy,R-thick-1,2*Math.PI,Math.PI,true);ctx.closePath();
-  ctx.fillStyle='#F0F0F0';ctx.fill();ctx.restore();
-  // Segments with gradient
-  FAIXAS_CORES.forEach((_,i)=>{const sa=Math.PI+(i*arcFx),ea=Math.PI+((i+1)*arcFx)-0.008;ctx.beginPath();ctx.arc(cx,cy,R,sa,ea);ctx.arc(cx,cy,R-thick,ea,sa,true);ctx.closePath();ctx.fillStyle=FAIXAS_BG[i];ctx.fill();ctx.strokeStyle='rgba(255,255,255,0.5)';ctx.lineWidth=0.8;ctx.stroke();});
-  // Active segment
+  FAIXAS_CORES.forEach((_,i)=>{const sa=Math.PI+(i*arcFx),ea=Math.PI+((i+1)*arcFx);ctx.beginPath();ctx.arc(cx,cy,R,sa,ea);ctx.arc(cx,cy,R-thick,ea,sa,true);ctx.closePath();ctx.fillStyle=FAIXAS_BG[i];ctx.fill();ctx.strokeStyle=FAIXAS_CORES[i];ctx.lineWidth=0.5;ctx.stroke();});
   const fi=faixaIdx(valor);const sa2=Math.PI+(fi*arcFx),ea2=Math.PI+((fi+1)*arcFx);
-  const hg=ctx.createRadialGradient(cx,cy,R-thick,cx,cy,R);
-  hg.addColorStop(0,FAIXAS_CORES[fi]);hg.addColorStop(1,FAIXAS_CORES[fi]+'CC');
-  ctx.beginPath();ctx.arc(cx,cy,R,sa2,ea2);ctx.arc(cx,cy,R-thick,ea2,sa2,true);ctx.closePath();ctx.fillStyle=hg;ctx.fill();
-  // Labels
-  FAIXAS_LABELS.forEach((lbl,i)=>{const mid=Math.PI+(i*arcFx)+(arcFx/2);const lx=cx+(R-thick/2)*Math.cos(mid),ly=cy+(R-thick/2)*Math.sin(mid);ctx.font=`${i===fi?'bold ':''}7.5px Space Grotesk,Arial`;ctx.fillStyle=i===fi?'#fff':'rgba(100,100,100,0.5)';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText(lbl,lx,ly);});
-  // Needle
-  const frac=fi<5?(valor-fi*50)/50:1;const angle=Math.PI+(fi+frac)*arcFx;const nLen=R-thick-12;
-  ctx.save();ctx.shadowColor='rgba(0,0,0,0.2)';ctx.shadowBlur=5;ctx.shadowOffsetY=1;ctx.strokeStyle=FAIXAS_CORES[fi];ctx.lineWidth=3;ctx.lineCap='round';ctx.beginPath();ctx.moveTo(cx,cy);ctx.lineTo(cx+nLen*Math.cos(angle),cy+nLen*Math.sin(angle));ctx.stroke();ctx.restore();
-  // Hub
-  ctx.beginPath();ctx.arc(cx,cy,8,0,2*Math.PI);const cg=ctx.createRadialGradient(cx,cy-2,0,cx,cy,8);cg.addColorStop(0,'#fff');cg.addColorStop(1,FAIXAS_CORES[fi]);ctx.fillStyle=cg;ctx.fill();
-  ctx.beginPath();ctx.arc(cx,cy,3.5,0,2*Math.PI);ctx.fillStyle='#fff';ctx.fill();
+  ctx.beginPath();ctx.arc(cx,cy,R,sa2,ea2);ctx.arc(cx,cy,R-thick,ea2,sa2,true);ctx.closePath();ctx.fillStyle=FAIXAS_CORES[fi];ctx.globalAlpha=0.85;ctx.fill();ctx.globalAlpha=1;
+  FAIXAS_LABELS.forEach((lbl,i)=>{const mid=Math.PI+(i*arcFx)+(arcFx/2);const lx=cx+(R-thick/2)*Math.cos(mid),ly=cy+(R-thick/2)*Math.sin(mid);ctx.font='bold 7.5px Space Grotesk,Arial';ctx.fillStyle=i===fi?'#fff':'rgba(100,100,100,0.6)';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText(lbl,lx,ly);});
+  const frac=fi<5?(valor-fi*50)/50:1;const angle=Math.PI+(fi+frac)*arcFx;const nLen=R-thick-10;
+  ctx.save();ctx.shadowColor='rgba(0,0,0,0.2)';ctx.shadowBlur=4;ctx.strokeStyle=FAIXAS_CORES[fi];ctx.lineWidth=3;ctx.lineCap='round';ctx.beginPath();ctx.moveTo(cx,cy);ctx.lineTo(cx+nLen*Math.cos(angle),cy+nLen*Math.sin(angle));ctx.stroke();ctx.restore();
+  ctx.beginPath();ctx.arc(cx,cy,7,0,2*Math.PI);ctx.fillStyle=FAIXAS_CORES[fi];ctx.fill();ctx.beginPath();ctx.arc(cx,cy,3,0,2*Math.PI);ctx.fillStyle='#fff';ctx.fill();
 }
 
 function drawLineChart(canvasId,sems){
@@ -264,61 +252,76 @@ function drawCompBars(containerId,ag,agAnt,mes,mesAnt){
   el.innerHTML=`<div class="comp-grid"><div class="comp-col"><div class="comp-label">${formatMes(mes)} (atual)</div>${metrics.map(m=>`<div class="comp-row"><span class="comp-name">${m.name}</span><div class="comp-bar-bg"><div class="comp-bar-fill" style="width:${Math.round(m.cur/maxAll*100)}%;background:#2460A7;"></div></div><span class="comp-val">${m.cur}</span></div>`).join('')}</div><div class="comp-col"><div class="comp-label">${agAnt?formatMes(mesAnt):'Mês anterior'}</div>${metrics.map(m=>`<div class="comp-row"><span class="comp-name">${m.name}</span><div class="comp-bar-bg"><div class="comp-bar-fill" style="width:${m.ant>0?Math.round(m.ant/maxAll*100):0}%;background:#B99454;"></div></div><span class="comp-val">${m.ant||'—'}</span></div>`).join('')}</div></div>`;
 }
 
+
 function drawStackedChart(canvasId,mesRef){
-  const canvas=document.getElementById(canvasId);if(!canvas)return;
-  const ctx=canvas.getContext('2d');
-  const hist=JSON.parse(localStorage.getItem(STORAGE_KEY)||'[]');
-  const MESES_L=['Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez','Jan','Fev'];
-  const MESES_K=['2026-02','2026-03','2026-04','2026-05','2026-06','2026-07','2026-08','2026-09','2026-10','2026-11','2026-12','2027-01','2027-02'];
-  const data=MESES_K.map((mk,i)=>{
-    const[ano,mm]=mk.split('-');
-    const sems=hist.filter(h=>{if(!h.semana)return false;const[y,w]=h.semana.split('-W');const d=isoWeekToDate(parseInt(y),parseInt(w));return d.getFullYear()===parseInt(ano)&&(d.getMonth()+1)===parseInt(mm);});
-    let hd=0,crrt=0,dp=0,sled=0;
-    sems.forEach(s=>{hd+=(s.sessoes.hd||0);crrt+=(s.sessoes.crrt||0);dp+=(s.sessoes.dp||0);sled+=(s.sessoes.sled||0);});
-    return{label:MESES_L[i],key:mk,hd,crrt,dp,sled,total:hd+crrt+dp+sled};
+  var canvas=document.getElementById(canvasId);if(!canvas)return;
+  var ctx=canvas.getContext('2d');
+  var hist=JSON.parse(localStorage.getItem(STORAGE_KEY)||'[]');
+  var ML=['Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez','Jan','Fev'];
+  var MK=['2026-02','2026-03','2026-04','2026-05','2026-06','2026-07','2026-08','2026-09','2026-10','2026-11','2026-12','2027-01','2027-02'];
+  var data=MK.map(function(mk,i){
+    var parts=mk.split('-');var ano=parts[0];var mm=parts[1];
+    var sems=hist.filter(function(h){
+      if(!h.semana)return false;
+      var sw=h.semana.split('-W');var d=isoWeekToDate(parseInt(sw[0]),parseInt(sw[1]));
+      return d.getFullYear()===parseInt(ano)&&(d.getMonth()+1)===parseInt(mm);
+    });
+    var hd=0,crrt=0,dp=0,sled=0;
+    sems.forEach(function(s){hd+=(s.sessoes.hd||0);crrt+=(s.sessoes.crrt||0);dp+=(s.sessoes.dp||0);sled+=(s.sessoes.sled||0);});
+    return{label:ML[i],key:mk,hd:hd,crrt:crrt,dp:dp,sled:sled,total:hd+crrt+dp+sled};
   });
-  const W=canvas.parentElement.offsetWidth;const H=260;canvas.width=W;canvas.height=H;
-  const pad={top:25,right:20,bottom:40,left:45};
-  const cw=W-pad.left-pad.right,ch=H-pad.top-pad.bottom;
-  const maxV=Math.max(...data.map(d=>d.total),10)*1.15;
-  const slotW=cw/data.length;
-  const barW=Math.min(slotW*0.55,46);
-  const colors={hd:'#2460A7',crrt:'#E8973A',dp:'#2D6A4F',sled:'#B99454'};
+  var W=canvas.parentElement.offsetWidth||800;var H=260;
+  canvas.width=W;canvas.height=H;
+  var padT=25,padR=20,padB=40,padL=45;
+  var cw=W-padL-padR,ch=H-padT-padB;
+  var vals=data.map(function(d){return d.total;});
+  var maxV=Math.max.apply(null,vals.concat([10]))*1.15;
+  var slotW=cw/data.length;
+  var barW=Math.min(slotW*0.55,46);
+  var colors={hd:'#2460A7',crrt:'#E8973A',dp:'#2D6A4F',sled:'#B99454'};
+  var mods=['hd','crrt','dp','sled'];
   // Grid
   ctx.strokeStyle='#F0EDED';ctx.lineWidth=1;
-  for(let i=0;i<=4;i++){const y=pad.top+ch-(ch/4*i);ctx.beginPath();ctx.moveTo(pad.left,y);ctx.lineTo(W-pad.right,y);ctx.stroke();ctx.font='10px Space Grotesk,sans-serif';ctx.fillStyle='#bbb';ctx.textAlign='right';ctx.textBaseline='middle';ctx.fillText(Math.round(maxV/4*i),pad.left-8,y);}
+  for(var g=0;g<=4;g++){
+    var gy=padT+ch-(ch/4*g);
+    ctx.beginPath();ctx.moveTo(padL,gy);ctx.lineTo(W-padR,gy);ctx.stroke();
+    ctx.font='10px Space Grotesk,sans-serif';ctx.fillStyle='#bbb';ctx.textAlign='right';ctx.textBaseline='middle';
+    ctx.fillText(Math.round(maxV/4*g),padL-8,gy);
+  }
   // Bars
-  data.forEach((d,i)=>{
-    const cx=pad.left+slotW*i+slotW/2;
-    const x=cx-barW/2;
-    const isRef=(d.key===mesRef);
+  for(var i=0;i<data.length;i++){
+    var d=data[i];
+    var centerX=padL+slotW*i+slotW/2;
+    var x0=centerX-barW/2;
+    var isRef=(d.key===mesRef);
     if(d.total>0){
-      let curY=pad.top+ch;
-      ['hd','crrt','dp','sled'].forEach(mod=>{
-        const v=d[mod];if(v===0)return;
-        const h=(v/maxV)*ch;
+      var curY=padT+ch;
+      for(var m=0;m<mods.length;m++){
+        var mod=mods[m];
+        var v=d[mod];if(v===0)continue;
+        var h=(v/maxV)*ch;
         ctx.fillStyle=colors[mod];
-        ctx.fillRect(x,curY-h,barW,h);
+        ctx.fillRect(x0,curY-h,barW,h);
         curY-=h;
-      });
-      // Round top corners
-      ctx.fillStyle='#fff';ctx.globalCompositeOperation='destination-out';
-      ctx.beginPath();ctx.moveTo(x,curY);ctx.lineTo(x,curY+3);ctx.quadraticCurveTo(x,curY,x+3,curY);ctx.closePath();ctx.fill();
-      ctx.beginPath();ctx.moveTo(x+barW,curY);ctx.lineTo(x+barW,curY+3);ctx.quadraticCurveTo(x+barW,curY,x+barW-3,curY);ctx.closePath();ctx.fill();
-      ctx.globalCompositeOperation='source-over';
+      }
       // Total label
       ctx.font='bold 10px Space Grotesk,sans-serif';ctx.fillStyle='#1A4070';ctx.textAlign='center';
-      ctx.fillText(d.total,cx,curY-6);
+      ctx.fillText(d.total,centerX,curY-6);
       // Highlight ref month
-      if(isRef){ctx.strokeStyle='#1A4070';ctx.lineWidth=2;ctx.setLineDash([]);ctx.strokeRect(x-1,curY-1,barW+2,pad.top+ch-curY+1);ctx.lineWidth=1;}
+      if(isRef){
+        ctx.strokeStyle='#1A4070';ctx.lineWidth=2;
+        ctx.strokeRect(x0-2,curY-2,barW+4,padT+ch-curY+4);
+      }
     }
     // Month label
     ctx.font=isRef?'bold 11px Space Grotesk,sans-serif':'10px Space Grotesk,sans-serif';
-    ctx.fillStyle=d.total>0?(isRef?'#1A4070':'#666'):'#ccc';ctx.textAlign='center';
-    ctx.fillText(d.label,cx,pad.top+ch+16);
+    ctx.fillStyle=d.total>0?(isRef?'#1A4070':'#666'):'#ccc';
+    ctx.textAlign='center';
+    ctx.fillText(d.label,centerX,padT+ch+16);
+    // Year
     ctx.font='8px Space Grotesk,sans-serif';ctx.fillStyle='#bbb';
-    ctx.fillText(d.key.startsWith('2027')?'27':'26',cx,pad.top+ch+28);
-  });
+    ctx.fillText(d.key.indexOf('2027')===0?'27':'26',centerX,padT+ch+28);
+  }
 }
 
 function icGradiente(pct){if(pct>80)return'#C85B2A';if(pct>60)return'#E8973A';if(pct>40)return'#2460A7';if(pct>20)return'#9CB84E';return'#2D6A4F';}
