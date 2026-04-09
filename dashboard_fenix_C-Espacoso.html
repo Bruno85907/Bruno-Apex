@@ -1809,9 +1809,9 @@ function render(mes){
 
   setCard('eag', fmt(D.eag[mes]),               D.eag[mes]===0,             'Meta: zero');
   setCard('sui', fmt(D.sui[mes]),               D.sui[mes]===0,             'Meta: zero');
-  setCard('obi', fmt(D.obi[mes])+' <span class="sub">/ '+D.obiPct[mes]+'%</span>', D.obi[mes]===0, 'Meta: zero');
-  setCard('fal', fmt(D.fal[mes])+' <span class="sub">/ '+D.falPct[mes].toFixed(2)+'%</span>', D.falPct[mes]<=1, 'Meta: ≤1%');
-  setCard('tx',  D.tx[mes]+'%',                 D.tx[mes]>=55,              'Meta: ≥55%');
+  setCard('obi', fmt(D.obi[mes])+' <span class="sub">/ '+Math.round(D.obiPct[mes])+'%</span>', D.obi[mes]===0, 'Meta: zero');
+  setCard('fal', fmt(D.fal[mes])+' <span class="sub">/ '+Math.round(D.falPct[mes])+'%</span>', D.falPct[mes]<=1, 'Meta: ≤1%');
+  setCard('tx',  Math.round(D.tx[mes])+'%',             D.tx[mes]>=55,              'Meta: ≥55%');
   setCard('ics', fmt(D.ics[mes]),               D.ics[mes]===0,             'Meta: zero');
   setCard('icf', fmt(D.icf[mes]),               D.icf[mes]===0,             'Meta: zero');
   setCard('que', fmt(D.que[mes]),               D.que[mes]===0,             'Meta: zero');
