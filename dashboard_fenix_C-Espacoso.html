@@ -54,6 +54,10 @@ canvas{display:block;width:100%;}
 .analytic-box .ai-btn{background:#8B6914;color:#fff;border:none;border-radius:8px;padding:7px 16px;font-size:12px;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:6px;margin-top:8px;}
 .analytic-box .ai-btn:hover{background:#A67C3D;}
 .analytic-box .ai-btn:disabled{background:#D4B896;cursor:not-allowed;}
+.analytic-box .save-btn{background:#fff;color:#8B6914;border:1.5px solid #8B6914;border-radius:8px;padding:7px 16px;font-size:12px;font-weight:600;cursor:pointer;display:inline-flex;align-items:center;gap:6px;margin-top:8px;}
+.analytic-box .save-btn:hover{background:#F7F0E4;}
+.analytic-box .save-btn:disabled{border-color:#D4B896;color:#D4B896;cursor:not-allowed;}
+.analytic-box .btn-row{display:flex;gap:8px;flex-wrap:wrap;align-items:center;}
 .analytic-box .ai-loading{font-size:12px;color:#9C7A4A;margin-top:6px;display:none;}
 
 /* ── BARRA DE NAVEGAÇÃO PORTAL ── */
@@ -124,9 +128,11 @@ canvas{display:block;width:100%;}
 .portal-nav-back:hover { color: #B99454; }
 
 @media print{
+  *{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important;color-adjust:exact!important;}
   body{background:#fff;}
   .dashboard{padding:12px 18px;}
   .analytic-box .ai-btn{display:none;}
+  .analytic-box .save-btn{display:none;}
   .mes-bar button{display:none;}
   .mes-bar select{display:none;}
   .mes-bar label{display:none;}
@@ -232,7 +238,10 @@ canvas{display:block;width:100%;}
     <div class="analytic-box">
       <div class="atitle">Análise Clínica — Volumetria <span>IA sugere · você edita</span></div>
       <textarea id="analysis-vol" placeholder="Clique em Gerar análise para que a IA sugira uma interpretação dos resultados, ou digite sua análise diretamente..."></textarea>
-      <button class="ai-btn" onclick="gerarAnalise('vol','Volumetria','vol')">✦ Gerar análise com IA</button>
+      <div class="btn-row">
+        <button class="ai-btn" onclick="gerarAnalise('vol','Volumetria','vol')">✦ Gerar análise com IA</button>
+        <button class="save-btn" id="save-btn-vol" onclick="salvarAnalise('vol', +document.getElementById('mesSel').value)">💾 Salvar análise</button>
+      </div>
       <div class="ai-loading" id="loading-vol">Analisando os dados...</div>
     </div>
   </div>
@@ -275,7 +284,10 @@ canvas{display:block;width:100%;}
     <div class="analytic-box">
       <div class="atitle">Análise Clínica — Desfechos Clínicos <span>IA sugere · você edita</span></div>
       <textarea id="analysis-def" placeholder="Clique em Gerar análise para que a IA sugira uma interpretação dos resultados, ou digite sua análise diretamente..."></textarea>
-      <button class="ai-btn" onclick="gerarAnalise('def','Desfechos Clínicos','def')">✦ Gerar análise com IA</button>
+      <div class="btn-row">
+        <button class="ai-btn" onclick="gerarAnalise('def','Desfechos Clínicos','def')">✦ Gerar análise com IA</button>
+        <button class="save-btn" id="save-btn-def" onclick="salvarAnalise('def', +document.getElementById('mesSel').value)">💾 Salvar análise</button>
+      </div>
       <div class="ai-loading" id="loading-def">Analisando os dados...</div>
     </div>
   </div>
@@ -360,7 +372,10 @@ canvas{display:block;width:100%;}
     <div class="analytic-box">
       <div class="atitle">Análise Clínica — Avaliação Nutricional <span>IA sugere · você edita</span></div>
       <textarea id="analysis-nutri" placeholder="Clique em Gerar análise para que a IA sugira uma interpretação dos resultados, ou digite sua análise diretamente..."></textarea>
-      <button class="ai-btn" onclick="gerarAnalise('nutri','Avaliação Nutricional','nutri')">✦ Gerar análise com IA</button>
+      <div class="btn-row">
+        <button class="ai-btn" onclick="gerarAnalise('nutri','Avaliação Nutricional','nutri')">✦ Gerar análise com IA</button>
+        <button class="save-btn" id="save-btn-nutri" onclick="salvarAnalise('nutri', +document.getElementById('mesSel').value)">💾 Salvar análise</button>
+      </div>
       <div class="ai-loading" id="loading-nutri">Analisando os dados...</div>
     </div>
   </div>
@@ -422,7 +437,10 @@ canvas{display:block;width:100%;}
     <div class="analytic-box">
       <div class="atitle">Análise Clínica — Adequação da Diálise <span>IA sugere · você edita</span></div>
       <textarea id="analysis-adequ" placeholder="Clique em Gerar análise para que a IA sugira uma interpretação dos resultados, ou digite sua análise diretamente..."></textarea>
-      <button class="ai-btn" onclick="gerarAnalise('adequ','Adequação da Diálise','adequ')">✦ Gerar análise com IA</button>
+      <div class="btn-row">
+        <button class="ai-btn" onclick="gerarAnalise('adequ','Adequação da Diálise','adequ')">✦ Gerar análise com IA</button>
+        <button class="save-btn" id="save-btn-adequ" onclick="salvarAnalise('adequ', +document.getElementById('mesSel').value)">💾 Salvar análise</button>
+      </div>
       <div class="ai-loading" id="loading-adequ">Analisando os dados...</div>
     </div>
   </div>
@@ -476,7 +494,10 @@ canvas{display:block;width:100%;}
     <div class="analytic-box">
       <div class="atitle">Análise Clínica — Qualidade de Vida <span>IA sugere · você edita</span></div>
       <textarea id="analysis-qol" placeholder="Clique em Gerar análise para que a IA sugira uma interpretação dos resultados, ou digite sua análise diretamente..."></textarea>
-      <button class="ai-btn" onclick="gerarAnalise('qol','Qualidade de Vida','qol')">✦ Gerar análise com IA</button>
+      <div class="btn-row">
+        <button class="ai-btn" onclick="gerarAnalise('qol','Qualidade de Vida','qol')">✦ Gerar análise com IA</button>
+        <button class="save-btn" id="save-btn-qol" onclick="salvarAnalise('qol', +document.getElementById('mesSel').value)">💾 Salvar análise</button>
+      </div>
       <div class="ai-loading" id="loading-qol">Analisando os dados...</div>
     </div>
   </div>
@@ -512,7 +533,10 @@ canvas{display:block;width:100%;}
     <div class="analytic-box">
       <div class="atitle">Análise Clínica — Cardiovascular <span>IA sugere · você edita</span></div>
       <textarea id="analysis-cardio" placeholder="Clique em Gerar análise para que a IA sugira uma interpretação dos resultados, ou digite sua análise diretamente..."></textarea>
-      <button class="ai-btn" onclick="gerarAnalise('cardio','Cardiovascular','cardio')">✦ Gerar análise com IA</button>
+      <div class="btn-row">
+        <button class="ai-btn" onclick="gerarAnalise('cardio','Cardiovascular','cardio')">✦ Gerar análise com IA</button>
+        <button class="save-btn" id="save-btn-cardio" onclick="salvarAnalise('cardio', +document.getElementById('mesSel').value)">💾 Salvar análise</button>
+      </div>
       <div class="ai-loading" id="loading-cardio">Analisando os dados...</div>
     </div>
   </div>
@@ -581,7 +605,10 @@ canvas{display:block;width:100%;}
     <div class="analytic-box">
       <div class="atitle">Análise Clínica — Composição Corporal <span>IA sugere · você edita</span></div>
       <textarea id="analysis-compcorp" placeholder="Clique em Gerar análise para que a IA sugira uma interpretação dos resultados, ou digite sua análise diretamente..."></textarea>
-      <button class="ai-btn" onclick="gerarAnalise('compcorp','Composição Corporal','compcorp')">✦ Gerar análise com IA</button>
+      <div class="btn-row">
+        <button class="ai-btn" onclick="gerarAnalise('compcorp','Composição Corporal','compcorp')">✦ Gerar análise com IA</button>
+        <button class="save-btn" id="save-btn-compcorp" onclick="salvarAnalise('compcorp', +document.getElementById('mesSel').value)">💾 Salvar análise</button>
+      </div>
       <div class="ai-loading" id="loading-compcorp">Analisando os dados...</div>
     </div>
   </div>
