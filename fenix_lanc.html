@@ -104,7 +104,7 @@ body{font-family:'Space Grotesk',system-ui,sans-serif;color:var(--text-primary);
       <span class="secao-title">Atividade</span>
       <span class="secao-toggle open" id="tog-s-atividade">▾</span>
     </div>
-    <div class="secao-body grid-3" id="s-atividade">
+    <div class="secao-body grid-4" id="s-atividade">
       <div class="campo">
         <label class="campo-lbl">Pacientes</label>
         <input type="number" class="inp" id="f-pac" placeholder="0" min="0" oninput="markChanged(this)"/>
@@ -114,6 +114,11 @@ body{font-family:'Space Grotesk',system-ui,sans-serif;color:var(--text-primary);
         <label class="campo-lbl">Sessões</label>
         <input type="number" class="inp" id="f-ses" placeholder="0" min="0" oninput="markChanged(this)"/>
         <span class="inp-hint">Total de sessões no mês</span>
+      </div>
+      <div class="campo">
+        <label class="campo-lbl">Sessões Extras</label>
+        <input type="number" class="inp" id="f-ses-extras" placeholder="0" min="0" oninput="markChanged(this)"/>
+        <span class="inp-hint">Sessões extras realizadas no período</span>
       </div>
       <div class="campo">
         <label class="campo-lbl">Admissões</label>
@@ -134,11 +139,6 @@ body{font-family:'Space Grotesk',system-ui,sans-serif;color:var(--text-primary);
         <label class="campo-lbl">Consultas Especialista</label>
         <input type="number" class="inp" id="f-cons-esp" placeholder="0" min="0" oninput="markChanged(this)"/>
         <span class="inp-hint">Consultas com outros especialistas</span>
-      </div>
-      <div class="campo">
-        <label class="campo-lbl">Sessões Extras</label>
-        <input type="number" class="inp" id="f-ses-extras" placeholder="0" min="0" oninput="markChanged(this)"/>
-        <span class="inp-hint">Sessões extras realizadas no período</span>
       </div>
     </div>
   </div>
@@ -494,7 +494,7 @@ async function carregarDados(){
   const cols=Object.values(CAMPOS).join(',');
   try{
     const resp=await fetch(
-      `${SUPA_URL}/rest/v1/dados_mensais?ano=eq.${m.ano}&mes=eq.${m.mes}&select=${cols}`,
+      `${SUPA_URL}/rest/v1/dados_mensais?ano=eq.${m.ano}&mes=eq.${m.mes}&select=*`,
       {headers:getHeaders()}
     );
     const rows=await resp.json();
