@@ -702,8 +702,8 @@ async function carregarDadosSupabase() {
       BASE.admissoes[m] = (d.adm_rl||0) + (d.adm_santos||0) + (d.adm_tatuape||0) || d.admissoes || 0;
       BASE.saidas[m]    = (d.sai_rl||0) + (d.sai_santos||0) + (d.sai_tatuape||0) || d.saidas    || 0;
       BASE.sesExtras[m] = d.ses_extras|| 0;
-      BASE.consEsp[m]   = d.cons_esp  || 0;
-      BASE.consNefro[m] = d.cons_nefro|| 0;
+      BASE.consEsp[m]   = (d.cons_esp_rl||0) + (d.cons_esp_santos||0) + (d.cons_esp_tatuape||0) || d.cons_esp || 0;
+      BASE.consNefro[m] = (d.cons_nefro_rl||0) + (d.cons_nefro_santos||0) + (d.cons_nefro_tatuape||0) || d.cons_nefro || 0;
 
       BASE.def.eag[m]    = (d.eag_rl||0)+(d.eag_santos||0)+(d.eag_tatuape||0) || d.eag    || 0;
       BASE.def.sui[m]    = (d.sui_rl||0)+(d.sui_santos||0)+(d.sui_tatuape||0) || d.sui    || 0;
