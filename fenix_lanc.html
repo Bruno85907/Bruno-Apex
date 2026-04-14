@@ -104,7 +104,7 @@ body{font-family:'Space Grotesk',system-ui,sans-serif;color:var(--text-primary);
       <span class="secao-title">Atividade</span>
       <span class="secao-toggle open" id="tog-s-atividade">▾</span>
     </div>
-    <div class="secao-body grid-4" id="s-atividade">
+    <div class="secao-body grid-3" id="s-atividade">
       <div class="campo">
         <label class="campo-lbl">Pacientes</label>
         <input type="number" class="inp" id="f-pac" placeholder="0" min="0" oninput="markChanged(this)"/>
@@ -124,6 +124,16 @@ body{font-family:'Space Grotesk',system-ui,sans-serif;color:var(--text-primary);
         <label class="campo-lbl">Saídas</label>
         <input type="number" class="inp" id="f-sai" placeholder="0" min="0" oninput="markChanged(this)"/>
         <span class="inp-hint">Saídas no mês</span>
+      </div>
+      <div class="campo">
+        <label class="campo-lbl">Consultas Nefro</label>
+        <input type="number" class="inp" id="f-cons-nefro" placeholder="0" min="0" oninput="markChanged(this)"/>
+        <span class="inp-hint">Consultas nefrológicas no mês</span>
+      </div>
+      <div class="campo">
+        <label class="campo-lbl">Consultas Especialista</label>
+        <input type="number" class="inp" id="f-cons-esp" placeholder="0" min="0" oninput="markChanged(this)"/>
+        <span class="inp-hint">Consultas com outros especialistas</span>
       </div>
     </div>
   </div>
@@ -401,6 +411,8 @@ const CAMPOS={
   'f-ses':          `ses_${U}`,
   'f-adm':          `adm_${U}`,
   'f-sai':          `sai_${U}`,
+  'f-cons-nefro':   `cons_nefro_${U}`,
+  'f-cons-esp':     `cons_esp_${U}`,
   'f-obi':          `obi_${U}`,
   'f-obi-pct':      `obi_pct_${U}`,
   'f-int':          `int_${U}`,
