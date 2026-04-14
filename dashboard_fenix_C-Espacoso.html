@@ -256,6 +256,7 @@ canvas{display:block;width:100%;}
         <p style="font-size:10px;font-weight:600;color:#555;text-transform:uppercase;letter-spacing:.04em;margin:0 0 10px;">Taxa de Internação — Rede</p>
         <canvas id="gauge" height="140" style="max-width:240px;"></canvas>
         <p style="font-size:34px;font-weight:600;color:#1c1c1e;margin:4px 0 0;line-height:1;" id="v-int-pct">—</p>
+        <p style="font-size:13px;color:#666;margin:2px 0 0;" id="v-int-num">—</p>
         <span class="badge" id="bg-int"></span>
       </div>
       <div class="pizza-card">
@@ -344,7 +345,7 @@ canvas{display:block;width:100%;}
       </div>
 
       <div style="background:#F7F0E4;border-radius:10px;border-top:3px solid #BE9664;padding:10px 12px;">
-        <p style="font-size:13px;font-weight:600;color:#555;text-transform:uppercase;letter-spacing:.04em;margin:0 0 8px;">IMC eutrófico ★</p>
+        <p style="font-size:13px;font-weight:600;color:#555;text-transform:uppercase;letter-spacing:.04em;margin:0 0 8px;">IMC eutrófico ★ (Trimestral)</p>
         <div style="display:flex;align-items:center;gap:10px;">
           <div style="flex-shrink:0;width:66px;height:66px;"><canvas id="dn-imc" width="66" height="66" style="width:66px;height:66px;display:block;"></canvas></div>
           <div style="flex:1;min-width:0;overflow:hidden;">
@@ -524,7 +525,7 @@ canvas{display:block;width:100%;}
 
       <!-- Ângulo de fase -->
       <div style="background:#F7F0E4;border-radius:10px;border-top:3px solid #BE9664;padding:12px;">
-        <p style="font-size:13px;font-weight:600;color:#555;text-transform:uppercase;letter-spacing:.04em;margin:0 0 8px;">Ângulo de Fase &gt;4°</p>
+        <p style="font-size:13px;font-weight:600;color:#555;text-transform:uppercase;letter-spacing:.04em;margin:0 0 8px;">Ângulo de Fase &gt;4° (Trimestral)</p>
         <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
           <span style="font-size:32px;font-weight:600;" id="v-ang">—</span>
           <span class="badge" id="bg-ang"></span>
@@ -614,7 +615,7 @@ const BASE = {
   def: {
     eag:Array(12).fill(0), sui:Array(12).fill(0), obi:Array(12).fill(0), obiPct:Array(12).fill(0),
     fal:Array(12).fill(0), falPct:Array(12).fill(0), tx:Array(12).fill(0),
-    ics:Array(12).fill(0), icf:Array(12).fill(0), que:Array(12).fill(0), intPct:Array(12).fill(0),
+    ics:Array(12).fill(0), icf:Array(12).fill(0), que:Array(12).fill(0), intPct:Array(12).fill(0), intNum:Array(12).fill(0),
     causas: Array(12).fill(null).map(()=>[0,0,0,0,0,0])
   }
 };
@@ -701,7 +702,7 @@ async function carregarDadosSupabase() {
 
       BASE.admissoes[m] = (d.adm_rl||0) + (d.adm_santos||0) + (d.adm_tatuape||0) || d.admissoes || 0;
       BASE.saidas[m]    = (d.sai_rl||0) + (d.sai_santos||0) + (d.sai_tatuape||0) || d.saidas    || 0;
-      BASE.sesExtras[m] = d.ses_extras|| 0;
+      BASE.sesExtras[m] = (d.ses_extras_rl||0) + (d.ses_extras_santos||0) + (d.ses_extras_tatuape||0) || d.ses_extras|| 0;
       BASE.consEsp[m]   = (d.cons_esp_rl||0) + (d.cons_esp_santos||0) + (d.cons_esp_tatuape||0) || d.cons_esp || 0;
       BASE.consNefro[m] = (d.cons_nefro_rl||0) + (d.cons_nefro_santos||0) + (d.cons_nefro_tatuape||0) || d.cons_nefro || 0;
 
@@ -718,6 +719,7 @@ async function carregarDadosSupabase() {
       // int_pct: média das unidades se disponível, senão campo legado
       const intVals=[d.int_rl,d.int_santos,d.int_tatuape].filter(v=>v!=null&&v>0);
       BASE.def.intPct[m] = intVals.length>0 ? intVals.reduce((a,b)=>a+b,0)/intVals.length : (d.int_pct||0);
+      BASE.def.intNum[m] = (d.int_num_rl||0) + (d.int_num_santos||0) + (d.int_num_tatuape||0) || d.int_num || 0;
       // causas: soma das unidades se disponível, senão campos legados
       BASE.def.causas[m] = [
         (d.causas_metabolica_rl||0)+(d.causas_metabolica_santos||0)+(d.causas_metabolica_tatuape||0) || d.causas_metabolica||0,
@@ -1204,11 +1206,12 @@ function drawPizza(data, hoveredIdx){
     ctx.fillStyle=PIZZA_COLORS[i];
     ctx.fill();
 
-    if(val>=5){
+    const pct=(val/total)*100;
+    if(pct>=5){
       const mid=angle+slice/2;
       ctx.font='bold 11px Arial'; ctx.fillStyle='#fff';
       ctx.textAlign='center'; ctx.textBaseline='middle';
-      ctx.fillText(val.toFixed(1)+'%',
+      ctx.fillText(pct.toFixed(1)+'%',
         cx+ox+(rr*0.72)*Math.cos(mid),
         cy+oy+(rr*0.72)*Math.sin(mid));
     }
@@ -1429,7 +1432,7 @@ function drawGaugeMini(canvasId, val, meta) {
   ctx.fillStyle='#F7F0E4'; ctx.fill();
 
   if(val>0){
-    const maxV=100, angle=Math.PI+(val/maxV)*Math.PI;
+    let frac; if(val<60) frac=(val/60)*0.25; else if(val<70) frac=0.25+((val-60)/10)*0.25; else if(val<80) frac=0.50+((val-70)/10)*0.25; else frac=Math.min(0.75+((val-80)/20)*0.25,1.0); const angle=Math.PI+frac*Math.PI;
     const nLen=R-thick-4;
     ctx.beginPath();
     ctx.moveTo(cx+5*Math.cos(angle+Math.PI/2), cy+5*Math.sin(angle+Math.PI/2));
@@ -1611,7 +1614,7 @@ function drawGaugeHb(val) {
   ctx.fillStyle='#F7F0E4'; ctx.fill();
 
   if(val>0){
-    const maxV=100, angle=Math.PI+(val/maxV)*Math.PI;
+    let frac; if(val<50) frac=(val/50)*0.25; else if(val<60) frac=0.25+((val-50)/10)*0.25; else if(val<70) frac=0.50+((val-60)/10)*0.25; else frac=Math.min(0.75+((val-70)/30)*0.25,1.0); const angle=Math.PI+frac*Math.PI;
     const nLen=R-thick-4;
     ctx.beginPath();
     ctx.moveTo(cx+5*Math.cos(angle+Math.PI/2), cy+5*Math.sin(angle+Math.PI/2));
@@ -1669,7 +1672,7 @@ function drawGaugeGeneric(canvasId, val, meta) {
   ctx.beginPath(); ctx.arc(cx,cy,R-thick-2,0,2*Math.PI);
   ctx.fillStyle='#F7F0E4'; ctx.fill();
   if(val>0){
-    const angle=Math.PI+(Math.min(val,100)/100)*Math.PI;
+    const lo=meta*0.9,b1=Math.round(lo*0.7),b2=Math.round(lo),b3=meta; let frac; if(val<=b1) frac=(val/b1)*0.25; else if(val<=b2) frac=0.25+((val-b1)/(b2-b1))*0.25; else if(val<=b3) frac=0.50+((val-b2)/(b3-b2))*0.25; else frac=Math.min(0.75+((val-b3)/(b3*0.3))*0.25,1.0); const angle=Math.PI+frac*Math.PI;
     const nLen=R-thick-4;
     ctx.beginPath();
     ctx.moveTo(cx+5*Math.cos(angle+Math.PI/2),cy+5*Math.sin(angle+Math.PI/2));
@@ -1818,6 +1821,7 @@ function render(mes){
 
   const ip=D.intPct[mes];
   document.getElementById('v-int-pct').textContent=ip.toFixed(1)+'%';
+  const inN=D.intNum?D.intNum[mes]:0; document.getElementById('v-int-num').textContent=inN>0?inN+' intern.':'-';
   const ib=document.getElementById('bg-int');
   ib.className='badge '+(ip<=6?'b-ok':'b-bad');
   ib.textContent=ip<=6?'Meta atingida':'Acima da meta';
