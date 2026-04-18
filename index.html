@@ -31,14 +31,14 @@ body{font-family:var(--sans);background:var(--bg);color:var(--ink);overflow-x:hi
 .hdr{position:fixed;top:0;left:0;right:0;z-index:900;
   background:rgba(250,249,245,.92);backdrop-filter:blur(20px);
   border-bottom:none;box-shadow:0 1px 0 rgba(31,30,29,.06);}
-.hdr-top{height:80px;display:flex;align-items:center;
+.hdr-top{height:96px;display:flex;align-items:center;
   padding:0 44px;border-bottom:1px solid var(--border);}
 .hdr-logo{display:flex;align-items:center;gap:14px;
   text-decoration:none;flex-shrink:0;padding-right:32px;}
-.hdr-logo img{height:60px!important;width:auto!important;
-  border-radius:8px;}
+.hdr-logo img{height:80px!important;width:auto!important;
+  border-radius:10px;}
 .hdr-brand{display:flex;align-items:center;gap:0}
-.hdr-name{font-size:34px;font-weight:700;letter-spacing:5px;
+.hdr-name{font-size:40px;font-weight:700;letter-spacing:6px;
   text-transform:uppercase;color:var(--hub-navy);line-height:1;}
 .hdr-sep-brand{
   width:1px;height:28px;background:rgba(30,45,80,.25);
@@ -90,7 +90,7 @@ body{font-family:var(--sans);background:var(--bg);color:var(--ink);overflow-x:hi
 .hero-mtn{
   height:100vh;min-height:620px;
   position:relative;display:flex;align-items:center;justify-content:center;
-  margin-top:124px;overflow:hidden;
+  margin-top:140px;overflow:hidden;
 }
 /* Camada 1 — pôr-do-sol atmosférico */
 .hero-bg1{
@@ -586,6 +586,118 @@ footer{background:var(--dark);color:#fff;padding:80px 60px 30px}
   will-change:transform;
 }
 #news-roll:hover{animation-play-state:paused}
+
+/* ═══ FENIX EVENT ═══ */
+.fenix-event{
+  display:grid;grid-template-columns:1fr 380px;
+  border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);
+  background:#fff;
+}
+.fe-main{
+  padding:48px 44px;display:flex;flex-direction:column;justify-content:center;
+  background:linear-gradient(160deg,var(--hub-navy),#152240);
+  position:relative;overflow:hidden;
+}
+.fe-bg-txt{
+  position:absolute;top:-8%;right:-2%;
+  font-family:var(--serif);font-style:italic;
+  font-size:clamp(80px,14vw,180px);font-weight:400;
+  color:rgba(255,255,255,.03);line-height:1;pointer-events:none;letter-spacing:-4px;
+}
+.fe-kicker{font-size:9px;font-weight:600;letter-spacing:3px;text-transform:uppercase;
+  color:rgba(196,163,90,.7);margin-bottom:14px;position:relative;z-index:2}
+.fe-ttl{font-family:var(--serif);font-size:clamp(24px,3vw,40px);
+  font-weight:400;color:#fff;line-height:1.15;letter-spacing:-.3px;
+  margin-bottom:14px;position:relative;z-index:2}
+.fe-ttl em{font-style:italic;color:rgba(196,163,90,.85)}
+.fe-desc{font-size:14px;font-weight:300;color:rgba(255,255,255,.5);
+  line-height:1.78;max-width:480px;position:relative;z-index:2;margin-bottom:20px}
+.fe-details{position:relative;z-index:2;display:flex;flex-direction:column;gap:8px;margin-bottom:20px}
+.fe-detail{display:flex;align-items:center;gap:10px;
+  font-size:12px;color:rgba(255,255,255,.6)}
+.fe-detail-icon{font-size:16px;width:24px;text-align:center;flex-shrink:0}
+.fe-detail strong{color:rgba(255,255,255,.85);font-weight:600}
+.fe-speakers{position:relative;z-index:2}
+.fe-speakers-label{font-size:8px;font-weight:700;letter-spacing:2px;text-transform:uppercase;
+  color:rgba(196,163,90,.5);margin-bottom:10px}
+.fe-speaker{display:flex;align-items:center;gap:10px;padding:8px 12px;margin-bottom:5px;
+  border:1px solid rgba(255,255,255,.08);border-radius:6px;
+  background:rgba(255,255,255,.04);transition:background .2s;}
+.fe-speaker:hover{background:rgba(255,255,255,.08)}
+.fe-speaker-name{font-size:12px;font-weight:600;color:#fff}
+.fe-speaker-role{font-size:10px;color:rgba(255,255,255,.35);margin-top:1px}
+.fe-side{
+  background:var(--off);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  padding:40px 30px;gap:24px;
+  border-left:1px solid var(--border);
+}
+.fe-poster{
+  width:100%;max-width:300px;border-radius:12px;
+  box-shadow:0 12px 40px rgba(0,0,0,.12);
+  overflow:hidden;
+}
+.fe-poster img{width:100%;height:auto;display:block}
+.fe-cta-wrap{text-align:center}
+.fe-cta{
+  display:inline-flex;align-items:center;gap:8px;
+  font-size:10px;font-weight:600;letter-spacing:2px;text-transform:uppercase;
+  color:var(--hub-navy);text-decoration:none;
+  border-bottom:1px solid var(--border);padding-bottom:2px;
+  transition:color .2s,border-color .2s;
+}
+.fe-cta:hover{color:var(--gold);border-color:var(--gold)}
+
+/* ═══ PARTNERSHIP HIGHLIGHT ═══ */
+.partnership{
+  display:grid;grid-template-columns:1fr 1fr;
+  border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);
+  background:#fff;min-height:320px;
+}
+.part-visual{
+  background:linear-gradient(160deg,#f0ebe3,#e8e2d8);
+  display:flex;align-items:center;justify-content:center;
+  padding:48px;position:relative;overflow:hidden;
+}
+.part-logos{display:flex;align-items:center;gap:32px;position:relative;z-index:2}
+.part-logo-item{
+  background:#fff;border-radius:16px;padding:24px 28px;
+  box-shadow:0 8px 30px rgba(0,0,0,.08);
+  display:flex;align-items:center;justify-content:center;
+  min-width:140px;min-height:100px;
+}
+.part-logo-item img{max-height:60px;width:auto}
+.part-logo-text{font-size:22px;font-weight:700;color:var(--hub-navy);letter-spacing:1px}
+.part-plus{font-size:28px;font-weight:300;color:var(--gold);opacity:.6}
+.part-body{
+  padding:48px 44px;display:flex;flex-direction:column;justify-content:center;
+}
+.part-kicker{font-size:9px;font-weight:600;letter-spacing:3px;text-transform:uppercase;
+  color:var(--gold);margin-bottom:12px;display:flex;align-items:center;gap:10px}
+.part-kicker::before{content:'';width:18px;height:1px;background:var(--gold)}
+.part-ttl{font-family:var(--serif);font-size:clamp(20px,2.5vw,30px);
+  font-weight:400;line-height:1.2;color:var(--ink);letter-spacing:-.2px;margin-bottom:14px}
+.part-ttl em{font-style:italic;color:var(--mid)}
+.part-excerpt{font-size:14px;font-weight:300;color:var(--mid);line-height:1.78;margin-bottom:20px}
+.part-highlights{display:flex;flex-direction:column;gap:6px;margin-bottom:20px}
+.part-hi{font-size:13px;color:var(--mid);line-height:1.5;display:flex;gap:8px}
+.part-hi::before{content:'→';color:var(--gold);flex-shrink:0;font-weight:700}
+.part-meta{font-size:10px;color:var(--ghost);display:flex;align-items:center;gap:14px}
+.part-meta strong{color:var(--soft);font-weight:600}
+.part-link{
+  display:inline-flex;align-items:center;gap:8px;
+  font-size:10px;font-weight:600;letter-spacing:2px;text-transform:uppercase;
+  text-decoration:none;color:var(--ink);border-bottom:1px solid var(--border);
+  padding-bottom:2px;transition:color .2s,border-color .2s;margin-top:16px;width:fit-content;
+}
+.part-link:hover{color:var(--gold);border-color:var(--gold)}
+
+@media(max-width:960px){
+  .fenix-event{grid-template-columns:1fr}
+  .fe-side{padding:30px}
+  .partnership{grid-template-columns:1fr}
+  .part-visual{min-height:200px;padding:32px}
+}
 </style>
 </head>
 <body>
@@ -594,7 +706,7 @@ footer{background:var(--dark);color:#fff;padding:80px 60px 30px}
 <header class="hdr">
   <div class="hdr-top">
     <a href="#" class="hdr-logo">
-      <img src="apex-hub.png" alt="APEX Hub" style="height:68px;width:auto;">
+      <img src="apex-hub.png" alt="APEX Hub" style="height:88px;width:auto;">
     </a>
     <div class="hdr-div"></div>
     <div class="hdr-date" id="hdr-date">
@@ -623,7 +735,8 @@ footer{background:var(--dark);color:#fff;padding:80px 60px 30px}
     <a href="#s-feature"   class="hn">Destaque</a>
     <a href="#s-editorial" class="hn">Conteúdo</a>
     <a href="#s-science"   class="hn">Ciência</a>
-    <a href="#s-evento"    class="hn">Buenos Aires</a>
+    <a href="#s-evento"    class="hn">Eventos</a>
+    <a href="#s-parceria"  class="hn">Parceria</a>
     <a href="#s-rankings"  class="hn">Top Lidas</a>
     <a href="#s-videos"    class="hn">Vídeos</a>
     <a href="#s-portais"   class="hn">Plataformas</a>
@@ -863,7 +976,7 @@ footer{background:var(--dark);color:#fff;padding:80px 60px 30px}
   <div class="ed-row2" id="ed-row2"></div>
 </section>
 
-<!-- ═══ SCIENCE SPOTLIGHT ═══ -->
+<!-- ═══ SCIENCE SPOTLIGHT — ESTUDO DA SEMANA ═══ -->
 <section class="wrap off" id="s-science">
   <div class="sec-hdr rv">
     <div><div class="sec-eye">Ciência</div><div class="sec-ttl">Estudo da Semana</div></div>
@@ -872,85 +985,113 @@ footer{background:var(--dark);color:#fff;padding:80px 60px 30px}
     <div class="sci-l">
       <div>
         <div class="sci-eye">Paper em destaque</div>
-        <div class="sci-jnl">KDIGO Clinical Practice Guidelines for CKD · 2024</div>
+        <div class="sci-jnl">Kidney International Reports · 2025</div>
         <div style="margin-top:12px">
-          <div class="sci-m">Publicação: <b>Kidney International · 2024</b></div>
-          <div class="sci-m">Autores: <b>KDIGO Work Group</b></div>
-          <div class="sci-m">Relevância: <b>Gestor · Médico</b></div>
+          <div class="sci-m">DOI: <b>10.1016/j.ekir.2025.03.051</b></div>
+          <div class="sci-m">Autores: <b>Rao N, Brotons-Munto F, Moura AF et al.</b></div>
+          <div class="sci-m">Modelo: <b>IMPACT CKD · LSE Framework</b></div>
+          <div class="sci-m">Relevância: <b>Gestor · Médico · Política de Saúde</b></div>
         </div>
       </div>
-      <a href="#" class="sci-badge">↗ Acessar o paper original</a>
+      <a href="https://doi.org/10.1016/j.ekir.2025.03.051" target="_blank" class="sci-badge">↗ Acessar o paper original</a>
     </div>
     <div class="sci-r">
-      <div class="sci-ttl">Novo guideline KDIGO 2024: <em>o que muda na prática da nefrologia e da gestão de clínicas de diálise</em></div>
-      <p class="sci-abs">O KDIGO 2024 atualiza as recomendações para manejo da DRC com evidências de três grandes ensaios clínicos publicados nos últimos 24 meses. As mudanças mais significativas envolvem o papel dos inibidores de SGLT-2 na nefroproteção e os novos alvos de hemoglobina em pacientes dialíticos.</p>
+      <div class="sci-ttl">Impacto Holístico da DRC: <em>análise clínica, econômica e ambiental em 8 países pelo IMPACT CKD</em></div>
+      <p class="sci-abs">Estudo de microssimulação projetou a carga multidimensional da DRC de 2022 a 2032 em 8 países, incluindo o Brasil. Até 2032, a prevalência de DRC pode chegar a 16,5% da população, com aumento de até 170,8% nos pacientes em diálise. O impacto econômico estimado ultrapassa US$ 470 bilhões em custos diretos e US$ 186 bilhões em TRS nos 8 países analisados.</p>
       <div class="sci-tks">
-        <div class="sci-tks-l">O que muda na sua prática</div>
-        <div class="sci-tk">SGLT-2i passa de segunda linha para recomendação forte em DRC estágios 2–4 com proteinúria, independente de diabetes.</div>
-        <div class="sci-tk">Alvo de hemoglobina em HD redefinido para 10–11,5 g/dL — evitando hipercorreção associada a eventos cardiovasculares.</div>
-        <div class="sci-tk">TFG estimada por CKD-EPI 2021 (sem raça) torna-se o padrão internacional recomendado.</div>
+        <div class="sci-tks-l">Principais achados</div>
+        <div class="sci-tk">Brasil projeta o maior crescimento em diálise (170,8%) e transplante (80,1%) entre os 8 países até 2032.</div>
+        <div class="sci-tk">DRC estágio 3-5 atingirá 125 milhões de pessoas nos países estudados — aumento de até 59% (Espanha).</div>
+        <div class="sci-tk">Eventos cardiovasculares (IAM e AVC) aumentarão mais de 25% em todos os países na próxima década.</div>
+        <div class="sci-tk">Custos com TRS no Brasil passarão de R$ 6,35B para R$ 17,12B (+169,5%) até 2032.</div>
+        <div class="sci-tk">Impacto ambiental: consumo de água, combustível fóssil e produção de carbono da TRS subirão &gt;11% em todos os países.</div>
       </div>
       <div class="sci-foot">
-        <a href="#" class="sci-lnk">Ler análise completa →</a>
-        <span style="font-size:9px;color:var(--ghost)">8 min de leitura</span>
+        <a href="https://doi.org/10.1016/j.ekir.2025.03.051" target="_blank" class="sci-lnk">Acessar paper completo →</a>
+        <span style="font-size:9px;color:var(--ghost)">Kidney Int Reports · Aceito Mar 2025</span>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ═══ EVENTO — Buenos Aires ═══ -->
+<!-- ═══ EVENTOS ═══ -->
 <section class="wrap" id="s-evento">
   <div class="sec-hdr rv">
-    <div><div class="sec-eye">Série Editorial · 2026</div><div class="sec-ttl">Maratona de Buenos Aires</div></div>
-    <a href="#" class="sec-more">Acompanhar a série →</a>
+    <div><div class="sec-eye">Eventos</div><div class="sec-ttl">Eventos APEX & Fenix</div></div>
   </div>
-  <div class="evento rv d1">
-    <div class="ev-m">
-      <div class="ev-bg">BA</div>
-      <div>
-        <div class="ev-kicker">Setembro · 2026 · Buenos Aires, Argentina</div>
-        <h2 class="ev-ttl">O método APEX<br>correndo <em>42,195 km</em></h2>
-        <p class="ev-desc">Uma série editorial com dados reais de treino, wearable, exames e ajustes clínicos — publicada semanalmente de abril a setembro de 2026.</p>
-        <div class="ev-eps">
-          <div class="ev-eps-l">Episódios da série</div>
-          <a href="#" class="ev-ep">
-            <span class="ev-ep-n">01</span>
-            <div><div class="ev-ep-ttl">Por que um nefrologista corre maratona</div><div class="ev-ep-dt">Publicado · Abr 2026</div></div>
-          </a>
-          <div class="ev-ep pend">
-            <span class="ev-ep-n dim">02</span>
-            <div><div class="ev-ep-ttl">Semana 1 — primeiro long run e o que o Garmin revelou</div><div class="ev-ep-dt">Em breve · Abr 2026</div></div>
-          </div>
-          <div class="ev-ep pend">
-            <span class="ev-ep-n dim">03</span>
-            <div><div class="ev-ep-ttl">Exames do mês 1 — creatinina, ferritina e VO₂</div><div class="ev-ep-dt">Mai 2026</div></div>
-          </div>
-        </div>
+  <div class="fenix-event rv d1">
+    <div class="fe-main">
+      <div class="fe-bg-txt">FENIX</div>
+      <div class="fe-kicker">Evento Fenix Nefrologia · 2026</div>
+      <h2 class="fe-ttl">Qual o futuro da<br><em>Terapia Renal</em> no Brasil?</h2>
+      <p class="fe-desc">Mesa-redonda promovida pela Fenix Nefrologia reunindo especialistas para discutir os avanços, desafios e perspectivas da terapia renal substitutiva no cenário brasileiro.</p>
+      <div class="fe-details">
+        <div class="fe-detail"><span class="fe-detail-icon">📍</span> <strong>São Paulo, SP</strong> — Fenix Nefrologia</div>
+        <div class="fe-detail"><span class="fe-detail-icon">📅</span> <strong>2026</strong> — Evento realizado</div>
+        <div class="fe-detail"><span class="fe-detail-icon">🎯</span> Nefrologistas, gestores e profissionais de saúde</div>
       </div>
-      <div class="ev-tags">
-        <span class="ev-tag">Garmin · Oura Ring</span>
-        <span class="ev-tag">HRV semanal</span>
-        <span class="ev-tag">VO₂ máx</span>
-        <span class="ev-tag">Exames mensais</span>
+      <div class="fe-speakers">
+        <div class="fe-speakers-label">Temas em debate</div>
+        <div class="fe-speaker">
+          <div><div class="fe-speaker-name">Inovação em Hemodiálise</div>
+          <div class="fe-speaker-role">Novas tecnologias e abordagens clínicas</div></div>
+        </div>
+        <div class="fe-speaker">
+          <div><div class="fe-speaker-name">Acesso e Qualidade em TRS</div>
+          <div class="fe-speaker-role">Indicadores, benchmarks e melhores práticas</div></div>
+        </div>
+        <div class="fe-speaker">
+          <div><div class="fe-speaker-name">Sustentabilidade e Gestão</div>
+          <div class="fe-speaker-role">Modelos assistenciais e impacto ambiental</div></div>
+        </div>
       </div>
     </div>
-    <div class="ev-side">
-      <div>
-        <div class="ev-cd-l">Contagem regressiva</div>
-        <div class="ev-cd">
-          <div class="cd-u"><span class="cd-n" id="cd-d">--</span><div class="cd-l">dias</div></div>
-          <div class="cd-u"><span class="cd-n" id="cd-h">--</span><div class="cd-l">horas</div></div>
-          <div class="cd-u"><span class="cd-n" id="cd-m">--</span><div class="cd-l">min</div></div>
-          <div class="cd-u"><span class="cd-n" id="cd-s">--</span><div class="cd-l">seg</div></div>
+    <div class="fe-side">
+      <div class="fe-poster" style="background:linear-gradient(160deg,var(--hub-navy),#2a4070);padding:36px 28px;text-align:center;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;min-height:360px;border-radius:12px;">
+        <div style="font-size:9px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:rgba(196,163,90,.7)">Fenix Nefrologia apresenta</div>
+        <div style="font-family:var(--serif);font-size:28px;color:#fff;line-height:1.2;font-weight:400">Qual o futuro da</div>
+        <div style="font-family:var(--serif);font-size:34px;color:var(--gold);line-height:1.1;font-style:italic;font-weight:400">Terapia Renal</div>
+        <div style="font-family:var(--serif);font-size:28px;color:#fff;line-height:1.2;font-weight:400">no Brasil?</div>
+        <div style="width:40px;height:2px;background:var(--gold);opacity:.5;margin:8px 0"></div>
+        <div style="font-size:10px;color:rgba(255,255,255,.4);letter-spacing:2px;text-transform:uppercase">Mesa-Redonda · 2026</div>
+      </div>
+      <div class="fe-cta-wrap">
+        <a href="#" class="fe-cta">Saiba mais sobre o evento →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ PARCERIA SABARÁ ═══ -->
+<section class="wrap off" id="s-parceria">
+  <div class="sec-hdr rv">
+    <div><div class="sec-eye">Parceria</div><div class="sec-ttl">Na Mídia</div></div>
+  </div>
+  <div class="partnership rv d1">
+    <div class="part-visual">
+      <div class="part-logos">
+        <div class="part-logo-item">
+          <div class="part-logo-text">Sabará</div>
+        </div>
+        <div class="part-plus">+</div>
+        <div class="part-logo-item">
+          <div class="part-logo-text">Fenix</div>
         </div>
       </div>
-      <div class="ev-stats">
-        <div class="ev-st"><span class="ev-st-l">Distância semanal</span><span class="ev-st-v">42 <em>km</em></span></div>
-        <div class="ev-st"><span class="ev-st-l">VO₂ máx estimado</span><span class="ev-st-v">48 <em>mL/kg/min</em></span></div>
-        <div class="ev-st"><span class="ev-st-l">Pace alvo de prova</span><span class="ev-st-v">6'<em>00"/km</em></span></div>
-        <div class="ev-st"><span class="ev-st-l">HRV média 7 dias</span><span class="ev-st-v">54 <em>ms</em></span></div>
-        <div class="ev-st"><span class="ev-st-l">Próximo exame</span><span class="ev-st-v">Abr <em>2026</em></span></div>
+    </div>
+    <div class="part-body">
+      <div class="part-kicker">Medicina S/A · Abril 2026</div>
+      <div class="part-ttl">Sabará e Fenix Nefrologia ampliam oferta de <em>hemodiálise pediátrica</em></div>
+      <p class="part-excerpt">Parceria estratégica entre o Sabará Hospital Infantil e a Clínica Fenix Nefrologia amplia o acesso à hemodiálise ambulatorial pediátrica, garantindo continuidade do cuidado entre o ambiente hospitalar e o acompanhamento fora da internação.</p>
+      <div class="part-highlights">
+        <div class="part-hi">Mesma equipe médica do hospital acompanha o paciente na Fenix — integração assistencial completa</div>
+        <div class="part-hi">Aumento de mais de 150% no atendimento de pacientes pediátricos em hemodiálise no Sabará ao longo dos anos</div>
+        <div class="part-hi">Estrutura especializada, protocolos rigorosos de segurança e acolhimento humanizado para crianças</div>
       </div>
+      <div class="part-meta">
+        Publicado em: <strong>14/04/2026</strong> · Fonte: <strong>Medicina S/A</strong>
+      </div>
+      <a href="https://medicinasa.com.br/hemodialise-pediatrica/" target="_blank" class="part-link">Ler matéria completa →</a>
     </div>
   </div>
 </section>
