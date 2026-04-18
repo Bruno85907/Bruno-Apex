@@ -143,22 +143,7 @@ body{font-family:var(--sans);background:var(--bg);color:var(--ink);overflow-x:hi
 }
 
 /* ═══ FAIXAS ═══ */
-.stocks-bar{background:var(--dark);overflow:hidden;height:32px;
-  display:flex;align-items:stretch;white-space:nowrap;
-  margin-top:0;}
-.bar-lbl{flex-shrink:0;padding:0 18px;font-size:8px;font-weight:700;
-  letter-spacing:3px;text-transform:uppercase;color:rgba(185,148,84,.6);
-  border-right:1px solid rgba(255,255,255,.07);display:flex;align-items:center;}
-.bar-track{flex:1;overflow:hidden;display:flex;align-items:center}
-.bar-roll{display:flex;width:max-content;will-change:transform;}
-.bar-roll:hover{animation-play-state:paused}
 
-.sk{display:flex;align-items:center;gap:8px;padding:0 22px;
-  height:32px;flex-shrink:0;border-right:1px solid rgba(255,255,255,.06);}
-.sk-t{font-size:9px;font-weight:700;letter-spacing:1px;color:rgba(255,255,255,.45)}
-.sk-p{font-size:11px;font-weight:700;color:#fff}
-.sk-u{font-size:9px;font-weight:600;color:var(--green)}
-.sk-d{font-size:9px;font-weight:600;color:#ff4466}
 
 .news-bar{background:var(--off);border-bottom:1px solid var(--border);
   overflow:hidden;height:38px;display:flex;align-items:stretch;white-space:nowrap;}
@@ -169,9 +154,9 @@ body{font-family:var(--sans);background:var(--bg);color:var(--ink);overflow-x:hi
 .ni-txt{font-size:11px;color:var(--mid);white-space:nowrap}
 .ni-src{font-size:9px;color:var(--ghost);margin-left:4px;white-space:nowrap}
 @keyframes roll{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
-@keyframes roll-stocks{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
 
-/* margin-top: hdr(80+44) + stocks(32) + news(38) = 194px */
+
+/* margin-top: hdr(80+44) + news(38) = 162px */
 main{margin-top:0}
 
 /* ═══ UTIL ═══ */
@@ -207,44 +192,6 @@ main{margin-top:0}
 .bn-lbl{font-size:13px;font-weight:300;color:var(--mid);line-height:1.5;max-width:220px}
 .bn-src{font-size:8px;color:var(--ghost);letter-spacing:1px;text-transform:uppercase;margin-top:4px}
 
-/* ═══ TABELA AÇÕES — fundo escuro, compacto ═══ */
-.stocks-section{
-  display:grid;grid-template-columns:1fr 1fr;
-  border-bottom:1px solid rgba(255,255,255,.06);
-  background:#0d0d0d;
-}
-.stocks-panel{padding:22px 28px;border-right:1px solid rgba(255,255,255,.06)}
-.stocks-panel:last-child{border-right:none}
-.stocks-panel-hdr{
-  display:flex;align-items:center;justify-content:space-between;
-  margin-bottom:12px;padding-bottom:10px;
-  border-bottom:1px solid rgba(255,255,255,.07);
-}
-.stocks-panel-title{font-size:8px;font-weight:700;letter-spacing:2.5px;
-  text-transform:uppercase;color:rgba(185,148,84,.7)}
-.stocks-panel-update{font-size:8px;color:rgba(255,255,255,.22);letter-spacing:.5px}
-.stocks-table{width:100%;border-collapse:collapse}
-.stocks-table th{
-  font-size:7.5px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;
-  color:rgba(255,255,255,.25);padding:5px 6px;text-align:left;
-  border-bottom:1px solid rgba(255,255,255,.06);
-}
-.stocks-table th:last-child{text-align:right}
-.stocks-table td{
-  padding:7px 6px;border-bottom:1px solid rgba(255,255,255,.05);
-  font-size:12px;vertical-align:middle;
-}
-.stocks-table tr:last-child td{border-bottom:none}
-.stocks-table tr:hover td{background:rgba(255,255,255,.03)}
-.st-ticker{font-weight:700;color:#fff;letter-spacing:.5px;font-size:11px}
-.st-name{font-size:10px;color:rgba(255,255,255,.35);font-weight:400}
-.st-price{font-weight:600;color:#fff;text-align:right;
-  font-variant-numeric:tabular-nums;font-size:12px}
-.st-chg{text-align:right;font-weight:700;font-size:11px;white-space:nowrap}
-.st-up{color:#4CAF8A}.st-dn{color:#ff4466}
-.st-sector{font-size:8px;color:rgba(255,255,255,.25);letter-spacing:.3px}
-.st-note{font-size:7.5px;color:rgba(255,255,255,.2);padding-top:8px;letter-spacing:.5px;
-  border-top:1px solid rgba(255,255,255,.06);margin-top:3px}
 
 /* ═══ FEATURE — texto + visual ═══ */
 .feature{display:grid;grid-template-columns:1fr 1fr;
@@ -605,13 +552,13 @@ footer{background:var(--dark);color:#fff;padding:52px 44px 26px}
 }
 
 /* ═══ FAIXAS ROTATIVAS — animação garantida ═══ */
-#stocks-roll{
+
   display:flex;
   width:max-content;
   animation:roll 34s linear infinite;
   will-change:transform;
 }
-#stocks-roll:hover{animation-play-state:paused}
+
 #news-roll{
   display:flex;
   width:max-content;
@@ -627,15 +574,7 @@ footer{background:var(--dark);color:#fff;padding:52px 44px 26px}
 <header class="hdr">
   <div class="hdr-top">
     <a href="#" class="hdr-logo">
-      <svg width="42" height="28" viewBox="0 0 60 28" fill="none">
-        <polyline points="2,26 14,6 21,16 27,8 35,26" fill="none" stroke="#1E2D50" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round"/>
-        <polyline points="30,26 40,4 47,15 54,26" fill="none" stroke="#1E2D50" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" opacity=".45"/>
-      </svg>
-      <div class="hdr-brand">
-        <span class="hdr-name">APEX</span>
-        <div class="hdr-sep-brand"></div>
-        <span class="hdr-sub">HUB</span>
-      </div>
+      <img src="apex-hub.png" alt="APEX Hub" style="height:52px;width:auto;">
     </a>
     <div class="hdr-div"></div>
     <div class="hdr-date" id="hdr-date">
@@ -660,7 +599,7 @@ footer{background:var(--dark);color:#fff;padding:52px 44px 26px}
   </div>
   <nav class="hdr-nav">
     <a href="#s-numbers" class="hn">Dados</a>
-    <a href="#s-stocks"  class="hn">Bolsa</a>
+
     <a href="#s-feature"   class="hn">Destaque</a>
     <a href="#s-editorial" class="hn">Conteúdo</a>
     <a href="#s-science"   class="hn">Ciência</a>
@@ -678,27 +617,7 @@ footer{background:var(--dark);color:#fff;padding:52px 44px 26px}
   <div class="hero-overlay"></div>
   <div class="hero-content rv">
     <div class="hero-logo">
-      <svg class="hero-logo-svg" width="64" height="44" viewBox="0 0 64 38" fill="none">
-        <!-- Range traseira — profundidade -->
-        <path d="M4,38 L18,22 L25,28 L34,14 L43,24 L50,18 L60,30 L64,38 Z"
-              fill="rgba(245,200,66,.13)"/>
-        <path d="M4,38 L18,22 L25,28 L34,14 L43,24 L50,18 L60,30"
-              fill="none" stroke="rgba(245,200,66,.35)" stroke-width="1.6"
-              stroke-linejoin="round" stroke-linecap="round"/>
-        <!-- Range frontal — forma principal -->
-        <path d="M0,38 L10,27 L16,32 L24,10 L30,21 L36,5 L43,19 L50,12 L57,24 L64,38 Z"
-              fill="rgba(245,200,66,.18)"/>
-        <path d="M0,38 L10,27 L16,32 L24,10 L30,21 L36,5 L43,19 L50,12 L57,24 L64,38"
-              fill="none" stroke="#F5C842" stroke-width="2.8"
-              stroke-linejoin="round" stroke-linecap="round"/>
-        <!-- Pico principal — indicador de neve -->
-        <path d="M33,9 L36,5 L39,9"
-              fill="none" stroke="rgba(255,255,255,.65)" stroke-width="1.8"
-              stroke-linejoin="round"/>
-      </svg>
-      <div class="hero-logo-div"></div>
-      <div class="hero-brand">
-        <div class="hero-brand-name">APEX</div>
+      <img src="apex-hub.png" alt="APEX Hub" style="height:80px;width:auto;filter:brightness(0) invert(1) sepia(1) saturate(5) hue-rotate(10deg) brightness(1.1);">
         <div class="hero-brand-sub">HUB</div>
       </div>
     </div>
@@ -713,32 +632,6 @@ footer{background:var(--dark);color:#fff;padding:52px 44px 26px}
   </div>
 </section>
 
-<!-- ═══ BOLSA B3 ═══ -->
-<div class="stocks-bar">
-  <div class="bar-lbl">Saúde · B3</div>
-  <div class="bar-track">
-    <div class="bar-roll" id="stocks-roll">
-      <!-- fallback estático — JS sobrescreve com valores atualizados -->
-      <div class="sk"><span class="sk-t">HAPV3</span><span class="sk-p">R$ 4,12</span><span class="sk-u">▲ +1,8%</span></div>
-      <div class="sk"><span class="sk-t">RDOR3</span><span class="sk-p">R$ 28,45</span><span class="sk-d">▼ -0,6%</span></div>
-      <div class="sk"><span class="sk-t">QUAL3</span><span class="sk-p">R$ 6,88</span><span class="sk-u">▲ +0,4%</span></div>
-      <div class="sk"><span class="sk-t">FLRY3</span><span class="sk-p">R$ 14,22</span><span class="sk-u">▲ +2,1%</span></div>
-      <div class="sk"><span class="sk-t">DASA3</span><span class="sk-p">R$ 3,94</span><span class="sk-d">▼ -1,2%</span></div>
-      <div class="sk"><span class="sk-t">PNVL3</span><span class="sk-p">R$ 11,60</span><span class="sk-u">▲ +0,9%</span></div>
-      <div class="sk"><span class="sk-t">ONCO3</span><span class="sk-p">R$ 7,35</span><span class="sk-u">▲ +0,3%</span></div>
-      <div class="sk"><span class="sk-t">IBOV</span><span class="sk-p">182.601</span><span class="sk-u">▲ +0,57%</span></div>
-      <!-- duplicado para loop contínuo -->
-      <div class="sk"><span class="sk-t">HAPV3</span><span class="sk-p">R$ 4,12</span><span class="sk-u">▲ +1,8%</span></div>
-      <div class="sk"><span class="sk-t">RDOR3</span><span class="sk-p">R$ 28,45</span><span class="sk-d">▼ -0,6%</span></div>
-      <div class="sk"><span class="sk-t">QUAL3</span><span class="sk-p">R$ 6,88</span><span class="sk-u">▲ +0,4%</span></div>
-      <div class="sk"><span class="sk-t">FLRY3</span><span class="sk-p">R$ 14,22</span><span class="sk-u">▲ +2,1%</span></div>
-      <div class="sk"><span class="sk-t">DASA3</span><span class="sk-p">R$ 3,94</span><span class="sk-d">▼ -1,2%</span></div>
-      <div class="sk"><span class="sk-t">PNVL3</span><span class="sk-p">R$ 11,60</span><span class="sk-u">▲ +0,9%</span></div>
-      <div class="sk"><span class="sk-t">ONCO3</span><span class="sk-p">R$ 7,35</span><span class="sk-u">▲ +0,3%</span></div>
-      <div class="sk"><span class="sk-t">IBOV</span><span class="sk-p">182.601</span><span class="sk-u">▲ +0,57%</span></div>
-    </div>
-  </div>
-</div>
 
 <!-- ═══ FAIXA DINÂMICA ═══ -->
 <div class="news-bar">
@@ -817,128 +710,6 @@ footer{background:var(--dark);color:#fff;padding:52px 44px 26px}
   </div>
 </section>
 
-<!-- ═══ TABELA AÇÕES SAÚDE B3 ═══ -->
-<div class="stocks-section rv" id="s-stocks">
-
-  <!-- Coluna 1: ações de saúde B3 -->
-  <div class="stocks-panel">
-    <div class="stocks-panel-hdr">
-      <div class="stocks-panel-title">Saúde · B3</div>
-      <div class="stocks-panel-update" id="stocks-time">Valores de referência · atualizar no Vercel</div>
-    </div>
-    <table class="stocks-table">
-      <thead>
-        <tr>
-          <th>Ativo</th>
-          <th>Empresa</th>
-          <th style="text-align:right">Preço</th>
-          <th style="text-align:right">Var. dia</th>
-        </tr>
-      </thead>
-      <tbody id="stocks-tbody">
-        <tr>
-          <td><div class="st-ticker">HAPV3</div><div class="st-sector">Planos de Saúde</div></td>
-          <td><span class="st-name">Hapvida</span></td>
-          <td class="st-price">R$ 4,12</td>
-          <td class="st-chg st-up">▲ +1,8%</td>
-        </tr>
-        <tr>
-          <td><div class="st-ticker">RDOR3</div><div class="st-sector">Hospitais</div></td>
-          <td><span class="st-name">Rede D'Or</span></td>
-          <td class="st-price">R$ 28,45</td>
-          <td class="st-chg st-dn">▼ -0,6%</td>
-        </tr>
-        <tr>
-          <td><div class="st-ticker">QUAL3</div><div class="st-sector">Planos de Saúde</div></td>
-          <td><span class="st-name">Qualicorp</span></td>
-          <td class="st-price">R$ 6,88</td>
-          <td class="st-chg st-up">▲ +0,4%</td>
-        </tr>
-        <tr>
-          <td><div class="st-ticker">FLRY3</div><div class="st-sector">Diagnósticos</div></td>
-          <td><span class="st-name">Fleury</span></td>
-          <td class="st-price">R$ 14,22</td>
-          <td class="st-chg st-up">▲ +2,1%</td>
-        </tr>
-        <tr>
-          <td><div class="st-ticker">DASA3</div><div class="st-sector">Diagnósticos</div></td>
-          <td><span class="st-name">Dasa</span></td>
-          <td class="st-price">R$ 3,94</td>
-          <td class="st-chg st-dn">▼ -1,2%</td>
-        </tr>
-        <tr>
-          <td><div class="st-ticker">PNVL3</div><div class="st-sector">Farmácias</div></td>
-          <td><span class="st-name">Panvel</span></td>
-          <td class="st-price">R$ 11,60</td>
-          <td class="st-chg st-up">▲ +0,9%</td>
-        </tr>
-        <tr>
-          <td><div class="st-ticker">ONCO3</div><div class="st-sector">Oncologia</div></td>
-          <td><span class="st-name">Oncoclínicas</span></td>
-          <td class="st-price">R$ 7,35</td>
-          <td class="st-chg st-up">▲ +0,3%</td>
-        </tr>
-      </tbody>
-    </table>
-    <div class="st-note">Valores de referência · Atualização em tempo real disponível após deploy · Fonte: B3</div>
-  </div>
-
-  <!-- Coluna 2: índices + contexto -->
-  <div class="stocks-panel">
-    <div class="stocks-panel-hdr">
-      <div class="stocks-panel-title">Índices &amp; Contexto</div>
-      <div class="stocks-panel-update">B3 · 30/03/2026</div>
-    </div>
-    <table class="stocks-table">
-      <thead>
-        <tr>
-          <th>Índice / Ativo</th>
-          <th></th>
-          <th style="text-align:right">Valor</th>
-          <th style="text-align:right">Var.</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td><div class="st-ticker">IBOV</div><div class="st-sector">Ibovespa</div></td>
-          <td><span class="st-name">B3 Brasil</span></td>
-          <td class="st-price">182.601</td>
-          <td class="st-chg st-up">▲ +0,57%</td>
-        </tr>
-        <tr>
-          <td><div class="st-ticker">IMAT</div><div class="st-sector">Materiais Básicos</div></td>
-          <td><span class="st-name">B3 Materiais</span></td>
-          <td class="st-price">5.240</td>
-          <td class="st-chg st-dn">▼ -0,3%</td>
-        </tr>
-        <tr>
-          <td><div class="st-ticker">USD/BRL</div><div class="st-sector">Câmbio</div></td>
-          <td><span class="st-name">Dólar / Real</span></td>
-          <td class="st-price">R$ 5,68</td>
-          <td class="st-chg st-dn">▼ -0,2%</td>
-        </tr>
-        <tr>
-          <td><div class="st-ticker">SELIC</div><div class="st-sector">Taxa básica</div></td>
-          <td><span class="st-name">Banco Central</span></td>
-          <td class="st-price">14,75%</td>
-          <td class="st-chg" style="color:var(--ghost)">a.a.</td>
-        </tr>
-        <tr>
-          <td><div class="st-ticker">IPCA</div><div class="st-sector">Inflação 12m</div></td>
-          <td><span class="st-name">IBGE</span></td>
-          <td class="st-price">5,06%</td>
-          <td class="st-chg" style="color:var(--ghost)">acum.</td>
-        </tr>
-      </tbody>
-    </table>
-    <div style="margin-top:16px;padding-top:14px;border-top:1px solid var(--border)">
-      <div style="font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:rgba(185,148,84,.6);margin-bottom:10px">Por que acompanhar saúde na bolsa?</div>
-      <p style="font-size:12px;font-weight:300;color:rgba(255,255,255,.45);line-height:1.7">O setor de saúde representa mais de 8% do PIB brasileiro. Hapvida, Rede D'Or e Fleury refletem diretamente as tendências de cobertura, qualidade assistencial e investimento em tecnologia clínica.</p>
-    </div>
-    <div class="st-note">Valores de referência · Fonte: B3, Banco Central, IBGE · Março 2026</div>
-  </div>
-
-</div>
 
 <!-- ═══ FEATURE STORY ═══ -->
 <section class="feature" id="s-feature">
@@ -1368,7 +1139,7 @@ document.querySelectorAll('.rv').forEach(function(el){obs.observe(el);});
 
 /* ── Nav active ── */
 var hns=document.querySelectorAll('.hn');
-var sids=['s-numbers','s-stocks','s-feature','s-editorial','s-science','s-evento','s-rankings','s-videos','s-portais'];
+var sids=['s-numbers','s-feature','s-editorial','s-science','s-evento','s-rankings','s-videos','s-portais'];
 var sels=sids.map(function(id){return document.getElementById(id);});
 window.addEventListener('scroll',function(){
   var pos=window.scrollY+160;
@@ -1428,22 +1199,6 @@ fetch('https://api.open-meteo.com/v1/forecast?latitude=-23.5505&longitude=-46.63
     document.getElementById('wx-range').textContent='↓'+Math.round(dy.temperature_2m_min[0])+'° ↑'+Math.round(dy.temperature_2m_max[0])+'°';
   }).catch(function(){});
 
-/* ── Bolsa B3 Saúde ── */
-var stocks=[
-  {t:'HAPV3',p:'R$ 4,12',c:'+1,8%',u:true},{t:'RDOR3',p:'R$ 28,45',c:'-0,6%',u:false},
-  {t:'QUAL3',p:'R$ 6,88',c:'+0,4%',u:true},{t:'FLRY3',p:'R$ 14,22',c:'+2,1%',u:true},
-  {t:'DASA3',p:'R$ 3,94',c:'-1,2%',u:false},{t:'PNVL3',p:'R$ 11,60',c:'+0,9%',u:true},
-  {t:'ONCO3',p:'R$ 7,35',c:'+0,3%',u:true},{t:'HAPV3',p:'R$ 4,12',c:'+1,8%',u:true},
-  {t:'RDOR3',p:'R$ 28,45',c:'-0,6%',u:false},{t:'QUAL3',p:'R$ 6,88',c:'+0,4%',u:true},
-  {t:'FLRY3',p:'R$ 14,22',c:'+2,1%',u:true},{t:'DASA3',p:'R$ 3,94',c:'-1,2%',u:false},
-  {t:'PNVL3',p:'R$ 11,60',c:'+0,9%',u:true},{t:'ONCO3',p:'R$ 7,35',c:'+0,3%',u:true},
-];
-var sr=document.getElementById('stocks-roll');
-if(sr)sr.innerHTML=stocks.map(function(s){
-  return '<div class="sk"><span class="sk-t">'+s.t+'</span>'
-    +'<span class="sk-p">'+s.p+'</span>'
-    +'<span class="'+(s.u?'sk-u':'sk-d')+'">'+(s.u?'▲':'▼')+' '+s.c+'</span></div>';
-}).join('');
 
 /* ── Faixa dinâmica contextual ── */
 var defaultNews=[
