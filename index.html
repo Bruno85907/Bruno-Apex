@@ -147,10 +147,10 @@ body{font-family:var(--sans);background:var(--bg);color:var(--ink);overflow-x:hi
 /* ═══ FAIXAS ═══ */
 
 
-.news-bar{background:rgba(10,18,32,.40);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+.news-bar{background:rgba(10,18,32,.35);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
   border-bottom:none;border-top:none;
   overflow:hidden;height:38px;display:flex;align-items:stretch;white-space:nowrap;
-  position:relative;z-index:10;margin-top:-38px;}
+  position:absolute;top:0;left:0;right:0;z-index:10;}
 .news-bar .bar-lbl{background:rgba(10,18,32,.3);border-right-color:rgba(255,255,255,.1);color:var(--gold)}
 .ni{display:flex;align-items:center;gap:8px;padding:0 24px;
   height:38px;flex-shrink:0;border-right:1px solid rgba(255,255,255,.08);white-space:nowrap;}
@@ -185,6 +185,7 @@ main{margin-top:0}
 .d4{transition-delay:.28s}.d5{transition-delay:.35s}.d6{transition-delay:.42s}
 
 /* ═══ BIG NUMBERS ═══ */
+.bignums-wrap{position:relative;}
 .bignums{display:grid;grid-template-columns:repeat(4,1fr);
   gap:0;padding:60px 60px 40px;
   position:relative;background:url('https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1920&q=80') center 45%/cover no-repeat fixed;}
@@ -762,7 +763,11 @@ footer{background:var(--dark);color:#fff;padding:80px 60px 30px}
 </section>
 
 
-<!-- ═══ FAIXA DINÂMICA ═══ -->
+<main>
+
+<!-- ═══ BIG NUMBERS ═══ -->
+<div class="bignums-wrap">
+<!-- ═══ FAIXA DINÂMICA (flutua sobre bignums) ═══ -->
 <div class="news-bar">
   <div class="bar-lbl">Em foco</div>
   <div class="bar-track">
@@ -790,10 +795,6 @@ footer{background:var(--dark);color:#fff;padding:80px 60px 30px}
     </div>
   </div>
 </div>
-
-<main>
-
-<!-- ═══ BIG NUMBERS ═══ -->
 <section class="bignums" id="s-numbers">
   <div class="bn rv">
     <div class="bn-n"><em>145</em><span style="font-size:.55em;letter-spacing:-1px">mil</span></div>
@@ -860,6 +861,7 @@ footer{background:var(--dark);color:#fff;padding:80px 60px 30px}
     <div class="bn-src">Lancet Diabetes & Endocrinology · 2023</div>
   </div>
 </section>
+</div><!-- /bignums-wrap -->
 
 
 <!-- ═══ FEATURE STORY ═══ -->
