@@ -105,9 +105,8 @@ body{font-family:var(--sans);background:var(--bg);color:var(--ink);overflow-x:hi
       rgba(5,12,28,.05) 0%,
       rgba(5,12,28,.10) 30%,
       rgba(5,12,28,.35) 60%,
-      rgba(5,12,28,.60) 78%,
-      rgba(250,249,245,.90) 92%,
-      rgba(250,249,245,1) 100%);
+      rgba(5,12,28,.55) 80%,
+      rgba(5,12,28,.70) 100%);
 }
 .hero-content{position:relative;z-index:3;text-align:center;padding:0 24px 80px;max-width:800px;
   opacity:0;transform:translateY(40px);transition:opacity 1.2s cubic-bezier(.16,1,.3,1),transform 1.2s cubic-bezier(.16,1,.3,1);}
@@ -148,14 +147,15 @@ body{font-family:var(--sans);background:var(--bg);color:var(--ink);overflow-x:hi
 /* ═══ FAIXAS ═══ */
 
 
-.news-bar{background:var(--off);border-bottom:1px solid var(--border);
+.news-bar{background:rgba(10,18,32,.55);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+  border-bottom:1px solid rgba(255,255,255,.08);
   overflow:hidden;height:38px;display:flex;align-items:stretch;white-space:nowrap;}
-.news-bar .bar-lbl{background:var(--off);border-right-color:var(--border);color:var(--gold)}
+.news-bar .bar-lbl{background:rgba(10,18,32,.3);border-right-color:rgba(255,255,255,.1);color:var(--gold)}
 .ni{display:flex;align-items:center;gap:8px;padding:0 24px;
-  height:38px;flex-shrink:0;border-right:1px solid var(--border);white-space:nowrap;}
+  height:38px;flex-shrink:0;border-right:1px solid rgba(255,255,255,.08);white-space:nowrap;}
 .ni-dot{width:4px;height:4px;border-radius:50%;background:var(--gold);flex-shrink:0}
-.ni-txt{font-size:11px;color:var(--mid);white-space:nowrap}
-.ni-src{font-size:9px;color:var(--ghost);margin-left:4px;white-space:nowrap}
+.ni-txt{font-size:11px;color:rgba(255,255,255,.7);white-space:nowrap}
+.ni-src{font-size:9px;color:rgba(255,255,255,.35);margin-left:4px;white-space:nowrap}
 @keyframes roll{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
 
 
@@ -189,10 +189,10 @@ main{margin-top:0}
   position:relative;background:url('https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1920&q=80') center 45%/cover no-repeat fixed;}
 .bignums::before{content:'';position:absolute;inset:0;
   background:linear-gradient(to bottom,
-    rgba(250,249,245,1) 0%,
-    rgba(5,12,28,.55) 12%,
-    rgba(5,12,28,.45) 85%,
-    rgba(250,249,245,.95) 95%,
+    rgba(5,12,28,.65) 0%,
+    rgba(5,12,28,.50) 40%,
+    rgba(5,12,28,.45) 75%,
+    rgba(250,249,245,.85) 93%,
     rgba(250,249,245,1) 100%);
   z-index:0;}
 .bignums>*{position:relative;z-index:1;}
@@ -842,6 +842,28 @@ footer{background:var(--dark);color:#fff;padding:80px 60px 30px}
     <div class="bn-n"><em>3×</em><span style="font-size:.5em;letter-spacing:-1px">/sem</span></div>
     <div class="bn-lbl">de exercício aeróbico reduz em 35% o risco de progressão da doença renal crônica</div>
     <div class="bn-src">CJASN · Meta-análise 2024</div>
+  </div>
+
+  <!-- Linha 3: ganhos com atividade física -->
+  <div class="bn rv">
+    <div class="bn-n"><em>50</em><span style="font-size:.55em;letter-spacing:-1px">%</span></div>
+    <div class="bn-lbl">menor risco de mortalidade por todas as causas em adultos fisicamente ativos vs. sedentários</div>
+    <div class="bn-src">JAMA Internal Medicine · 2022</div>
+  </div>
+  <div class="bn rv d1">
+    <div class="bn-n"><em>VO₂</em><span style="font-size:.5em;letter-spacing:-1px">máx</span></div>
+    <div class="bn-lbl">cada 1 MET a mais de capacidade aeróbica reduz 13% o risco de morte cardiovascular</div>
+    <div class="bn-src">Circulation · AHA 2023</div>
+  </div>
+  <div class="bn rv d2">
+    <div class="bn-n"><em>150</em><span style="font-size:.5em;letter-spacing:-1px">min</span></div>
+    <div class="bn-lbl">de exercício moderado por semana reduz em 31% o risco de depressão e ansiedade</div>
+    <div class="bn-src">British Journal of Sports Medicine · 2023</div>
+  </div>
+  <div class="bn rv d3">
+    <div class="bn-n"><em>40</em><span style="font-size:.55em;letter-spacing:-1px">%</span></div>
+    <div class="bn-lbl">menor incidência de diabetes tipo 2 em indivíduos com ≥7.000 passos/dia</div>
+    <div class="bn-src">Lancet Diabetes & Endocrinology · 2023</div>
   </div>
 </section>
 
