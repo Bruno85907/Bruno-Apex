@@ -171,14 +171,14 @@ body{font-family:var(--sans);background:var(--bg);color:var(--ink);overflow-x:hi
 main{margin-top:0}
 
 /* ═══ UTIL ═══ */
-.wrap{padding:100px 60px}
+.wrap{padding:64px 60px}
 .wrap.off{background:var(--off)}
 .wrap.dark{background:var(--dark);border-radius:0}
 .sec-hdr{display:flex;align-items:flex-end;justify-content:space-between;
   margin-bottom:48px;padding-bottom:0;border-bottom:none;}
 .sec-eye{font-size:10px;font-weight:400;letter-spacing:3.5px;text-transform:uppercase;
   color:var(--soft);margin-bottom:8px;}
-.sec-ttl{font-size:clamp(22px,2.5vw,36px);font-weight:400;color:var(--ink);letter-spacing:-.2px}
+.sec-ttl{font-size:clamp(22px,2.5vw,36px);font-weight:600;color:var(--ink);letter-spacing:-.2px}
 .sec-ttl.wh{color:#fff}
 .sec-more{font-size:9px;font-weight:600;letter-spacing:2px;text-transform:uppercase;
   color:var(--soft);text-decoration:none;border-bottom:1px solid var(--border);
@@ -216,7 +216,7 @@ main{margin-top:0}
   color:var(--gold);margin-bottom:16px;display:flex;align-items:center;gap:12px;}
 .feat-kicker::before{content:'';width:22px;height:1px;background:var(--gold)}
 .feat-h1{font-family:var(--serif);font-size:clamp(26px,3.2vw,48px);
-  font-weight:400;line-height:1.12;color:var(--ink);letter-spacing:-.4px;margin-bottom:16px;}
+  font-weight:400;line-height:1.22;color:var(--ink);letter-spacing:-.4px;margin-bottom:16px;}
 .feat-h1 em{font-style:italic;color:var(--mid)}
 .feat-lide{font-size:15px;font-weight:300;color:var(--mid);
   line-height:1.78;margin-bottom:26px;max-width:440px;}
@@ -227,7 +227,7 @@ main{margin-top:0}
   text-decoration:none;color:var(--ink);border-bottom:1px solid var(--border);
   padding-bottom:2px;transition:color .2s,border-color .2s;}
 .feat-link:hover{color:var(--gold);border-color:var(--gold)}
-.feat-vis{background:linear-gradient(150deg,#0d1a10,#112018);
+.feat-vis{background:linear-gradient(150deg,var(--apex-health),#112018);
   display:flex;align-items:center;justify-content:center;
   position:relative;overflow:hidden;min-height:360px;}
 .feat-vis-img{width:100%;height:100%;object-fit:cover;display:block;
@@ -326,7 +326,7 @@ main{margin-top:0}
 .art-ttl em{font-style:italic}
 .art-ttl.lg{font-size:clamp(17px,1.9vw,22px)}
 .art-ttl.md{font-size:clamp(14px,1.4vw,17px)}
-.art-ttl.sm{font-size:13px}
+.art-ttl.sm{font-size:clamp(12px,1.1vw,14px)}
 .art-exc{font-size:12.5px;font-weight:300;color:var(--mid);line-height:1.62;flex:1}
 .art-exc.sm{font-size:11.5px}
 .art-foot{display:flex;justify-content:space-between;align-items:center;
@@ -345,14 +345,14 @@ main{margin-top:0}
 /* ═══ SCIENCE SPOTLIGHT ═══ */
 .science{display:grid;grid-template-columns:280px 1fr;
   border:none;border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);}
-.sci-l{background:linear-gradient(160deg,#0d1f12,#0a1a0a);
+.sci-l{background:linear-gradient(160deg,var(--apex-health),#0a1a0a);
   padding:32px 28px;display:flex;flex-direction:column;justify-content:space-between;
   border-right:1px solid rgba(255,255,255,.06);}
 .sci-eye{font-size:8px;font-weight:700;letter-spacing:3px;text-transform:uppercase;
   color:rgba(185,148,84,.65);margin-bottom:14px;}
 .sci-jnl{font-family:var(--serif);font-style:italic;font-size:20px;
   color:rgba(255,255,255,.85);line-height:1.28;margin-bottom:16px;}
-.sci-m{font-size:9px;color:rgba(255,255,255,.28);margin-bottom:5px}
+.sci-m{font-size:9px;color:rgba(255,255,255,.48);margin-bottom:5px}
 .sci-m b{color:rgba(255,255,255,.6)}
 .sci-badge{margin-top:18px;display:inline-flex;align-items:center;gap:7px;
   padding:7px 12px;border:1px solid rgba(185,148,84,.22);border-radius:3px;
@@ -380,7 +380,7 @@ main{margin-top:0}
 /* ═══ EVENTO ═══ */
 .evento{display:grid;grid-template-columns:1fr 280px;
   border:none;border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);}
-.ev-m{background:linear-gradient(140deg,#0a0a14,#10142a,#090913);
+.ev-m{background:linear-gradient(140deg,var(--navy),#10142a,#090913);
   padding:48px 44px;position:relative;overflow:hidden;
   display:flex;flex-direction:column;justify-content:space-between;}
 .ev-bg{position:absolute;top:-5%;right:-3%;
@@ -474,7 +474,7 @@ main{margin-top:0}
 .vid-meta{font-size:9px;color:var(--ghost)}
 
 /* ═══ PORTAIS ═══ */
-.portais{display:grid;grid-template-columns:repeat(3,1fr);gap:32px;padding:0 20px;}
+.portais{display:grid;grid-template-columns:repeat(3,1fr);gap:32px;padding:0 60px;}
 .portal{
   padding:0;text-decoration:none;color:#fff;
   display:flex;flex-direction:column;
@@ -1361,7 +1361,12 @@ fetch('https://api.open-meteo.com/v1/forecast?latitude=-23.5505&longitude=-46.63
     document.getElementById('wx-temp').innerHTML=Math.round(c.temperature_2m)+'<sup>°C</sup>';
     document.getElementById('wx-cond').textContent=co[code]||co[k]||'';
     document.getElementById('wx-range').textContent='↓'+Math.round(dy.temperature_2m_min[0])+'° ↑'+Math.round(dy.temperature_2m_max[0])+'°';
-  }).catch(function(){});
+  }).catch(function(){
+    document.getElementById('wx-icon').textContent='🌡️';
+    document.getElementById('wx-temp').innerHTML='--<sup>°C</sup>';
+    document.getElementById('wx-cond').textContent='Indisponível';
+    document.getElementById('wx-range').textContent='';
+  });
 
 
 /* ── Faixa dinâmica contextual ── */
