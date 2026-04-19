@@ -92,23 +92,17 @@ body{font-family:var(--sans);background:var(--bg);color:var(--ink);overflow-x:hi
   position:relative;display:flex;align-items:flex-end;justify-content:center;
   margin-top:140px;overflow:hidden;
 }
-/* Camada 1 — pôr-do-sol atmosférico */
+/* Camada 1 — pôr-do-sol atmosférico (visível no topo) */
 .hero-bg1{
   position:absolute;inset:0;
   background:url('https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=1920&q=80') center 40%/cover no-repeat;
-  animation:hero-xfade 14s ease-in-out infinite;
+  transition:opacity .6s ease-out;
 }
-/* Camada 2 — céu azul ensolarado */
+/* Camada 2 — céu azul ensolarado (aparece ao scrollar) */
 .hero-bg2{
   position:absolute;inset:0;
   background:url('https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1920&q=80') center 35%/cover no-repeat;
-  animation:hero-xfade 14s ease-in-out infinite;
-  animation-delay:-7s;
-}
-@keyframes hero-xfade{
-  0%,40%{opacity:1}
-  50%,90%{opacity:0}
-  100%{opacity:1}
+  opacity:0;transition:opacity .6s ease-out;
 }
 .hero-overlay{
   position:absolute;inset:0;z-index:2;
@@ -129,7 +123,7 @@ body{font-family:var(--sans);background:var(--bg);color:var(--ink);overflow-x:hi
 .hero-logo-svg{flex-shrink:0}
 .hero-logo-div{width:1px;height:56px;background:rgba(245,200,66,.55);}
 .hero-brand{text-align:left;}
-.hero-brand-name{font-size:clamp(48px,7vw,80px);font-weight:300;letter-spacing:20px;
+.hero-brand-name{font-size:clamp(48px,7vw,80px);font-weight:600;letter-spacing:22px;
   color:#fff;line-height:1;text-transform:uppercase;
   text-shadow:0 2px 40px rgba(0,0,0,.2);}
 .hero-brand-sub{font-size:12px;font-weight:600;letter-spacing:6px;
@@ -153,7 +147,7 @@ body{font-family:var(--sans);background:var(--bg);color:var(--ink);overflow-x:hi
 @keyframes hero-bounce{0%,100%{transform:translateY(0)}55%{transform:translateY(7px)}}
 @media(max-width:600px){
   .hero-mtn{margin-top:108px;min-height:75vh}
-  .hero-brand-name{font-size:38px}
+  .hero-brand-name{font-size:38px;letter-spacing:14px}
   .hero-brand-sub{font-size:10px}
 }
 
@@ -1305,20 +1299,30 @@ footer{background:var(--dark);color:#fff;padding:80px 60px 30px}
 var obs=new IntersectionObserver(function(e){e.forEach(function(x){if(x.isIntersecting){x.target.classList.add('in');obs.unobserve(x.target);}});},{threshold:.07});
 document.querySelectorAll('.rv').forEach(function(el){obs.observe(el);});
 
-/* ── Hero scroll reveal ── */
+/* ── Hero scroll controller ── */
 (function(){
   var hc=document.querySelector('.hero-content');
-  if(!hc)return;
-  var triggered=false;
-  function checkHero(){
-    if(triggered)return;
-    if(window.scrollY>80){
+  var bg1=document.querySelector('.hero-bg1');
+  var bg2=document.querySelector('.hero-bg2');
+  var hero=document.querySelector('.hero-mtn');
+  if(!hc||!bg1||!bg2||!hero)return;
+  var textTriggered=false;
+  function onScroll(){
+    var scrollY=window.scrollY;
+    var heroH=hero.offsetHeight;
+    /* Crossfade: imagem 1→2 entre 20% e 70% do hero */
+    var start=heroH*0.2, end=heroH*0.7;
+    var progress=Math.min(1,Math.max(0,(scrollY-start)/(end-start)));
+    bg2.style.opacity=progress;
+    bg1.style.opacity=1-progress*0.3;
+    /* Text reveal ao scrollar 80px */
+    if(!textTriggered&&scrollY>80){
       hc.classList.add('in');
-      triggered=true;
-      window.removeEventListener('scroll',checkHero);
+      textTriggered=true;
     }
   }
-  window.addEventListener('scroll',checkHero,{passive:true});
+  window.addEventListener('scroll',onScroll,{passive:true});
+  onScroll();
 })();
 
 /* ── Nav active ── */
