@@ -6,7 +6,7 @@
 <title>APEX Hub · Plataforma Integrada de Saúde</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Instrument+Serif:ital@0;1&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
@@ -89,7 +89,7 @@ body{font-family:var(--sans);background:var(--bg);color:var(--ink);overflow-x:hi
 /* ═══ HERO MOUNTAIN ═══ */
 .hero-mtn{
   height:100vh;min-height:620px;
-  position:relative;display:flex;align-items:center;justify-content:center;
+  position:relative;display:flex;align-items:flex-end;justify-content:center;
   margin-top:140px;overflow:hidden;
 }
 /* Camada 1 — pôr-do-sol atmosférico */
@@ -114,13 +114,16 @@ body{font-family:var(--sans);background:var(--bg);color:var(--ink);overflow-x:hi
   position:absolute;inset:0;z-index:2;
   background:
     linear-gradient(to bottom,
-      rgba(5,12,28,.10) 0%,
-      rgba(5,12,28,.25) 40%,
-      rgba(5,12,28,.55) 70%,
-      rgba(250,249,245,.95) 92%,
+      rgba(5,12,28,.05) 0%,
+      rgba(5,12,28,.12) 30%,
+      rgba(5,12,28,.40) 60%,
+      rgba(5,12,28,.72) 80%,
+      rgba(250,249,245,.95) 93%,
       rgba(250,249,245,1) 100%);
 }
-.hero-content{position:relative;z-index:3;text-align:center;padding:0 24px;max-width:800px;}
+.hero-content{position:relative;z-index:3;text-align:center;padding:0 24px 80px;max-width:800px;
+  opacity:0;transform:translateY(40px);transition:opacity 1.2s cubic-bezier(.16,1,.3,1),transform 1.2s cubic-bezier(.16,1,.3,1);}
+.hero-content.in{opacity:1;transform:translateY(0)}
 
 .hero-logo{display:flex;align-items:center;justify-content:center;gap:0;margin-bottom:32px;}
 .hero-logo-svg{flex-shrink:0}
@@ -132,9 +135,10 @@ body{font-family:var(--sans);background:var(--bg);color:var(--ink);overflow-x:hi
 .hero-brand-sub{font-size:12px;font-weight:600;letter-spacing:6px;
   color:rgba(245,200,66,.75);text-transform:uppercase;margin-top:5px;}
 .hero-tagline{
-  font-family:var(--serif);font-style:italic;
-  font-size:clamp(28px,4vw,54px);color:#fff;
-  line-height:1.18;margin-bottom:18px;font-weight:400;
+  font-family:'Cormorant Garamond',var(--serif);font-style:italic;
+  font-size:clamp(32px,5vw,64px);color:#fff;
+  line-height:1.1;margin-bottom:18px;font-weight:300;
+  letter-spacing:2px;
   text-shadow:0 2px 40px rgba(0,0,0,.2);
 }
 .hero-sub{
@@ -748,13 +752,13 @@ footer{background:var(--dark);color:#fff;padding:80px 60px 30px}
   <div class="hero-bg1"></div>
   <div class="hero-bg2"></div>
   <div class="hero-overlay"></div>
-  <div class="hero-content rv">
+  <div class="hero-content">
     <div class="hero-logo">
       <div class="hero-brand">
         <div class="hero-brand-name">APEX</div>
       </div>
     </div>
-    <h1 class="hero-tagline">Performance em Saúde</h1>
+    <h1 class="hero-tagline">It's happening</h1>
     <p class="hero-sub">Sua plataforma integrada de ciência clínica, indicadores e qualidade de vida</p>
     <div class="hero-scroll">
       <span>Explorar</span>
@@ -1300,6 +1304,22 @@ footer{background:var(--dark);color:#fff;padding:80px 60px 30px}
 /* ── Scroll reveal ── */
 var obs=new IntersectionObserver(function(e){e.forEach(function(x){if(x.isIntersecting){x.target.classList.add('in');obs.unobserve(x.target);}});},{threshold:.07});
 document.querySelectorAll('.rv').forEach(function(el){obs.observe(el);});
+
+/* ── Hero scroll reveal ── */
+(function(){
+  var hc=document.querySelector('.hero-content');
+  if(!hc)return;
+  var triggered=false;
+  function checkHero(){
+    if(triggered)return;
+    if(window.scrollY>80){
+      hc.classList.add('in');
+      triggered=true;
+      window.removeEventListener('scroll',checkHero);
+    }
+  }
+  window.addEventListener('scroll',checkHero,{passive:true});
+})();
 
 /* ── Nav active ── */
 var hns=document.querySelectorAll('.hn');
