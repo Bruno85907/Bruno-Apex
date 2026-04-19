@@ -92,27 +92,21 @@ body{font-family:var(--sans);background:var(--bg);color:var(--ink);overflow-x:hi
   position:relative;display:flex;align-items:flex-end;justify-content:center;
   margin-top:140px;overflow:hidden;
 }
-/* Camada 1 — pôr-do-sol atmosférico (visível no topo) */
+/* Camada única — pôr-do-sol atmosférico */
 .hero-bg1{
   position:absolute;inset:0;
   background:url('https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=1920&q=80') center 40%/cover no-repeat;
-  transition:opacity .6s ease-out;
 }
-/* Camada 2 — céu azul ensolarado (aparece ao scrollar) */
-.hero-bg2{
-  position:absolute;inset:0;
-  background:url('https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1920&q=80') center 35%/cover no-repeat;
-  opacity:0;transition:opacity .6s ease-out;
-}
+.hero-bg2{display:none;}
 .hero-overlay{
   position:absolute;inset:0;z-index:2;
   background:
     linear-gradient(to bottom,
       rgba(5,12,28,.05) 0%,
-      rgba(5,12,28,.12) 30%,
-      rgba(5,12,28,.40) 60%,
-      rgba(5,12,28,.72) 80%,
-      rgba(250,249,245,.95) 93%,
+      rgba(5,12,28,.10) 30%,
+      rgba(5,12,28,.35) 60%,
+      rgba(5,12,28,.60) 78%,
+      rgba(250,249,245,.90) 92%,
       rgba(250,249,245,1) 100%);
 }
 .hero-content{position:relative;z-index:3;text-align:center;padding:0 24px 80px;max-width:800px;
@@ -191,17 +185,27 @@ main{margin-top:0}
 
 /* ═══ BIG NUMBERS ═══ */
 .bignums{display:grid;grid-template-columns:repeat(4,1fr);
-  gap:0;padding:60px 60px 40px;}
+  gap:0;padding:60px 60px 40px;
+  position:relative;background:url('https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1920&q=80') center 45%/cover no-repeat fixed;}
+.bignums::before{content:'';position:absolute;inset:0;
+  background:linear-gradient(to bottom,
+    rgba(250,249,245,1) 0%,
+    rgba(5,12,28,.55) 12%,
+    rgba(5,12,28,.45) 85%,
+    rgba(250,249,245,.95) 95%,
+    rgba(250,249,245,1) 100%);
+  z-index:0;}
+.bignums>*{position:relative;z-index:1;}
 .bn{padding:36px 32px;
   display:flex;flex-direction:column;gap:10px;
-  border-right:1px solid var(--border);}
+  border-right:1px solid rgba(255,255,255,.12);}
 .bn:last-child{border-right:none}
 
-.bn-n{font-size:clamp(32px,4vw,56px);font-weight:700;color:var(--ink);
+.bn-n{font-size:clamp(32px,4vw,56px);font-weight:700;color:#fff;
   letter-spacing:-3px;line-height:1;}
 .bn-n em{color:var(--gold);font-style:normal}
-.bn-lbl{font-size:13px;font-weight:300;color:var(--mid);line-height:1.5;max-width:220px}
-.bn-src{font-size:8px;color:var(--ghost);letter-spacing:1px;text-transform:uppercase;margin-top:4px}
+.bn-lbl{font-size:13px;font-weight:300;color:rgba(255,255,255,.7);line-height:1.5;max-width:220px}
+.bn-src{font-size:8px;color:rgba(255,255,255,.35);letter-spacing:1px;text-transform:uppercase;margin-top:4px}
 
 
 /* ═══ FEATURE — texto + visual ═══ */
@@ -1299,35 +1303,18 @@ footer{background:var(--dark);color:#fff;padding:80px 60px 30px}
 var obs=new IntersectionObserver(function(e){e.forEach(function(x){if(x.isIntersecting){x.target.classList.add('in');obs.unobserve(x.target);}});},{threshold:.07});
 document.querySelectorAll('.rv').forEach(function(el){obs.observe(el);});
 
-/* ── Hero scroll controller ── */
+/* ── Hero scroll reveal ── */
 (function(){
   var hc=document.querySelector('.hero-content');
-  var bg1=document.querySelector('.hero-bg1');
-  var bg2=document.querySelector('.hero-bg2');
-  var hero=document.querySelector('.hero-mtn');
-  if(!hc||!bg1||!bg2||!hero)return;
-  var textTriggered=false;
-  function onScroll(){
-    var scrollY=window.scrollY||window.pageYOffset||0;
-    var heroH=hero.offsetHeight||window.innerHeight||620;
-    /* Crossfade: imagem 1→2 entre 20% e 70% do hero */
-    var start=heroH*0.2, end=heroH*0.7;
-    var range=end-start;
-    if(range>0){
-      var progress=Math.min(1,Math.max(0,(scrollY-start)/range));
-      bg2.style.opacity=progress;
-      bg1.style.opacity=1-progress*0.3;
-    }
-    /* Text reveal ao scrollar 80px */
-    if(!textTriggered&&scrollY>80){
-      hc.classList.add('in');
-      textTriggered=true;
-    }
+  if(!hc)return;
+  var triggered=false;
+  function check(){
+    if(triggered)return;
+    var y=window.scrollY||window.pageYOffset||0;
+    if(y>80){hc.classList.add('in');triggered=true;}
   }
-  window.addEventListener('scroll',onScroll,{passive:true});
-  /* Trigger on load too (handles page reload with scroll position) */
-  onScroll();
-  setTimeout(onScroll,500);
+  window.addEventListener('scroll',check,{passive:true});
+  check();setTimeout(check,500);
 })();
 
 /* ── Nav active ── */
