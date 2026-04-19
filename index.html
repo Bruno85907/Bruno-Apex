@@ -148,17 +148,7 @@ body{font-family:var(--sans);background:var(--bg);color:var(--ink);overflow-x:hi
 /* ═══ FAIXAS ═══ */
 
 
-.news-bar{background:rgba(10,18,32,.35);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
-  border-bottom:none;border-top:none;
-  overflow:hidden;height:38px;display:flex;align-items:stretch;white-space:nowrap;
-  position:absolute;top:0;left:0;right:0;z-index:10;}
-.news-bar .bar-lbl{background:rgba(10,18,32,.3);border-right-color:rgba(255,255,255,.1);color:var(--gold)}
-.ni{display:flex;align-items:center;gap:8px;padding:0 24px;
-  height:38px;flex-shrink:0;border-right:1px solid rgba(255,255,255,.08);white-space:nowrap;}
-.ni-dot{width:4px;height:4px;border-radius:50%;background:var(--gold);flex-shrink:0}
-.ni-txt{font-size:11px;color:rgba(255,255,255,.7);white-space:nowrap}
-.ni-src{font-size:9px;color:rgba(255,255,255,.35);margin-left:4px;white-space:nowrap}
-@keyframes roll{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+/* news-bar removed — landscapes connect directly */
 
 
 /* margin-top: hdr(80+44) + news(38) = 162px */
@@ -186,7 +176,6 @@ main{margin-top:0}
 .d4{transition-delay:.28s}.d5{transition-delay:.35s}.d6{transition-delay:.42s}
 
 /* ═══ BIG NUMBERS ═══ */
-.bignums-wrap{position:relative;}
 .bignums{display:grid;grid-template-columns:repeat(4,1fr);
   gap:0;padding:60px 60px 40px;
   position:relative;background:url('https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1920&q=80') center 45%/cover no-repeat fixed;}
@@ -585,14 +574,6 @@ footer{background:var(--dark);color:#fff;padding:80px 60px 30px}
   will-change:transform;
 }
 
-#news-roll{
-  display:flex;
-  width:max-content;
-  animation:roll 52s linear infinite;
-  will-change:transform;
-}
-#news-roll:hover{animation-play-state:paused}
-
 /* ═══ FENIX EVENT ═══ */
 .fenix-event{
   display:grid;grid-template-columns:1fr 380px;
@@ -768,35 +749,6 @@ footer{background:var(--dark);color:#fff;padding:80px 60px 30px}
 <main>
 
 <!-- ═══ BIG NUMBERS ═══ -->
-<div class="bignums-wrap">
-<!-- ═══ FAIXA DINÂMICA (flutua sobre bignums) ═══ -->
-<div class="news-bar">
-  <div class="bar-lbl">Em foco</div>
-  <div class="bar-track">
-    <div class="bar-roll" id="news-roll">
-      <div class="ni"><span class="ni-dot"></span><span class="ni-txt">145.000 pacientes em hemodiálise no Brasil</span><span class="ni-src">· Censo SBN 2024</span></div>
-      <div class="ni"><span class="ni-dot"></span><span class="ni-txt">36% dos adultos brasileiros têm hipertensão arterial</span><span class="ni-src">· VIGITEL 2024</span></div>
-      <div class="ni"><span class="ni-dot"></span><span class="ni-txt">42% dos dialíticos têm diabetes mellitus como causa da DRC</span><span class="ni-src">· SBN</span></div>
-      <div class="ni"><span class="ni-dot"></span><span class="ni-txt">760 milhões de pessoas vivem com obesidade no mundo</span><span class="ni-src">· WHO 2024</span></div>
-      <div class="ni"><span class="ni-dot"></span><span class="ni-txt">SGLT-2i: recomendação forte em DRC estágios 2–4 independente de DM</span><span class="ni-src">· KDIGO 2024</span></div>
-      <div class="ni"><span class="ni-dot"></span><span class="ni-txt">André — 41 anos, hemodiálise 3×/sem — correu 42km na Maratona de SP</span><span class="ni-src">· APEX · 2024</span></div>
-      <div class="ni"><span class="ni-dot"></span><span class="ni-txt">R$ 4,2 bilhões gastos com TRS no SUS em 2024</span><span class="ni-src">· Ministério da Saúde</span></div>
-      <div class="ni"><span class="ni-dot"></span><span class="ni-txt">VO₂ máx ≥35 mL/kg/min = 30% menos mortalidade cardiovascular</span><span class="ni-src">· JAMA Cardiol.</span></div>
-      <div class="ni"><span class="ni-dot"></span><span class="ni-txt">1 em cada 10 adultos tem diabetes mellitus no mundo</span><span class="ni-src">· IDF Diabetes Atlas 2024</span></div>
-      <div class="ni"><span class="ni-dot"></span><span class="ni-txt">Kt/V ≥1,2 por sessão — meta de adequação dialítica · Fênix: 1,42</span><span class="ni-src">· KDOQI · Fênix 2025</span></div>
-      <div class="ni"><span class="ni-dot"></span><span class="ni-txt">145.000 pacientes em hemodiálise no Brasil</span><span class="ni-src">· Censo SBN 2024</span></div>
-      <div class="ni"><span class="ni-dot"></span><span class="ni-txt">36% dos adultos brasileiros têm hipertensão arterial</span><span class="ni-src">· VIGITEL 2024</span></div>
-      <div class="ni"><span class="ni-dot"></span><span class="ni-txt">42% dos dialíticos têm diabetes mellitus como causa da DRC</span><span class="ni-src">· SBN</span></div>
-      <div class="ni"><span class="ni-dot"></span><span class="ni-txt">760 milhões de pessoas vivem com obesidade no mundo</span><span class="ni-src">· WHO 2024</span></div>
-      <div class="ni"><span class="ni-dot"></span><span class="ni-txt">SGLT-2i: recomendação forte em DRC estágios 2–4 independente de DM</span><span class="ni-src">· KDIGO 2024</span></div>
-      <div class="ni"><span class="ni-dot"></span><span class="ni-txt">André — 41 anos, hemodiálise 3×/sem — correu 42km na Maratona de SP</span><span class="ni-src">· APEX · 2024</span></div>
-      <div class="ni"><span class="ni-dot"></span><span class="ni-txt">R$ 4,2 bilhões gastos com TRS no SUS em 2024</span><span class="ni-src">· Ministério da Saúde</span></div>
-      <div class="ni"><span class="ni-dot"></span><span class="ni-txt">VO₂ máx ≥35 mL/kg/min = 30% menos mortalidade cardiovascular</span><span class="ni-src">· JAMA Cardiol.</span></div>
-      <div class="ni"><span class="ni-dot"></span><span class="ni-txt">1 em cada 10 adultos tem diabetes mellitus no mundo</span><span class="ni-src">· IDF Diabetes Atlas 2024</span></div>
-      <div class="ni"><span class="ni-dot"></span><span class="ni-txt">Kt/V ≥1,2 por sessão — meta de adequação dialítica · Fênix: 1,42</span><span class="ni-src">· KDOQI · Fênix 2025</span></div>
-    </div>
-  </div>
-</div>
 <section class="bignums" id="s-numbers">
   <div class="bn rv">
     <div class="bn-n"><em>145</em><span style="font-size:.55em;letter-spacing:-1px">mil</span></div>
@@ -863,7 +815,6 @@ footer{background:var(--dark);color:#fff;padding:80px 60px 30px}
     <div class="bn-src">Lancet Diabetes & Endocrinology · 2023</div>
   </div>
 </section>
-</div><!-- /bignums-wrap -->
 
 
 <!-- ═══ FEATURE STORY ═══ -->
@@ -1405,33 +1356,7 @@ fetch('https://api.open-meteo.com/v1/forecast?latitude=-23.5505&longitude=-46.63
   });
 
 
-/* ── Faixa dinâmica contextual ── */
-var defaultNews=[
-  {t:'145.000 pacientes em hemodiálise no Brasil',s:'Censo SBN 2024'},
-  {t:'42% dos dialíticos têm diabetes mellitus como causa da DRC',s:'SBN'},
-  {t:'SGLT-2i: nova recomendação forte em DRC estágios 2–4 independente de DM',s:'KDIGO 2024'},
-  {t:'André — 41 anos, hemodiálise 3×/semana — correu 42km na Maratona de SP',s:'APEX · 2024'},
-  {t:'R$ 4,2 bilhões gastos com TRS no SUS em 2024',s:'Ministério da Saúde'},
-  {t:'VO₂ máx ≥35 mL/kg/min associado a 30% menos mortalidade cardiovascular',s:'JAMA Cardiol.'},
-  {t:'Kt/V ≥1,2 por sessão — meta de adequação dialítica · Fênix: 1,42',s:'KDOQI · Fênix 2025'},
-  {t:'1 em 3 adultos brasileiros tem hipertensão arterial sistêmica',s:'DATASUS 2024'},
-  {t:'HRV como biomarcador de recuperação e risco cardiovascular em dialíticos',s:'Nephrol Dial Transplant'},
-  {t:'145.000 pacientes em hemodiálise no Brasil',s:'Censo SBN 2024'},
-  {t:'42% dos dialíticos têm diabetes mellitus como causa da DRC',s:'SBN'},
-  {t:'SGLT-2i: nova recomendação forte em DRC estágios 2–4 independente de DM',s:'KDIGO 2024'},
-  {t:'André — 41 anos, hemodiálise 3×/semana — correu 42km na Maratona de SP',s:'APEX · 2024'},
-  {t:'R$ 4,2 bilhões gastos com TRS no SUS em 2024',s:'Ministério da Saúde'},
-  {t:'VO₂ máx ≥35 mL/kg/min associado a 30% menos mortalidade cardiovascular',s:'JAMA Cardiol.'},
-  {t:'Kt/V ≥1,2 por sessão — meta de adequação dialítica · Fênix: 1,42',s:'KDOQI · Fênix 2025'},
-  {t:'1 em 3 adultos brasileiros tem hipertensão arterial sistêmica',s:'DATASUS 2024'},
-  {t:'HRV como biomarcador de recuperação e risco cardiovascular em dialíticos',s:'Nephrol Dial Transplant'},
-];
-var nr=document.getElementById('news-roll');
-if(nr)nr.innerHTML=defaultNews.map(function(n){
-  return '<div class="ni"><span class="ni-dot"></span>'
-    +'<span class="ni-txt">'+n.t+'</span>'
-    +'<span class="ni-src">· '+n.s+'</span></div>';
-}).join('');
+/* news-bar removed */
 </script>
 </body>
 </html>
