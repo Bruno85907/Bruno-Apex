@@ -3,192 +3,232 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Saúde & Performance — Dr. Bruno Biluca</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<title>APEX Read — Saúde & Performance</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root{
-  --navy:#0D1B35;--navy-mid:#1B2A4A;--navy-light:#243357;
-  --gold:#D4A847;--gold-dark:#8B6914;--gold-pale:#E8D5A0;
-  --muted:rgba(232,213,160,0.78);--white:#FFFFFF;
+  /* APEX READ — Light Theme (padronizado APEX ecosystem) */
+  --bg:#F7F6F2;--bg-deep:#EFEEE9;--bg-card:#FFFFFF;
+  --border:rgba(140,47,70,0.10);--border-hover:rgba(140,47,70,0.22);
+  /* Identidade APEX Read: vinho/marsala */
+  --read:#8C2F46;--read-light:#A8425C;--read-dim:rgba(140,47,70,0.08);--read-border:rgba(140,47,70,0.18);
+  /* Header compartilhado APEX */
+  --pro:#3E4F5C;
+  /* Texto escuro sobre fundo claro */
+  --text:#1E2D3D;--text-2:#5A6A7A;--text-3:#8A96A3;
+  --white:#FFFFFF;--green:#5B9E50;
+  --shadow-card:0 2px 12px rgba(62,79,92,0.08);
+  --shadow-card-hover:0 8px 32px rgba(62,79,92,0.14);
+  --radius:14px;--radius-sm:8px;
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
 html{scroll-behavior:smooth;}
-body{font-family:'Space Grotesk',sans-serif;background:var(--navy);color:var(--white);min-height:100vh;}
+body{font-family:'Space Grotesk',system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;-webkit-font-smoothing:antialiased;overflow-x:hidden;position:relative;}
 
-/* NAV */
-nav{background:#FFF;border-bottom:1px solid #e8e6e1;padding:0 32px;height:52px;display:flex;align-items:center;gap:16px;position:sticky;top:0;z-index:100;}
-.nav-logo{font-size:12px;font-weight:700;color:#B99454;letter-spacing:5px;text-transform:uppercase;text-decoration:none;flex-shrink:0;}
-.nav-sep{width:1px;height:16px;background:#e8e6e1;}
-.nav-section{font-size:11px;font-weight:500;color:#777;letter-spacing:1.5px;text-transform:uppercase;}
+/* Fundo elegante — textura geométrica sutil estilo APEX */
+body::before{content:'';position:fixed;inset:0;z-index:-2;
+  background:
+    radial-gradient(ellipse 80% 60% at 20% 10%, rgba(140,47,70,0.05), transparent 50%),
+    radial-gradient(ellipse 60% 50% at 80% 80%, rgba(62,79,92,0.04), transparent 50%),
+    radial-gradient(ellipse 40% 30% at 50% 50%, rgba(140,47,70,0.03), transparent 40%);
+}
+body::after{content:'';position:fixed;inset:0;z-index:-1;
+  background-image:
+    linear-gradient(rgba(62,79,92,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(62,79,92,0.03) 1px, transparent 1px);
+  background-size:48px 48px;
+  mask-image:radial-gradient(ellipse 70% 60% at 50% 50%, black 20%, transparent 70%);
+  -webkit-mask-image:radial-gradient(ellipse 70% 60% at 50% 50%, black 20%, transparent 70%);
+}
+
+/* =====================================================
+   NAV — Header azul padrão APEX (80px)
+   ===================================================== */
+nav{background:var(--pro);border-bottom:1px solid rgba(255,255,255,0.1);padding:0 36px;height:80px;display:flex;align-items:center;gap:16px;position:sticky;top:0;z-index:100;}
+.nav-logo-wrap{display:flex;align-items:center;gap:10px;text-decoration:none;flex-shrink:0;}
+canvas.logo-canvas-nav{height:70px;width:auto;}
+.nav-sep{width:1px;height:24px;background:rgba(255,255,255,0.2);}
+.nav-section{font-size:12px;font-weight:500;color:rgba(255,255,255,0.7);letter-spacing:1.5px;text-transform:uppercase;}
 .nav-anchors{margin-left:auto;display:flex;gap:24px;list-style:none;}
-.nav-anchors a{font-size:10px;color:#aaa;text-decoration:none;letter-spacing:2px;text-transform:uppercase;transition:color .2s;}
-.nav-anchors a:hover{color:#B99454;}
-.nav-back{font-size:11px;letter-spacing:1px;color:#777;text-decoration:none;transition:color .2s;margin-left:16px;}
-.nav-back:hover{color:#B99454;}
+.nav-anchors a{font-size:11px;color:rgba(255,255,255,0.55);text-decoration:none;letter-spacing:2px;text-transform:uppercase;transition:color .2s;font-weight:500;}
+.nav-anchors a:hover{color:#fff;}
+.nav-back{font-size:12px;letter-spacing:1px;color:rgba(255,255,255,0.55);text-decoration:none;transition:color .2s;margin-left:16px;font-weight:500;}
+.nav-back:hover{color:#fff;}
 
-/* HERO */
-.hero{padding:72px 60px 60px;position:relative;overflow:hidden;border-bottom:1px solid rgba(212,168,71,0.08);}
-.hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse at 85% 40%,rgba(212,168,71,0.07) 0%,transparent 55%),radial-gradient(ellipse at 5% 80%,rgba(36,51,87,0.5) 0%,transparent 50%);}
-.hero-grid{position:absolute;inset:0;pointer-events:none;background-image:linear-gradient(rgba(212,168,71,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(212,168,71,0.03) 1px,transparent 1px);background-size:64px 64px;}
-.hero-inner{position:relative;z-index:1;display:grid;grid-template-columns:1fr auto;gap:60px;align-items:center;max-width:1200px;}
-.hero-badge{display:inline-flex;align-items:center;gap:10px;border:1px solid rgba(212,168,71,0.2);border-radius:30px;padding:7px 18px;margin-bottom:24px;font-family:'Space Grotesk',sans-serif;font-size:10px;letter-spacing:3px;color:var(--gold);}
-.hero-dot{width:6px;height:6px;border-radius:50%;background:var(--gold);animation:blink 2s infinite;}
+/* =====================================================
+   HERO — Limpo, texto sobre fundo claro
+   ===================================================== */
+.hero{padding:60px 60px 52px;position:relative;overflow:hidden;border-bottom:1px solid var(--border);margin-top:0;background:var(--bg-card);}
+.hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse at 85% 40%,rgba(140,47,70,0.04) 0%,transparent 55%),radial-gradient(ellipse at 5% 80%,rgba(62,79,92,0.04) 0%,transparent 50%);}
+.hero-grid{position:absolute;inset:0;pointer-events:none;background-image:linear-gradient(rgba(140,47,70,0.02) 1px,transparent 1px),linear-gradient(90deg,rgba(140,47,70,0.02) 1px,transparent 1px);background-size:64px 64px;}
+.hero-inner{position:relative;z-index:1;display:grid;grid-template-columns:1fr auto;gap:60px;align-items:center;max-width:1200px;margin:0 auto;}
+.hero-badge{display:inline-flex;align-items:center;gap:10px;border:1px solid var(--read-border);border-radius:30px;padding:7px 18px;margin-bottom:24px;font-size:10px;letter-spacing:3px;color:var(--read);font-weight:600;}
+.hero-dot{width:6px;height:6px;border-radius:50%;background:var(--read);animation:blink 2s infinite;}
 @keyframes blink{0%,100%{opacity:1}50%{opacity:.25}}
-.hero-title{font-family:'Space Grotesk',sans-serif;font-size:clamp(38px,5vw,64px);font-weight:300;color:var(--white);line-height:1.08;margin-bottom:18px;}
-.hero-title em{color:var(--gold-pale);font-style:italic;}
-.hero-desc{font-family:'Space Grotesk',sans-serif;font-size:18px;font-weight:300;font-style:italic;color:var(--muted);line-height:1.85;margin-bottom:28px;max-width:520px;}
+.hero-title{font-size:clamp(38px,5vw,58px);font-weight:300;color:var(--text);line-height:1.08;margin-bottom:18px;}
+.hero-title em{color:var(--read);font-style:italic;}
+.hero-desc{font-size:17px;font-weight:300;font-style:italic;color:var(--text-2);line-height:1.85;margin-bottom:28px;max-width:520px;}
 .wearables-strip{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:28px;}
-.wb{display:flex;align-items:center;gap:7px;background:rgba(212,168,71,0.06);border:1px solid rgba(212,168,71,0.15);border-radius:8px;padding:7px 13px;font-family:'Space Grotesk',sans-serif;font-size:12px;font-weight:500;color:var(--gold-pale);}
+.wb{display:flex;align-items:center;gap:7px;background:var(--read-dim);border:1px solid var(--read-border);border-radius:8px;padding:7px 13px;font-size:12px;font-weight:500;color:var(--read);}
 .hero-social{display:flex;gap:10px;}
-.soc-btn{display:flex;align-items:center;gap:8px;font-family:'Space Grotesk',sans-serif;font-size:11px;letter-spacing:2px;color:var(--gold);border:1px solid rgba(212,168,71,0.25);padding:9px 16px;border-radius:8px;text-decoration:none;transition:all .3s;}
-.soc-btn:hover{background:rgba(212,168,71,0.1);border-color:rgba(212,168,71,0.5);}
+.soc-btn{display:flex;align-items:center;gap:8px;font-size:11px;letter-spacing:2px;color:var(--read);border:1px solid var(--read-border);padding:9px 16px;border-radius:8px;text-decoration:none;transition:all .3s;font-weight:500;}
+.soc-btn:hover{background:var(--read-dim);border-color:rgba(140,47,70,0.35);}
 .hero-stats{display:flex;flex-direction:column;gap:14px;min-width:190px;}
-.stat-card{background:rgba(27,42,74,0.7);border:1px solid rgba(212,168,71,0.1);border-radius:12px;padding:18px 22px;text-align:center;}
-.stat-num{font-family:'Space Grotesk',sans-serif;font-size:34px;font-weight:300;color:var(--gold);line-height:1;}
-.stat-label{font-family:'Space Grotesk',sans-serif;font-size:9px;letter-spacing:2px;color:var(--muted);text-transform:uppercase;margin-top:4px;}
+.stat-card{background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:18px 22px;text-align:center;box-shadow:var(--shadow-card);}
+.stat-num{font-size:34px;font-weight:300;color:var(--read);line-height:1;}
+.stat-label{font-size:9px;letter-spacing:2px;color:var(--text-3);text-transform:uppercase;margin-top:4px;}
 
-/* ARTIGOS */
+/* =====================================================
+   ARTIGOS
+   ===================================================== */
 .artigos-section{padding:72px 60px;max-width:1280px;margin:0 auto;}
 .section-header{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:40px;gap:20px;flex-wrap:wrap;}
-.section-eyebrow{font-family:'Space Grotesk',sans-serif;font-size:11px;letter-spacing:4px;color:var(--gold);text-transform:uppercase;margin-bottom:8px;}
-.section-title{font-family:'Space Grotesk',sans-serif;font-size:clamp(26px,3vw,38px);font-weight:300;color:var(--white);line-height:1.2;}
-.section-title em{color:var(--gold-pale);font-style:italic;}
-.section-count{font-family:'Space Grotesk',sans-serif;font-size:11px;letter-spacing:2px;color:rgba(212,168,71,0.4);}
+.section-eyebrow{font-size:11px;letter-spacing:4px;color:var(--read);text-transform:uppercase;margin-bottom:8px;font-weight:600;}
+.section-title{font-size:clamp(26px,3vw,38px);font-weight:300;color:var(--text);line-height:1.2;}
+.section-title em{color:var(--read);font-style:italic;}
+.section-count{font-size:11px;letter-spacing:2px;color:var(--text-3);}
 
 /* FILTROS */
 .filtros-wrap{margin-bottom:36px;overflow-x:auto;padding-bottom:4px;}
 .filtros{display:flex;gap:8px;min-width:max-content;}
 .filtro-btn{
-  font-family:'Space Grotesk',sans-serif;font-size:12px;letter-spacing:1.5px;
-  color:rgba(232,213,160,0.7);background:rgba(255,255,255,0.03);
-  border:1px solid rgba(212,168,71,0.15);border-radius:24px;
+  font-size:12px;letter-spacing:1.5px;
+  color:var(--text-2);background:var(--bg-card);
+  border:1px solid var(--border);border-radius:24px;
   padding:10px 20px;cursor:pointer;transition:all .25s;white-space:nowrap;
-  font-weight:500;
+  font-weight:500;font-family:inherit;box-shadow:0 1px 4px rgba(0,0,0,0.04);
 }
-.filtro-btn:hover{color:var(--gold);border-color:rgba(212,168,71,0.4);background:rgba(212,168,71,0.06);}
-.filtro-btn.active{background:rgba(212,168,71,0.14);color:var(--gold);border-color:rgba(212,168,71,0.4);box-shadow:0 0 0 1px rgba(212,168,71,0.15);}
+.filtro-btn:hover{color:var(--read);border-color:var(--read-border);background:var(--read-dim);}
+.filtro-btn.active{background:var(--read);color:#fff;border-color:var(--read);box-shadow:0 2px 8px rgba(140,47,70,0.2);}
 
 /* DESTAQUE */
 .artigo-destaque{
   display:grid;grid-template-columns:1fr 1fr;
-  background:var(--navy-mid);border:1px solid rgba(212,168,71,0.1);
+  background:var(--bg-card);border:1px solid var(--border);
   border-radius:16px;overflow:hidden;text-decoration:none;
-  transition:all .4s;margin-bottom:3px;
+  transition:all .4s;margin-bottom:3px;box-shadow:var(--shadow-card);
 }
-.artigo-destaque:hover{border-color:rgba(212,168,71,0.28);transform:translateY(-2px);box-shadow:0 16px 40px rgba(0,0,0,0.25);}
+.artigo-destaque:hover{border-color:var(--border-hover);transform:translateY(-2px);box-shadow:var(--shadow-card-hover);}
 .artigo-destaque-img{min-height:260px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;position:relative;}
-.destaque-tag{position:absolute;top:16px;left:16px;background:var(--gold-dark);color:var(--white);font-family:'Space Grotesk',sans-serif;font-size:9px;letter-spacing:2px;padding:4px 12px;border-radius:20px;}
+.destaque-tag{position:absolute;top:16px;left:16px;background:var(--read);color:#fff;font-size:9px;letter-spacing:2px;padding:4px 12px;border-radius:20px;font-weight:600;}
 .artigo-destaque-body{padding:40px 36px;display:flex;flex-direction:column;}
-.a-cat{font-family:'Space Grotesk',sans-serif;font-size:10px;letter-spacing:3px;color:var(--gold);text-transform:uppercase;margin-bottom:12px;}
-.a-title{font-family:'Space Grotesk',sans-serif;font-size:22px;font-weight:400;color:var(--white);line-height:1.4;margin-bottom:14px;}
-.a-excerpt{font-family:'Space Grotesk',sans-serif;font-size:15px;font-style:italic;color:var(--muted);line-height:1.78;margin-bottom:20px;flex:1;}
-.a-meta{display:flex;align-items:center;gap:10px;font-family:'Space Grotesk',sans-serif;font-size:11px;color:rgba(232,213,160,0.45);margin-bottom:20px;}
-.a-dot{width:3px;height:3px;border-radius:50%;background:rgba(212,168,71,0.35);}
-.a-link{font-family:'Space Grotesk',sans-serif;font-size:10px;letter-spacing:2px;color:var(--gold);display:flex;align-items:center;gap:8px;transition:gap .3s;margin-top:auto;}
+.a-cat{font-size:10px;letter-spacing:3px;color:var(--read);text-transform:uppercase;margin-bottom:12px;font-weight:600;}
+.a-title{font-size:22px;font-weight:500;color:var(--text);line-height:1.4;margin-bottom:14px;}
+.a-excerpt{font-size:15px;font-style:italic;color:var(--text-2);line-height:1.78;margin-bottom:20px;flex:1;}
+.a-meta{display:flex;align-items:center;gap:10px;font-size:11px;color:var(--text-3);margin-bottom:20px;}
+.a-dot{width:3px;height:3px;border-radius:50%;background:var(--text-3);}
+.a-link{font-size:10px;letter-spacing:2px;color:var(--read);display:flex;align-items:center;gap:8px;transition:gap .3s;margin-top:auto;font-weight:600;}
 .artigo-destaque:hover .a-link{gap:14px;}
 
 /* LISTA DE ARTIGOS */
 .artigos-grid{display:flex;flex-direction:column;}
 .artigo-item{
   display:flex;align-items:flex-start;gap:22px;
-  padding:22px 0;border-bottom:1px solid rgba(212,168,71,0.06);
+  padding:22px 0;border-bottom:1px solid rgba(62,79,92,0.08);
   text-decoration:none;transition:all .3s;
   animation:fadeIn .3s ease;
 }
 @keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
-.artigo-item:first-of-type{border-top:1px solid rgba(212,168,71,0.06);margin-top:3px;}
+.artigo-item:first-of-type{border-top:1px solid rgba(62,79,92,0.08);margin-top:3px;}
 .artigo-item:last-of-type{border-bottom:none;}
 .artigo-item:hover{padding-left:8px;}
-.a-num{font-family:'Space Grotesk',sans-serif;font-size:20px;font-weight:700;color:rgba(212,168,71,0.13);min-width:36px;line-height:1;padding-top:4px;flex-shrink:0;}
+.a-num{font-size:20px;font-weight:700;color:rgba(140,47,70,0.15);min-width:36px;line-height:1;padding-top:4px;flex-shrink:0;}
 .a-body{flex:1;}
 .a-body .a-cat{margin-bottom:5px;}
 .a-body .a-title{font-size:17px;margin-bottom:7px;}
 .a-body .a-excerpt{font-size:14px;margin-bottom:10px;}
-.a-soon{display:inline-flex;align-items:center;gap:5px;font-family:'Space Grotesk',sans-serif;font-size:9px;letter-spacing:1.5px;color:rgba(232,213,160,0.35);background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:20px;padding:3px 10px;}
-.a-cat-badge{display:inline-block;font-family:'Space Grotesk',sans-serif;font-size:8px;letter-spacing:1.5px;padding:2px 8px;border-radius:10px;margin-left:8px;vertical-align:middle;}
+.a-soon{display:inline-flex;align-items:center;gap:5px;font-size:9px;letter-spacing:1.5px;color:var(--text-3);background:rgba(62,79,92,0.04);border:1px solid rgba(62,79,92,0.1);border-radius:20px;padding:3px 10px;}
+.a-cat-badge{display:inline-block;font-size:8px;letter-spacing:1.5px;padding:2px 8px;border-radius:10px;margin-left:8px;vertical-align:middle;}
 
-/* Cores por categoria */
-.cat-wearables{color:#D4A847;} .cat-wearables .a-cat{color:#D4A847;}
-.cat-idosos{color:#5BA8D4;} .cat-idosos .a-cat{color:#5BA8D4;}
-.cat-atividade{color:#5DCB8A;} .cat-atividade .a-cat{color:#5DCB8A;}
-.cat-hidratacao{color:#60B8D4;} .cat-hidratacao .a-cat{color:#60B8D4;}
-.cat-sono{color:#9B8ED4;} .cat-sono .a-cat{color:#9B8ED4;}
-.cat-longevidade{color:#D4A847;} .cat-longevidade .a-cat{color:#D4A847;}
-.cat-suplementacao{color:#D47A5B;} .cat-suplementacao .a-cat{color:#D47A5B;}
-.cat-metricas{color:#D4A847;} .cat-metricas .a-cat{color:#D4A847;}
-.cat-combinada{color:#C084FC;} .cat-combinada .a-cat{color:#C084FC;}
-.cat-pratica{color:#5DCB8A;} .cat-pratica .a-cat{color:#5DCB8A;}
-.cat-antiinflamatorio{color:#F07070;} .cat-antiinflamatorio .a-cat{color:#F07070;}
+/* Cores por categoria — mantidas para identidade de cada tema */
+.cat-wearables{color:#8C6B20;} .cat-wearables .a-cat{color:#8C6B20;}
+.cat-idosos{color:#3A7FA8;} .cat-idosos .a-cat{color:#3A7FA8;}
+.cat-atividade{color:#3D8C5A;} .cat-atividade .a-cat{color:#3D8C5A;}
+.cat-hidratacao{color:#3A8EA8;} .cat-hidratacao .a-cat{color:#3A8EA8;}
+.cat-sono{color:#6B5FA8;} .cat-sono .a-cat{color:#6B5FA8;}
+.cat-longevidade{color:#8C6B20;} .cat-longevidade .a-cat{color:#8C6B20;}
+.cat-suplementacao{color:#A85A3D;} .cat-suplementacao .a-cat{color:#A85A3D;}
+.cat-metricas{color:#8C6B20;} .cat-metricas .a-cat{color:#8C6B20;}
+.cat-combinada{color:#8B5CF6;} .cat-combinada .a-cat{color:#8B5CF6;}
+.cat-pratica{color:#3D8C5A;} .cat-pratica .a-cat{color:#3D8C5A;}
+.cat-antiinflamatorio{color:#C04040;} .cat-antiinflamatorio .a-cat{color:#C04040;}
 
 /* Mensagem sem resultados */
-.no-results{text-align:center;padding:60px 20px;font-family:'Space Grotesk',sans-serif;font-size:18px;font-style:italic;color:rgba(232,213,160,0.35);}
+.no-results{text-align:center;padding:60px 20px;font-size:18px;font-style:italic;color:var(--text-3);}
 
 /* SEP */
-.section-sep{height:1px;background:rgba(212,168,71,0.07);margin:0 60px;}
+.section-sep{height:1px;background:rgba(62,79,92,0.08);margin:0 60px;}
 
-/* VÍDEOS */
-.videos-bg{background:rgba(27,42,74,0.25);border-top:1px solid rgba(212,168,71,0.06);border-bottom:1px solid rgba(212,168,71,0.06);}
+/* =====================================================
+   VÍDEOS
+   ===================================================== */
+.videos-bg{background:rgba(62,79,92,0.03);border-top:1px solid rgba(62,79,92,0.08);border-bottom:1px solid rgba(62,79,92,0.08);}
 .videos-section{padding:72px 60px;max-width:1280px;margin:0 auto;}
 .serie-banner{
-  background:linear-gradient(160deg,var(--navy-light) 0%,#152640 100%);
-  border:1px solid rgba(212,168,71,0.15);border-radius:16px;
+  background:var(--bg-card);
+  border:1px solid var(--border);border-radius:16px;
   padding:36px 40px;margin-bottom:28px;
   display:flex;align-items:center;gap:32px;
+  box-shadow:var(--shadow-card);
 }
-.serie-badge{background:var(--gold-dark);color:var(--white);font-family:'Space Grotesk',sans-serif;font-size:9px;letter-spacing:3px;padding:5px 14px;border-radius:20px;white-space:nowrap;}
+.serie-badge{background:var(--read);color:#fff;font-size:9px;letter-spacing:3px;padding:5px 14px;border-radius:20px;white-space:nowrap;font-weight:600;}
 .serie-info{flex:1;}
-.serie-title{font-family:'Space Grotesk',sans-serif;font-size:16px;font-weight:700;color:var(--gold);letter-spacing:2px;margin-bottom:6px;}
-.serie-desc{font-family:'Space Grotesk',sans-serif;font-size:15px;font-style:italic;color:var(--muted);}
+.serie-title{font-size:16px;font-weight:700;color:var(--read);letter-spacing:2px;margin-bottom:6px;}
+.serie-desc{font-size:15px;font-style:italic;color:var(--text-2);}
 .serie-eps{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px;}
-.ep-chip{font-family:'Space Grotesk',sans-serif;font-size:11px;font-weight:500;color:rgba(212,168,71,0.65);background:rgba(212,168,71,0.07);border:1px solid rgba(212,168,71,0.15);border-radius:6px;padding:4px 12px;}
+.ep-chip{font-size:11px;font-weight:500;color:var(--read);background:var(--read-dim);border:1px solid var(--read-border);border-radius:6px;padding:4px 12px;}
 .videos-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;}
-.video-card{background:var(--navy-mid);border:1px solid rgba(212,168,71,0.08);border-radius:14px;overflow:hidden;cursor:pointer;transition:all .4s;text-decoration:none;display:block;}
-.video-card:hover{border-color:rgba(212,168,71,0.25);transform:translateY(-4px);box-shadow:0 16px 40px rgba(0,0,0,0.3);}
+.video-card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;cursor:pointer;transition:all .4s;text-decoration:none;display:block;box-shadow:var(--shadow-card);}
+.video-card:hover{border-color:var(--border-hover);transform:translateY(-4px);box-shadow:var(--shadow-card-hover);}
 .video-thumb{aspect-ratio:16/9;display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;gap:10px;}
-.video-play{width:52px;height:52px;border-radius:50%;background:rgba(212,168,71,0.15);border:1.5px solid rgba(212,168,71,0.4);display:flex;align-items:center;justify-content:center;transition:all .3s;}
-.video-card:hover .video-play{background:rgba(212,168,71,0.28);transform:scale(1.1);}
-.video-ep{position:absolute;top:10px;left:12px;background:rgba(0,0,0,0.6);font-family:'Space Grotesk',sans-serif;font-size:9px;letter-spacing:2px;color:var(--gold);padding:3px 10px;border-radius:4px;}
-.video-dur{position:absolute;bottom:10px;right:12px;background:rgba(0,0,0,0.65);font-size:11px;color:var(--white);padding:2px 8px;border-radius:4px;font-family:'Space Grotesk',sans-serif;}
-.v-soon{font-family:'Space Grotesk',sans-serif;font-size:9px;letter-spacing:2px;color:rgba(212,168,71,0.4);}
+.video-play{width:52px;height:52px;border-radius:50%;background:rgba(140,47,70,0.12);border:1.5px solid rgba(140,47,70,0.3);display:flex;align-items:center;justify-content:center;transition:all .3s;}
+.video-card:hover .video-play{background:rgba(140,47,70,0.2);transform:scale(1.1);}
+.video-ep{position:absolute;top:10px;left:12px;background:rgba(0,0,0,0.6);font-size:9px;letter-spacing:2px;color:#fff;padding:3px 10px;border-radius:4px;font-weight:600;}
+.video-dur{position:absolute;bottom:10px;right:12px;background:rgba(0,0,0,0.65);font-size:11px;color:#fff;padding:2px 8px;border-radius:4px;}
+.v-soon{font-size:9px;letter-spacing:2px;color:var(--text-3);}
 .video-body{padding:16px 20px 20px;}
-.v-serie{font-family:'Space Grotesk',sans-serif;font-size:9px;letter-spacing:3px;color:var(--gold);text-transform:uppercase;margin-bottom:6px;}
-.v-title{font-family:'Space Grotesk',sans-serif;font-size:16px;font-weight:400;color:var(--white);line-height:1.45;margin-bottom:7px;}
-.v-meta{font-family:'Space Grotesk',sans-serif;font-size:11px;color:rgba(232,213,160,0.45);}
+.v-serie{font-size:9px;letter-spacing:3px;color:var(--read);text-transform:uppercase;margin-bottom:6px;font-weight:600;}
+.v-title{font-size:16px;font-weight:500;color:var(--text);line-height:1.45;margin-bottom:7px;}
+.v-meta{font-size:11px;color:var(--text-3);}
 
-/* GALERIA */
+/* =====================================================
+   GALERIA
+   ===================================================== */
 .galeria-section{padding:72px 60px;max-width:1280px;margin:0 auto;}
 .galeria-grid{display:grid;grid-template-columns:repeat(12,1fr);grid-template-rows:210px 210px;gap:10px;}
-.gal-item{background:var(--navy-mid);border-radius:12px;overflow:hidden;cursor:pointer;position:relative;border:1px solid rgba(212,168,71,0.06);transition:all .4s;}
+.gal-item{background:var(--bg-card);border-radius:12px;overflow:hidden;cursor:pointer;position:relative;border:1px solid var(--border);transition:all .4s;box-shadow:var(--shadow-card);}
 .gal-item:nth-child(1){grid-column:span 5;grid-row:span 2;}
 .gal-item:nth-child(2){grid-column:span 4;}
 .gal-item:nth-child(3){grid-column:span 3;}
 .gal-item:nth-child(4){grid-column:span 3;}
 .gal-item:nth-child(5){grid-column:span 4;}
-.gal-item:hover{border-color:rgba(212,168,71,0.22);transform:scale(1.015);}
+.gal-item:hover{border-color:var(--border-hover);transform:scale(1.015);box-shadow:var(--shadow-card-hover);}
 .gal-ph{width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;}
-.gal-ov{position:absolute;inset:0;background:rgba(13,27,53,0);display:flex;align-items:center;justify-content:center;transition:background .35s;}
-.gal-item:hover .gal-ov{background:rgba(13,27,53,0.55);}
+.gal-ov{position:absolute;inset:0;background:rgba(62,79,92,0);display:flex;align-items:center;justify-content:center;transition:background .35s;}
+.gal-item:hover .gal-ov{background:rgba(62,79,92,0.08);}
 .gal-exp{opacity:0;transition:opacity .35s;}
 .gal-item:hover .gal-exp{opacity:1;}
-.gal-lbl{position:absolute;bottom:12px;left:14px;font-family:'Space Grotesk',sans-serif;font-size:9px;letter-spacing:2px;color:rgba(212,168,71,0.55);text-transform:uppercase;opacity:0;transition:opacity .35s;}
+.gal-lbl{position:absolute;bottom:12px;left:14px;font-size:9px;letter-spacing:2px;color:var(--text-3);text-transform:uppercase;opacity:0;transition:opacity .35s;font-weight:600;}
 .gal-item:hover .gal-lbl{opacity:1;}
 
-/* NEWSLETTER */
-.newsletter{background:linear-gradient(160deg,#152640 0%,var(--navy-mid) 100%);border-top:1px solid rgba(212,168,71,0.1);padding:64px 60px;text-align:center;}
-.nl-eyebrow{font-family:'Space Grotesk',sans-serif;font-size:11px;letter-spacing:4px;color:var(--gold);text-transform:uppercase;margin-bottom:14px;}
-.nl-title{font-family:'Space Grotesk',sans-serif;font-size:clamp(24px,3.5vw,38px);font-weight:300;color:var(--white);margin-bottom:10px;line-height:1.2;}
-.nl-title em{color:var(--gold-pale);font-style:italic;}
-.nl-sub{font-family:'Space Grotesk',sans-serif;font-size:17px;font-style:italic;color:var(--muted);margin-bottom:30px;}
+/* =====================================================
+   NEWSLETTER
+   ===================================================== */
+.newsletter{background:var(--pro);border-top:1px solid rgba(255,255,255,0.1);padding:64px 60px;text-align:center;}
+.nl-eyebrow{font-size:11px;letter-spacing:4px;color:rgba(255,255,255,0.55);text-transform:uppercase;margin-bottom:14px;font-weight:600;}
+.nl-title{font-size:clamp(24px,3.5vw,38px);font-weight:300;color:#fff;margin-bottom:10px;line-height:1.2;}
+.nl-title em{color:rgba(255,255,255,0.7);font-style:italic;}
+.nl-sub{font-size:17px;font-style:italic;color:rgba(255,255,255,0.5);margin-bottom:30px;}
 .nl-form{display:flex;gap:10px;max-width:420px;margin:0 auto;}
-.nl-input{flex:1;background:rgba(13,27,53,0.8);border:1px solid rgba(212,168,71,0.2);border-radius:8px;padding:12px 16px;font-size:14px;font-family:'Space Grotesk',sans-serif;color:var(--white);outline:none;transition:border-color .2s;}
-.nl-input:focus{border-color:var(--gold);}
-.nl-input::placeholder{color:rgba(255,255,255,0.22);}
-.nl-btn{background:var(--gold-dark);color:var(--white);border:none;border-radius:8px;padding:12px 20px;font-size:11px;font-weight:600;font-family:'Space Grotesk',sans-serif;letter-spacing:2px;cursor:pointer;transition:background .2s;white-space:nowrap;}
-.nl-btn:hover{background:var(--gold);}
+.nl-input{flex:1;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);border-radius:8px;padding:12px 16px;font-size:14px;font-family:inherit;color:#fff;outline:none;transition:border-color .2s;}
+.nl-input:focus{border-color:rgba(255,255,255,0.5);}
+.nl-input::placeholder{color:rgba(255,255,255,0.3);}
+.nl-btn{background:var(--read);color:#fff;border:none;border-radius:8px;padding:12px 20px;font-size:11px;font-weight:600;font-family:inherit;letter-spacing:2px;cursor:pointer;transition:all .2s;white-space:nowrap;}
+.nl-btn:hover{background:var(--read-light);box-shadow:0 4px 16px rgba(140,47,70,0.3);}
 
-footer{padding:30px 60px;display:flex;align-items:center;justify-content:space-between;border-top:1px solid rgba(212,168,71,0.08);}
-.footer-brand{font-family:'Space Grotesk',sans-serif;font-size:12px;font-weight:700;color:var(--gold);letter-spacing:4px;}
-.footer-copy{font-size:12px;color:#aaa;font-family:'Space Grotesk',sans-serif;}
+footer{padding:30px 60px;display:flex;align-items:center;justify-content:space-between;border-top:1px solid rgba(62,79,92,0.08);background:var(--bg);}
+.footer-brand{font-size:12px;font-weight:700;color:var(--read);letter-spacing:4px;}
+.footer-copy{font-size:12px;color:var(--text-3);}
 
 @media(max-width:1100px){
   .artigo-destaque{grid-template-columns:1fr;}.artigo-destaque-img{min-height:180px;}
@@ -199,7 +239,8 @@ footer{padding:30px 60px;display:flex;align-items:center;justify-content:space-b
   .gal-item:nth-child(4){grid-column:span 2;}.gal-item:nth-child(5){grid-column:span 3;}
 }
 @media(max-width:700px){
-  nav{padding:0 20px;}.nav-anchors{display:none;}
+  nav{padding:0 20px;height:64px;}.nav-anchors{display:none;}
+  canvas.logo-canvas-nav{height:50px;}
   .hero,.artigos-section,.videos-section,.galeria-section,.newsletter{padding:52px 20px;}
   .section-sep{margin:0 20px;}
   .hero-inner{grid-template-columns:1fr;}
@@ -218,7 +259,9 @@ footer{padding:30px 60px;display:flex;align-items:center;justify-content:space-b
 <body>
 
 <nav>
-  <a href="index.html" class="nav-logo">APEX</a>
+  <a href="index.html" class="nav-logo-wrap">
+    <canvas id="nav-logo-canvas" class="logo-canvas-nav"></canvas>
+  </a>
   <div class="nav-sep"></div>
   <span class="nav-section">Saúde & Performance</span>
   <ul class="nav-anchors">
@@ -226,7 +269,7 @@ footer{padding:30px 60px;display:flex;align-items:center;justify-content:space-b
     <li><a href="#videos">Vídeos</a></li>
     <li><a href="#galeria">Galeria</a></li>
   </ul>
-  <a href="javascript:history.back()" class="nav-back">← Voltar</a>
+  <a href="javascript:history.back()" class="nav-back">&larr; Voltar</a>
 </nav>
 
 <!-- HERO -->
@@ -234,17 +277,17 @@ footer{padding:30px 60px;display:flex;align-items:center;justify-content:space-b
   <div class="hero-bg"></div><div class="hero-grid"></div>
   <div class="hero-inner">
     <div class="hero-left">
-      <div class="hero-badge"><div class="hero-dot"></div>Medicina · Movimento · Propósito</div>
+      <div class="hero-badge"><div class="hero-dot"></div>Medicina &middot; Movimento &middot; Propósito</div>
       <h1 class="hero-title">Medicina de precisão<br><em>para a vida real</em></h1>
       <p class="hero-desc">Wearables, dados biométricos, exercício seguro e suplementação baseada em evidência — para quem quer viver mais e melhor, com ou sem comorbidades.</p>
       <div class="wearables-strip">
-        <div class="wb"><svg width="13" height="13" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="8" stroke="#D4A847" stroke-width="1.5"/><circle cx="12" cy="12" r="3" fill="rgba(212,168,71,0.4)"/></svg>Oura Ring</div>
-        <div class="wb"><svg width="13" height="13" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="#D4A847" stroke-width="1.5"/><path d="M12 7v5l3 3" stroke="#D4A847" stroke-width="1.3" stroke-linecap="round"/></svg>Garmin</div>
-        <div class="wb"><svg width="13" height="13" viewBox="0 0 24 24" fill="none"><rect x="6" y="2" width="12" height="20" rx="3" stroke="#D4A847" stroke-width="1.5"/><path d="M9 8h6M9 12h4" stroke="#D4A847" stroke-width="1.2" stroke-linecap="round"/></svg>Apple Watch</div>
+        <div class="wb"><svg width="13" height="13" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="8" stroke="currentColor" stroke-width="1.5"/><circle cx="12" cy="12" r="3" fill="currentColor" opacity="0.3"/></svg>Oura Ring</div>
+        <div class="wb"><svg width="13" height="13" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.5"/><path d="M12 7v5l3 3" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>Garmin</div>
+        <div class="wb"><svg width="13" height="13" viewBox="0 0 24 24" fill="none"><rect x="6" y="2" width="12" height="20" rx="3" stroke="currentColor" stroke-width="1.5"/><path d="M9 8h6M9 12h4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>Apple Watch</div>
       </div>
       <div class="hero-social">
-        <a href="https://instagram.com" target="_blank" class="soc-btn"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><rect x="2" y="2" width="20" height="20" rx="5" stroke="#D4A847" stroke-width="1.5"/><circle cx="12" cy="12" r="4" stroke="#D4A847" stroke-width="1.5"/><circle cx="17.5" cy="6.5" r="1" fill="#D4A847"/></svg>Instagram</a>
-        <a href="https://youtube.com" target="_blank" class="soc-btn"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><rect x="2" y="5" width="20" height="14" rx="3" stroke="#D4A847" stroke-width="1.5"/><path d="M10 9l5 3-5 3V9z" fill="#D4A847" opacity="0.7"/></svg>YouTube</a>
+        <a href="https://instagram.com" target="_blank" class="soc-btn"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><rect x="2" y="2" width="20" height="20" rx="5" stroke="currentColor" stroke-width="1.5"/><circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.5"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg>Instagram</a>
+        <a href="https://youtube.com" target="_blank" class="soc-btn"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><rect x="2" y="5" width="20" height="14" rx="3" stroke="currentColor" stroke-width="1.5"/><path d="M10 9l5 3-5 3V9z" fill="currentColor" opacity="0.5"/></svg>YouTube</a>
       </div>
     </div>
     <div class="hero-stats">
@@ -259,43 +302,43 @@ footer{padding:30px 60px;display:flex;align-items:center;justify-content:space-b
 <div class="artigos-section" id="artigos">
   <div class="section-header">
     <div>
-      <p class="section-eyebrow">01 · Leitura</p>
+      <p class="section-eyebrow">01 &middot; Leitura</p>
       <h2 class="section-title">Artigos &<br><em>análises clínicas</em></h2>
     </div>
-    <span class="section-count" id="artigos-count">58 artigos · Em breve</span>
+    <span class="section-count" id="artigos-count">58 artigos &middot; Em breve</span>
   </div>
 
   <!-- FILTROS -->
   <div class="filtros-wrap" style="padding-bottom:8px;">
     <div class="filtros">
       <button class="filtro-btn active" onclick="filtrar('todos', this)">Todos</button>
-      <button class="filtro-btn" onclick="filtrar('wearables', this)">⌚ Wearables</button>
-      <button class="filtro-btn" onclick="filtrar('idosos', this)">🏥 Idosos & Crônicos</button>
-      <button class="filtro-btn" onclick="filtrar('atividade', this)">🏃 Atividade Física</button>
-      <button class="filtro-btn" onclick="filtrar('hidratacao', this)">💧 Hidratação</button>
-      <button class="filtro-btn" onclick="filtrar('sono', this)">😴 Sono</button>
-      <button class="filtro-btn" onclick="filtrar('longevidade', this)">💪 Longevidade</button>
-      <button class="filtro-btn" onclick="filtrar('suplementacao', this)">💊 Suplementação</button>
-      <button class="filtro-btn" onclick="filtrar('metricas', this)">🔬 Métricas</button>
-      <button class="filtro-btn" onclick="filtrar('combinada', this)">🧠 Dados Combinados</button>
-      <button class="filtro-btn" onclick="filtrar('pratica', this)">🏃‍♂️ Aplicação Prática</button>
-      <button class="filtro-btn" onclick="filtrar('antiinflamatorio', this)">⚠️ Anti-inflamatórios & Rim</button>
+      <button class="filtro-btn" onclick="filtrar('wearables', this)">Wearables</button>
+      <button class="filtro-btn" onclick="filtrar('idosos', this)">Idosos & Crônicos</button>
+      <button class="filtro-btn" onclick="filtrar('atividade', this)">Atividade Física</button>
+      <button class="filtro-btn" onclick="filtrar('hidratacao', this)">Hidratação</button>
+      <button class="filtro-btn" onclick="filtrar('sono', this)">Sono</button>
+      <button class="filtro-btn" onclick="filtrar('longevidade', this)">Longevidade</button>
+      <button class="filtro-btn" onclick="filtrar('suplementacao', this)">Suplementação</button>
+      <button class="filtro-btn" onclick="filtrar('metricas', this)">Métricas</button>
+      <button class="filtro-btn" onclick="filtrar('combinada', this)">Dados Combinados</button>
+      <button class="filtro-btn" onclick="filtrar('pratica', this)">Aplicação Prática</button>
+      <button class="filtro-btn" onclick="filtrar('antiinflamatorio', this)">Anti-inflamatórios & Rim</button>
     </div>
   </div>
 
   <!-- DESTAQUE -->
   <a href="artigo_exercicio_drc.html" class="artigo-destaque" data-cat="atividade" id="artigo-destaque">
-    <div class="artigo-destaque-img" style="background:linear-gradient(135deg,#1B3A5A,#0D2040);">
+    <div class="artigo-destaque-img" style="background:linear-gradient(135deg,#3E4F5C,#2A3A48);">
       <span class="destaque-tag">Destaque</span>
-      <svg width="68" height="68" viewBox="0 0 68 68" fill="none"><circle cx="34" cy="34" r="26" stroke="rgba(212,168,71,0.2)" stroke-width="1"/><circle cx="34" cy="34" r="9" fill="rgba(212,168,71,0.1)" stroke="rgba(212,168,71,0.3)" stroke-width="1.2"/><path d="M34 8v6M34 54v6M8 34h6M54 34h6" stroke="rgba(212,168,71,0.2)" stroke-width="1.2" stroke-linecap="round"/><path d="M14 34l4-8 4 14 4-9 3 5 3 0 3-3 4 0" stroke="rgba(212,168,71,0.35)" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      <span style="font-family:'Space Grotesk',sans-serif;font-size:10px;letter-spacing:2px;color:rgba(212,168,71,0.4);">Wearables</span>
+      <svg width="68" height="68" viewBox="0 0 68 68" fill="none"><circle cx="34" cy="34" r="26" stroke="rgba(140,47,70,0.25)" stroke-width="1"/><circle cx="34" cy="34" r="9" fill="rgba(140,47,70,0.1)" stroke="rgba(140,47,70,0.3)" stroke-width="1.2"/><path d="M34 8v6M34 54v6M8 34h6M54 34h6" stroke="rgba(140,47,70,0.25)" stroke-width="1.2" stroke-linecap="round"/><path d="M14 34l4-8 4 14 4-9 3 5 3 0 3-3 4 0" stroke="rgba(255,255,255,0.35)" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span style="font-size:10px;letter-spacing:2px;color:rgba(255,255,255,0.5);">Wearables</span>
     </div>
     <div class="artigo-destaque-body">
-      <p class="a-cat">Atividade Física · Doença Renal Crônica</p>
+      <p class="a-cat">Atividade Física &middot; Doença Renal Crônica</p>
       <h3 class="a-title">Exercício na DRC: o que André me ensinou</h3>
       <p class="a-excerpt">André tinha 41 anos, fazia diálise três vezes por semana e completou 42km na Maratona de São Paulo ao lado do próprio médico. Esta é a história — e o protocolo por trás dela.</p>
       <div class="a-meta"><span>Dr. Bruno Biluca</span><div class="a-dot"></div><span>12 min</span><div class="a-dot"></div><span>Publicado</span></div>
-      <span class="a-link">Ler artigo →</span>
+      <span class="a-link">Ler artigo &rarr;</span>
     </div>
   </a>
 
@@ -303,7 +346,7 @@ footer{padding:30px 60px;display:flex;align-items:center;justify-content:space-b
   <div class="artigos-grid" id="artigos-lista">
 
     <!-- WEARABLES -->
-    <a href="artigo_wearables.html" class="artigo-item cat-wearables" data-cat="wearables"><div class="a-num">01</div><div class="a-body"><p class="a-cat">Wearables</p><h3 class="a-title">Wearables na prática clínica: o que os estudos dizem</h3><p class="a-excerpt">Oura Ring, Garmin e Apple Watch — acurácia clínica, limitações e como usar os dados com segurança. Com fotos reais do dispositivo.</p><div class="a-meta"><span>4 min</span><div class="a-dot"></div><span style="color:#5DCB8A;">● Publicado</span></div></div></a>
+    <a href="artigo_wearables.html" class="artigo-item cat-wearables" data-cat="wearables"><div class="a-num">01</div><div class="a-body"><p class="a-cat">Wearables</p><h3 class="a-title">Wearables na prática clínica: o que os estudos dizem</h3><p class="a-excerpt">Oura Ring, Garmin e Apple Watch — acurácia clínica, limitações e como usar os dados com segurança. Com fotos reais do dispositivo.</p><div class="a-meta"><span>4 min</span><div class="a-dot"></div><span style="color:#3D8C5A;">● Publicado</span></div></div></a>
 
     <a href="#" class="artigo-item cat-wearables" data-cat="wearables"><div class="a-num">02</div><div class="a-body"><p class="a-cat">Wearables</p><h3 class="a-title">Frequência cardíaca de repouso: quando se preocupar</h3><p class="a-excerpt">O que significa uma RHR elevada, o que a melhora e em que momento ela sinaliza algo que precisa de atenção médica.</p><div class="a-meta"><span>6 min</span></div><span class="a-soon">Em breve</span></div></a>
 
@@ -325,7 +368,7 @@ footer{padding:30px 60px;display:flex;align-items:center;justify-content:space-b
     <!-- ATIVIDADE FÍSICA -->
     <a href="#" class="artigo-item cat-atividade" data-cat="atividade"><div class="a-num">10</div><div class="a-body"><p class="a-cat">Atividade Física</p><h3 class="a-title">Hipertensão e exercício: o que é seguro</h3><p class="a-excerpt">Mitos e verdades sobre treinar com pressão alta. Tipos de exercício, intensidade recomendada e sinais de alerta para parar.</p><div class="a-meta"><span>8 min</span></div><span class="a-soon">Em breve</span></div></a>
 
-    <a href="artigo_exercicio_drc.html" class="artigo-item cat-atividade" data-cat="atividade"><div class="a-num">11</div><div class="a-body"><p class="a-cat">Atividade Física</p><h3 class="a-title">Exercício na doença renal crônica: o que André me ensinou</h3><p class="a-excerpt">André, 41 anos, em diálise, completou 42km na Maratona de São Paulo. Esta é a história e o protocolo por trás dela.</p><div class="a-meta"><span>12 min</span><div class="a-dot"></div><span style="color:#5DCB8A;">● Publicado</span></div></div></a>
+    <a href="artigo_exercicio_drc.html" class="artigo-item cat-atividade" data-cat="atividade"><div class="a-num">11</div><div class="a-body"><p class="a-cat">Atividade Física</p><h3 class="a-title">Exercício na doença renal crônica: o que André me ensinou</h3><p class="a-excerpt">André, 41 anos, em diálise, completou 42km na Maratona de São Paulo. Esta é a história e o protocolo por trás dela.</p><div class="a-meta"><span>12 min</span><div class="a-dot"></div><span style="color:#3D8C5A;">● Publicado</span></div></div></a>
 
     <a href="#" class="artigo-item cat-atividade" data-cat="atividade"><div class="a-num">12</div><div class="a-body"><p class="a-cat">Atividade Física</p><h3 class="a-title">Zona de FC segura: como calcular a sua</h3><p class="a-excerpt">Frequência cardíaca máxima, zonas de treino e como usar o wearable para treinar dentro do limite certo para sua condição.</p><div class="a-meta"><span>7 min</span></div><span class="a-soon">Em breve</span></div></a>
 
@@ -419,7 +462,7 @@ footer{padding:30px 60px;display:flex;align-items:center;justify-content:space-b
     <a href="#" class="artigo-item cat-pratica" data-cat="pratica"><div class="a-num">53</div><div class="a-body"><p class="a-cat">Aplicação Prática</p><h3 class="a-title">Como criar sua linha de base pessoal</h3><p class="a-excerpt">Sem sua linha de base, qualquer dado é inútil. Como estabelecer seus valores de referência em 30 dias — e por que isso muda tudo.</p><div class="a-meta"><span>7 min</span></div><span class="a-soon">Em breve</span></div></a>
 
     <!-- ANTI-INFLAMATÓRIOS & RIM -->
-    <a href="artigo_antiinflamatorio_rim.html" class="artigo-item cat-antiinflamatorio" data-cat="antiinflamatorio"><div class="a-num">54</div><div class="a-body"><p class="a-cat">Anti-inflamatórios & Rim</p><h3 class="a-title">Anti-inflamatório e rim: uma combinação perigosa</h3><p class="a-excerpt">Ibuprofeno, diclofenaco e naproxeno são alguns dos medicamentos mais vendidos no Brasil — e alguns dos mais nocivos para os rins. O que acontece dentro dos glomérulos quando você toma um analgésico.</p><div class="a-meta"><span>10 min</span><div class="a-dot"></div><span style="color:#5DCB8A;">● Publicado</span></div></div></a>
+    <a href="artigo_antiinflamatorio_rim.html" class="artigo-item cat-antiinflamatorio" data-cat="antiinflamatorio"><div class="a-num">54</div><div class="a-body"><p class="a-cat">Anti-inflamatórios & Rim</p><h3 class="a-title">Anti-inflamatório e rim: uma combinação perigosa</h3><p class="a-excerpt">Ibuprofeno, diclofenaco e naproxeno são alguns dos medicamentos mais vendidos no Brasil — e alguns dos mais nocivos para os rins. O que acontece dentro dos glomérulos quando você toma um analgésico.</p><div class="a-meta"><span>10 min</span><div class="a-dot"></div><span style="color:#3D8C5A;">● Publicado</span></div></div></a>
 
     <a href="#" class="artigo-item cat-antiinflamatorio" data-cat="antiinflamatorio"><div class="a-num">55</div><div class="a-body"><p class="a-cat">Anti-inflamatórios & Rim</p><h3 class="a-title">Quem não pode usar anti-inflamatório — e quase ninguém sabe</h3><p class="a-excerpt">Hipertensos, diabéticos, idosos e pacientes com DRC têm risco muito maior de lesão renal aguda com AINEs. A lista de quem precisa de alternativas.</p><div class="a-meta"><span>8 min</span></div><span class="a-soon">Em breve</span></div></a>
 
@@ -441,10 +484,10 @@ footer{padding:30px 60px;display:flex;align-items:center;justify-content:space-b
   <div class="videos-section">
     <div class="section-header">
       <div>
-        <p class="section-eyebrow">02 · Audiovisual</p>
+        <p class="section-eyebrow">02 &middot; Audiovisual</p>
         <h2 class="section-title">Série:<br><em>Interpretando seu Relógio</em></h2>
       </div>
-      <span class="section-count">6 episódios · Em breve</span>
+      <span class="section-count">6 episódios &middot; Em breve</span>
     </div>
 
     <div class="serie-banner">
@@ -465,58 +508,58 @@ footer{padding:30px 60px;display:flex;align-items:center;justify-content:space-b
 
     <div class="videos-grid">
       <a href="#" class="video-card">
-        <div class="video-thumb" style="background:linear-gradient(135deg,#1B3A5A,#0D2040);">
+        <div class="video-thumb" style="background:linear-gradient(135deg,#3E4F5C,#2A3A48);">
           <span class="video-ep">Ep. 1</span>
-          <div class="video-play"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M6 4l14 8-14 8V4z" fill="#D4A847"/></svg></div>
+          <div class="video-play"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M6 4l14 8-14 8V4z" fill="#fff"/></svg></div>
           <span class="v-soon">Em breve</span>
           <span class="video-dur">~15 min</span>
         </div>
-        <div class="video-body"><p class="v-serie">Interpretando seu Relógio</p><p class="v-title">HRV: o que seu coração está te dizendo</p><p class="v-meta">Dr. Bruno Biluca · Em breve</p></div>
+        <div class="video-body"><p class="v-serie">Interpretando seu Relógio</p><p class="v-title">HRV: o que seu coração está te dizendo</p><p class="v-meta">Dr. Bruno Biluca &middot; Em breve</p></div>
       </a>
       <a href="#" class="video-card">
-        <div class="video-thumb" style="background:linear-gradient(135deg,#1B3050,#0D1A30);">
+        <div class="video-thumb" style="background:linear-gradient(135deg,#4A5A68,#3A4A58);">
           <span class="video-ep">Ep. 2</span>
-          <div class="video-play"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M6 4l14 8-14 8V4z" fill="#D4A847"/></svg></div>
+          <div class="video-play"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M6 4l14 8-14 8V4z" fill="#fff"/></svg></div>
           <span class="v-soon">Em breve</span>
           <span class="video-dur">~12 min</span>
         </div>
-        <div class="video-body"><p class="v-serie">Interpretando seu Relógio</p><p class="v-title">RHR: frequência cardíaca de repouso na prática</p><p class="v-meta">Dr. Bruno Biluca · Em breve</p></div>
+        <div class="video-body"><p class="v-serie">Interpretando seu Relógio</p><p class="v-title">RHR: frequência cardíaca de repouso na prática</p><p class="v-meta">Dr. Bruno Biluca &middot; Em breve</p></div>
       </a>
       <a href="#" class="video-card">
-        <div class="video-thumb" style="background:linear-gradient(135deg,#2A1A3A,#1A0A2A);">
+        <div class="video-thumb" style="background:linear-gradient(135deg,#5A3A5A,#3A2A3A);">
           <span class="video-ep">Ep. 3</span>
-          <div class="video-play"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M6 4l14 8-14 8V4z" fill="#D4A847"/></svg></div>
+          <div class="video-play"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M6 4l14 8-14 8V4z" fill="#fff"/></svg></div>
           <span class="v-soon">Em breve</span>
           <span class="video-dur">~18 min</span>
         </div>
-        <div class="video-body"><p class="v-serie">Interpretando seu Relógio</p><p class="v-title">Sono: o que o wearable realmente mede</p><p class="v-meta">Dr. Bruno Biluca · Em breve</p></div>
+        <div class="video-body"><p class="v-serie">Interpretando seu Relógio</p><p class="v-title">Sono: o que o wearable realmente mede</p><p class="v-meta">Dr. Bruno Biluca &middot; Em breve</p></div>
       </a>
       <a href="#" class="video-card">
-        <div class="video-thumb" style="background:linear-gradient(135deg,#2A3A20,#1A2A14);">
+        <div class="video-thumb" style="background:linear-gradient(135deg,#3A5A3A,#2A4A2A);">
           <span class="video-ep">Ep. 4</span>
-          <div class="video-play"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M6 4l14 8-14 8V4z" fill="#D4A847"/></svg></div>
+          <div class="video-play"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M6 4l14 8-14 8V4z" fill="#fff"/></svg></div>
           <span class="v-soon">Em breve</span>
           <span class="video-dur">~14 min</span>
         </div>
-        <div class="video-body"><p class="v-serie">Interpretando seu Relógio</p><p class="v-title">VO₂ máximo: o que esse número diz sobre você</p><p class="v-meta">Dr. Bruno Biluca · Em breve</p></div>
+        <div class="video-body"><p class="v-serie">Interpretando seu Relógio</p><p class="v-title">VO₂ máximo: o que esse número diz sobre você</p><p class="v-meta">Dr. Bruno Biluca &middot; Em breve</p></div>
       </a>
       <a href="#" class="video-card">
-        <div class="video-thumb" style="background:linear-gradient(135deg,#3A2A1A,#2A1A0A);">
+        <div class="video-thumb" style="background:linear-gradient(135deg,#5A4A3A,#4A3A2A);">
           <span class="video-ep">Ep. 5</span>
-          <div class="video-play"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M6 4l14 8-14 8V4z" fill="#D4A847"/></svg></div>
+          <div class="video-play"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M6 4l14 8-14 8V4z" fill="#fff"/></svg></div>
           <span class="v-soon">Em breve</span>
           <span class="video-dur">~10 min</span>
         </div>
-        <div class="video-body"><p class="v-serie">Interpretando seu Relógio</p><p class="v-title">Temperatura corporal noturna: o sensor que poucos usam</p><p class="v-meta">Dr. Bruno Biluca · Em breve</p></div>
+        <div class="video-body"><p class="v-serie">Interpretando seu Relógio</p><p class="v-title">Temperatura corporal noturna: o sensor que poucos usam</p><p class="v-meta">Dr. Bruno Biluca &middot; Em breve</p></div>
       </a>
       <a href="#" class="video-card">
-        <div class="video-thumb" style="background:linear-gradient(135deg,#1A3A2A,#0A2A1A);">
+        <div class="video-thumb" style="background:linear-gradient(135deg,#3A5A4A,#2A4A3A);">
           <span class="video-ep">Ep. 6</span>
-          <div class="video-play"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M6 4l14 8-14 8V4z" fill="#D4A847"/></svg></div>
+          <div class="video-play"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M6 4l14 8-14 8V4z" fill="#fff"/></svg></div>
           <span class="v-soon">Em breve</span>
           <span class="video-dur">~13 min</span>
         </div>
-        <div class="video-body"><p class="v-serie">Interpretando seu Relógio</p><p class="v-title">Recovery Score: ouvir ou ignorar?</p><p class="v-meta">Dr. Bruno Biluca · Em breve</p></div>
+        <div class="video-body"><p class="v-serie">Interpretando seu Relógio</p><p class="v-title">Recovery Score: ouvir ou ignorar?</p><p class="v-meta">Dr. Bruno Biluca &middot; Em breve</p></div>
       </a>
     </div>
   </div>
@@ -528,17 +571,17 @@ footer{padding:30px 60px;display:flex;align-items:center;justify-content:space-b
 <div class="galeria-section" id="galeria">
   <div class="section-header">
     <div>
-      <p class="section-eyebrow">03 · Galeria</p>
+      <p class="section-eyebrow">03 &middot; Galeria</p>
       <h2 class="section-title">Bastidores &<br><em>momentos reais</em></h2>
     </div>
-    <span class="section-count">Fotos · Em breve</span>
+    <span class="section-count">Fotos &middot; Em breve</span>
   </div>
   <div class="galeria-grid">
-    <div class="gal-item"><div class="gal-ph" style="background:linear-gradient(135deg,#2A3A20,#1A2A14);height:100%;"><svg width="32" height="32" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="2" stroke="rgba(212,168,71,0.22)" stroke-width="1"/><circle cx="8.5" cy="8.5" r="1.5" stroke="rgba(212,168,71,0.22)" stroke-width="0.8"/><path d="M21 15l-5-5L5 21" stroke="rgba(212,168,71,0.22)" stroke-width="1" stroke-linecap="round"/></svg><span style="font-family:'Space Grotesk',sans-serif;font-size:9px;color:rgba(212,168,71,0.28);letter-spacing:2px;">Em breve</span></div><div class="gal-ov"><svg class="gal-exp" width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7" stroke="#D4A847" stroke-width="1.5" stroke-linecap="round"/></svg></div><span class="gal-lbl">Treino</span></div>
-    <div class="gal-item"><div class="gal-ph" style="background:linear-gradient(135deg,#1B3A5A,#0D2040);height:100%;"><svg width="28" height="28" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="2" stroke="rgba(212,168,71,0.22)" stroke-width="1"/><circle cx="8.5" cy="8.5" r="1.5" stroke="rgba(212,168,71,0.22)" stroke-width="0.8"/><path d="M21 15l-5-5L5 21" stroke="rgba(212,168,71,0.22)" stroke-width="1" stroke-linecap="round"/></svg></div><div class="gal-ov"><svg class="gal-exp" width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7" stroke="#D4A847" stroke-width="1.5" stroke-linecap="round"/></svg></div><span class="gal-lbl">Clínica</span></div>
-    <div class="gal-item"><div class="gal-ph" style="background:linear-gradient(135deg,#3A2A1A,#2A1A0A);height:100%;"><svg width="28" height="28" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="2" stroke="rgba(212,168,71,0.22)" stroke-width="1"/><circle cx="8.5" cy="8.5" r="1.5" stroke="rgba(212,168,71,0.22)" stroke-width="0.8"/><path d="M21 15l-5-5L5 21" stroke="rgba(212,168,71,0.22)" stroke-width="1" stroke-linecap="round"/></svg></div><div class="gal-ov"><svg class="gal-exp" width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7" stroke="#D4A847" stroke-width="1.5" stroke-linecap="round"/></svg></div><span class="gal-lbl">Provas</span></div>
-    <div class="gal-item"><div class="gal-ph" style="background:linear-gradient(135deg,#2A1A3A,#1A0A2A);height:100%;"><svg width="28" height="28" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="2" stroke="rgba(212,168,71,0.22)" stroke-width="1"/><circle cx="8.5" cy="8.5" r="1.5" stroke="rgba(212,168,71,0.22)" stroke-width="0.8"/><path d="M21 15l-5-5L5 21" stroke="rgba(212,168,71,0.22)" stroke-width="1" stroke-linecap="round"/></svg></div><div class="gal-ov"><svg class="gal-exp" width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7" stroke="#D4A847" stroke-width="1.5" stroke-linecap="round"/></svg></div><span class="gal-lbl">Bastidores</span></div>
-    <div class="gal-item"><div class="gal-ph" style="background:linear-gradient(135deg,#1B2A4A,#243357);height:100%;"><svg width="28" height="28" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="2" stroke="rgba(212,168,71,0.22)" stroke-width="1"/><circle cx="8.5" cy="8.5" r="1.5" stroke="rgba(212,168,71,0.22)" stroke-width="0.8"/><path d="M21 15l-5-5L5 21" stroke="rgba(212,168,71,0.22)" stroke-width="1" stroke-linecap="round"/></svg></div><div class="gal-ov"><svg class="gal-exp" width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7" stroke="#D4A847" stroke-width="1.5" stroke-linecap="round"/></svg></div><span class="gal-lbl">Eventos</span></div>
+    <div class="gal-item"><div class="gal-ph" style="background:linear-gradient(135deg,#3A5A3A,#2A4A2A);height:100%;"><svg width="32" height="32" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="2" stroke="rgba(255,255,255,0.3)" stroke-width="1"/><circle cx="8.5" cy="8.5" r="1.5" stroke="rgba(255,255,255,0.3)" stroke-width="0.8"/><path d="M21 15l-5-5L5 21" stroke="rgba(255,255,255,0.3)" stroke-width="1" stroke-linecap="round"/></svg><span style="font-size:9px;color:rgba(255,255,255,0.45);letter-spacing:2px;">Em breve</span></div><div class="gal-ov"><svg class="gal-exp" width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7" stroke="var(--read)" stroke-width="1.5" stroke-linecap="round"/></svg></div><span class="gal-lbl">Treino</span></div>
+    <div class="gal-item"><div class="gal-ph" style="background:linear-gradient(135deg,#3E4F5C,#2A3A48);height:100%;"><svg width="28" height="28" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="2" stroke="rgba(255,255,255,0.3)" stroke-width="1"/><circle cx="8.5" cy="8.5" r="1.5" stroke="rgba(255,255,255,0.3)" stroke-width="0.8"/><path d="M21 15l-5-5L5 21" stroke="rgba(255,255,255,0.3)" stroke-width="1" stroke-linecap="round"/></svg></div><div class="gal-ov"><svg class="gal-exp" width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7" stroke="var(--read)" stroke-width="1.5" stroke-linecap="round"/></svg></div><span class="gal-lbl">Clínica</span></div>
+    <div class="gal-item"><div class="gal-ph" style="background:linear-gradient(135deg,#5A4A3A,#4A3A2A);height:100%;"><svg width="28" height="28" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="2" stroke="rgba(255,255,255,0.3)" stroke-width="1"/><circle cx="8.5" cy="8.5" r="1.5" stroke="rgba(255,255,255,0.3)" stroke-width="0.8"/><path d="M21 15l-5-5L5 21" stroke="rgba(255,255,255,0.3)" stroke-width="1" stroke-linecap="round"/></svg></div><div class="gal-ov"><svg class="gal-exp" width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7" stroke="var(--read)" stroke-width="1.5" stroke-linecap="round"/></svg></div><span class="gal-lbl">Provas</span></div>
+    <div class="gal-item"><div class="gal-ph" style="background:linear-gradient(135deg,#5A3A5A,#3A2A3A);height:100%;"><svg width="28" height="28" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="2" stroke="rgba(255,255,255,0.3)" stroke-width="1"/><circle cx="8.5" cy="8.5" r="1.5" stroke="rgba(255,255,255,0.3)" stroke-width="0.8"/><path d="M21 15l-5-5L5 21" stroke="rgba(255,255,255,0.3)" stroke-width="1" stroke-linecap="round"/></svg></div><div class="gal-ov"><svg class="gal-exp" width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7" stroke="var(--read)" stroke-width="1.5" stroke-linecap="round"/></svg></div><span class="gal-lbl">Bastidores</span></div>
+    <div class="gal-item"><div class="gal-ph" style="background:linear-gradient(135deg,#3E4F5C,#4A5A68);height:100%;"><svg width="28" height="28" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="2" stroke="rgba(255,255,255,0.3)" stroke-width="1"/><circle cx="8.5" cy="8.5" r="1.5" stroke="rgba(255,255,255,0.3)" stroke-width="0.8"/><path d="M21 15l-5-5L5 21" stroke="rgba(255,255,255,0.3)" stroke-width="1" stroke-linecap="round"/></svg></div><div class="gal-ov"><svg class="gal-exp" width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7" stroke="var(--read)" stroke-width="1.5" stroke-linecap="round"/></svg></div><span class="gal-lbl">Eventos</span></div>
   </div>
 </div>
 
@@ -549,14 +592,14 @@ footer{padding:30px 60px;display:flex;align-items:center;justify-content:space-b
   <p class="nl-sub">Conteúdo médico sério, linguagem acessível — direto no seu e-mail</p>
   <div class="nl-form" id="nl-form">
     <input type="email" class="nl-input" placeholder="seu@email.com" id="nl-email"/>
-    <button class="nl-btn" onclick="assinar()">Assinar</button>
+    <button class="nl-btn" onclick="assinar()">ASSINAR</button>
   </div>
-  <p id="nl-ok" style="display:none;margin-top:16px;font-family:'Space Grotesk',sans-serif;font-size:17px;font-style:italic;color:#5DCB8A;">✓ Perfeito! Você será o primeiro a saber.</p>
+  <p id="nl-ok" style="display:none;margin-top:16px;font-size:17px;font-style:italic;color:#5B9E50;">&#10003; Perfeito! Você será o primeiro a saber.</p>
 </section>
 
 <footer>
-  <div class="footer-brand">DR. BRUNO BILUCA</div>
-  <p class="footer-copy">© 2026 APEX · Medicina · Movimento · Propósito</p>
+  <div class="footer-brand">APEX READ</div>
+  <p class="footer-copy">&copy; 2026 APEX &middot; Medicina &middot; Movimento &middot; Propósito</p>
 </footer>
 
 <script>
@@ -595,12 +638,40 @@ function filtrar(cat, btn) {
 function assinar() {
   const email = document.getElementById('nl-email').value.trim();
   if(!email || !email.includes('@')) {
-    document.getElementById('nl-email').style.borderColor = '#F07070';
+    document.getElementById('nl-email').style.borderColor = '#C04040';
     return;
   }
   document.getElementById('nl-form').style.display = 'none';
   document.getElementById('nl-ok').style.display = 'block';
 }
+
+/* =====================================================
+   LOGO — Canvas background removal (apex-reading.png)
+   ===================================================== */
+function removeLogoBg(src, canvasId, h) {
+  var img = new Image();
+  img.crossOrigin = 'anonymous';
+  img.onload = function() {
+    var c = document.getElementById(canvasId);
+    if(!c) return;
+    var ratio = img.width / img.height;
+    c.height = h;
+    c.width = Math.round(h * ratio);
+    var ctx = c.getContext('2d');
+    ctx.drawImage(img, 0, 0, c.width, c.height);
+    var id = ctx.getImageData(0, 0, c.width, c.height);
+    var d = id.data;
+    for(var i = 0; i < d.length; i += 4) {
+      var r = d[i], g = d[i+1], b = d[i+2];
+      if(r > 230 && g > 230 && b > 230) { d[i+3] = 0; }
+      else if(r > 200 && g > 200 && b > 200) { d[i+3] = Math.round(255 * (1 - (r-200)/55)); }
+    }
+    ctx.putImageData(id, 0, 0);
+  };
+  img.src = src;
+}
+
+removeLogoBg('apex-reading.png', 'nav-logo-canvas', 70);
 </script>
 
 <!-- Embed: esconde nav quando carregado dentro do portal -->
