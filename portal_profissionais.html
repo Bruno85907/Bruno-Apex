@@ -72,8 +72,8 @@ body::after{content:'';position:fixed;inset:0;z-index:-1;
 /* Logo APEX PRO — canvas bg removal */
 .login-logo-wrap{display:flex;align-items:center;justify-content:center;margin-bottom:44px;}
 .login-logo-img{height:80px;width:auto;object-fit:contain;}
-canvas.logo-canvas{height:140px;width:auto;}
-canvas.logo-canvas-nav{height:48px;width:auto;}
+canvas.logo-canvas{height:150px;width:auto;}
+canvas.logo-canvas-nav{height:70px;width:auto;}
 
 .login-welcome{font-size:24px;font-weight:300;color:#F0EFEC;margin-bottom:6px;}
 .login-welcome strong{font-weight:700;color:var(--gold);}
@@ -109,7 +109,7 @@ canvas.logo-canvas-nav{height:48px;width:auto;}
    TOP NAV (redesign style with canvas logo)
    ===================================================== */
 /* NAV: Cabeçalho azul APEX Pro */
-.top-nav{position:fixed;top:0;left:0;right:0;height:60px;background:var(--pro);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,0.1);display:flex;align-items:center;padding:0 36px;gap:16px;z-index:100;}
+.top-nav{position:fixed;top:0;left:0;right:0;height:80px;background:var(--pro);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,0.1);display:flex;align-items:center;padding:0 36px;gap:16px;z-index:100;}
 .nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none;cursor:pointer;}
 .nav-logo-img{height:32px;width:auto;object-fit:contain;}
 .nav-sep{width:1px;height:20px;background:rgba(255,255,255,0.2);}
@@ -126,7 +126,7 @@ canvas.logo-canvas-nav{height:48px;width:auto;}
    HERO / WELCOME (redesign photo style)
    ===================================================== */
 /* HERO: Clean, sem foto — apenas textura geométrica sutil */
-.dash-hero{position:relative;overflow:hidden;padding:0;margin-top:60px;}
+.dash-hero{position:relative;overflow:hidden;padding:0;margin-top:80px;}
 .dash-hero-bg{position:relative;height:auto;overflow:hidden;background:transparent;}
 .dash-hero-img{display:none;}
 .dash-hero-bg::after{display:none;}
@@ -139,7 +139,7 @@ canvas.logo-canvas-nav{height:48px;width:auto;}
 /* =====================================================
    MAIN SCREENS
    ===================================================== */
-.app-screen{display:none;padding:24px 40px 48px;max-width:1200px;margin:0 auto;padding-top:84px;}
+.app-screen{display:none;padding:24px 40px 48px;max-width:1200px;margin:0 auto;padding-top:104px;}
 .app-screen.active{display:block;}
 #screen-dashboard{padding-top:16px;}
 @keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
@@ -524,7 +524,7 @@ canvas.logo-canvas-nav{height:48px;width:auto;}
    RESPONSIVE
    ===================================================== */
 @media(max-width:900px){
-  .top-nav{padding:0 16px;height:52px;}
+  .top-nav{padding:0 16px;height:64px;}
   .app-screen{padding:12px 20px 36px;}
   .main-cards{grid-template-columns:1fr;padding:20px;}
   .nefro-grid,.outros-grid{grid-template-columns:1fr;}
@@ -716,7 +716,7 @@ canvas.logo-canvas-nav{height:48px;width:auto;}
         <div class="nefro-card-arrow">&#8594;</div>
       </div>
 
-      <a href="material_apoio.html" class="nefro-card nc-qualidade">
+      <div class="nefro-card nc-qualidade" onclick="abrirQualidade()">
         <div class="nefro-card-bg"></div>
         <div class="nefro-card-overlay"></div>
         <div class="nefro-card-content">
@@ -727,9 +727,9 @@ canvas.logo-canvas-nav{height:48px;width:auto;}
           <div class="nefro-card-desc">Material de apoio, ilustracoes didaticas e recursos educativos para consultas e treinamentos.</div>
         </div>
         <div class="nefro-card-arrow">&#8594;</div>
-      </a>
+      </div>
 
-      <a href="calculadoras.html" class="nefro-card nc-calculadoras">
+      <div class="nefro-card nc-calculadoras" onclick="abrirCalculadoras()">
         <div class="nefro-card-bg"></div>
         <div class="nefro-card-overlay"></div>
         <div class="nefro-card-content">
@@ -740,7 +740,7 @@ canvas.logo-canvas-nav{height:48px;width:auto;}
           <div class="nefro-card-desc">CKD-EPI, Kt/V, IMC, risco cardiovascular e ajuste de dose por funcao renal.</div>
         </div>
         <div class="nefro-card-arrow">&#8594;</div>
-      </a>
+      </div>
 
     </div>
   </div>
@@ -782,6 +782,38 @@ canvas.logo-canvas-nav{height:48px;width:auto;}
           <div class="badge-soon">Em breve</div>
         </div>
       </div>
+    </div>
+  </div>
+
+  <!-- SCREEN: QUALIDADE -->
+  <div class="app-screen" id="screen-qualidade">
+    <div class="sub-header">
+      <button class="sub-back" onclick="abrirNefrologia()">&#8592; Voltar</button>
+      <div>
+        <div class="sub-title">Qualidade</div>
+        <div class="sub-desc">Material de apoio, recursos educativos e ferramentas de qualidade assistencial</div>
+      </div>
+    </div>
+    <div class="qual-empty" style="text-align:center;padding:80px 20px;">
+      <div style="font-size:48px;margin-bottom:16px;opacity:0.3;">&#128218;</div>
+      <div style="font-size:18px;font-weight:600;color:var(--pro);margin-bottom:8px;">Area em construcao</div>
+      <div style="font-size:13px;color:var(--text-2);max-width:400px;margin:0 auto;line-height:1.7;">Os cards de qualidade serao adicionados aqui. Protocolos, materiais educativos, ilustracoes e recursos para a equipe assistencial.</div>
+    </div>
+  </div>
+
+  <!-- SCREEN: CALCULADORAS -->
+  <div class="app-screen" id="screen-calculadoras">
+    <div class="sub-header">
+      <button class="sub-back" onclick="abrirNefrologia()">&#8592; Voltar</button>
+      <div>
+        <div class="sub-title">Calculadoras</div>
+        <div class="sub-desc">Ferramentas de calculo clinico para nefrologia</div>
+      </div>
+    </div>
+    <div class="calc-empty" style="text-align:center;padding:80px 20px;">
+      <div style="font-size:48px;margin-bottom:16px;opacity:0.3;">&#129518;</div>
+      <div style="font-size:18px;font-weight:600;color:var(--pro);margin-bottom:8px;">Area em construcao</div>
+      <div style="font-size:13px;color:var(--text-2);max-width:400px;margin:0 auto;line-height:1.7;">As calculadoras clinicas serao adicionadas aqui. CKD-EPI, Kt/V, IMC, risco cardiovascular, ajuste de dose por funcao renal e mais.</div>
     </div>
   </div>
 
@@ -1321,6 +1353,16 @@ function abrirOutros(){
   updateBreadcrumb('outros');
 }
 
+function abrirQualidade(){
+  showAppScreen('screen-qualidade');
+  updateBreadcrumb('qualidade');
+}
+
+function abrirCalculadoras(){
+  showAppScreen('screen-calculadoras');
+  updateBreadcrumb('calculadoras');
+}
+
 function abrirIndicadoresFromNefro(){
   abrirIndicadores();
 }
@@ -1332,8 +1374,8 @@ function abrirPacientesDireto(){
 }
 
 /* Breadcrumb for top nav */
-const NAV_NAMES={dashboard:'Dashboard',nefrologia:'Nefrologia',outros:'Outros Modulos',pacientes:'Meus Pacientes',ficha:'Ficha do Paciente'};
-const NAV_PARENTS={nefrologia:'dashboard',outros:'dashboard',pacientes:'dashboard',ficha:'pacientes'};
+const NAV_NAMES={dashboard:'Dashboard',nefrologia:'Nefrologia',qualidade:'Qualidade',calculadoras:'Calculadoras',outros:'Outros Modulos',pacientes:'Meus Pacientes',ficha:'Ficha do Paciente'};
+const NAV_PARENTS={nefrologia:'dashboard',qualidade:'nefrologia',calculadoras:'nefrologia',outros:'dashboard',pacientes:'dashboard',ficha:'pacientes'};
 
 function updateBreadcrumb(layer){
   const bc=document.getElementById('breadcrumb');
@@ -1350,6 +1392,8 @@ function updateBreadcrumb(layer){
 function goToNav(layer){
   if(layer==='dashboard') voltarMainDash();
   else if(layer==='nefrologia') abrirNefrologia();
+  else if(layer==='qualidade') abrirQualidade();
+  else if(layer==='calculadoras') abrirCalculadoras();
   else if(layer==='outros') abrirOutros();
   else if(layer==='pacientes') abrirPacientesDireto();
 }
