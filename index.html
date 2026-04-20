@@ -89,8 +89,8 @@ body{font-family:var(--sans);background:var(--bg);color:var(--ink);overflow-x:hi
 
 /* ═══ HERO MOUNTAIN ═══ */
 .hero-mtn{
-  height:160vh;min-height:900px;
-  position:relative;display:flex;align-items:center;justify-content:center;
+  height:100vh;min-height:620px;
+  position:relative;display:flex;align-items:flex-end;justify-content:flex-start;
   margin-top:154px;overflow:hidden;
 }
 /* Camada única — pôr-do-sol atmosférico */
@@ -114,8 +114,8 @@ body{font-family:var(--sans);background:var(--bg);color:var(--ink);overflow-x:hi
       rgba(5,12,28,.70) 90%,
       rgba(5,12,28,.90) 100%);
 }
-.hero-content{position:relative;z-index:3;text-align:left;padding:0 60px;max-width:100%;width:100%;
-  opacity:0;transform:translateY(30px);transition:opacity 1.4s cubic-bezier(.16,1,.3,1),transform 1.4s cubic-bezier(.16,1,.3,1);}
+.hero-content{position:relative;z-index:3;text-align:left;padding:0 60px 80px;max-width:100%;width:100%;
+  opacity:0;transform:translateY(20px);transition:opacity 1s ease-out,transform 1s ease-out;}
 .hero-content.in{opacity:1;transform:translateY(0)}
 
 .hero-logo{display:flex;align-items:center;justify-content:flex-start;gap:0;margin-bottom:8px;}
@@ -1040,8 +1040,14 @@ footer{background:var(--dark);color:#fff;padding:80px 60px 30px}
     <div><div class="sec-eye">Parceria</div><div class="sec-ttl">Na Mídia</div></div>
   </div>
   <div class="partnership rv d1">
-    <div class="part-visual" style="background:#fff;padding:0;overflow:hidden;border-radius:12px;">
-      <img src="https://medicinasa.com.br/wp-content/uploads/2024/04/hemodialise-pediatrica.jpg" alt="Sabará e Fenix Nefrologia — Medicina S/A" style="width:100%;height:100%;object-fit:cover;display:block;">
+    <div class="part-visual" style="background:linear-gradient(135deg,#CC0000 0%,#990000 100%);padding:40px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:20px;border-radius:12px;">
+      <div style="font-family:Arial,sans-serif;font-size:42px;font-weight:900;color:#fff;letter-spacing:2px;line-height:1;">MEDICINA<span style="font-weight:400;font-style:italic;">S/A</span></div>
+      <div style="display:flex;gap:12px;">
+        <span style="width:28px;height:28px;border-radius:50%;border:2px solid rgba(255,255,255,.5);display:flex;align-items:center;justify-content:center;font-size:13px;color:#fff;">in</span>
+        <span style="width:28px;height:28px;border-radius:50%;border:2px solid rgba(255,255,255,.5);display:flex;align-items:center;justify-content:center;font-size:13px;color:#fff;">f</span>
+      </div>
+      <div style="width:60px;height:2px;background:rgba(255,255,255,.3);margin:4px 0;"></div>
+      <div style="font-size:11px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.8);">Hemodiálise Pediátrica</div>
     </div>
     <div class="part-body">
       <div class="part-kicker">Medicina S/A · Abril 2026</div>
@@ -1162,15 +1168,12 @@ footer{background:var(--dark);color:#fff;padding:80px 60px 30px}
           <line x1="18" y1="26" x2="18" y2="34" stroke="#F5C842" stroke-width="2.5" stroke-linecap="round" opacity=".7"/>
           <line x1="2" y1="18" x2="10" y2="18" stroke="#F5C842" stroke-width="2.5" stroke-linecap="round" opacity=".7"/>
           <line x1="26" y1="18" x2="34" y2="18" stroke="#F5C842" stroke-width="2.5" stroke-linecap="round" opacity=".7"/>
-          <line x1="6" y1="6" x2="12" y2="12" stroke="#F5C842" stroke-width="2" stroke-linecap="round" opacity=".45"/>
-          <line x1="24" y1="24" x2="30" y2="30" stroke="#F5C842" stroke-width="2" stroke-linecap="round" opacity=".45"/>
-          <line x1="30" y1="6" x2="24" y2="12" stroke="#F5C842" stroke-width="2" stroke-linecap="round" opacity=".45"/>
-          <line x1="12" y1="24" x2="6" y2="30" stroke="#F5C842" stroke-width="2" stroke-linecap="round" opacity=".45"/>
+          <!-- linhas diagonais removidas — ícone em formato de cruz + -->
         </svg>
       </div>
-      <div class="por-lbl">Saúde &amp; Pacientes</div>
+      <div class="por-lbl">Sua saúde, do seu jeito</div>
       <div class="por-ttl">APEX Health</div>
-      <div class="por-desc">Conteúdo sobre DRC, hipertensão, diabetes e qualidade de vida — em linguagem acessível e com base clínica sólida.</div>
+      <div class="por-desc">Entenda seu corpo, acompanhe seus dados e viva melhor — mesmo quando a saúde exige mais atenção.</div>
       <div class="por-cta">Acessar plataforma <span class="por-arr">→</span></div>
     </a>
     <a class="portal prof" href="portal_profissionais.html">
@@ -1188,9 +1191,9 @@ footer{background:var(--dark);color:#fff;padding:80px 60px 30px}
           <line x1="23" y1="15.5" x2="24" y2="16.5" stroke="#F5C842" stroke-width="1.5" opacity=".5"/>
         </svg>
       </div>
-      <div class="por-lbl">Clínicas &amp; Gestores</div>
+      <div class="por-lbl">Gestão que transforma</div>
       <div class="por-ttl">APEX Pro</div>
-      <div class="por-desc">Dashboard de indicadores TRS, análises de qualidade e benchmarks clínicos para clínicas de hemodiálise.</div>
+      <div class="por-desc">Indicadores claros, decisões melhores. A visão completa da sua clínica em um só lugar.</div>
       <div class="por-cta">Acessar plataforma <span class="por-arr">→</span></div>
     </a>
     <a class="portal saud" href="portal_saude_performance.html">
@@ -1203,9 +1206,9 @@ footer{background:var(--dark);color:#fff;padding:80px 60px 30px}
           <path d="M0,22 Q5,18 10,22 Q15,26 20,22 Q25,18 30,22 Q35,26 40,22" stroke="#F5C842" stroke-width="2.2" fill="none" stroke-linecap="round" opacity=".45"/>
         </svg>
       </div>
-      <div class="por-lbl">Médicos &amp; Atletas</div>
+      <div class="por-lbl">Leitura que inspira</div>
       <div class="por-ttl">APEX Reading</div>
-      <div class="por-desc">Artigos sobre wearables, longevidade, VO₂, HRV e exercício como ferramenta clínica.</div>
+      <div class="por-desc">Ciência, performance e longevidade — traduzidos em artigos que você realmente vai querer ler.</div>
       <div class="por-cta">Acessar plataforma <span class="por-arr">→</span></div>
     </a>
   </div>
@@ -1265,28 +1268,26 @@ footer{background:var(--dark);color:#fff;padding:80px 60px 30px}
 var obs=new IntersectionObserver(function(e){e.forEach(function(x){if(x.isIntersecting){x.target.classList.add('in');obs.unobserve(x.target);}});},{threshold:.07});
 document.querySelectorAll('.rv').forEach(function(el){obs.observe(el);});
 
-/* ── Hero scroll crossfade + text reveal ── */
+/* ── Hero: texto visível ao abrir, crossfade ao scrollar ── */
 (function(){
   var hc=document.querySelector('.hero-content');
   var bg1=document.querySelector('.hero-bg1');
   var bg2=document.querySelector('.hero-bg2');
   var hero=document.querySelector('.hero-mtn');
   if(!hc||!bg1||!bg2||!hero)return;
-  var textShown=false;
+  /* texto visível imediatamente */
+  hc.classList.add('in');
   function onScroll(){
     var y=window.scrollY||window.pageYOffset||0;
-    var heroH=hero.offsetHeight;
-    var heroTop=hero.offsetTop;
-    /* scroll progress dentro do hero (0 → 1) */
-    var progress=Math.max(0,Math.min(1,(y-heroTop)/(heroH*0.6)));
-    /* crossfade: bg1 desaparece, bg2 aparece */
+    /* crossfade baseado no scroll da página (0 no topo → 1 quando hero sai) */
+    var start=100;/* px antes de começar crossfade */
+    var range=hero.offsetHeight*0.7;
+    var progress=Math.max(0,Math.min(1,(y-start)/range));
+    /* bg1 desaparece, bg2 aparece */
     bg2.style.opacity=progress;
-    bg1.style.opacity=1-progress*0.5;
-    /* texto aparece a 15% do scroll */
-    if(!textShown&&progress>0.08){hc.classList.add('in');textShown=true;}
+    bg1.style.opacity=1-progress*0.6;
   }
   window.addEventListener('scroll',onScroll,{passive:true});
-  onScroll();setTimeout(onScroll,500);
 })();
 
 /* ── Nav active ── */
