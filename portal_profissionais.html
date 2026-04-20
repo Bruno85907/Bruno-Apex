@@ -54,7 +54,7 @@ body{font-family:'Space Grotesk',system-ui,-apple-system,sans-serif;background:v
 .login-logo-wrap{display:flex;align-items:center;justify-content:center;margin-bottom:44px;}
 .login-logo-img{height:80px;width:auto;object-fit:contain;}
 canvas.logo-canvas{height:120px;width:auto;}
-canvas.logo-canvas-nav{height:32px;width:auto;}
+canvas.logo-canvas-nav{height:44px;width:auto;}
 
 .login-welcome{font-size:24px;font-weight:300;color:var(--text);margin-bottom:6px;}
 .login-welcome strong{font-weight:700;color:var(--gold);}
@@ -177,27 +177,49 @@ canvas.logo-canvas-nav{height:32px;width:auto;}
 .sub-desc{font-size:12px;color:var(--text-2);}
 
 /* =====================================================
-   NEFROLOGIA SUB-SCREEN CARDS
+   NEFROLOGIA SUB-SCREEN CARDS (photo card style)
    ===================================================== */
-.nefro-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;max-width:900px;}
+.nefro-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;max-width:1000px;}
 @media(max-width:700px){.nefro-grid{grid-template-columns:1fr;}}
-.nefro-card{background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:24px;cursor:pointer;transition:all .3s ease;position:relative;overflow:hidden;text-decoration:none;display:block;color:var(--text);}
-.nefro-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--gold),var(--gold-light));opacity:0;transition:opacity .3s;}
-.nefro-card:hover{transform:translateY(-3px);border-color:var(--gold-border);box-shadow:0 8px 32px rgba(0,0,0,0.25);}
-.nefro-card:hover::before{opacity:1;}
-.nefro-card-icon{width:40px;height:40px;border-radius:8px;background:var(--gold-dim);border:1px solid var(--gold-border);display:flex;align-items:center;justify-content:center;margin-bottom:14px;font-size:18px;color:var(--gold);}
-.nefro-card-title{font-size:15px;font-weight:700;color:var(--text);margin-bottom:5px;}
-.nefro-card-desc{font-size:11px;color:var(--text-2);line-height:1.7;}
+.nefro-card{position:relative;border:1px solid var(--border);border-radius:var(--radius);cursor:pointer;transition:all .35s cubic-bezier(.4,0,.2,1);overflow:hidden;min-height:220px;display:flex;flex-direction:column;justify-content:flex-end;text-decoration:none;color:var(--text);}
+.nefro-card:hover{transform:translateY(-6px);border-color:var(--gold-border);box-shadow:0 12px 40px rgba(0,0,0,0.4),0 0 0 1px var(--gold-border);}
+.nefro-card-bg{position:absolute;inset:0;background-size:cover;background-position:center;transition:transform 8s ease;}
+.nefro-card:hover .nefro-card-bg{transform:scale(1.06);}
+.nefro-card-overlay{position:absolute;inset:0;transition:opacity .35s;}
+.nefro-card:hover .nefro-card-overlay{opacity:0.95;}
+.nefro-card-content{position:relative;z-index:2;padding:22px 24px;}
+.nefro-card-icon{width:44px;height:44px;border-radius:10px;background:var(--gold-dim);border:1px solid var(--gold-border);display:flex;align-items:center;justify-content:center;margin-bottom:14px;font-size:18px;color:var(--gold);backdrop-filter:blur(8px);}
+.nefro-card-title{font-size:17px;font-weight:700;color:#fff;margin-bottom:5px;text-shadow:0 1px 3px rgba(0,0,0,0.3);}
+.nefro-card-desc{font-size:11px;color:rgba(255,255,255,0.65);line-height:1.7;text-shadow:0 1px 2px rgba(0,0,0,0.2);}
+.nefro-card-arrow{position:absolute;bottom:18px;right:18px;width:28px;height:28px;border-radius:50%;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.12);display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,0.4);font-size:12px;transition:all .25s;z-index:2;backdrop-filter:blur(4px);}
+.nefro-card:hover .nefro-card-arrow{background:var(--gold-dim);border-color:var(--gold-border);color:var(--gold);transform:translateX(4px);}
+/* Card backgrounds */
+.nc-indicadores .nefro-card-bg{background-image:url('https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=75');}
+.nc-indicadores .nefro-card-overlay{background:linear-gradient(135deg,rgba(62,79,92,0.88),rgba(26,37,48,0.92));}
+.nc-qualidade .nefro-card-bg{background-image:url('https://images.unsplash.com/photo-1532938911079-1b06ac7ceec7?w=800&q=75');}
+.nc-qualidade .nefro-card-overlay{background:linear-gradient(135deg,rgba(20,80,70,0.85),rgba(26,37,48,0.92));}
+.nc-calculadoras .nefro-card-bg{background-image:url('https://images.unsplash.com/photo-1584982751601-97dcc096659c?w=800&q=75');}
+.nc-calculadoras .nefro-card-overlay{background:linear-gradient(135deg,rgba(50,60,80,0.88),rgba(26,37,48,0.92));}
 
 /* =====================================================
-   OUTROS SUB-SCREEN
+   OUTROS SUB-SCREEN (photo card style — disabled)
    ===================================================== */
-.outros-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;max-width:900px;}
+.outros-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;max-width:1000px;}
 @media(max-width:700px){.outros-grid{grid-template-columns:1fr;}}
-.outros-card{background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:24px;opacity:0.4;cursor:default;}
-.outros-card-icon{width:40px;height:40px;border-radius:8px;background:rgba(91,168,212,0.08);border:1px solid rgba(91,168,212,0.15);display:flex;align-items:center;justify-content:center;margin-bottom:14px;font-size:18px;}
-.outros-card-title{font-size:15px;font-weight:600;color:var(--text);margin-bottom:4px;}
-.outros-card-desc{font-size:11px;color:var(--text-2);line-height:1.6;}
+.outros-card{position:relative;border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;min-height:220px;display:flex;flex-direction:column;justify-content:flex-end;opacity:0.5;cursor:default;}
+.outros-card-bg{position:absolute;inset:0;background-size:cover;background-position:center;}
+.outros-card-overlay{position:absolute;inset:0;}
+.outros-card-content{position:relative;z-index:2;padding:22px 24px;}
+.outros-card-icon{width:44px;height:44px;border-radius:10px;background:rgba(91,168,212,0.1);border:1px solid rgba(91,168,212,0.2);display:flex;align-items:center;justify-content:center;margin-bottom:14px;font-size:18px;backdrop-filter:blur(8px);}
+.outros-card-title{font-size:17px;font-weight:700;color:#fff;margin-bottom:5px;text-shadow:0 1px 3px rgba(0,0,0,0.3);}
+.outros-card-desc{font-size:11px;color:rgba(255,255,255,0.65);line-height:1.7;text-shadow:0 1px 2px rgba(0,0,0,0.2);}
+/* Card backgrounds */
+.oc-manual .outros-card-bg{background-image:url('https://images.unsplash.com/photo-1457369804613-52c61a468e7d?w=800&q=75');}
+.oc-manual .outros-card-overlay{background:linear-gradient(135deg,rgba(40,50,70,0.88),rgba(26,37,48,0.92));}
+.oc-fichas .outros-card-bg{background-image:url('https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=800&q=75');}
+.oc-fichas .outros-card-overlay{background:linear-gradient(135deg,rgba(50,60,80,0.88),rgba(26,37,48,0.92));}
+.oc-modulos .outros-card-bg{background-image:url('https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=800&q=75');}
+.oc-modulos .outros-card-overlay{background:linear-gradient(135deg,rgba(30,50,60,0.88),rgba(26,37,48,0.92));}
 .badge-soon{display:inline-block;font-size:9px;font-weight:600;letter-spacing:1px;padding:3px 10px;border-radius:10px;background:var(--gold-dim);color:var(--gold);margin-top:10px;}
 .badge-live{display:inline-flex;align-items:center;gap:5px;font-size:9px;font-weight:600;letter-spacing:1px;padding:3px 10px;border-radius:10px;background:rgba(91,158,80,0.12);color:var(--green);margin-top:10px;}
 .badge-live .pulse{width:6px;height:6px;border-radius:50%;background:var(--green);animation:apulse 2s ease infinite;}
@@ -231,32 +253,28 @@ canvas.logo-canvas-nav{height:32px;width:auto;}
 .ind-home-title strong{font-weight:700;}
 
 .ind-trs-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;max-width:1000px;}
-.trs-card{background:var(--bg-card);border:1px solid var(--border);border-radius:8px;padding:24px;cursor:pointer;transition:all .3s ease;position:relative;overflow:hidden;}
-.trs-card::after{content:'';position:absolute;top:0;left:0;right:0;height:2px;opacity:0;transition:opacity .2s;}
-.trs-card.cron::after{background:var(--gold);}
-.trs-card.agud::after{background:var(--blue);}
-.trs-card.tv::after{background:var(--green);}
-.trs-card:hover{border-color:var(--border-hover);box-shadow:0 4px 20px rgba(0,0,0,0.3);transform:translateY(-2px);}
-.trs-card:hover::after{opacity:1;}
-.trs-card.cron{border-color:var(--gold-border);}
-.trs-card.cron::after{opacity:0.4;}
-.trs-card.agud{border-color:rgba(91,168,212,0.2);}
-.trs-card.tv{border-color:rgba(91,158,80,0.2);}
-.trs-card-icon{width:36px;height:36px;border-radius:7px;display:flex;align-items:center;justify-content:center;margin-bottom:16px;}
-.trs-card.cron .trs-card-icon{background:var(--gold-dim);border:1px solid var(--gold-border);}
-.trs-card.agud .trs-card-icon{background:rgba(91,168,212,0.1);border:1px solid rgba(91,168,212,0.2);}
-.trs-card.tv .trs-card-icon{background:rgba(91,158,80,0.1);border:1px solid rgba(91,158,80,0.2);}
-.trs-card-label{font-size:8px;font-weight:600;letter-spacing:2px;text-transform:uppercase;margin-bottom:7px;}
-.trs-card.cron .trs-card-label{color:var(--gold-muted);}
-.trs-card.agud .trs-card-label{color:rgba(91,168,212,0.7);}
-.trs-card.tv .trs-card-label{color:rgba(91,158,80,0.7);}
-.trs-card-title{font-size:15px;font-weight:600;color:var(--text);margin-bottom:6px;line-height:1.3;}
-.trs-card-desc{font-size:11px;color:var(--text-2);line-height:1.7;margin-bottom:14px;}
+.trs-card{position:relative;border:1px solid var(--border);border-radius:var(--radius);cursor:pointer;transition:all .35s;overflow:hidden;min-height:220px;display:flex;flex-direction:column;justify-content:flex-end;}
+.trs-card-bg{position:absolute;inset:0;background-size:cover;background-position:center;transition:transform 8s ease;}
+.trs-card-overlay{position:absolute;inset:0;transition:opacity .35s;}
+.trs-card:hover{border-color:var(--border-hover);box-shadow:0 8px 32px rgba(0,0,0,0.4);transform:translateY(-4px);}
+.trs-card:hover .trs-card-bg{transform:scale(1.08);}
+.trs-card-content{position:relative;z-index:2;padding:22px 24px;}
+.trs-card-arrow{position:absolute;top:18px;right:18px;z-index:3;font-size:18px;color:rgba(255,255,255,0.5);transition:all .3s;}
+.trs-card:hover .trs-card-arrow{color:#fff;transform:translateX(3px);}
+.tc-cron .trs-card-bg{background-image:url('https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=75');}
+.tc-cron .trs-card-overlay{background:linear-gradient(135deg,rgba(26,37,48,0.75),rgba(62,79,92,0.88));}
+.tc-agud .trs-card-bg{background-image:url('https://images.unsplash.com/photo-1579684385127-1ef15d508118?w=800&q=75');}
+.tc-agud .trs-card-overlay{background:linear-gradient(135deg,rgba(26,37,48,0.78),rgba(40,60,80,0.9));}
+.tc-tv .trs-card-bg{background-image:url('https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&q=75');}
+.tc-tv .trs-card-overlay{background:linear-gradient(135deg,rgba(26,37,48,0.78),rgba(35,55,45,0.9));}
+.tc-relat .trs-card-bg{background-image:url('https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=800&q=75');}
+.tc-relat .trs-card-overlay{background:linear-gradient(135deg,rgba(26,37,48,0.78),rgba(50,40,30,0.9));}
+.trs-card-label{font-size:8px;font-weight:600;letter-spacing:2px;text-transform:uppercase;margin-bottom:7px;color:rgba(255,255,255,0.5);}
+.trs-card-title{font-size:17px;font-weight:700;color:#fff;margin-bottom:6px;line-height:1.3;text-shadow:0 1px 3px rgba(0,0,0,0.3);}
+.trs-card-desc{font-size:11px;color:rgba(255,255,255,0.65);line-height:1.7;margin-bottom:14px;text-shadow:0 1px 2px rgba(0,0,0,0.2);}
 .trs-card-tags{display:flex;gap:4px;flex-wrap:wrap;}
 .trs-tag{font-size:8px;font-weight:500;padding:2px 7px;border-radius:4px;}
-.trs-card.cron .trs-tag{color:var(--gold);background:var(--gold-dim);border:1px solid var(--gold-border);}
-.trs-card.agud .trs-tag{color:var(--blue);background:rgba(91,168,212,0.1);border:1px solid rgba(91,168,212,0.18);}
-.trs-card.tv .trs-tag{color:var(--green);background:rgba(91,158,80,0.1);border:1px solid rgba(91,158,80,0.18);}
+.trs-tag{color:rgba(255,255,255,0.8);background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.15);backdrop-filter:blur(4px);}
 
 /* cron-mid */
 .cron-mid{flex:1;overflow-y:auto;padding:52px 40px;display:none;background:var(--bg);}
@@ -662,28 +680,43 @@ canvas.logo-canvas-nav{height:32px;width:auto;}
     </div>
     <div class="nefro-grid">
 
-      <div class="nefro-card" onclick="abrirIndicadoresFromNefro()">
-        <div class="nefro-card-icon">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="2" stroke="currentColor" stroke-width="1.4"/><line x1="3" y1="9" x2="21" y2="9" stroke="currentColor" stroke-width="1.2"/><rect x="6" y="13" width="3" height="5" rx="1" fill="currentColor" opacity=".25"/><rect x="11" y="11" width="3" height="7" rx="1" fill="currentColor" opacity=".15"/><rect x="16" y="14" width="3" height="4" rx="1" fill="currentColor" opacity=".2"/></svg>
+      <div class="nefro-card nc-indicadores" onclick="abrirIndicadoresFromNefro()">
+        <div class="nefro-card-bg"></div>
+        <div class="nefro-card-overlay"></div>
+        <div class="nefro-card-content">
+          <div class="nefro-card-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="2" stroke="currentColor" stroke-width="1.4"/><line x1="3" y1="9" x2="21" y2="9" stroke="currentColor" stroke-width="1.2"/><rect x="6" y="13" width="3" height="5" rx="1" fill="currentColor" opacity=".3"/><rect x="11" y="11" width="3" height="7" rx="1" fill="currentColor" opacity=".2"/><rect x="16" y="14" width="3" height="4" rx="1" fill="currentColor" opacity=".25"/></svg>
+          </div>
+          <div class="nefro-card-title">Indicadores Clinicos</div>
+          <div class="nefro-card-desc">TRS Cronico, TRS Agudo, Painel TV e Relatorio por Plano — dashboards e lancamento de dados.</div>
         </div>
-        <div class="nefro-card-title">Indicadores</div>
-        <div class="nefro-card-desc">TRS Cronico, TRS Agudo, Painel TV e Relatorio por Plano — dashboards e lancamento de dados.</div>
+        <div class="nefro-card-arrow">&#8594;</div>
       </div>
 
-      <a href="material_apoio.html" class="nefro-card">
-        <div class="nefro-card-icon">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M12 6.5C12 4.5 13 3 14.5 3C16 3 17 4.5 17 6.5C17 8.5 16 9.5 15 10C16 10.5 17 12 17 14C17 16 16 17.5 14.5 17.5C13 17.5 12 16 12 14" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/><path d="M12 6.5C12 4.5 11 3 9.5 3C8 3 7 4.5 7 6.5C7 8.5 8 9.5 9 10C8 10.5 7 12 7 14C7 16 8 17.5 9.5 17.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+      <a href="material_apoio.html" class="nefro-card nc-qualidade">
+        <div class="nefro-card-bg"></div>
+        <div class="nefro-card-overlay"></div>
+        <div class="nefro-card-content">
+          <div class="nefro-card-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M12 6.5C12 4.5 13 3 14.5 3C16 3 17 4.5 17 6.5C17 8.5 16 9.5 15 10C16 10.5 17 12 17 14C17 16 16 17.5 14.5 17.5C13 17.5 12 16 12 14" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/><path d="M12 6.5C12 4.5 11 3 9.5 3C8 3 7 4.5 7 6.5C7 8.5 8 9.5 9 10C8 10.5 7 12 7 14C7 16 8 17.5 9.5 17.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+          </div>
+          <div class="nefro-card-title">Qualidade</div>
+          <div class="nefro-card-desc">Material de apoio, ilustracoes didaticas e recursos educativos para consultas e treinamentos.</div>
         </div>
-        <div class="nefro-card-title">Qualidade</div>
-        <div class="nefro-card-desc">Material de apoio, ilustracoes didaticas e recursos educativos para uso em consultas.</div>
+        <div class="nefro-card-arrow">&#8594;</div>
       </a>
 
-      <a href="calculadoras.html" class="nefro-card">
-        <div class="nefro-card-icon">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><rect x="4" y="2" width="16" height="20" rx="2" stroke="currentColor" stroke-width="1.4"/><rect x="7" y="6" width="10" height="4" rx="1" stroke="currentColor" stroke-width="1" fill="currentColor" opacity=".1"/><rect x="7" y="13" width="3" height="3" rx="0.5" stroke="currentColor" stroke-width="0.8" opacity="0.6"/><rect x="10.5" y="13" width="3" height="3" rx="0.5" stroke="currentColor" stroke-width="0.8" opacity="0.6"/><rect x="14" y="13" width="3" height="3" rx="0.5" stroke="currentColor" stroke-width="0.8" opacity="0.6"/></svg>
+      <a href="calculadoras.html" class="nefro-card nc-calculadoras">
+        <div class="nefro-card-bg"></div>
+        <div class="nefro-card-overlay"></div>
+        <div class="nefro-card-content">
+          <div class="nefro-card-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><rect x="4" y="2" width="16" height="20" rx="2" stroke="currentColor" stroke-width="1.4"/><rect x="7" y="6" width="10" height="4" rx="1" stroke="currentColor" stroke-width="1" fill="currentColor" opacity=".1"/><rect x="7" y="13" width="3" height="3" rx="0.5" stroke="currentColor" stroke-width="0.8" opacity="0.6"/><rect x="10.5" y="13" width="3" height="3" rx="0.5" stroke="currentColor" stroke-width="0.8" opacity="0.6"/><rect x="14" y="13" width="3" height="3" rx="0.5" stroke="currentColor" stroke-width="0.8" opacity="0.6"/></svg>
+          </div>
+          <div class="nefro-card-title">Calculadoras</div>
+          <div class="nefro-card-desc">CKD-EPI, Kt/V, IMC, risco cardiovascular e ajuste de dose por funcao renal.</div>
         </div>
-        <div class="nefro-card-title">Calculadoras</div>
-        <div class="nefro-card-desc">CKD-EPI, Kt/V, IMC, risco cardiovascular e ajuste de dose por funcao renal.</div>
+        <div class="nefro-card-arrow">&#8594;</div>
       </a>
 
     </div>
@@ -699,23 +732,32 @@ canvas.logo-canvas-nav{height:32px;width:auto;}
       </div>
     </div>
     <div class="outros-grid">
-      <div class="outros-card">
-        <div class="outros-card-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M4 19.5A2.5 2.5 0 016.5 17H20" stroke="#5BA8D4" stroke-width="1.4" stroke-linecap="round"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z" stroke="#5BA8D4" stroke-width="1.4"/></svg></div>
-        <div class="outros-card-title">Manual Clinico</div>
-        <div class="outros-card-desc">Protocolos, diretrizes e condutas em nefrologia para toda a equipe assistencial.</div>
-        <div class="badge-soon">Em breve</div>
+      <div class="outros-card oc-manual">
+        <div class="outros-card-bg"></div>
+        <div class="outros-card-overlay"></div>
+        <div class="outros-card-content">
+          <div class="outros-card-title">Manual Clinico</div>
+          <div class="outros-card-desc">Protocolos, diretrizes e condutas em nefrologia para toda a equipe assistencial.</div>
+          <div class="badge-soon">Em breve</div>
+        </div>
       </div>
-      <div class="outros-card">
-        <div class="outros-card-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="2" stroke="#5BA8D4" stroke-width="1.4"/><line x1="3" y1="9" x2="21" y2="9" stroke="#5BA8D4" stroke-width="1"/><line x1="12" y1="9" x2="12" y2="21" stroke="#5BA8D4" stroke-width="1"/></svg></div>
-        <div class="outros-card-title">Fichas Tecnicas</div>
-        <div class="outros-card-desc">Descricao detalhada de cada indicador — metodologia, meta e interpretacao clinica.</div>
-        <div class="badge-soon">Em breve</div>
+      <div class="outros-card oc-fichas">
+        <div class="outros-card-bg"></div>
+        <div class="outros-card-overlay"></div>
+        <div class="outros-card-content">
+          <div class="outros-card-title">Fichas Tecnicas</div>
+          <div class="outros-card-desc">Descricao detalhada de cada indicador — metodologia, meta e interpretacao clinica.</div>
+          <div class="badge-soon">Em breve</div>
+        </div>
       </div>
-      <div class="outros-card">
-        <div class="outros-card-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="#5BA8D4" stroke-width="1.4" opacity="0.5"/><line x1="12" y1="8" x2="12" y2="12" stroke="#5BA8D4" stroke-width="1.4" stroke-linecap="round" opacity="0.5"/><line x1="12" y1="16" x2="12.01" y2="16" stroke="#5BA8D4" stroke-width="1.4" stroke-linecap="round" opacity="0.5"/></svg></div>
-        <div class="outros-card-title">Novos Modulos</div>
-        <div class="outros-card-desc">Mais ferramentas e integracoes serao adicionadas em breve.</div>
-        <div class="badge-soon">Em breve</div>
+      <div class="outros-card oc-modulos">
+        <div class="outros-card-bg"></div>
+        <div class="outros-card-overlay"></div>
+        <div class="outros-card-content">
+          <div class="outros-card-title">Novos Modulos</div>
+          <div class="outros-card-desc">Mais ferramentas e integracoes serao adicionadas em breve.</div>
+          <div class="badge-soon">Em breve</div>
+        </div>
       </div>
     </div>
   </div>
@@ -1003,30 +1045,34 @@ canvas.logo-canvas-nav{height:32px;width:auto;}
     <h2 class="ind-home-title">O que deseja <strong>acessar?</strong></h2>
     <div class="cron-mid-grid">
 
-      <div class="trs-card cron" id="card-cron-dashboard" onclick="abrirDashboardCron()">
-        <div class="trs-card-icon">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="2" stroke="#D4A853" stroke-width="1.4"/><line x1="3" y1="9" x2="21" y2="9" stroke="#D4A853" stroke-width="1.2"/><rect x="6" y="13" width="3" height="5" rx="1" fill="rgba(212,168,83,0.25)" stroke="#D4A853" stroke-width="0.8"/><rect x="11" y="11" width="3" height="7" rx="1" fill="rgba(212,168,83,0.15)" stroke="#D4A853" stroke-width="0.8"/><rect x="16" y="14" width="3" height="4" rx="1" fill="rgba(212,168,83,0.2)" stroke="#D4A853" stroke-width="0.8"/></svg>
+      <div class="trs-card tc-cron" id="card-cron-dashboard" onclick="abrirDashboardCron()">
+        <div class="trs-card-bg"></div>
+        <div class="trs-card-overlay"></div>
+        <div class="trs-card-content">
+          <div class="trs-card-label">Visualizacao</div>
+          <div class="trs-card-title">Dashboard</div>
+          <div class="trs-card-desc">Indicadores consolidados da rede — graficos, metas e evolucao mensal.</div>
+          <div class="trs-card-tags">
+            <span class="trs-tag">Rede completa</span>
+            <span class="trs-tag">Por unidade</span>
+          </div>
         </div>
-        <div class="trs-card-label">Visualizacao</div>
-        <div class="trs-card-title">Dashboard</div>
-        <div class="trs-card-desc">Indicadores consolidados da rede — graficos, metas e evolucao mensal.</div>
-        <div class="trs-card-tags">
-          <span class="trs-tag">Rede completa</span>
-          <span class="trs-tag">Por unidade</span>
-        </div>
+        <div class="trs-card-arrow">&#8594;</div>
       </div>
 
-      <div class="trs-card cron" id="card-cron-lancamento" onclick="abrirSelecaoUnidade()">
-        <div class="trs-card-icon">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7" stroke="#D4A853" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z" stroke="#D4A853" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <div class="trs-card tc-cron" id="card-cron-lancamento" onclick="abrirSelecaoUnidade()">
+        <div class="trs-card-bg"></div>
+        <div class="trs-card-overlay"></div>
+        <div class="trs-card-content">
+          <div class="trs-card-label">Entrada de dados</div>
+          <div class="trs-card-title">Lancamento Mensal</div>
+          <div class="trs-card-desc">Preenchimento dos indicadores mensais por unidade — RL, Santos e Tatuape.</div>
+          <div class="trs-card-tags">
+            <span class="trs-tag">Por unidade</span>
+            <span class="trs-tag">Supabase</span>
+          </div>
         </div>
-        <div class="trs-card-label">Entrada de dados</div>
-        <div class="trs-card-title">Lancamento Mensal</div>
-        <div class="trs-card-desc">Preenchimento dos indicadores mensais por unidade — RL, Santos e Tatuape.</div>
-        <div class="trs-card-tags">
-          <span class="trs-tag">Por unidade</span>
-          <span class="trs-tag">Supabase</span>
-        </div>
+        <div class="trs-card-arrow">&#8594;</div>
       </div>
 
     </div>
@@ -1066,42 +1112,52 @@ canvas.logo-canvas-nav{height:32px;width:auto;}
     <h2 class="ind-home-title">Selecione um <strong>servico</strong></h2>
     <div class="ind-trs-grid">
 
-      <div class="trs-card cron" onclick="abrirCronico()">
-        <div class="trs-card-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="2" stroke="#D4A853" stroke-width="1.4"/><line x1="3" y1="9" x2="21" y2="9" stroke="#D4A853" stroke-width="1.2"/><rect x="6" y="13" width="3" height="5" rx="1" fill="rgba(212,168,83,0.25)" stroke="#D4A853" stroke-width="0.8"/><rect x="11" y="11" width="3" height="7" rx="1" fill="rgba(212,168,83,0.15)" stroke="#D4A853" stroke-width="0.8"/><rect x="16" y="14" width="3" height="4" rx="1" fill="rgba(212,168,83,0.2)" stroke="#D4A853" stroke-width="0.8"/></svg></div>
-        <div class="trs-card-label">Terapia Renal Substitutiva</div>
-        <div class="trs-card-title">Gestao TRS Cronico</div>
-        <div class="trs-card-desc">Dashboard mensal e lancamento de dados das unidades RL, Santos e Tatuape.</div>
-        <div class="trs-card-tags"><span class="trs-tag">Dashboard</span><span class="trs-tag">Lancamento</span><span class="trs-tag">Por unidade</span></div>
-      </div>
-
-      <div class="trs-card agud" onclick="abrirAgudo()">
-        <div class="trs-card-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M12 3L3 7.5l9 4.5 9-4.5L12 3z" stroke="#5BA8D4" stroke-width="1.4" stroke-linejoin="round"/><path d="M3 16.5l9 4.5 9-4.5M3 12l9 4.5 9-4.5" stroke="#5BA8D4" stroke-width="1.4" stroke-linejoin="round"/></svg></div>
-        <div class="trs-card-label">Terapia Renal Substitutiva</div>
-        <div class="trs-card-title">Gestao TRS Agudo</div>
-        <div class="trs-card-desc">Lancamento semanal, acessos venosos e intercorrencias por hospital.</div>
-        <div class="trs-card-tags"><span class="trs-tag">HD - CRRT - DP - SLED</span><span class="trs-tag">Intercorrencias</span><span class="trs-tag">Por hospital</span></div>
-      </div>
-
-      <div class="trs-card tv" onclick="abrirPainelTV()">
-        <div class="trs-card-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><rect x="2" y="3" width="20" height="14" rx="2" stroke="#5B9E50" stroke-width="1.4"/><path d="M8 21h8M12 17v4" stroke="#5B9E50" stroke-width="1.4" stroke-linecap="round"/></svg></div>
-        <div class="trs-card-label">Sala da Diretoria</div>
-        <div class="trs-card-title">Painel de Indicadores</div>
-        <div class="trs-card-desc">Visao executiva em TV 16:9 — Cronico e Agudo em tempo real com atualizacao automatica.</div>
-        <div class="trs-card-tags"><span class="trs-tag">Cronico + Agudo</span><span class="trs-tag">TV 16:9</span><span class="trs-tag">Auto-atualizacao</span></div>
-      </div>
-
-      <div class="trs-card" style="border-color:rgba(212,168,83,0.2);" onclick="window.open('relatorio_plano.html','_blank')">
-        <div class="trs-card-icon" style="background:var(--gold-dim);border:1px solid var(--gold-border);">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><rect x="4" y="2" width="16" height="20" rx="2" stroke="#D4A853" stroke-width="1.4"/><line x1="8" y1="7" x2="16" y2="7" stroke="#D4A853" stroke-width="1.2" stroke-linecap="round"/><line x1="8" y1="11" x2="16" y2="11" stroke="#D4A853" stroke-width="1.2" stroke-linecap="round"/><line x1="8" y1="15" x2="12" y2="15" stroke="#D4A853" stroke-width="1.2" stroke-linecap="round"/></svg>
+      <div class="trs-card tc-cron" onclick="abrirCronico()">
+        <div class="trs-card-bg"></div>
+        <div class="trs-card-overlay"></div>
+        <div class="trs-card-content">
+          <div class="trs-card-label">Terapia Renal Substitutiva</div>
+          <div class="trs-card-title">Gestao TRS Cronico</div>
+          <div class="trs-card-desc">Dashboard mensal e lancamento de dados das unidades RL, Santos e Tatuape.</div>
+          <div class="trs-card-tags"><span class="trs-tag">Dashboard</span><span class="trs-tag">Lancamento</span><span class="trs-tag">Por unidade</span></div>
         </div>
-        <div class="trs-card-label" style="color:var(--gold-muted);">Planos de Saude</div>
-        <div class="trs-card-title">Relatorio por Plano</div>
-        <div class="trs-card-desc">Indicadores segmentados por plano de saude para reunioes com gestores. Comparativo plano x total da clinica.</div>
-        <div class="trs-card-tags">
-          <span class="trs-tag" style="color:var(--gold);background:var(--gold-dim);border:1px solid var(--gold-border);">Por plano</span>
-          <span class="trs-tag" style="color:var(--gold);background:var(--gold-dim);border:1px solid var(--gold-border);">Comparativo</span>
-          <span class="trs-tag" style="color:var(--gold);background:var(--gold-dim);border:1px solid var(--gold-border);">Gera PDF</span>
+        <div class="trs-card-arrow">&#8594;</div>
+      </div>
+
+      <div class="trs-card tc-agud" onclick="abrirAgudo()">
+        <div class="trs-card-bg"></div>
+        <div class="trs-card-overlay"></div>
+        <div class="trs-card-content">
+          <div class="trs-card-label">Terapia Renal Substitutiva</div>
+          <div class="trs-card-title">Gestao TRS Agudo</div>
+          <div class="trs-card-desc">Lancamento semanal, acessos venosos e intercorrencias por hospital.</div>
+          <div class="trs-card-tags"><span class="trs-tag">HD - CRRT - DP - SLED</span><span class="trs-tag">Intercorrencias</span><span class="trs-tag">Por hospital</span></div>
         </div>
+        <div class="trs-card-arrow">&#8594;</div>
+      </div>
+
+      <div class="trs-card tc-tv" onclick="abrirPainelTV()">
+        <div class="trs-card-bg"></div>
+        <div class="trs-card-overlay"></div>
+        <div class="trs-card-content">
+          <div class="trs-card-label">Sala da Diretoria</div>
+          <div class="trs-card-title">Painel de Indicadores</div>
+          <div class="trs-card-desc">Visao executiva em TV 16:9 — Cronico e Agudo em tempo real com atualizacao automatica.</div>
+          <div class="trs-card-tags"><span class="trs-tag">Cronico + Agudo</span><span class="trs-tag">TV 16:9</span><span class="trs-tag">Auto-atualizacao</span></div>
+        </div>
+        <div class="trs-card-arrow">&#8594;</div>
+      </div>
+
+      <div class="trs-card tc-relat" onclick="window.open('relatorio_plano.html','_blank')">
+        <div class="trs-card-bg"></div>
+        <div class="trs-card-overlay"></div>
+        <div class="trs-card-content">
+          <div class="trs-card-label">Planos de Saude</div>
+          <div class="trs-card-title">Relatorio por Plano</div>
+          <div class="trs-card-desc">Indicadores segmentados por plano de saude para reunioes com gestores. Comparativo plano x total da clinica.</div>
+          <div class="trs-card-tags"><span class="trs-tag">Por plano</span><span class="trs-tag">Comparativo</span><span class="trs-tag">Gera PDF</span></div>
+        </div>
+        <div class="trs-card-arrow">&#8594;</div>
       </div>
 
     </div>
