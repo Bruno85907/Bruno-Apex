@@ -16,7 +16,7 @@
   /* Texto escuro sobre fundo claro */
   --text:#1E2D3D;--text-2:#5A6A7A;--text-3:#8A96A3;
   --text-primary:var(--text);--text-secondary:var(--text-2);--text-muted:var(--text-3);
-  --card:var(--bg-card);--card-hover:rgba(62,79,92,0.06);--surface:rgba(62,79,92,0.03);--bg-dark:#3E4F5C;
+  --card:var(--bg-card);--card-hover:rgba(62,79,92,0.06);--surface:rgba(62,79,92,0.07);--bg-dark:#3E4F5C;
   --white:#fff;--green:#5B9E50;--blue:#5BA8D4;--red:#E05252;--teal:#14b8a6;
   --radius:14px;--radius-sm:8px;
   --shadow-card:0 2px 12px rgba(62,79,92,0.08);
@@ -30,13 +30,13 @@ body{font-family:'Space Grotesk',system-ui,-apple-system,sans-serif;background:v
 body::before{content:'';position:fixed;inset:0;z-index:-2;
   background:
     radial-gradient(ellipse 80% 60% at 20% 10%, rgba(62,79,92,0.06), transparent 50%),
-    radial-gradient(ellipse 60% 50% at 80% 80%, rgba(62,79,92,0.04), transparent 50%),
+    radial-gradient(ellipse 60% 50% at 80% 80%, rgba(62,79,92,0.08), transparent 50%),
     radial-gradient(ellipse 40% 30% at 50% 50%, rgba(90,122,143,0.03), transparent 40%);
 }
 body::after{content:'';position:fixed;inset:0;z-index:-1;
   background-image:
-    linear-gradient(rgba(62,79,92,0.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(62,79,92,0.03) 1px, transparent 1px);
+    linear-gradient(rgba(62,79,92,0.07) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(62,79,92,0.07) 1px, transparent 1px);
   background-size:48px 48px;
   mask-image:radial-gradient(ellipse 70% 60% at 50% 50%, black 20%, transparent 70%);
   -webkit-mask-image:radial-gradient(ellipse 70% 60% at 50% 50%, black 20%, transparent 70%);
@@ -408,7 +408,7 @@ canvas.logo-canvas-nav{height:70px;width:auto;}
 .dia-btn.sel{background:var(--pro-dim);border-color:var(--pro-border);color:var(--pro);}
 
 /* GERAR PROTOCOLO IA */
-.ai-gen-bar{display:flex;align-items:center;gap:12px;background:linear-gradient(135deg,rgba(62,79,92,0.06),rgba(62,79,92,0.03));border:1px solid var(--pro-border);border-radius:10px;padding:16px 20px;margin:20px 0;}
+.ai-gen-bar{display:flex;align-items:center;gap:12px;background:linear-gradient(135deg,rgba(62,79,92,0.06),rgba(62,79,92,0.07));border:1px solid var(--pro-border);border-radius:10px;padding:16px 20px;margin:20px 0;}
 .ai-gen-bar .ai-icon{font-size:22px;flex-shrink:0;}
 .ai-gen-bar .ai-txt{flex:1;}
 .ai-gen-bar .ai-txt strong{display:block;font-size:13px;font-weight:700;color:var(--pro);margin-bottom:2px;}
@@ -427,7 +427,7 @@ canvas.logo-canvas-nav{height:70px;width:auto;}
 /* WIZARD STEPPER */
 .wiz-stepper{display:flex;align-items:center;gap:0;margin-bottom:20px;padding:14px 10px;background:rgba(62,79,92,0.02);border:1px solid var(--border);border-radius:10px;overflow-x:auto;}
 .wiz-step{display:flex;align-items:center;gap:8px;cursor:pointer;padding:6px 10px;border-radius:6px;transition:background .15s;white-space:nowrap;flex-shrink:0;}
-.wiz-step:hover:not(.locked){background:rgba(62,79,92,0.03);}
+.wiz-step:hover:not(.locked){background:rgba(62,79,92,0.07);}
 .wiz-step .wiz-num{width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;border:2px solid var(--border);color:var(--text-muted);flex-shrink:0;transition:all .2s;}
 .wiz-step .wiz-label{font-size:11px;font-weight:600;color:var(--text-muted);transition:color .2s;}
 .wiz-step.active .wiz-num{border-color:#5B9E50;background:#5B9E50;color:#fff;box-shadow:0 0 10px rgba(91,158,80,.35);}
@@ -441,7 +441,7 @@ canvas.logo-canvas-nav{height:70px;width:auto;}
 .wiz-panel.active{display:block;}
 @keyframes wizFade{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
 .wiz-nav{display:flex;justify-content:space-between;align-items:center;margin-top:20px;padding-top:16px;border-top:1px solid var(--border);}
-.wiz-nav .wiz-back{font-family:inherit;font-size:12px;font-weight:600;color:var(--text-secondary);background:rgba(62,79,92,0.04);border:1px solid var(--border);border-radius:7px;padding:9px 20px;cursor:pointer;transition:.15s;}
+.wiz-nav .wiz-back{font-family:inherit;font-size:12px;font-weight:600;color:var(--text-secondary);background:rgba(62,79,92,0.08);border:1px solid var(--border);border-radius:7px;padding:9px 20px;cursor:pointer;transition:.15s;}
 .wiz-nav .wiz-back:hover{background:rgba(62,79,92,0.07);}
 .wiz-nav .wiz-next{font-family:inherit;font-size:12px;font-weight:700;color:#fff;background:#5B9E50;border:none;border-radius:7px;padding:9px 24px;cursor:pointer;transition:.15s;display:flex;align-items:center;gap:6px;}
 .wiz-nav .wiz-next:hover{background:#4e8a45;}
@@ -449,7 +449,7 @@ canvas.logo-canvas-nav{height:70px;width:auto;}
 .wiz-progress-text{font-size:10px;color:var(--text-muted);font-weight:600;letter-spacing:1px;text-transform:uppercase;}
 /* Comorbidity grid */
 .comorb-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;}
-.comorb-item{display:flex;align-items:center;gap:10px;background:rgba(62,79,92,0.025);border:1px solid var(--border);border-radius:8px;padding:10px 14px;cursor:pointer;transition:all .15s;}
+.comorb-item{display:flex;align-items:center;gap:10px;background:rgba(62,79,92,0.06);border:1px solid var(--border);border-radius:8px;padding:10px 14px;cursor:pointer;transition:all .15s;}
 .comorb-item:hover{border-color:var(--border-hover);}
 .comorb-item.sel{background:rgba(91,158,80,0.08);border-color:rgba(91,158,80,0.35);}
 .comorb-item input[type=checkbox]{accent-color:#5B9E50;width:15px;height:15px;flex-shrink:0;}
@@ -482,14 +482,14 @@ canvas.logo-canvas-nav{height:70px;width:auto;}
 .f-row.f1{grid-template-columns:1fr;}
 .f-group{display:flex;flex-direction:column;gap:5px;}
 .f-group label{font-size:9px;font-weight:600;letter-spacing:1px;color:var(--text-secondary);text-transform:uppercase;}
-.f-group input,.f-group select,.f-group textarea{font-family:inherit;font-size:13px;color:var(--text-primary);background:rgba(62,79,92,0.04);border:1px solid var(--border);border-radius:6px;padding:8px 11px;outline:none;transition:border-color .15s,background .15s;}
+.f-group input,.f-group select,.f-group textarea{font-family:inherit;font-size:13px;color:var(--text-primary);background:rgba(62,79,92,0.08);border:1px solid var(--border);border-radius:6px;padding:8px 11px;outline:none;transition:border-color .15s,background .15s;}
 .f-group input:focus,.f-group select:focus,.f-group textarea:focus{border-color:var(--gold);background:rgba(62,79,92,0.07);}
 .f-group input::placeholder,.f-group textarea::placeholder{color:var(--text-muted);}
-.f-group select{color:var(--text-primary);background:rgba(62,79,92,0.04);}
+.f-group select{color:var(--text-primary);background:rgba(62,79,92,0.08);}
 .f-group select option{background:#1a2530;color:var(--text-primary);}
 .f-group textarea{resize:vertical;min-height:72px;}
 .f-section{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--text-muted);margin:20px 0 12px;padding-bottom:6px;border-bottom:1px solid var(--border);}
-.f-card{background:rgba(62,79,92,0.025);border:1px solid var(--border);border-radius:8px;padding:16px;margin-bottom:10px;}
+.f-card{background:rgba(62,79,92,0.06);border:1px solid var(--border);border-radius:8px;padding:16px;margin-bottom:10px;}
 .f-card-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;}
 .f-card-title{font-size:13px;font-weight:600;color:var(--text-primary);}
 .f-add-btn{font-family:inherit;font-size:11px;font-weight:600;color:var(--gold);background:var(--gold-dim);border:1px solid var(--gold-border);border-radius:5px;padding:5px 12px;cursor:pointer;}
@@ -505,12 +505,12 @@ canvas.logo-canvas-nav{height:70px;width:auto;}
 .msg-thread{display:flex;flex-direction:column;gap:10px;max-height:360px;overflow-y:auto;margin-bottom:14px;background:rgba(62,79,92,0.02);border:1px solid var(--border);border-radius:8px;padding:14px;}
 .msg-b{max-width:72%;padding:9px 13px;border-radius:10px;font-size:12px;line-height:1.6;}
 .msg-b.clinic{background:var(--gold-dim);border:1px solid var(--gold-border);align-self:flex-end;}
-.msg-b.patient{background:rgba(62,79,92,0.03);border:1px solid var(--border);align-self:flex-start;}
+.msg-b.patient{background:rgba(62,79,92,0.07);border:1px solid var(--border);align-self:flex-start;}
 .msg-b-time{font-size:9px;color:var(--text-muted);margin-top:4px;}
 
 /* ANAMNESE */
 .check-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:14px;}
-.check-item{display:flex;align-items:center;gap:8px;background:rgba(62,79,92,0.025);border:1px solid var(--border);border-radius:6px;padding:8px 11px;cursor:pointer;transition:border-color .15s;}
+.check-item{display:flex;align-items:center;gap:8px;background:rgba(62,79,92,0.06);border:1px solid var(--border);border-radius:6px;padding:8px 11px;cursor:pointer;transition:border-color .15s;}
 .check-item:hover{border-color:var(--border-hover);}
 .check-item.checked{background:var(--gold-dim);border-color:var(--gold-border);}
 .check-item input[type=checkbox]{accent-color:var(--gold);width:14px;height:14px;flex-shrink:0;}
@@ -519,11 +519,11 @@ canvas.logo-canvas-nav{height:70px;width:auto;}
 .drc-sel{margin-top:6px;padding:8px 10px;background:var(--gold-dim);border:1px solid var(--gold-border);border-radius:6px;}
 .drc-sel label{font-size:9px;font-weight:600;letter-spacing:1px;color:var(--gold-muted);text-transform:uppercase;display:block;margin-bottom:5px;}
 .drc-stages{display:flex;gap:5px;flex-wrap:wrap;}
-.drc-stage{font-family:inherit;font-size:10px;font-weight:600;padding:3px 9px;border-radius:4px;border:1px solid var(--gold-border);background:rgba(62,79,92,0.04);color:var(--gold);cursor:pointer;transition:.12s;}
+.drc-stage{font-family:inherit;font-size:10px;font-weight:600;padding:3px 9px;border-radius:4px;border:1px solid var(--gold-border);background:rgba(62,79,92,0.08);color:var(--gold);cursor:pointer;transition:.12s;}
 .drc-stage.sel{background:var(--gold);color:#fff;border-color:var(--gold);}
 .obj-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px;}
 .dias-grid{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:6px;}
-.dia-btn{font-family:inherit;font-size:11px;font-weight:600;padding:5px 11px;border-radius:5px;border:1px solid var(--border);background:rgba(62,79,92,0.025);color:var(--text-muted);cursor:pointer;transition:.12s;}
+.dia-btn{font-family:inherit;font-size:11px;font-weight:600;padding:5px 11px;border-radius:5px;border:1px solid var(--border);background:rgba(62,79,92,0.06);color:var(--text-muted);cursor:pointer;transition:.12s;}
 .dia-btn.sel{background:var(--gold-dim);border-color:var(--gold-border);color:var(--gold);}
 
 /* GERAR PROTOCOLO IA */
@@ -538,7 +538,7 @@ canvas.logo-canvas-nav{height:70px;width:auto;}
 .ai-gen-spin{width:13px;height:13px;border:2px solid rgba(26,25,23,.3);border-top-color:#fff;border-radius:50%;display:none;animation:agspin .7s linear infinite;}
 .ai-gen-btn.loading .ai-gen-spin{display:inline-block;}
 @keyframes agspin{to{transform:rotate(360deg)}}
-.ai-preview{background:rgba(62,79,92,0.025);border:1px solid var(--border);border-radius:8px;padding:14px 16px;margin-bottom:14px;font-size:12px;color:var(--text-secondary);line-height:1.7;display:none;}
+.ai-preview{background:rgba(62,79,92,0.06);border:1px solid var(--border);border-radius:8px;padding:14px 16px;margin-bottom:14px;font-size:12px;color:var(--text-secondary);line-height:1.7;display:none;}
 .ai-preview.show{display:block;}
 .ai-preview h4{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--text-muted);margin:10px 0 4px;}
 .ai-preview h4:first-child{margin-top:0;}
@@ -563,7 +563,7 @@ canvas.logo-canvas-nav{height:70px;width:auto;}
 .wiz-ai-panel-header .waip-meta{font-size:10px;color:var(--text-muted);}
 .wiz-ai-resumo{padding:14px 18px;background:rgba(62,79,92,0.02);font-size:12px;color:var(--text-secondary);line-height:1.7;border-bottom:1px solid var(--border);}
 .wiz-ai-list{padding:8px;}
-.wiz-ai-card{background:rgba(62,79,92,0.025);border:1px solid var(--border);border-radius:8px;padding:14px 16px;margin-bottom:8px;transition:all .2s;}
+.wiz-ai-card{background:rgba(62,79,92,0.06);border:1px solid var(--border);border-radius:8px;padding:14px 16px;margin-bottom:8px;transition:all .2s;}
 .wiz-ai-card:last-child{margin-bottom:0;}
 .wiz-ai-card.accepted{border-color:rgba(91,158,80,0.3);background:rgba(91,158,80,0.06);}
 .wiz-ai-card.rejected{opacity:0.4;border-color:rgba(224,82,82,0.15);}
@@ -572,7 +572,7 @@ canvas.logo-canvas-nav{height:70px;width:auto;}
 .wiz-ai-badge.alta{background:rgba(224,82,82,0.12);color:var(--red);}
 .wiz-ai-badge.media{background:rgba(185,148,84,0.12);color:var(--gold);}
 .wiz-ai-badge.baixa{background:rgba(91,168,212,0.12);color:var(--blue);}
-.wiz-ai-badge.cat{background:rgba(62,79,92,0.05);color:var(--text-muted);}
+.wiz-ai-badge.cat{background:rgba(62,79,92,0.10);color:var(--text-muted);}
 .wiz-ai-card-title{font-size:13px;font-weight:700;color:var(--text-primary);flex:1;}
 .wiz-ai-card-body{font-size:11px;color:var(--text-secondary);line-height:1.7;margin-bottom:10px;}
 .wiz-ai-card-body .wai-ref{font-size:10px;color:var(--text-muted);font-style:italic;margin-top:4px;display:block;}
@@ -3324,7 +3324,7 @@ function wizAddMeta(m){
   const list=document.getElementById('rx-metas-list');
   const row=document.createElement('div');row.className='f-list-item';row.style.gridTemplateColumns='140px 1fr 100px 130px auto';
   row.innerHTML=`
-    <select class="f-group" style="font-size:12px;padding:7px;background:rgba(62,79,92,0.04);border:1px solid var(--border);border-radius:6px;color:var(--text-primary);">
+    <select class="f-group" style="font-size:12px;padding:7px;background:rgba(62,79,92,0.08);border:1px solid var(--border);border-radius:6px;color:var(--text-primary);">
       <option value="peso" ${m.tipo==='peso'?'selected':''}>Peso</option>
       <option value="pa" ${m.tipo==='pa'?'selected':''}>Pressão Arterial</option>
       <option value="glicemia" ${m.tipo==='glicemia'?'selected':''}>Glicemia/HbA1c</option>
@@ -3335,9 +3335,9 @@ function wizAddMeta(m){
       <option value="circ" ${m.tipo==='circ'?'selected':''}>Circ. Abdominal</option>
       <option value="outro" ${m.tipo==='outro'?'selected':''}>Outro</option>
     </select>
-    <input type="text" placeholder="Descrição da meta..." value="${m.descricao||''}" style="font-size:12px;padding:7px;background:rgba(62,79,92,0.04);border:1px solid var(--border);border-radius:6px;color:var(--text-primary);">
-    <input type="text" placeholder="Valor alvo" value="${m.valor_alvo||''}" style="font-size:12px;padding:7px;background:rgba(62,79,92,0.04);border:1px solid var(--border);border-radius:6px;color:var(--text-primary);">
-    <input type="date" value="${m.prazo||''}" style="font-size:12px;padding:7px;background:rgba(62,79,92,0.04);border:1px solid var(--border);border-radius:6px;color:var(--text-primary);">
+    <input type="text" placeholder="Descrição da meta..." value="${m.descricao||''}" style="font-size:12px;padding:7px;background:rgba(62,79,92,0.08);border:1px solid var(--border);border-radius:6px;color:var(--text-primary);">
+    <input type="text" placeholder="Valor alvo" value="${m.valor_alvo||''}" style="font-size:12px;padding:7px;background:rgba(62,79,92,0.08);border:1px solid var(--border);border-radius:6px;color:var(--text-primary);">
+    <input type="date" value="${m.prazo||''}" style="font-size:12px;padding:7px;background:rgba(62,79,92,0.08);border:1px solid var(--border);border-radius:6px;color:var(--text-primary);">
     <button class="f-remove-btn" onclick="this.parentElement.remove()">✕</button>`;
   list.appendChild(row);
 }
@@ -3362,8 +3362,8 @@ function wizMudarFase(v){RX_FASE_ATUAL=v;document.querySelectorAll('.rx-phase-ta
 function wizSubTab(tab){
   document.getElementById('sub-corrida').style.display=tab==='corrida'?'block':'none';
   document.getElementById('sub-forca').style.display=tab==='forca'?'block':'none';
-  document.getElementById('btn-sub-corrida').style.background=tab==='corrida'?'#5B9E50':'rgba(62,79,92,0.04)';
-  document.getElementById('btn-sub-forca').style.background=tab==='forca'?'#5B9E50':'rgba(62,79,92,0.04)';
+  document.getElementById('btn-sub-corrida').style.background=tab==='corrida'?'#5B9E50':'rgba(62,79,92,0.08)';
+  document.getElementById('btn-sub-forca').style.background=tab==='forca'?'#5B9E50':'rgba(62,79,92,0.08)';
 }
 function wizAddRunWorkout(w){
   w=w||{weekday:1,title:'',type:'aerobio',total_km:'',total_min:''};
@@ -3405,9 +3405,9 @@ function wizAddMeal(m){
   const list=document.getElementById('rx-d-meals');
   const row=document.createElement('div');row.className='f-list-item';row.style.gridTemplateColumns='140px 80px 1fr auto';
   row.innerHTML=`
-    <input type="text" value="${m.name}" placeholder="Café da manhã" style="font-size:12px;padding:7px;background:rgba(62,79,92,0.04);border:1px solid var(--border);border-radius:6px;color:var(--text-primary);">
-    <input type="time" value="${m.time||''}" style="font-size:12px;padding:7px;background:rgba(62,79,92,0.04);border:1px solid var(--border);border-radius:6px;color:var(--text-primary);">
-    <input type="text" value="${(m.foods||[]).join(', ')}" placeholder="Alimentos..." style="font-size:12px;padding:7px;background:rgba(62,79,92,0.04);border:1px solid var(--border);border-radius:6px;color:var(--text-primary);">
+    <input type="text" value="${m.name}" placeholder="Café da manhã" style="font-size:12px;padding:7px;background:rgba(62,79,92,0.08);border:1px solid var(--border);border-radius:6px;color:var(--text-primary);">
+    <input type="time" value="${m.time||''}" style="font-size:12px;padding:7px;background:rgba(62,79,92,0.08);border:1px solid var(--border);border-radius:6px;color:var(--text-primary);">
+    <input type="text" value="${(m.foods||[]).join(', ')}" placeholder="Alimentos..." style="font-size:12px;padding:7px;background:rgba(62,79,92,0.08);border:1px solid var(--border);border-radius:6px;color:var(--text-primary);">
     <button class="f-remove-btn" onclick="this.parentElement.remove()">✕</button>`;
   list.appendChild(row);
 }
@@ -3447,11 +3447,11 @@ function wizAddInteraction(ix){
   const list=document.getElementById('rx-interactions-list');
   const row=document.createElement('div');row.className='f-list-item';row.style.gridTemplateColumns='1fr 120px 1fr auto';
   row.innerHTML=`
-    <input type="text" value="${(ix.drugs||[]).join(' + ')}" placeholder="Droga A + Droga B" style="font-size:12px;padding:7px;background:rgba(62,79,92,0.04);border:1px solid var(--border);border-radius:6px;color:var(--text-primary);">
-    <select style="font-size:12px;padding:7px;background:rgba(62,79,92,0.04);border:1px solid var(--border);border-radius:6px;color:var(--text-primary);">
+    <input type="text" value="${(ix.drugs||[]).join(' + ')}" placeholder="Droga A + Droga B" style="font-size:12px;padding:7px;background:rgba(62,79,92,0.08);border:1px solid var(--border);border-radius:6px;color:var(--text-primary);">
+    <select style="font-size:12px;padding:7px;background:rgba(62,79,92,0.08);border:1px solid var(--border);border-radius:6px;color:var(--text-primary);">
       <option value="leve" ${ix.risk==='leve'?'selected':''}>Leve</option><option value="moderado" ${ix.risk==='moderado'?'selected':''}>Moderado</option><option value="grave" ${ix.risk==='grave'?'selected':''}>Grave</option>
     </select>
-    <input type="text" value="${ix.action||''}" placeholder="Ação: monitorar, ajustar dose..." style="font-size:12px;padding:7px;background:rgba(62,79,92,0.04);border:1px solid var(--border);border-radius:6px;color:var(--text-primary);">
+    <input type="text" value="${ix.action||''}" placeholder="Ação: monitorar, ajustar dose..." style="font-size:12px;padding:7px;background:rgba(62,79,92,0.08);border:1px solid var(--border);border-radius:6px;color:var(--text-primary);">
     <button class="f-remove-btn" onclick="this.parentElement.remove()">✕</button>`;
   list.appendChild(row);
 }
@@ -3559,8 +3559,8 @@ function wizAddExame(e){
   const list=document.getElementById('rx-exames-list');
   const row=document.createElement('div');row.className='f-list-item';row.style.gridTemplateColumns='1fr 120px 130px auto';
   row.innerHTML=`
-    <input type="text" value="${e.nome||''}" placeholder="Nome do exame" style="font-size:12px;padding:7px;background:rgba(62,79,92,0.04);border:1px solid var(--border);border-radius:6px;color:var(--text-primary);">
-    <select style="font-size:12px;padding:7px;background:rgba(62,79,92,0.04);border:1px solid var(--border);border-radius:6px;color:var(--text-primary);">
+    <input type="text" value="${e.nome||''}" placeholder="Nome do exame" style="font-size:12px;padding:7px;background:rgba(62,79,92,0.08);border:1px solid var(--border);border-radius:6px;color:var(--text-primary);">
+    <select style="font-size:12px;padding:7px;background:rgba(62,79,92,0.08);border:1px solid var(--border);border-radius:6px;color:var(--text-primary);">
       <option value="mensal" ${e.recorrencia==='mensal'?'selected':''}>Mensal</option>
       <option value="trimestral" ${e.recorrencia==='trimestral'?'selected':''}>Trimestral</option>
       <option value="semestral" ${e.recorrencia==='semestral'?'selected':''}>Semestral</option>
@@ -3568,7 +3568,7 @@ function wizAddExame(e){
       <option value="bianual" ${e.recorrencia==='bianual'?'selected':''}>A cada 2 anos</option>
       <option value="unica" ${e.recorrencia==='unica'?'selected':''}>Única vez</option>
     </select>
-    <input type="date" value="${e.proxima_data||''}" style="font-size:12px;padding:7px;background:rgba(62,79,92,0.04);border:1px solid var(--border);border-radius:6px;color:var(--text-primary);">
+    <input type="date" value="${e.proxima_data||''}" style="font-size:12px;padding:7px;background:rgba(62,79,92,0.08);border:1px solid var(--border);border-radius:6px;color:var(--text-primary);">
     <button class="f-remove-btn" onclick="this.parentElement.remove()">✕</button>`;
   list.appendChild(row);
 }
@@ -3585,20 +3585,20 @@ function wizAddAlertRule(r){
   const list=document.getElementById('rx-alert-rules');
   const row=document.createElement('div');row.className='f-list-item';row.style.gridTemplateColumns='120px 60px 80px 100px 1fr auto';
   row.innerHTML=`
-    <select style="font-size:11px;padding:6px;background:rgba(62,79,92,0.04);border:1px solid var(--border);border-radius:5px;color:var(--text-primary);">
+    <select style="font-size:11px;padding:6px;background:rgba(62,79,92,0.08);border:1px solid var(--border);border-radius:5px;color:var(--text-primary);">
       <option value="pa_sis" ${r.metric==='pa_sis'?'selected':''}>PA Sistólica</option><option value="pa_dia" ${r.metric==='pa_dia'?'selected':''}>PA Diastólica</option>
       <option value="fc" ${r.metric==='fc'?'selected':''}>FC</option><option value="glicemia" ${r.metric==='glicemia'?'selected':''}>Glicemia</option>
       <option value="peso" ${r.metric==='peso'?'selected':''}>Peso</option><option value="spo2" ${r.metric==='spo2'?'selected':''}>SpO2</option>
       <option value="temp" ${r.metric==='temp'?'selected':''}>Temperatura</option>
     </select>
-    <select style="font-size:11px;padding:6px;background:rgba(62,79,92,0.04);border:1px solid var(--border);border-radius:5px;color:var(--text-primary);">
+    <select style="font-size:11px;padding:6px;background:rgba(62,79,92,0.08);border:1px solid var(--border);border-radius:5px;color:var(--text-primary);">
       <option value=">" ${r.condition==='>'?'selected':''}>&gt;</option><option value="<" ${r.condition==='<'?'selected':''}>&lt;</option><option value=">=" ${r.condition==='>='?'selected':''}>&ge;</option><option value="<=" ${r.condition==='<='?'selected':''}>&le;</option>
     </select>
-    <input type="number" value="${r.threshold||''}" placeholder="Valor" style="font-size:11px;padding:6px;background:rgba(62,79,92,0.04);border:1px solid var(--border);border-radius:5px;color:var(--text-primary);">
-    <select style="font-size:11px;padding:6px;background:rgba(62,79,92,0.04);border:1px solid var(--border);border-radius:5px;color:var(--text-primary);">
+    <input type="number" value="${r.threshold||''}" placeholder="Valor" style="font-size:11px;padding:6px;background:rgba(62,79,92,0.08);border:1px solid var(--border);border-radius:5px;color:var(--text-primary);">
+    <select style="font-size:11px;padding:6px;background:rgba(62,79,92,0.08);border:1px solid var(--border);border-radius:5px;color:var(--text-primary);">
       <option value="low" ${r.severity==='low'?'selected':''}>Leve</option><option value="medium" ${r.severity==='medium'?'selected':''}>Médio</option><option value="high" ${r.severity==='high'?'selected':''}>Alto</option><option value="critical" ${r.severity==='critical'?'selected':''}>Crítico</option>
     </select>
-    <input type="text" value="${r.message||''}" placeholder="Mensagem de alerta..." style="font-size:11px;padding:6px;background:rgba(62,79,92,0.04);border:1px solid var(--border);border-radius:5px;color:var(--text-primary);">
+    <input type="text" value="${r.message||''}" placeholder="Mensagem de alerta..." style="font-size:11px;padding:6px;background:rgba(62,79,92,0.08);border:1px solid var(--border);border-radius:5px;color:var(--text-primary);">
     <button class="f-remove-btn" onclick="this.parentElement.remove()">✕</button>`;
   list.appendChild(row);
 }
@@ -3749,7 +3749,7 @@ function wizBuildDashboard(){
     const age=RX_PERFIL.idade||30;
     const sex=document.getElementById('rx-sexo')?.value||'';
     const items=wizGetPreventiveProtocol(age,sex);
-    prev.innerHTML=items.map(i=>`<div style="font-size:11px;color:var(--text-secondary);padding:4px 0;border-bottom:1px solid rgba(62,79,92,0.025);">✓ ${i}</div>`).join('');
+    prev.innerHTML=items.map(i=>`<div style="font-size:11px;color:var(--text-secondary);padding:4px 0;border-bottom:1px solid rgba(62,79,92,0.06);">✓ ${i}</div>`).join('');
   }
 }
 
