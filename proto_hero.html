@@ -101,8 +101,6 @@ body{font-family:var(--sans);background:var(--bg);color:#141413;overflow-x:hidde
   display:flex;align-items:center;justify-content:center;
   overflow:hidden;
 }
-
-/* Background image with parallax */
 .hero-bg{
   position:absolute;inset:-80px;
   background-position:center center;
@@ -110,15 +108,12 @@ body{font-family:var(--sans);background:var(--bg);color:#141413;overflow-x:hidde
   transform:translateZ(0);will-change:transform;
   transition:opacity .8s ease;
 }
-
-/* Overlay — glassmorphism feel */
 .hero-overlay{
   position:absolute;inset:0;
   background:
     radial-gradient(ellipse 80% 60% at 50% 40%, rgba(10,22,40,.7) 0%, rgba(10,22,40,.9) 100%);
   backdrop-filter:saturate(1.3);
 }
-/* Accent glow */
 .hero-glow{
   position:absolute;width:600px;height:600px;border-radius:50%;
   background:radial-gradient(circle,rgba(2,128,144,.2) 0%,transparent 70%);
@@ -135,8 +130,6 @@ body{font-family:var(--sans);background:var(--bg);color:#141413;overflow-x:hidde
   0%{transform:translate(0,0) scale(1);}
   100%{transform:translate(30px,-20px) scale(1.1);}
 }
-
-/* Geometric accent lines */
 .hero-lines{
   position:absolute;inset:0;pointer-events:none;overflow:hidden;
 }
@@ -155,16 +148,12 @@ body{font-family:var(--sans);background:var(--bg);color:#141413;overflow-x:hidde
 @keyframes line-fade{
   0%,100%{opacity:.3;}50%{opacity:.8;}
 }
-
-/* Floating cross logo in hero bg */
 .hero-cross-bg{
   position:absolute;z-index:1;
   width:350px;height:350px;
   top:50%;left:50%;transform:translate(-50%,-50%);
   opacity:.04;pointer-events:none;
 }
-
-/* Content */
 .hero-content{
   position:relative;z-index:2;text-align:center;
   max-width:720px;padding:0 30px;
@@ -180,7 +169,6 @@ body{font-family:var(--sans);background:var(--bg);color:#141413;overflow-x:hidde
 @keyframes stagger-in{
   to{opacity:1;transform:translateY(0);}
 }
-
 .hero-eyebrow{
   font-size:12px;font-weight:600;letter-spacing:4px;
   text-transform:uppercase;color:var(--gold);
@@ -224,8 +212,6 @@ body{font-family:var(--sans);background:var(--bg);color:#141413;overflow-x:hidde
   border-color:rgba(255,255,255,.4);
   background:rgba(255,255,255,.1);
 }
-
-/* Scroll indicator */
 .hero-scroll{
   position:absolute;bottom:30px;left:50%;transform:translateX(-50%);
   z-index:2;display:flex;flex-direction:column;align-items:center;gap:6px;
@@ -243,8 +229,6 @@ body{font-family:var(--sans);background:var(--bg);color:#141413;overflow-x:hidde
   0%,100%{transform:translateX(-50%) translateY(0);opacity:.6;}
   50%{transform:translateX(-50%) translateY(8px);opacity:1;}
 }
-
-/* Placeholder sections */
 .placeholder-section{
   min-height:50vh;padding:80px 40px;
   display:flex;align-items:center;justify-content:center;
@@ -261,9 +245,7 @@ body{font-family:var(--sans);background:var(--bg);color:#141413;overflow-x:hidde
 <!-- ═══ HEADER ═══ -->
 <header class="header" id="main-header">
   <a href="#" class="header-logo">
-    <!-- APEX Health cross logo (dots pattern rotated 45° to + shape) -->
     <svg class="header-logo-icon" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <!-- Vertical arm -->
       <circle cx="20" cy="4" r="2" fill="#C4A35A" opacity=".5"/>
       <circle cx="20" cy="9" r="2.3" fill="#C4A35A" opacity=".65"/>
       <circle cx="20" cy="14.5" r="2.6" fill="#C4A35A" opacity=".8"/>
@@ -271,14 +253,12 @@ body{font-family:var(--sans);background:var(--bg);color:#141413;overflow-x:hidde
       <circle cx="20" cy="25.5" r="2.6" fill="#C4A35A" opacity=".8"/>
       <circle cx="20" cy="31" r="2.3" fill="#C4A35A" opacity=".65"/>
       <circle cx="20" cy="36" r="2" fill="#C4A35A" opacity=".5"/>
-      <!-- Horizontal arm -->
       <circle cx="4" cy="20" r="2" fill="#C4A35A" opacity=".5"/>
       <circle cx="9" cy="20" r="2.3" fill="#C4A35A" opacity=".65"/>
       <circle cx="14.5" cy="20" r="2.6" fill="#C4A35A" opacity=".8"/>
       <circle cx="25.5" cy="20" r="2.6" fill="#C4A35A" opacity=".8"/>
       <circle cx="31" cy="20" r="2.3" fill="#C4A35A" opacity=".65"/>
       <circle cx="36" cy="20" r="2" fill="#C4A35A" opacity=".5"/>
-      <!-- Diagonal accents (subtle, smaller) -->
       <circle cx="14" cy="14" r="1.5" fill="#028090" opacity=".35"/>
       <circle cx="26" cy="14" r="1.5" fill="#028090" opacity=".35"/>
       <circle cx="14" cy="26" r="1.5" fill="#028090" opacity=".35"/>
@@ -286,16 +266,13 @@ body{font-family:var(--sans);background:var(--bg);color:#141413;overflow-x:hidde
     </svg>
     <span class="header-brand">APEX</span>
   </a>
-
   <div class="header-spacer"></div>
-
   <nav class="header-nav">
     <a href="#s-problema">O Problema</a>
     <a href="#s-produto">Como Funciona</a>
     <a href="#s-planos">Planos</a>
     <a href="#s-insights">Insights</a>
   </nav>
-
   <div class="header-sep"></div>
   <a href="portal_profissionais.html" class="header-pro">Área Pro ↗</a>
   <div class="header-sep"></div>
@@ -310,5 +287,114 @@ body{font-family:var(--sans);background:var(--bg);color:#141413;overflow-x:hidde
   <div class="hero-glow-2"></div>
   <div class="hero-lines"></div>
 
-  <!-- Large faded cross in background -->
-  <svg class=
+  <svg class="hero-cross-bg" viewBox="0 0 40 40" fill="none">
+    <circle cx="20" cy="4" r="2" fill="#C4A35A" opacity=".5"/>
+    <circle cx="20" cy="9" r="2.3" fill="#C4A35A" opacity=".65"/>
+    <circle cx="20" cy="14.5" r="2.6" fill="#C4A35A" opacity=".8"/>
+    <circle cx="20" cy="20" r="3" fill="#C4A35A"/>
+    <circle cx="20" cy="25.5" r="2.6" fill="#C4A35A" opacity=".8"/>
+    <circle cx="20" cy="31" r="2.3" fill="#C4A35A" opacity=".65"/>
+    <circle cx="20" cy="36" r="2" fill="#C4A35A" opacity=".5"/>
+    <circle cx="4" cy="20" r="2" fill="#C4A35A" opacity=".5"/>
+    <circle cx="9" cy="20" r="2.3" fill="#C4A35A" opacity=".65"/>
+    <circle cx="14.5" cy="20" r="2.6" fill="#C4A35A" opacity=".8"/>
+    <circle cx="25.5" cy="20" r="2.6" fill="#C4A35A" opacity=".8"/>
+    <circle cx="31" cy="20" r="2.3" fill="#C4A35A" opacity=".65"/>
+    <circle cx="36" cy="20" r="2" fill="#C4A35A" opacity=".5"/>
+    <circle cx="14" cy="14" r="1.5" fill="#028090" opacity=".4"/>
+    <circle cx="26" cy="14" r="1.5" fill="#028090" opacity=".4"/>
+    <circle cx="14" cy="26" r="1.5" fill="#028090" opacity=".4"/>
+    <circle cx="26" cy="26" r="1.5" fill="#028090" opacity=".4"/>
+  </svg>
+
+  <div class="hero-content">
+    <div class="hero-eyebrow">Monitoramento Remoto de Pacientes</div>
+    <h1 class="hero-headline">
+      Seu corpo fala<br><em>todos os dias.</em>
+    </h1>
+    <p class="hero-sub">
+      Acompanhamento contínuo de hipertensão, diabetes, obesidade e doença renal crônica — com wearables, inteligência artificial e médico especialista.
+    </p>
+    <div class="hero-actions">
+      <a href="#s-planos" class="hero-btn-primary">Conheça os planos →</a>
+      <a href="#s-produto" class="hero-btn-secondary">Como funciona</a>
+    </div>
+  </div>
+
+  <div class="hero-scroll">
+    <span>Scroll</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- Placeholder sections -->
+<section class="placeholder-section" id="s-problema" style="background:#f5f5f0;">
+  <h2 class="rv">Seção 02 — O Problema (Big Numbers)</h2>
+</section>
+<section class="placeholder-section" id="s-produto">
+  <h2 class="rv">Seção 03 — A Solução APEX</h2>
+</section>
+<section class="placeholder-section" id="s-planos" style="background:#1E2D50;">
+  <h2 class="rv" style="color:#C4A35A;">Seção 06 — Planos e Preços</h2>
+</section>
+<section class="placeholder-section" id="s-insights" style="background:#f5f5f0;">
+  <h2 class="rv">Seção 08 — APEX Insights</h2>
+</section>
+
+<!-- ═══ BACKGROUND SELECTOR (para validação) ═══ -->
+<div class="bg-selector" id="bg-sel">
+  <span>Trocar fundo</span>
+  <button class="active" onclick="setBg(0,this)">A · Médico + tecnologia</button>
+  <button onclick="setBg(1,this)">B · Wearable / smartwatch</button>
+  <button onclick="setBg(2,this)">C · Abstrato / dados</button>
+  <button onclick="setBg(3,this)">D · Paciente + natureza</button>
+</div>
+
+<script>
+var bgImages = [
+  'https://images.unsplash.com/photo-1631217868264-e5b90bb7e133?w=1920&q=85',
+  'https://images.unsplash.com/photo-1510017803434-a899b57cbffc?w=1920&q=85',
+  'https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=1920&q=85',
+  'https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=1920&q=85'
+];
+var heroBg = document.getElementById('hero-bg');
+
+function setBg(idx, btn) {
+  heroBg.style.opacity = '0';
+  setTimeout(function() {
+    heroBg.style.backgroundImage = "url('" + bgImages[idx] + "')";
+    heroBg.style.opacity = '1';
+  }, 400);
+  document.querySelectorAll('.bg-selector button').forEach(function(b) { b.classList.remove('active'); });
+  btn.classList.add('active');
+}
+
+bgImages.forEach(function(src) {
+  var img = new Image();
+  img.src = src;
+});
+
+var header = document.getElementById('main-header');
+window.addEventListener('scroll', function() {
+  header.classList.toggle('scrolled', window.scrollY > 80);
+});
+
+window.addEventListener('scroll', function() {
+  if (window.scrollY < window.innerHeight) {
+    heroBg.style.transform = 'translateY(' + (window.scrollY * 0.3) + 'px)';
+  }
+});
+
+var obs = new IntersectionObserver(function(entries) {
+  entries.forEach(function(entry) {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('in');
+      obs.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.1 });
+document.querySelectorAll('.rv').forEach(function(el) { obs.observe(el); });
+</script>
+
+</body>
+</html>
