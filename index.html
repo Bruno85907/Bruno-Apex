@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>APEX Hub · Plataforma Integrada de Saúde</title>
+<title>APEX Hub · Monitoramento Remoto de Pacientes Crônicos</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Instrument+Serif:ital@0;1&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&display=swap" rel="stylesheet">
@@ -16,7 +16,7 @@
   --border:rgba(31,30,29,.10); --green:#4CAF8A; --blue:#2D628C; --navy:#1E2D50;
   /* ── APEX Hub Brand System ── */
   --hub-cream:#FAF9F5; --hub-navy:#1E2D50;
-  --apex-health:#2B5A3E; --apex-pro:#3E4F5C; --apex-reading:#8C2F46;
+  --apex-health:#2B5A3E; --apex-pro:#3E4F5C; --apex-insights:#8C2F46;
   --serif:'Instrument Serif',Georgia,serif;
   --sans:'Space Grotesk',sans-serif;
   --radius:14px;
@@ -745,7 +745,7 @@ footer{background:var(--dark);color:#fff;padding:80px 60px 30px}
         <div class="hero-brand-name">APEX</div>
       </div>
     </div>
-    <h1 class="hero-tagline">It's happening</h1>
+    <h1 class="hero-tagline">Monitoramento que transforma</h1>
   </div>
 </section>
 
@@ -855,8 +855,8 @@ footer{background:var(--dark);color:#fff;padding:80px 60px 30px}
 <!-- ═══ GRADE EDITORIAL ═══ -->
 <section class="wrap" id="s-editorial">
   <div class="sec-hdr rv">
-    <div><div class="sec-eye" style="color:var(--apex-reading)">Conteúdo</div><div class="sec-ttl">Grade Editorial</div></div>
-    <a href="portal_leitura.html" class="sec-more" style="color:var(--apex-reading)">Ver todos →</a>
+    <div><div class="sec-eye" style="color:var(--apex-insights)">Conteúdo</div><div class="sec-ttl">Grade Editorial</div></div>
+    <a href="portal_saude_performance.html" class="sec-more" style="color:var(--apex-insights)">Ver todos →</a>
   </div>
 
   <!-- filtros removidos — conteúdo unificado -->
@@ -865,7 +865,7 @@ footer{background:var(--dark);color:#fff;padding:80px 60px 30px}
   <div class="ed-list rv d2" id="ed-layout">
 
     <!-- 1. André + Maratona — destaque hero -->
-    <a class="ed-item hero" href="portal_leitura.html#artigo-exercicio-drc" data-p="p1">
+    <a class="ed-item hero" href="artigo_exercicio_drc.html" data-p="p1">
       <div class="ed-img">
         <img src="https://images.unsplash.com/photo-1552674605-db6ffd4facb5?w=600&q=80" alt="Corredor em maratona" alt="André e Dr. Bruno Biluca na Maratona de São Paulo" style="width:100%;height:100%;display:block;object-fit:cover;">
       </div>
@@ -878,7 +878,7 @@ footer{background:var(--dark);color:#fff;padding:80px 60px 30px}
     </a>
 
     <!-- 2. Dashboard Fênix / Kt/V -->
-    <a class="ed-item" href="portal_leitura.html" data-p="p2">
+    <a class="ed-item" href="dashboard_fenix_C-Espacoso.html" data-p="p2">
       <div class="ed-img">
         <img src="https://images.unsplash.com/photo-1579684385127-1ef15d508118?w=600&q=80" alt="Equipamento médico" alt="Dashboard indicadores TRS Fênix Nefrologia" style="width:100%;height:100%;display:block;object-fit:cover;">
       </div>
@@ -891,7 +891,7 @@ footer{background:var(--dark);color:#fff;padding:80px 60px 30px}
     </a>
 
     <!-- 3. Oura Ring / HRV -->
-    <a class="ed-item" href="portal_leitura.html" data-p="p3">
+    <a class="ed-item" href="artigo_wearables.html" data-p="p3">
       <div class="ed-img">
         <img src="https://images.unsplash.com/photo-1434494878577-86c23bcb06b9?w=600&q=80" alt="Wearable de saúde" alt="Oura Ring HRV Readiness" style="width:100%;height:100%;display:block;object-fit:cover;object-position:center 60%;">
       </div>
@@ -904,7 +904,7 @@ footer{background:var(--dark);color:#fff;padding:80px 60px 30px}
     </a>
 
     <!-- 4. VO₂ Apple Watch -->
-    <a class="ed-item" href="portal_leitura.html" data-p="p3">
+    <a class="ed-item" href="#s-editorial" data-p="p3">
       <div class="ed-img">
         <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=600&q=80" alt="Exercício cardio" alt="VO2 máximo Apple Watch" style="width:100%;height:100%;display:block;object-fit:contain;">
       </div>
@@ -917,7 +917,7 @@ footer{background:var(--dark);color:#fff;padding:80px 60px 30px}
     </a>
 
     <!-- 5. Sono / Garmin -->
-    <a class="ed-item" href="portal_leitura.html" data-p="p3">
+    <a class="ed-item" href="#s-editorial" data-p="p3">
       <div class="ed-img">
         <img src="https://images.unsplash.com/photo-1541781774459-bb2af2f05b55?w=600&q=80" alt="Qualidade do sono" alt="Garmin sono profundo monitor" style="width:100%;height:100%;display:block;object-fit:contain;">
       </div>
@@ -930,7 +930,7 @@ footer{background:var(--dark);color:#fff;padding:80px 60px 30px}
     </a>
 
     <!-- 6. Ibuprofeno / Anti-inflamatório -->
-    <a class="ed-item" href="portal_leitura.html#artigo-antiinflamatorio-rim" data-p="p3">
+    <a class="ed-item" href="artigo_antiinflamatorio_rim.html" data-p="p3">
       <div class="ed-img">
         <img src="https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=600&q=80" alt="Medicamentos" alt="Ibuprofeno anti-inflamatório AINE" style="width:100%;height:100%;display:block;object-fit:cover;">
       </div>
@@ -1158,27 +1158,41 @@ footer{background:var(--dark);color:#fff;padding:80px 60px 30px}
     <div><div class="sec-eye">Plataformas</div><div class="sec-ttl wh">Ecossistema APEX</div></div>
   </div>
   <div class="portais rv d1">
+    <!-- #01 APEX Health — Produto Core -->
     <a class="portal pac" href="portal_pacientes.html">
       <div class="por-logo-wrap"><img src="apex-health.png" alt="APEX Health"></div>
       <div class="por-n">01</div>
       <div class="por-icon">
         <svg width="36" height="36" viewBox="0 0 36 36" fill="none">
-          <circle cx="18" cy="18" r="5" fill="#F5C842" opacity=".9"/>
-          <line x1="18" y1="2" x2="18" y2="10" stroke="#F5C842" stroke-width="2.5" stroke-linecap="round" opacity=".7"/>
-          <line x1="18" y1="26" x2="18" y2="34" stroke="#F5C842" stroke-width="2.5" stroke-linecap="round" opacity=".7"/>
-          <line x1="2" y1="18" x2="10" y2="18" stroke="#F5C842" stroke-width="2.5" stroke-linecap="round" opacity=".7"/>
-          <line x1="26" y1="18" x2="34" y2="18" stroke="#F5C842" stroke-width="2.5" stroke-linecap="round" opacity=".7"/>
-          <!-- linhas diagonais removidas — ícone em formato de cruz + -->
+          <path d="M18 6 C14 6 8 10 8 16 C8 24 18 30 18 30 C18 30 28 24 28 16 C28 10 22 6 18 6Z" fill="#F5C842" opacity=".85"/>
+          <path d="M12 17 L16 21 L24 13" stroke="#1E2D50" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
         </svg>
       </div>
-      <div class="por-lbl">Sua saúde, do seu jeito</div>
+      <div class="por-lbl">Monitoramento cardiometabólico-renal</div>
       <div class="por-ttl">APEX Health</div>
-      <div class="por-desc">Entenda seu corpo, acompanhe seus dados e viva melhor — mesmo quando a saúde exige mais atenção.</div>
-      <div class="por-cta">Acessar plataforma <span class="por-arr">→</span></div>
+      <div class="por-desc">Acompanhamento contínuo de hipertensão, diabetes, obesidade e doença renal — com dados de wearables, IA e especialista dedicado.</div>
+      <div class="por-cta">Conhecer planos <span class="por-arr">→</span></div>
     </a>
+    <!-- #02 APEX Insights — Conteúdo e funil -->
+    <a class="portal saud" href="portal_saude_performance.html">
+      <div class="por-logo-wrap"><img src="apex-reading.png" alt="APEX Insights"></div>
+      <div class="por-n">02</div>
+      <div class="por-icon">
+        <svg width="40" height="28" viewBox="0 0 40 28" fill="none">
+          <path d="M0,6 Q5,2 10,6 Q15,10 20,6 Q25,2 30,6 Q35,10 40,6" stroke="#F5C842" stroke-width="2.2" fill="none" stroke-linecap="round" opacity=".9"/>
+          <path d="M0,14 Q5,10 10,14 Q15,18 20,14 Q25,10 30,14 Q35,18 40,14" stroke="#F5C842" stroke-width="2.2" fill="none" stroke-linecap="round" opacity=".7"/>
+          <path d="M0,22 Q5,18 10,22 Q15,26 20,22 Q25,18 30,22 Q35,26 40,22" stroke="#F5C842" stroke-width="2.2" fill="none" stroke-linecap="round" opacity=".45"/>
+        </svg>
+      </div>
+      <div class="por-lbl">Ciência, wearables e longevidade</div>
+      <div class="por-ttl">APEX Insights</div>
+      <div class="por-desc">Artigos baseados em evidência sobre saúde crônica, performance e tecnologia — para quem quer entender seus dados e viver melhor.</div>
+      <div class="por-cta">Explorar conteúdo <span class="por-arr">→</span></div>
+    </a>
+    <!-- #03 APEX Pro — Gestão clínica -->
     <a class="portal prof" href="portal_profissionais.html">
       <div class="por-logo-wrap"><img src="apex-pro.png" alt="APEX Pro"></div>
-      <div class="por-n">02</div>
+      <div class="por-n">03</div>
       <div class="por-icon">
         <svg width="36" height="36" viewBox="0 0 36 36" fill="none">
           <circle cx="18" cy="18" r="6" stroke="#F5C842" stroke-width="2.2" fill="rgba(245,200,66,.1)" opacity=".9"/>
@@ -1191,24 +1205,9 @@ footer{background:var(--dark);color:#fff;padding:80px 60px 30px}
           <line x1="23" y1="15.5" x2="24" y2="16.5" stroke="#F5C842" stroke-width="1.5" opacity=".5"/>
         </svg>
       </div>
-      <div class="por-lbl">Gestão que transforma</div>
+      <div class="por-lbl">Painel clínico completo</div>
       <div class="por-ttl">APEX Pro</div>
-      <div class="por-desc">Indicadores claros, decisões melhores. A visão completa da sua clínica em um só lugar.</div>
-      <div class="por-cta">Acessar plataforma <span class="por-arr">→</span></div>
-    </a>
-    <a class="portal saud" href="portal_saude_performance.html">
-      <div class="por-logo-wrap"><img src="apex-reading.png" alt="APEX Reading"></div>
-      <div class="por-n">03</div>
-      <div class="por-icon">
-        <svg width="40" height="28" viewBox="0 0 40 28" fill="none">
-          <path d="M0,6 Q5,2 10,6 Q15,10 20,6 Q25,2 30,6 Q35,10 40,6" stroke="#F5C842" stroke-width="2.2" fill="none" stroke-linecap="round" opacity=".9"/>
-          <path d="M0,14 Q5,10 10,14 Q15,18 20,14 Q25,10 30,14 Q35,18 40,14" stroke="#F5C842" stroke-width="2.2" fill="none" stroke-linecap="round" opacity=".7"/>
-          <path d="M0,22 Q5,18 10,22 Q15,26 20,22 Q25,18 30,22 Q35,26 40,22" stroke="#F5C842" stroke-width="2.2" fill="none" stroke-linecap="round" opacity=".45"/>
-        </svg>
-      </div>
-      <div class="por-lbl">Leitura que inspira</div>
-      <div class="por-ttl">APEX Reading</div>
-      <div class="por-desc">Ciência, performance e longevidade — traduzidos em artigos que você realmente vai querer ler.</div>
+      <div class="por-desc">Gestão de pacientes, prescrições, dashboards e indicadores — tudo em um só lugar para o médico que monitora.</div>
       <div class="por-cta">Acessar plataforma <span class="por-arr">→</span></div>
     </a>
   </div>
@@ -1250,13 +1249,13 @@ footer{background:var(--dark);color:#fff;padding:80px 60px 30px}
     <div>
       <div class="ft-ch">Plataformas</div>
       <a href="portal_pacientes.html"          class="ft-l">APEX Health</a>
+      <a href="portal_saude_performance.html"   class="ft-l">APEX Insights</a>
       <a href="portal_profissionais.html"       class="ft-l">APEX Pro</a>
-      <a href="portal_saude_performance.html"   class="ft-l">APEX Reading</a>
       <a href="dashboard_fenix_C-Espacoso.html" class="ft-l">Dashboard Fênix</a>
     </div>
   </div>
   <div class="ft-bot">
-    <span>© 2026 APEX Hub · apex.med.br · Medicina · Movimento · Propósito</span>
+    <span>© 2026 APEX Hub · apex.med.br · Monitoramento · Dados · Resultados</span>
     <div style="display:flex;gap:14px"><span>Powered by Fênix Nefrologia</span><a href="#">Privacidade</a></div>
   </div>
 </footer>
@@ -1366,3 +1365,4 @@ fetchWeather();setInterval(fetchWeather,600000);
 </script>
 </body>
 </html>
+                                                                                         
