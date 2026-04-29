@@ -413,156 +413,158 @@ body{font-family:var(--sans);background:var(--bg);color:#141413;overflow-x:hidde
 
 
 
+
+
 /* ═══ COMO FUNCIONA ═══ */
 .como-funciona{
-  padding:72px 48px 64px;
-  background:#0a0f1a;
-  overflow:hidden;
+  padding:80px 48px;
+  background:var(--bg);
 }
 .cf-inner{
-  max-width:1060px;margin:0 auto;
+  max-width:900px;margin:0 auto;
+}
+.cf-header{
+  text-align:center;margin-bottom:64px;
 }
 .cf-eyebrow{
   font-size:11px;font-weight:600;letter-spacing:3.5px;
   text-transform:uppercase;color:var(--gold);
-  margin-bottom:8px;text-align:center;
+  margin-bottom:8px;
 }
 .cf-headline{
   font-family:var(--serif);
-  font-size:34px;font-weight:400;color:#fff;
-  line-height:1.2;margin-bottom:10px;text-align:center;
+  font-size:36px;font-weight:400;color:#111;
+  line-height:1.2;margin-bottom:10px;
 }
 .cf-headline em{font-style:italic;color:var(--gold);}
 .cf-sub{
-  font-size:14px;color:rgba(255,255,255,.4);
-  text-align:center;max-width:560px;margin:0 auto 48px;line-height:1.6;
+  font-size:14.5px;color:rgba(0,0,0,.45);
+  max-width:480px;margin:0 auto;line-height:1.6;
 }
-/* Two tracks layout */
-.cf-tracks{
-  display:grid;
-  grid-template-columns:1fr 60px 1fr;
-  gap:0;
-  align-items:start;
+/* Steps */
+.cf-steps{
+  display:flex;flex-direction:column;gap:0;
 }
-.cf-track{
-  background:rgba(255,255,255,.03);
-  border:1px solid rgba(255,255,255,.06);
-  border-radius:16px;
-  padding:28px 24px;
-}
-.cf-track:hover{
-  background:rgba(255,255,255,.04);
-  border-color:rgba(196,163,90,.15);
-  transition:all .4s;
-}
-.cf-track-badge{
-  font-size:9px;font-weight:600;letter-spacing:1.5px;
-  text-transform:uppercase;
-  padding:4px 10px;border-radius:6px;
-  display:inline-block;margin-bottom:16px;
-}
-.cf-badge-protocol{background:rgba(2,128,144,.15);color:#028090;}
-.cf-badge-ai{background:rgba(196,163,90,.15);color:var(--gold);}
-.cf-track-title{
-  font-family:var(--serif);
-  font-size:22px;color:#fff;margin-bottom:6px;
-}
-.cf-track-title em{font-style:italic;color:var(--gold);}
-.cf-track-desc{
-  font-size:13px;color:rgba(255,255,255,.4);
-  line-height:1.6;margin-bottom:24px;
-}
-/* Steps inside track */
 .cf-step{
-  display:flex;gap:14px;align-items:flex-start;
-  margin-bottom:18px;position:relative;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:48px;
+  align-items:center;
+  padding:48px 0;
+  border-top:1px solid rgba(0,0,0,.06);
 }
-.cf-step:last-child{margin-bottom:0;}
-.cf-step-icon{
-  width:40px;height:40px;flex-shrink:0;
-  border-radius:10px;
-  background:rgba(255,255,255,.05);
-  border:1px solid rgba(255,255,255,.08);
-  display:flex;align-items:center;justify-content:center;
-}
-.cf-step-icon svg{width:20px;height:20px;}
+.cf-step:last-child{border-bottom:1px solid rgba(0,0,0,.06);}
+.cf-step:nth-child(even) .cf-step-visual{order:-1;}
 .cf-step-content{}
-.cf-step-label{
-  font-size:12px;font-weight:600;color:#fff;
-  margin-bottom:2px;
+.cf-step-num{
+  font-family:var(--serif);
+  font-size:72px;font-weight:400;
+  color:rgba(0,0,0,.04);
+  line-height:1;margin-bottom:4px;
+  letter-spacing:-3px;
 }
+.cf-step-title{
+  font-family:var(--serif);
+  font-size:26px;font-weight:400;color:#111;
+  margin-bottom:10px;line-height:1.2;
+}
+.cf-step-title em{font-style:italic;color:var(--gold);}
 .cf-step-text{
-  font-size:11.5px;color:rgba(255,255,255,.35);
-  line-height:1.5;
+  font-size:14px;color:rgba(0,0,0,.5);
+  line-height:1.7;margin-bottom:16px;
 }
-/* Connector line between steps */
-.cf-step::before{
-  content:'';
-  position:absolute;
-  left:19px;top:44px;
-  width:1px;height:calc(100% - 26px);
-  background:rgba(255,255,255,.06);
+.cf-step-tags{
+  display:flex;gap:8px;flex-wrap:wrap;
 }
-.cf-step:last-child::before{display:none;}
-/* Center divider */
-.cf-divider{
-  display:flex;flex-direction:column;
-  align-items:center;justify-content:center;
-  padding-top:60px;
+.cf-step-tag{
+  font-size:11px;font-weight:500;letter-spacing:.5px;
+  padding:5px 12px;border-radius:6px;
+  background:rgba(0,0,0,.04);color:rgba(0,0,0,.45);
 }
-.cf-divider-line{
-  width:1px;height:100px;
-  background:linear-gradient(180deg,transparent,rgba(196,163,90,.3),transparent);
-}
-.cf-divider-or{
-  font-size:10px;font-weight:600;letter-spacing:2px;
-  text-transform:uppercase;color:rgba(255,255,255,.2);
-  padding:10px 0;
-}
-/* Flow diagram below */
-.cf-flow{
-  margin-top:48px;
+/* Visual card (illustration placeholder) */
+.cf-step-visual{
+  background:rgba(0,0,0,.02);
+  border:1px solid rgba(0,0,0,.06);
+  border-radius:16px;
+  min-height:260px;
   display:flex;align-items:center;justify-content:center;
-  gap:16px;flex-wrap:wrap;
+  padding:24px;
+  position:relative;
+  overflow:hidden;
 }
-.cf-flow-node{
-  text-align:center;
-  padding:16px 20px;
-  border-radius:14px;
-  background:rgba(255,255,255,.03);
-  border:1px solid rgba(255,255,255,.06);
-  min-width:130px;
+/* Mini mockups inside visual cards */
+.cf-mock{
+  width:100%;max-width:280px;
 }
-.cf-flow-node-icon{
-  width:44px;height:44px;border-radius:50%;
-  margin:0 auto 8px;
+.cf-mock-card{
+  background:#fff;
+  border:1px solid rgba(0,0,0,.08);
+  border-radius:12px;
+  padding:16px;
+  margin-bottom:8px;
+  box-shadow:0 2px 12px rgba(0,0,0,.04);
+}
+.cf-mock-card:last-child{margin-bottom:0;}
+.cf-mock-row{
+  display:flex;justify-content:space-between;align-items:center;
+}
+.cf-mock-label{font-size:11px;color:rgba(0,0,0,.4);font-weight:500;}
+.cf-mock-value{font-size:16px;font-weight:700;color:#111;}
+.cf-mock-badge{
+  font-size:9px;font-weight:600;padding:3px 8px;border-radius:4px;
+  display:inline-block;margin-top:4px;
+}
+.cf-mock-ok{background:rgba(16,185,129,.1);color:#059669;}
+.cf-mock-warn{background:rgba(245,158,11,.1);color:#d97706;}
+/* Chat mockup */
+.cf-chat{width:100%;max-width:300px;}
+.cf-chat-bubble{
+  padding:10px 14px;border-radius:14px;
+  font-size:12px;line-height:1.5;
+  margin-bottom:8px;max-width:85%;
+}
+.cf-chat-patient{
+  background:rgba(0,0,0,.05);color:#111;
+  border-bottom-left-radius:4px;
+  margin-right:auto;
+}
+.cf-chat-ai{
+  background:var(--navy-deep);color:#fff;
+  border-bottom-right-radius:4px;
+  margin-left:auto;
+}
+.cf-chat-ai-name{
+  font-size:9px;font-weight:600;letter-spacing:1px;
+  text-transform:uppercase;color:var(--gold);
+  margin-bottom:3px;
+}
+/* Flow summary */
+.cf-flow-summary{
+  margin-top:56px;
   display:flex;align-items:center;justify-content:center;
+  gap:12px;flex-wrap:wrap;
 }
-.cf-flow-node-label{font-size:12px;font-weight:600;color:#fff;}
-.cf-flow-node-sub{font-size:10px;color:rgba(255,255,255,.3);margin-top:2px;}
-.cf-flow-arrow{
-  flex-shrink:0;
-  color:var(--gold);font-size:11px;font-weight:500;
-  display:flex;flex-direction:column;align-items:center;gap:2px;
+.cf-flow-dot{
+  width:48px;height:48px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--serif);font-size:20px;font-weight:400;
+  background:rgba(0,0,0,.03);color:rgba(0,0,0,.25);
+  border:1px solid rgba(0,0,0,.06);
 }
-.cf-flow-arrow svg{width:32px;height:12px;}
-.cf-devices{
-  margin-top:40px;
-  display:flex;gap:28px;align-items:center;justify-content:center;
-  flex-wrap:wrap;
+.cf-flow-dot.active{
+  background:var(--gold);color:#fff;
+  border-color:var(--gold);
 }
-.cf-devices span{
-  font-size:11px;font-weight:500;letter-spacing:.8px;
-  color:rgba(255,255,255,.18);
+.cf-flow-line{
+  width:40px;height:1px;background:rgba(0,0,0,.1);
 }
-@media(max-width:900px){
-  .cf-tracks{grid-template-columns:1fr;gap:16px;}
-  .cf-divider{flex-direction:row;padding:0;gap:12px;}
-  .cf-divider-line{width:80px;height:1px;
-    background:linear-gradient(90deg,transparent,rgba(196,163,90,.3),transparent);}
-  .como-funciona{padding:48px 24px 40px;}
-  .cf-headline{font-size:26px;}
-  .cf-flow{flex-direction:column;}
+@media(max-width:768px){
+  .cf-step{grid-template-columns:1fr;gap:24px;}
+  .cf-step:nth-child(even) .cf-step-visual{order:0;}
+  .cf-step-num{font-size:56px;}
+  .cf-step-title{font-size:22px;}
+  .como-funciona{padding:56px 24px;}
+  .cf-headline{font-size:28px;}
 }
 </style>
 </head>
@@ -760,146 +762,170 @@ body{font-family:var(--sans);background:var(--bg);color:#141413;overflow-x:hidde
 
 
 
+
+
 <!-- ═══ SEÇÃO — COMO FUNCIONA ═══ -->
 <section class="como-funciona" id="s-como-funciona">
   <div class="cf-inner">
 
-    <div class="cf-eyebrow rv">Como funciona</div>
-    <h2 class="cf-headline rv">
-      Dois caminhos.<br><em>Um objetivo.</em>
-    </h2>
-    <p class="cf-sub rv">O APEX combina protocolo clínico estruturado com monitoramento contínuo por inteligência artificial — e o médico acompanha tudo.</p>
+    <div class="cf-header">
+      <div class="cf-eyebrow rv">Como funciona</div>
+      <h2 class="cf-headline rv">Quatro passos para o<br><em>controle contínuo.</em></h2>
+      <p class="cf-sub rv">Do primeiro contato ao monitoramento diário — tudo conectado em uma plataforma única.</p>
+    </div>
 
-    <div class="cf-tracks rv">
+    <div class="cf-steps">
 
-      <!-- Track 1: Protocolo -->
-      <div class="cf-track">
-        <div class="cf-track-badge cf-badge-protocol">Caminho 1</div>
-        <div class="cf-track-title">Protocolo <em>clínico</em></div>
-        <div class="cf-track-desc">Consultas e retornos programados — presenciais ou por telemedicina — com metas individualizadas para cada condição.</div>
-
-        <div class="cf-step">
-          <div class="cf-step-icon">
-            <svg fill="none" viewBox="0 0 24 24"><path d="M16 4h2a2 2 0 012 2v14a2 2 0 01-2 2H6a2 2 0 01-2-2V6a2 2 0 012-2h2" stroke="#028090" stroke-width="1.5"/><rect x="8" y="2" width="8" height="4" rx="1" stroke="#028090" stroke-width="1.5"/></svg>
-          </div>
-          <div class="cf-step-content">
-            <div class="cf-step-label">Avaliação inicial</div>
-            <div class="cf-step-text">Consulta completa, exames, definição de metas para PA, glicemia, peso e função renal.</div>
+      <!-- Step 01 -->
+      <div class="cf-step rv">
+        <div class="cf-step-content">
+          <div class="cf-step-num">01</div>
+          <div class="cf-step-title">Conte sua <em>história</em></div>
+          <p class="cf-step-text">Você responde um questionário clínico detalhado sobre suas condições, sintomas, medicações atuais e objetivos. Tudo online, no seu tempo — sem fila, sem burocracia.</p>
+          <div class="cf-step-tags">
+            <span class="cf-step-tag">100% online</span>
+            <span class="cf-step-tag">5 minutos</span>
+            <span class="cf-step-tag">Dados seguros</span>
           </div>
         </div>
-
-        <div class="cf-step">
-          <div class="cf-step-icon">
-            <svg fill="none" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" stroke="#028090" stroke-width="1.5"/><path d="M16 2v4M8 2v4M3 10h18" stroke="#028090" stroke-width="1.5"/></svg>
-          </div>
-          <div class="cf-step-content">
-            <div class="cf-step-label">Retornos programados</div>
-            <div class="cf-step-text">Consultas presenciais ou teleconsultas em intervalos definidos pelo protocolo de cada condição.</div>
-          </div>
-        </div>
-
-        <div class="cf-step">
-          <div class="cf-step-icon">
-            <svg fill="none" viewBox="0 0 24 24"><path d="M9 11l3 3L22 4" stroke="#028090" stroke-width="1.5" stroke-linecap="round"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11" stroke="#028090" stroke-width="1.5"/></svg>
-          </div>
-          <div class="cf-step-content">
-            <div class="cf-step-label">Ajustes e otimização</div>
-            <div class="cf-step-text">Medicações, dieta e metas reavaliadas a cada retorno com base nos dados acumulados.</div>
+        <div class="cf-step-visual">
+          <div class="cf-mock">
+            <div class="cf-mock-card">
+              <div class="cf-mock-label">Condições atuais</div>
+              <div style="display:flex;gap:6px;margin-top:8px;flex-wrap:wrap;">
+                <span class="cf-mock-badge cf-mock-warn">Hipertensão</span>
+                <span class="cf-mock-badge cf-mock-warn">DM tipo 2</span>
+                <span class="cf-mock-badge" style="background:rgba(99,102,241,.1);color:#4f46e5;">DRC estágio 3</span>
+              </div>
+            </div>
+            <div class="cf-mock-card">
+              <div class="cf-mock-label">Medicações em uso</div>
+              <div style="font-size:12px;color:#111;margin-top:6px;line-height:1.6;">Losartana 50mg · Metformina 850mg · Dapagliflozina 10mg</div>
+            </div>
           </div>
         </div>
       </div>
 
-      <!-- Divider -->
-      <div class="cf-divider">
-        <div class="cf-divider-line"></div>
-        <div class="cf-divider-or">+</div>
-        <div class="cf-divider-line"></div>
+      <!-- Step 02 -->
+      <div class="cf-step rv">
+        <div class="cf-step-content">
+          <div class="cf-step-num">02</div>
+          <div class="cf-step-title">Consulta com <em>especialista</em></div>
+          <p class="cf-step-text">Com seus dados em mãos, o médico já chega à consulta conhecendo seu caso. Presencial ou por telemedicina — você escolhe. Juntos, definem metas para pressão, glicemia, peso e função renal.</p>
+          <div class="cf-step-tags">
+            <span class="cf-step-tag">Presencial ou tele</span>
+            <span class="cf-step-tag">Nefrologista</span>
+            <span class="cf-step-tag">Metas individuais</span>
+          </div>
+        </div>
+        <div class="cf-step-visual">
+          <div class="cf-mock">
+            <div class="cf-mock-card">
+              <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
+                <div style="width:36px;height:36px;border-radius:50%;background:var(--gold);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#121d33;">Dr</div>
+                <div>
+                  <div style="font-size:13px;font-weight:600;color:#111;">Dr. Bruno Biluca</div>
+                  <div style="font-size:10px;color:rgba(0,0,0,.4);">Nefrologista · CRM 00000</div>
+                </div>
+              </div>
+              <div style="border-top:1px solid rgba(0,0,0,.06);padding-top:10px;">
+                <div class="cf-mock-label" style="margin-bottom:8px;">Metas definidas</div>
+                <div class="cf-mock-row" style="margin-bottom:4px;">
+                  <span style="font-size:11px;color:rgba(0,0,0,.5);">PA alvo</span>
+                  <span style="font-size:12px;font-weight:600;color:#111;">< 130/80</span>
+                </div>
+                <div class="cf-mock-row" style="margin-bottom:4px;">
+                  <span style="font-size:11px;color:rgba(0,0,0,.5);">HbA1c alvo</span>
+                  <span style="font-size:12px;font-weight:600;color:#111;">< 7,0%</span>
+                </div>
+                <div class="cf-mock-row">
+                  <span style="font-size:11px;color:rgba(0,0,0,.5);">Peso alvo</span>
+                  <span style="font-size:12px;font-weight:600;color:#111;">78 kg (-5 kg)</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
 
-      <!-- Track 2: IA contínua -->
-      <div class="cf-track">
-        <div class="cf-track-badge cf-badge-ai">Caminho 2</div>
-        <div class="cf-track-title">Monitoramento <em>contínuo</em></div>
-        <div class="cf-track-desc">Entre as consultas, a IA APEX acompanha cada métrica e conversa com o paciente — o médico vê tudo em tempo real.</div>
-
-        <div class="cf-step">
-          <div class="cf-step-icon">
-            <svg fill="none" viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2" stroke="#C4A35A" stroke-width="1.5" stroke-linecap="round"/></svg>
-          </div>
-          <div class="cf-step-content">
-            <div class="cf-step-label">Paciente mede em casa</div>
-            <div class="cf-step-text">Pressão, glicemia, peso e smartwatch. Os dados chegam automaticamente à plataforma.</div>
+      <!-- Step 03 -->
+      <div class="cf-step rv">
+        <div class="cf-step-content">
+          <div class="cf-step-num">03</div>
+          <div class="cf-step-title">Seu plano <em>personalizado</em></div>
+          <p class="cf-step-text">Você recebe um plano sob medida com medicações otimizadas, orientações de dieta e exercício, e os dispositivos de monitoramento que vão acompanhar você no dia a dia — esfigmomanômetro, glicosímetro, balança e smartwatch.</p>
+          <div class="cf-step-tags">
+            <span class="cf-step-tag">Dispositivos em casa</span>
+            <span class="cf-step-tag">Plano de dieta</span>
+            <span class="cf-step-tag">Medicações ajustadas</span>
           </div>
         </div>
-
-        <div class="cf-step">
-          <div class="cf-step-icon">
-            <svg fill="none" viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z" stroke="#C4A35A" stroke-width="1.5"/><circle cx="9" cy="10" r="1" fill="#C4A35A"/><circle cx="12" cy="10" r="1" fill="#C4A35A"/><circle cx="15" cy="10" r="1" fill="#C4A35A"/></svg>
-          </div>
-          <div class="cf-step-content">
-            <div class="cf-step-label">IA APEX analisa e conversa</div>
-            <div class="cf-step-text">A inteligência artificial interpreta as métricas, tira dúvidas do paciente e orienta sobre dieta, medicação e hábitos.</div>
+        <div class="cf-step-visual">
+          <div class="cf-mock">
+            <div class="cf-mock-card">
+              <div class="cf-mock-label" style="margin-bottom:10px;">Dispositivos do seu plano</div>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+                <div style="text-align:center;padding:12px 8px;background:rgba(0,0,0,.02);border-radius:8px;">
+                  <svg width="28" height="28" fill="none" viewBox="0 0 24 24" style="margin:0 auto 4px;display:block;"><path d="M22 12h-4l-3 9L9 3l-3 9H2" stroke="#C4A35A" stroke-width="1.5" stroke-linecap="round"/></svg>
+                  <div style="font-size:10px;color:#111;font-weight:500;">Esfigmo</div>
+                </div>
+                <div style="text-align:center;padding:12px 8px;background:rgba(0,0,0,.02);border-radius:8px;">
+                  <svg width="28" height="28" fill="none" viewBox="0 0 24 24" style="margin:0 auto 4px;display:block;"><circle cx="12" cy="12" r="4" stroke="#C4A35A" stroke-width="1.5"/><path d="M12 4v2M12 18v2M4 12h2M18 12h2" stroke="#C4A35A" stroke-width="1.5" stroke-linecap="round"/></svg>
+                  <div style="font-size:10px;color:#111;font-weight:500;">Glicosímetro</div>
+                </div>
+                <div style="text-align:center;padding:12px 8px;background:rgba(0,0,0,.02);border-radius:8px;">
+                  <svg width="28" height="28" fill="none" viewBox="0 0 24 24" style="margin:0 auto 4px;display:block;"><rect x="4" y="14" width="16" height="6" rx="2" stroke="#C4A35A" stroke-width="1.5"/><path d="M12 14V8M8 10h8" stroke="#C4A35A" stroke-width="1.5" stroke-linecap="round"/></svg>
+                  <div style="font-size:10px;color:#111;font-weight:500;">Balança</div>
+                </div>
+                <div style="text-align:center;padding:12px 8px;background:rgba(0,0,0,.02);border-radius:8px;">
+                  <svg width="28" height="28" fill="none" viewBox="0 0 24 24" style="margin:0 auto 4px;display:block;"><rect x="6" y="3" width="12" height="18" rx="6" stroke="#C4A35A" stroke-width="1.5"/><circle cx="12" cy="9" r="2" fill="#C4A35A"/></svg>
+                  <div style="font-size:10px;color:#111;font-weight:500;">Smartwatch</div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
+      </div>
 
-        <div class="cf-step">
-          <div class="cf-step-icon">
-            <svg fill="none" viewBox="0 0 24 24"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9" stroke="#C4A35A" stroke-width="1.5"/><path d="M13.73 21a2 2 0 01-3.46 0" stroke="#C4A35A" stroke-width="1.5"/></svg>
+      <!-- Step 04 -->
+      <div class="cf-step rv">
+        <div class="cf-step-content">
+          <div class="cf-step-num">04</div>
+          <div class="cf-step-title">Monitoramento <em>contínuo</em></div>
+          <p class="cf-step-text">Seus dados chegam automaticamente à plataforma. A IA APEX analisa cada medição, conversa com você sobre dúvidas e orienta no dia a dia. O médico acompanha tudo em tempo real e é alertado quando algo precisa de atenção clínica.</p>
+          <div class="cf-step-tags">
+            <span class="cf-step-tag">IA 24/7</span>
+            <span class="cf-step-tag">Médico vê tudo</span>
+            <span class="cf-step-tag">Alertas inteligentes</span>
           </div>
-          <div class="cf-step-content">
-            <div class="cf-step-label">Alerta inteligente ao médico</div>
-            <div class="cf-step-text">Se algo sair do padrão, o médico é notificado com contexto completo. Sem ruído — só o que importa clinicamente.</div>
+        </div>
+        <div class="cf-step-visual">
+          <div class="cf-chat">
+            <div class="cf-chat-bubble cf-chat-patient">Minha pressão deu 152/96 hoje de manhã, é preocupante?</div>
+            <div class="cf-chat-bubble cf-chat-ai">
+              <div class="cf-chat-ai-name">IA APEX</div>
+              Sua PA está acima da meta de 130/80. Nas últimas 3 medições, a média foi 145/92. Vou notificar o Dr. Bruno para avaliar um ajuste na medicação. Enquanto isso, evite sal e tente medir novamente em 2 horas.
+            </div>
+            <div class="cf-chat-bubble cf-chat-patient">Ok, obrigado. E minha glicemia ontem?</div>
+            <div class="cf-chat-bubble cf-chat-ai">
+              <div class="cf-chat-ai-name">IA APEX</div>
+              Sua glicemia de ontem (104 mg/dL) está dentro da meta. Parabéns pela consistência! 📊
+            </div>
           </div>
         </div>
       </div>
 
     </div>
 
-    <!-- Flow diagram -->
-    <div class="cf-flow rv">
-      <div class="cf-flow-node">
-        <div class="cf-flow-node-icon" style="background:rgba(255,255,255,.06);">
-          <svg width="22" height="22" fill="none" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2" stroke="#fff" stroke-width="1.5"/><circle cx="12" cy="7" r="4" stroke="#fff" stroke-width="1.5"/></svg>
-        </div>
-        <div class="cf-flow-node-label">Paciente</div>
-        <div class="cf-flow-node-sub">Mede em casa</div>
-      </div>
-
-      <div class="cf-flow-arrow">
-        <svg viewBox="0 0 32 12"><line x1="0" y1="6" x2="24" y2="6" stroke="#C4A35A" stroke-width="1.5"/><polygon points="24,2 32,6 24,10" fill="#C4A35A"/></svg>
-        <span style="font-size:8px;color:rgba(255,255,255,.2)">dados</span>
-      </div>
-
-      <div class="cf-flow-node" style="border-color:rgba(196,163,90,.2);">
-        <div class="cf-flow-node-icon" style="background:rgba(196,163,90,.1);">
-          <svg width="22" height="22" fill="none" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3" stroke="#C4A35A" stroke-width="1.5"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41" stroke="#C4A35A" stroke-width="1.5" stroke-linecap="round"/></svg>
-        </div>
-        <div class="cf-flow-node-label" style="color:var(--gold);">IA APEX</div>
-        <div class="cf-flow-node-sub">Analisa 24/7</div>
-      </div>
-
-      <div class="cf-flow-arrow">
-        <svg viewBox="0 0 32 12"><line x1="0" y1="6" x2="24" y2="6" stroke="#C4A35A" stroke-width="1.5"/><polygon points="24,2 32,6 24,10" fill="#C4A35A"/></svg>
-        <span style="font-size:8px;color:rgba(255,255,255,.2)">alertas</span>
-      </div>
-
-      <div class="cf-flow-node">
-        <div class="cf-flow-node-icon" style="background:rgba(2,128,144,.1);">
-          <svg width="22" height="22" fill="none" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z" stroke="#028090" stroke-width="1.5"/><path d="M9 22V12h6v10" stroke="#028090" stroke-width="1.5"/></svg>
-        </div>
-        <div class="cf-flow-node-label">Médico</div>
-        <div class="cf-flow-node-sub">Vê tudo, age quando precisa</div>
-      </div>
-    </div>
-
-    <div class="cf-devices rv">
-      <span>Esfigmomanômetro</span>
-      <span>·</span>
-      <span>Glicosímetro</span>
-      <span>·</span>
-      <span>Balança digital</span>
-      <span>·</span>
-      <span>Smartwatch</span>
+    <!-- Flow summary dots -->
+    <div class="cf-flow-summary rv">
+      <div class="cf-flow-dot">01</div>
+      <div class="cf-flow-line"></div>
+      <div class="cf-flow-dot">02</div>
+      <div class="cf-flow-line"></div>
+      <div class="cf-flow-dot">03</div>
+      <div class="cf-flow-line"></div>
+      <div class="cf-flow-dot active">04</div>
     </div>
 
   </div>
