@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>APEX — Protótipo Header + Hero</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --gold:#C4A35A;
+  --navy:#1E2D50;
+  --teal:#028090;
+  --bg:#FAF9F5;
+  --sans:'Space Grotesk',sans-serif;
+  --serif:'Instrument Serif',Georgia,serif;
+}
+html{scroll-behavior:smooth}
+body{font-family:var(--sans);background:var(--bg);color:#141413;overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;}
+
+/* ═══ HEADER ═══ */
+.header{
+  position:fixed;top:0;left:0;right:0;z-index:900;
+  height:64px;display:flex;align-items:center;padding:0 40px;
+  background:rgba(255,255,255,.92);backdrop-filter:blur(24px);
+  border-bottom:1px solid rgba(30,45,80,.06);
+  transition:all .4s ease;
+}
+.header.scrolled{
+  height:56px;
+  box-shadow:0 2px 20px rgba(0,0,0,.06);
+}
+.header-logo{
+  display:flex;align-items:center;gap:10px;
+  text-decoration:none;flex-shrink:0;
+}
+.header-logo svg{height:28px;width:auto;}
+.header-brand{
+  font-size:22px;font-weight:700;letter-spacing:5px;
+  color:var(--navy);text-transform:uppercase;line-height:1;
+}
+.header-spacer{flex:1}
+.header-nav{display:flex;align-items:center;gap:28px;}
+.header-nav a{
+  font-size:11px;font-weight:500;letter-spacing:1.5px;
+  text-transform:uppercase;color:#666;text-decoration:none;
+  transition:color .3s;position:relative;
+}
+.header-nav a::after{
+  content:'';position:absolute;bottom:-4px;left:0;right:0;
+  height:2px;background:var(--gold);transform:scaleX(0);
+  transition:transform .3s;
+}
+.header-nav a:hover{color:var(--navy)}
+.header-nav a:hover::after{transform:scaleX(1)}
+.header-pro{
+  font-size:10px;font-weight:500;color:#666;text-decoration:none;
+  border:1px solid #ddd;border-radius:6px;padding:7px 14px;
+  transition:all .3s;letter-spacing:.5px;
+}
+.header-pro:hover{border-color:var(--navy);color:var(--navy)}
+.header-cta{
+  font-size:11px;font-weight:700;letter-spacing:.5px;
+  background:var(--gold);color:var(--navy);
+  border:none;border-radius:8px;padding:10px 22px;
+  cursor:pointer;transition:all .3s;text-decoration:none;
+}
+.header-cta:hover{
+  transform:translateY(-1px);
+  box-shadow:0 4px 16px rgba(196,163,90,.35);
+}
+.header-sep{
+  width:1px;height:24px;background:rgba(0,0,0,.08);margin:0 4px;
+}
+
+/* ═══ HERO ═══ */
+.hero{
+  position:relative;min-height:100vh;
+  display:flex;align-items:center;justify-content:center;
+  overflow:hidden;margin-top:0;
+}
+
+/* Background image with parallax */
+.hero-bg{
+  position:absolute;inset:-60px;
+  background:url('https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=1920&q=85') center center/cover no-repeat;
+  transform:translateZ(0);
+  will-change:transform;
+}
+
+/* Overlay gradient — escurece para leitura */
+.hero-overlay{
+  position:absolute;inset:0;
+  background:
+    linear-gradient(180deg,
+      rgba(30,45,80,.75) 0%,
+      rgba(10,22,40,.85) 50%,
+      rgba(2,128,144,.6) 100%
+    );
+}
+
+/* Animated particles / pulse circles */
+.hero-particles{
+  position:absolute;inset:0;overflow:hidden;pointer-events:none;
+}
+.hero-particles .ring{
+  position:absolute;border-radius:50%;
+  border:1px solid rgba(196,163,90,.12);
+  animation:pulse-ring 6s ease-in-out infinite;
+}
+.hero-particles .ring:nth-child(1){
+  width:500px;height:500px;top:20%;left:-10%;animation-delay:0s;
+}
+.hero-particles .ring:nth-child(2){
+  width:350px;height:350px;top:50%;right:-5%;animation-delay:2s;
+}
+.hero-particles .ring:nth-child(3){
+  width:200px;height:200px;bottom:10%;left:30%;animation-delay:4s;
+}
+@keyframes pulse-ring{
+  0%,100%{transform:scale(1);opacity:.15;}
+  50%{transform:scale(1.15);opacity:.3;}
+}
+
+/* Subtle floating dots */
+.hero-dot{
+  position:absolute;width:4px;height:4px;border-radius:50%;
+  background:rgba(196,163,90,.3);
+  animation:float-dot 8s ease-in-out infinite;
+}
+.hero-dot:nth-child(1){top:25%;left:15%;animation-delay:0s;}
+.hero-dot:nth-child(2){top:40%;right:20%;animation-delay:1.5s;width:3px;height:3px;}
+.hero-dot:nth-child(3){top:65%;left:25%;animation-delay:3s;width:5px;height:5px;}
+.hero-dot:nth-child(4){top:30%;right:35%;animation-delay:4.5s;}
+.hero-dot:nth-child(5){bottom:25%;right:15%;animation-delay:2s;width:3px;height:3px;}
+@keyframes float-dot{
+  0%,100%{transform:translateY(0) scale(1);opacity:.3;}
+  50%{transform:translateY(-20px) scale(1.5);opacity:.6;}
+}
+
+/* Content */
+.hero-content{
+  position:relative;z-index:2;text-align:center;
+  max-width:720px;padding:0 30px;
+  animation:hero-fade-in 1.2s ease-out;
+}
+@keyframes hero-fade-in{
+  from{opacity:0;transform:translateY(30px);}
+  to{opacity:1;transform:translateY(0);}
+}
+.hero-eyebrow{
+  font-size:12px;font-weight:600;letter-spacing:4px;
+  text-transform:uppercase;color:var(--gold);
+  margin-bottom:20px;
+}
+.hero-headline{
+  font-family:var(--serif);
+  font-size:58px;font-weight:400;color:#fff;
+  line-height:1.15;margin-bottom:16px;
+}
+.hero-headline strong{font-weight:400;font-style:italic;color:var(--gold);}
+.hero-sub{
+  font-size:17px;font-weight:300;color:rgba(255,255,255,.65);
+  line-height:1.6;margin-bottom:36px;max-width:540px;margin-left:auto;margin-right:auto;
+}
+.hero-actions{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;}
+.hero-btn-primary{
+  font-size:14px;font-weight:700;letter-spacing:.5px;
+  background:var(--gold);color:var(--navy);
+  border:none;border-radius:10px;padding:16px 36px;
+  cursor:pointer;transition:all .3s;text-decoration:none;
+  display:inline-flex;align-items:center;gap:8px;
+}
+.hero-btn-primary:hover{
+  transform:translateY(-2px);
+  box-shadow:0 8px 30px rgba(196,163,90,.4);
+}
+.hero-btn-secondary{
+  font-size:14px;font-weight:500;
+  background:transparent;color:#fff;
+  border:1.5px solid rgba(255,255,255,.25);
+  border-radius:10px;padding:16px 32px;
+  cursor:pointer;transition:all .3s;text-decoration:none;
+}
+.hero-btn-secondary:hover{
+  border-color:rgba(255,255,255,.5);
+  background:rgba(255,255,255,.06);
+}
+
+/* Scroll indicator */
+.hero-scroll{
+  position:absolute;bottom:30px;left:50%;transform:translateX(-50%);
+  z-index:2;display:flex;flex-direction:column;align-items:center;gap:6px;
+  animation:bounce-scroll 2s ease-in-out infinite;
+}
+.hero-scroll span{
+  font-size:9px;letter-spacing:2px;text-transform:uppercase;
+  color:rgba(255,255,255,.35);
+}
+.scroll-line{
+  width:1px;height:30px;background:linear-gradient(to bottom,rgba(196,163,90,.5),transparent);
+}
+@keyframes bounce-scroll{
+  0%,100%{transform:translateX(-50%) translateY(0);}
+  50%{transform:translateX(-50%) translateY(8px);}
+}
+
+/* ═══ SEÇÃO PLACEHOLDER — para testar scroll ═══ */
+.placeholder-section{
+  min-height:60vh;padding:80px 40px;
+  display:flex;align-items:center;justify-content:center;
+}
+.placeholder-section h2{
+  font-family:var(--serif);font-size:36px;color:var(--navy);
+  opacity:.3;
+}
+
+/* Reveal animation */
+.rv{opacity:0;transform:translateY(24px);transition:all .7s cubic-bezier(.22,1,.36,1);}
+.rv.in{opacity:1;transform:translateY(0);}
+</style>
+</head>
+<body>
+
+<!-- ═══ HEADER ═══ -->
+<header class="header" id="main-header">
+  <a href="#" class="header-logo">
+    <svg viewBox="0 0 56 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 28L14 4L28 28" stroke="#1E2D50" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M10 28L22 8L34 28" stroke="#C4A35A" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" opacity=".7"/>
+      <path d="M20 28L30 12L40 28" stroke="#028090" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity=".5"/>
+    </svg>
+    <span class="header-brand">APEX</span>
+  </a>
+
+  <div class="header-spacer"></div>
+
+  <nav class="header-nav">
+    <a href="#s-problema">O Problema</a>
+    <a href="#s-produto">Como Funciona</a>
+    <a href="#s-planos">Planos</a>
+    <a href="#s-insights">Insights</a>
+  </nav>
+
+  <div class="header-sep"></div>
+
+  <a href="portal_profissionais.html" class="header-pro">Área Pro ↗</a>
+
+  <div class="header-sep"></div>
+
+  <a href="#s-planos" class="header-cta">Começar →</a>
+</header>
+
+<!-- ═══ HERO ═══ -->
+<section class="hero" id="hero">
+  <div class="hero-bg" id="hero-bg"></div>
+  <div class="hero-overlay"></div>
+
+  <!-- Animated elements -->
+  <div class="hero-particles">
+    <div class="ring"></div>
+    <div class="ring"></div>
+    <div class="ring"></div>
+    <div class="hero-dot"></div>
+    <div class="hero-dot"></div>
+    <div class="hero-dot"></div>
+    <div class="hero-dot"></div>
+    <div class="hero-dot"></div>
+  </div>
+
+  <div class="hero-content">
+    <div class="hero-eyebrow">Monitoramento Remoto de Pacientes</div>
+    <h1 class="hero-headline">
+      Seu corpo fala<br><strong>todos os dias.</strong>
+    </h1>
+    <p class="hero-sub">
+      Acompanhamento contínuo de hipertensão, diabetes, obesidade e doença renal crônica — com wearables, inteligência artificial e médico especialista.
+    </p>
+    <div class="hero-actions">
+      <a href="#s-planos" class="hero-btn-primary">Conheça os planos →</a>
+      <a href="#s-produto" class="hero-btn-secondary">Como funciona</a>
+    </div>
+  </div>
+
+  <div class="hero-scroll">
+    <span>Scroll</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- Placeholder sections para testar scroll -->
+<section class="placeholder-section" id="s-problema" style="background:#f5f5f0;">
+  <h2 class="rv">Seção 02 — O Problema (Big Numbers)</h2>
+</section>
+<section class="placeholder-section" id="s-produto">
+  <h2 class="rv">Seção 03 — A Solução APEX</h2>
+</section>
+<section class="placeholder-section" id="s-planos" style="background:#1E2D50;">
+  <h2 class="rv" style="color:#C4A35A;">Seção 06 — Planos e Preços</h2>
+</section>
+<section class="placeholder-section" id="s-insights" style="background:#f5f5f0;">
+  <h2 class="rv">Seção 08 — APEX Insights</h2>
+</section>
+
+<script>
+// Header shrink on scroll
+var header = document.getElementById('main-header');
+window.addEventListener('scroll', function() {
+  if (window.scrollY > 80) {
+    header.classList.add('scrolled');
+  } else {
+    header.classList.remove('scrolled');
+  }
+});
+
+// Parallax on hero background
+var heroBg = document.getElementById('hero-bg');
+window.addEventListener('scroll', function() {
+  var scrolled = window.scrollY;
+  if (scrolled < window.innerHeight) {
+    heroBg.style.transform = 'translateY(' + (scrolled * 0.35) + 'px)';
+  }
+});
+
+// Scroll reveal
+var obs = new IntersectionObserver(function(entries) {
+  entries.forEach(function(entry) {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('in');
+      obs.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.1 });
+document.querySelectorAll('.rv').forEach(function(el) { obs.observe(el); });
+</script>
+
+</body>
+</html>
