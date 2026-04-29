@@ -222,6 +222,90 @@ body{font-family:var(--sans);background:var(--bg);color:#141413;overflow-x:hidde
 }
 .rv{opacity:0;transform:translateY(20px);transition:all .7s cubic-bezier(.22,1,.36,1);}
 .rv.in{opacity:1;transform:translateY(0);}
+
+/* ═══ BIG NUMBERS / O PROBLEMA ═══ */
+.big-numbers{
+  padding:100px 48px 80px;
+  background:#f0efeb;
+}
+.big-numbers-inner{
+  max-width:1100px;margin:0 auto;
+}
+.big-numbers-eyebrow{
+  font-size:11px;font-weight:600;letter-spacing:3.5px;
+  text-transform:uppercase;color:var(--gold);
+  margin-bottom:14px;
+}
+.big-numbers-headline{
+  font-family:var(--serif);
+  font-size:38px;font-weight:400;color:var(--navy);
+  line-height:1.2;margin-bottom:60px;max-width:560px;
+}
+.big-numbers-headline em{font-style:italic;color:var(--gold);}
+.big-numbers-grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:48px;
+  margin-bottom:72px;
+}
+.big-number-item{
+  border-top:1.5px solid rgba(30,45,80,.1);
+  padding-top:28px;
+}
+.big-number-value{
+  font-family:var(--serif);
+  font-size:56px;font-weight:400;
+  color:var(--navy);line-height:1;
+  margin-bottom:6px;
+  letter-spacing:-2px;
+}
+.big-number-value span{
+  font-size:32px;color:var(--gold);letter-spacing:0;
+}
+.big-number-label{
+  font-size:14px;font-weight:600;color:var(--navy);
+  margin-bottom:8px;letter-spacing:.3px;
+}
+.big-number-desc{
+  font-size:13px;font-weight:400;color:rgba(30,45,80,.5);
+  line-height:1.6;max-width:260px;
+}
+/* CKM block */
+.ckm-block{
+  border-top:1.5px solid rgba(30,45,80,.1);
+  padding-top:48px;
+  display:grid;
+  grid-template-columns:280px 1fr;
+  gap:48px;
+  align-items:start;
+}
+.ckm-label{
+  font-family:var(--serif);
+  font-size:28px;font-weight:400;color:var(--navy);
+  line-height:1.25;
+}
+.ckm-label em{font-style:italic;color:var(--gold);}
+.ckm-text{
+  font-size:15px;font-weight:400;color:rgba(30,45,80,.65);
+  line-height:1.8;max-width:640px;
+}
+.ckm-text strong{font-weight:600;color:var(--navy);}
+.ckm-source{
+  margin-top:20px;
+  font-size:11px;font-weight:500;letter-spacing:1px;
+  text-transform:uppercase;color:rgba(30,45,80,.3);
+}
+@media(max-width:900px){
+  .big-numbers-grid{grid-template-columns:repeat(2,1fr);gap:36px 28px;}
+  .ckm-block{grid-template-columns:1fr;gap:24px;}
+  .big-numbers{padding:72px 28px 60px;}
+  .big-numbers-headline{font-size:30px;}
+  .big-number-value{font-size:44px;}
+}
+@media(max-width:520px){
+  .big-numbers-grid{grid-template-columns:1fr;gap:32px;}
+  .big-number-value{font-size:48px;}
+}
 </style>
 </head>
 <body>
@@ -299,9 +383,53 @@ body{font-family:var(--sans);background:var(--bg);color:#141413;overflow-x:hidde
 </section>
 
 <!-- Placeholder sections -->
-<section class="placeholder-section" id="s-problema" style="background:#f0efeb;">
-  <h2 class="rv">Seção 02 — O Problema (Big Numbers)</h2>
+<!-- ═══ SEÇÃO 02 — O PROBLEMA (BIG NUMBERS) ═══ -->
+<section class="big-numbers" id="s-problema">
+  <div class="big-numbers-inner">
+
+    <div class="big-numbers-eyebrow rv">O problema</div>
+    <h2 class="big-numbers-headline rv">
+      Quatro doenças crônicas.<br><em>Uma epidemia silenciosa.</em>
+    </h2>
+
+    <div class="big-numbers-grid">
+      <div class="big-number-item rv">
+        <div class="big-number-value">60<span>mi</span></div>
+        <div class="big-number-label">Hipertensos</div>
+        <div class="big-number-desc">30% dos adultos brasileiros. Apenas 1 em cada 3 mantém a pressão controlada.</div>
+      </div>
+      <div class="big-number-item rv">
+        <div class="big-number-value">20<span>mi</span></div>
+        <div class="big-number-label">Diabéticos</div>
+        <div class="big-number-desc">Crescimento de 135% em 18 anos. O Brasil é o 6º país em prevalência no mundo.</div>
+      </div>
+      <div class="big-number-item rv">
+        <div class="big-number-value">1<span>em 4</span></div>
+        <div class="big-number-label">Obesos</div>
+        <div class="big-number-desc">25,7% dos adultos — alta de 118% desde 2006. Projeção: quase metade da população até 2044.</div>
+      </div>
+      <div class="big-number-item rv">
+        <div class="big-number-value">20<span>mi</span></div>
+        <div class="big-number-label">Doença renal crônica</div>
+        <div class="big-number-desc">10% da população. Hipertensão e diabetes causam 60% dos casos. 172 mil já em diálise.</div>
+      </div>
+    </div>
+
+    <div class="ckm-block rv">
+      <div class="ckm-label">
+        A Síndrome<br><em>CKM</em>
+      </div>
+      <div>
+        <p class="ckm-text">
+          Em 2023, a American Heart Association definiu a <strong>Síndrome Cardiovascular-Renal-Metabólica (CKM)</strong> — o reconhecimento de que obesidade, diabetes, doença renal e doença cardiovascular não são problemas isolados. Elas se alimentam mutuamente em um ciclo que se agrava com o tempo. A obesidade desencadeia resistência insulínica, que leva ao diabetes; ambos aceleram a lesão renal e vascular, que por sua vez sobrecarrega o coração. No Brasil, esse ciclo mata <strong>400 mil pessoas por ano</strong> — uma a cada 90 segundos. Monitorar cada condição isoladamente já não é suficiente.
+        </p>
+        <div class="ckm-source">Fontes: Vigitel 2025 · SBD · SBN · SBC · AHA Circulation 2023</div>
+      </div>
+    </div>
+
+  </div>
 </section>
+
 <section class="placeholder-section" id="s-produto">
   <h2 class="rv">Seção 03 — A Solução APEX</h2>
 </section>
