@@ -223,88 +223,97 @@ body{font-family:var(--sans);background:var(--bg);color:#141413;overflow-x:hidde
 .rv{opacity:0;transform:translateY(20px);transition:all .7s cubic-bezier(.22,1,.36,1);}
 .rv.in{opacity:1;transform:translateY(0);}
 
-/* ═══ BIG NUMBERS / O PROBLEMA ═══ */
+/* ═══ BIG NUMBERS / OS NÚMEROS ═══ */
 .big-numbers{
-  padding:100px 48px 80px;
+  padding:88px 48px 72px;
   background:#f0efeb;
 }
 .big-numbers-inner{
-  max-width:1100px;margin:0 auto;
+  max-width:1060px;margin:0 auto;
 }
 .big-numbers-eyebrow{
   font-size:11px;font-weight:600;letter-spacing:3.5px;
   text-transform:uppercase;color:var(--gold);
-  margin-bottom:14px;
+  margin-bottom:12px;
 }
 .big-numbers-headline{
   font-family:var(--serif);
-  font-size:38px;font-weight:400;color:var(--navy);
-  line-height:1.2;margin-bottom:60px;max-width:560px;
+  font-size:36px;font-weight:400;color:var(--navy);
+  line-height:1.2;margin-bottom:48px;max-width:520px;
 }
 .big-numbers-headline em{font-style:italic;color:var(--gold);}
 .big-numbers-grid{
   display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:48px;
-  margin-bottom:72px;
+  grid-template-columns:repeat(3,1fr);
+  gap:20px;
+  margin-bottom:56px;
 }
 .big-number-item{
   border-top:1.5px solid rgba(30,45,80,.1);
-  padding-top:28px;
+  padding:20px 16px 16px;
+  border-radius:10px;
+  transition:all .35s cubic-bezier(.22,1,.36,1);
+  cursor:default;
+}
+.big-number-item:hover{
+  background:rgba(196,163,90,.07);
+  transform:scale(1.03);
+  box-shadow:0 0 0 1px rgba(196,163,90,.2);
 }
 .big-number-value{
   font-family:var(--serif);
-  font-size:56px;font-weight:400;
-  color:var(--navy);line-height:1;
-  margin-bottom:6px;
-  letter-spacing:-2px;
+  font-size:48px;font-weight:400;
+  color:var(--navy-deep);line-height:1;
+  margin-bottom:4px;
+  letter-spacing:-1.5px;
 }
 .big-number-value span{
-  font-size:32px;color:var(--gold);letter-spacing:0;
+  font-size:26px;color:var(--gold);letter-spacing:0;
+  font-weight:400;
 }
 .big-number-label{
-  font-size:14px;font-weight:600;color:var(--navy);
-  margin-bottom:8px;letter-spacing:.3px;
+  font-size:13px;font-weight:600;color:var(--navy);
+  margin-bottom:6px;letter-spacing:.2px;
 }
 .big-number-desc{
-  font-size:13px;font-weight:400;color:rgba(30,45,80,.5);
-  line-height:1.6;max-width:260px;
+  font-size:12.5px;font-weight:400;color:rgba(20,20,19,.5);
+  line-height:1.55;
 }
 /* CKM block */
 .ckm-block{
   border-top:1.5px solid rgba(30,45,80,.1);
-  padding-top:48px;
+  padding-top:40px;
   display:grid;
-  grid-template-columns:280px 1fr;
-  gap:48px;
+  grid-template-columns:240px 1fr;
+  gap:40px;
   align-items:start;
 }
 .ckm-label{
   font-family:var(--serif);
-  font-size:28px;font-weight:400;color:var(--navy);
+  font-size:26px;font-weight:400;color:var(--navy);
   line-height:1.25;
 }
 .ckm-label em{font-style:italic;color:var(--gold);}
 .ckm-text{
-  font-size:15px;font-weight:400;color:rgba(30,45,80,.65);
-  line-height:1.8;max-width:640px;
+  font-size:14.5px;font-weight:400;color:rgba(20,20,19,.55);
+  line-height:1.75;max-width:600px;
 }
-.ckm-text strong{font-weight:600;color:var(--navy);}
+.ckm-text strong{font-weight:600;color:var(--navy-deep);}
 .ckm-source{
-  margin-top:20px;
-  font-size:11px;font-weight:500;letter-spacing:1px;
-  text-transform:uppercase;color:rgba(30,45,80,.3);
+  margin-top:16px;
+  font-size:10px;font-weight:500;letter-spacing:1.2px;
+  text-transform:uppercase;color:rgba(30,45,80,.25);
 }
 @media(max-width:900px){
-  .big-numbers-grid{grid-template-columns:repeat(2,1fr);gap:36px 28px;}
-  .ckm-block{grid-template-columns:1fr;gap:24px;}
-  .big-numbers{padding:72px 28px 60px;}
-  .big-numbers-headline{font-size:30px;}
-  .big-number-value{font-size:44px;}
+  .big-numbers-grid{grid-template-columns:repeat(2,1fr);gap:16px;}
+  .ckm-block{grid-template-columns:1fr;gap:20px;}
+  .big-numbers{padding:64px 24px 52px;}
+  .big-numbers-headline{font-size:28px;margin-bottom:36px;}
+  .big-number-value{font-size:40px;}
 }
 @media(max-width:520px){
-  .big-numbers-grid{grid-template-columns:1fr;gap:32px;}
-  .big-number-value{font-size:48px;}
+  .big-numbers-grid{grid-template-columns:1fr;gap:14px;}
+  .big-number-value{font-size:44px;}
 }
 </style>
 </head>
@@ -383,45 +392,55 @@ body{font-family:var(--sans);background:var(--bg);color:#141413;overflow-x:hidde
 </section>
 
 <!-- Placeholder sections -->
-<!-- ═══ SEÇÃO 02 — O PROBLEMA (BIG NUMBERS) ═══ -->
+<!-- ═══ SEÇÃO 02 — OS NÚMEROS ═══ -->
 <section class="big-numbers" id="s-problema">
   <div class="big-numbers-inner">
 
-    <div class="big-numbers-eyebrow rv">O problema</div>
+    <div class="big-numbers-eyebrow rv">Os números</div>
     <h2 class="big-numbers-headline rv">
       Quatro doenças crônicas.<br><em>Uma epidemia silenciosa.</em>
     </h2>
 
-    <div class="big-numbers-grid">
+    <div class="big-numbers-grid" id="numbers-grid">
       <div class="big-number-item rv">
-        <div class="big-number-value">60<span>mi</span></div>
+        <div class="big-number-value"><span class="count-up" data-target="60" data-suffix="">60</span><span>mi</span></div>
         <div class="big-number-label">Hipertensos</div>
         <div class="big-number-desc">30% dos adultos brasileiros. Apenas 1 em cada 3 mantém a pressão controlada.</div>
       </div>
       <div class="big-number-item rv">
-        <div class="big-number-value">20<span>mi</span></div>
+        <div class="big-number-value"><span class="count-up" data-target="20" data-suffix="">20</span><span>mi</span></div>
         <div class="big-number-label">Diabéticos</div>
-        <div class="big-number-desc">Crescimento de 135% em 18 anos. O Brasil é o 6º país em prevalência no mundo.</div>
+        <div class="big-number-desc">Crescimento de 135% em 18 anos. Brasil é o 6º país em prevalência no mundo.</div>
       </div>
       <div class="big-number-item rv">
-        <div class="big-number-value">1<span>em 4</span></div>
+        <div class="big-number-value"><span class="count-up" data-target="25" data-suffix=",7">25,7</span><span>%</span></div>
         <div class="big-number-label">Obesos</div>
-        <div class="big-number-desc">25,7% dos adultos — alta de 118% desde 2006. Projeção: quase metade da população até 2044.</div>
+        <div class="big-number-desc">1 em cada 4 adultos. Alta de 118% desde 2006.</div>
       </div>
       <div class="big-number-item rv">
-        <div class="big-number-value">20<span>mi</span></div>
+        <div class="big-number-value"><span class="count-up" data-target="20" data-suffix="">20</span><span>mi</span></div>
         <div class="big-number-label">Doença renal crônica</div>
-        <div class="big-number-desc">10% da população. Hipertensão e diabetes causam 60% dos casos. 172 mil já em diálise.</div>
+        <div class="big-number-desc">10% da população. Hipertensão e diabetes causam 60% dos casos.</div>
+      </div>
+      <div class="big-number-item rv">
+        <div class="big-number-value"><span class="count-up" data-target="172" data-suffix="">172</span><span>mil</span></div>
+        <div class="big-number-label">Pacientes em diálise</div>
+        <div class="big-number-desc">50 mil novos casos por ano. 79% dependem do SUS.</div>
+      </div>
+      <div class="big-number-item rv">
+        <div class="big-number-value"><span class="count-up" data-target="400" data-suffix="">400</span><span>mil</span></div>
+        <div class="big-number-label">Mortes cardiovasculares/ano</div>
+        <div class="big-number-desc">Uma vida perdida a cada 90 segundos. Principal causa de óbito no Brasil.</div>
       </div>
     </div>
 
     <div class="ckm-block rv">
       <div class="ckm-label">
-        A Síndrome<br><em>CKM</em>
+        Síndrome<br><em>CKM</em>
       </div>
       <div>
         <p class="ckm-text">
-          Em 2023, a American Heart Association definiu a <strong>Síndrome Cardiovascular-Renal-Metabólica (CKM)</strong> — o reconhecimento de que obesidade, diabetes, doença renal e doença cardiovascular não são problemas isolados. Elas se alimentam mutuamente em um ciclo que se agrava com o tempo. A obesidade desencadeia resistência insulínica, que leva ao diabetes; ambos aceleram a lesão renal e vascular, que por sua vez sobrecarrega o coração. No Brasil, esse ciclo mata <strong>400 mil pessoas por ano</strong> — uma a cada 90 segundos. Monitorar cada condição isoladamente já não é suficiente.
+          Em 2023, a American Heart Association definiu a <strong>Síndrome Cardiovascular-Renal-Metabólica (CKM)</strong> — o reconhecimento de que obesidade, diabetes, doença renal e doença cardiovascular não são problemas isolados. Elas se alimentam mutuamente em um ciclo que se agrava com o tempo. A obesidade desencadeia resistência insulínica, que leva ao diabetes; ambos aceleram a lesão renal e vascular, que por sua vez sobrecarrega o coração. Monitorar cada condição isoladamente já não é suficiente.
         </p>
         <div class="ckm-source">Fontes: Vigitel 2025 · SBD · SBN · SBC · AHA Circulation 2023</div>
       </div>
@@ -493,6 +512,42 @@ var obs = new IntersectionObserver(function(entries) {
   });
 }, { threshold: 0.1 });
 document.querySelectorAll('.rv').forEach(function(el) { obs.observe(el); });
+
+
+/* ═══ COUNT-UP ANIMATION ═══ */
+var countAnimated = false;
+function animateCounters() {
+  if (countAnimated) return;
+  countAnimated = true;
+  document.querySelectorAll('.count-up').forEach(function(el) {
+    var target = parseInt(el.dataset.target);
+    var suffix = el.dataset.suffix || '';
+    var duration = 1800;
+    var startTime = null;
+    function step(ts) {
+      if (!startTime) startTime = ts;
+      var progress = Math.min((ts - startTime) / duration, 1);
+      var eased = 1 - Math.pow(1 - progress, 3);
+      var current = Math.round(eased * target);
+      el.textContent = current + suffix;
+      if (progress < 1) requestAnimationFrame(step);
+    }
+    el.textContent = '0';
+    requestAnimationFrame(step);
+  });
+}
+var numbersGrid = document.getElementById('numbers-grid');
+if (numbersGrid) {
+  var countObs = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        animateCounters();
+        countObs.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.2 });
+  countObs.observe(numbersGrid);
+}
 </script>
 
 </body>
