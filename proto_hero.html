@@ -315,6 +315,101 @@ body{font-family:var(--sans);background:var(--bg);color:#141413;overflow-x:hidde
   .big-numbers-grid{grid-template-columns:1fr;gap:8px;}
   .big-number-value{font-size:64px;}
 }
+
+/* ═══ GAINS / O CONTROLE ═══ */
+.gains{
+  padding:64px 48px 56px;
+  background:var(--navy-deep);
+  color:#fff;
+}
+.gains-inner{
+  max-width:1060px;margin:0 auto;
+}
+.gains-eyebrow{
+  font-size:11px;font-weight:600;letter-spacing:3.5px;
+  text-transform:uppercase;color:var(--gold);
+  margin-bottom:8px;
+}
+.gains-headline{
+  font-family:var(--serif);
+  font-size:34px;font-weight:400;color:#fff;
+  line-height:1.2;margin-bottom:12px;max-width:560px;
+}
+.gains-headline em{font-style:italic;color:var(--gold);}
+.gains-sub{
+  font-size:14px;font-weight:400;color:rgba(255,255,255,.45);
+  line-height:1.6;margin-bottom:36px;max-width:580px;
+}
+.gains-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:10px;
+  margin-bottom:32px;
+}
+.gain-item{
+  border-top:1px solid rgba(255,255,255,.1);
+  padding:14px 14px 12px;
+  border-radius:10px;
+  transition:all .35s cubic-bezier(.22,1,.36,1);
+  cursor:default;
+}
+.gain-item:hover{
+  background:rgba(196,163,90,.08);
+  transform:scale(1.03);
+  box-shadow:0 0 0 1px rgba(196,163,90,.2);
+}
+.gain-value{
+  font-family:var(--serif);
+  font-size:56px;font-weight:400;
+  color:var(--gold);line-height:1;
+  margin-bottom:2px;
+  letter-spacing:-1.5px;
+}
+.gain-value span{
+  font-size:28px;color:rgba(255,255,255,.3);letter-spacing:0;
+}
+.gain-label{
+  font-size:13px;font-weight:600;color:#fff;
+  margin-bottom:4px;letter-spacing:.2px;
+}
+.gain-desc{
+  font-size:12.5px;font-weight:400;color:rgba(255,255,255,.4);
+  line-height:1.5;
+}
+.gains-footer{
+  border-top:1px solid rgba(255,255,255,.08);
+  padding-top:24px;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:32px;
+}
+.gains-footer-block{}
+.gains-footer-title{
+  font-family:var(--serif);
+  font-size:20px;color:#fff;margin-bottom:8px;
+}
+.gains-footer-title em{font-style:italic;color:var(--gold);}
+.gains-footer-text{
+  font-size:13px;color:rgba(255,255,255,.4);line-height:1.65;
+}
+.gains-footer-text strong{color:var(--gold);font-weight:600;}
+.gains-source{
+  margin-top:20px;
+  font-size:10px;font-weight:500;letter-spacing:1.2px;
+  text-transform:uppercase;color:rgba(255,255,255,.15);
+  grid-column:1/-1;
+}
+@media(max-width:900px){
+  .gains-grid{grid-template-columns:repeat(2,1fr);gap:8px;}
+  .gains-footer{grid-template-columns:1fr;gap:20px;}
+  .gains{padding:48px 24px 40px;}
+  .gains-headline{font-size:26px;}
+  .gain-value{font-size:44px;}
+}
+@media(max-width:520px){
+  .gains-grid{grid-template-columns:1fr;gap:8px;}
+  .gain-value{font-size:48px;}
+}
 </style>
 </head>
 <body>
@@ -449,6 +544,65 @@ body{font-family:var(--sans);background:var(--bg);color:#141413;overflow-x:hidde
   </div>
 </section>
 
+
+<!-- ═══ SEÇÃO 02B — O CONTROLE (GAINS) ═══ -->
+<section class="gains" id="s-controle">
+  <div class="gains-inner">
+
+    <div class="gains-eyebrow rv">O controle</div>
+    <h2 class="gains-headline rv">
+      Mas quando monitoradas,<br><em>o cenário muda.</em>
+    </h2>
+    <p class="gains-sub rv">Estudos de referência mostram que o controle adequado de pressão, glicemia e peso — combinado com as novas medicações nefroprotetoras — reduz drasticamente desfechos graves.</p>
+
+    <div class="gains-grid" id="gains-grid">
+      <div class="gain-item rv">
+        <div class="gain-value">-20<span>%</span></div>
+        <div class="gain-label">Eventos cardiovasculares</div>
+        <div class="gain-desc">A cada 10 mmHg de redução na pressão sistólica. AVC cai 27%, insuficiência cardíaca 28%.</div>
+      </div>
+      <div class="gain-item rv">
+        <div class="gain-value">-37<span>%</span></div>
+        <div class="gain-label">Complicações microvasculares</div>
+        <div class="gain-desc">A cada 1% de redução na HbA1c. Mortes por diabetes caem 21%. Infarto, 14%.</div>
+      </div>
+      <div class="gain-item rv">
+        <div class="gain-value">-48<span>%</span></div>
+        <div class="gain-label">Risco CV com perda de peso</div>
+        <div class="gain-desc">Perder apenas 5% do peso corporal reduz quase pela metade eventos cardiovasculares em diabéticos.</div>
+      </div>
+      <div class="gain-item rv">
+        <div class="gain-value">-39<span>%</span></div>
+        <div class="gain-label">Falência renal (DAPA-CKD)</div>
+        <div class="gain-desc">Dapagliflozina reduziu progressão renal e morte em 39%. Mortalidade geral caiu 31%.</div>
+      </div>
+      <div class="gain-item rv">
+        <div class="gain-value">-28<span>%</span></div>
+        <div class="gain-label">Progressão renal (EMPA-KIDNEY)</div>
+        <div class="gain-desc">Empagliflozina freou a progressão da DRC e morte cardiovascular. Declínio renal caiu pela metade.</div>
+      </div>
+      <div class="gain-item rv">
+        <div class="gain-value">-50<span>%</span></div>
+        <div class="gain-label">Velocidade de perda renal</div>
+        <div class="gain-desc">Gliflozinas reduziram o ritmo de queda da função renal de 2,75 para 1,37 ml/min/ano.</div>
+      </div>
+    </div>
+
+    <div class="gains-footer rv">
+      <div class="gains-footer-block">
+        <div class="gains-footer-title">O custo de <em>não agir</em></div>
+        <div class="gains-footer-text">No Brasil, o número de pacientes em diálise deve crescer <strong>170%</strong> até 2032. O custo com terapia renal substitutiva saltará de R$ 6,3 bi para <strong>R$ 17,1 bi/ano</strong>. São R$ 1,3 trilhão em PIB perdido por absenteísmo e presenteísmo em 10 anos.</div>
+      </div>
+      <div class="gains-footer-block">
+        <div class="gains-footer-title">O valor do <em>monitoramento</em></div>
+        <div class="gains-footer-text">Diagnóstico precoce e controle contínuo das 4 condições CKM podem retardar ou evitar a diálise, reduzir internações e devolver qualidade de vida. <strong>Cada ano de função renal preservada</strong> é um ano a menos de diálise — e milhares de reais economizados.</div>
+      </div>
+      <div class="gains-source">Fontes: DAPA-CKD (NEJM 2020) · EMPA-KIDNEY (NEJM 2023) · UKPDS 35 · Lancet 2016 Meta-analysis · IMPACT CKD (KI Reports 2025)</div>
+    </div>
+
+  </div>
+</section>
+
 <section class="placeholder-section" id="s-produto">
   <h2 class="rv">Seção 03 — A Solução APEX</h2>
 </section>
@@ -547,6 +701,43 @@ if (numbersGrid) {
     });
   }, { threshold: 0.2 });
   countObs.observe(numbersGrid);
+}
+
+
+/* ═══ COUNT-UP GAINS ═══ */
+var gainsAnimated = false;
+function animateGains() {
+  if (gainsAnimated) return;
+  gainsAnimated = true;
+  document.querySelectorAll('#gains-grid .gain-value').forEach(function(el) {
+    var text = el.childNodes[0].textContent.trim();
+    var isNeg = text.startsWith('-');
+    var target = parseInt(text.replace('-',''));
+    var duration = 1600;
+    var startTime = null;
+    var numNode = el.childNodes[0];
+    function step(ts) {
+      if (!startTime) startTime = ts;
+      var progress = Math.min((ts - startTime) / duration, 1);
+      var eased = 1 - Math.pow(1 - progress, 3);
+      numNode.textContent = (isNeg ? '-' : '') + Math.round(eased * target);
+      if (progress < 1) requestAnimationFrame(step);
+    }
+    numNode.textContent = isNeg ? '-0' : '0';
+    requestAnimationFrame(step);
+  });
+}
+var gainsGrid = document.getElementById('gains-grid');
+if (gainsGrid) {
+  var gainsObs = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        animateGains();
+        gainsObs.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.2 });
+  gainsObs.observe(gainsGrid);
 }
 </script>
 
