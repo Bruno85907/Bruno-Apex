@@ -3,232 +3,374 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>APEX — Protótipo Header + Hero v2</title>
+<title>APEX Health — Monitoramento Remoto de Pacientes</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
   --gold:#C4A35A;
+  --gold-light:#D4B96A;
   --navy:#1E2D50;
+  --navy-deep:#121D33;
   --teal:#028090;
+  --teal-light:#03A5B5;
   --bg:#FAF9F5;
-  --sans:'Space Grotesk',sans-serif;
+  --sans:'Inter',system-ui,sans-serif;
   --serif:'Instrument Serif',Georgia,serif;
 }
 html{scroll-behavior:smooth}
 body{font-family:var(--sans);background:var(--bg);color:#141413;overflow-x:hidden;
-  -webkit-font-smoothing:antialiased;}
+  -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;}
 
-/* ═══ BG SELECTOR (dev only) ═══ */
-.bg-selector{
-  position:fixed;bottom:20px;right:20px;z-index:999;
-  background:rgba(30,45,80,.95);backdrop-filter:blur(12px);
-  border-radius:12px;padding:14px 18px;
-  display:flex;flex-direction:column;gap:8px;
-  box-shadow:0 8px 32px rgba(0,0,0,.3);
-}
-.bg-selector span{font-size:9px;color:var(--gold);font-weight:700;letter-spacing:2px;text-transform:uppercase;}
-.bg-selector button{
-  font-size:11px;font-family:var(--sans);color:#fff;background:rgba(255,255,255,.08);
-  border:1px solid rgba(255,255,255,.12);border-radius:6px;padding:8px 14px;
-  cursor:pointer;transition:all .2s;text-align:left;
-}
-.bg-selector button:hover{background:rgba(255,255,255,.15);border-color:var(--gold);}
-.bg-selector button.active{background:var(--teal);border-color:var(--teal);}
-
-/* ═══ HEADER ═══ */
+/* ═══ HEADER — floating dark pill (Sonar style) ═══ */
 .header{
-  position:fixed;top:0;left:0;right:0;z-index:900;
-  height:64px;display:flex;align-items:center;padding:0 40px;
-  background:rgba(255,255,255,.92);backdrop-filter:blur(24px);
-  border-bottom:1px solid rgba(30,45,80,.06);
-  transition:all .4s ease;
+  position:fixed;top:16px;left:50%;transform:translateX(-50%);z-index:900;
+  width:calc(100% - 48px);max-width:1240px;
+  height:60px;display:flex;align-items:center;padding:0 8px 0 28px;
+  background:rgba(18,29,51,.92);backdrop-filter:blur(20px) saturate(1.8);
+  border-radius:16px;
+  border:1px solid rgba(255,255,255,.06);
+  box-shadow:0 4px 30px rgba(0,0,0,.15),0 1px 3px rgba(0,0,0,.1);
+  transition:all .4s cubic-bezier(.22,1,.36,1);
 }
 .header.scrolled{
-  height:56px;
-  box-shadow:0 2px 20px rgba(0,0,0,.06);
+  top:10px;
+  background:rgba(18,29,51,.97);
+  box-shadow:0 8px 40px rgba(0,0,0,.2);
 }
+
+/* Logo */
 .header-logo{
-  display:flex;align-items:center;gap:12px;
+  display:flex;align-items:center;gap:2px;
   text-decoration:none;flex-shrink:0;
 }
-.header-logo-icon{
-  width:36px;height:36px;
+.logo-mark{
+  font-size:24px;font-weight:900;letter-spacing:-1px;
+  color:#fff;line-height:1;
 }
-.header-brand{
-  font-size:22px;font-weight:700;letter-spacing:5px;
-  color:var(--navy);text-transform:uppercase;line-height:1;
+.logo-dot{
+  display:inline-block;width:6px;height:6px;
+  background:var(--gold);border-radius:50%;
+  margin-left:1px;margin-bottom:2px;vertical-align:baseline;
 }
+.logo-health{
+  font-size:10px;font-weight:600;letter-spacing:3px;
+  text-transform:uppercase;color:var(--gold);
+  margin-left:6px;opacity:.85;align-self:flex-end;margin-bottom:2px;
+}
+
 .header-spacer{flex:1}
-.header-nav{display:flex;align-items:center;gap:28px;}
+
+.header-nav{display:flex;align-items:center;gap:6px;}
 .header-nav a{
-  font-size:11px;font-weight:500;letter-spacing:1.5px;
-  text-transform:uppercase;color:#666;text-decoration:none;
-  transition:color .3s;position:relative;
+  font-size:13px;font-weight:500;
+  color:rgba(255,255,255,.55);text-decoration:none;
+  padding:8px 14px;border-radius:10px;
+  transition:all .25s;
 }
-.header-nav a::after{
-  content:'';position:absolute;bottom:-4px;left:0;right:0;
-  height:2px;background:var(--gold);transform:scaleX(0);
-  transition:transform .3s;
+.header-nav a:hover{color:#fff;background:rgba(255,255,255,.08);}
+
+.header-divider{
+  width:1px;height:28px;background:rgba(255,255,255,.1);margin:0 8px;
 }
-.header-nav a:hover{color:var(--navy)}
-.header-nav a:hover::after{transform:scaleX(1)}
 .header-pro{
-  font-size:10px;font-weight:500;color:#666;text-decoration:none;
-  border:1px solid #ddd;border-radius:6px;padding:7px 14px;
-  transition:all .3s;letter-spacing:.5px;
+  font-size:12px;font-weight:500;color:rgba(255,255,255,.45);
+  text-decoration:none;padding:8px 14px;border-radius:10px;
+  transition:all .25s;
 }
-.header-pro:hover{border-color:var(--navy);color:var(--navy)}
+.header-pro:hover{color:rgba(255,255,255,.8);background:rgba(255,255,255,.06);}
 .header-cta{
-  font-size:11px;font-weight:700;letter-spacing:.5px;
-  background:var(--gold);color:var(--navy);
-  border:none;border-radius:8px;padding:10px 22px;
+  font-size:13px;font-weight:700;
+  background:var(--gold);color:var(--navy-deep);
+  border:none;border-radius:12px;padding:10px 24px;
   cursor:pointer;transition:all .3s;text-decoration:none;
+  white-space:nowrap;
 }
 .header-cta:hover{
+  background:var(--gold-light);
   transform:translateY(-1px);
-  box-shadow:0 4px 16px rgba(196,163,90,.35);
-}
-.header-sep{
-  width:1px;height:24px;background:rgba(0,0,0,.08);margin:0 4px;
+  box-shadow:0 4px 20px rgba(196,163,90,.4);
 }
 
 /* ═══ HERO ═══ */
 .hero{
   position:relative;min-height:100vh;
-  display:flex;align-items:center;justify-content:center;
+  display:flex;align-items:center;
   overflow:hidden;
+  background:linear-gradient(135deg,var(--navy-deep) 0%,var(--navy) 40%,#1a3a55 70%,#143040 100%);
 }
-.hero-bg{
-  position:absolute;inset:-80px;
-  background-position:center center;
-  background-size:cover;background-repeat:no-repeat;
-  transform:translateZ(0);will-change:transform;
-  transition:opacity .8s ease;
+
+/* Ambient glow effects */
+.hero::before{
+  content:'';position:absolute;
+  width:800px;height:800px;border-radius:50%;
+  background:radial-gradient(circle,rgba(2,128,144,.15) 0%,transparent 65%);
+  top:-15%;right:-10%;pointer-events:none;
+  animation:ambient 14s ease-in-out infinite alternate;
 }
-.hero-overlay{
+.hero::after{
+  content:'';position:absolute;
+  width:600px;height:600px;border-radius:50%;
+  background:radial-gradient(circle,rgba(196,163,90,.08) 0%,transparent 65%);
+  bottom:-10%;left:10%;pointer-events:none;
+  animation:ambient 18s ease-in-out infinite alternate-reverse;
+}
+@keyframes ambient{
+  0%{transform:translate(0,0) scale(1);opacity:.6}
+  100%{transform:translate(40px,-30px) scale(1.15);opacity:1}
+}
+
+/* Grid pattern overlay */
+.hero-grid{
   position:absolute;inset:0;
-  background:
-    radial-gradient(ellipse 80% 60% at 50% 40%, rgba(10,22,40,.7) 0%, rgba(10,22,40,.9) 100%);
-  backdrop-filter:saturate(1.3);
+  background-image:
+    linear-gradient(rgba(255,255,255,.02) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(255,255,255,.02) 1px,transparent 1px);
+  background-size:60px 60px;
+  pointer-events:none;
 }
-.hero-glow{
-  position:absolute;width:600px;height:600px;border-radius:50%;
-  background:radial-gradient(circle,rgba(2,128,144,.2) 0%,transparent 70%);
-  top:10%;right:-10%;pointer-events:none;
-  animation:glow-drift 10s ease-in-out infinite alternate;
+
+/* Content layout — split */
+.hero-inner{
+  position:relative;z-index:2;
+  width:100%;max-width:1240px;margin:0 auto;
+  padding:120px 40px 80px;
+  display:grid;grid-template-columns:1fr 1fr;gap:60px;
+  align-items:center;
 }
-.hero-glow-2{
-  position:absolute;width:400px;height:400px;border-radius:50%;
-  background:radial-gradient(circle,rgba(196,163,90,.12) 0%,transparent 70%);
-  bottom:5%;left:-5%;pointer-events:none;
-  animation:glow-drift 12s ease-in-out infinite alternate-reverse;
-}
-@keyframes glow-drift{
-  0%{transform:translate(0,0) scale(1);}
-  100%{transform:translate(30px,-20px) scale(1.1);}
-}
-.hero-lines{
-  position:absolute;inset:0;pointer-events:none;overflow:hidden;
-}
-.hero-lines::before{
-  content:'';position:absolute;
-  width:1px;height:200px;background:linear-gradient(to bottom,transparent,rgba(196,163,90,.2),transparent);
-  top:15%;left:12%;transform:rotate(15deg);
-  animation:line-fade 6s ease-in-out infinite;
-}
-.hero-lines::after{
-  content:'';position:absolute;
-  width:1px;height:160px;background:linear-gradient(to bottom,transparent,rgba(2,128,144,.15),transparent);
-  top:25%;right:15%;transform:rotate(-10deg);
-  animation:line-fade 8s ease-in-out infinite 2s;
-}
-@keyframes line-fade{
-  0%,100%{opacity:.3;}50%{opacity:.8;}
-}
-.hero-cross-bg{
-  position:absolute;z-index:1;
-  width:350px;height:350px;
-  top:50%;left:50%;transform:translate(-50%,-50%);
-  opacity:.04;pointer-events:none;
-}
-.hero-content{
-  position:relative;z-index:2;text-align:center;
-  max-width:720px;padding:0 30px;
-}
-.hero-content > *{
-  opacity:0;transform:translateY(25px);
-  animation:stagger-in .8s ease-out forwards;
-}
-.hero-content > *:nth-child(1){animation-delay:.2s}
-.hero-content > *:nth-child(2){animation-delay:.45s}
-.hero-content > *:nth-child(3){animation-delay:.65s}
-.hero-content > *:nth-child(4){animation-delay:.85s}
-@keyframes stagger-in{
-  to{opacity:1;transform:translateY(0);}
-}
-.hero-eyebrow{
-  font-size:12px;font-weight:600;letter-spacing:4px;
+
+/* Left: text */
+.hero-text{max-width:560px;}
+.hero-badge{
+  display:inline-flex;align-items:center;gap:8px;
+  font-size:12px;font-weight:600;letter-spacing:1.5px;
   text-transform:uppercase;color:var(--gold);
-  margin-bottom:24px;
-  display:inline-flex;align-items:center;gap:12px;
+  background:rgba(196,163,90,.1);
+  border:1px solid rgba(196,163,90,.2);
+  border-radius:100px;padding:8px 18px;
+  margin-bottom:32px;
 }
-.hero-eyebrow::before,.hero-eyebrow::after{
-  content:'';width:30px;height:1px;background:var(--gold);opacity:.5;
+.hero-badge-dot{
+  width:6px;height:6px;border-radius:50%;
+  background:var(--teal);
+  animation:pulse-dot 2s ease-in-out infinite;
 }
-.hero-headline{
+@keyframes pulse-dot{
+  0%,100%{opacity:1;transform:scale(1)}
+  50%{opacity:.5;transform:scale(.7)}
+}
+.hero-h1{
   font-family:var(--serif);
-  font-size:60px;font-weight:400;color:#fff;
-  line-height:1.12;margin-bottom:20px;
+  font-size:clamp(40px,5.5vw,68px);
+  font-weight:400;color:#fff;
+  line-height:1.08;margin-bottom:24px;
+  letter-spacing:-1px;
 }
-.hero-headline em{font-style:italic;color:var(--gold);}
-.hero-sub{
-  font-size:17px;font-weight:300;color:rgba(255,255,255,.6);
-  line-height:1.65;margin-bottom:40px;max-width:520px;margin-left:auto;margin-right:auto;
-  letter-spacing:.2px;
+.hero-h1 em{
+  font-style:italic;
+  background:linear-gradient(135deg,var(--gold) 0%,var(--gold-light) 100%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  background-clip:text;
 }
-.hero-actions{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;}
-.hero-btn-primary{
-  font-size:14px;font-weight:700;letter-spacing:.5px;
-  background:var(--gold);color:var(--navy);
-  border:none;border-radius:10px;padding:16px 36px;
+.hero-p{
+  font-size:18px;font-weight:400;
+  color:rgba(255,255,255,.5);
+  line-height:1.7;margin-bottom:40px;
+  max-width:480px;
+}
+.hero-actions{display:flex;gap:12px;align-items:center;flex-wrap:wrap;}
+.btn-gold{
+  font-family:var(--sans);font-size:15px;font-weight:700;
+  background:var(--gold);color:var(--navy-deep);
+  border:none;border-radius:14px;padding:16px 32px;
   cursor:pointer;transition:all .3s;text-decoration:none;
   display:inline-flex;align-items:center;gap:8px;
 }
-.hero-btn-primary:hover{
+.btn-gold:hover{
+  background:var(--gold-light);
   transform:translateY(-2px);
-  box-shadow:0 8px 30px rgba(196,163,90,.4);
+  box-shadow:0 8px 30px rgba(196,163,90,.35);
 }
-.hero-btn-secondary{
-  font-size:14px;font-weight:500;
-  background:rgba(255,255,255,.06);color:#fff;
-  border:1.5px solid rgba(255,255,255,.18);
-  border-radius:10px;padding:16px 32px;
+.btn-ghost{
+  font-family:var(--sans);font-size:15px;font-weight:500;
+  background:transparent;color:rgba(255,255,255,.7);
+  border:1.5px solid rgba(255,255,255,.15);
+  border-radius:14px;padding:15px 28px;
   cursor:pointer;transition:all .3s;text-decoration:none;
 }
-.hero-btn-secondary:hover{
-  border-color:rgba(255,255,255,.4);
-  background:rgba(255,255,255,.1);
+.btn-ghost:hover{
+  color:#fff;
+  border-color:rgba(255,255,255,.35);
+  background:rgba(255,255,255,.05);
 }
-.hero-scroll{
-  position:absolute;bottom:30px;left:50%;transform:translateX(-50%);
-  z-index:2;display:flex;flex-direction:column;align-items:center;gap:6px;
-  animation:bounce-scroll 2.5s ease-in-out infinite;
+
+/* Trust row */
+.hero-trust{
+  margin-top:48px;display:flex;align-items:center;gap:24px;
+  padding-top:32px;border-top:1px solid rgba(255,255,255,.06);
 }
-.hero-scroll span{
-  font-size:8px;letter-spacing:3px;text-transform:uppercase;
-  color:rgba(255,255,255,.3);
+.trust-item{
+  display:flex;flex-direction:column;gap:2px;
 }
-.scroll-line{
-  width:1px;height:28px;
-  background:linear-gradient(to bottom,rgba(196,163,90,.5),transparent);
+.trust-number{
+  font-size:22px;font-weight:800;color:#fff;line-height:1;
 }
-@keyframes bounce-scroll{
-  0%,100%{transform:translateX(-50%) translateY(0);opacity:.6;}
-  50%{transform:translateX(-50%) translateY(8px);opacity:1;}
+.trust-label{
+  font-size:11px;font-weight:500;color:rgba(255,255,255,.35);
+  letter-spacing:.5px;
 }
+.trust-sep{
+  width:1px;height:36px;background:rgba(255,255,255,.08);
+}
+
+/* Right: visual */
+.hero-visual{
+  position:relative;display:flex;justify-content:center;align-items:center;
+}
+
+/* App mockup card */
+.app-card{
+  position:relative;
+  width:320px;
+  background:rgba(255,255,255,.04);
+  backdrop-filter:blur(20px);
+  border:1px solid rgba(255,255,255,.08);
+  border-radius:28px;
+  padding:28px 24px;
+  box-shadow:0 20px 60px rgba(0,0,0,.3);
+}
+.app-card-header{
+  display:flex;align-items:center;justify-content:space-between;
+  margin-bottom:24px;
+}
+.app-greeting{
+  font-size:11px;font-weight:500;color:rgba(255,255,255,.4);
+  letter-spacing:.5px;
+}
+.app-name{
+  font-size:20px;font-weight:700;color:#fff;margin-top:2px;
+}
+.app-avatar{
+  width:40px;height:40px;border-radius:50%;
+  background:linear-gradient(135deg,var(--teal),var(--teal-light));
+  display:flex;align-items:center;justify-content:center;
+  font-size:16px;font-weight:700;color:#fff;
+}
+
+/* Metric cards inside app */
+.metric-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px;}
+.metric{
+  background:rgba(255,255,255,.04);
+  border:1px solid rgba(255,255,255,.06);
+  border-radius:16px;padding:16px 14px;
+}
+.metric-icon{
+  font-size:18px;margin-bottom:8px;display:block;
+}
+.metric-val{
+  font-size:20px;font-weight:800;color:#fff;line-height:1;
+}
+.metric-unit{font-size:11px;font-weight:500;color:rgba(255,255,255,.35);margin-left:2px;}
+.metric-label{
+  font-size:10px;font-weight:500;color:rgba(255,255,255,.3);
+  margin-top:4px;letter-spacing:.3px;
+}
+.metric.highlight{
+  background:linear-gradient(135deg,rgba(2,128,144,.15),rgba(2,128,144,.05));
+  border-color:rgba(2,128,144,.2);
+}
+.metric.gold-hl{
+  background:linear-gradient(135deg,rgba(196,163,90,.12),rgba(196,163,90,.04));
+  border-color:rgba(196,163,90,.15);
+}
+
+/* Jarvis bar */
+.jarvis-bar{
+  background:rgba(255,255,255,.04);
+  border:1px solid rgba(255,255,255,.06);
+  border-radius:14px;padding:14px 16px;
+  display:flex;align-items:center;gap:10px;
+}
+.jarvis-icon{
+  width:28px;height:28px;border-radius:10px;
+  background:linear-gradient(135deg,var(--gold),var(--gold-light));
+  display:flex;align-items:center;justify-content:center;
+  font-size:14px;flex-shrink:0;
+}
+.jarvis-text{
+  font-size:12px;color:rgba(255,255,255,.5);line-height:1.4;
+}
+.jarvis-text strong{color:rgba(255,255,255,.8);font-weight:600;}
+
+/* Floating elements around card */
+.float-pill{
+  position:absolute;
+  background:rgba(255,255,255,.06);
+  backdrop-filter:blur(12px);
+  border:1px solid rgba(255,255,255,.08);
+  border-radius:14px;padding:12px 16px;
+  display:flex;align-items:center;gap:8px;
+  font-size:12px;font-weight:600;color:rgba(255,255,255,.7);
+  box-shadow:0 8px 24px rgba(0,0,0,.2);
+  animation:float-y 5s ease-in-out infinite;
+}
+.float-pill .pill-icon{font-size:16px;}
+.float-pill.pill-1{top:-20px;right:-40px;animation-delay:0s;}
+.float-pill.pill-2{bottom:60px;left:-50px;animation-delay:1.5s;}
+.float-pill.pill-3{bottom:-10px;right:-30px;animation-delay:3s;}
+@keyframes float-y{
+  0%,100%{transform:translateY(0)}
+  50%{transform:translateY(-10px)}
+}
+
+/* Entrance animations */
+.fade-up{
+  opacity:0;transform:translateY(30px);
+  animation:fadeUp .8s ease-out forwards;
+}
+.fade-up:nth-child(1){animation-delay:.1s}
+.fade-up:nth-child(2){animation-delay:.25s}
+.fade-up:nth-child(3){animation-delay:.4s}
+.fade-up:nth-child(4){animation-delay:.55s}
+.fade-up:nth-child(5){animation-delay:.7s}
+.fade-up:nth-child(6){animation-delay:.85s}
+@keyframes fadeUp{to{opacity:1;transform:translateY(0)}}
+
+.fade-in-right{
+  opacity:0;transform:translateX(40px);
+  animation:fadeRight 1s ease-out .5s forwards;
+}
+@keyframes fadeRight{to{opacity:1;transform:translateX(0)}}
+
+/* Scroll indicator */
+.scroll-hint{
+  position:absolute;bottom:28px;left:50%;transform:translateX(-50%);
+  z-index:3;display:flex;flex-direction:column;align-items:center;gap:8px;
+}
+.scroll-mouse{
+  width:22px;height:34px;border-radius:11px;
+  border:2px solid rgba(255,255,255,.15);
+  position:relative;
+}
+.scroll-mouse::after{
+  content:'';position:absolute;
+  width:3px;height:8px;border-radius:2px;
+  background:var(--gold);
+  top:6px;left:50%;transform:translateX(-50%);
+  animation:scroll-wheel 2s ease-in-out infinite;
+}
+@keyframes scroll-wheel{
+  0%{opacity:1;transform:translateX(-50%) translateY(0)}
+  100%{opacity:0;transform:translateX(-50%) translateY(12px)}
+}
+.scroll-text{
+  font-size:9px;font-weight:600;letter-spacing:2px;
+  text-transform:uppercase;color:rgba(255,255,255,.2);
+}
+
+/* Placeholder sections */
 .placeholder-section{
   min-height:50vh;padding:80px 40px;
   display:flex;align-items:center;justify-content:center;
@@ -238,92 +380,141 @@ body{font-family:var(--sans);background:var(--bg);color:#141413;overflow-x:hidde
 }
 .rv{opacity:0;transform:translateY(24px);transition:all .7s cubic-bezier(.22,1,.36,1);}
 .rv.in{opacity:1;transform:translateY(0);}
+
+/* Responsive */
+@media(max-width:900px){
+  .hero-inner{grid-template-columns:1fr;text-align:center;padding:140px 24px 60px;}
+  .hero-text{max-width:100%;}
+  .hero-p{margin-left:auto;margin-right:auto;}
+  .hero-actions{justify-content:center;}
+  .hero-trust{justify-content:center;}
+  .hero-visual{margin-top:40px;}
+  .float-pill{display:none;}
+  .header-nav{display:none;}
+  .header{padding:0 16px 0 24px;}
+}
 </style>
 </head>
 <body>
 
-<!-- ═══ HEADER ═══ -->
+<!-- ═══ HEADER — floating pill ═══ -->
 <header class="header" id="main-header">
   <a href="#" class="header-logo">
-    <svg class="header-logo-icon" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <circle cx="20" cy="4" r="2" fill="#C4A35A" opacity=".5"/>
-      <circle cx="20" cy="9" r="2.3" fill="#C4A35A" opacity=".65"/>
-      <circle cx="20" cy="14.5" r="2.6" fill="#C4A35A" opacity=".8"/>
-      <circle cx="20" cy="20" r="3" fill="#C4A35A" opacity="1"/>
-      <circle cx="20" cy="25.5" r="2.6" fill="#C4A35A" opacity=".8"/>
-      <circle cx="20" cy="31" r="2.3" fill="#C4A35A" opacity=".65"/>
-      <circle cx="20" cy="36" r="2" fill="#C4A35A" opacity=".5"/>
-      <circle cx="4" cy="20" r="2" fill="#C4A35A" opacity=".5"/>
-      <circle cx="9" cy="20" r="2.3" fill="#C4A35A" opacity=".65"/>
-      <circle cx="14.5" cy="20" r="2.6" fill="#C4A35A" opacity=".8"/>
-      <circle cx="25.5" cy="20" r="2.6" fill="#C4A35A" opacity=".8"/>
-      <circle cx="31" cy="20" r="2.3" fill="#C4A35A" opacity=".65"/>
-      <circle cx="36" cy="20" r="2" fill="#C4A35A" opacity=".5"/>
-      <circle cx="14" cy="14" r="1.5" fill="#028090" opacity=".35"/>
-      <circle cx="26" cy="14" r="1.5" fill="#028090" opacity=".35"/>
-      <circle cx="14" cy="26" r="1.5" fill="#028090" opacity=".35"/>
-      <circle cx="26" cy="26" r="1.5" fill="#028090" opacity=".35"/>
-    </svg>
-    <span class="header-brand">APEX</span>
+    <span class="logo-mark">apex<span class="logo-dot"></span></span>
+    <span class="logo-health">health</span>
   </a>
+
   <div class="header-spacer"></div>
+
   <nav class="header-nav">
     <a href="#s-problema">O Problema</a>
     <a href="#s-produto">Como Funciona</a>
     <a href="#s-planos">Planos</a>
     <a href="#s-insights">Insights</a>
   </nav>
-  <div class="header-sep"></div>
-  <a href="portal_profissionais.html" class="header-pro">Área Pro ↗</a>
-  <div class="header-sep"></div>
-  <a href="#s-planos" class="header-cta">Começar →</a>
+
+  <div class="header-divider"></div>
+  <a href="portal_profissionais.html" class="header-pro">Área Pro</a>
+  <a href="#s-planos" class="header-cta">Começar agora</a>
 </header>
 
 <!-- ═══ HERO ═══ -->
 <section class="hero" id="hero">
-  <div class="hero-bg" id="hero-bg" style="background-image:url('https://images.unsplash.com/photo-1631217868264-e5b90bb7e133?w=1920&q=85');"></div>
-  <div class="hero-overlay"></div>
-  <div class="hero-glow"></div>
-  <div class="hero-glow-2"></div>
-  <div class="hero-lines"></div>
+  <div class="hero-grid"></div>
 
-  <svg class="hero-cross-bg" viewBox="0 0 40 40" fill="none">
-    <circle cx="20" cy="4" r="2" fill="#C4A35A" opacity=".5"/>
-    <circle cx="20" cy="9" r="2.3" fill="#C4A35A" opacity=".65"/>
-    <circle cx="20" cy="14.5" r="2.6" fill="#C4A35A" opacity=".8"/>
-    <circle cx="20" cy="20" r="3" fill="#C4A35A"/>
-    <circle cx="20" cy="25.5" r="2.6" fill="#C4A35A" opacity=".8"/>
-    <circle cx="20" cy="31" r="2.3" fill="#C4A35A" opacity=".65"/>
-    <circle cx="20" cy="36" r="2" fill="#C4A35A" opacity=".5"/>
-    <circle cx="4" cy="20" r="2" fill="#C4A35A" opacity=".5"/>
-    <circle cx="9" cy="20" r="2.3" fill="#C4A35A" opacity=".65"/>
-    <circle cx="14.5" cy="20" r="2.6" fill="#C4A35A" opacity=".8"/>
-    <circle cx="25.5" cy="20" r="2.6" fill="#C4A35A" opacity=".8"/>
-    <circle cx="31" cy="20" r="2.3" fill="#C4A35A" opacity=".65"/>
-    <circle cx="36" cy="20" r="2" fill="#C4A35A" opacity=".5"/>
-    <circle cx="14" cy="14" r="1.5" fill="#028090" opacity=".4"/>
-    <circle cx="26" cy="14" r="1.5" fill="#028090" opacity=".4"/>
-    <circle cx="14" cy="26" r="1.5" fill="#028090" opacity=".4"/>
-    <circle cx="26" cy="26" r="1.5" fill="#028090" opacity=".4"/>
-  </svg>
+  <div class="hero-inner">
+    <!-- Left: text content -->
+    <div class="hero-text">
+      <div class="hero-badge fade-up">
+        <span class="hero-badge-dot"></span>
+        Monitoramento Remoto de Pacientes
+      </div>
+      <h1 class="hero-h1 fade-up">
+        Seu corpo fala<br><em>todos os dias.</em>
+      </h1>
+      <p class="hero-p fade-up">
+        Acompanhamento contínuo de hipertensão, diabetes, obesidade e doença renal crônica — com wearables, inteligência artificial e médico especialista.
+      </p>
+      <div class="hero-actions fade-up">
+        <a href="#s-planos" class="btn-gold">Conheça os planos <span style="font-size:18px">→</span></a>
+        <a href="#s-produto" class="btn-ghost">Como funciona</a>
+      </div>
+      <div class="hero-trust fade-up">
+        <div class="trust-item">
+          <span class="trust-number">4</span>
+          <span class="trust-label">Condições CKM</span>
+        </div>
+        <div class="trust-sep"></div>
+        <div class="trust-item">
+          <span class="trust-number">24/7</span>
+          <span class="trust-label">Monitoramento</span>
+        </div>
+        <div class="trust-sep"></div>
+        <div class="trust-item">
+          <span class="trust-number">IA</span>
+          <span class="trust-label">Jarvis Assistente</span>
+        </div>
+      </div>
+    </div>
 
-  <div class="hero-content">
-    <div class="hero-eyebrow">Monitoramento Remoto de Pacientes</div>
-    <h1 class="hero-headline">
-      Seu corpo fala<br><em>todos os dias.</em>
-    </h1>
-    <p class="hero-sub">
-      Acompanhamento contínuo de hipertensão, diabetes, obesidade e doença renal crônica — com wearables, inteligência artificial e médico especialista.
-    </p>
-    <div class="hero-actions">
-      <a href="#s-planos" class="hero-btn-primary">Conheça os planos →</a>
-      <a href="#s-produto" class="hero-btn-secondary">Como funciona</a>
+    <!-- Right: app mockup -->
+    <div class="hero-visual fade-in-right">
+      <div class="app-card">
+        <div class="app-card-header">
+          <div>
+            <div class="app-greeting">Bom dia,</div>
+            <div class="app-name">Bruno</div>
+          </div>
+          <div class="app-avatar">B</div>
+        </div>
+
+        <div class="metric-grid">
+          <div class="metric highlight">
+            <span class="metric-icon">💓</span>
+            <div><span class="metric-val">120</span><span class="metric-unit">/78</span></div>
+            <div class="metric-label">Pressão arterial</div>
+          </div>
+          <div class="metric gold-hl">
+            <span class="metric-icon">🩸</span>
+            <div><span class="metric-val">98</span><span class="metric-unit">mg/dL</span></div>
+            <div class="metric-label">Glicemia</div>
+          </div>
+          <div class="metric">
+            <span class="metric-icon">⚖️</span>
+            <div><span class="metric-val">82</span><span class="metric-unit">kg</span></div>
+            <div class="metric-label">Peso atual</div>
+          </div>
+          <div class="metric">
+            <span class="metric-icon">💧</span>
+            <div><span class="metric-val">92</span><span class="metric-unit">mL/min</span></div>
+            <div class="metric-label">TFGe</div>
+          </div>
+        </div>
+
+        <div class="jarvis-bar">
+          <div class="jarvis-icon">✦</div>
+          <div class="jarvis-text">
+            <strong>Jarvis:</strong> Sua pressão está estável há 7 dias. Continue assim!
+          </div>
+        </div>
+      </div>
+
+      <!-- Floating pills -->
+      <div class="float-pill pill-1">
+        <span class="pill-icon">⌚</span> Apple Watch
+      </div>
+      <div class="float-pill pill-2">
+        <span class="pill-icon">📊</span> Relatório mensal
+      </div>
+      <div class="float-pill pill-3">
+        <span class="pill-icon">💊</span> 3 medicações hoje
+      </div>
     </div>
   </div>
 
-  <div class="hero-scroll">
-    <span>Scroll</span>
-    <div class="scroll-line"></div>
+  <div class="scroll-hint">
+    <div class="scroll-mouse"></div>
+    <span class="scroll-text">scroll</span>
   </div>
 </section>
 
@@ -334,57 +525,21 @@ body{font-family:var(--sans);background:var(--bg);color:#141413;overflow-x:hidde
 <section class="placeholder-section" id="s-produto">
   <h2 class="rv">Seção 03 — A Solução APEX</h2>
 </section>
-<section class="placeholder-section" id="s-planos" style="background:#1E2D50;">
-  <h2 class="rv" style="color:#C4A35A;">Seção 06 — Planos e Preços</h2>
+<section class="placeholder-section" id="s-planos" style="background:var(--navy-deep);">
+  <h2 class="rv" style="color:var(--gold);">Seção 06 — Planos e Preços</h2>
 </section>
 <section class="placeholder-section" id="s-insights" style="background:#f5f5f0;">
   <h2 class="rv">Seção 08 — APEX Insights</h2>
 </section>
 
-<!-- ═══ BACKGROUND SELECTOR (para validação) ═══ -->
-<div class="bg-selector" id="bg-sel">
-  <span>Trocar fundo</span>
-  <button class="active" onclick="setBg(0,this)">A · Médico + tecnologia</button>
-  <button onclick="setBg(1,this)">B · Wearable / smartwatch</button>
-  <button onclick="setBg(2,this)">C · Abstrato / dados</button>
-  <button onclick="setBg(3,this)">D · Paciente + natureza</button>
-</div>
-
 <script>
-var bgImages = [
-  'https://images.unsplash.com/photo-1631217868264-e5b90bb7e133?w=1920&q=85',
-  'https://images.unsplash.com/photo-1510017803434-a899b57cbffc?w=1920&q=85',
-  'https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=1920&q=85',
-  'https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=1920&q=85'
-];
-var heroBg = document.getElementById('hero-bg');
-
-function setBg(idx, btn) {
-  heroBg.style.opacity = '0';
-  setTimeout(function() {
-    heroBg.style.backgroundImage = "url('" + bgImages[idx] + "')";
-    heroBg.style.opacity = '1';
-  }, 400);
-  document.querySelectorAll('.bg-selector button').forEach(function(b) { b.classList.remove('active'); });
-  btn.classList.add('active');
-}
-
-bgImages.forEach(function(src) {
-  var img = new Image();
-  img.src = src;
-});
-
+// Header shrink on scroll
 var header = document.getElementById('main-header');
 window.addEventListener('scroll', function() {
-  header.classList.toggle('scrolled', window.scrollY > 80);
+  header.classList.toggle('scrolled', window.scrollY > 60);
 });
 
-window.addEventListener('scroll', function() {
-  if (window.scrollY < window.innerHeight) {
-    heroBg.style.transform = 'translateY(' + (window.scrollY * 0.3) + 'px)';
-  }
-});
-
+// Scroll reveal
 var obs = new IntersectionObserver(function(entries) {
   entries.forEach(function(entry) {
     if (entry.isIntersecting) {
