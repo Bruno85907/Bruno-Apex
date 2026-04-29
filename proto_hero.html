@@ -410,6 +410,188 @@ body{font-family:var(--sans);background:var(--bg);color:#141413;overflow-x:hidde
   .gains-grid{grid-template-columns:1fr;gap:8px;}
   .gain-value{font-size:48px;}
 }
+
+/* ═══ INTEGRAÇÕES ═══ */
+.integrations{
+  padding:80px 48px;
+  background:#0a0f1a;
+  overflow:hidden;
+  position:relative;
+}
+.integrations-inner{
+  max-width:1060px;margin:0 auto;
+  text-align:center;
+}
+.integrations-eyebrow{
+  font-size:11px;font-weight:600;letter-spacing:3.5px;
+  text-transform:uppercase;color:var(--gold);
+  margin-bottom:8px;
+}
+.integrations-headline{
+  font-family:var(--serif);
+  font-size:34px;font-weight:400;color:#fff;
+  line-height:1.2;margin-bottom:10px;
+}
+.integrations-headline em{font-style:italic;color:var(--gold);}
+.integrations-sub{
+  font-size:14px;color:rgba(255,255,255,.4);
+  max-width:480px;margin:0 auto 48px;line-height:1.6;
+}
+/* Showcase area */
+.integ-showcase{
+  position:relative;
+  height:520px;
+  display:flex;align-items:center;justify-content:center;
+}
+/* Phone mockup */
+.phone-mock{
+  position:relative;z-index:2;
+  width:260px;height:520px;
+  background:#111;
+  border-radius:36px;
+  border:3px solid #2a2a2a;
+  box-shadow:0 40px 80px rgba(0,0,0,.5),0 0 0 1px rgba(255,255,255,.05);
+  overflow:hidden;
+  display:flex;flex-direction:column;
+}
+.phone-notch{
+  width:100px;height:6px;
+  background:#222;border-radius:0 0 8px 8px;
+  margin:0 auto;flex-shrink:0;
+}
+.phone-screen{
+  flex:1;padding:16px 18px 12px;
+  display:flex;flex-direction:column;
+  background:linear-gradient(180deg,#0d1520 0%,#121d33 100%);
+}
+.ps-header{
+  display:flex;align-items:center;justify-content:space-between;
+  margin-bottom:16px;
+}
+.ps-greeting{font-size:11px;color:rgba(255,255,255,.4);font-weight:400;}
+.ps-name{font-size:18px;font-weight:600;color:#fff;margin-top:1px;}
+.ps-avatar{
+  width:32px;height:32px;border-radius:50%;
+  background:var(--gold);display:flex;align-items:center;justify-content:center;
+  font-size:12px;font-weight:700;color:#121d33;
+}
+/* Metric cards inside phone */
+.ps-metrics{
+  display:grid;grid-template-columns:1fr 1fr;gap:8px;
+  margin-bottom:12px;
+}
+.ps-card{
+  background:rgba(255,255,255,.05);
+  border-radius:12px;padding:10px;
+  border:1px solid rgba(255,255,255,.06);
+}
+.ps-card-icon{font-size:14px;margin-bottom:4px;}
+.ps-card-label{font-size:9px;color:rgba(255,255,255,.35);text-transform:uppercase;letter-spacing:.8px;font-weight:500;}
+.ps-card-value{font-size:20px;font-weight:700;color:#fff;margin-top:2px;line-height:1;}
+.ps-card-unit{font-size:10px;color:rgba(255,255,255,.3);font-weight:400;}
+.ps-card-status{
+  font-size:8px;font-weight:600;letter-spacing:.5px;
+  padding:2px 6px;border-radius:4px;
+  display:inline-block;margin-top:4px;
+}
+.ps-ok{background:rgba(16,185,129,.15);color:#10b981;}
+.ps-warn{background:rgba(245,158,11,.15);color:#f59e0b;}
+.ps-high{background:rgba(239,68,68,.15);color:#ef4444;}
+/* Mini chart */
+.ps-chart{
+  background:rgba(255,255,255,.03);
+  border-radius:12px;padding:10px;
+  border:1px solid rgba(255,255,255,.06);
+  margin-bottom:12px;flex:1;
+}
+.ps-chart-header{
+  display:flex;justify-content:space-between;align-items:center;
+  margin-bottom:8px;
+}
+.ps-chart-title{font-size:10px;color:rgba(255,255,255,.4);font-weight:500;text-transform:uppercase;letter-spacing:.6px;}
+.ps-chart-period{font-size:9px;color:var(--gold);font-weight:500;}
+/* Bottom nav */
+.ps-nav{
+  display:flex;justify-content:space-around;
+  border-top:1px solid rgba(255,255,255,.06);
+  padding-top:8px;
+}
+.ps-nav-item{text-align:center;}
+.ps-nav-dot{width:4px;height:4px;border-radius:50%;margin:0 auto 2px;}
+.ps-nav-label{font-size:7px;color:rgba(255,255,255,.3);text-transform:uppercase;letter-spacing:.5px;}
+.ps-nav-active .ps-nav-dot{background:var(--gold);}
+.ps-nav-active .ps-nav-label{color:var(--gold);}
+/* Watch mockup */
+.watch-mock{
+  position:absolute;z-index:3;
+  right:calc(50% - 230px);bottom:40px;
+  width:120px;height:148px;
+  background:#111;
+  border-radius:30px;
+  border:3px solid #2a2a2a;
+  box-shadow:0 20px 50px rgba(0,0,0,.5);
+  overflow:hidden;
+  display:flex;flex-direction:column;align-items:center;
+  padding:12px 10px 8px;
+}
+.watch-screen{
+  width:100%;flex:1;
+  background:linear-gradient(180deg,#0d1520,#121d33);
+  border-radius:20px;
+  display:flex;flex-direction:column;align-items:center;
+  justify-content:center;padding:8px;
+}
+.ws-bpm-label{font-size:7px;color:rgba(255,255,255,.4);text-transform:uppercase;letter-spacing:.8px;margin-bottom:2px;}
+.ws-bpm{font-size:32px;font-weight:700;color:#ef4444;line-height:1;}
+.ws-bpm-unit{font-size:8px;color:rgba(255,255,255,.3);margin-top:1px;}
+.ws-steps{font-size:9px;color:rgba(255,255,255,.4);margin-top:8px;}
+.ws-steps span{color:var(--gold);font-weight:600;}
+/* Floating icons */
+.float-icon{
+  position:absolute;
+  width:52px;height:52px;
+  border-radius:14px;
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 8px 24px rgba(0,0,0,.4);
+  z-index:1;
+  animation:float-bob 4s ease-in-out infinite;
+}
+.float-icon img{width:28px;height:28px;}
+.float-icon svg{width:28px;height:28px;}
+.fi-1{top:20px;left:calc(50% - 280px);animation-delay:0s;background:#fff;}
+.fi-2{top:100px;left:calc(50% - 310px);animation-delay:.6s;background:#1a1a1a;}
+.fi-3{top:220px;left:calc(50% - 290px);animation-delay:1.2s;background:#fff;}
+.fi-4{top:360px;left:calc(50% - 260px);animation-delay:.3s;background:#24d868;}
+.fi-5{top:10px;right:calc(50% - 280px);animation-delay:.9s;background:#0d47f7;}
+.fi-6{top:120px;right:calc(50% - 320px);animation-delay:.4s;background:#fff;}
+.fi-7{top:260px;right:calc(50% - 300px);animation-delay:1.0s;background:#00c9a7;}
+.fi-8{top:380px;right:calc(50% - 250px);animation-delay:.7s;background:#e4002b;}
+@keyframes float-bob{
+  0%,100%{transform:translateY(0)}
+  50%{transform:translateY(-10px)}
+}
+.integrations-logos{
+  margin-top:40px;
+  display:flex;gap:32px;align-items:center;justify-content:center;
+  flex-wrap:wrap;
+}
+.integrations-logos span{
+  font-size:11px;font-weight:500;letter-spacing:1px;
+  text-transform:uppercase;color:rgba(255,255,255,.2);
+}
+@media(max-width:900px){
+  .integ-showcase{height:440px;}
+  .phone-mock{width:220px;height:440px;}
+  .watch-mock{width:100px;height:124px;right:calc(50% - 190px);bottom:30px;}
+  .float-icon{width:42px;height:42px;}
+  .integrations{padding:56px 24px;}
+}
+@media(max-width:520px){
+  .float-icon{display:none;}
+  .watch-mock{right:calc(50% - 160px);}
+  .integ-showcase{height:400px;}
+  .phone-mock{width:200px;height:400px;}
+}
 </style>
 </head>
 <body>
@@ -598,6 +780,120 @@ body{font-family:var(--sans);background:var(--bg);color:#141413;overflow-x:hidde
         <div class="gains-footer-text">Diagnóstico precoce e controle contínuo das 4 condições CKM podem retardar ou evitar a diálise, reduzir internações e devolver qualidade de vida. <strong>Cada ano de função renal preservada</strong> é um ano a menos de diálise — e milhares de reais economizados.</div>
       </div>
       <div class="gains-source">Fontes: DAPA-CKD (NEJM 2020) · EMPA-KIDNEY (NEJM 2023) · UKPDS 35 · Lancet 2016 Meta-analysis · IMPACT CKD (KI Reports 2025)</div>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ═══ SEÇÃO — INTEGRAÇÕES ═══ -->
+<section class="integrations" id="s-integracoes">
+  <div class="integrations-inner">
+
+    <div class="integrations-eyebrow rv">Ecossistema</div>
+    <h2 class="integrations-headline rv">
+      Todos os seus dispositivos.<br><em>Um só painel.</em>
+    </h2>
+    <p class="integrations-sub rv">O APEX conecta wearables, apps de saúde e dispositivos médicos em uma plataforma única — monitorada pelo seu médico.</p>
+
+    <div class="integ-showcase rv">
+      <!-- Floating partner icons -->
+      <div class="float-icon fi-1" title="Apple Health">
+        <svg viewBox="0 0 24 24" fill="#111"><path d="M17.05 12.54c-.03-2.71 2.21-4.01 2.31-4.07a5.01 5.01 0 00-3.95-2.14c-1.67-.17-3.28 1-4.13 1-.86 0-2.18-.98-3.59-.95a5.28 5.28 0 00-4.45 2.72c-1.9 3.3-.49 8.18 1.36 10.86.9 1.31 1.98 2.78 3.39 2.73 1.36-.06 1.87-.88 3.52-.88 1.64 0 2.1.88 3.54.85 1.47-.03 2.4-1.33 3.29-2.65a10.9 10.9 0 001.49-3.06 4.64 4.64 0 01-2.78-4.41zM14.43 4.54a4.74 4.74 0 001.08-3.4 4.82 4.82 0 00-3.12 1.62 4.51 4.51 0 00-1.11 3.27 3.99 3.99 0 003.15-1.49z"/></svg>
+      </div>
+      <div class="float-icon fi-2" title="Garmin">
+        <svg viewBox="0 0 24 24" fill="#fff"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z"/></svg>
+      </div>
+      <div class="float-icon fi-3" title="Samsung Health">
+        <svg viewBox="0 0 24 24" fill="#1428a0"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+      </div>
+      <div class="float-icon fi-4" title="Health Connect">
+        <svg viewBox="0 0 24 24" fill="#fff"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+      </div>
+      <div class="float-icon fi-5" title="MyFitnessPal">
+        <svg viewBox="0 0 24 24" fill="#fff"><circle cx="12" cy="8" r="4"/><path d="M12 14c-4 0-8 2-8 4v2h16v-2c0-2-4-4-8-4z"/></svg>
+      </div>
+      <div class="float-icon fi-6" title="Google Fit">
+        <svg viewBox="0 0 24 24" fill="none"><path d="M12 2L8.5 8.5 2 12l6.5 3.5L12 22l3.5-6.5L22 12l-6.5-3.5z" fill="#4285f4"/><path d="M12 2l3.5 6.5L22 12l-6.5 3.5" fill="#ea4335"/><path d="M12 22l-3.5-6.5L2 12l6.5-3.5" fill="#34a853"/></svg>
+      </div>
+      <div class="float-icon fi-7" title="Withings">
+        <svg viewBox="0 0 24 24" fill="#fff"><rect x="4" y="4" width="16" height="16" rx="3" fill="#00b4aa"/><path d="M8 16l2.5-8h1l1.5 5 1.5-5h1l2.5 8" stroke="#fff" stroke-width="1.5" fill="none"/></svg>
+      </div>
+      <div class="float-icon fi-8" title="Peloton">
+        <svg viewBox="0 0 24 24" fill="#fff"><circle cx="12" cy="12" r="9" stroke="#fff" stroke-width="2" fill="none"/><path d="M12 7v5l3.5 3.5" stroke="#fff" stroke-width="2" fill="none" stroke-linecap="round"/></svg>
+      </div>
+
+      <!-- Phone mockup -->
+      <div class="phone-mock">
+        <div class="phone-notch"></div>
+        <div class="phone-screen">
+          <div class="ps-header">
+            <div>
+              <div class="ps-greeting">Bom dia,</div>
+              <div class="ps-name">Bruno</div>
+            </div>
+            <div class="ps-avatar">BB</div>
+          </div>
+          <div class="ps-metrics">
+            <div class="ps-card">
+              <div class="ps-card-label">Pressão</div>
+              <div class="ps-card-value">128<span class="ps-card-unit">/82</span></div>
+              <div class="ps-card-status ps-ok">Controlada</div>
+            </div>
+            <div class="ps-card">
+              <div class="ps-card-label">Glicemia</div>
+              <div class="ps-card-value">104<span class="ps-card-unit"> mg/dL</span></div>
+              <div class="ps-card-status ps-ok">Normal</div>
+            </div>
+            <div class="ps-card">
+              <div class="ps-card-label">Peso</div>
+              <div class="ps-card-value">82,3<span class="ps-card-unit"> kg</span></div>
+              <div class="ps-card-status ps-warn">-1,2 kg</div>
+            </div>
+            <div class="ps-card">
+              <div class="ps-card-label">Creatinina</div>
+              <div class="ps-card-value">1,18<span class="ps-card-unit"> mg/dL</span></div>
+              <div class="ps-card-status ps-ok">Estável</div>
+            </div>
+          </div>
+          <div class="ps-chart">
+            <div class="ps-chart-header">
+              <span class="ps-chart-title">Pressão 7 dias</span>
+              <span class="ps-chart-period">Abr 2026</span>
+            </div>
+            <svg viewBox="0 0 200 60" style="width:100%;height:auto;">
+              <polyline points="5,40 30,35 55,42 80,30 105,28 130,32 155,25 180,20 195,22" fill="none" stroke="#C4A35A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <polyline points="5,48 30,44 55,50 80,42 105,40 130,44 155,38 180,34 195,36" fill="none" stroke="rgba(196,163,90,.3)" stroke-width="1.5" stroke-dasharray="3,3"/>
+              <line x1="5" y1="55" x2="195" y2="55" stroke="rgba(255,255,255,.06)" stroke-width="1"/>
+            </svg>
+          </div>
+          <div class="ps-nav">
+            <div class="ps-nav-item ps-nav-active"><div class="ps-nav-dot"></div><div class="ps-nav-label">Home</div></div>
+            <div class="ps-nav-item"><div class="ps-nav-dot" style="background:rgba(255,255,255,.15)"></div><div class="ps-nav-label">Dados</div></div>
+            <div class="ps-nav-item"><div class="ps-nav-dot" style="background:rgba(255,255,255,.15)"></div><div class="ps-nav-label">Chat</div></div>
+            <div class="ps-nav-item"><div class="ps-nav-dot" style="background:rgba(255,255,255,.15)"></div><div class="ps-nav-label">Perfil</div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Watch mockup -->
+      <div class="watch-mock">
+        <div class="watch-screen">
+          <div class="ws-bpm-label">BPM</div>
+          <div class="ws-bpm">72</div>
+          <div class="ws-bpm-unit">bpm</div>
+          <div class="ws-steps"><span>8.430</span> passos</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="integrations-logos rv">
+      <span>Apple Health</span>
+      <span>Google Fit</span>
+      <span>Garmin</span>
+      <span>Samsung Health</span>
+      <span>Withings</span>
+      <span>Whoop</span>
     </div>
 
   </div>
