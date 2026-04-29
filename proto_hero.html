@@ -321,4 +321,51 @@ var interval = 5000;
 var timer;
 
 window.goSlide = function(idx) {
-  s
+  slides[current].classList.remove('active');
+  dots[current].classList.remove('active');
+  current = idx;
+  slides[current].classList.add('active');
+  dots[current].classList.add('active');
+  resetTimer();
+};
+
+function nextSlide() {
+  window.goSlide((current + 1) % slides.length);
+}
+
+function resetTimer() {
+  clearInterval(timer);
+  timer = setInterval(nextSlide, interval);
+}
+
+// Start autoplay
+timer = setInterval(nextSlide, interval);
+
+// Preload slide images
+document.querySelectorAll('.hero-slide').forEach(function(s) {
+  var bg = s.style.backgroundImage;
+  var url = bg.replace(/url\(['"]?/, '').replace(/['"]?\)/, '');
+  var img = new Image();
+  img.src = url;
+});
+
+/* HEADER SCROLL */
+var header = document.getElementById('main-header');
+window.addEventListener('scroll', function() {
+  header.classList.toggle('scrolled', window.scrollY > 60);
+});
+
+/* SCROLL REVEAL */
+var obs = new IntersectionObserver(function(entries) {
+  entries.forEach(function(entry) {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('in');
+      obs.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.1 });
+document.querySelectorAll('.rv').forEach(function(el) { obs.observe(el); });
+</script>
+
+</body>
+</html>
