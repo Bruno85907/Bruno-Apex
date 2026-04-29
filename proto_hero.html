@@ -3,153 +3,220 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>APEX Health — Monitoramento Remoto de Pacientes</title>
+<title>APEX Health — Protótipo Header + Hero v8</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --gold:#C4A35A;--gold-light:#D4B96A;
-  --navy:#1E2D50;--navy-deep:#121D33;
-  --teal:#028090;--bg:#FAF9F5;
+  --gold:#C4A35A;
+  --navy:#1E2D50;
+  --navy-deep:#121D33;
+  --teal:#028090;
+  --bg:#FAF9F5;
   --sans:'Inter',system-ui,sans-serif;
   --serif:'Instrument Serif',Georgia,serif;
 }
 html{scroll-behavior:smooth}
 body{font-family:var(--sans);background:var(--bg);color:#141413;overflow-x:hidden;
-  -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;}
+  -webkit-font-smoothing:antialiased;}
 
-/* ═══ HEADER — floating dark pill ═══ */
+/* ═══ HEADER ═══ */
 .header{
-  position:fixed;top:16px;left:50%;transform:translateX(-50%);z-index:900;
-  width:calc(100% - 48px);max-width:1200px;
-  height:60px;display:flex;align-items:center;padding:0 8px 0 28px;
-  background:rgba(18,29,51,.92);backdrop-filter:blur(20px) saturate(1.8);
-  border-radius:16px;
-  border:1px solid rgba(255,255,255,.06);
-  box-shadow:0 4px 30px rgba(0,0,0,.15);
-  transition:all .4s cubic-bezier(.22,1,.36,1);
+  position:fixed;top:0;left:0;right:0;z-index:900;
+  height:68px;display:flex;align-items:center;padding:0 48px;
+  background:rgba(12,20,35,.35);
+  backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+  border-bottom:1px solid rgba(255,255,255,.06);
+  transition:all .4s ease;
 }
-.header.scrolled{top:10px;background:rgba(18,29,51,.97);box-shadow:0 8px 40px rgba(0,0,0,.25);}
-.header-logo{display:flex;align-items:baseline;gap:2px;text-decoration:none;flex-shrink:0;}
-.logo-mark{font-size:24px;font-weight:900;letter-spacing:-1px;color:#fff;line-height:1;}
-.logo-dot{display:inline-block;width:6px;height:6px;background:var(--gold);border-radius:50%;margin-left:1px;vertical-align:baseline;}
-.logo-health{font-size:10px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-left:6px;opacity:.8;}
+.header.scrolled{
+  height:58px;
+  background:rgba(12,20,35,.85);
+  box-shadow:0 4px 30px rgba(0,0,0,.2);
+}
+.header-logo{
+  display:flex;align-items:center;gap:14px;
+  text-decoration:none;flex-shrink:0;
+}
+.header-logo img{
+  height:34px;
+  /* Remove green background — treat as transparent */
+  mix-blend-mode:screen;
+  filter:brightness(1.2);
+}
+.header-brand{
+  font-size:20px;font-weight:700;letter-spacing:5px;
+  color:#fff;text-transform:uppercase;line-height:1;
+}
+.header-brand .brand-health{
+  font-weight:300;letter-spacing:3px;color:rgba(255,255,255,.5);
+  font-size:11px;display:block;margin-top:2px;
+}
 .header-spacer{flex:1}
-.header-nav{display:flex;align-items:center;gap:4px;}
-.header-nav a{font-size:13px;font-weight:500;color:rgba(255,255,255,.5);text-decoration:none;padding:8px 14px;border-radius:10px;transition:all .25s;}
-.header-nav a:hover{color:#fff;background:rgba(255,255,255,.08);}
-.header-divider{width:1px;height:28px;background:rgba(255,255,255,.1);margin:0 8px;}
-.header-pro{font-size:12px;font-weight:500;color:rgba(255,255,255,.4);text-decoration:none;padding:8px 14px;border-radius:10px;transition:all .25s;}
-.header-pro:hover{color:rgba(255,255,255,.8);background:rgba(255,255,255,.06);}
-.header-cta{font-size:13px;font-weight:700;background:var(--gold);color:var(--navy-deep);border:none;border-radius:12px;padding:10px 24px;cursor:pointer;transition:all .3s;text-decoration:none;white-space:nowrap;}
-.header-cta:hover{background:var(--gold-light);transform:translateY(-1px);box-shadow:0 4px 20px rgba(196,163,90,.4);}
+.header-nav{display:flex;align-items:center;gap:28px;}
+.header-nav a{
+  font-size:11px;font-weight:500;letter-spacing:1.5px;
+  text-transform:uppercase;color:rgba(255,255,255,.55);text-decoration:none;
+  transition:color .3s;position:relative;
+}
+.header-nav a::after{
+  content:'';position:absolute;bottom:-4px;left:0;right:0;
+  height:1.5px;background:var(--gold);transform:scaleX(0);
+  transition:transform .3s;
+}
+.header-nav a:hover{color:#fff}
+.header-nav a:hover::after{transform:scaleX(1)}
+.header-pro{
+  font-size:10px;font-weight:500;color:rgba(255,255,255,.5);text-decoration:none;
+  border:1px solid rgba(255,255,255,.15);border-radius:6px;padding:7px 14px;
+  transition:all .3s;letter-spacing:.5px;
+}
+.header-pro:hover{border-color:rgba(255,255,255,.4);color:#fff}
+.header-cta{
+  font-size:11px;font-weight:600;letter-spacing:.5px;
+  background:var(--gold);color:var(--navy-deep);
+  border:none;border-radius:8px;padding:10px 22px;
+  cursor:pointer;transition:all .3s;text-decoration:none;
+}
+.header-cta:hover{
+  transform:translateY(-1px);
+  box-shadow:0 4px 16px rgba(196,163,90,.35);
+}
+.header-sep{
+  width:1px;height:22px;background:rgba(255,255,255,.1);margin:0 8px;
+}
 
 /* ═══ HERO ═══ */
 .hero{
-  position:relative;min-height:100vh;
-  display:flex;align-items:flex-end;
-  overflow:hidden;background:#0a0f18;
+  position:relative;height:85vh;min-height:580px;
+  display:flex;align-items:center;justify-content:flex-start;
+  overflow:hidden;
 }
 
-/* Slideshow */
+/* Slideshow backgrounds */
 .hero-slide{
   position:absolute;inset:0;
-  background-size:cover;background-position:center;
-  opacity:0;transition:opacity 1.8s ease-in-out;
+  background-position:center center;
+  background-size:cover;background-repeat:no-repeat;
+  opacity:0;
+  transition:opacity 1.2s ease;
 }
 .hero-slide.active{opacity:1;}
 
-/* Overlay — strong top + strong left + strong bottom */
+/* Dark overlay — ensures text contrast on ALL photos */
 .hero-overlay{
-  position:absolute;inset:0;z-index:1;
+  position:absolute;inset:0;
   background:
-    linear-gradient(to bottom,
-      rgba(10,15,24,.7) 0%,
-      rgba(10,15,24,.3) 15%,
-      rgba(10,15,24,.15) 40%,
-      rgba(10,15,24,.4) 65%,
-      rgba(10,15,24,.8) 100%
-    ),
-    linear-gradient(to right,
-      rgba(10,15,24,.7) 0%,
-      rgba(10,15,24,.35) 45%,
-      rgba(10,15,24,.05) 100%
-    );
+    linear-gradient(to right, rgba(8,14,26,.82) 0%, rgba(8,14,26,.55) 50%, rgba(8,14,26,.3) 100%),
+    linear-gradient(to bottom, rgba(8,14,26,.6) 0%, rgba(8,14,26,.2) 40%, rgba(8,14,26,.5) 100%);
+  z-index:1;
 }
 
-/* Content — bottom-left, ultra-minimal */
+/* Content — left-aligned like Sonar */
 .hero-content{
   position:relative;z-index:2;
-  width:100%;max-width:1200px;margin:0 auto;
-  padding:0 48px 90px;
+  max-width:620px;padding:0 48px;padding-top:68px;
+  margin-left:4%;
 }
-.hero-h1{
-  font-family:var(--serif);
-  font-size:clamp(48px,6vw,76px);
-  font-weight:400;color:#fff;
-  line-height:1.06;margin-bottom:20px;
-  letter-spacing:-1.5px;max-width:600px;
-  opacity:0;transform:translateY(30px);
-  animation:fadeUp .9s ease-out .3s forwards;
-}
-.hero-h1 em{font-style:italic;color:var(--gold);}
-.hero-sub{
-  font-size:18px;font-weight:400;
-  color:rgba(255,255,255,.5);
-  line-height:1.65;max-width:440px;
+.hero-content > *{
   opacity:0;transform:translateY(20px);
-  animation:fadeUp .8s ease-out .55s forwards;
+  animation:fade-up .7s ease-out forwards;
+}
+.hero-content > *:nth-child(1){animation-delay:.15s}
+.hero-content > *:nth-child(2){animation-delay:.35s}
+.hero-content > *:nth-child(3){animation-delay:.55s}
+.hero-content > *:nth-child(4){animation-delay:.75s}
+@keyframes fade-up{
+  to{opacity:1;transform:translateY(0);}
 }
 
-@keyframes fadeUp{to{opacity:1;transform:translateY(0)}}
+.hero-eyebrow{
+  font-size:11px;font-weight:600;letter-spacing:3.5px;
+  text-transform:uppercase;color:var(--gold);
+  margin-bottom:22px;
+}
+.hero-headline{
+  font-family:var(--serif);
+  font-size:52px;font-weight:400;color:#fff;
+  line-height:1.15;margin-bottom:18px;
+}
+.hero-headline em{font-style:italic;color:var(--gold);}
+.hero-sub{
+  font-size:16px;font-weight:300;color:rgba(255,255,255,.55);
+  line-height:1.7;margin-bottom:36px;max-width:480px;
+  letter-spacing:.2px;
+}
+.hero-actions{display:flex;gap:14px;flex-wrap:wrap;}
+.hero-btn-primary{
+  font-size:13px;font-weight:600;letter-spacing:.3px;
+  background:var(--gold);color:var(--navy-deep);
+  border:none;border-radius:8px;padding:14px 32px;
+  cursor:pointer;transition:all .3s;text-decoration:none;
+  display:inline-flex;align-items:center;gap:8px;
+}
+.hero-btn-primary:hover{
+  transform:translateY(-2px);
+  box-shadow:0 6px 24px rgba(196,163,90,.35);
+}
+.hero-btn-secondary{
+  font-size:13px;font-weight:500;
+  background:transparent;color:rgba(255,255,255,.7);
+  border:1.5px solid rgba(255,255,255,.15);
+  border-radius:8px;padding:14px 28px;
+  cursor:pointer;transition:all .3s;text-decoration:none;
+}
+.hero-btn-secondary:hover{
+  border-color:rgba(255,255,255,.35);color:#fff;
+}
 
 /* Slide dots */
 .hero-dots{
-  position:absolute;bottom:40px;left:50%;transform:translateX(-50%);
-  z-index:3;display:flex;gap:8px;
-  opacity:0;animation:fadeUp .5s ease-out 1s forwards;
+  position:absolute;bottom:32px;left:50%;transform:translateX(-50%);
+  z-index:3;display:flex;gap:10px;
 }
 .hero-dot{
   width:8px;height:8px;border-radius:50%;
-  background:rgba(255,255,255,.2);cursor:pointer;transition:all .4s;
+  background:rgba(255,255,255,.25);
+  cursor:pointer;transition:all .4s;
+  border:none;padding:0;
 }
-.hero-dot.active{background:var(--gold);width:28px;border-radius:4px;}
+.hero-dot.active{
+  background:var(--gold);
+  box-shadow:0 0 8px rgba(196,163,90,.4);
+  transform:scale(1.2);
+}
 
 /* Scroll indicator */
-.scroll-hint{
-  position:absolute;bottom:36px;right:48px;
-  z-index:3;display:flex;align-items:center;gap:10px;
-  opacity:0;animation:fadeUp .6s ease-out 1.2s forwards;
+.hero-scroll{
+  position:absolute;bottom:28px;right:48px;
+  z-index:3;display:flex;flex-direction:column;align-items:center;gap:5px;
+  animation:bounce-scroll 2.5s ease-in-out infinite;
 }
-.scroll-mouse{
-  width:20px;height:32px;border-radius:10px;
-  border:2px solid rgba(255,255,255,.18);position:relative;
+.hero-scroll span{
+  font-size:8px;letter-spacing:2.5px;text-transform:uppercase;
+  color:rgba(255,255,255,.25);
 }
-.scroll-mouse::after{
-  content:'';position:absolute;width:3px;height:7px;border-radius:2px;
-  background:var(--gold);opacity:.7;top:5px;left:50%;transform:translateX(-50%);
-  animation:scroll-wheel 2s ease-in-out infinite;
+.scroll-line{
+  width:1px;height:24px;
+  background:linear-gradient(to bottom,rgba(196,163,90,.4),transparent);
 }
-@keyframes scroll-wheel{
-  0%{opacity:.7;transform:translateX(-50%) translateY(0)}
-  100%{opacity:0;transform:translateX(-50%) translateY(10px)}
+@keyframes bounce-scroll{
+  0%,100%{transform:translateY(0);opacity:.5;}
+  50%{transform:translateY(6px);opacity:1;}
 }
-.scroll-text{font-size:10px;font-weight:500;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.2);}
 
-/* Placeholder sections */
-.placeholder-section{min-height:50vh;padding:80px 40px;display:flex;align-items:center;justify-content:center;}
-.placeholder-section h2{font-family:var(--serif);font-size:36px;color:var(--navy);opacity:.25;}
-.rv{opacity:0;transform:translateY(24px);transition:all .7s cubic-bezier(.22,1,.36,1);}
+/* ═══ PLACEHOLDER SECTIONS ═══ */
+.placeholder-section{
+  min-height:50vh;padding:80px 48px;
+  display:flex;align-items:center;justify-content:center;
+}
+.placeholder-section h2{
+  font-family:var(--serif);font-size:36px;color:var(--navy);opacity:.2;
+}
+.rv{opacity:0;transform:translateY(20px);transition:all .7s cubic-bezier(.22,1,.36,1);}
 .rv.in{opacity:1;transform:translateY(0);}
-
-@media(max-width:768px){
-  .hero-content{padding:0 24px 80px;}
-  .header-nav,.header-divider,.header-pro{display:none;}
-  .header{padding:0 16px 0 24px;width:calc(100% - 32px);}
-  .scroll-hint{display:none;}
-}
 </style>
 </head>
 <body>
@@ -157,58 +224,64 @@ body{font-family:var(--sans);background:var(--bg);color:#141413;overflow-x:hidde
 <!-- ═══ HEADER ═══ -->
 <header class="header" id="main-header">
   <a href="#" class="header-logo">
-    <span class="logo-mark">apex<span class="logo-dot"></span></span>
-    <span class="logo-health">health</span>
+    <img src="apex-health.png" alt="APEX Health" />
   </a>
+
   <div class="header-spacer"></div>
+
   <nav class="header-nav">
     <a href="#s-problema">O Problema</a>
     <a href="#s-produto">Como Funciona</a>
     <a href="#s-planos">Planos</a>
     <a href="#s-insights">Insights</a>
   </nav>
-  <div class="header-divider"></div>
-  <a href="portal_profissionais.html" class="header-pro">Área Pro</a>
-  <a href="#s-planos" class="header-cta">Começar agora</a>
+
+  <div class="header-sep"></div>
+  <a href="portal_profissionais.html" class="header-pro">Área Pro ↗</a>
+  <div class="header-sep"></div>
+  <a href="#s-planos" class="header-cta">Começar →</a>
 </header>
 
 <!-- ═══ HERO ═══ -->
 <section class="hero" id="hero">
-  <!-- Slide 1: Smartwatch no pulso — wearable/monitoramento -->
-  <div class="hero-slide active" style="background-image:url('https://images.unsplash.com/photo-1434494878577-86c23bcb06b9?w=1920&q=80');background-position:center 40%"></div>
-  <!-- Slide 2: Pessoa correndo — atividade física -->
-  <div class="hero-slide" style="background-image:url('https://images.unsplash.com/photo-1552674605-db6ffd4facb5?w=1920&q=80');background-position:center 35%"></div>
-  <!-- Slide 3: Monitoramento de sinais vitais -->
-  <div class="hero-slide" style="background-image:url('https://images.unsplash.com/photo-1549060279-7e168fcee0c2?w=1920&q=80');background-position:center 40%"></div>
-  <!-- Slide 4: Telemedicina / acompanhamento médico remoto -->
-  <div class="hero-slide" style="background-image:url('https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=1920&q=80');background-position:center 30%"></div>
+  <!-- Slideshow backgrounds — dark/moody photos -->
+  <div class="hero-slide active" style="background-image:url('https://images.unsplash.com/photo-1434494878577-86c23bcb06b9?w=1920&q=85');"></div>
+  <div class="hero-slide" style="background-image:url('https://images.unsplash.com/photo-1552674605-db6ffd4facb5?w=1920&q=85');"></div>
+  <div class="hero-slide" style="background-image:url('https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=1920&q=85');"></div>
+  <div class="hero-slide" style="background-image:url('https://images.unsplash.com/photo-1549060279-7e168fcee0c2?w=1920&q=85');"></div>
 
   <div class="hero-overlay"></div>
 
   <div class="hero-content">
-    <h1 class="hero-h1">
-      Seu corpo fala<br><em>todos os dias.</em>
+    <div class="hero-eyebrow">Monitoramento Remoto de Pacientes</div>
+    <h1 class="hero-headline">
+      Seus dados de saúde,<br><em>em tempo real.</em>
     </h1>
     <p class="hero-sub">
-      Monitoramento contínuo de doenças crônicas com wearables, inteligência artificial e médico especialista.
+      Wearables, inteligência artificial e médico especialista monitorando pressão, glicemia, peso e função renal — 24 horas por dia.
     </p>
+    <div class="hero-actions">
+      <a href="#s-planos" class="hero-btn-primary">Conheça os planos →</a>
+      <a href="#s-produto" class="hero-btn-secondary">Como funciona</a>
+    </div>
   </div>
 
+  <!-- Slide dots -->
   <div class="hero-dots" id="hero-dots">
-    <div class="hero-dot active" onclick="goSlide(0)"></div>
-    <div class="hero-dot" onclick="goSlide(1)"></div>
-    <div class="hero-dot" onclick="goSlide(2)"></div>
-    <div class="hero-dot" onclick="goSlide(3)"></div>
+    <button class="hero-dot active" onclick="goSlide(0)"></button>
+    <button class="hero-dot" onclick="goSlide(1)"></button>
+    <button class="hero-dot" onclick="goSlide(2)"></button>
+    <button class="hero-dot" onclick="goSlide(3)"></button>
   </div>
 
-  <div class="scroll-hint">
-    <span class="scroll-text">scroll</span>
-    <div class="scroll-mouse"></div>
+  <div class="hero-scroll">
+    <span>Scroll</span>
+    <div class="scroll-line"></div>
   </div>
 </section>
 
 <!-- Placeholder sections -->
-<section class="placeholder-section" id="s-problema" style="background:#f5f5f0;">
+<section class="placeholder-section" id="s-problema" style="background:#f0efeb;">
   <h2 class="rv">Seção 02 — O Problema (Big Numbers)</h2>
 </section>
 <section class="placeholder-section" id="s-produto">
@@ -217,14 +290,16 @@ body{font-family:var(--sans);background:var(--bg);color:#141413;overflow-x:hidde
 <section class="placeholder-section" id="s-planos" style="background:var(--navy-deep);">
   <h2 class="rv" style="color:var(--gold);">Seção 06 — Planos e Preços</h2>
 </section>
-<section class="placeholder-section" id="s-insights" style="background:#f5f5f0;">
+<section class="placeholder-section" id="s-insights" style="background:#f0efeb;">
   <h2 class="rv">Seção 08 — APEX Insights</h2>
 </section>
 
 <script>
+/* ═══ SLIDESHOW ═══ */
 var slides = document.querySelectorAll('.hero-slide');
 var dots = document.querySelectorAll('.hero-dot');
 var current = 0;
+var interval = 5000;
 var timer;
 
 function goSlide(idx) {
@@ -233,27 +308,35 @@ function goSlide(idx) {
   current = idx;
   slides[current].classList.add('active');
   dots[current].classList.add('active');
-  clearInterval(timer);
-  timer = setInterval(nextSlide, 5500);
+  resetTimer();
 }
-function nextSlide() { goSlide((current + 1) % slides.length); }
-timer = setInterval(nextSlide, 5500);
 
-// Preload
-['https://images.unsplash.com/photo-1434494878577-86c23bcb06b9?w=1920&q=80',
- 'https://images.unsplash.com/photo-1552674605-db6ffd4facb5?w=1920&q=80',
- 'https://images.unsplash.com/photo-1549060279-7e168fcee0c2?w=1920&q=80',
- 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=1920&q=80'
-].forEach(function(s){var i=new Image();i.src=s;});
+function nextSlide() {
+  goSlide((current + 1) % slides.length);
+}
 
+function resetTimer() {
+  clearInterval(timer);
+  timer = setInterval(nextSlide, interval);
+}
+
+// Start autoplay
+timer = setInterval(nextSlide, interval);
+
+// Preload slide images
+document.querySelectorAll('.hero-slide').forEach(function(s) {
+  var bg = s.style.backgroundImage;
+  var url = bg.replace(/url\(['"]?/, '').replace(/['"]?\)/, '');
+  var img = new Image();
+  img.src = url;
+});
+
+/* ═══ HEADER SCROLL ═══ */
 var header = document.getElementById('main-header');
-window.addEventListener('scroll', function(){header.classList.toggle('scrolled',window.scrollY>60);});
+window.addEventListener('scroll', function() {
+  header.classList.toggle('scrolled', window.scrollY > 60);
+});
 
-var obs = new IntersectionObserver(function(entries){
-  entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');obs.unobserve(e.target);}});
-},{threshold:0.1});
-document.querySelectorAll('.rv').forEach(function(el){obs.observe(el);});
-</script>
-
-</body>
-</html>
+/* ═══ SCROLL REVEAL ═══ */
+var obs = new IntersectionObserver(function(entries) {
+  entries.forEach
