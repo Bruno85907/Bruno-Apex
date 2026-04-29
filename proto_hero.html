@@ -25,16 +25,13 @@ body{font-family:var(--sans);background:var(--bg);color:#141413;overflow-x:hidde
   position:fixed;top:16px;left:50%;transform:translateX(-50%);z-index:900;
   width:calc(100% - 48px);max-width:1200px;
   height:60px;display:flex;align-items:center;padding:0 8px 0 28px;
-  background:rgba(18,29,51,.88);backdrop-filter:blur(20px) saturate(1.8);
+  background:rgba(18,29,51,.92);backdrop-filter:blur(20px) saturate(1.8);
   border-radius:16px;
   border:1px solid rgba(255,255,255,.06);
   box-shadow:0 4px 30px rgba(0,0,0,.15);
   transition:all .4s cubic-bezier(.22,1,.36,1);
 }
-.header.scrolled{
-  top:10px;background:rgba(18,29,51,.96);
-  box-shadow:0 8px 40px rgba(0,0,0,.25);
-}
+.header.scrolled{top:10px;background:rgba(18,29,51,.97);box-shadow:0 8px 40px rgba(0,0,0,.25);}
 .header-logo{display:flex;align-items:baseline;gap:2px;text-decoration:none;flex-shrink:0;}
 .logo-mark{font-size:24px;font-weight:900;letter-spacing:-1px;color:#fff;line-height:1;}
 .logo-dot{display:inline-block;width:6px;height:6px;background:var(--gold);border-radius:50%;margin-left:1px;vertical-align:baseline;}
@@ -56,97 +53,73 @@ body{font-family:var(--sans);background:var(--bg);color:#141413;overflow-x:hidde
   overflow:hidden;background:#0a0f18;
 }
 
-/* Slideshow layers */
+/* Slideshow */
 .hero-slide{
   position:absolute;inset:0;
   background-size:cover;background-position:center;
-  opacity:0;transition:opacity 1.5s ease-in-out;
+  opacity:0;transition:opacity 1.8s ease-in-out;
 }
 .hero-slide.active{opacity:1;}
 
-/* Dark overlay — stronger to guarantee contrast */
+/* Overlay — strong top + strong left + strong bottom */
 .hero-overlay{
   position:absolute;inset:0;z-index:1;
   background:
-    linear-gradient(to right,
-      rgba(10,15,24,.75) 0%,
-      rgba(10,15,24,.4) 50%,
-      rgba(10,15,24,.2) 100%
-    ),
     linear-gradient(to bottom,
-      rgba(10,15,24,.2) 0%,
-      rgba(10,15,24,.1) 40%,
-      rgba(10,15,24,.5) 70%,
-      rgba(10,15,24,.85) 100%
+      rgba(10,15,24,.7) 0%,
+      rgba(10,15,24,.3) 15%,
+      rgba(10,15,24,.15) 40%,
+      rgba(10,15,24,.4) 65%,
+      rgba(10,15,24,.8) 100%
+    ),
+    linear-gradient(to right,
+      rgba(10,15,24,.7) 0%,
+      rgba(10,15,24,.35) 45%,
+      rgba(10,15,24,.05) 100%
     );
 }
 
-/* Content — bottom-left */
+/* Content — bottom-left, ultra-minimal */
 .hero-content{
   position:relative;z-index:2;
   width:100%;max-width:1200px;margin:0 auto;
-  padding:0 48px 80px;
+  padding:0 48px 90px;
 }
 .hero-h1{
   font-family:var(--serif);
   font-size:clamp(48px,6vw,76px);
   font-weight:400;color:#fff;
-  line-height:1.06;margin-bottom:22px;
-  letter-spacing:-1.5px;max-width:650px;
+  line-height:1.06;margin-bottom:20px;
+  letter-spacing:-1.5px;max-width:600px;
   opacity:0;transform:translateY(30px);
   animation:fadeUp .9s ease-out .3s forwards;
 }
 .hero-h1 em{font-style:italic;color:var(--gold);}
 .hero-sub{
   font-size:18px;font-weight:400;
-  color:rgba(255,255,255,.55);
-  line-height:1.65;margin-bottom:36px;max-width:460px;
+  color:rgba(255,255,255,.5);
+  line-height:1.65;max-width:440px;
   opacity:0;transform:translateY(20px);
   animation:fadeUp .8s ease-out .55s forwards;
 }
-.hero-actions{
-  display:flex;gap:14px;align-items:center;flex-wrap:wrap;
-  opacity:0;transform:translateY(20px);
-  animation:fadeUp .8s ease-out .75s forwards;
-}
-.btn-gold{
-  font-family:var(--sans);font-size:15px;font-weight:700;
-  background:var(--gold);color:var(--navy-deep);
-  border:none;border-radius:14px;padding:16px 34px;
-  cursor:pointer;transition:all .3s;text-decoration:none;
-  display:inline-flex;align-items:center;gap:8px;
-}
-.btn-gold:hover{background:var(--gold-light);transform:translateY(-2px);box-shadow:0 8px 30px rgba(196,163,90,.35);}
-.btn-ghost{
-  font-family:var(--sans);font-size:15px;font-weight:500;
-  background:rgba(255,255,255,.06);color:rgba(255,255,255,.8);
-  border:1.5px solid rgba(255,255,255,.15);
-  border-radius:14px;padding:15px 28px;
-  cursor:pointer;transition:all .3s;text-decoration:none;
-}
-.btn-ghost:hover{color:#fff;border-color:rgba(255,255,255,.35);background:rgba(255,255,255,.1);}
 
 @keyframes fadeUp{to{opacity:1;transform:translateY(0)}}
 
-/* Slide dots indicator */
+/* Slide dots */
 .hero-dots{
-  position:absolute;bottom:36px;left:50%;transform:translateX(-50%);
+  position:absolute;bottom:40px;left:50%;transform:translateX(-50%);
   z-index:3;display:flex;gap:8px;
   opacity:0;animation:fadeUp .5s ease-out 1s forwards;
 }
 .hero-dot{
   width:8px;height:8px;border-radius:50%;
-  background:rgba(255,255,255,.2);
-  cursor:pointer;transition:all .4s;
+  background:rgba(255,255,255,.2);cursor:pointer;transition:all .4s;
 }
-.hero-dot.active{
-  background:var(--gold);
-  width:28px;border-radius:4px;
-}
+.hero-dot.active{background:var(--gold);width:28px;border-radius:4px;}
 
 /* Scroll indicator */
 .scroll-hint{
-  position:absolute;bottom:32px;right:48px;
+  position:absolute;bottom:36px;right:48px;
   z-index:3;display:flex;align-items:center;gap:10px;
   opacity:0;animation:fadeUp .6s ease-out 1.2s forwards;
 }
@@ -172,7 +145,7 @@ body{font-family:var(--sans);background:var(--bg);color:#141413;overflow-x:hidde
 .rv.in{opacity:1;transform:translateY(0);}
 
 @media(max-width:768px){
-  .hero-content{padding:0 24px 70px;}
+  .hero-content{padding:0 24px 80px;}
   .header-nav,.header-divider,.header-pro{display:none;}
   .header{padding:0 16px 0 24px;width:calc(100% - 32px);}
   .scroll-hint{display:none;}
@@ -201,11 +174,14 @@ body{font-family:var(--sans);background:var(--bg);color:#141413;overflow-x:hidde
 
 <!-- ═══ HERO ═══ -->
 <section class="hero" id="hero">
-  <!-- Slideshow backgrounds — all dark/moody photos -->
-  <div class="hero-slide active" style="background-image:url('https://images.unsplash.com/photo-1559757175-5700dde675bc?w=1920&q=80')"></div>
-  <div class="hero-slide" style="background-image:url('https://images.unsplash.com/photo-1549060279-7e168fcee0c2?w=1920&q=80')"></div>
-  <div class="hero-slide" style="background-image:url('https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=1920&q=80')"></div>
-  <div class="hero-slide" style="background-image:url('https://images.unsplash.com/photo-1542884748-2b87b36c6b90?w=1920&q=80')"></div>
+  <!-- Slide 1: Smartwatch no pulso — wearable/monitoramento -->
+  <div class="hero-slide active" style="background-image:url('https://images.unsplash.com/photo-1434494878577-86c23bcb06b9?w=1920&q=80');background-position:center 40%"></div>
+  <!-- Slide 2: Pessoa correndo — atividade física -->
+  <div class="hero-slide" style="background-image:url('https://images.unsplash.com/photo-1552674605-db6ffd4facb5?w=1920&q=80');background-position:center 35%"></div>
+  <!-- Slide 3: Medição de pressão arterial -->
+  <div class="hero-slide" style="background-image:url('https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=1920&q=80');background-position:center"></div>
+  <!-- Slide 4: Médico com tecnologia / estetoscópio + laptop -->
+  <div class="hero-slide" style="background-image:url('https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=1920&q=80');background-position:center 60%"></div>
 
   <div class="hero-overlay"></div>
 
@@ -216,13 +192,8 @@ body{font-family:var(--sans);background:var(--bg);color:#141413;overflow-x:hidde
     <p class="hero-sub">
       Monitoramento contínuo de doenças crônicas com wearables, inteligência artificial e médico especialista.
     </p>
-    <div class="hero-actions">
-      <a href="#s-planos" class="btn-gold">Conheça os planos <span style="font-size:18px">→</span></a>
-      <a href="#s-produto" class="btn-ghost">Como funciona</a>
-    </div>
   </div>
 
-  <!-- Slide dots -->
   <div class="hero-dots" id="hero-dots">
     <div class="hero-dot active" onclick="goSlide(0)"></div>
     <div class="hero-dot" onclick="goSlide(1)"></div>
@@ -251,11 +222,9 @@ body{font-family:var(--sans);background:var(--bg);color:#141413;overflow-x:hidde
 </section>
 
 <script>
-// ═══ SLIDESHOW ═══
 var slides = document.querySelectorAll('.hero-slide');
 var dots = document.querySelectorAll('.hero-dot');
 var current = 0;
-var interval = 5000; // 5 seconds per slide
 var timer;
 
 function goSlide(idx) {
@@ -264,38 +233,26 @@ function goSlide(idx) {
   current = idx;
   slides[current].classList.add('active');
   dots[current].classList.add('active');
-  // Reset timer
   clearInterval(timer);
-  timer = setInterval(nextSlide, interval);
+  timer = setInterval(nextSlide, 5500);
 }
+function nextSlide() { goSlide((current + 1) % slides.length); }
+timer = setInterval(nextSlide, 5500);
 
-function nextSlide() {
-  goSlide((current + 1) % slides.length);
-}
+// Preload
+['https://images.unsplash.com/photo-1434494878577-86c23bcb06b9?w=1920&q=80',
+ 'https://images.unsplash.com/photo-1552674605-db6ffd4facb5?w=1920&q=80',
+ 'https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=1920&q=80',
+ 'https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=1920&q=80'
+].forEach(function(s){var i=new Image();i.src=s;});
 
-// Start auto-rotation
-timer = setInterval(nextSlide, interval);
-
-// Preload all images
-['https://images.unsplash.com/photo-1559757175-5700dde675bc?w=1920&q=80',
- 'https://images.unsplash.com/photo-1549060279-7e168fcee0c2?w=1920&q=80',
- 'https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=1920&q=80',
- 'https://images.unsplash.com/photo-1542884748-2b87b36c6b90?w=1920&q=80'
-].forEach(function(src) { var i = new Image(); i.src = src; });
-
-// Header shrink
 var header = document.getElementById('main-header');
-window.addEventListener('scroll', function() {
-  header.classList.toggle('scrolled', window.scrollY > 60);
-});
+window.addEventListener('scroll', function(){header.classList.toggle('scrolled',window.scrollY>60);});
 
-// Scroll reveal
-var obs = new IntersectionObserver(function(entries) {
-  entries.forEach(function(e) {
-    if (e.isIntersecting) { e.target.classList.add('in'); obs.unobserve(e.target); }
-  });
-}, { threshold: 0.1 });
-document.querySelectorAll('.rv').forEach(function(el) { obs.observe(el); });
+var obs = new IntersectionObserver(function(entries){
+  entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');obs.unobserve(e.target);}});
+},{threshold:0.1});
+document.querySelectorAll('.rv').forEach(function(el){obs.observe(el);});
 </script>
 
 </body>
