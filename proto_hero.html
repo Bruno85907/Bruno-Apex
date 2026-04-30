@@ -566,6 +566,315 @@ body{font-family:var(--sans);background:var(--bg);color:#141413;overflow-x:hidde
   .como-funciona{padding:56px 24px;}
   .cf-headline{font-size:28px;}
 }
+
+/* ═══ PLANOS E PREÇOS ═══ */
+.planos{
+  padding:80px 48px;
+  background:var(--navy-deep);
+}
+.planos-inner{
+  max-width:1060px;margin:0 auto;
+}
+.planos-header{
+  text-align:center;margin-bottom:56px;
+}
+.planos-eyebrow{
+  font-size:11px;font-weight:600;letter-spacing:3.5px;
+  text-transform:uppercase;color:var(--gold);
+  margin-bottom:8px;
+}
+.planos-headline{
+  font-family:var(--serif);
+  font-size:36px;font-weight:400;color:#fff;
+  line-height:1.2;margin-bottom:10px;
+}
+.planos-headline em{font-style:italic;color:var(--gold);}
+.planos-sub{
+  font-size:14.5px;color:rgba(255,255,255,.4);
+  max-width:440px;margin:0 auto;line-height:1.6;
+}
+.planos-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:20px;
+  align-items:start;
+}
+.plano-card{
+  background:rgba(255,255,255,.04);
+  border:1px solid rgba(255,255,255,.08);
+  border-radius:16px;
+  padding:36px 28px 32px;
+  transition:all .4s cubic-bezier(.22,1,.36,1);
+  position:relative;
+}
+.plano-card:hover{
+  transform:translateY(-4px);
+  box-shadow:0 12px 40px rgba(0,0,0,.3);
+  border-color:rgba(196,163,90,.2);
+}
+.plano-card.featured{
+  background:rgba(196,163,90,.08);
+  border-color:rgba(196,163,90,.3);
+}
+.plano-badge{
+  position:absolute;top:-12px;right:24px;
+  font-size:9px;font-weight:700;letter-spacing:1.5px;
+  text-transform:uppercase;
+  background:var(--gold);color:var(--navy-deep);
+  padding:5px 14px;border-radius:6px;
+}
+.plano-name{
+  font-family:var(--serif);
+  font-size:24px;color:#fff;margin-bottom:4px;
+}
+.plano-desc{
+  font-size:13px;color:rgba(255,255,255,.35);
+  margin-bottom:20px;line-height:1.5;
+}
+.plano-price{
+  margin-bottom:24px;
+}
+.plano-price-value{
+  font-family:var(--serif);
+  font-size:48px;font-weight:400;color:#fff;
+  line-height:1;
+}
+.plano-price-value span.currency{
+  font-size:22px;color:rgba(255,255,255,.4);
+  vertical-align:super;margin-right:2px;
+}
+.plano-price-value span.period{
+  font-size:14px;color:rgba(255,255,255,.25);
+  font-family:var(--sans);font-weight:400;
+}
+.plano-features{
+  list-style:none;padding:0;margin:0 0 28px;
+}
+.plano-features li{
+  font-size:13px;color:rgba(255,255,255,.55);
+  padding:8px 0;
+  border-bottom:1px solid rgba(255,255,255,.05);
+  display:flex;align-items:center;gap:10px;
+  line-height:1.4;
+}
+.plano-features li:last-child{border-bottom:none;}
+.plano-check{
+  width:16px;height:16px;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;
+}
+.plano-check svg{width:14px;height:14px;}
+.plano-btn{
+  display:block;width:100%;text-align:center;
+  font-size:13px;font-weight:600;letter-spacing:.3px;
+  padding:14px;border-radius:10px;
+  text-decoration:none;transition:all .3s;
+  cursor:pointer;border:none;
+}
+.plano-btn-primary{
+  background:var(--gold);color:var(--navy-deep);
+}
+.plano-btn-primary:hover{
+  transform:translateY(-1px);
+  box-shadow:0 4px 16px rgba(196,163,90,.35);
+}
+.plano-btn-secondary{
+  background:transparent;color:rgba(255,255,255,.6);
+  border:1px solid rgba(255,255,255,.12);
+}
+.plano-btn-secondary:hover{
+  border-color:rgba(255,255,255,.3);color:#fff;
+}
+.planos-note{
+  text-align:center;margin-top:32px;
+  font-size:12px;color:rgba(255,255,255,.2);
+  line-height:1.6;
+}
+@media(max-width:900px){
+  .planos-grid{grid-template-columns:1fr;max-width:400px;margin:0 auto;}
+  .planos{padding:56px 24px;}
+  .planos-headline{font-size:28px;}
+}
+
+/* ═══ SOCIAL PROOF ═══ */
+.social-proof{
+  padding:80px 48px;
+  background:var(--bg);
+}
+.sp-inner{
+  max-width:1060px;margin:0 auto;
+}
+.sp-header{
+  text-align:center;margin-bottom:56px;
+}
+.sp-eyebrow{
+  font-size:11px;font-weight:600;letter-spacing:3.5px;
+  text-transform:uppercase;color:var(--gold);
+  margin-bottom:8px;
+}
+.sp-headline{
+  font-family:var(--serif);
+  font-size:36px;font-weight:400;color:#111;
+  line-height:1.2;margin-bottom:10px;
+}
+.sp-headline em{font-style:italic;color:var(--gold);}
+.sp-sub{
+  font-size:14.5px;color:rgba(0,0,0,.4);
+  max-width:420px;margin:0 auto;line-height:1.6;
+}
+.sp-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:20px;
+}
+.sp-card{
+  background:#fff;
+  border:1px solid rgba(0,0,0,.06);
+  border-radius:16px;
+  padding:28px 24px;
+  transition:all .35s;
+}
+.sp-card:hover{
+  transform:translateY(-3px);
+  box-shadow:0 8px 32px rgba(0,0,0,.06);
+}
+.sp-result{
+  display:flex;align-items:baseline;gap:8px;
+  margin-bottom:16px;
+  padding-bottom:16px;
+  border-bottom:1px solid rgba(0,0,0,.06);
+}
+.sp-result-value{
+  font-family:var(--serif);
+  font-size:44px;font-weight:400;
+  color:var(--gold);line-height:1;
+  letter-spacing:-1px;
+}
+.sp-result-unit{
+  font-size:14px;color:rgba(0,0,0,.3);
+}
+.sp-result-label{
+  font-size:12px;font-weight:600;color:#111;
+  letter-spacing:.2px;
+}
+.sp-quote{
+  font-size:14px;color:rgba(0,0,0,.5);
+  line-height:1.7;margin-bottom:16px;
+  font-style:italic;
+}
+.sp-author{
+  display:flex;align-items:center;gap:10px;
+}
+.sp-avatar{
+  width:36px;height:36px;border-radius:50%;
+  background:var(--gold);
+  display:flex;align-items:center;justify-content:center;
+  font-size:14px;font-weight:700;color:var(--navy-deep);
+}
+.sp-author-info{}
+.sp-author-name{
+  font-size:12px;font-weight:600;color:#111;
+}
+.sp-author-detail{
+  font-size:11px;color:rgba(0,0,0,.35);
+}
+@media(max-width:900px){
+  .sp-grid{grid-template-columns:1fr;max-width:400px;margin:0 auto;}
+  .social-proof{padding:56px 24px;}
+  .sp-headline{font-size:28px;}
+}
+
+/* ═══ CTA FINAL ═══ */
+.cta-final{
+  padding:100px 48px;
+  background:var(--navy-deep);
+  text-align:center;
+  position:relative;
+  overflow:hidden;
+}
+.cta-final::before{
+  content:'';position:absolute;
+  top:-200px;left:50%;transform:translateX(-50%);
+  width:600px;height:600px;
+  background:radial-gradient(circle,rgba(196,163,90,.08) 0%,transparent 70%);
+  pointer-events:none;
+}
+.cta-inner{
+  max-width:620px;margin:0 auto;position:relative;z-index:1;
+}
+.cta-eyebrow{
+  font-size:11px;font-weight:600;letter-spacing:3.5px;
+  text-transform:uppercase;color:var(--gold);
+  margin-bottom:12px;
+}
+.cta-headline{
+  font-family:var(--serif);
+  font-size:42px;font-weight:400;color:#fff;
+  line-height:1.2;margin-bottom:16px;
+}
+.cta-headline em{font-style:italic;color:var(--gold);}
+.cta-sub{
+  font-size:15px;color:rgba(255,255,255,.4);
+  line-height:1.7;margin-bottom:36px;
+  max-width:480px;margin-left:auto;margin-right:auto;
+}
+.cta-buttons{
+  display:flex;gap:14px;justify-content:center;flex-wrap:wrap;
+}
+.cta-btn-primary{
+  font-size:14px;font-weight:600;letter-spacing:.3px;
+  background:var(--gold);color:var(--navy-deep);
+  border:none;border-radius:10px;padding:16px 36px;
+  cursor:pointer;transition:all .3s;text-decoration:none;
+  display:inline-flex;align-items:center;gap:8px;
+}
+.cta-btn-primary:hover{
+  transform:translateY(-2px);
+  box-shadow:0 6px 24px rgba(196,163,90,.35);
+}
+.cta-btn-secondary{
+  font-size:14px;font-weight:500;
+  background:transparent;color:rgba(255,255,255,.6);
+  border:1.5px solid rgba(255,255,255,.12);
+  border-radius:10px;padding:16px 32px;
+  cursor:pointer;transition:all .3s;text-decoration:none;
+}
+.cta-btn-secondary:hover{
+  border-color:rgba(255,255,255,.3);color:#fff;
+}
+.cta-trust{
+  margin-top:40px;
+  display:flex;justify-content:center;gap:32px;flex-wrap:wrap;
+}
+.cta-trust-item{
+  font-size:11px;font-weight:500;color:rgba(255,255,255,.2);
+  display:flex;align-items:center;gap:6px;
+  letter-spacing:.5px;
+}
+.cta-trust-item svg{width:14px;height:14px;opacity:.3;}
+
+/* ═══ FOOTER ═══ */
+.footer{
+  padding:40px 48px;
+  background:#0a1220;
+  text-align:center;
+}
+.footer-inner{
+  max-width:1060px;margin:0 auto;
+}
+.footer-logo{
+  font-size:18px;font-weight:900;letter-spacing:-1px;
+  color:rgba(255,255,255,.3);margin-bottom:8px;
+}
+.footer-logo em{
+  font-size:9px;font-weight:600;letter-spacing:3px;
+  text-transform:uppercase;color:rgba(196,163,90,.3);
+  font-style:normal;margin-left:6px;
+}
+.footer-text{
+  font-size:12px;color:rgba(255,255,255,.12);
+  line-height:1.7;
+}
+.footer-text a{color:rgba(196,163,90,.25);text-decoration:none;}
 </style>
 </head>
 <body>
@@ -931,15 +1240,252 @@ body{font-family:var(--sans);background:var(--bg);color:#141413;overflow-x:hidde
   </div>
 </section>
 
-<section class="placeholder-section" id="s-produto">
-  <h2 class="rv">Seção 03 — A Solução APEX</h2>
+
+<!-- ═══ SEÇÃO — PLANOS E PREÇOS ═══ -->
+<section class="planos" id="s-planos">
+  <div class="planos-inner">
+
+    <div class="planos-header">
+      <div class="planos-eyebrow rv">Planos</div>
+      <h2 class="planos-headline rv">Escolha o plano ideal<br><em>para você.</em></h2>
+      <p class="planos-sub rv">Todos os planos incluem acompanhamento médico especializado e acesso à plataforma APEX.</p>
+    </div>
+
+    <div class="planos-grid">
+
+      <!-- Plano Essencial -->
+      <div class="plano-card rv">
+        <div class="plano-name">Essencial</div>
+        <div class="plano-desc">Para quem quer começar a monitorar uma condição crônica.</div>
+        <div class="plano-price">
+          <div class="plano-price-value">
+            <span class="currency">R$</span>199<span class="period">/mês</span>
+          </div>
+        </div>
+        <ul class="plano-features">
+          <li>
+            <span class="plano-check"><svg fill="none" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7" stroke="#C4A35A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            1 condição monitorada
+          </li>
+          <li>
+            <span class="plano-check"><svg fill="none" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7" stroke="#C4A35A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            1 dispositivo de medição
+          </li>
+          <li>
+            <span class="plano-check"><svg fill="none" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7" stroke="#C4A35A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            IA APEX para dúvidas 24/7
+          </li>
+          <li>
+            <span class="plano-check"><svg fill="none" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7" stroke="#C4A35A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            Relatório mensal ao médico
+          </li>
+          <li>
+            <span class="plano-check"><svg fill="none" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7" stroke="#C4A35A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            1 teleconsulta por mês
+          </li>
+        </ul>
+        <a href="#" class="plano-btn plano-btn-secondary">Começar agora</a>
+      </div>
+
+      <!-- Plano Completo (featured) -->
+      <div class="plano-card featured rv">
+        <div class="plano-badge">Mais escolhido</div>
+        <div class="plano-name">Completo</div>
+        <div class="plano-desc">Monitoramento integrado das 4 condições CKM.</div>
+        <div class="plano-price">
+          <div class="plano-price-value">
+            <span class="currency">R$</span>349<span class="period">/mês</span>
+          </div>
+        </div>
+        <ul class="plano-features">
+          <li>
+            <span class="plano-check"><svg fill="none" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7" stroke="#C4A35A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            4 condições monitoradas
+          </li>
+          <li>
+            <span class="plano-check"><svg fill="none" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7" stroke="#C4A35A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            Kit completo de dispositivos
+          </li>
+          <li>
+            <span class="plano-check"><svg fill="none" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7" stroke="#C4A35A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            IA APEX + alertas ao médico
+          </li>
+          <li>
+            <span class="plano-check"><svg fill="none" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7" stroke="#C4A35A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            Relatórios semanais detalhados
+          </li>
+          <li>
+            <span class="plano-check"><svg fill="none" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7" stroke="#C4A35A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            2 teleconsultas por mês
+          </li>
+          <li>
+            <span class="plano-check"><svg fill="none" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7" stroke="#C4A35A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            Plano nutricional personalizado
+          </li>
+        </ul>
+        <a href="#" class="plano-btn plano-btn-primary">Começar agora →</a>
+      </div>
+
+      <!-- Plano Família -->
+      <div class="plano-card rv">
+        <div class="plano-name">Família</div>
+        <div class="plano-desc">Para até 3 membros da família com acompanhamento conjunto.</div>
+        <div class="plano-price">
+          <div class="plano-price-value">
+            <span class="currency">R$</span>599<span class="period">/mês</span>
+          </div>
+        </div>
+        <ul class="plano-features">
+          <li>
+            <span class="plano-check"><svg fill="none" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7" stroke="#C4A35A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            Até 3 pessoas monitoradas
+          </li>
+          <li>
+            <span class="plano-check"><svg fill="none" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7" stroke="#C4A35A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            Kit de dispositivos por pessoa
+          </li>
+          <li>
+            <span class="plano-check"><svg fill="none" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7" stroke="#C4A35A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            Painel familiar integrado
+          </li>
+          <li>
+            <span class="plano-check"><svg fill="none" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7" stroke="#C4A35A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            Tudo do plano Completo
+          </li>
+          <li>
+            <span class="plano-check"><svg fill="none" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7" stroke="#C4A35A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            3 teleconsultas por mês
+          </li>
+        </ul>
+        <a href="#" class="plano-btn plano-btn-secondary">Começar agora</a>
+      </div>
+
+    </div>
+
+    <div class="planos-note rv">
+      Todos os planos incluem período de 7 dias para experimentar. Cancele quando quiser.<br>
+      Dispositivos são enviados para sua casa em até 3 dias úteis.
+    </div>
+
+  </div>
 </section>
-<section class="placeholder-section" id="s-planos" style="background:var(--navy-deep);">
-  <h2 class="rv" style="color:var(--gold);">Seção 06 — Planos e Preços</h2>
+
+
+<!-- ═══ SEÇÃO — SOCIAL PROOF ═══ -->
+<section class="social-proof" id="s-resultados">
+  <div class="sp-inner">
+
+    <div class="sp-header">
+      <div class="sp-eyebrow rv">Resultados reais</div>
+      <h2 class="sp-headline rv">Quem monitora,<br><em>transforma sua saúde.</em></h2>
+      <p class="sp-sub rv">Pacientes acompanhados pela plataforma APEX nos primeiros 6 meses de monitoramento.</p>
+    </div>
+
+    <div class="sp-grid">
+
+      <div class="sp-card rv">
+        <div class="sp-result">
+          <div>
+            <div class="sp-result-value">-18</div>
+            <div class="sp-result-unit">mmHg</div>
+          </div>
+          <div class="sp-result-label">Redução média na<br>pressão sistólica</div>
+        </div>
+        <p class="sp-quote">"Eu achava que controlar a pressão era impossível. Com o monitoramento diário e os ajustes do médico, saí de 160 para 128 em 4 meses."</p>
+        <div class="sp-author">
+          <div class="sp-avatar">M</div>
+          <div class="sp-author-info">
+            <div class="sp-author-name">Maria C., 62 anos</div>
+            <div class="sp-author-detail">Hipertensão · Plano Essencial</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="sp-card rv">
+        <div class="sp-result">
+          <div>
+            <div class="sp-result-value">-1,8</div>
+            <div class="sp-result-unit">% HbA1c</div>
+          </div>
+          <div class="sp-result-label">Redução média na<br>hemoglobina glicada</div>
+        </div>
+        <p class="sp-quote">"A IA me lembra de medir, me explica os números e o médico ajusta a medicação sem eu precisar ir ao consultório. Minha HbA1c nunca esteve tão boa."</p>
+        <div class="sp-author">
+          <div class="sp-avatar">R</div>
+          <div class="sp-author-info">
+            <div class="sp-author-name">Roberto S., 55 anos</div>
+            <div class="sp-author-detail">Diabetes tipo 2 + DRC · Plano Completo</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="sp-card rv">
+        <div class="sp-result">
+          <div>
+            <div class="sp-result-value">-12</div>
+            <div class="sp-result-unit">kg</div>
+          </div>
+          <div class="sp-result-label">Perda média de peso<br>em 6 meses</div>
+        </div>
+        <p class="sp-quote">"Ter tudo num lugar só — peso, pressão, glicemia — e ver a evolução no gráfico me deu a motivação que faltava. O plano nutricional fez toda a diferença."</p>
+        <div class="sp-author">
+          <div class="sp-avatar">A</div>
+          <div class="sp-author-info">
+            <div class="sp-author-name">Ana L., 48 anos</div>
+            <div class="sp-author-detail">Obesidade + Hipertensão · Plano Completo</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
 </section>
-<section class="placeholder-section" id="s-insights" style="background:#f0efeb;">
-  <h2 class="rv">Seção 08 — APEX Insights</h2>
+
+
+<!-- ═══ CTA FINAL ═══ -->
+<section class="cta-final" id="s-cta">
+  <div class="cta-inner">
+    <div class="cta-eyebrow rv">Comece hoje</div>
+    <h2 class="cta-headline rv">
+      Sua saúde merece<br><em>atenção contínua.</em>
+    </h2>
+    <p class="cta-sub rv">
+      Junte-se a milhares de pacientes que transformaram o controle de suas condições crônicas com monitoramento inteligente, IA e acompanhamento médico especializado.
+    </p>
+    <div class="cta-buttons rv">
+      <a href="#s-planos" class="cta-btn-primary">Ver planos e começar →</a>
+      <a href="#s-como-funciona" class="cta-btn-secondary">Como funciona</a>
+    </div>
+    <div class="cta-trust rv">
+      <div class="cta-trust-item">
+        <svg fill="none" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke="currentColor" stroke-width="1.5"/></svg>
+        Dados criptografados
+      </div>
+      <div class="cta-trust-item">
+        <svg fill="none" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M22 4 12 14.01l-3-3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Cancele quando quiser
+      </div>
+      <div class="cta-trust-item">
+        <svg fill="none" viewBox="0 0 24 24"><path d="M12 8v4l3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.5"/></svg>
+        7 dias grátis
+      </div>
+    </div>
+  </div>
 </section>
+
+
+<!-- ═══ FOOTER ═══ -->
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-logo">apex<span class="logo-dot" style="background:rgba(196,163,90,.3);"></span> <em>health</em></div>
+    <p class="footer-text">
+      APEX Health · Monitoramento Remoto de Pacientes<br>
+      Fenix Nefrologia · São Paulo, Brasil<br>
+      <a href="mailto:contato@apex.med.br">contato@apex.med.br</a>
+    </p>
+  </div>
+</footer>
 
 <script>
 /* ═══ SLIDESHOW ═══ */
