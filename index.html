@@ -3,1366 +3,1622 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>APEX Hub · Monitoramento Remoto de Pacientes Crônicos</title>
+<title>APEX Health — Protótipo Header + Hero v8</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Instrument+Serif:ital@0;1&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --gold:#C4A35A; --gold-d:rgba(196,163,90,.10);
-  --ink:#141413; --mid:#4a4a48; --soft:#81A0BB; --ghost:#A9BFD2;
-  --bg:#FAF9F5; --off:#F3F1EC; --dark:#1a1a18;
-  --border:rgba(31,30,29,.10); --green:#4CAF8A; --blue:#2D628C; --navy:#1E2D50;
-  /* ── APEX Hub Brand System ── */
-  --hub-cream:#FAF9F5; --hub-navy:#1E2D50;
-  --apex-health:#2B5A3E; --apex-pro:#3E4F5C; --apex-insights:#8C2F46;
+  --gold:#C4A35A;
+  --navy:#1E2D50;
+  --navy-deep:#121D33;
+  --teal:#028090;
+  --bg:#FAF9F5;
+  --sans:'Inter',system-ui,sans-serif;
   --serif:'Instrument Serif',Georgia,serif;
-  --sans:'Space Grotesk',sans-serif;
-  --radius:14px;
-  --shadow:0 20px 60px rgba(0,0,0,.07);
-  --shadow-hover:0 30px 80px rgba(0,0,0,.12);
 }
 html{scroll-behavior:smooth}
-body{font-family:var(--sans);background:var(--bg);color:var(--ink);overflow-x:hidden;
-  -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;}
+body{font-family:var(--sans);background:var(--bg);color:#141413;overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;}
 
 /* ═══ HEADER ═══ */
-.hdr{position:fixed;top:0;left:0;right:0;z-index:900;
-  background:rgba(250,249,245,.92);backdrop-filter:blur(20px);
-  border-bottom:none;box-shadow:0 1px 0 rgba(31,30,29,.06);}
-.hdr-top{height:110px;display:flex;align-items:center;
-  padding:0 44px;border-bottom:1px solid var(--border);}
-.hdr-logo{display:flex;align-items:center;gap:14px;
-  text-decoration:none;flex-shrink:0;padding-right:32px;}
-.hdr-logo img{height:100px!important;width:auto!important;
-  border-radius:10px;}
-.hdr-brand{display:flex;align-items:center;gap:0}
-.hdr-name{font-size:40px;font-weight:700;letter-spacing:6px;
-  text-transform:uppercase;color:var(--hub-navy);line-height:1;}
-.hdr-sep-brand{
-  width:1px;height:28px;background:rgba(30,45,80,.25);
-  margin:0 16px;flex-shrink:0;
+.header{
+  position:fixed;top:16px;left:40px;right:40px;z-index:900;
+  height:60px;display:flex;align-items:center;padding:0 32px;
+  background:rgba(18,29,51,.2);
+  backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);
+  border:1px solid rgba(255,255,255,.08);
+  border-radius:14px;
+  transition:all .4s ease;
 }
-.hdr-sub{
-  font-size:12px;font-weight:700;letter-spacing:4px;
-  color:rgba(30,45,80,.55);line-height:1;
-  text-transform:uppercase;
-  white-space:nowrap;
+.header.scrolled{
+  top:10px;
+  height:54px;
+  background:rgba(18,29,51,.65);
+  box-shadow:0 4px 30px rgba(0,0,0,.15);
 }
-.hdr-div{width:1px;height:44px;background:var(--border);flex-shrink:0;margin-right:32px}
-.hdr-sp{flex:1}
-.hdr-right{display:flex;align-items:center;gap:18px}
-.wx{display:flex;align-items:center;gap:10px;padding:8px 14px;
-  border:1px solid var(--border);border-radius:4px;background:var(--off);flex-shrink:0;}
-.wx-icon{font-size:20px;line-height:1}
-.wx-city{font-size:8px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--soft)}
-.wx-temp{font-size:19px;font-weight:700;color:var(--ink);letter-spacing:-1px;line-height:1}
-.wx-temp sup{font-size:10px;vertical-align:super}
-.wx-cond{font-size:8px;color:var(--ghost)}
-.wx-range{font-size:8px;color:var(--ghost);margin-top:1px}
-.hdr-sep{width:1px;height:20px;background:var(--border);flex-shrink:0}
-.hdr-date{
-  display:flex;flex-direction:column;align-items:center;gap:3px;
-  flex:1;
+.header-logo{
+  display:flex;align-items:center;gap:14px;
+  text-decoration:none;flex-shrink:0;
 }
-.hdr-date-line1{
-  font-size:11px;font-weight:500;color:var(--mid);letter-spacing:.3px;
+.header-logo-icon{
+  width:32px;height:32px;
 }
-.hdr-date-line2{
-  font-family:'Instrument Serif',Georgia,serif;
-  font-style:italic;font-size:12px;color:var(--ghost);letter-spacing:.5px;
+.logo-mark{
+  font-size:24px;font-weight:900;letter-spacing:-1px;
+  color:#fff;line-height:1;
 }
-.hdr-cta{font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;
-  text-decoration:none;color:#fff;background:var(--apex-pro);
-  border-radius:6px;padding:12px 22px;flex-shrink:0;transition:all .3s;
-  display:flex;align-items:center;gap:8px;}
-.hdr-cta:hover{opacity:.85;transform:translateY(-1px)}
-.hdr-nav{height:44px;display:flex;align-items:stretch;padding:0 44px;}
-.hn{font-size:10px;font-weight:400;color:var(--mid);text-decoration:none;
-  padding:0 18px;display:flex;align-items:center;white-space:nowrap;
-  letter-spacing:1.5px;text-transform:uppercase;
-  border-bottom:2px solid transparent;transition:all .3s ease;}
-.hn:hover{color:var(--ink)}
-.hn.on{color:var(--hub-navy);font-weight:500;border-bottom-color:var(--gold)}
-
-
-/* ═══ HERO MOUNTAIN ═══ */
-.hero-mtn{
-  height:calc(100vh - 154px);min-height:500px;
-  position:relative;display:flex;align-items:flex-end;justify-content:flex-start;
-  margin-top:154px;overflow:hidden;
+.logo-dot{
+  display:inline-block;width:6px;height:6px;
+  background:var(--gold);border-radius:50%;
+  margin-left:1px;vertical-align:baseline;
 }
-/* Camada única — pôr-do-sol atmosférico */
-.hero-bg1{
-  position:absolute;inset:0;
-  background:url('https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=1920&q=80') center 40%/cover no-repeat;
+.logo-health{
+  font-size:10px;font-weight:600;letter-spacing:3px;
+  text-transform:uppercase;color:var(--gold);
+  margin-left:6px;opacity:.8;
 }
-.hero-bg2{
-  position:absolute;inset:0;
-  background:url('https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1920&q=80') center 45%/cover no-repeat;
-  opacity:0;transition:none;z-index:1;
+.header-spacer{flex:1}
+.header-nav{display:flex;align-items:center;gap:28px;}
+.header-nav a{
+  font-size:11px;font-weight:500;letter-spacing:1.5px;
+  text-transform:uppercase;color:rgba(255,255,255,.55);text-decoration:none;
+  transition:color .3s;position:relative;
 }
-.hero-overlay{
-  position:absolute;inset:0;z-index:2;
-  background:
-    linear-gradient(to bottom,
-      rgba(5,12,28,.05) 0%,
-      rgba(5,12,28,.08) 25%,
-      rgba(5,12,28,.20) 45%,
-      rgba(5,12,28,.45) 70%,
-      rgba(5,12,28,.70) 90%,
-      rgba(5,12,28,.90) 100%);
+.header-nav a::after{
+  content:'';position:absolute;bottom:-4px;left:0;right:0;
+  height:1.5px;background:var(--gold);transform:scaleX(0);
+  transition:transform .3s;
 }
-.hero-content{position:relative;z-index:3;text-align:left;padding:0 60px 80px;max-width:100%;width:100%;
-  opacity:0;transform:translateY(20px);transition:opacity 1s ease-out,transform 1s ease-out;}
-.hero-content.in{opacity:1;transform:translateY(0)}
-
-.hero-logo{display:flex;align-items:center;justify-content:flex-start;gap:0;margin-bottom:8px;}
-.hero-logo-svg{flex-shrink:0}
-.hero-logo-div{width:1px;height:56px;background:rgba(245,200,66,.55);}
-.hero-brand{text-align:left;}
-.hero-brand-name{font-size:clamp(48px,7vw,80px);font-weight:600;letter-spacing:22px;
-  color:#fff;line-height:1;text-transform:uppercase;
-  text-shadow:0 2px 40px rgba(0,0,0,.2);}
-.hero-brand-sub{font-size:12px;font-weight:600;letter-spacing:6px;
-  color:rgba(245,200,66,.75);text-transform:uppercase;margin-top:5px;}
-.hero-tagline{
-  font-family:'Cormorant Garamond',var(--serif);font-style:italic;
-  font-size:clamp(18px,2.5vw,32px);color:rgba(255,255,255,.75);
-  line-height:1.1;margin-bottom:0;font-weight:300;
-  letter-spacing:2px;margin-top:-4px;
-  text-shadow:0 2px 30px rgba(0,0,0,.15);
+.header-nav a:hover{color:#fff}
+.header-nav a:hover::after{transform:scaleX(1)}
+.header-pro{
+  font-size:10px;font-weight:500;color:rgba(255,255,255,.5);text-decoration:none;
+  border:1px solid rgba(255,255,255,.15);border-radius:6px;padding:7px 14px;
+  transition:all .3s;letter-spacing:.5px;
 }
-.hero-sub{
-  font-size:14px;font-weight:300;color:rgba(255,255,255,.58);
-  line-height:1.75;margin-bottom:44px;
+.header-pro:hover{border-color:rgba(255,255,255,.4);color:#fff}
+.header-cta{
+  font-size:11px;font-weight:600;letter-spacing:.5px;
+  background:var(--gold);color:var(--navy-deep);
+  border:none;border-radius:8px;padding:10px 22px;
+  cursor:pointer;transition:all .3s;text-decoration:none;
 }
-.hero-scroll{
-  display:inline-flex;flex-direction:column;align-items:center;gap:8px;
-  font-size:8px;font-weight:700;letter-spacing:3.5px;text-transform:uppercase;
-  color:rgba(255,255,255,.38);animation:hero-bounce 2.2s ease-in-out infinite;
+.header-cta:hover{
+  transform:translateY(-1px);
+  box-shadow:0 4px 16px rgba(196,163,90,.35);
 }
-@keyframes hero-bounce{0%,100%{transform:translateY(0)}55%{transform:translateY(7px)}}
-@media(max-width:600px){
-  .hero-mtn{margin-top:108px;min-height:75vh}
-  .hero-brand-name{font-size:38px;letter-spacing:14px}
-  .hero-brand-sub{font-size:10px}
+.header-sep{
+  width:1px;height:22px;background:rgba(255,255,255,.1);margin:0 8px;
 }
 
-/* ═══ FAIXAS ═══ */
-
-
-/* news-bar removed — landscapes connect directly */
-
-
-/* margin-top: hdr(80+44) + news(38) = 162px */
-main{margin-top:0}
-
-/* ═══ UTIL ═══ */
-.wrap{padding:64px 60px}
-.wrap.off{background:var(--off)}
-.wrap.dark{background:var(--dark);border-radius:0}
-.sec-hdr{display:flex;align-items:flex-end;justify-content:space-between;
-  margin-bottom:48px;padding-bottom:0;border-bottom:none;}
-.sec-eye{font-size:10px;font-weight:400;letter-spacing:3.5px;text-transform:uppercase;
-  color:var(--soft);margin-bottom:8px;}
-.sec-ttl{font-size:clamp(22px,2.5vw,36px);font-weight:600;color:var(--ink);letter-spacing:-.2px}
-.sec-ttl.wh{color:#fff}
-.sec-more{font-size:9px;font-weight:600;letter-spacing:2px;text-transform:uppercase;
-  color:var(--soft);text-decoration:none;border-bottom:1px solid var(--border);
-  padding-bottom:2px;transition:color .2s,border-color .2s;flex-shrink:0;}
-.sec-more:hover{color:var(--gold);border-color:var(--gold)}
-
-/* reveal */
-.rv{opacity:0;transform:translateY(30px);transition:opacity .8s cubic-bezier(.16,1,.3,1),transform .8s cubic-bezier(.16,1,.3,1)}
-.rv.in{opacity:1;transform:translateY(0)}
-.d1{transition-delay:.07s}.d2{transition-delay:.14s}.d3{transition-delay:.21s}
-.d4{transition-delay:.28s}.d5{transition-delay:.35s}.d6{transition-delay:.42s}
-
-/* ═══ BIG NUMBERS ═══ */
-.bignums{display:grid;grid-template-columns:repeat(4,1fr);
-  gap:0;padding:60px 60px 40px;
-  position:relative;background:url('https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1920&q=80') center 45%/cover no-repeat fixed;}
-.bignums::before{content:'';position:absolute;inset:0;
-  background:linear-gradient(to bottom,
-    rgba(5,12,28,.85) 0%,
-    rgba(5,12,28,.55) 15%,
-    rgba(5,12,28,.45) 50%,
-    rgba(5,12,28,.40) 75%,
-    rgba(250,249,245,.80) 92%,
-    rgba(250,249,245,1) 100%);
-  z-index:0;}
-.bignums>*{position:relative;z-index:1;}
-.bn{padding:36px 32px;
-  display:flex;flex-direction:column;gap:10px;
-  border-right:1px solid rgba(255,255,255,.12);}
-.bn:last-child{border-right:none}
-
-.bn-n{font-size:clamp(32px,4vw,56px);font-weight:700;color:#fff;
-  letter-spacing:-3px;line-height:1;}
-.bn-n em{color:var(--gold);font-style:normal}
-.bn-lbl{font-size:13px;font-weight:300;color:rgba(255,255,255,.7);line-height:1.5;max-width:220px}
-.bn-src{font-size:8px;color:rgba(255,255,255,.35);letter-spacing:1px;text-transform:uppercase;margin-top:4px}
-
-
-/* ═══ FEATURE — texto + visual ═══ */
-.feature{display:grid;grid-template-columns:1fr 1fr;
-  min-height:62vh;border-bottom:none;border-radius:var(--radius);overflow:hidden;
-  box-shadow:var(--shadow);margin:0 60px;}
-.feat-txt{padding:60px 52px 60px 44px;display:flex;flex-direction:column;
-  justify-content:center;border-right:1px solid var(--border);}
-.feat-kicker{font-size:9px;font-weight:600;letter-spacing:3px;text-transform:uppercase;
-  color:var(--gold);margin-bottom:16px;display:flex;align-items:center;gap:12px;}
-.feat-kicker::before{content:'';width:22px;height:1px;background:var(--gold)}
-.feat-h1{font-family:var(--serif);font-size:clamp(26px,3.2vw,48px);
-  font-weight:400;line-height:1.22;color:var(--ink);letter-spacing:-.4px;margin-bottom:16px;}
-.feat-h1 em{font-style:italic;color:var(--mid)}
-.feat-lide{font-size:15px;font-weight:300;color:var(--mid);
-  line-height:1.78;margin-bottom:26px;max-width:440px;}
-.feat-meta{font-size:10px;color:var(--ghost);display:flex;align-items:center;gap:12px;flex-wrap:wrap}
-.feat-meta strong{color:var(--soft);font-weight:600}
-.feat-link{margin-top:26px;display:inline-flex;align-items:center;gap:8px;width:fit-content;
-  font-size:10px;font-weight:600;letter-spacing:2px;text-transform:uppercase;
-  text-decoration:none;color:var(--ink);border-bottom:1px solid var(--border);
-  padding-bottom:2px;transition:color .2s,border-color .2s;}
-.feat-link:hover{color:var(--gold);border-color:var(--gold)}
-.feat-vis{background:linear-gradient(150deg,var(--apex-health),#112018);
-  display:flex;align-items:center;justify-content:center;
-  position:relative;overflow:hidden;min-height:360px;}
-.feat-vis-img{width:100%;height:100%;object-fit:cover;display:block;
-  position:absolute;inset:0;opacity:.35;}
-.feat-vis-over{position:relative;z-index:2;text-align:center;padding:32px}
-.feat-vis-eye{font-size:9px;font-weight:600;letter-spacing:2px;text-transform:uppercase;
-  color:rgba(185,148,84,.65);margin-bottom:10px;}
-.feat-vis-ttl{font-family:var(--serif);font-style:italic;
-  font-size:clamp(26px,3.8vw,48px);color:#fff;line-height:1.15;margin-bottom:8px;}
-.feat-vis-sub{font-size:9px;color:rgba(255,255,255,.28);letter-spacing:2px}
-.feat-bg{position:absolute;font-family:var(--serif);font-style:italic;
-  font-size:clamp(80px,14vw,180px);font-weight:400;color:rgba(185,148,84,.07);
-  line-height:1;top:50%;left:50%;transform:translate(-50%,-50%);
-  pointer-events:none;white-space:nowrap;letter-spacing:-4px;}
-.feat-data{display:flex;gap:10px;margin-top:20px;flex-wrap:wrap;justify-content:center;}
-.feat-dc{background:rgba(185,148,84,.09);border:1px solid rgba(185,148,84,.22);
-  border-radius:3px;padding:9px 14px;}
-.feat-dc-l{font-size:7px;font-weight:600;letter-spacing:2px;text-transform:uppercase;
-  color:rgba(185,148,84,.6);margin-bottom:2px;}
-.feat-dc-v{font-size:16px;font-weight:700;color:#fff;letter-spacing:-.5px}
-.feat-cap{position:absolute;bottom:14px;right:14px;
-  font-size:9px;color:rgba(255,255,255,.22);letter-spacing:1px;}
-
-/* ═══ GRADE EDITORIAL — formato lista ═══ */
-
-/* Filtros */
-.filters{display:flex;gap:7px;margin-bottom:22px;flex-wrap:wrap;}
-.fb{font-size:9px;font-weight:500;letter-spacing:1.5px;text-transform:uppercase;
-  padding:8px 20px;border-radius:100px;cursor:pointer;
-  border:1px solid var(--border);background:transparent;
-  color:var(--mid);transition:all .3s;font-family:var(--sans);}
-.fb:hover{border-color:var(--mid);color:var(--ink)}
-.fb.on{background:var(--ink);color:#fff;border-color:var(--ink)}
-.fb.p2.on{background:var(--navy);border-color:var(--navy)}
-.fb.p3.on{background:var(--gold);border-color:var(--gold)}
-
-/* Lista editorial — artigos em lista com foto */
-.ed-list{border:none;display:flex;flex-direction:column;gap:16px;}
-
-/* Item de lista — foto esquerda, texto direita */
-.ed-item{
-  display:grid;grid-template-columns:220px 1fr;
-  text-decoration:none;color:inherit;
-  background:#fff;transition:all .4s cubic-bezier(.16,1,.3,1);
-  min-height:140px;
-  border-radius:var(--radius);
+/* ═══ HERO ═══ */
+.hero{
+  position:relative;height:85vh;min-height:580px;
+  display:flex;align-items:center;justify-content:flex-start;
   overflow:hidden;
-  box-shadow:var(--shadow);
-  border:none;
-  border-left:none;
-}
-.ed-item:last-child{border-bottom:none}
-.ed-item:hover{box-shadow:var(--shadow-hover);transform:translateY(-3px)}
-/* paleta unificada APEX Read */
-.ed-item{border-left:4px solid var(--apex-reading)!important;}
-
-/* Foto — quadrada, enquadramento perfeito */
-.ed-img{
-  width:200px;flex-shrink:0;
-  overflow:hidden;position:relative;
-  background:var(--off);
-  self-align:stretch;
-}
-.ed-img img{
-  width:100%;height:100%;
-  object-fit:cover;object-position:center;
-  display:block;transition:transform .4s;
-}
-.ed-item:hover .ed-img img{transform:scale(1.04)}
-/* Screenshot app — contain centralizado sem padding excessivo */
-.ed-img.screen{background:#111}
-.ed-img.screen img{object-fit:cover;object-position:center center}
-/* Produto — contain branco */
-.ed-img.product{background:#fafafa}
-.ed-img.product img{object-fit:contain;padding:14px}
-
-/* Corpo do item */
-.ed-body{
-  padding:28px 32px;
-  display:flex;flex-direction:column;gap:10px;
-  justify-content:center;
-  align-self:stretch;
 }
 
-/* Item destaque — foto maior */
-.ed-item.hero{grid-template-columns:340px 1fr;min-height:240px}
-
-/* Tags */
-.tag{font-size:8px;font-weight:700;letter-spacing:2px;text-transform:uppercase;
-  display:flex;align-items:center;gap:6px;}
-.tag-dot{width:4px;height:4px;border-radius:50%;flex-shrink:0}
-.dp1{background:var(--green)}.dp2{background:var(--navy)}.dp3{background:var(--gold)}
-.tag-nm{color:var(--soft)}
-.art-ttl{font-family:var(--serif);font-weight:400;line-height:1.32;color:var(--ink);letter-spacing:-.1px}
-.art-ttl em{font-style:italic}
-.art-ttl.lg{font-size:clamp(17px,1.9vw,22px)}
-.art-ttl.md{font-size:clamp(14px,1.4vw,17px)}
-.art-ttl.sm{font-size:clamp(12px,1.1vw,14px)}
-.art-exc{font-size:12.5px;font-weight:300;color:var(--mid);line-height:1.62;flex:1}
-.art-exc.sm{font-size:11.5px}
-.art-foot{display:flex;justify-content:space-between;align-items:center;
-  padding-top:10px;border-top:none;font-size:9px;color:var(--ghost);}
-.art-foot strong{color:var(--soft);font-weight:600}
-
-/* Placeholder */
-.img-ph{width:100%;height:100%;min-height:140px;display:flex;align-items:center;
-  justify-content:center;flex-direction:column;gap:8px;background:var(--off);}
-.img-ph-icon{font-size:28px;opacity:.25}
-.img-ph-lbl{font-size:9px;color:var(--ghost);letter-spacing:1px;text-transform:uppercase}
-
-/* Segunda linha — mantida para compatibilidade */
-.ed-row2{display:none}
-
-/* ═══ SCIENCE SPOTLIGHT ═══ */
-.science{display:grid;grid-template-columns:280px 1fr;
-  border:none;border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);}
-.sci-l{background:linear-gradient(160deg,var(--apex-health),#0a1a0a);
-  padding:32px 28px;display:flex;flex-direction:column;justify-content:space-between;
-  border-right:1px solid rgba(255,255,255,.06);}
-.sci-eye{font-size:8px;font-weight:700;letter-spacing:3px;text-transform:uppercase;
-  color:rgba(185,148,84,.65);margin-bottom:14px;}
-.sci-jnl{font-family:var(--serif);font-style:italic;font-size:20px;
-  color:rgba(255,255,255,.85);line-height:1.28;margin-bottom:16px;}
-.sci-m{font-size:9px;color:rgba(255,255,255,.48);margin-bottom:5px}
-.sci-m b{color:rgba(255,255,255,.6)}
-.sci-badge{margin-top:18px;display:inline-flex;align-items:center;gap:7px;
-  padding:7px 12px;border:1px solid rgba(185,148,84,.22);border-radius:3px;
-  font-size:8px;font-weight:600;letter-spacing:2px;text-transform:uppercase;
-  color:rgba(185,148,84,.75);text-decoration:none;width:fit-content;transition:border-color .2s}
-.sci-badge:hover{border-color:rgba(185,148,84,.55)}
-.sci-r{padding:32px 38px}
-.sci-ttl{font-family:var(--serif);font-size:clamp(18px,1.9vw,26px);
-  font-weight:400;line-height:1.28;color:var(--ink);letter-spacing:-.2px;margin-bottom:14px}
-.sci-ttl em{font-style:italic}
-.sci-abs{font-size:13.5px;font-weight:300;color:var(--mid);line-height:1.78;margin-bottom:20px}
-.sci-tks{border-left:2px solid var(--gold);padding-left:16px;margin-bottom:20px}
-.sci-tks-l{font-size:8px;font-weight:700;letter-spacing:2px;text-transform:uppercase;
-  color:var(--gold);margin-bottom:9px}
-.sci-tk{font-size:13px;color:var(--mid);line-height:1.6;margin-bottom:6px;
-  display:flex;gap:8px}
-.sci-tk::before{content:'→';color:var(--gold);flex-shrink:0;font-weight:700}
-.sci-foot{display:flex;align-items:center;gap:14px;padding-top:14px;
-  border-top:1px solid var(--border);}
-.sci-lnk{font-size:9px;font-weight:600;letter-spacing:2px;text-transform:uppercase;
-  text-decoration:none;color:var(--ink);border-bottom:1px solid var(--border);
-  padding-bottom:2px;transition:color .2s,border-color .2s}
-.sci-lnk:hover{color:var(--gold);border-color:var(--gold)}
-
-/* ═══ EVENTO ═══ */
-.evento{display:grid;grid-template-columns:1fr 280px;
-  border:none;border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);}
-.ev-m{background:linear-gradient(140deg,var(--navy),#10142a,#090913);
-  padding:48px 44px;position:relative;overflow:hidden;
-  display:flex;flex-direction:column;justify-content:space-between;}
-.ev-bg{position:absolute;top:-5%;right:-3%;
-  font-family:var(--serif);font-style:italic;
-  font-size:clamp(90px,16vw,220px);font-weight:400;
-  color:rgba(255,255,255,.025);line-height:1;pointer-events:none;letter-spacing:-4px;}
-.ev-kicker{font-size:9px;font-weight:600;letter-spacing:3px;text-transform:uppercase;
-  color:rgba(185,148,84,.65);margin-bottom:12px;position:relative;z-index:2}
-.ev-ttl{font-family:var(--serif);font-size:clamp(24px,3vw,44px);
-  font-weight:400;color:#fff;line-height:1.1;letter-spacing:-.4px;
-  margin-bottom:10px;position:relative;z-index:2}
-.ev-ttl em{font-style:italic;color:rgba(185,148,84,.85)}
-.ev-desc{font-size:14px;font-weight:300;color:rgba(255,255,255,.38);
-  line-height:1.72;max-width:460px;position:relative;z-index:2;margin-bottom:24px}
-.ev-eps{position:relative;z-index:2}
-.ev-eps-l{font-size:8px;font-weight:700;letter-spacing:2px;text-transform:uppercase;
-  color:rgba(185,148,84,.45);margin-bottom:9px}
-.ev-ep{display:flex;align-items:center;gap:12px;padding:9px 12px;margin-bottom:5px;
-  border:1px solid rgba(255,255,255,.07);border-radius:3px;
-  background:rgba(255,255,255,.03);text-decoration:none;transition:background .2s;}
-.ev-ep:hover{background:rgba(255,255,255,.07)}
-.ev-ep.pend{opacity:.4;pointer-events:none}
-.ev-ep-n{font-size:11px;font-weight:700;color:var(--gold);width:22px;flex-shrink:0}
-.ev-ep-n.dim{color:rgba(185,148,84,.3)}
-.ev-ep-ttl{font-size:12px;font-weight:600;color:#fff}
-.ev-ep-dt{font-size:10px;color:rgba(255,255,255,.28);margin-top:1px}
-.ev-tags{display:flex;gap:7px;flex-wrap:wrap;position:relative;z-index:2;margin-top:18px}
-.ev-tag{font-size:8px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;
-  padding:4px 9px;border:1px solid rgba(255,255,255,.1);border-radius:2px;
-  color:rgba(255,255,255,.35)}
-.ev-side{background:#0d0d0d;border-left:1px solid rgba(255,255,255,.06);
-  padding:32px 26px;display:flex;flex-direction:column;gap:24px;}
-.ev-cd-l{font-size:8px;font-weight:700;letter-spacing:2px;text-transform:uppercase;
-  color:rgba(185,148,84,.5);margin-bottom:12px;text-align:center}
-.ev-cd{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-bottom:16px}
-.cd-u{text-align:center}
-.cd-n{font-size:24px;font-weight:700;color:#fff;letter-spacing:-1px;
-  display:block;line-height:1;font-variant-numeric:tabular-nums}
-.cd-l{font-size:7px;color:rgba(255,255,255,.22);letter-spacing:2px;
-  text-transform:uppercase;margin-top:2px}
-.ev-stats{border-top:1px solid rgba(255,255,255,.06);padding-top:16px}
-.ev-st{display:flex;justify-content:space-between;align-items:baseline;
-  padding:8px 0;border-bottom:1px solid rgba(255,255,255,.05);}
-.ev-st:last-child{border-bottom:none}
-.ev-st-l{font-size:9px;color:rgba(255,255,255,.27)}
-.ev-st-v{font-size:13px;font-weight:700;color:#fff;letter-spacing:-.5px}
-.ev-st-v em{color:var(--gold);font-style:normal}
-
-/* ═══ RANKINGS ═══ */
-.ranks{display:grid;grid-template-columns:1fr 1fr;gap:24px;
-  background:transparent;border:none;}
-.rank-col{background:#fff;padding:32px 30px;border-radius:var(--radius);box-shadow:var(--shadow)}
-.rank-col-h{font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;
-  color:var(--soft);margin-bottom:18px;display:flex;align-items:center;gap:10px}
-.rank-col-h::after{content:'';flex:1;height:1px;background:var(--border)}
-.ri{display:flex;align-items:flex-start;gap:12px;padding:12px 0;
-  border-bottom:1px solid var(--border);text-decoration:none;color:inherit;}
-.ri:last-child{border-bottom:none}
-.ri:hover .ri-ttl{color:var(--gold)}
-.ri-n{font-size:18px;font-weight:700;color:var(--border);letter-spacing:-1px;
-  width:26px;flex-shrink:0;font-variant-numeric:tabular-nums}
-.ri-n.gold{color:rgba(185,148,84,.4)}
-.ri-cat{font-size:8px;font-weight:600;letter-spacing:1.5px;
-  text-transform:uppercase;color:var(--ghost);margin-bottom:2px}
-.ri-ttl{font-size:13px;font-weight:600;color:var(--ink);
-  line-height:1.38;margin-bottom:2px;transition:color .2s}
-.ri-meta{font-size:9px;color:var(--ghost)}
-
-/* ═══ VÍDEOS ═══ */
-.vids{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;
-  background:transparent;border:none;}
-.vid{background:#fff;text-decoration:none;color:inherit;
-  display:flex;flex-direction:column;transition:all .4s cubic-bezier(.16,1,.3,1);
-  border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);}
-.vid:hover{transform:translateY(-4px);box-shadow:var(--shadow-hover)}
-.vid-th{aspect-ratio:16/9;position:relative;overflow:hidden;background:#111}
-.vid-th img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .4s}
-.vid:hover .vid-th img{transform:scale(1.03)}
-.vid-play{position:absolute;inset:0;display:flex;align-items:center;
-  justify-content:center;background:rgba(0,0,0,.22);transition:background .2s}
-.vid:hover .vid-play{background:rgba(0,0,0,.1)}
-.vid-btn{width:46px;height:46px;border-radius:50%;background:rgba(185,148,84,.9);
-  display:flex;align-items:center;justify-content:center;transition:transform .2s}
-.vid:hover .vid-btn{transform:scale(1.08)}
-.vid-btn::after{content:'';border-style:solid;border-width:7px 0 7px 13px;
-  border-color:transparent transparent transparent #fff;margin-left:3px}
-.vid-body{padding:16px 18px 20px}
-.vid-cat{font-size:8px;font-weight:600;letter-spacing:2px;
-  text-transform:uppercase;color:var(--ghost);margin-bottom:6px}
-.vid-ttl{font-size:14px;font-weight:600;color:var(--ink);line-height:1.4;margin-bottom:5px}
-.vid-meta{font-size:9px;color:var(--ghost)}
-
-/* ═══ PORTAIS ═══ */
-.portais{display:grid;grid-template-columns:repeat(3,1fr);gap:32px;padding:0 60px;}
-.portal{
-  padding:0;text-decoration:none;color:#fff;
-  display:flex;flex-direction:column;
-  position:relative;overflow:hidden;
-  border-radius:20px;
-  transition:all .5s cubic-bezier(.16,1,.3,1);
-  box-shadow:0 20px 60px rgba(0,0,0,.15);
+/* Slideshow backgrounds */
+.hero-slide{
+  position:absolute;inset:0;
+  background-position:center center;
+  background-size:cover;background-repeat:no-repeat;
+  opacity:0;
+  transition:opacity 1.2s ease;
 }
-.portal:hover{transform:translateY(-8px);box-shadow:0 30px 80px rgba(0,0,0,.25)}
-.portal.pac{background:linear-gradient(160deg,#2B5A3E,#1a3d2a);}
-.portal.prof{background:linear-gradient(160deg,#3E4F5C,#2a3740);}
-.portal.saud{background:linear-gradient(160deg,#8C2F46,#5e1f30);}
-.por-logo-wrap{padding:40px 40px 20px;display:flex;align-items:center;justify-content:center;}
-.por-logo-wrap img{height:110px;width:auto;border-radius:14px;
-  box-shadow:0 12px 40px rgba(0,0,0,.25);transition:transform .5s cubic-bezier(.16,1,.3,1);
-  mix-blend-mode:normal;}
-.portal:hover .por-logo-wrap img{transform:scale(1.06)}
-.por-icon{display:none;}
-.por-n{display:none;}
-.por-lbl{
-  font-size:10px;font-weight:400;letter-spacing:3px;
-  text-transform:uppercase;color:rgba(255,255,255,.5);
-  padding:0 40px;
+.hero-slide.active{opacity:1;}
+
+/* Dark overlay — ensures text contrast on ALL photos */
+.hero-overlay{
+  position:absolute;inset:0;
+  background:
+    linear-gradient(to right, rgba(8,14,26,.82) 0%, rgba(8,14,26,.55) 50%, rgba(8,14,26,.3) 100%),
+    linear-gradient(to bottom, rgba(8,14,26,.6) 0%, rgba(8,14,26,.2) 40%, rgba(8,14,26,.5) 100%);
+  z-index:1;
 }
-.por-ttl{
-  font-size:32px;font-weight:600;color:#fff;
-  letter-spacing:-.5px;line-height:1.1;
-  padding:0 40px;margin-top:4px;
+
+/* Content — left-aligned like Sonar */
+.hero-content{
+  position:relative;z-index:2;
+  max-width:620px;padding:0 48px;padding-top:68px;
+  margin-left:4%;
 }
-.por-desc{font-size:14px;font-weight:300;color:rgba(255,255,255,.55);line-height:1.78;flex:1;padding:12px 40px 0}
-.por-cta{
-  font-size:10px;font-weight:400;letter-spacing:2.5px;text-transform:uppercase;
-  color:rgba(255,255,255,.5);display:flex;align-items:center;gap:8px;
-  padding:24px 40px 36px;border-top:none;
-  transition:all .3s;
+.hero-content > *{
+  opacity:0;transform:translateY(20px);
+  animation:fade-up .7s ease-out forwards;
 }
-.portal:hover .por-cta{color:#fff;letter-spacing:3.5px}
-.por-arr{transition:transform .2s}
-.portal:hover .por-arr{transform:translateX(6px)}
+.hero-content > *:nth-child(1){animation-delay:.15s}
+.hero-content > *:nth-child(2){animation-delay:.35s}
+.hero-content > *:nth-child(3){animation-delay:.55s}
+.hero-content > *:nth-child(4){animation-delay:.75s}
+@keyframes fade-up{
+  to{opacity:1;transform:translateY(0);}
+}
+
+.hero-eyebrow{
+  font-size:11px;font-weight:600;letter-spacing:3.5px;
+  text-transform:uppercase;color:var(--gold);
+  margin-bottom:22px;
+}
+.hero-headline{
+  font-family:var(--serif);
+  font-size:52px;font-weight:400;color:#fff;
+  line-height:1.15;margin-bottom:18px;
+}
+.hero-headline em{font-style:italic;color:var(--gold);}
+.hero-sub{
+  font-size:16px;font-weight:300;color:rgba(255,255,255,.55);
+  line-height:1.7;margin-bottom:36px;max-width:480px;
+  letter-spacing:.2px;
+}
+.hero-actions{display:flex;gap:14px;flex-wrap:wrap;}
+.hero-btn-primary{
+  font-size:13px;font-weight:600;letter-spacing:.3px;
+  background:var(--gold);color:var(--navy-deep);
+  border:none;border-radius:8px;padding:14px 32px;
+  cursor:pointer;transition:all .3s;text-decoration:none;
+  display:inline-flex;align-items:center;gap:8px;
+}
+.hero-btn-primary:hover{
+  transform:translateY(-2px);
+  box-shadow:0 6px 24px rgba(196,163,90,.35);
+}
+.hero-btn-secondary{
+  font-size:13px;font-weight:500;
+  background:transparent;color:rgba(255,255,255,.7);
+  border:1.5px solid rgba(255,255,255,.15);
+  border-radius:8px;padding:14px 28px;
+  cursor:pointer;transition:all .3s;text-decoration:none;
+}
+.hero-btn-secondary:hover{
+  border-color:rgba(255,255,255,.35);color:#fff;
+}
+
+/* Slide dots */
+.hero-dots{
+  position:absolute;bottom:32px;left:50%;transform:translateX(-50%);
+  z-index:3;display:flex;gap:10px;
+}
+.hero-dot{
+  width:8px;height:8px;border-radius:50%;
+  background:rgba(255,255,255,.25);
+  cursor:pointer;transition:all .4s;
+  border:none;padding:0;
+}
+.hero-dot.active{
+  background:var(--gold);
+  box-shadow:0 0 8px rgba(196,163,90,.4);
+  transform:scale(1.2);
+}
+
+/* Scroll indicator */
+.hero-scroll{
+  position:absolute;bottom:28px;right:48px;
+  z-index:3;display:flex;flex-direction:column;align-items:center;gap:5px;
+  animation:bounce-scroll 2.5s ease-in-out infinite;
+}
+.hero-scroll span{
+  font-size:8px;letter-spacing:2.5px;text-transform:uppercase;
+  color:rgba(255,255,255,.25);
+}
+.scroll-line{
+  width:1px;height:24px;
+  background:linear-gradient(to bottom,rgba(196,163,90,.4),transparent);
+}
+@keyframes bounce-scroll{
+  0%,100%{transform:translateY(0);opacity:.5;}
+  50%{transform:translateY(6px);opacity:1;}
+}
+
+/* ═══ PLACEHOLDER SECTIONS ═══ */
+.placeholder-section{
+  min-height:50vh;padding:80px 48px;
+  display:flex;align-items:center;justify-content:center;
+}
+.placeholder-section h2{
+  font-family:var(--serif);font-size:36px;color:var(--navy);opacity:.2;
+}
+.rv{opacity:0;transform:translateY(20px);transition:all .7s cubic-bezier(.22,1,.36,1);}
+.rv.in{opacity:1;transform:translateY(0);}
+
+/* ═══ BIG NUMBERS / OS NÚMEROS ═══ */
+.big-numbers{
+  padding:64px 48px 56px;
+  background:#f0efeb;
+}
+.big-numbers-inner{
+  max-width:1060px;margin:0 auto;
+}
+.big-numbers-eyebrow{
+  font-size:11px;font-weight:600;letter-spacing:3.5px;
+  text-transform:uppercase;color:var(--gold);
+  margin-bottom:8px;
+}
+.big-numbers-headline{
+  font-family:var(--serif);
+  font-size:34px;font-weight:400;color:#111;
+  line-height:1.2;margin-bottom:36px;max-width:520px;
+}
+.big-numbers-headline em{font-style:italic;color:var(--gold);}
+.big-numbers-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:10px;
+  margin-bottom:40px;
+}
+.big-number-item{
+  border-top:1.5px solid rgba(0,0,0,.08);
+  padding:14px 14px 12px;
+  border-radius:10px;
+  transition:all .35s cubic-bezier(.22,1,.36,1);
+  cursor:default;
+}
+.big-number-item:hover{
+  background:rgba(196,163,90,.07);
+  transform:scale(1.03);
+  box-shadow:0 0 0 1px rgba(196,163,90,.2);
+}
+.big-number-value{
+  font-family:var(--serif);
+  font-size:76px;font-weight:400;
+  color:#111;line-height:1;
+  margin-bottom:2px;
+  letter-spacing:-2px;
+}
+.big-number-value span{
+  font-size:36px;color:var(--gold);letter-spacing:0;
+  font-weight:400;
+}
+.big-number-label{
+  font-size:13px;font-weight:600;color:#111;
+  margin-bottom:4px;letter-spacing:.2px;
+}
+.big-number-desc{
+  font-size:12.5px;font-weight:400;color:rgba(0,0,0,.5);
+  line-height:1.5;
+}
+/* CKM block */
+.ckm-block{
+  border-top:1.5px solid rgba(0,0,0,.08);
+  padding-top:28px;
+  display:grid;
+  grid-template-columns:220px 1fr;
+  gap:32px;
+  align-items:start;
+}
+.ckm-label{
+  font-family:var(--serif);
+  font-size:24px;font-weight:400;color:#111;
+  line-height:1.25;
+}
+.ckm-label em{font-style:italic;color:var(--gold);}
+.ckm-text{
+  font-size:14px;font-weight:400;color:rgba(0,0,0,.6);
+  line-height:1.7;max-width:600px;
+}
+.ckm-text strong{font-weight:600;color:#111;}
+.ckm-source{
+  margin-top:12px;
+  font-size:10px;font-weight:500;letter-spacing:1.2px;
+  text-transform:uppercase;color:rgba(0,0,0,.25);
+}
+@media(max-width:900px){
+  .big-numbers-grid{grid-template-columns:repeat(2,1fr);gap:8px;}
+  .ckm-block{grid-template-columns:1fr;gap:16px;}
+  .big-numbers{padding:48px 24px 40px;}
+  .big-numbers-headline{font-size:26px;margin-bottom:28px;}
+  .big-number-value{font-size:60px;}
+}
+@media(max-width:520px){
+  .big-numbers-grid{grid-template-columns:1fr;gap:8px;}
+  .big-number-value{font-size:64px;}
+}
+
+/* ═══ GAINS / O CONTROLE ═══ */
+.gains{
+  padding:64px 48px 56px;
+  background:var(--navy-deep);
+  color:#fff;
+}
+.gains-inner{
+  max-width:1060px;margin:0 auto;
+}
+.gains-eyebrow{
+  font-size:11px;font-weight:600;letter-spacing:3.5px;
+  text-transform:uppercase;color:var(--gold);
+  margin-bottom:8px;
+}
+.gains-headline{
+  font-family:var(--serif);
+  font-size:34px;font-weight:400;color:#fff;
+  line-height:1.2;margin-bottom:12px;max-width:560px;
+}
+.gains-headline em{font-style:italic;color:var(--gold);}
+.gains-sub{
+  font-size:14px;font-weight:400;color:rgba(255,255,255,.45);
+  line-height:1.6;margin-bottom:36px;max-width:580px;
+}
+.gains-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:10px;
+  margin-bottom:32px;
+}
+.gain-item{
+  border-top:1px solid rgba(255,255,255,.1);
+  padding:14px 14px 12px;
+  border-radius:10px;
+  transition:all .35s cubic-bezier(.22,1,.36,1);
+  cursor:default;
+}
+.gain-item:hover{
+  background:rgba(196,163,90,.08);
+  transform:scale(1.03);
+  box-shadow:0 0 0 1px rgba(196,163,90,.2);
+}
+.gain-value{
+  font-family:var(--serif);
+  font-size:56px;font-weight:400;
+  color:var(--gold);line-height:1;
+  margin-bottom:2px;
+  letter-spacing:-1.5px;
+}
+.gain-value span{
+  font-size:28px;color:rgba(255,255,255,.3);letter-spacing:0;
+}
+.gain-label{
+  font-size:13px;font-weight:600;color:#fff;
+  margin-bottom:4px;letter-spacing:.2px;
+}
+.gain-desc{
+  font-size:12.5px;font-weight:400;color:rgba(255,255,255,.4);
+  line-height:1.5;
+}
+.gains-footer{
+  border-top:1px solid rgba(255,255,255,.08);
+  padding-top:24px;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:32px;
+}
+.gains-footer-block{}
+.gains-footer-title{
+  font-family:var(--serif);
+  font-size:20px;color:#fff;margin-bottom:8px;
+}
+.gains-footer-title em{font-style:italic;color:var(--gold);}
+.gains-footer-text{
+  font-size:13px;color:rgba(255,255,255,.4);line-height:1.65;
+}
+.gains-footer-text strong{color:var(--gold);font-weight:600;}
+.gains-source{
+  margin-top:20px;
+  font-size:10px;font-weight:500;letter-spacing:1.2px;
+  text-transform:uppercase;color:rgba(255,255,255,.15);
+  grid-column:1/-1;
+}
+@media(max-width:900px){
+  .gains-grid{grid-template-columns:repeat(2,1fr);gap:8px;}
+  .gains-footer{grid-template-columns:1fr;gap:20px;}
+  .gains{padding:48px 24px 40px;}
+  .gains-headline{font-size:26px;}
+  .gain-value{font-size:44px;}
+}
+@media(max-width:520px){
+  .gains-grid{grid-template-columns:1fr;gap:8px;}
+  .gain-value{font-size:48px;}
+}
+
+
+
+
+
+/* ═══ COMO FUNCIONA ═══ */
+.como-funciona{
+  padding:80px 48px;
+  background:var(--bg);
+}
+.cf-inner{
+  max-width:900px;margin:0 auto;
+}
+.cf-header{
+  text-align:center;margin-bottom:64px;
+}
+.cf-eyebrow{
+  font-size:11px;font-weight:600;letter-spacing:3.5px;
+  text-transform:uppercase;color:var(--gold);
+  margin-bottom:8px;
+}
+.cf-headline{
+  font-family:var(--serif);
+  font-size:36px;font-weight:400;color:#111;
+  line-height:1.2;margin-bottom:10px;
+}
+.cf-headline em{font-style:italic;color:var(--gold);}
+.cf-sub{
+  font-size:14.5px;color:rgba(0,0,0,.45);
+  max-width:480px;margin:0 auto;line-height:1.6;
+}
+/* Steps */
+.cf-steps{
+  display:flex;flex-direction:column;gap:0;
+}
+.cf-step{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:48px;
+  align-items:center;
+  padding:48px 0;
+  border-top:1px solid rgba(0,0,0,.06);
+}
+.cf-step:last-child{border-bottom:1px solid rgba(0,0,0,.06);}
+.cf-step:nth-child(even) .cf-step-visual{order:-1;}
+.cf-step-content{}
+.cf-step-num{
+  font-family:var(--serif);
+  font-size:72px;font-weight:400;
+  color:rgba(0,0,0,.04);
+  line-height:1;margin-bottom:4px;
+  letter-spacing:-3px;
+}
+.cf-step-title{
+  font-family:var(--serif);
+  font-size:26px;font-weight:400;color:#111;
+  margin-bottom:10px;line-height:1.2;
+}
+.cf-step-title em{font-style:italic;color:var(--gold);}
+.cf-step-text{
+  font-size:14px;color:rgba(0,0,0,.5);
+  line-height:1.7;margin-bottom:16px;
+}
+.cf-step-tags{
+  display:flex;gap:8px;flex-wrap:wrap;
+}
+.cf-step-tag{
+  font-size:11px;font-weight:500;letter-spacing:.5px;
+  padding:5px 12px;border-radius:6px;
+  background:rgba(0,0,0,.04);color:rgba(0,0,0,.45);
+}
+/* Visual card (illustration placeholder) */
+.cf-step-visual{
+  background:rgba(0,0,0,.02);
+  border:1px solid rgba(0,0,0,.06);
+  border-radius:16px;
+  min-height:260px;
+  display:flex;align-items:center;justify-content:center;
+  padding:24px;
+  position:relative;
+  overflow:hidden;
+}
+/* Mini mockups inside visual cards */
+.cf-mock{
+  width:100%;max-width:280px;
+}
+.cf-mock-card{
+  background:#fff;
+  border:1px solid rgba(0,0,0,.08);
+  border-radius:12px;
+  padding:16px;
+  margin-bottom:8px;
+  box-shadow:0 2px 12px rgba(0,0,0,.04);
+}
+.cf-mock-card:last-child{margin-bottom:0;}
+.cf-mock-row{
+  display:flex;justify-content:space-between;align-items:center;
+}
+.cf-mock-label{font-size:11px;color:rgba(0,0,0,.4);font-weight:500;}
+.cf-mock-value{font-size:16px;font-weight:700;color:#111;}
+.cf-mock-badge{
+  font-size:9px;font-weight:600;padding:3px 8px;border-radius:4px;
+  display:inline-block;margin-top:4px;
+}
+.cf-mock-ok{background:rgba(16,185,129,.1);color:#059669;}
+.cf-mock-warn{background:rgba(245,158,11,.1);color:#d97706;}
+/* Chat mockup */
+.cf-chat{width:100%;max-width:300px;}
+.cf-chat-bubble{
+  padding:10px 14px;border-radius:14px;
+  font-size:12px;line-height:1.5;
+  margin-bottom:8px;max-width:85%;
+}
+.cf-chat-patient{
+  background:rgba(0,0,0,.05);color:#111;
+  border-bottom-left-radius:4px;
+  margin-right:auto;
+}
+.cf-chat-ai{
+  background:var(--navy-deep);color:#fff;
+  border-bottom-right-radius:4px;
+  margin-left:auto;
+}
+.cf-chat-ai-name{
+  font-size:9px;font-weight:600;letter-spacing:1px;
+  text-transform:uppercase;color:var(--gold);
+  margin-bottom:3px;
+}
+/* Flow summary */
+.cf-flow-summary{
+  margin-top:56px;
+  display:flex;align-items:center;justify-content:center;
+  gap:12px;flex-wrap:wrap;
+}
+.cf-flow-dot{
+  width:48px;height:48px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--serif);font-size:20px;font-weight:400;
+  background:rgba(0,0,0,.03);color:rgba(0,0,0,.25);
+  border:1px solid rgba(0,0,0,.06);
+}
+.cf-flow-dot.active{
+  background:var(--gold);color:#fff;
+  border-color:var(--gold);
+}
+.cf-flow-line{
+  width:40px;height:1px;background:rgba(0,0,0,.1);
+}
+@media(max-width:768px){
+  .cf-step{grid-template-columns:1fr;gap:24px;}
+  .cf-step:nth-child(even) .cf-step-visual{order:0;}
+  .cf-step-num{font-size:56px;}
+  .cf-step-title{font-size:22px;}
+  .como-funciona{padding:56px 24px;}
+  .cf-headline{font-size:28px;}
+}
+
+/* ═══ PLANOS E PREÇOS ═══ */
+.planos{
+  padding:80px 48px;
+  background:var(--navy-deep);
+}
+.planos-inner{
+  max-width:1060px;margin:0 auto;
+}
+.planos-header{
+  text-align:center;margin-bottom:56px;
+}
+.planos-eyebrow{
+  font-size:11px;font-weight:600;letter-spacing:3.5px;
+  text-transform:uppercase;color:var(--gold);
+  margin-bottom:8px;
+}
+.planos-headline{
+  font-family:var(--serif);
+  font-size:36px;font-weight:400;color:#fff;
+  line-height:1.2;margin-bottom:10px;
+}
+.planos-headline em{font-style:italic;color:var(--gold);}
+.planos-sub{
+  font-size:14.5px;color:rgba(255,255,255,.4);
+  max-width:440px;margin:0 auto;line-height:1.6;
+}
+.planos-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:20px;
+  align-items:start;
+}
+.plano-card{
+  background:rgba(255,255,255,.04);
+  border:1px solid rgba(255,255,255,.08);
+  border-radius:16px;
+  padding:36px 28px 32px;
+  transition:all .4s cubic-bezier(.22,1,.36,1);
+  position:relative;
+}
+.plano-card:hover{
+  transform:translateY(-4px);
+  box-shadow:0 12px 40px rgba(0,0,0,.3);
+  border-color:rgba(196,163,90,.2);
+}
+.plano-card.featured{
+  background:rgba(196,163,90,.08);
+  border-color:rgba(196,163,90,.3);
+}
+.plano-badge{
+  position:absolute;top:-12px;right:24px;
+  font-size:9px;font-weight:700;letter-spacing:1.5px;
+  text-transform:uppercase;
+  background:var(--gold);color:var(--navy-deep);
+  padding:5px 14px;border-radius:6px;
+}
+.plano-name{
+  font-family:var(--serif);
+  font-size:24px;color:#fff;margin-bottom:4px;
+}
+.plano-desc{
+  font-size:13px;color:rgba(255,255,255,.35);
+  margin-bottom:20px;line-height:1.5;
+}
+.plano-price{
+  margin-bottom:24px;
+}
+.plano-price-value{
+  font-family:var(--serif);
+  font-size:48px;font-weight:400;color:#fff;
+  line-height:1;
+}
+.plano-price-value span.currency{
+  font-size:22px;color:rgba(255,255,255,.4);
+  vertical-align:super;margin-right:2px;
+}
+.price-hidden{
+  font-family:var(--serif);
+  font-size:32px;font-weight:400;color:var(--gold);
+  line-height:1;
+}
+.plano-price-value span.period{
+  font-size:14px;color:rgba(255,255,255,.25);
+  font-family:var(--sans);font-weight:400;
+}
+.plano-features{
+  list-style:none;padding:0;margin:0 0 28px;
+}
+.plano-features li{
+  font-size:13px;color:rgba(255,255,255,.55);
+  padding:8px 0;
+  border-bottom:1px solid rgba(255,255,255,.05);
+  display:flex;align-items:center;gap:10px;
+  line-height:1.4;
+}
+.plano-features li:last-child{border-bottom:none;}
+.plano-check{
+  width:16px;height:16px;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;
+}
+.plano-check svg{width:14px;height:14px;}
+.plano-btn{
+  display:block;width:100%;text-align:center;
+  font-size:13px;font-weight:600;letter-spacing:.3px;
+  padding:14px;border-radius:10px;
+  text-decoration:none;transition:all .3s;
+  cursor:pointer;border:none;
+}
+.plano-btn-primary{
+  background:var(--gold);color:var(--navy-deep);
+}
+.plano-btn-primary:hover{
+  transform:translateY(-1px);
+  box-shadow:0 4px 16px rgba(196,163,90,.35);
+}
+.plano-btn-secondary{
+  background:transparent;color:rgba(255,255,255,.6);
+  border:1px solid rgba(255,255,255,.12);
+}
+.plano-btn-secondary:hover{
+  border-color:rgba(255,255,255,.3);color:#fff;
+}
+.planos-note{
+  text-align:center;margin-top:32px;
+  font-size:12px;color:rgba(255,255,255,.2);
+  line-height:1.6;
+}
+@media(max-width:900px){
+  .planos-grid{grid-template-columns:1fr;max-width:400px;margin:0 auto;}
+  .planos{padding:56px 24px;}
+  .planos-headline{font-size:28px;}
+}
+
+/* ═══ SOCIAL PROOF ═══ */
+.social-proof{
+  padding:80px 48px;
+  background:var(--bg);
+}
+.sp-inner{
+  max-width:1060px;margin:0 auto;
+}
+.sp-header{
+  text-align:center;margin-bottom:56px;
+}
+.sp-eyebrow{
+  font-size:11px;font-weight:600;letter-spacing:3.5px;
+  text-transform:uppercase;color:var(--gold);
+  margin-bottom:8px;
+}
+.sp-headline{
+  font-family:var(--serif);
+  font-size:36px;font-weight:400;color:#111;
+  line-height:1.2;margin-bottom:10px;
+}
+.sp-headline em{font-style:italic;color:var(--gold);}
+.sp-sub{
+  font-size:14.5px;color:rgba(0,0,0,.4);
+  max-width:420px;margin:0 auto;line-height:1.6;
+}
+.sp-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:20px;
+}
+.sp-card{
+  background:#fff;
+  border:1px solid rgba(0,0,0,.06);
+  border-radius:16px;
+  padding:28px 24px;
+  transition:all .35s;
+}
+.sp-card:hover{
+  transform:translateY(-3px);
+  box-shadow:0 8px 32px rgba(0,0,0,.06);
+}
+.sp-result{
+  display:flex;align-items:baseline;gap:8px;
+  margin-bottom:16px;
+  padding-bottom:16px;
+  border-bottom:1px solid rgba(0,0,0,.06);
+}
+.sp-result-value{
+  font-family:var(--serif);
+  font-size:44px;font-weight:400;
+  color:var(--gold);line-height:1;
+  letter-spacing:-1px;
+}
+.sp-result-unit{
+  font-size:14px;color:rgba(0,0,0,.3);
+}
+.sp-result-label{
+  font-size:12px;font-weight:600;color:#111;
+  letter-spacing:.2px;
+}
+.sp-quote{
+  font-size:14px;color:rgba(0,0,0,.5);
+  line-height:1.7;margin-bottom:16px;
+  font-style:italic;
+}
+.sp-author{
+  display:flex;align-items:center;gap:10px;
+}
+.sp-avatar{
+  width:36px;height:36px;border-radius:50%;
+  background:var(--gold);
+  display:flex;align-items:center;justify-content:center;
+  font-size:14px;font-weight:700;color:var(--navy-deep);
+}
+.sp-author-info{}
+.sp-author-name{
+  font-size:12px;font-weight:600;color:#111;
+}
+.sp-author-detail{
+  font-size:11px;color:rgba(0,0,0,.35);
+}
+@media(max-width:900px){
+  .sp-grid{grid-template-columns:1fr;max-width:400px;margin:0 auto;}
+  .social-proof{padding:56px 24px;}
+  .sp-headline{font-size:28px;}
+}
+
+/* ═══ CTA FINAL ═══ */
+.cta-final{
+  padding:100px 48px;
+  background:var(--navy-deep);
+  text-align:center;
+  position:relative;
+  overflow:hidden;
+}
+.cta-final::before{
+  content:'';position:absolute;
+  top:-200px;left:50%;transform:translateX(-50%);
+  width:600px;height:600px;
+  background:radial-gradient(circle,rgba(196,163,90,.08) 0%,transparent 70%);
+  pointer-events:none;
+}
+.cta-inner{
+  max-width:620px;margin:0 auto;position:relative;z-index:1;
+}
+.cta-eyebrow{
+  font-size:11px;font-weight:600;letter-spacing:3.5px;
+  text-transform:uppercase;color:var(--gold);
+  margin-bottom:12px;
+}
+.cta-headline{
+  font-family:var(--serif);
+  font-size:42px;font-weight:400;color:#fff;
+  line-height:1.2;margin-bottom:16px;
+}
+.cta-headline em{font-style:italic;color:var(--gold);}
+.cta-sub{
+  font-size:15px;color:rgba(255,255,255,.4);
+  line-height:1.7;margin-bottom:36px;
+  max-width:480px;margin-left:auto;margin-right:auto;
+}
+.cta-buttons{
+  display:flex;gap:14px;justify-content:center;flex-wrap:wrap;
+}
+.cta-btn-primary{
+  font-size:14px;font-weight:600;letter-spacing:.3px;
+  background:var(--gold);color:var(--navy-deep);
+  border:none;border-radius:10px;padding:16px 36px;
+  cursor:pointer;transition:all .3s;text-decoration:none;
+  display:inline-flex;align-items:center;gap:8px;
+}
+.cta-btn-primary:hover{
+  transform:translateY(-2px);
+  box-shadow:0 6px 24px rgba(196,163,90,.35);
+}
+.cta-btn-secondary{
+  font-size:14px;font-weight:500;
+  background:transparent;color:rgba(255,255,255,.6);
+  border:1.5px solid rgba(255,255,255,.12);
+  border-radius:10px;padding:16px 32px;
+  cursor:pointer;transition:all .3s;text-decoration:none;
+}
+.cta-btn-secondary:hover{
+  border-color:rgba(255,255,255,.3);color:#fff;
+}
+.cta-trust{
+  margin-top:40px;
+  display:flex;justify-content:center;gap:32px;flex-wrap:wrap;
+}
+.cta-trust-item{
+  font-size:11px;font-weight:500;color:rgba(255,255,255,.2);
+  display:flex;align-items:center;gap:6px;
+  letter-spacing:.5px;
+}
+.cta-trust-item svg{width:14px;height:14px;opacity:.3;}
 
 /* ═══ FOOTER ═══ */
-footer{background:var(--dark);color:#fff;padding:80px 60px 30px}
-.ft-g{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:40px;
-  margin-bottom:40px;padding-bottom:32px;border-bottom:1px solid rgba(255,255,255,.06)}
-.ft-logo{display:flex;align-items:center;gap:11px;margin-bottom:11px}
-.ft-nm{font-size:11px;font-weight:700;letter-spacing:5px;text-transform:uppercase;color:var(--gold)}
-.ft-tag{font-family:var(--serif);font-style:italic;font-size:11px;
-  font-weight:300;color:rgba(255,255,255,.28);line-height:1.7;max-width:220px;margin-bottom:12px}
-.ft-crm{font-size:9px;color:rgba(255,255,255,.18);letter-spacing:.4px}
-.ft-ch{font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;
-  color:rgba(255,255,255,.28);margin-bottom:12px}
-.ft-l{display:block;font-size:12px;color:rgba(255,255,255,.3);
-  text-decoration:none;margin-bottom:8px;transition:color .2s}
-.ft-l:hover{color:rgba(255,255,255,.7)}
-.ft-inp{width:100%;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);
-  border-radius:3px;padding:9px 12px;font-family:var(--sans);font-size:12px;
-  color:#fff;outline:none;margin-bottom:7px;transition:border-color .2s}
-.ft-inp::placeholder{color:rgba(255,255,255,.2)}
-.ft-inp:focus{border-color:rgba(185,148,84,.4)}
-.ft-btn{width:100%;background:var(--gold);border:none;border-radius:3px;padding:9px;
-  font-family:var(--sans);font-size:9px;font-weight:700;letter-spacing:2px;
-  text-transform:uppercase;color:#fff;cursor:pointer;transition:opacity .2s}
-.ft-btn:hover{opacity:.85}
-.ft-bot{display:flex;justify-content:space-between;align-items:center;
-  font-size:9px;color:rgba(255,255,255,.16)}
-.ft-bot a{color:rgba(255,255,255,.16);text-decoration:none}
-.ft-bot a:hover{color:rgba(255,255,255,.4)}
-
-/* ═══ RESPONSIVE ═══ */
-@media(max-width:960px){
-  .bignums{grid-template-columns:1fr 1fr}
-  .feature{grid-template-columns:1fr;margin:0}
-  .feat-vis{min-height:240px}
-  .ed-layout{grid-template-columns:1fr 1fr}
-  .ed-main{grid-row:span 1;grid-column:span 2}
-  .ed-row2{grid-template-columns:1fr 1fr}
-  .science{grid-template-columns:1fr}
-  .evento{grid-template-columns:1fr}
-  .vids{grid-template-columns:1fr 1fr}
-  .portais{grid-template-columns:1fr;gap:20px;padding:0}
-  .ranks{grid-template-columns:1fr}
-  .ft-g{grid-template-columns:1fr 1fr}
+.footer{
+  padding:40px 48px;
+  background:#0a1220;
+  text-align:center;
 }
-@media(max-width:600px){
-  .hdr-top{padding:0 20px;height:64px}.hdr-nav{padding:0 20px}
-  .hdr-name{font-size:22px}.hdr-div{margin-right:20px}
-  .wx{display:none}
-  .wrap{padding:40px 20px}
-  .bignums{grid-template-columns:1fr 1fr}
-  .bn{padding:28px 20px}
-  .ed-layout,.ed-row2,.vids{grid-template-columns:1fr}
-  .ed-main{grid-column:span 1}
-  .ft-g{grid-template-columns:1fr}
-  main{margin-top:162px}
+.footer-inner{
+  max-width:1060px;margin:0 auto;
 }
-
-/* ═══ FAIXAS ROTATIVAS — animação garantida ═══ */
-
-  display:flex;
-  width:max-content;
-  animation:roll 34s linear infinite;
-  will-change:transform;
+.footer-logo{
+  font-size:18px;font-weight:900;letter-spacing:-1px;
+  color:rgba(255,255,255,.3);margin-bottom:8px;
 }
-
-/* ═══ FENIX EVENT ═══ */
-.fenix-event{
-  display:grid;grid-template-columns:1fr 380px;
-  border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);
-  background:#fff;
+.footer-logo em{
+  font-size:9px;font-weight:600;letter-spacing:3px;
+  text-transform:uppercase;color:rgba(196,163,90,.3);
+  font-style:normal;margin-left:6px;
 }
-.fe-main{
-  padding:48px 44px;display:flex;flex-direction:column;justify-content:center;
-  background:linear-gradient(160deg,var(--hub-navy),#152240);
-  position:relative;overflow:hidden;
+.footer-text{
+  font-size:12px;color:rgba(255,255,255,.12);
+  line-height:1.7;
 }
-.fe-bg-txt{
-  position:absolute;top:-8%;right:-2%;
-  font-family:var(--serif);font-style:italic;
-  font-size:clamp(80px,14vw,180px);font-weight:400;
-  color:rgba(255,255,255,.03);line-height:1;pointer-events:none;letter-spacing:-4px;
-}
-.fe-kicker{font-size:9px;font-weight:600;letter-spacing:3px;text-transform:uppercase;
-  color:rgba(196,163,90,.7);margin-bottom:14px;position:relative;z-index:2}
-.fe-ttl{font-family:var(--serif);font-size:clamp(24px,3vw,40px);
-  font-weight:400;color:#fff;line-height:1.15;letter-spacing:-.3px;
-  margin-bottom:14px;position:relative;z-index:2}
-.fe-ttl em{font-style:italic;color:rgba(196,163,90,.85)}
-.fe-desc{font-size:14px;font-weight:300;color:rgba(255,255,255,.5);
-  line-height:1.78;max-width:480px;position:relative;z-index:2;margin-bottom:20px}
-.fe-details{position:relative;z-index:2;display:flex;flex-direction:column;gap:8px;margin-bottom:20px}
-.fe-detail{display:flex;align-items:center;gap:10px;
-  font-size:12px;color:rgba(255,255,255,.6)}
-.fe-detail-icon{font-size:16px;width:24px;text-align:center;flex-shrink:0}
-.fe-detail strong{color:rgba(255,255,255,.85);font-weight:600}
-.fe-speakers{position:relative;z-index:2}
-.fe-speakers-label{font-size:8px;font-weight:700;letter-spacing:2px;text-transform:uppercase;
-  color:rgba(196,163,90,.5);margin-bottom:10px}
-.fe-speaker{display:flex;align-items:center;gap:10px;padding:8px 12px;margin-bottom:5px;
-  border:1px solid rgba(255,255,255,.08);border-radius:6px;
-  background:rgba(255,255,255,.04);transition:background .2s;}
-.fe-speaker:hover{background:rgba(255,255,255,.08)}
-.fe-speaker-name{font-size:12px;font-weight:600;color:#fff}
-.fe-speaker-role{font-size:10px;color:rgba(255,255,255,.35);margin-top:1px}
-.fe-side{
-  background:var(--off);
-  display:flex;flex-direction:column;align-items:center;justify-content:center;
-  padding:40px 30px;gap:24px;
-  border-left:1px solid var(--border);
-}
-.fe-poster{
-  width:100%;max-width:300px;border-radius:12px;
-  box-shadow:0 12px 40px rgba(0,0,0,.12);
-  overflow:hidden;
-}
-.fe-poster img{width:100%;height:auto;display:block}
-.fe-cta-wrap{text-align:center}
-.fe-cta{
-  display:inline-flex;align-items:center;gap:8px;
-  font-size:10px;font-weight:600;letter-spacing:2px;text-transform:uppercase;
-  color:var(--hub-navy);text-decoration:none;
-  border-bottom:1px solid var(--border);padding-bottom:2px;
-  transition:color .2s,border-color .2s;
-}
-.fe-cta:hover{color:var(--gold);border-color:var(--gold)}
-
-/* ═══ PARTNERSHIP HIGHLIGHT ═══ */
-.partnership{
-  display:grid;grid-template-columns:1fr 1fr;
-  border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);
-  background:#fff;min-height:320px;
-}
-.part-visual{
-  background:linear-gradient(160deg,#f0ebe3,#e8e2d8);
-  display:flex;align-items:center;justify-content:center;
-  padding:48px;position:relative;overflow:hidden;
-}
-.part-logos{display:flex;align-items:center;gap:32px;position:relative;z-index:2}
-.part-logo-item{
-  background:#fff;border-radius:16px;padding:24px 28px;
-  box-shadow:0 8px 30px rgba(0,0,0,.08);
-  display:flex;align-items:center;justify-content:center;
-  min-width:140px;min-height:100px;
-}
-.part-logo-item img{max-height:60px;width:auto}
-.part-logo-text{font-size:22px;font-weight:700;color:var(--hub-navy);letter-spacing:1px}
-.part-plus{font-size:28px;font-weight:300;color:var(--gold);opacity:.6}
-.part-body{
-  padding:48px 44px;display:flex;flex-direction:column;justify-content:center;
-}
-.part-kicker{font-size:9px;font-weight:600;letter-spacing:3px;text-transform:uppercase;
-  color:var(--gold);margin-bottom:12px;display:flex;align-items:center;gap:10px}
-.part-kicker::before{content:'';width:18px;height:1px;background:var(--gold)}
-.part-ttl{font-family:var(--serif);font-size:clamp(20px,2.5vw,30px);
-  font-weight:400;line-height:1.2;color:var(--ink);letter-spacing:-.2px;margin-bottom:14px}
-.part-ttl em{font-style:italic;color:var(--mid)}
-.part-excerpt{font-size:14px;font-weight:300;color:var(--mid);line-height:1.78;margin-bottom:20px}
-.part-highlights{display:flex;flex-direction:column;gap:6px;margin-bottom:20px}
-.part-hi{font-size:13px;color:var(--mid);line-height:1.5;display:flex;gap:8px}
-.part-hi::before{content:'→';color:var(--gold);flex-shrink:0;font-weight:700}
-.part-meta{font-size:10px;color:var(--ghost);display:flex;align-items:center;gap:14px}
-.part-meta strong{color:var(--soft);font-weight:600}
-.part-link{
-  display:inline-flex;align-items:center;gap:8px;
-  font-size:10px;font-weight:600;letter-spacing:2px;text-transform:uppercase;
-  text-decoration:none;color:var(--ink);border-bottom:1px solid var(--border);
-  padding-bottom:2px;transition:color .2s,border-color .2s;margin-top:16px;width:fit-content;
-}
-.part-link:hover{color:var(--gold);border-color:var(--gold)}
-
-@media(max-width:960px){
-  .fenix-event{grid-template-columns:1fr}
-  .fe-side{padding:30px}
-  .partnership{grid-template-columns:1fr}
-  .part-visual{min-height:200px;padding:32px}
-}
+.footer-text a{color:rgba(196,163,90,.25);text-decoration:none;}
 </style>
 </head>
 <body>
 
 <!-- ═══ HEADER ═══ -->
-<header class="hdr">
-  <div class="hdr-top">
-    <a href="#" class="hdr-logo">
-      <img src="apex-hub.png" alt="APEX Hub" style="height:88px;width:auto;">
-    </a>
-    <div class="hdr-div"></div>
-    <div class="hdr-date" id="hdr-date">
-      <div class="hdr-date-line1" id="hdr-date-txt">Segunda-feira, 30 de março de 2026</div>
-      <div class="hdr-date-line2">It's happening</div>
-    </div>
-    <div class="hdr-right">
-      <div class="wx" id="wx">
-        <span id="wx-icon" class="wx-icon">⛅</span>
-        <div>
-          <div class="wx-city">São Paulo · SP</div>
-          <div style="display:flex;align-items:baseline;gap:5px">
-            <span class="wx-temp" id="wx-temp">--<sup>°C</sup></span>
-            <span class="wx-cond" id="wx-cond">–</span>
-          </div>
-          <div class="wx-range" id="wx-range">-- / --</div>
-        </div>
-      </div>
-      <div class="hdr-sep"></div>
-      <a href="portal_profissionais.html" class="hdr-cta">APEX Pro →</a>
-    </div>
-  </div>
-  <nav class="hdr-nav">
-    <a href="#s-numbers" class="hn">Dados</a>
+<header class="header" id="main-header">
+  <a href="#" class="header-logo">
+    <svg class="header-logo-icon" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="20" cy="4" r="2" fill="#C4A35A" opacity=".5"/>
+      <circle cx="20" cy="9" r="2.3" fill="#C4A35A" opacity=".65"/>
+      <circle cx="20" cy="14.5" r="2.6" fill="#C4A35A" opacity=".8"/>
+      <circle cx="20" cy="20" r="3" fill="#C4A35A"/>
+      <circle cx="20" cy="25.5" r="2.6" fill="#C4A35A" opacity=".8"/>
+      <circle cx="20" cy="31" r="2.3" fill="#C4A35A" opacity=".65"/>
+      <circle cx="20" cy="36" r="2" fill="#C4A35A" opacity=".5"/>
+      <circle cx="4" cy="20" r="2" fill="#C4A35A" opacity=".5"/>
+      <circle cx="9" cy="20" r="2.3" fill="#C4A35A" opacity=".65"/>
+      <circle cx="14.5" cy="20" r="2.6" fill="#C4A35A" opacity=".8"/>
+      <circle cx="25.5" cy="20" r="2.6" fill="#C4A35A" opacity=".8"/>
+      <circle cx="31" cy="20" r="2.3" fill="#C4A35A" opacity=".65"/>
+      <circle cx="36" cy="20" r="2" fill="#C4A35A" opacity=".5"/>
+    </svg>
+    <span class="logo-mark">apex<span class="logo-dot"></span></span>
+    <span class="logo-health">health</span>
+  </a>
 
-    <a href="#s-feature"   class="hn">Destaque</a>
-    <a href="#s-editorial" class="hn">Conteúdo</a>
-    <a href="#s-science"   class="hn">Ciência</a>
-    <a href="#s-evento"    class="hn">Eventos</a>
-    <a href="#s-parceria"  class="hn">Parceria</a>
-    <a href="#s-rankings"  class="hn">Top Lidas</a>
-    <a href="#s-videos"    class="hn">Vídeos</a>
-    <a href="#s-portais"   class="hn">Plataformas</a>
+  <div class="header-spacer"></div>
+
+  <nav class="header-nav">
+    <a href="#s-problema">O Problema</a>
+    <a href="#s-produto">Como Funciona</a>
+    <a href="#s-planos">Planos</a>
+    <a href="#s-insights">Insights</a>
   </nav>
+
+  <div class="header-sep"></div>
+  <a href="portal_profissionais.html" class="header-pro">Área Pro ↗</a>
+  <div class="header-sep"></div>
+  <a href="#s-planos" class="header-cta">Começar →</a>
 </header>
 
-<!-- ═══ HERO MOUNTAIN ═══ -->
-<section class="hero-mtn" id="hero">
-  <div class="hero-bg1"></div>
-  <div class="hero-bg2"></div>
+<!-- ═══ HERO ═══ -->
+<section class="hero" id="hero">
+  <!-- Slideshow backgrounds — dark/moody photos -->
+  <div class="hero-slide active" style="background-image:url('https://images.unsplash.com/photo-1434494878577-86c23bcb06b9?w=1920&q=85');"></div>
+  <div class="hero-slide" style="background-image:url('https://images.unsplash.com/photo-1552674605-db6ffd4facb5?w=1920&q=85');"></div>
+  <div class="hero-slide" style="background-image:url('https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=1920&q=85');"></div>
+  <div class="hero-slide" style="background-image:url('https://images.unsplash.com/photo-1549060279-7e168fcee0c2?w=1920&q=85');"></div>
+
   <div class="hero-overlay"></div>
+
   <div class="hero-content">
-    <div class="hero-logo">
-      <div class="hero-brand">
-        <div class="hero-brand-name">APEX</div>
+    <div class="hero-eyebrow">Monitoramento Remoto de Pacientes</div>
+    <h1 class="hero-headline">
+      Seus dados de saúde,<br><em>em tempo real.</em>
+    </h1>
+    <p class="hero-sub">
+      Wearables, inteligência artificial e médico especialista monitorando pressão, glicemia, peso e função renal — 24 horas por dia.
+    </p>
+    <!-- Botões apenas no header para evitar duplicidade -->
+  </div>
+
+  <!-- Slide dots -->
+  <div class="hero-dots" id="hero-dots">
+    <button class="hero-dot active" onclick="goSlide(0)"></button>
+    <button class="hero-dot" onclick="goSlide(1)"></button>
+    <button class="hero-dot" onclick="goSlide(2)"></button>
+    <button class="hero-dot" onclick="goSlide(3)"></button>
+  </div>
+
+  <div class="hero-scroll">
+    <span>Scroll</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- Placeholder sections -->
+<!-- ═══ SEÇÃO 02 — OS NÚMEROS ═══ -->
+<section class="big-numbers" id="s-problema">
+  <div class="big-numbers-inner">
+
+    <div class="big-numbers-eyebrow rv">Os números</div>
+    <h2 class="big-numbers-headline rv">
+      Quatro doenças crônicas.<br><em>Uma epidemia silenciosa.</em>
+    </h2>
+
+    <div class="big-numbers-grid" id="numbers-grid">
+      <div class="big-number-item rv">
+        <div class="big-number-value"><span class="count-up" data-target="60" data-suffix="">60</span><span>mi</span></div>
+        <div class="big-number-label">Hipertensos</div>
+        <div class="big-number-desc">30% dos adultos brasileiros. Apenas 1 em cada 3 mantém a pressão controlada.</div>
+      </div>
+      <div class="big-number-item rv">
+        <div class="big-number-value"><span class="count-up" data-target="20" data-suffix="">20</span><span>mi</span></div>
+        <div class="big-number-label">Diabéticos</div>
+        <div class="big-number-desc">Crescimento de 135% em 18 anos. Brasil é o 6º país em prevalência no mundo.</div>
+      </div>
+      <div class="big-number-item rv">
+        <div class="big-number-value"><span class="count-up" data-target="25" data-suffix=",7">25,7</span><span>%</span></div>
+        <div class="big-number-label">Obesos</div>
+        <div class="big-number-desc">1 em cada 4 adultos. Alta de 118% desde 2006.</div>
+      </div>
+      <div class="big-number-item rv">
+        <div class="big-number-value"><span class="count-up" data-target="20" data-suffix="">20</span><span>mi</span></div>
+        <div class="big-number-label">Doença renal crônica</div>
+        <div class="big-number-desc">10% da população. Hipertensão e diabetes causam 60% dos casos.</div>
+      </div>
+      <div class="big-number-item rv">
+        <div class="big-number-value"><span class="count-up" data-target="172" data-suffix="">172</span><span>mil</span></div>
+        <div class="big-number-label">Pacientes em diálise</div>
+        <div class="big-number-desc">50 mil novos casos por ano. 79% dependem do SUS.</div>
+      </div>
+      <div class="big-number-item rv">
+        <div class="big-number-value"><span class="count-up" data-target="400" data-suffix="">400</span><span>mil</span></div>
+        <div class="big-number-label">Mortes cardiovasculares/ano</div>
+        <div class="big-number-desc">Uma vida perdida a cada 90 segundos. Principal causa de óbito no Brasil.</div>
       </div>
     </div>
-    <h1 class="hero-tagline">Monitoramento que transforma</h1>
-  </div>
-</section>
 
-
-<main>
-
-<!-- ═══ BIG NUMBERS ═══ -->
-<section class="bignums" id="s-numbers">
-  <div class="bn rv">
-    <div class="bn-n"><em>145</em><span style="font-size:.55em;letter-spacing:-1px">mil</span></div>
-    <div class="bn-lbl">pacientes em hemodiálise no Brasil — os dados do censo que você precisa conhecer</div>
-    <div class="bn-src">Censo Brasileiro de Diálise · SBN 2024</div>
-  </div>
-  <div class="bn rv d1">
-    <div class="bn-n"><em>42</em><span style="font-size:.45em;letter-spacing:-1px">%</span></div>
-    <div class="bn-lbl">dos dialíticos têm diabetes mellitus como causa da doença renal</div>
-    <div class="bn-src">SBN · Censo Nacional de Diálise</div>
-  </div>
-  <div class="bn rv d2">
-    <div class="bn-n">R$<em>4,2</em><span style="font-size:.45em;letter-spacing:-1px">bi</span></div>
-    <div class="bn-lbl">gastos anuais com terapia renal substitutiva no Sistema Único de Saúde</div>
-    <div class="bn-src">Ministério da Saúde · 2024</div>
-  </div>
-  <div class="bn rv d3">
-    <div class="bn-n"><em>30</em><span style="font-size:.55em;letter-spacing:-1px">+</span></div>
-    <div class="bn-lbl">anos de história da Fênix Nefrologia cuidando de pacientes em São Paulo</div>
-    <div class="bn-src">Fênix Nefrologia · desde 1994</div>
-  </div>
-
-  <!-- Linha 2: doenças crônicas -->
-  <div class="bn rv d1">
-    <div class="bn-n"><em>36</em><span style="font-size:.55em;letter-spacing:-1px">%</span></div>
-    <div class="bn-lbl">dos adultos brasileiros têm hipertensão arterial — 1 em cada 3 pessoas</div>
-    <div class="bn-src">DATASUS · VIGITEL 2024</div>
-  </div>
-  <div class="bn rv d2">
-    <div class="bn-n"><em>760</em><span style="font-size:.5em;letter-spacing:-1px">mi</span></div>
-    <div class="bn-lbl">de pessoas vivem com obesidade no mundo — pandemia silenciosa do século XXI</div>
-    <div class="bn-src">WHO Global Obesity Report · 2024</div>
-  </div>
-  <div class="bn rv d3">
-    <div class="bn-n"><em>1</em><span style="font-size:.5em;letter-spacing:-1px">em 10</span></div>
-    <div class="bn-lbl">adultos tem diabetes mellitus — principal causa de DRC estágio 5 no Brasil</div>
-    <div class="bn-src">IDF Diabetes Atlas · 2024</div>
-  </div>
-  <div class="bn rv d4">
-    <div class="bn-n"><em>3×</em><span style="font-size:.5em;letter-spacing:-1px">/sem</span></div>
-    <div class="bn-lbl">de exercício aeróbico reduz em 35% o risco de progressão da doença renal crônica</div>
-    <div class="bn-src">CJASN · Meta-análise 2024</div>
-  </div>
-
-  <!-- Linha 3: ganhos com atividade física -->
-  <div class="bn rv">
-    <div class="bn-n"><em>50</em><span style="font-size:.55em;letter-spacing:-1px">%</span></div>
-    <div class="bn-lbl">menor risco de mortalidade por todas as causas em adultos fisicamente ativos vs. sedentários</div>
-    <div class="bn-src">JAMA Internal Medicine · 2022</div>
-  </div>
-  <div class="bn rv d1">
-    <div class="bn-n"><em>VO₂</em><span style="font-size:.5em;letter-spacing:-1px">máx</span></div>
-    <div class="bn-lbl">cada 1 MET a mais de capacidade aeróbica reduz 13% o risco de morte cardiovascular</div>
-    <div class="bn-src">Circulation · AHA 2023</div>
-  </div>
-  <div class="bn rv d2">
-    <div class="bn-n"><em>150</em><span style="font-size:.5em;letter-spacing:-1px">min</span></div>
-    <div class="bn-lbl">de exercício moderado por semana reduz em 31% o risco de depressão e ansiedade</div>
-    <div class="bn-src">British Journal of Sports Medicine · 2023</div>
-  </div>
-  <div class="bn rv d3">
-    <div class="bn-n"><em>40</em><span style="font-size:.55em;letter-spacing:-1px">%</span></div>
-    <div class="bn-lbl">menor incidência de diabetes tipo 2 em indivíduos com ≥7.000 passos/dia</div>
-    <div class="bn-src">Lancet Diabetes & Endocrinology · 2023</div>
-  </div>
-</section>
-
-
-<!-- ═══ FEATURE STORY ═══ -->
-<section class="feature" id="s-feature">
-  <div class="feat-txt">
-    <div class="feat-kicker rv">Análise · Gestão · Indicadores TRS</div>
-    <h1 class="feat-h1 rv d1">Fênix Nefrologia vs. Brasil:<br><em>o que o Censo Brasileiro de Diálise revela</em></h1>
-    <p class="feat-lide rv d2">Kt/V, hemoglobina, fístula arteriovenosa, URR — comparamos cada indicador da Fênix com o benchmark nacional publicado pela SBN e analisamos o que os números significam na prática clínica.</p>
-    <div class="feat-meta rv d3">
-      <strong>Dr. Bruno Biluca</strong>
-      <span>·</span><span>14 min de leitura</span>
-      <span>·</span><span>Gestão · Qualidade · TRS</span>
-    </div>
-    <a href="dashboard_fenix_C-Espacoso.html" class="feat-link rv d4">Ver análise com dashboard interativo →</a>
-  </div>
-  <div class="feat-vis">
-    <!-- FOTO: quando tiver imagem do censo/dados, coloque aqui:
-    <img class="feat-vis-img" src="foto-censo.jpg" alt="Censo Diálise"> -->
-    <div class="feat-bg">SBN</div>
-    <div class="feat-vis-over">
-      <div class="feat-vis-eye">Censo Brasileiro de Diálise · SBN 2024</div>
-      <div class="feat-vis-ttl">Fênix vs. Brasil</div>
-      <div class="feat-vis-sub">Indicadores TRS comparados</div>
-      <div class="feat-data">
-        <div class="feat-dc"><div class="feat-dc-l">Kt/V Fênix</div><div class="feat-dc-v">1,42</div></div>
-        <div class="feat-dc"><div class="feat-dc-l">Kt/V Nacional</div><div class="feat-dc-v">1,31</div></div>
-        <div class="feat-dc"><div class="feat-dc-l">Fístula AV</div><div class="feat-dc-v">86%</div></div>
+    <div class="ckm-block rv">
+      <div class="ckm-label">
+        Síndrome<br><em>CKM</em>
       </div>
-    </div>
-    <div class="feat-cap">Fonte: SBN · Censo Brasileiro de Diálise 2024</div>
-  </div>
-</section>
-
-<!-- ═══ GRADE EDITORIAL ═══ -->
-<section class="wrap" id="s-editorial">
-  <div class="sec-hdr rv">
-    <div><div class="sec-eye" style="color:var(--apex-insights)">Conteúdo</div><div class="sec-ttl">Grade Editorial</div></div>
-    <a href="portal_saude_performance.html" class="sec-more" style="color:var(--apex-insights)">Ver todos →</a>
-  </div>
-
-  <!-- filtros removidos — conteúdo unificado -->
-
-  <!-- Lista editorial -->
-  <div class="ed-list rv d2" id="ed-layout">
-
-    <!-- 1. André + Maratona — destaque hero -->
-    <a class="ed-item hero" href="artigo_exercicio_drc.html" data-p="p1">
-      <div class="ed-img">
-        <img src="https://images.unsplash.com/photo-1552674605-db6ffd4facb5?w=600&q=80" alt="Corredor em maratona" alt="André e Dr. Bruno Biluca na Maratona de São Paulo" style="width:100%;height:100%;display:block;object-fit:cover;">
-      </div>
-      <div class="ed-body">
-        <div class="tag"><span class="tag-dot dp1"></span><span class="tag-nm">Atividade Física · DRC</span></div>
-        <div class="art-ttl lg">Exercício na doença renal crônica: <em>o que André me ensinou</em></div>
-        <div class="art-exc">André tem 41 anos e faz hemodiálise três vezes por semana. Em outubro de 2024, cruzou a linha de chegada da Maratona de São Paulo. Este artigo é sobre o método por trás disso — e o que ele significa para qualquer paciente renal.</div>
-        <div class="art-foot"><strong>Dr. Bruno Biluca</strong><span>12 min de leitura</span></div>
-      </div>
-    </a>
-
-    <!-- 2. Dashboard Fênix / Kt/V -->
-    <a class="ed-item" href="dashboard_fenix_C-Espacoso.html" data-p="p2">
-      <div class="ed-img">
-        <img src="https://images.unsplash.com/photo-1579684385127-1ef15d508118?w=600&q=80" alt="Equipamento médico" alt="Dashboard indicadores TRS Fênix Nefrologia" style="width:100%;height:100%;display:block;object-fit:cover;">
-      </div>
-      <div class="ed-body">
-        <div class="tag"><span class="tag-dot dp2"></span><span class="tag-nm">Gestão · Indicadores TRS</span></div>
-        <div class="art-ttl md">Kt/V abaixo de 1,2: <em>o que os dados da sua clínica estão dizendo</em></div>
-        <div class="art-exc sm">Adequação dialítica é o indicador mais sensível de qualidade em hemodiálise — e o mais subestimado. Como ler, agir e documentar.</div>
-        <div class="art-foot"><strong>Dr. Bruno Biluca</strong><span>8 min</span></div>
-      </div>
-    </a>
-
-    <!-- 3. Oura Ring / HRV -->
-    <a class="ed-item" href="artigo_wearables.html" data-p="p3">
-      <div class="ed-img">
-        <img src="https://images.unsplash.com/photo-1434494878577-86c23bcb06b9?w=600&q=80" alt="Wearable de saúde" alt="Oura Ring HRV Readiness" style="width:100%;height:100%;display:block;object-fit:cover;object-position:center 60%;">
-      </div>
-      <div class="ed-body">
-        <div class="tag"><span class="tag-dot dp3"></span><span class="tag-nm">Performance · Wearables</span></div>
-        <div class="art-ttl md">HRV: o que o número do seu Oura <em>realmente significa na prática clínica</em></div>
-        <div class="art-exc sm">Variabilidade cardíaca saiu dos laboratórios de fisiologia e entrou nos consultórios. Como usar esse dado com critério médico.</div>
-        <div class="art-foot"><strong>Dr. Bruno Biluca</strong><span>10 min</span></div>
-      </div>
-    </a>
-
-    <!-- 4. VO₂ Apple Watch -->
-    <a class="ed-item" href="#s-editorial" data-p="p3">
-      <div class="ed-img">
-        <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=600&q=80" alt="Exercício cardio" alt="VO2 máximo Apple Watch" style="width:100%;height:100%;display:block;object-fit:contain;">
-      </div>
-      <div class="ed-body">
-        <div class="tag"><span class="tag-dot dp3"></span><span class="tag-nm">Longevidade · Exercício</span></div>
-        <div class="art-ttl md">VO₂ máximo: <em>o marcador de longevidade que a medicina ainda subestima</em></div>
-        <div class="art-exc sm">VO₂ máx = 51, entre os 10% melhores para a idade. Peter Attia chama de o exame de longevidade mais importante — como interpretar e como melhorar.</div>
-        <div class="art-foot"><strong>Dr. Bruno Biluca</strong><span>11 min</span></div>
-      </div>
-    </a>
-
-    <!-- 5. Sono / Garmin -->
-    <a class="ed-item" href="#s-editorial" data-p="p3">
-      <div class="ed-img">
-        <img src="https://images.unsplash.com/photo-1541781774459-bb2af2f05b55?w=600&q=80" alt="Qualidade do sono" alt="Garmin sono profundo monitor" style="width:100%;height:100%;display:block;object-fit:contain;">
-      </div>
-      <div class="ed-body">
-        <div class="tag"><span class="tag-dot dp3"></span><span class="tag-nm">Sono · Saúde Crônica</span></div>
-        <div class="art-ttl md">Sono ruim e doença crônica: <em>impacto renal e inflamatório que ignoramos</em></div>
-        <div class="art-exc sm">7h45m de sono com 1h27m profundo e 1h41m REM. A qualidade do sono é preditor independente de progressão da DRC. O que os dados do Garmin mostram.</div>
-        <div class="art-foot"><strong>Dr. Bruno Biluca</strong><span>9 min</span></div>
-      </div>
-    </a>
-
-    <!-- 6. Ibuprofeno / Anti-inflamatório -->
-    <a class="ed-item" href="artigo_antiinflamatorio_rim.html" data-p="p3">
-      <div class="ed-img">
-        <img src="https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=600&q=80" alt="Medicamentos" alt="Ibuprofeno anti-inflamatório AINE" style="width:100%;height:100%;display:block;object-fit:cover;">
-      </div>
-      <div class="ed-body">
-        <div class="tag"><span class="tag-dot dp3"></span><span class="tag-nm">Farmacologia · Rim</span></div>
-        <div class="art-ttl md">Anti-inflamatório e rim: <em>o perigo que o paciente não vê</em></div>
-        <div class="art-exc sm">Ibuprofeno, diclofenaco, naproxeno — AINEs são a causa evitável mais comum de lesão renal aguda. O que todo médico precisa comunicar ao paciente.</div>
-        <div class="art-foot"><strong>Dr. Bruno Biluca</strong><span>7 min</span></div>
-      </div>
-    </a>
-
-  </div>
-
-  <!-- Ed-row2 vazio (mantido para compatibilidade) -->
-  <div class="ed-row2" id="ed-row2"></div>
-</section>
-
-<!-- ═══ SCIENCE SPOTLIGHT — ESTUDO DA SEMANA ═══ -->
-<section class="wrap off" id="s-science">
-  <div class="sec-hdr rv">
-    <div><div class="sec-eye">Ciência</div><div class="sec-ttl">Estudo da Semana</div></div>
-  </div>
-  <div class="science rv d1">
-    <div class="sci-l">
       <div>
-        <div class="sci-eye">Paper em destaque</div>
-        <div class="sci-jnl">Kidney International Reports · 2025</div>
-        <div style="margin-top:12px">
-          <div class="sci-m">DOI: <b>10.1016/j.ekir.2025.03.051</b></div>
-          <div class="sci-m">Autores: <b>Rao N, Brotons-Munto F, Moura AF et al.</b></div>
-          <div class="sci-m">Modelo: <b>IMPACT CKD · LSE Framework</b></div>
-          <div class="sci-m">Relevância: <b>Gestor · Médico · Política de Saúde</b></div>
+        <p class="ckm-text">
+          CKM significa <strong>Cardiovascular-Kidney-Metabolic</strong> — ou Cardiovascular, Renal e Metabólica. Em 2023, a American Heart Association reconheceu oficialmente que essas condições não são problemas isolados: formam uma síndrome única em que cada doença alimenta a outra. A obesidade desencadeia resistência insulínica e diabetes; ambos aceleram a lesão renal e vascular, sobrecarregando o coração. Tratar cada uma separadamente já não basta.
+        </p>
+        <div class="ckm-source">Fontes: Vigitel 2025 · SBD · SBN · SBC · AHA Circulation 2023</div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ═══ SEÇÃO 02B — O CONTROLE (GAINS) ═══ -->
+<section class="gains" id="s-controle">
+  <div class="gains-inner">
+
+    <div class="gains-eyebrow rv">O controle</div>
+    <h2 class="gains-headline rv">
+      Mas quando monitoradas,<br><em>o cenário muda.</em>
+    </h2>
+    <p class="gains-sub rv">Estudos de referência mostram que o controle adequado de pressão, glicemia e peso — combinado com as novas medicações nefroprotetoras — reduz drasticamente desfechos graves.</p>
+
+    <div class="gains-grid" id="gains-grid">
+      <div class="gain-item rv">
+        <div class="gain-value">-20<span>%</span></div>
+        <div class="gain-label">Eventos cardiovasculares</div>
+        <div class="gain-desc">A cada 10 mmHg de redução na pressão sistólica. AVC cai 27%, insuficiência cardíaca 28%.</div>
+      </div>
+      <div class="gain-item rv">
+        <div class="gain-value">-37<span>%</span></div>
+        <div class="gain-label">Complicações microvasculares</div>
+        <div class="gain-desc">A cada 1% de redução na HbA1c. Mortes por diabetes caem 21%. Infarto, 14%.</div>
+      </div>
+      <div class="gain-item rv">
+        <div class="gain-value">-48<span>%</span></div>
+        <div class="gain-label">Risco CV com perda de peso</div>
+        <div class="gain-desc">Perder apenas 5% do peso corporal reduz quase pela metade eventos cardiovasculares em diabéticos.</div>
+      </div>
+      <div class="gain-item rv">
+        <div class="gain-value">-39<span>%</span></div>
+        <div class="gain-label">Falência renal (DAPA-CKD)</div>
+        <div class="gain-desc">Dapagliflozina reduziu progressão renal e morte em 39%. Mortalidade geral caiu 31%.</div>
+      </div>
+      <div class="gain-item rv">
+        <div class="gain-value">-28<span>%</span></div>
+        <div class="gain-label">Progressão renal (EMPA-KIDNEY)</div>
+        <div class="gain-desc">Empagliflozina freou a progressão da DRC e morte cardiovascular. Declínio renal caiu pela metade.</div>
+      </div>
+      <div class="gain-item rv">
+        <div class="gain-value">-50<span>%</span></div>
+        <div class="gain-label">Velocidade de perda renal</div>
+        <div class="gain-desc">Gliflozinas reduziram o ritmo de queda da função renal de 2,75 para 1,37 ml/min/ano.</div>
+      </div>
+    </div>
+
+    <div class="gains-footer rv">
+      <div class="gains-footer-block">
+        <div class="gains-footer-title">O custo de <em>não agir</em></div>
+        <div class="gains-footer-text">No Brasil, o número de pacientes em diálise deve crescer <strong>170%</strong> até 2032. O custo com terapia renal substitutiva saltará de R$ 6,3 bi para <strong>R$ 17,1 bi/ano</strong>. São R$ 1,3 trilhão em PIB perdido por absenteísmo e presenteísmo em 10 anos.</div>
+      </div>
+      <div class="gains-footer-block">
+        <div class="gains-footer-title">O valor do <em>monitoramento</em></div>
+        <div class="gains-footer-text">Diagnóstico precoce e controle contínuo das 4 condições CKM podem retardar ou evitar a diálise, reduzir internações e devolver qualidade de vida. <strong>Cada ano de função renal preservada</strong> é um ano a menos de diálise — e milhares de reais economizados.</div>
+      </div>
+      <div class="gains-source">Fontes: DAPA-CKD (NEJM 2020) · EMPA-KIDNEY (NEJM 2023) · UKPDS 35 · Lancet 2016 Meta-analysis · IMPACT CKD (KI Reports 2025)</div>
+    </div>
+
+  </div>
+</section>
+
+
+
+
+
+
+<!-- ═══ SEÇÃO — COMO FUNCIONA ═══ -->
+<section class="como-funciona" id="s-como-funciona">
+  <div class="cf-inner">
+
+    <div class="cf-header">
+      <div class="cf-eyebrow rv">Como funciona</div>
+      <h2 class="cf-headline rv">Quatro passos para o<br><em>controle contínuo.</em></h2>
+      <p class="cf-sub rv">Do primeiro contato ao monitoramento diário — tudo conectado em uma plataforma única.</p>
+    </div>
+
+    <div class="cf-steps">
+
+      <!-- Step 01 -->
+      <div class="cf-step rv">
+        <div class="cf-step-content">
+          <div class="cf-step-num">01</div>
+          <div class="cf-step-title">Conte sua <em>história</em></div>
+          <p class="cf-step-text">Você responde um questionário clínico detalhado sobre suas condições, sintomas, medicações atuais e objetivos. Tudo online, no seu tempo — sem fila, sem burocracia.</p>
+          <div class="cf-step-tags">
+            <span class="cf-step-tag">100% online</span>
+            <span class="cf-step-tag">5 minutos</span>
+            <span class="cf-step-tag">Dados seguros</span>
+          </div>
+        </div>
+        <div class="cf-step-visual">
+          <div class="cf-mock">
+            <div class="cf-mock-card">
+              <div class="cf-mock-label">Condições atuais</div>
+              <div style="display:flex;gap:6px;margin-top:8px;flex-wrap:wrap;">
+                <span class="cf-mock-badge cf-mock-warn">Hipertensão</span>
+                <span class="cf-mock-badge cf-mock-warn">DM tipo 2</span>
+                <span class="cf-mock-badge" style="background:rgba(99,102,241,.1);color:#4f46e5;">DRC estágio 3</span>
+              </div>
+            </div>
+            <div class="cf-mock-card">
+              <div class="cf-mock-label">Medicações em uso</div>
+              <div style="font-size:12px;color:#111;margin-top:6px;line-height:1.6;">Losartana 50mg · Metformina 850mg · Dapagliflozina 10mg</div>
+            </div>
+          </div>
         </div>
       </div>
-      <a href="https://doi.org/10.1016/j.ekir.2025.03.051" target="_blank" class="sci-badge">↗ Acessar o paper original</a>
-    </div>
-    <div class="sci-r">
-      <div class="sci-ttl">Impacto Holístico da DRC: <em>análise clínica, econômica e ambiental em 8 países pelo IMPACT CKD</em></div>
-      <p class="sci-abs">Estudo de microssimulação projetou a carga multidimensional da DRC de 2022 a 2032 em 8 países, incluindo o Brasil. Até 2032, a prevalência de DRC pode chegar a 16,5% da população, com aumento de até 170,8% nos pacientes em diálise. O impacto econômico estimado ultrapassa US$ 470 bilhões em custos diretos e US$ 186 bilhões em TRS nos 8 países analisados.</p>
-      <div class="sci-tks">
-        <div class="sci-tks-l">Principais achados</div>
-        <div class="sci-tk">Brasil projeta o maior crescimento em diálise (170,8%) e transplante (80,1%) entre os 8 países até 2032.</div>
-        <div class="sci-tk">DRC estágio 3-5 atingirá 125 milhões de pessoas nos países estudados — aumento de até 59% (Espanha).</div>
-        <div class="sci-tk">Eventos cardiovasculares (IAM e AVC) aumentarão mais de 25% em todos os países na próxima década.</div>
-        <div class="sci-tk">Custos com TRS no Brasil passarão de R$ 6,35B para R$ 17,12B (+169,5%) até 2032.</div>
-        <div class="sci-tk">Impacto ambiental: consumo de água, combustível fóssil e produção de carbono da TRS subirão &gt;11% em todos os países.</div>
-      </div>
-      <div class="sci-foot">
-        <a href="https://doi.org/10.1016/j.ekir.2025.03.051" target="_blank" class="sci-lnk">Acessar paper completo →</a>
-        <span style="font-size:9px;color:var(--ghost)">Kidney Int Reports · Aceito Mar 2025</span>
-      </div>
-    </div>
-  </div>
-</section>
 
-<!-- ═══ EVENTOS ═══ -->
-<section class="wrap" id="s-evento">
-  <div class="sec-hdr rv">
-    <div><div class="sec-eye">Eventos</div><div class="sec-ttl">Eventos APEX & Fenix</div></div>
-  </div>
-  <div class="fenix-event rv d1">
-    <div class="fe-main">
-      <div class="fe-bg-txt">FENIX</div>
-      <div class="fe-kicker">Evento Fenix Nefrologia · 2026</div>
-      <h2 class="fe-ttl">Qual o futuro da<br><em>Terapia Renal</em> no Brasil?</h2>
-      <p class="fe-desc">Mesa-redonda promovida pela Fenix Nefrologia reunindo especialistas para discutir os avanços, desafios e perspectivas da terapia renal substitutiva no cenário brasileiro.</p>
-      <div class="fe-details">
-        <div class="fe-detail"><span class="fe-detail-icon">📍</span> <strong>São Paulo, SP</strong> — Fenix Nefrologia</div>
-        <div class="fe-detail"><span class="fe-detail-icon">📅</span> <strong>2026</strong> — Evento realizado</div>
-        <div class="fe-detail"><span class="fe-detail-icon">🎯</span> Nefrologistas, gestores e profissionais de saúde</div>
-      </div>
-      <div class="fe-speakers">
-        <div class="fe-speakers-label">Temas em debate</div>
-        <div class="fe-speaker">
-          <div><div class="fe-speaker-name">Inovação em Hemodiálise</div>
-          <div class="fe-speaker-role">Novas tecnologias e abordagens clínicas</div></div>
+      <!-- Step 02 -->
+      <div class="cf-step rv">
+        <div class="cf-step-content">
+          <div class="cf-step-num">02</div>
+          <div class="cf-step-title">Consulta com <em>especialista</em></div>
+          <p class="cf-step-text">Com seus dados em mãos, o médico já chega à consulta conhecendo seu caso. Presencial ou por telemedicina — você escolhe. Juntos, definem metas para pressão, glicemia, peso e função renal.</p>
+          <div class="cf-step-tags">
+            <span class="cf-step-tag">Presencial ou tele</span>
+            <span class="cf-step-tag">Nefrologista</span>
+            <span class="cf-step-tag">Metas individuais</span>
+          </div>
         </div>
-        <div class="fe-speaker">
-          <div><div class="fe-speaker-name">Acesso e Qualidade em TRS</div>
-          <div class="fe-speaker-role">Indicadores, benchmarks e melhores práticas</div></div>
-        </div>
-        <div class="fe-speaker">
-          <div><div class="fe-speaker-name">Sustentabilidade e Gestão</div>
-          <div class="fe-speaker-role">Modelos assistenciais e impacto ambiental</div></div>
+        <div class="cf-step-visual">
+          <div class="cf-mock">
+            <div class="cf-mock-card">
+              <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
+                <div style="width:36px;height:36px;border-radius:50%;background:var(--gold);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#121d33;">Dr</div>
+                <div>
+                  <div style="font-size:13px;font-weight:600;color:#111;">Dr. Bruno Biluca</div>
+                  <div style="font-size:10px;color:rgba(0,0,0,.4);">Nefrologista · CRM 00000</div>
+                </div>
+              </div>
+              <div style="border-top:1px solid rgba(0,0,0,.06);padding-top:10px;">
+                <div class="cf-mock-label" style="margin-bottom:8px;">Metas definidas</div>
+                <div class="cf-mock-row" style="margin-bottom:4px;">
+                  <span style="font-size:11px;color:rgba(0,0,0,.5);">PA alvo</span>
+                  <span style="font-size:12px;font-weight:600;color:#111;">< 130/80</span>
+                </div>
+                <div class="cf-mock-row" style="margin-bottom:4px;">
+                  <span style="font-size:11px;color:rgba(0,0,0,.5);">HbA1c alvo</span>
+                  <span style="font-size:12px;font-weight:600;color:#111;">< 7,0%</span>
+                </div>
+                <div class="cf-mock-row">
+                  <span style="font-size:11px;color:rgba(0,0,0,.5);">Peso alvo</span>
+                  <span style="font-size:12px;font-weight:600;color:#111;">78 kg (-5 kg)</span>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
-    <div class="fe-side">
-      <div class="fe-poster" style="background:linear-gradient(160deg,var(--hub-navy),#2a4070);padding:36px 28px;text-align:center;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;min-height:360px;border-radius:12px;">
-        <div style="font-size:9px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:rgba(196,163,90,.7)">Fenix Nefrologia apresenta</div>
-        <div style="font-family:var(--serif);font-size:28px;color:#fff;line-height:1.2;font-weight:400">Qual o futuro da</div>
-        <div style="font-family:var(--serif);font-size:34px;color:var(--gold);line-height:1.1;font-style:italic;font-weight:400">Terapia Renal</div>
-        <div style="font-family:var(--serif);font-size:28px;color:#fff;line-height:1.2;font-weight:400">no Brasil?</div>
-        <div style="width:40px;height:2px;background:var(--gold);opacity:.5;margin:8px 0"></div>
-        <div style="font-size:10px;color:rgba(255,255,255,.4);letter-spacing:2px;text-transform:uppercase">Mesa-Redonda · 2026</div>
+
+      <!-- Step 03 -->
+      <div class="cf-step rv">
+        <div class="cf-step-content">
+          <div class="cf-step-num">03</div>
+          <div class="cf-step-title">Seu plano <em>personalizado</em></div>
+          <p class="cf-step-text">Você recebe um plano sob medida com medicações otimizadas, orientações de dieta e exercício, e os dispositivos de monitoramento que vão acompanhar você no dia a dia — esfigmomanômetro, glicosímetro, balança e smartwatch.</p>
+          <div class="cf-step-tags">
+            <span class="cf-step-tag">Dispositivos em casa</span>
+            <span class="cf-step-tag">Plano de dieta</span>
+            <span class="cf-step-tag">Medicações ajustadas</span>
+          </div>
+        </div>
+        <div class="cf-step-visual">
+          <div class="cf-mock">
+            <div class="cf-mock-card">
+              <div class="cf-mock-label" style="margin-bottom:10px;">Dispositivos do seu plano</div>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+                <div style="text-align:center;padding:12px 8px;background:rgba(0,0,0,.02);border-radius:8px;">
+                  <svg width="28" height="28" fill="none" viewBox="0 0 24 24" style="margin:0 auto 4px;display:block;"><path d="M22 12h-4l-3 9L9 3l-3 9H2" stroke="#C4A35A" stroke-width="1.5" stroke-linecap="round"/></svg>
+                  <div style="font-size:10px;color:#111;font-weight:500;">Esfigmo</div>
+                </div>
+                <div style="text-align:center;padding:12px 8px;background:rgba(0,0,0,.02);border-radius:8px;">
+                  <svg width="28" height="28" fill="none" viewBox="0 0 24 24" style="margin:0 auto 4px;display:block;"><circle cx="12" cy="12" r="4" stroke="#C4A35A" stroke-width="1.5"/><path d="M12 4v2M12 18v2M4 12h2M18 12h2" stroke="#C4A35A" stroke-width="1.5" stroke-linecap="round"/></svg>
+                  <div style="font-size:10px;color:#111;font-weight:500;">Glicosímetro</div>
+                </div>
+                <div style="text-align:center;padding:12px 8px;background:rgba(0,0,0,.02);border-radius:8px;">
+                  <svg width="28" height="28" fill="none" viewBox="0 0 24 24" style="margin:0 auto 4px;display:block;"><rect x="4" y="14" width="16" height="6" rx="2" stroke="#C4A35A" stroke-width="1.5"/><path d="M12 14V8M8 10h8" stroke="#C4A35A" stroke-width="1.5" stroke-linecap="round"/></svg>
+                  <div style="font-size:10px;color:#111;font-weight:500;">Balança</div>
+                </div>
+                <div style="text-align:center;padding:12px 8px;background:rgba(0,0,0,.02);border-radius:8px;">
+                  <svg width="28" height="28" fill="none" viewBox="0 0 24 24" style="margin:0 auto 4px;display:block;"><rect x="6" y="3" width="12" height="18" rx="6" stroke="#C4A35A" stroke-width="1.5"/><circle cx="12" cy="9" r="2" fill="#C4A35A"/></svg>
+                  <div style="font-size:10px;color:#111;font-weight:500;">Smartwatch</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
-      <div class="fe-cta-wrap">
-        <a href="#" class="fe-cta">Saiba mais sobre o evento →</a>
+
+      <!-- Step 04 -->
+      <div class="cf-step rv">
+        <div class="cf-step-content">
+          <div class="cf-step-num">04</div>
+          <div class="cf-step-title">Monitoramento <em>contínuo</em></div>
+          <p class="cf-step-text">Seus dados chegam automaticamente à plataforma. A IA APEX analisa cada medição, conversa com você sobre dúvidas e orienta no dia a dia. O médico acompanha tudo em tempo real e é alertado quando algo precisa de atenção clínica.</p>
+          <div class="cf-step-tags">
+            <span class="cf-step-tag">IA 24/7</span>
+            <span class="cf-step-tag">Médico vê tudo</span>
+            <span class="cf-step-tag">Alertas inteligentes</span>
+          </div>
+        </div>
+        <div class="cf-step-visual">
+          <div class="cf-chat">
+            <div class="cf-chat-bubble cf-chat-patient">Minha pressão deu 152/96 hoje de manhã, é preocupante?</div>
+            <div class="cf-chat-bubble cf-chat-ai">
+              <div class="cf-chat-ai-name">IA APEX</div>
+              Sua PA está acima da meta de 130/80. Nas últimas 3 medições, a média foi 145/92. Vou notificar o Dr. Bruno para avaliar um ajuste na medicação. Enquanto isso, evite sal e tente medir novamente em 2 horas.
+            </div>
+            <div class="cf-chat-bubble cf-chat-patient">Ok, obrigado. E minha glicemia ontem?</div>
+            <div class="cf-chat-bubble cf-chat-ai">
+              <div class="cf-chat-ai-name">IA APEX</div>
+              Sua glicemia de ontem (104 mg/dL) está dentro da meta. Parabéns pela consistência! 📊
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Flow summary dots -->
+    <div class="cf-flow-summary rv">
+      <div class="cf-flow-dot">01</div>
+      <div class="cf-flow-line"></div>
+      <div class="cf-flow-dot">02</div>
+      <div class="cf-flow-line"></div>
+      <div class="cf-flow-dot">03</div>
+      <div class="cf-flow-line"></div>
+      <div class="cf-flow-dot active">04</div>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ═══ SEÇÃO — PLANOS E PREÇOS ═══ -->
+<section class="planos" id="s-planos">
+  <div class="planos-inner">
+
+    <div class="planos-header">
+      <div class="planos-eyebrow rv">Planos</div>
+      <h2 class="planos-headline rv">Escolha o plano ideal<br><em>para você.</em></h2>
+      <p class="planos-sub rv">Todos os planos incluem acompanhamento médico especializado e acesso à plataforma APEX.</p>
+    </div>
+
+    <div class="planos-grid">
+
+      <!-- Plano Essencial -->
+      <div class="plano-card rv">
+        <div class="plano-name">Essencial</div>
+        <div class="plano-desc">Para quem quer começar a monitorar uma condição crônica.</div>
+        <div class="plano-price">
+          <div class="plano-price-value">
+            <span class="price-hidden">Consulte</span>
+          </div>
+        </div>
+        <ul class="plano-features">
+          <li>
+            <span class="plano-check"><svg fill="none" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7" stroke="#C4A35A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            1 condição monitorada
+          </li>
+          <li>
+            <span class="plano-check"><svg fill="none" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7" stroke="#C4A35A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            1 dispositivo de medição
+          </li>
+          <li>
+            <span class="plano-check"><svg fill="none" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7" stroke="#C4A35A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            IA APEX para dúvidas 24/7
+          </li>
+          <li>
+            <span class="plano-check"><svg fill="none" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7" stroke="#C4A35A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            Relatório mensal ao médico
+          </li>
+          <li>
+            <span class="plano-check"><svg fill="none" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7" stroke="#C4A35A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            1 teleconsulta por mês
+          </li>
+        </ul>
+        <a href="#" class="plano-btn plano-btn-secondary">Começar agora</a>
+      </div>
+
+      <!-- Plano Completo (featured) -->
+      <div class="plano-card featured rv">
+        <div class="plano-badge">Mais escolhido</div>
+        <div class="plano-name">Completo</div>
+        <div class="plano-desc">Monitoramento integrado das 4 condições CKM.</div>
+        <div class="plano-price">
+          <div class="plano-price-value">
+            <span class="price-hidden">Consulte</span>
+          </div>
+        </div>
+        <ul class="plano-features">
+          <li>
+            <span class="plano-check"><svg fill="none" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7" stroke="#C4A35A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            4 condições monitoradas
+          </li>
+          <li>
+            <span class="plano-check"><svg fill="none" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7" stroke="#C4A35A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            Kit completo de dispositivos
+          </li>
+          <li>
+            <span class="plano-check"><svg fill="none" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7" stroke="#C4A35A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            IA APEX + alertas ao médico
+          </li>
+          <li>
+            <span class="plano-check"><svg fill="none" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7" stroke="#C4A35A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            Relatórios semanais detalhados
+          </li>
+          <li>
+            <span class="plano-check"><svg fill="none" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7" stroke="#C4A35A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            2 teleconsultas por mês
+          </li>
+          <li>
+            <span class="plano-check"><svg fill="none" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7" stroke="#C4A35A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            Plano nutricional personalizado
+          </li>
+        </ul>
+        <a href="#" class="plano-btn plano-btn-primary">Começar agora →</a>
+      </div>
+
+      <!-- Plano Família -->
+      <div class="plano-card rv">
+        <div class="plano-name">Família</div>
+        <div class="plano-desc">Para até 3 membros da família com acompanhamento conjunto.</div>
+        <div class="plano-price">
+          <div class="plano-price-value">
+            <span class="price-hidden">Consulte</span>
+          </div>
+        </div>
+        <ul class="plano-features">
+          <li>
+            <span class="plano-check"><svg fill="none" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7" stroke="#C4A35A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            Até 3 pessoas monitoradas
+          </li>
+          <li>
+            <span class="plano-check"><svg fill="none" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7" stroke="#C4A35A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            Kit de dispositivos por pessoa
+          </li>
+          <li>
+            <span class="plano-check"><svg fill="none" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7" stroke="#C4A35A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            Painel familiar integrado
+          </li>
+          <li>
+            <span class="plano-check"><svg fill="none" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7" stroke="#C4A35A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            Tudo do plano Completo
+          </li>
+          <li>
+            <span class="plano-check"><svg fill="none" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7" stroke="#C4A35A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            3 teleconsultas por mês
+          </li>
+        </ul>
+        <a href="#" class="plano-btn plano-btn-secondary">Começar agora</a>
+      </div>
+
+    </div>
+
+    <div class="planos-note rv">
+      Todos os planos incluem período de 7 dias para experimentar. Cancele quando quiser.<br>
+      Dispositivos são enviados para sua casa em até 3 dias úteis.
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ═══ SEÇÃO — SOCIAL PROOF ═══ -->
+<section class="social-proof" id="s-resultados">
+  <div class="sp-inner">
+
+    <div class="sp-header">
+      <div class="sp-eyebrow rv">Resultados reais</div>
+      <h2 class="sp-headline rv">Quem monitora,<br><em>transforma sua saúde.</em></h2>
+      <p class="sp-sub rv">Pacientes acompanhados pela plataforma APEX nos primeiros 6 meses de monitoramento.</p>
+    </div>
+
+    <div class="sp-grid">
+
+      <div class="sp-card rv">
+        <div class="sp-result">
+          <div>
+            <div class="sp-result-value">-18</div>
+            <div class="sp-result-unit">mmHg</div>
+          </div>
+          <div class="sp-result-label">Redução média na<br>pressão sistólica</div>
+        </div>
+        <p class="sp-quote">"Eu achava que controlar a pressão era impossível. Com o monitoramento diário e os ajustes do médico, saí de 160 para 128 em 4 meses."</p>
+        <div class="sp-author">
+          <div class="sp-avatar">M</div>
+          <div class="sp-author-info">
+            <div class="sp-author-name">Maria C., 62 anos</div>
+            <div class="sp-author-detail">Hipertensão · Plano Essencial</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="sp-card rv">
+        <div class="sp-result">
+          <div>
+            <div class="sp-result-value">-1,8</div>
+            <div class="sp-result-unit">% HbA1c</div>
+          </div>
+          <div class="sp-result-label">Redução média na<br>hemoglobina glicada</div>
+        </div>
+        <p class="sp-quote">"A IA me lembra de medir, me explica os números e o médico ajusta a medicação sem eu precisar ir ao consultório. Minha HbA1c nunca esteve tão boa."</p>
+        <div class="sp-author">
+          <div class="sp-avatar">R</div>
+          <div class="sp-author-info">
+            <div class="sp-author-name">Roberto S., 55 anos</div>
+            <div class="sp-author-detail">Diabetes tipo 2 + DRC · Plano Completo</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="sp-card rv">
+        <div class="sp-result">
+          <div>
+            <div class="sp-result-value">-12</div>
+            <div class="sp-result-unit">kg</div>
+          </div>
+          <div class="sp-result-label">Perda média de peso<br>em 6 meses</div>
+        </div>
+        <p class="sp-quote">"Ter tudo num lugar só — peso, pressão, glicemia — e ver a evolução no gráfico me deu a motivação que faltava. O plano nutricional fez toda a diferença."</p>
+        <div class="sp-author">
+          <div class="sp-avatar">A</div>
+          <div class="sp-author-info">
+            <div class="sp-author-name">Ana L., 48 anos</div>
+            <div class="sp-author-detail">Obesidade + Hipertensão · Plano Completo</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ═══ CTA FINAL ═══ -->
+<section class="cta-final" id="s-cta">
+  <div class="cta-inner">
+    <div class="cta-eyebrow rv">Comece hoje</div>
+    <h2 class="cta-headline rv">
+      Sua saúde merece<br><em>atenção contínua.</em>
+    </h2>
+    <p class="cta-sub rv">
+      Junte-se a milhares de pacientes que transformaram o controle de suas condições crônicas com monitoramento inteligente, IA e acompanhamento médico especializado.
+    </p>
+    <div class="cta-buttons rv">
+      <a href="#s-planos" class="cta-btn-primary">Ver planos e começar →</a>
+      <a href="#s-como-funciona" class="cta-btn-secondary">Como funciona</a>
+    </div>
+    <div class="cta-trust rv">
+      <div class="cta-trust-item">
+        <svg fill="none" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke="currentColor" stroke-width="1.5"/></svg>
+        Dados criptografados
+      </div>
+      <div class="cta-trust-item">
+        <svg fill="none" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M22 4 12 14.01l-3-3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Cancele quando quiser
+      </div>
+      <div class="cta-trust-item">
+        <svg fill="none" viewBox="0 0 24 24"><path d="M12 8v4l3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.5"/></svg>
+        7 dias grátis
       </div>
     </div>
   </div>
 </section>
 
-<!-- ═══ PARCERIA SABARÁ ═══ -->
-<section class="wrap off" id="s-parceria">
-  <div class="sec-hdr rv">
-    <div><div class="sec-eye">Parceria</div><div class="sec-ttl">Na Mídia</div></div>
-  </div>
-  <div class="partnership rv d1">
-    <div class="part-visual" style="background:linear-gradient(135deg,#CC0000 0%,#990000 100%);padding:40px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:20px;border-radius:12px;">
-      <div style="font-family:Arial,sans-serif;font-size:42px;font-weight:900;color:#fff;letter-spacing:2px;line-height:1;">MEDICINA<span style="font-weight:400;font-style:italic;">S/A</span></div>
-      <div style="display:flex;gap:12px;">
-        <span style="width:28px;height:28px;border-radius:50%;border:2px solid rgba(255,255,255,.5);display:flex;align-items:center;justify-content:center;font-size:13px;color:#fff;">in</span>
-        <span style="width:28px;height:28px;border-radius:50%;border:2px solid rgba(255,255,255,.5);display:flex;align-items:center;justify-content:center;font-size:13px;color:#fff;">f</span>
-      </div>
-      <div style="width:60px;height:2px;background:rgba(255,255,255,.3);margin:4px 0;"></div>
-      <div style="font-size:11px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.8);">Hemodiálise Pediátrica</div>
-    </div>
-    <div class="part-body">
-      <div class="part-kicker">Medicina S/A · Abril 2026</div>
-      <div class="part-ttl">Sabará e Fenix Nefrologia ampliam oferta de <em>hemodiálise pediátrica</em></div>
-      <p class="part-excerpt">Parceria estratégica entre o Sabará Hospital Infantil e a Clínica Fenix Nefrologia amplia o acesso à hemodiálise ambulatorial pediátrica, garantindo continuidade do cuidado entre o ambiente hospitalar e o acompanhamento fora da internação.</p>
-      <div class="part-highlights">
-        <div class="part-hi">Mesma equipe médica do hospital acompanha o paciente na Fenix — integração assistencial completa</div>
-        <div class="part-hi">Aumento de mais de 150% no atendimento de pacientes pediátricos em hemodiálise no Sabará ao longo dos anos</div>
-        <div class="part-hi">Estrutura especializada, protocolos rigorosos de segurança e acolhimento humanizado para crianças</div>
-      </div>
-      <div class="part-meta">
-        Publicado em: <strong>14/04/2026</strong> · Fonte: <strong>Medicina S/A</strong>
-      </div>
-      <a href="https://medicinasa.com.br/hemodialise-pediatrica/" target="_blank" class="part-link">Ler matéria completa →</a>
-    </div>
-  </div>
-</section>
-
-<!-- ═══ TOP LIDAS + RECOMENDADAS ═══ -->
-<section class="wrap off" id="s-rankings">
-  <div class="sec-hdr rv">
-    <div><div class="sec-eye">Curadoria</div><div class="sec-ttl">Top Lidas &amp; Recomendadas</div></div>
-  </div>
-  <div class="ranks rv d1">
-    <div class="rank-col">
-      <div class="rank-col-h">Mais lidas esta semana</div>
-      <a class="ri" href="#">
-        <div class="ri-n gold">01</div>
-        <div><div class="ri-cat">Gestão · TRS</div><div class="ri-ttl">Fênix vs. Brasil: o que o Censo Brasileiro de Diálise revela</div><div class="ri-meta">14 min · 5.1k leituras</div></div>
-      </a>
-      <a class="ri" href="#">
-        <div class="ri-n">02</div>
-        <div><div class="ri-cat">DRC · Medicamentos</div><div class="ri-ttl">Anti-inflamatório e rim: o perigo que o paciente não vê</div><div class="ri-meta">7 min · 4.2k leituras</div></div>
-      </a>
-      <a class="ri" href="#">
-        <div class="ri-n">03</div>
-        <div><div class="ri-cat">Performance · Wearables</div><div class="ri-ttl">HRV: o que o número do seu Oura realmente significa</div><div class="ri-meta">10 min · 3.8k leituras</div></div>
-      </a>
-      <a class="ri" href="#">
-        <div class="ri-n">04</div>
-        <div><div class="ri-cat">Longevidade · Exercício</div><div class="ri-ttl">VO₂ máximo: o marcador de longevidade que a medicina subestima</div><div class="ri-meta">11 min · 2.1k leituras</div></div>
-      </a>
-      <a class="ri" href="artigo_exercicio_drc.html">
-        <div class="ri-n">05</div>
-        <div><div class="ri-cat">Atividade Física · DRC</div><div class="ri-ttl">Exercício na DRC: o que André me ensinou</div><div class="ri-meta">12 min · 1.8k leituras</div></div>
-      </a>
-    </div>
-    <div class="rank-col">
-      <div class="rank-col-h">Recomendadas pelo Dr. Biluca</div>
-      <a class="ri" href="#"><div class="ri-n" style="color:rgba(185,148,84,.35)">→</div><div><div class="ri-cat">Sono · Saúde Renal</div><div class="ri-ttl">Sono ruim e doença crônica: impacto renal e inflamatório que ignoramos</div><div class="ri-meta">9 min · Mar 2026</div></div></a>
-      <a class="ri" href="#"><div class="ri-n" style="color:rgba(185,148,84,.35)">→</div><div><div class="ri-cat">Suplementação · Evidência</div><div class="ri-ttl">Ômega-3 na DRC: quando realmente vale a prescrição</div><div class="ri-meta">8 min · Fev 2026</div></div></a>
-      <a class="ri" href="#"><div class="ri-n" style="color:rgba(185,148,84,.35)">→</div><div><div class="ri-cat">Hidratação · Rins</div><div class="ri-ttl">O que acontece com seus rins quando você não bebe água suficiente</div><div class="ri-meta">6 min · Jan 2026</div></div></a>
-      <a class="ri" href="#"><div class="ri-n" style="color:rgba(185,148,84,.35)">→</div><div><div class="ri-cat">Ciência · KDIGO</div><div class="ri-ttl">KDIGO 2024: o que muda na prática da nefrologia</div><div class="ri-meta">8 min · Dez 2025</div></div></a>
-      <a class="ri" href="#"><div class="ri-n" style="color:rgba(185,148,84,.35)">→</div><div><div class="ri-cat">Gestão · Dashboard</div><div class="ri-ttl">Dashboard TRS: do dado à decisão clínica</div><div class="ri-meta">9 min · Nov 2025</div></div></a>
-    </div>
-  </div>
-</section>
-
-<!-- ═══ VÍDEOS ═══ -->
-<section class="wrap" id="s-videos">
-  <div class="sec-hdr rv">
-    <div><div class="sec-eye">Vídeos</div><div class="sec-ttl">Canal @brunobiluca</div></div>
-    <a href="https://youtube.com/@brunobiluca" target="_blank" class="sec-more">Ver canal →</a>
-  </div>
-  <div class="vids rv d1">
-    <a class="vid" href="https://www.youtube.com/watch?v=fSDkpP7jwvY" target="_blank" rel="noopener">
-      <div class="vid-th">
-        <img src="https://img.youtube.com/vi/fSDkpP7jwvY/maxresdefault.jpg"
-             onerror="this.src='https://img.youtube.com/vi/fSDkpP7jwvY/hqdefault.jpg'" alt="Vídeo 1">
-        <div class="vid-play"><div class="vid-btn"></div></div>
-      </div>
-      <div class="vid-body">
-        <div class="vid-cat">DRC · Documentário</div>
-        <div class="vid-ttl">Hemodiálise e Maratona — a história de André</div>
-        <div class="vid-meta">@brunobiluca · YouTube ↗</div>
-      </div>
-    </a>
-    <a class="vid" href="https://www.youtube.com/watch?v=abWoE6j82sU" target="_blank" rel="noopener">
-      <div class="vid-th">
-        <img src="https://img.youtube.com/vi/abWoE6j82sU/maxresdefault.jpg"
-             onerror="this.src='https://img.youtube.com/vi/abWoE6j82sU/hqdefault.jpg'" alt="Vídeo 2">
-        <div class="vid-play"><div class="vid-btn"></div></div>
-      </div>
-      <div class="vid-body">
-        <div class="vid-cat">Saúde &amp; Performance</div>
-        <div class="vid-ttl">Exercício, rins e longevidade — protocolo clínico</div>
-        <div class="vid-meta">@brunobiluca · YouTube ↗</div>
-      </div>
-    </a>
-    <a class="vid" href="https://www.youtube.com/watch?v=SfyPJ4ez04U" target="_blank" rel="noopener">
-      <div class="vid-th">
-        <img src="https://img.youtube.com/vi/SfyPJ4ez04U/maxresdefault.jpg"
-             onerror="this.src='https://img.youtube.com/vi/SfyPJ4ez04U/hqdefault.jpg'" alt="Documentário">
-        <div class="vid-play"><div class="vid-btn"></div></div>
-      </div>
-      <div class="vid-body">
-        <div class="vid-cat">Documentário Completo</div>
-        <div class="vid-ttl">André: um paciente renal na Maratona de São Paulo</div>
-        <div class="vid-meta">@brunobiluca · YouTube ↗</div>
-      </div>
-    </a>
-  </div>
-</section>
-
-<!-- ═══ PORTAIS ═══ -->
-<section class="wrap dark" id="s-portais">
-  <div class="sec-hdr rv" style="border-color:rgba(255,255,255,.1)">
-    <div><div class="sec-eye">Plataformas</div><div class="sec-ttl wh">Ecossistema APEX</div></div>
-  </div>
-  <div class="portais rv d1">
-    <!-- #01 APEX Health — Produto Core -->
-    <a class="portal pac" href="portal_pacientes.html">
-      <div class="por-logo-wrap"><img src="apex-health.png" alt="APEX Health"></div>
-      <div class="por-n">01</div>
-      <div class="por-icon">
-        <svg width="36" height="36" viewBox="0 0 36 36" fill="none">
-          <path d="M18 6 C14 6 8 10 8 16 C8 24 18 30 18 30 C18 30 28 24 28 16 C28 10 22 6 18 6Z" fill="#F5C842" opacity=".85"/>
-          <path d="M12 17 L16 21 L24 13" stroke="#1E2D50" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-        </svg>
-      </div>
-      <div class="por-lbl">Monitoramento cardiometabólico-renal</div>
-      <div class="por-ttl">APEX Health</div>
-      <div class="por-desc">Acompanhamento contínuo de hipertensão, diabetes, obesidade e doença renal — com dados de wearables, IA e especialista dedicado.</div>
-      <div class="por-cta">Conhecer planos <span class="por-arr">→</span></div>
-    </a>
-    <!-- #02 APEX Insights — Conteúdo e funil -->
-    <a class="portal saud" href="portal_saude_performance.html">
-      <div class="por-logo-wrap"><img src="apex-reading.png" alt="APEX Insights"></div>
-      <div class="por-n">02</div>
-      <div class="por-icon">
-        <svg width="40" height="28" viewBox="0 0 40 28" fill="none">
-          <path d="M0,6 Q5,2 10,6 Q15,10 20,6 Q25,2 30,6 Q35,10 40,6" stroke="#F5C842" stroke-width="2.2" fill="none" stroke-linecap="round" opacity=".9"/>
-          <path d="M0,14 Q5,10 10,14 Q15,18 20,14 Q25,10 30,14 Q35,18 40,14" stroke="#F5C842" stroke-width="2.2" fill="none" stroke-linecap="round" opacity=".7"/>
-          <path d="M0,22 Q5,18 10,22 Q15,26 20,22 Q25,18 30,22 Q35,26 40,22" stroke="#F5C842" stroke-width="2.2" fill="none" stroke-linecap="round" opacity=".45"/>
-        </svg>
-      </div>
-      <div class="por-lbl">Ciência, wearables e longevidade</div>
-      <div class="por-ttl">APEX Insights</div>
-      <div class="por-desc">Artigos baseados em evidência sobre saúde crônica, performance e tecnologia — para quem quer entender seus dados e viver melhor.</div>
-      <div class="por-cta">Explorar conteúdo <span class="por-arr">→</span></div>
-    </a>
-    <!-- #03 APEX Pro — Gestão clínica -->
-    <a class="portal prof" href="portal_profissionais.html">
-      <div class="por-logo-wrap"><img src="apex-pro.png" alt="APEX Pro"></div>
-      <div class="por-n">03</div>
-      <div class="por-icon">
-        <svg width="36" height="36" viewBox="0 0 36 36" fill="none">
-          <circle cx="18" cy="18" r="6" stroke="#F5C842" stroke-width="2.2" fill="rgba(245,200,66,.1)" opacity=".9"/>
-          <circle cx="18" cy="18" r="2.5" fill="#F5C842" opacity=".7"/>
-          <circle cx="8" cy="13" r="4.5" stroke="#F5C842" stroke-width="2" fill="rgba(245,200,66,.08)" opacity=".7"/>
-          <circle cx="8" cy="13" r="1.8" fill="#F5C842" opacity=".55"/>
-          <circle cx="28" cy="13" r="4.5" stroke="#F5C842" stroke-width="2" fill="rgba(245,200,66,.08)" opacity=".7"/>
-          <circle cx="28" cy="13" r="1.8" fill="#F5C842" opacity=".55"/>
-          <line x1="13" y1="15.5" x2="12" y2="16.5" stroke="#F5C842" stroke-width="1.5" opacity=".5"/>
-          <line x1="23" y1="15.5" x2="24" y2="16.5" stroke="#F5C842" stroke-width="1.5" opacity=".5"/>
-        </svg>
-      </div>
-      <div class="por-lbl">Painel clínico completo</div>
-      <div class="por-ttl">APEX Pro</div>
-      <div class="por-desc">Gestão de pacientes, prescrições, dashboards e indicadores — tudo em um só lugar para o médico que monitora.</div>
-      <div class="por-cta">Acessar plataforma <span class="por-arr">→</span></div>
-    </a>
-  </div>
-</section>
-
-</main>
 
 <!-- ═══ FOOTER ═══ -->
-<footer>
-  <div class="ft-g">
-    <div>
-      <div class="ft-logo">
-        <svg width="28" height="18" viewBox="0 0 56 30" fill="none">
-          <path d="M0,30 L8,22 L13,26 L20,8 L25,17 L30,4 L36,16 L42,10 L48,20 L56,30 Z"
-                fill="#F5C842" fill-opacity=".7"/>
-          <path d="M0,30 L8,22 L13,26 L20,8 L25,17 L30,4 L36,16 L42,10 L48,20 L56,30"
-                fill="none" stroke="#F5C842" stroke-width="1.5"
-                stroke-linejoin="round" stroke-linecap="round" opacity=".9"/>
-        </svg>
-        <span class="ft-nm">APEX</span>
-      </div>
-      <div class="ft-tag">"Curar quando possível, aliviar quando necessário, consolar e acolher sempre."</div>
-      <div class="ft-crm">Dr. Bruno P. Biluca · CRM-SP 151.041 · RQE 70145<br>Nefrologista · Fênix Nefrologia · São Paulo</div>
-    </div>
-    <div>
-      <div class="ft-ch">Newsletter</div>
-      <p style="font-size:11px;color:rgba(255,255,255,.22);line-height:1.65;margin-bottom:12px">Artigos, estudos e dados de treino — uma vez por semana.</p>
-      <input class="ft-inp" type="email" placeholder="seu@email.com">
-      <button class="ft-btn">Assinar →</button>
-    </div>
-    <div>
-      <div class="ft-ch">Conteúdo</div>
-      <a href="#s-editorial" class="ft-l">Grade Editorial</a>
-      <a href="#s-science"   class="ft-l">Ciência &amp; Estudos</a>
-      <a href="#s-evento"    class="ft-l">Buenos Aires 2026</a>
-      <a href="#s-videos"    class="ft-l">Vídeos</a>
-      <a href="https://instagram.com/brunobiluca" target="_blank" class="ft-l">Instagram @brunobiluca</a>
-    </div>
-    <div>
-      <div class="ft-ch">Plataformas</div>
-      <a href="portal_pacientes.html"          class="ft-l">APEX Health</a>
-      <a href="portal_saude_performance.html"   class="ft-l">APEX Insights</a>
-      <a href="portal_profissionais.html"       class="ft-l">APEX Pro</a>
-      <a href="dashboard_fenix_C-Espacoso.html" class="ft-l">Dashboard Fênix</a>
-    </div>
-  </div>
-  <div class="ft-bot">
-    <span>© 2026 APEX Hub · apex.med.br · Monitoramento · Dados · Resultados</span>
-    <div style="display:flex;gap:14px"><span>Powered by Fênix Nefrologia</span><a href="#">Privacidade</a></div>
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-logo">apex<span class="logo-dot" style="background:rgba(196,163,90,.3);"></span> <em>health</em></div>
+    <p class="footer-text">
+      APEX Health · Monitoramento Remoto de Pacientes<br>
+      Fenix Nefrologia · São Paulo, Brasil<br>
+      <a href="mailto:contato@apex.med.br">contato@apex.med.br</a>
+    </p>
   </div>
 </footer>
 
 <script>
-'use strict';
+/* ═══ SLIDESHOW ═══ */
+var slides = document.querySelectorAll('.hero-slide');
+var dots = document.querySelectorAll('.hero-dot');
+var current = 0;
+var interval = 5000;
+var timer;
 
-/* ── Scroll reveal ── */
-var obs=new IntersectionObserver(function(e){e.forEach(function(x){if(x.isIntersecting){x.target.classList.add('in');obs.unobserve(x.target);}});},{threshold:.07});
-document.querySelectorAll('.rv').forEach(function(el){obs.observe(el);});
+window.goSlide = function(idx) {
+  slides[current].classList.remove('active');
+  dots[current].classList.remove('active');
+  current = idx;
+  slides[current].classList.add('active');
+  dots[current].classList.add('active');
+  resetTimer();
+};
 
-/* ── Hero: texto visível ao abrir, crossfade ao scrollar ── */
-(function(){
-  var hc=document.querySelector('.hero-content');
-  var bg1=document.querySelector('.hero-bg1');
-  var bg2=document.querySelector('.hero-bg2');
-  var hero=document.querySelector('.hero-mtn');
-  if(!hc||!bg1||!bg2||!hero)return;
-  /* texto visível imediatamente */
-  hc.classList.add('in');
-  function onScroll(){
-    var y=window.scrollY||window.pageYOffset||0;
-    /* crossfade baseado no scroll da página (0 no topo → 1 quando hero sai) */
-    var start=100;/* px antes de começar crossfade */
-    var range=hero.offsetHeight*0.7;
-    var progress=Math.max(0,Math.min(1,(y-start)/range));
-    /* bg1 desaparece, bg2 aparece */
-    bg2.style.opacity=progress;
-    bg1.style.opacity=1-progress*0.6;
-  }
-  window.addEventListener('scroll',onScroll,{passive:true});
-})();
+function nextSlide() {
+  window.goSlide((current + 1) % slides.length);
+}
 
-/* ── Nav active ── */
-var hns=document.querySelectorAll('.hn');
-var sids=['s-numbers','s-feature','s-editorial','s-science','s-evento','s-rankings','s-videos','s-portais'];
-var sels=sids.map(function(id){return document.getElementById(id);});
-window.addEventListener('scroll',function(){
-  var pos=window.scrollY+160;
-  sels.forEach(function(sec,i){
-    if(!sec)return;
-    var next=sels[i+1];
-    if(pos>=sec.offsetTop&&(!next||pos<next.offsetTop)){
-      hns.forEach(function(l){l.classList.remove('on');});
-      if(hns[i])hns[i].classList.add('on');
+function resetTimer() {
+  clearInterval(timer);
+  timer = setInterval(nextSlide, interval);
+}
+
+// Start autoplay
+timer = setInterval(nextSlide, interval);
+
+// Preload slide images
+document.querySelectorAll('.hero-slide').forEach(function(s) {
+  var bg = s.style.backgroundImage;
+  var url = bg.replace(/url\(['"]?/, '').replace(/['"]?\)/, '');
+  var img = new Image();
+  img.src = url;
+});
+
+/* HEADER SCROLL */
+var header = document.getElementById('main-header');
+window.addEventListener('scroll', function() {
+  header.classList.toggle('scrolled', window.scrollY > 60);
+});
+
+/* SCROLL REVEAL */
+var obs = new IntersectionObserver(function(entries) {
+  entries.forEach(function(entry) {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('in');
+      obs.unobserve(entry.target);
     }
   });
-},{passive:true});
-
-/* filtros removidos */
-
+}, { threshold: 0.1 });
+document.querySelectorAll('.rv').forEach(function(el) { obs.observe(el); });
 
 
-
-
-
-
-
-
-
-
-
-/* ── Data dinâmica no header ── */
-(function(){
-  var d = new Date();
-  var dias = ['Domingo','Segunda-feira','Terça-feira','Quarta-feira','Quinta-feira','Sexta-feira','Sábado'];
-  var meses = ['janeiro','fevereiro','março','abril','maio','junho','julho','agosto','setembro','outubro','novembro','dezembro'];
-  var txt = dias[d.getDay()] + ', ' + d.getDate() + ' de ' + meses[d.getMonth()] + ' de ' + d.getFullYear();
-  var el = document.getElementById('hdr-date-txt');
-  if(el) el.textContent = txt;
-})();
-
-/* ── Countdown Buenos Aires 27/09/2026 ── */
-function cd(){
-  var diff=Math.max(0,new Date('2026-09-27T07:00:00-03:00')-new Date());
-  document.getElementById('cd-d').textContent=String(Math.floor(diff/86400000)).padStart(3,'0');
-  document.getElementById('cd-h').textContent=String(Math.floor(diff%86400000/3600000)).padStart(2,'0');
-  document.getElementById('cd-m').textContent=String(Math.floor(diff%3600000/60000)).padStart(2,'0');
-  document.getElementById('cd-s').textContent=String(Math.floor(diff%60000/1000)).padStart(2,'0');
+/* ═══ COUNT-UP ANIMATION ═══ */
+var countAnimated = false;
+function animateCounters() {
+  if (countAnimated) return;
+  countAnimated = true;
+  document.querySelectorAll('.count-up').forEach(function(el) {
+    var target = parseInt(el.dataset.target);
+    var suffix = el.dataset.suffix || '';
+    var duration = 1800;
+    var startTime = null;
+    function step(ts) {
+      if (!startTime) startTime = ts;
+      var progress = Math.min((ts - startTime) / duration, 1);
+      var eased = 1 - Math.pow(1 - progress, 3);
+      var current = Math.round(eased * target);
+      el.textContent = current + suffix;
+      if (progress < 1) requestAnimationFrame(step);
+    }
+    el.textContent = '0';
+    requestAnimationFrame(step);
+  });
 }
-cd();setInterval(cd,1000);
-
-/* ── Previsão do tempo (atualiza a cada 10 min) ── */
-function fetchWeather(){
-  fetch('https://api.open-meteo.com/v1/forecast?latitude=-23.5505&longitude=-46.6333&current=temperature_2m,weather_code&daily=temperature_2m_max,temperature_2m_min&timezone=America%2FSao_Paulo&forecast_days=1')
-    .then(function(r){return r.json();})
-    .then(function(d){
-      var c=d.current,dy=d.daily,code=c.weather_code;
-      var ic={0:'☀️',1:'🌤️',2:'⛅',3:'☁️',45:'🌫️',51:'🌦️',61:'🌧️',80:'🌦️',95:'⛈️'};
-      var co={0:'Céu limpo',1:'Sol e nuvens',2:'Nublado parcial',3:'Nublado',51:'Garoa',61:'Chuva',80:'Pancadas',95:'Tempestade'};
-      var k=Math.floor(code/10)*10;
-      document.getElementById('wx-icon').textContent=ic[code]||ic[k]||'🌡️';
-      document.getElementById('wx-temp').innerHTML=Math.round(c.temperature_2m)+'<sup>°C</sup>';
-      document.getElementById('wx-cond').textContent=co[code]||co[k]||'';
-      document.getElementById('wx-range').textContent='↓'+Math.round(dy.temperature_2m_min[0])+'° ↑'+Math.round(dy.temperature_2m_max[0])+'°';
-    }).catch(function(){
-      document.getElementById('wx-icon').textContent='🌡️';
-      document.getElementById('wx-temp').innerHTML='--<sup>°C</sup>';
-      document.getElementById('wx-cond').textContent='Indisponível';
-      document.getElementById('wx-range').textContent='';
+var numbersGrid = document.getElementById('numbers-grid');
+if (numbersGrid) {
+  var countObs = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        animateCounters();
+        countObs.unobserve(entry.target);
+      }
     });
+  }, { threshold: 0.2 });
+  countObs.observe(numbersGrid);
 }
-fetchWeather();setInterval(fetchWeather,600000);
 
 
-/* news-bar removed */
+/* ═══ COUNT-UP GAINS ═══ */
+var gainsAnimated = false;
+function animateGains() {
+  if (gainsAnimated) return;
+  gainsAnimated = true;
+  document.querySelectorAll('#gains-grid .gain-value').forEach(function(el) {
+    var text = el.childNodes[0].textContent.trim();
+    var isNeg = text.startsWith('-');
+    var target = parseInt(text.replace('-',''));
+    var duration = 1600;
+    var startTime = null;
+    var numNode = el.childNodes[0];
+    function step(ts) {
+      if (!startTime) startTime = ts;
+      var progress = Math.min((ts - startTime) / duration, 1);
+      var eased = 1 - Math.pow(1 - progress, 3);
+      numNode.textContent = (isNeg ? '-' : '') + Math.round(eased * target);
+      if (progress < 1) requestAnimationFrame(step);
+    }
+    numNode.textContent = isNeg ? '-0' : '0';
+    requestAnimationFrame(step);
+  });
+}
+var gainsGrid = document.getElementById('gains-grid');
+if (gainsGrid) {
+  var gainsObs = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        animateGains();
+        gainsObs.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.2 });
+  gainsObs.observe(gainsGrid);
+}
 </script>
+
 </body>
 </html>
-                                                                                         
