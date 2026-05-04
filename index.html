@@ -60,9 +60,29 @@
       width: 60px; height: 2px; background: var(--gold); margin: 0 auto 40px;
     }
 
+    /* Gold dots pattern (dark sections) */
+    .gold-dots {
+      background-image: radial-gradient(circle, rgba(196,163,90,0.08) 1px, transparent 1px);
+      background-size: 20px 20px;
+    }
+
     /* Scroll reveal */
     .rv { opacity: 0; transform: translateY(24px); transition: opacity 0.7s cubic-bezier(.22,1,.36,1), transform 0.7s cubic-bezier(.22,1,.36,1); }
     .rv.visible { opacity: 1; transform: translateY(0); }
+    .rv-delay-1 { transition-delay: 0.1s; }
+    .rv-delay-2 { transition-delay: 0.2s; }
+    .rv-delay-3 { transition-delay: 0.3s; }
+
+    /* Hero entrance animation */
+    .hero-content { animation: heroFadeIn 1.2s cubic-bezier(.22,1,.36,1) 0.3s both; }
+    @keyframes heroFadeIn {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .hero-dots { animation: heroFadeIn 1s cubic-bezier(.22,1,.36,1) 1.2s both; }
+
+    /* Smooth focus for accessibility */
+    :focus-visible { outline: 2px solid var(--teal); outline-offset: 3px; border-radius: 4px; }
 
     /* Buttons */
     .btn-teal {
@@ -154,6 +174,7 @@
     .hero-content {
       position: relative; z-index: 2; max-width: 620px;
       padding: 0 24px; margin-left: max(5vw, 40px);
+      opacity: 0;
     }
     .hero h1 {
       font-family: var(--font-serif); font-size: clamp(36px, 5vw, 56px);
@@ -229,7 +250,7 @@
     .cenario-closing strong { color: var(--navy); }
 
     /* ===== O METODO ===== */
-    .metodo { background: var(--navy-deep); color: #fff; position: relative; overflow: hidden; }
+    .metodo { background-color: var(--navy-deep); color: #fff; position: relative; overflow: hidden; }
     .metodo::before {
       content: ''; position: absolute; top: -200px; left: 50%; transform: translateX(-50%);
       width: 600px; height: 600px; border-radius: 50%;
@@ -481,7 +502,7 @@
     }
 
     /* ===== PARA QUEM ===== */
-    .paraquem { background: var(--navy-deep); color: #fff; }
+    .paraquem { background-color: var(--navy-deep); color: #fff; }
     .paraquem .headline-serif { color: #fff; }
     .paraquem .subtitle { color: rgba(255,255,255,0.5); }
     .paraquem-grid {
@@ -552,7 +573,7 @@
     .medico-diff p { font-size: 14px; line-height: 1.6; color: var(--navy); }
 
     /* ===== RESULTADOS ===== */
-    .resultados { background: var(--navy-deep); color: #fff; }
+    .resultados { background-color: var(--navy-deep); color: #fff; }
     .resultados .headline-serif { color: #fff; }
     .result-cards {
       display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;
@@ -641,7 +662,7 @@
 
     /* ===== CTA FINAL ===== */
     .cta-final {
-      background: var(--navy-deep); position: relative; overflow: hidden;
+      background-color: var(--navy-deep); position: relative; overflow: hidden;
       text-align: center; padding: 100px 24px;
     }
     .cta-final::before {
@@ -684,7 +705,7 @@
 
     /* ===== FOOTER ===== */
     .footer {
-      background: var(--footer-bg); padding: 48px 24px 32px; text-align: center;
+      background-color: var(--footer-bg); padding: 48px 24px 32px; text-align: center;
     }
     .footer-logo {
       font-family: var(--font-sans); font-size: 18px; font-weight: 700;
@@ -699,32 +720,116 @@
     .footer-links a:hover { color: rgba(255,255,255,0.7); }
     .footer-copy { font-size: 12px; color: rgba(255,255,255,0.2); }
 
-    /* ===== RESPONSIVE ===== */
+    /* ===== RESPONSIVE — TABLET ===== */
+    @media (max-width: 1024px) {
+      .paraquem-grid { grid-template-columns: repeat(3, 1fr); }
+      .paraquem-card-img { height: 140px; }
+      .result-cards { grid-template-columns: repeat(3, 1fr); gap: 16px; }
+      .insights-row { grid-template-columns: repeat(3, 1fr); gap: 16px; }
+      .app-layout { gap: 40px; }
+      .wf-2 { left: -40px; }
+      .wf-3 { left: -30px; }
+      .wf-6 { right: -40px; }
+    }
+
+    /* ===== RESPONSIVE — MOBILE ===== */
     @media (max-width: 768px) {
+      .header { padding: 12px 20px; width: calc(100% - 32px); top: 12px; }
+      .header-logo { font-size: 16px; }
       .header-nav a:not(.header-cta):not(.header-pro) { display: none; }
-      .header-nav { gap: 0; }
-      .hero-content { margin-left: 16px; }
-      .hero h1 { font-size: 32px; }
+      .header-nav { gap: 8px; }
+      .header-pro { padding: 6px 12px; font-size: 11px; }
+      .header-cta { padding: 8px 18px; font-size: 12px; }
+
+      .hero { min-height: 540px; height: 85vh; }
+      .hero-content { margin-left: 16px; padding: 0 16px; }
+      .hero h1 { font-size: 32px; margin-bottom: 16px; }
+      .hero-sub { font-size: 15px; margin-bottom: 28px; }
       .hero-scroll { display: none; }
-      .cenario-grid { grid-template-columns: 1fr 1fr; }
-      .cenario-num { font-size: 48px; }
-      .pillars-grid { grid-template-columns: 1fr; }
+      .hero-dots { bottom: 28px; }
+
+      .section-pad { padding: 64px 0; }
+      .headline-serif { font-size: clamp(26px, 7vw, 36px); }
+      .subtitle { font-size: 15px; }
+      .gold-line { margin-bottom: 32px; }
+
+      .cenario-grid { grid-template-columns: 1fr 1fr; gap: 16px; }
+      .cenario-num { font-size: 44px; }
+      .cenario-stat { padding: 16px 8px; }
+      .cenario-closing { font-size: 15px; }
+
+      .milestones { flex-wrap: wrap; gap: 8px; justify-content: center; }
+      .milestone { font-size: 11px; }
+      .pillars-grid { grid-template-columns: 1fr; gap: 16px; }
+      .pillar-card { padding: 28px 22px; }
+      .progress-badge { font-size: 11px; padding: 4px 10px; top: -32px; }
+      .maintenance-label { font-size: 10px; right: 8%; }
+
       .jornada-grid { grid-template-columns: 1fr; gap: 16px; }
       .jornada-num { font-size: 48px; }
       .jornada-card { padding: 24px 20px 20px; }
       .jornada-devices { gap: 6px; }
-      .app-layout { flex-direction: column; gap: 40px; text-align: center; }
+
+      .app-layout { flex-direction: column; gap: 36px; text-align: center; }
       .app-text { max-width: 100%; }
-      .app-features { justify-items: center; }
+      .app-text .headline-serif { font-size: 28px; }
+      .app-features { justify-items: center; grid-template-columns: 1fr; gap: 10px; }
       .phone-frame { width: 260px; height: 480px; margin: 0 auto; }
-      .paraquem-grid { grid-template-columns: repeat(2, 1fr); gap: 14px; }
-      .paraquem-card-img { height: 130px; }
+      .wearable-float { width: 38px; height: 38px; border-radius: 10px; }
+      .wf-1 { left: -24px; top: 20px; }
+      .wf-2 { left: -32px; top: 120px; }
+      .wf-3 { left: -24px; bottom: 120px; }
+      .wf-4 { left: -12px; bottom: 30px; }
+      .wf-5 { right: -28px; top: 40px; }
+      .wf-6 { right: -32px; top: 170px; }
+
+      .paraquem-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+      .paraquem-card-img { height: 120px; }
+      .paraquem-card-content { padding: 16px 14px 18px; }
+      .paraquem-card h4 { font-size: 17px; }
+      .paraquem-card p { font-size: 12px; }
+      .ckm-block { margin-top: 40px; padding-top: 32px; }
+
       .medico-bio-centered { text-align: center; }
-      .medico-diffs { align-items: center; }
-      .result-cards { grid-template-columns: 1fr; }
-      .insights-row { grid-template-columns: 1fr; }
+      .medico-bio-centered h3 { font-size: 26px; }
+      .medico-diffs { align-items: stretch; }
+      .medico-diff { padding: 14px 16px; }
+      .medico-diff p { font-size: 13px; }
+
+      .result-cards { grid-template-columns: 1fr; gap: 16px; }
+      .result-card { padding: 32px 20px; }
+      .result-num { font-size: 44px; }
+      .insights-row { grid-template-columns: 1fr; gap: 16px; }
+      .insight-card { display: flex; flex-direction: row; }
+      .insight-card-img { width: 120px; height: auto; aspect-ratio: 1/1; flex-shrink: 0; }
+      .insight-card-body { padding: 16px; display: flex; flex-direction: column; justify-content: center; }
+      .insight-card h4 { font-size: 14px; margin-bottom: 8px; }
+
+      .faq-q { font-size: 15px; padding: 18px 0; }
+      .faq-a-inner { font-size: 13px; }
+
+      .cta-final { padding: 72px 20px; }
+      .cta-final::before { width: 320px; height: 320px; }
+
       .pro-banner-inner { flex-direction: column; text-align: center; padding: 28px 24px; gap: 20px; }
-      .section-pad { padding: 72px 0; }
+
+      .footer { padding: 36px 20px 28px; }
+      .footer-links { gap: 16px; }
+      .footer-links a { font-size: 12px; }
+    }
+
+    /* ===== RESPONSIVE — SMALL MOBILE ===== */
+    @media (max-width: 400px) {
+      .header { padding: 10px 16px; }
+      .header-logo { font-size: 14px; }
+      .hero h1 { font-size: 28px; }
+      .cenario-grid { grid-template-columns: 1fr; }
+      .cenario-num { font-size: 40px; }
+      .paraquem-grid { grid-template-columns: 1fr; }
+      .paraquem-card-img { height: 160px; }
+      .phone-frame { width: 240px; height: 440px; }
+      .btn-teal { padding: 13px 26px; font-size: 13px; }
+      .btn-outline { padding: 12px 24px; font-size: 13px; }
     }
   </style>
 </head>
@@ -813,7 +918,7 @@
   </section>
 
   <!-- O METODO -->
-  <section class="metodo section-pad" id="metodo">
+  <section class="metodo section-pad gold-dots" id="metodo">
     <div class="container">
       <p class="eyebrow eyebrow-center rv" style="color:var(--gold);">O método</p>
       <h2 class="headline-serif headline-center rv" style="font-size:clamp(28px,3.5vw,42px);max-width:600px;margin:0 auto;">
@@ -1020,7 +1125,7 @@
   </section>
 
   <!-- PARA QUEM -->
-  <section class="paraquem section-pad" id="paraquem">
+  <section class="paraquem section-pad gold-dots" id="paraquem">
     <div class="container">
       <p class="eyebrow eyebrow-center rv" style="color:var(--gold);">Para quem</p>
       <h2 class="headline-serif headline-center rv" style="font-size:clamp(28px,3.5vw,42px);max-width:600px;margin:0 auto;">
@@ -1112,7 +1217,7 @@
   </section>
 
   <!-- RESULTADOS + INSIGHTS -->
-  <section class="resultados section-pad" id="resultados">
+  <section class="resultados section-pad gold-dots" id="resultados">
     <div class="container">
       <p class="eyebrow eyebrow-center rv" style="color:var(--gold);">Resultados</p>
       <h2 class="headline-serif headline-center rv" style="font-size:clamp(28px,3.5vw,42px);max-width:600px;margin:0 auto;">
@@ -1259,7 +1364,7 @@
   </section>
 
   <!-- CTA FINAL -->
-  <section class="cta-final" id="cta-final">
+  <section class="cta-final gold-dots" id="cta-final">
     <div class="container">
       <h2 class="rv">Pronto para ter um protocolo feito <em>para você</em>?</h2>
       <div class="cta-final-btns rv" style="transition-delay:0.1s">
@@ -1289,7 +1394,7 @@
   </section>
 
   <!-- FOOTER -->
-  <footer class="footer">
+  <footer class="footer gold-dots">
     <div class="footer-logo">APEX <span>Health</span></div>
     <div class="footer-links">
       <a href="#metodo">O Método</a>
