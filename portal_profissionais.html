@@ -47,6 +47,21 @@ body::after{content:'';position:fixed;inset:0;z-index:-1;
   -webkit-mask-image:radial-gradient(ellipse 70% 60% at 50% 50%, black 20%, transparent 70%);
 }
 
+/* Gold dots pattern post-login */
+body.logged-in::before{
+  background:
+    radial-gradient(ellipse 80% 60% at 20% 10%, rgba(30,45,80,0.04), transparent 50%),
+    radial-gradient(ellipse 60% 50% at 80% 80%, rgba(30,45,80,0.06), transparent 50%),
+    radial-gradient(ellipse 40% 30% at 50% 50%, rgba(2,128,144,0.02), transparent 40%);
+}
+body.logged-in::after{
+  background-image:
+    radial-gradient(circle 1px, rgba(196,163,90,0.08) 98%, transparent 100%);
+  background-size:28px 28px;
+  mask-image:radial-gradient(ellipse 70% 60% at 50% 50%, black 20%, transparent 70%);
+  -webkit-mask-image:radial-gradient(ellipse 70% 60% at 50% 50%, black 20%, transparent 70%);
+}
+
 /* =====================================================
    CAMADA 1: LOGIN — SPLIT SCREEN (from redesign)
    ===================================================== */
@@ -144,11 +159,21 @@ canvas.logo-canvas-nav{height:70px;width:auto;}
 .hero-greeting{font-family:var(--font-serif);font-size:clamp(26px,3.5vw,36px);font-weight:400;color:var(--text);margin-bottom:6px;}
 .hero-greeting strong{font-weight:700;color:var(--pro);}
 .hero-tagline{font-size:13px;color:var(--text-2);max-width:560px;line-height:1.7;}
+.hero-date{font-size:12px;color:var(--text-3);margin-bottom:20px;font-weight:500;}
+.hero-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:8px;}
+@media(max-width:700px){.hero-stats{grid-template-columns:1fr 1fr;}}
+.hero-stat{background:var(--bg-card);border:1px solid var(--border);border-radius:10px;padding:14px 16px;position:relative;overflow:hidden;box-shadow:var(--shadow-card);transition:all .3s;}
+.hero-stat:hover{box-shadow:var(--shadow-card-hover);transform:translateY(-2px);}
+.hero-stat::before{content:'';position:absolute;top:0;left:0;width:3px;height:100%;border-radius:3px 0 0 3px;}
+.hero-stat.hs-navy::before{background:var(--navy);} .hero-stat.hs-teal::before{background:var(--teal);} .hero-stat.hs-gold::before{background:var(--gold);} .hero-stat.hs-green::before{background:var(--green);}
+.hero-stat-label{font-size:10px;font-weight:600;letter-spacing:0.5px;text-transform:uppercase;color:var(--text-3);margin-bottom:4px;}
+.hero-stat-value{font-size:24px;font-weight:800;color:var(--text);line-height:1;}
+.hero-stat-sub{font-size:10px;color:var(--text-2);margin-top:3px;}
 
 /* =====================================================
    MAIN SCREENS
    ===================================================== */
-.app-screen{display:none;padding:24px 40px 48px;max-width:1200px;margin:0 auto;padding-top:104px;}
+.app-screen{display:none;padding:24px 40px 48px;max-width:1200px;margin:0 auto;padding-top:104px;animation:fadeUp .3s ease-out;}
 .app-screen.active{display:block;}
 #screen-dashboard{padding-top:16px;}
 @keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
@@ -211,7 +236,7 @@ canvas.logo-canvas-nav{height:70px;width:auto;}
 /* =====================================================
    NEFROLOGIA SUB-SCREEN CARDS (photo card style)
    ===================================================== */
-.nefro-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;max-width:1000px;}
+.nefro-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;max-width:1000px;}
 @media(max-width:700px){.nefro-grid{grid-template-columns:1fr;}}
 .nefro-card{position:relative;background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);cursor:pointer;transition:all .35s cubic-bezier(.4,0,.2,1);overflow:hidden;min-height:220px;display:flex;flex-direction:column;justify-content:flex-end;text-decoration:none;color:var(--text);box-shadow:var(--shadow-card);}
 .nefro-card:hover{transform:translateY(-6px);border-color:var(--pro);box-shadow:var(--shadow-card-hover);}
@@ -226,12 +251,10 @@ canvas.logo-canvas-nav{height:70px;width:auto;}
 .nefro-card-arrow{position:absolute;bottom:18px;right:18px;width:28px;height:28px;border-radius:50%;background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.18);display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,0.5);font-size:12px;transition:all .25s;z-index:2;}
 .nefro-card:hover .nefro-card-arrow{background:rgba(255,255,255,0.2);border-color:rgba(255,255,255,0.3);color:#fff;transform:translateX(4px);}
 /* Card backgrounds — azul APEX Pro */
-.nc-indicadores .nefro-card-bg{background-image:url('https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=75');}
+.nc-indicadores .nefro-card-bg{background-image:url('https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?w=800&q=75');}
 .nc-indicadores .nefro-card-overlay{background:linear-gradient(135deg,rgba(30,45,80,0.85),rgba(18,29,51,0.92));}
 .nc-qualidade .nefro-card-bg{background-image:url('https://images.unsplash.com/photo-1532938911079-1b06ac7ceec7?w=800&q=75');}
 .nc-qualidade .nefro-card-overlay{background:linear-gradient(135deg,rgba(2,100,112,0.85),rgba(18,29,51,0.92));}
-.nc-calculadoras .nefro-card-bg{background-image:url('https://images.unsplash.com/photo-1584982751601-97dcc096659c?w=800&q=75');}
-.nc-calculadoras .nefro-card-overlay{background:linear-gradient(135deg,rgba(30,45,80,0.85),rgba(18,29,51,0.92));}
 
 /* =====================================================
    OUTROS SUB-SCREEN (photo card style — disabled)
@@ -296,9 +319,9 @@ canvas.logo-canvas-nav{height:70px;width:auto;}
 .trs-card:hover .trs-card-arrow{color:#fff;transform:translateX(3px);}
 .tc-cron .trs-card-bg{background-image:url('https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=75');}
 .tc-cron .trs-card-overlay{background:linear-gradient(135deg,rgba(30,45,80,0.85),rgba(18,29,51,0.90));}
-.tc-agud .trs-card-bg{background-image:url('https://images.unsplash.com/photo-1579684385127-1ef15d508118?w=800&q=75');}
+.tc-agud .trs-card-bg{background-image:url('https://images.unsplash.com/photo-1516549655169-df83a0774514?w=800&q=75');}
 .tc-agud .trs-card-overlay{background:linear-gradient(135deg,rgba(2,100,112,0.82),rgba(18,29,51,0.90));}
-.tc-tv .trs-card-bg{background-image:url('https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&q=75');}
+.tc-tv .trs-card-bg{background-image:url('https://images.unsplash.com/photo-1551076805-e1869033e561?w=800&q=75');}
 .tc-tv .trs-card-overlay{background:linear-gradient(135deg,rgba(50,70,58,0.82),rgba(18,29,51,0.90));}
 .tc-relat .trs-card-bg{background-image:url('https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=800&q=75');}
 .tc-relat .trs-card-overlay{background:linear-gradient(135deg,rgba(30,45,80,0.82),rgba(18,29,51,0.90));}
@@ -360,9 +383,11 @@ canvas.logo-canvas-nav{height:70px;width:auto;}
 
 /* tabs */
 .pac-tabs{display:flex;gap:2px;border-bottom:1px solid var(--border);margin-bottom:24px;overflow-x:auto;flex-shrink:0;}
-.pac-tab{font-family:inherit;font-size:11px;font-weight:500;color:var(--text-3);background:transparent;border:none;padding:9px 14px;cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px;white-space:nowrap;transition:color .15s;}
+.pac-tab{font-family:inherit;font-size:11px;font-weight:500;color:var(--text-3);background:transparent;border:none;padding:9px 14px;cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px;white-space:nowrap;transition:color .15s;display:flex;align-items:center;gap:5px;}
 .pac-tab:hover{color:var(--text);}
 .pac-tab.active{color:var(--pro);border-bottom-color:var(--pro);font-weight:600;}
+.pac-tab svg{flex-shrink:0;opacity:0.6;transition:opacity .15s;}
+.pac-tab.active svg{opacity:1;}
 .pac-tab-content{display:none;}
 .pac-tab-content.active{display:block;}
 
@@ -434,7 +459,13 @@ canvas.logo-canvas-nav{height:70px;width:auto;}
 .ai-preview h4:first-child{margin-top:0;}
 
 /* WIZARD STEPPER */
-.wiz-stepper{display:flex;align-items:center;gap:0;margin-bottom:20px;padding:14px 10px;background:rgba(62,79,92,0.02);border:1px solid var(--border);border-radius:10px;overflow-x:auto;}
+.wiz-stepper{display:flex;align-items:center;gap:0;margin-bottom:20px;padding:14px 10px;background:rgba(62,79,92,0.02);border:1px solid var(--border);border-radius:10px;overflow-x:auto;position:relative;}
+.wiz-stepper::after{content:'';position:absolute;right:0;top:0;bottom:0;width:40px;background:linear-gradient(90deg,transparent,var(--bg));pointer-events:none;opacity:0;transition:opacity .2s;border-radius:0 10px 10px 0;}
+@media(max-width:900px){
+  .wiz-stepper::after{opacity:1;}
+  .wiz-stepper{-webkit-overflow-scrolling:touch;scrollbar-width:none;}
+  .wiz-stepper::-webkit-scrollbar{display:none;}
+}
 .wiz-step{display:flex;align-items:center;gap:8px;cursor:pointer;padding:6px 10px;border-radius:6px;transition:background .15s;white-space:nowrap;flex-shrink:0;}
 .wiz-step:hover:not(.locked){background:rgba(62,79,92,0.07);}
 .wiz-step .wiz-num{width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;border:2px solid var(--border);color:var(--text-muted);flex-shrink:0;transition:all .2s;}
@@ -484,73 +515,6 @@ canvas.logo-canvas-nav{height:70px;width:auto;}
 .proto-section{background:rgba(62,79,92,0.02);border:1px solid var(--border);border-radius:8px;padding:14px;margin-bottom:10px;}
 .proto-title{font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--text-muted);margin-bottom:10px;display:flex;align-items:center;gap:6px;}
 .proto-title .proto-badge{font-size:9px;background:rgba(91,158,80,0.12);color:#5B9E50;padding:2px 8px;border-radius:3px;font-weight:700;letter-spacing:0;text-transform:none;}
-
-/* form fields */
-.f-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px;}
-.f-row.f3{grid-template-columns:1fr 1fr 1fr;}
-.f-row.f1{grid-template-columns:1fr;}
-.f-group{display:flex;flex-direction:column;gap:5px;}
-.f-group label{font-size:9px;font-weight:600;letter-spacing:1px;color:var(--text-secondary);text-transform:uppercase;}
-.f-group input,.f-group select,.f-group textarea{font-family:inherit;font-size:13px;color:var(--text-primary);background:rgba(62,79,92,0.08);border:1px solid var(--border);border-radius:6px;padding:8px 11px;outline:none;transition:border-color .15s,background .15s;}
-.f-group input:focus,.f-group select:focus,.f-group textarea:focus{border-color:var(--gold);background:rgba(62,79,92,0.07);}
-.f-group input::placeholder,.f-group textarea::placeholder{color:var(--text-muted);}
-.f-group select{color:var(--text-primary);background:rgba(62,79,92,0.08);}
-.f-group select option{background:#1a2530;color:var(--text-primary);}
-.f-group textarea{resize:vertical;min-height:72px;}
-.f-section{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--text-muted);margin:20px 0 12px;padding-bottom:6px;border-bottom:1px solid var(--border);}
-.f-card{background:rgba(62,79,92,0.06);border:1px solid var(--border);border-radius:8px;padding:16px;margin-bottom:10px;}
-.f-card-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;}
-.f-card-title{font-size:13px;font-weight:600;color:var(--text-primary);}
-.f-add-btn{font-family:inherit;font-size:11px;font-weight:600;color:var(--gold);background:var(--gold-dim);border:1px solid var(--gold-border);border-radius:5px;padding:5px 12px;cursor:pointer;}
-.f-add-btn:hover{opacity:.8;}
-.f-remove-btn{font-family:inherit;font-size:10px;color:var(--red);background:transparent;border:none;cursor:pointer;opacity:.6;}
-.f-remove-btn:hover{opacity:1;}
-.f-list{display:flex;flex-direction:column;gap:8px;}
-.f-list-item{display:grid;grid-template-columns:1fr 1fr 1fr auto;gap:8px;align-items:end;}
-.f-save-bar{display:flex;gap:10px;align-items:center;margin-top:20px;padding-top:16px;border-top:1px solid var(--border);}
-.f-save-msg{font-size:11px;color:var(--green);}
-
-/* msg thread */
-.msg-thread{display:flex;flex-direction:column;gap:10px;max-height:360px;overflow-y:auto;margin-bottom:14px;background:rgba(62,79,92,0.02);border:1px solid var(--border);border-radius:8px;padding:14px;}
-.msg-b{max-width:72%;padding:9px 13px;border-radius:10px;font-size:12px;line-height:1.6;}
-.msg-b.clinic{background:var(--gold-dim);border:1px solid var(--gold-border);align-self:flex-end;}
-.msg-b.patient{background:rgba(62,79,92,0.07);border:1px solid var(--border);align-self:flex-start;}
-.msg-b-time{font-size:9px;color:var(--text-muted);margin-top:4px;}
-
-/* ANAMNESE */
-.check-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:14px;}
-.check-item{display:flex;align-items:center;gap:8px;background:rgba(62,79,92,0.06);border:1px solid var(--border);border-radius:6px;padding:8px 11px;cursor:pointer;transition:border-color .15s;}
-.check-item:hover{border-color:var(--border-hover);}
-.check-item.checked{background:var(--gold-dim);border-color:var(--gold-border);}
-.check-item input[type=checkbox]{accent-color:var(--gold);width:14px;height:14px;flex-shrink:0;}
-.check-item label{font-size:12px;font-weight:500;cursor:pointer;color:var(--text-secondary);}
-.check-item.checked label{color:var(--gold);}
-.drc-sel{margin-top:6px;padding:8px 10px;background:var(--gold-dim);border:1px solid var(--gold-border);border-radius:6px;}
-.drc-sel label{font-size:9px;font-weight:600;letter-spacing:1px;color:var(--gold-muted);text-transform:uppercase;display:block;margin-bottom:5px;}
-.drc-stages{display:flex;gap:5px;flex-wrap:wrap;}
-.drc-stage{font-family:inherit;font-size:10px;font-weight:600;padding:3px 9px;border-radius:4px;border:1px solid var(--gold-border);background:rgba(62,79,92,0.08);color:var(--gold);cursor:pointer;transition:.12s;}
-.drc-stage.sel{background:var(--gold);color:#fff;border-color:var(--gold);}
-.obj-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px;}
-.dias-grid{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:6px;}
-.dia-btn{font-family:inherit;font-size:11px;font-weight:600;padding:5px 11px;border-radius:5px;border:1px solid var(--border);background:rgba(62,79,92,0.06);color:var(--text-muted);cursor:pointer;transition:.12s;}
-.dia-btn.sel{background:var(--gold-dim);border-color:var(--gold-border);color:var(--gold);}
-
-/* GERAR PROTOCOLO IA */
-.ai-gen-bar{display:flex;align-items:center;gap:12px;background:linear-gradient(135deg,rgba(30,45,80,0.08),rgba(30,45,80,0.04));border:1px solid var(--pro-border);border-radius:10px;padding:16px 20px;margin:20px 0;}
-.ai-gen-bar .ai-icon{font-size:22px;flex-shrink:0;}
-.ai-gen-bar .ai-txt{flex:1;}
-.ai-gen-bar .ai-txt strong{display:block;font-size:13px;font-weight:700;color:var(--pro);margin-bottom:2px;}
-.ai-gen-bar .ai-txt span{font-size:11px;color:var(--text-2);}
-.ai-gen-btn{font-family:inherit;font-size:12px;font-weight:700;background:var(--gold);color:#fff;border:none;border-radius:7px;padding:10px 20px;cursor:pointer;white-space:nowrap;transition:.15s;display:flex;align-items:center;gap:6px;}
-.ai-gen-btn:hover{background:#c9a040;}
-.ai-gen-btn:disabled{opacity:.45;cursor:not-allowed;}
-.ai-gen-spin{width:13px;height:13px;border:2px solid rgba(26,25,23,.3);border-top-color:#fff;border-radius:50%;display:none;animation:agspin .7s linear infinite;}
-.ai-gen-btn.loading .ai-gen-spin{display:inline-block;}
-@keyframes agspin{to{transform:rotate(360deg)}}
-.ai-preview{background:rgba(62,79,92,0.06);border:1px solid var(--border);border-radius:8px;padding:14px 16px;margin-bottom:14px;font-size:12px;color:var(--text-secondary);line-height:1.7;display:none;}
-.ai-preview.show{display:block;}
-.ai-preview h4{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--text-muted);margin:10px 0 4px;}
-.ai-preview h4:first-child{margin-top:0;}
 
 /* ── REFINAR COM IA (WIZARD) ── */
 .wiz-ai-bar{display:flex;align-items:center;gap:14px;background:linear-gradient(135deg,rgba(91,158,80,0.08),rgba(91,158,80,0.03));border:1px solid rgba(91,158,80,0.2);border-radius:10px;padding:16px 20px;margin:20px 0 16px;}
@@ -629,37 +593,37 @@ canvas.logo-canvas-nav{height:70px;width:auto;}
 /* =====================================================
    DASHBOARD OVERLAY — from original
    ===================================================== */
-.dash-overlay{display:none;position:fixed;inset:0;background:#0A0A0C;z-index:200;flex-direction:column;overflow:hidden;}
+.dash-overlay{display:none;position:fixed;inset:0;background:var(--bg);z-index:200;flex-direction:column;overflow:hidden;}
 .dash-overlay.show{display:flex;}
-.dash-nav{background:#111113;border-bottom:1px solid rgba(255,255,255,0.06);height:52px;padding:0 28px;display:flex;align-items:center;gap:14px;flex-shrink:0;}
+.dash-nav{background:var(--navy);border-bottom:1px solid rgba(255,255,255,0.06);height:52px;padding:0 28px;display:flex;align-items:center;gap:14px;flex-shrink:0;}
 .dash-nav-logo{font-size:12px;font-weight:700;color:#5B9E50;letter-spacing:4px;text-transform:uppercase;}
 .dash-nav-sep{width:1px;height:16px;background:rgba(255,255,255,0.1);}
 .dash-nav-title{font-size:11px;font-weight:500;color:rgba(255,255,255,0.5);letter-spacing:1px;}
 .dash-nav-badge{font-size:10px;padding:3px 10px;border-radius:10px;background:rgba(91,158,80,0.12);color:#5B9E50;font-weight:600;letter-spacing:0.5px;border:1px solid rgba(91,158,80,0.2);}
-.dash-btn-sair{margin-left:auto;font-family:inherit;font-size:11px;font-weight:600;letter-spacing:1px;color:rgba(224,82,82,0.6);background:transparent;border:1px solid rgba(224,82,82,0.15);border-radius:5px;padding:5px 13px;cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:5px;}
-.dash-btn-sair:hover{color:#E05252;border-color:rgba(224,82,82,0.35);}
-.dash-body{flex:1;overflow-y:auto;padding:28px;font-family:var(--font-sans);color:#E8E8E8;}
+.dash-btn-sair{margin-left:auto;font-family:inherit;font-size:11px;font-weight:600;letter-spacing:1px;color:rgba(224,82,82,0.7);background:transparent;border:1px solid rgba(224,82,82,0.2);border-radius:5px;padding:5px 13px;cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:5px;}
+.dash-btn-sair:hover{color:#E05252;border-color:rgba(224,82,82,0.4);}
+.dash-body{flex:1;overflow-y:auto;padding:28px;font-family:var(--font-sans);color:var(--text);}
 
 /* DASH views nav */
-.dash-views{display:flex;gap:4px;background:rgba(255,255,255,0.04);border-radius:10px;padding:3px;margin-bottom:24px;width:fit-content;}
-.dash-view-btn{padding:7px 16px;border-radius:7px;border:none;background:transparent;color:#888;font-family:inherit;font-size:12px;font-weight:600;cursor:pointer;transition:all .2s;}
+.dash-views{display:flex;gap:4px;background:var(--bg-deep);border-radius:10px;padding:3px;margin-bottom:24px;width:fit-content;}
+.dash-view-btn{padding:7px 16px;border-radius:7px;border:none;background:transparent;color:var(--text-3);font-family:inherit;font-size:12px;font-weight:600;cursor:pointer;transition:all .2s;}
 .dash-view-btn.active{background:rgba(91,158,80,0.18);color:#5B9E50;}
 
 /* DASH stats grid */
 .dash-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:24px;}
 @media(max-width:900px){.dash-stats{grid-template-columns:1fr 1fr;}}
-.dash-stat{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);border-radius:14px;padding:18px 20px;position:relative;overflow:hidden;}
+.dash-stat{background:var(--bg-card);border:1px solid var(--border);border-radius:14px;padding:18px 20px;position:relative;overflow:hidden;box-shadow:var(--shadow-card);}
 .dash-stat::before{content:'';position:absolute;top:0;left:0;width:3px;height:100%;border-radius:3px 0 0 3px;}
 .dash-stat.green::before{background:#5B9E50;} .dash-stat.gold::before{background:#C4A35A;} .dash-stat.purple::before{background:#8B7AAE;} .dash-stat.blue::before{background:#5AADA0;}
-.dash-stat-label{font-size:11px;color:#666;font-weight:500;letter-spacing:0.5px;margin-bottom:6px;}
-.dash-stat-value{font-size:32px;font-weight:800;color:#fff;line-height:1;}
-.dash-stat-sub{font-size:11px;color:#555;margin-top:4px;}
-.dash-pbar{height:5px;border-radius:3px;background:rgba(255,255,255,0.07);overflow:hidden;margin-top:8px;}
+.dash-stat-label{font-size:11px;color:var(--text-2);font-weight:500;letter-spacing:0.5px;margin-bottom:6px;}
+.dash-stat-value{font-size:32px;font-weight:800;color:var(--text);line-height:1;}
+.dash-stat-sub{font-size:11px;color:var(--text-3);margin-top:4px;}
+.dash-pbar{height:5px;border-radius:3px;background:var(--border);overflow:hidden;margin-top:8px;}
 .dash-pbar-fill{height:100%;border-radius:3px;transition:width .5s ease;}
 
 /* DASH filter bar */
 .dash-filters{display:flex;gap:5px;margin-bottom:18px;flex-wrap:wrap;}
-.dash-fbtn{padding:5px 12px;border-radius:7px;border:1px solid rgba(255,255,255,0.08);background:transparent;color:#888;font-family:inherit;font-size:11px;font-weight:600;cursor:pointer;transition:all .2s;}
+.dash-fbtn{padding:5px 12px;border-radius:7px;border:1px solid var(--border);background:transparent;color:var(--text-3);font-family:inherit;font-size:11px;font-weight:600;cursor:pointer;transition:all .2s;}
 .dash-fbtn.active{border-color:var(--fc,#5B9E50);background:color-mix(in srgb,var(--fc,#5B9E50) 12%,transparent);color:var(--fc,#5B9E50);}
 
 /* DASH week */
@@ -669,34 +633,34 @@ canvas.logo-canvas-nav{height:70px;width:auto;}
 .dash-wbadge.maio{background:rgba(91,158,80,0.12);color:#5B9E50;} .dash-wbadge.junho{background:rgba(196,163,90,0.12);color:#C4A35A;} .dash-wbadge.julho{background:rgba(139,122,174,0.12);color:#8B7AAE;}
 
 /* DASH task row */
-.dash-task{display:flex;align-items:center;gap:8px;padding:9px 12px;border-radius:9px;margin-bottom:4px;transition:all .15s;border:1px solid rgba(255,255,255,0.03);}
-.dash-task.todo{background:rgba(255,255,255,0.04);} .dash-task.doing{background:rgba(196,163,90,0.08);} .dash-task.done{background:rgba(91,158,80,0.08);} .dash-task.blocked{background:rgba(224,82,82,0.08);}
+.dash-task{display:flex;align-items:center;gap:8px;padding:9px 12px;border-radius:9px;margin-bottom:4px;transition:all .15s;border:1px solid var(--border);}
+.dash-task.todo{background:var(--bg-deep);} .dash-task.doing{background:rgba(196,163,90,0.08);} .dash-task.done{background:rgba(91,158,80,0.08);} .dash-task.blocked{background:rgba(224,82,82,0.08);}
 .dash-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0;}
-.dash-dot.todo{background:#666;} .dash-dot.doing{background:#C4A35A;} .dash-dot.done{background:#5B9E50;} .dash-dot.blocked{background:#E05252;}
+.dash-dot.todo{background:var(--text-3);} .dash-dot.doing{background:#C4A35A;} .dash-dot.done{background:#5B9E50;} .dash-dot.blocked{background:#E05252;}
 .dash-tag{font-size:9px;padding:2px 7px;border-radius:5px;font-weight:600;}
 .dash-tag.tech{background:rgba(91,158,80,0.12);color:#5B9E50;} .dash-tag.legal{background:rgba(196,163,90,0.12);color:#C4A35A;} .dash-tag.mkt{background:rgba(139,122,174,0.12);color:#8B7AAE;}
 .dash-prio{font-size:9px;padding:2px 6px;border-radius:5px;font-weight:700;text-transform:uppercase;letter-spacing:0.3px;}
 .dash-prio.alta{background:rgba(224,82,82,0.12);color:#E05252;} .dash-prio.media{background:rgba(196,163,90,0.12);color:#C4A35A;} .dash-prio.baixa{background:rgba(90,173,160,0.12);color:#5AADA0;}
-.dash-task-title{flex:1;font-size:12px;color:#ddd;font-weight:500;}
+.dash-task-title{flex:1;font-size:12px;color:var(--text);font-weight:500;}
 .dash-task-title.done{color:#5B9E50;text-decoration:line-through;}
-.dash-task-sub{font-size:9px;color:#555;padding:2px 5px;background:rgba(255,255,255,0.04);border-radius:3px;}
-.dash-sel{background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:5px;color:#E8E8E8;font-family:inherit;font-size:10px;padding:3px 5px;cursor:pointer;outline:none;}
-.dash-sel option{background:#1a1a1c;color:#E8E8E8;}
+.dash-task-sub{font-size:9px;color:var(--text-3);padding:2px 5px;background:var(--bg-deep);border-radius:3px;}
+.dash-sel{background:var(--bg-card);border:1px solid var(--border);border-radius:5px;color:var(--text);font-family:inherit;font-size:10px;padding:3px 5px;cursor:pointer;outline:none;}
+.dash-sel option{background:var(--bg-card);color:var(--text);}
 
 /* DASH hours guide */
-.dash-hours{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;text-align:center;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);border-radius:14px;padding:18px;margin-top:20px;max-width:500px;}
-.dash-hours-val{font-size:22px;font-weight:800;line-height:1;}
-.dash-hours-label{font-size:11px;color:#aaa;font-weight:600;margin-top:2px;}
-.dash-hours-sub{font-size:9px;color:#666;margin-top:2px;}
+.dash-hours{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;text-align:center;background:var(--bg-card);border:1px solid var(--border);border-radius:14px;padding:18px;margin-top:20px;max-width:500px;box-shadow:var(--shadow-card);}
+.dash-hours-val{font-size:22px;font-weight:800;line-height:1;color:var(--text);}
+.dash-hours-label{font-size:11px;color:var(--text-2);font-weight:600;margin-top:2px;}
+.dash-hours-sub{font-size:9px;color:var(--text-3);margin-top:2px;}
 
 /* DASH kanban */
 .dash-kanban{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;}
 @media(max-width:900px){.dash-kanban{grid-template-columns:1fr 1fr;}}
-.dash-kcol{background:rgba(255,255,255,0.02);border-radius:12px;padding:10px;}
-.dash-kcol-hdr{display:flex;align-items:center;gap:6px;padding-bottom:8px;margin-bottom:8px;border-bottom:2px solid rgba(255,255,255,0.06);}
-.dash-kcard{background:rgba(255,255,255,0.04);border-radius:8px;padding:8px 10px;margin-bottom:6px;border-left:3px solid transparent;}
+.dash-kcol{background:var(--bg-deep);border-radius:12px;padding:10px;}
+.dash-kcol-hdr{display:flex;align-items:center;gap:6px;padding-bottom:8px;margin-bottom:8px;border-bottom:2px solid var(--border);}
+.dash-kcard{background:var(--bg-card);border-radius:8px;padding:8px 10px;margin-bottom:6px;border-left:3px solid transparent;box-shadow:0 1px 4px rgba(30,45,80,0.06);}
 .dash-kcard.tech{border-left-color:#5B9E50;} .dash-kcard.legal{border-left-color:#C4A35A;} .dash-kcard.mkt{border-left-color:#8B7AAE;}
-.dash-kcard-title{font-size:11px;font-weight:600;color:#ddd;margin-bottom:4px;}
+.dash-kcard-title{font-size:11px;font-weight:600;color:var(--text);margin-bottom:4px;}
 .dash-kcard-meta{display:flex;gap:3px;flex-wrap:wrap;align-items:center;}
 
 /* =====================================================
@@ -726,15 +690,8 @@ canvas.logo-canvas-nav{height:70px;width:auto;}
   <div class="login-photo">
     <div class="login-photo-bg"></div>
     <div class="login-photo-content">
-      <div class="login-photo-badge"><span class="dot"></span> Portal Profissional</div>
-      <h1 class="login-photo-title">Dados que <strong>transformam</strong> a pratica clinica</h1>
-      <p class="login-photo-sub">Indicadores em tempo real, protocolos inteligentes e gestao integrada de pacientes para profissionais de saude.</p>
-      <div class="login-photo-features">
-        <div class="login-feature"><div class="f-icon">&#128202;</div> Dashboards</div>
-        <div class="login-feature"><div class="f-icon">&#129302;</div> IA clinica</div>
-        <div class="login-feature"><div class="f-icon">&#9201;</div> Wearables</div>
-        <div class="login-feature"><div class="f-icon">&#128274;</div> LGPD</div>
-      </div>
+      <h1 class="login-photo-title">Dados que <strong>transformam</strong> a prática clínica</h1>
+      <p class="login-photo-sub">Indicadores em tempo real, protocolos inteligentes e gestão integrada de pacientes para profissionais de saúde.</p>
     </div>
   </div>
 
@@ -742,15 +699,15 @@ canvas.logo-canvas-nav{height:70px;width:auto;}
   <div class="login-form-side">
     <div class="login-form-wrap">
       <div class="login-logo-wrap">
-        <canvas id="login-logo-canvas" class="logo-canvas"></canvas>
+        <div style="font-family:var(--font-sans);font-size:18px;font-weight:700;color:#fff;letter-spacing:1px;">APEX <span style="color:var(--gold);">Pro</span></div>
       </div>
 
       <div class="login-welcome">Acesso <strong>profissional</strong></div>
-      <div class="login-desc">Entre com suas credenciais para acessar indicadores, protocolos e gestao de pacientes.</div>
+      <div class="login-desc">Entre com suas credenciais para acessar indicadores, protocolos e gestão de pacientes.</div>
 
       <div class="login-field">
         <label>E-mail institucional</label>
-        <input type="email" id="login-email" placeholder="seu@clinica.com.br" onkeydown="if(event.key==='Enter')fazerLogin()">
+        <input type="email" id="login-email" placeholder="seu@clínica.com.br" onkeydown="if(event.key==='Enter')fazerLogin()">
       </div>
       <div class="login-field">
         <label>Senha</label>
@@ -787,12 +744,33 @@ canvas.logo-canvas-nav{height:70px;width:auto;}
 
   <!-- HERO / WELCOME (redesign photo hero) -->
   <div class="dash-hero" id="dash-hero-area">
-    <div class="dash-hero-bg">
-      <div class="dash-hero-img"></div>
-    </div>
+    <div class="dash-hero-bg"><div class="dash-hero-img"></div></div>
     <div class="dash-hero-content">
-      <h1 class="hero-greeting">Bem-vindo, <strong id="hero-nome">Dr. Bruno</strong></h1>
-      <p class="hero-tagline">Gestao clinica integrada para nefrologistas — indicadores, protocolos, prescricao e acompanhamento de pacientes.</p>
+      <h1 class="hero-greeting" id="hero-greeting-dynamic">Bem-vindo, <strong id="hero-nome">Dr. Bruno</strong></h1>
+      <p class="hero-date" id="hero-date"></p>
+      <p class="hero-tagline">Gestão clínica integrada para nefrologistas — indicadores, protocolos, prescrição e acompanhamento de pacientes.</p>
+      <div class="hero-stats">
+        <div class="hero-stat hs-navy">
+          <div class="hero-stat-label">Pacientes Ativos</div>
+          <div class="hero-stat-value">12</div>
+          <div class="hero-stat-sub">+2 este mês</div>
+        </div>
+        <div class="hero-stat hs-teal">
+          <div class="hero-stat-label">Consultas Hoje</div>
+          <div class="hero-stat-value">3</div>
+          <div class="hero-stat-sub">Próxima às 14h</div>
+        </div>
+        <div class="hero-stat hs-gold">
+          <div class="hero-stat-label">Protocolos Gerados</div>
+          <div class="hero-stat-value">8</div>
+          <div class="hero-stat-sub">3 esta semana</div>
+        </div>
+        <div class="hero-stat hs-green">
+          <div class="hero-stat-label">Próximo Retorno</div>
+          <div class="hero-stat-value" style="font-size:16px;">Amanhã</div>
+          <div class="hero-stat-sub">João S. — 09h30</div>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -812,7 +790,7 @@ canvas.logo-canvas-nav{height:70px;width:auto;}
             <span class="mc-badge live"><span class="pulse-d"></span> Ativo</span>
           </div>
           <div class="mc-title">Nefrologia</div>
-          <div class="mc-desc">Indicadores clinicos, dashboards de qualidade, calculadoras e ferramentas para a pratica nefrologica.</div>
+          <div class="mc-desc">Indicadores clínicos, dashboards de qualidade e ferramentas para a prática nefrológica.</div>
         </div>
         <div class="mc-arrow">&#8594;</div>
       </div>
@@ -829,7 +807,7 @@ canvas.logo-canvas-nav{height:70px;width:auto;}
             <span class="mc-badge live"><span class="pulse-d"></span> Ativo</span>
           </div>
           <div class="mc-title">Meus Pacientes</div>
-          <div class="mc-desc">Protocolos clinicos, acompanhamento individual, prescricao digital e mensagens com pacientes.</div>
+          <div class="mc-desc">Protocolos clínicos, acompanhamento individual, prescrição digital e mensagens com pacientes.</div>
         </div>
         <div class="mc-arrow">&#8594;</div>
       </div>
@@ -845,8 +823,8 @@ canvas.logo-canvas-nav{height:70px;width:auto;}
             </div>
             <span class="mc-badge soon">Em breve</span>
           </div>
-          <div class="mc-title">Outros Modulos</div>
-          <div class="mc-desc">Manual clinico, fichas tecnicas e novos servicos em desenvolvimento para a plataforma.</div>
+          <div class="mc-title">Outros Módulos</div>
+          <div class="mc-desc">Manual clínico, fichas técnicas e novos serviços em desenvolvimento para a plataforma.</div>
         </div>
         <div class="mc-arrow">&#8594;</div>
       </div>
@@ -862,8 +840,8 @@ canvas.logo-canvas-nav{height:70px;width:auto;}
             </div>
             <span class="mc-badge live"><span class="pulse-d"></span> Sprint</span>
           </div>
-          <div class="mc-title">APEX em Construcao</div>
-          <div class="mc-desc">Dashboard de execucao do projeto — plataformas, tarefas legais e marketing.</div>
+          <div class="mc-title">APEX em Construção</div>
+          <div class="mc-desc">Dashboard de execução do projeto — plataformas, tarefas legais e marketing.</div>
         </div>
         <div class="mc-arrow">&#8594;</div>
       </div>
@@ -877,7 +855,7 @@ canvas.logo-canvas-nav{height:70px;width:auto;}
       <button class="sub-back" onclick="voltarMainDash()">&#8592; Voltar</button>
       <div>
         <div class="sub-title">Nefrologia</div>
-        <div class="sub-desc">Indicadores clinicos, qualidade e ferramentas</div>
+        <div class="sub-desc">Indicadores clínicos, qualidade e ferramentas</div>
       </div>
     </div>
     <div class="nefro-grid">
@@ -889,8 +867,8 @@ canvas.logo-canvas-nav{height:70px;width:auto;}
           <div class="nefro-card-icon">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="2" stroke="currentColor" stroke-width="1.4"/><line x1="3" y1="9" x2="21" y2="9" stroke="currentColor" stroke-width="1.2"/><rect x="6" y="13" width="3" height="5" rx="1" fill="currentColor" opacity=".3"/><rect x="11" y="11" width="3" height="7" rx="1" fill="currentColor" opacity=".2"/><rect x="16" y="14" width="3" height="4" rx="1" fill="currentColor" opacity=".25"/></svg>
           </div>
-          <div class="nefro-card-title">Indicadores Clinicos</div>
-          <div class="nefro-card-desc">TRS Cronico, TRS Agudo, Painel TV e Relatorio por Plano — dashboards e lancamento de dados.</div>
+          <div class="nefro-card-title">Indicadores Clínicos</div>
+          <div class="nefro-card-desc">TRS Crônico, TRS Agudo, Painel TV e Relatório por Plano — dashboards e lançamento de dados.</div>
         </div>
         <div class="nefro-card-arrow">&#8594;</div>
       </div>
@@ -903,23 +881,11 @@ canvas.logo-canvas-nav{height:70px;width:auto;}
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M12 6.5C12 4.5 13 3 14.5 3C16 3 17 4.5 17 6.5C17 8.5 16 9.5 15 10C16 10.5 17 12 17 14C17 16 16 17.5 14.5 17.5C13 17.5 12 16 12 14" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/><path d="M12 6.5C12 4.5 11 3 9.5 3C8 3 7 4.5 7 6.5C7 8.5 8 9.5 9 10C8 10.5 7 12 7 14C7 16 8 17.5 9.5 17.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
           </div>
           <div class="nefro-card-title">Qualidade</div>
-          <div class="nefro-card-desc">Material de apoio, ilustracoes didaticas e recursos educativos para consultas e treinamentos.</div>
+          <div class="nefro-card-desc">Material de apoio, ilustrações didáticas e recursos educativos para consultas e treinamentos.</div>
         </div>
         <div class="nefro-card-arrow">&#8594;</div>
       </div>
 
-      <div class="nefro-card nc-calculadoras" onclick="abrirCalculadoras()">
-        <div class="nefro-card-bg"></div>
-        <div class="nefro-card-overlay"></div>
-        <div class="nefro-card-content">
-          <div class="nefro-card-icon">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><rect x="4" y="2" width="16" height="20" rx="2" stroke="currentColor" stroke-width="1.4"/><rect x="7" y="6" width="10" height="4" rx="1" stroke="currentColor" stroke-width="1" fill="currentColor" opacity=".1"/><rect x="7" y="13" width="3" height="3" rx="0.5" stroke="currentColor" stroke-width="0.8" opacity="0.6"/><rect x="10.5" y="13" width="3" height="3" rx="0.5" stroke="currentColor" stroke-width="0.8" opacity="0.6"/><rect x="14" y="13" width="3" height="3" rx="0.5" stroke="currentColor" stroke-width="0.8" opacity="0.6"/></svg>
-          </div>
-          <div class="nefro-card-title">Calculadoras</div>
-          <div class="nefro-card-desc">CKD-EPI, Kt/V, IMC, risco cardiovascular e ajuste de dose por funcao renal.</div>
-        </div>
-        <div class="nefro-card-arrow">&#8594;</div>
-      </div>
 
     </div>
   </div>
@@ -930,7 +896,7 @@ canvas.logo-canvas-nav{height:70px;width:auto;}
       <button class="sub-back" onclick="voltarMainDash()">&#8592; Voltar</button>
       <div>
         <div class="sub-title">Outros</div>
-        <div class="sub-desc">Proximos servicos em desenvolvimento</div>
+        <div class="sub-desc">Próximos serviços em desenvolvimento</div>
       </div>
     </div>
     <div class="outros-grid">
@@ -947,8 +913,8 @@ canvas.logo-canvas-nav{height:70px;width:auto;}
         <div class="outros-card-bg"></div>
         <div class="outros-card-overlay"></div>
         <div class="outros-card-content">
-          <div class="outros-card-title">Fichas Tecnicas</div>
-          <div class="outros-card-desc">Descricao detalhada de cada indicador — metodologia, meta e interpretacao clinica.</div>
+          <div class="outros-card-title">Fichas Técnicas</div>
+          <div class="outros-card-desc">Descrição detalhada de cada indicador — metodologia, meta e interpretação clínica.</div>
           <div class="badge-soon">Em breve</div>
         </div>
       </div>
@@ -956,8 +922,8 @@ canvas.logo-canvas-nav{height:70px;width:auto;}
         <div class="outros-card-bg"></div>
         <div class="outros-card-overlay"></div>
         <div class="outros-card-content">
-          <div class="outros-card-title">Novos Modulos</div>
-          <div class="outros-card-desc">Mais ferramentas e integracoes serao adicionadas em breve.</div>
+          <div class="outros-card-title">Novos Módulos</div>
+          <div class="outros-card-desc">Mais ferramentas e integrações serão adicionadas em breve.</div>
           <div class="badge-soon">Em breve</div>
         </div>
       </div>
@@ -973,35 +939,32 @@ canvas.logo-canvas-nav{height:70px;width:auto;}
         <div class="sub-desc">Material de apoio, recursos educativos e ferramentas de qualidade assistencial</div>
       </div>
     </div>
-    <div class="qual-empty" style="text-align:center;padding:80px 20px;">
-      <div style="font-size:48px;margin-bottom:16px;opacity:0.3;">&#128218;</div>
-      <div style="font-size:18px;font-weight:600;color:var(--pro);margin-bottom:8px;">Area em construcao</div>
-      <div style="font-size:13px;color:var(--text-2);max-width:400px;margin:0 auto;line-height:1.7;">Os cards de qualidade serao adicionados aqui. Protocolos, materiais educativos, ilustracoes e recursos para a equipe assistencial.</div>
+    <div style="text-align:center;padding:80px 20px;max-width:480px;margin:0 auto;">
+      <div style="margin-bottom:24px;">
+        <svg width="80" height="80" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="8" y="8" width="64" height="64" rx="16" fill="rgba(30,45,80,0.04)" stroke="var(--border)" stroke-width="1.5"/>
+          <rect x="20" y="22" width="40" height="4" rx="2" fill="rgba(30,45,80,0.12)"/>
+          <rect x="20" y="32" width="28" height="4" rx="2" fill="rgba(30,45,80,0.08)"/>
+          <rect x="20" y="42" width="34" height="4" rx="2" fill="rgba(30,45,80,0.08)"/>
+          <circle cx="56" cy="52" r="12" fill="rgba(2,128,144,0.08)" stroke="var(--teal)" stroke-width="1.5"/>
+          <path d="M52 52l3 3 5-6" stroke="var(--teal)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <div style="display:inline-flex;align-items:center;gap:6px;font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--teal);background:rgba(2,128,144,0.06);border:1px solid rgba(2,128,144,0.15);border-radius:20px;padding:5px 14px;margin-bottom:16px;">
+        <span style="width:6px;height:6px;border-radius:50%;background:var(--teal);opacity:0.6;"></span> Em Desenvolvimento
+      </div>
+      <div style="font-family:var(--font-serif);font-size:20px;font-weight:400;color:var(--text);margin-bottom:8px;">Qualidade Assistencial</div>
+      <div style="font-size:13px;color:var(--text-2);line-height:1.8;">Protocolos baseados em evidências, materiais educativos, ilustrações didáticas e recursos para a equipe assistencial estarão disponíveis aqui em breve.</div>
     </div>
   </div>
 
-  <!-- SCREEN: CALCULADORAS -->
-  <div class="app-screen" id="screen-calculadoras">
-    <div class="sub-header">
-      <button class="sub-back" onclick="abrirNefrologia()">&#8592; Voltar</button>
-      <div>
-        <div class="sub-title">Calculadoras</div>
-        <div class="sub-desc">Ferramentas de calculo clinico para nefrologia</div>
-      </div>
-    </div>
-    <div class="calc-empty" style="text-align:center;padding:80px 20px;">
-      <div style="font-size:48px;margin-bottom:16px;opacity:0.3;">&#129518;</div>
-      <div style="font-size:18px;font-weight:600;color:var(--pro);margin-bottom:8px;">Area em construcao</div>
-      <div style="font-size:13px;color:var(--text-2);max-width:400px;margin:0 auto;line-height:1.7;">As calculadoras clinicas serao adicionadas aqui. CKD-EPI, Kt/V, IMC, risco cardiovascular, ajuste de dose por funcao renal e mais.</div>
-    </div>
-  </div>
 
   <!-- SCREEN: PATIENT LIST -->
   <div class="app-screen" id="screen-pacientes">
     <div class="pac-screen active" id="pac-list" style="padding:0;">
       <div class="pac-header">
         <div>
-          <div class="pac-title">Gestao de Pacientes</div>
+          <div class="pac-title">Gestão de Pacientes</div>
           <div class="pac-sub">Cadastro, protocolos e acompanhamento individual</div>
         </div>
         <div style="display:flex;gap:8px;">
@@ -1027,43 +990,43 @@ canvas.logo-canvas-nav{height:70px;width:auto;}
       </div>
 
       <div class="pac-tabs">
-        <button class="pac-tab active" onclick="abrirTab('anamnese',this)">Anamnese</button>
-        <button class="pac-tab" onclick="abrirTab('perfil',this)">Perfil</button>
-        <button class="pac-tab" onclick="abrirTab('exames',this)">Exames</button>
-        <button class="pac-tab" onclick="abrirTab('consultas',this)">Consultas</button>
-        <button class="pac-tab" onclick="abrirTab('metas',this)">Metas</button>
-        <button class="pac-tab" onclick="abrirTab('medicamentos',this)">Medicamentos</button>
-        <button class="pac-tab" onclick="abrirTab('dieta',this)">Dieta &amp; Macros</button>
-        <button class="pac-tab" onclick="abrirTab('suplementacao',this)">Suplementacao</button>
-        <button class="pac-tab" onclick="abrirTab('treino',this)">Treino</button>
-        <button class="pac-tab" onclick="abrirTab('planejamento',this)">Planejamento</button>
-        <button class="pac-tab" onclick="abrirTab('prescricao',this)">Prescricao</button>
-        <button class="pac-tab" onclick="abrirTab('mensagens',this)">Mensagens <span id="msg-cnt" style="display:none;background:#ef4444;color:#fff;font-size:9px;padding:1px 5px;border-radius:8px;margin-left:3px;">0</span></button>
+        <button class="pac-tab active" onclick="abrirTab('anamnese',this)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/><line x1="9" y1="12" x2="15" y2="12"/><line x1="9" y1="16" x2="13" y2="16"/></svg> Anamnese</button>
+        <button class="pac-tab" onclick="abrirTab('perfil',this)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg> Perfil</button>
+        <button class="pac-tab" onclick="abrirTab('exames',this)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3v2m6-2v2M9 19v2m6-2v2M3 9h2m-2 6h2m14-6h2m-2 6h2"/><rect x="7" y="7" width="10" height="10" rx="1"/></svg> Exames</button>
+        <button class="pac-tab" onclick="abrirTab('consultas',this)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg> Consultas</button>
+        <button class="pac-tab" onclick="abrirTab('metas',this)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg> Metas</button>
+        <button class="pac-tab" onclick="abrirTab('medicamentos',this)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10.5 1.5H8C4.5 1.5 3 3 3 6.5v11c0 3.5 1.5 5 5 5h8c3.5 0 5-1.5 5-5v-5"/><path d="M17 2.5v5h5"/><path d="M12 16v-4m-2 2h4"/></svg> Medicamentos</button>
+        <button class="pac-tab" onclick="abrirTab('dieta',this)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 00-7 7c0 5 7 13 7 13s7-8 7-13a7 7 0 00-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg> Dieta &amp; Macros</button>
+        <button class="pac-tab" onclick="abrirTab('suplementacao',this)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="3" width="12" height="18" rx="4"/><line x1="6" y1="12" x2="18" y2="12"/></svg> Suplementação</button>
+        <button class="pac-tab" onclick="abrirTab('treino',this)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg> Treino</button>
+        <button class="pac-tab" onclick="abrirTab('planejamento',this)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="3 6 9 3 15 6 21 3 21 18 15 21 9 18 3 21"/><line x1="9" y1="3" x2="9" y2="18"/><line x1="15" y1="6" x2="15" y2="21"/></svg> Planejamento</button>
+        <button class="pac-tab" onclick="abrirTab('prescricao',this)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="9" y1="13" x2="15" y2="13"/><line x1="9" y1="17" x2="13" y2="17"/></svg> Prescrição</button>
+        <button class="pac-tab" onclick="abrirTab('mensagens',this)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"/></svg> Mensagens <span id="msg-cnt" style="display:none;background:#ef4444;color:#fff;font-size:9px;padding:1px 5px;border-radius:8px;margin-left:3px;">0</span></button>
       </div>
 
       <!-- TAB ANAMNESE -->
       <div class="pac-tab-content active" id="tab-anamnese">
-        <div class="f-section">Historia Pregressa</div>
-        <div class="f-row f1"><div class="f-group"><textarea id="an-historia" rows="5" placeholder="Descreva a historia clinica pregressa do paciente: queixas principais, evolucao da doenca, internacoes anteriores, cirurgias, alergias, historico familiar relevante..."></textarea></div></div>
+        <div class="f-section">História Pregressa</div>
+        <div class="f-row f1"><div class="f-group"><textarea id="an-historia" rows="5" placeholder="Descreva a história clínica pregressa do paciente: queixas principais, evolução da doença, internações anteriores, cirurgias, alergias, histórico familiar relevante..."></textarea></div></div>
 
         <div class="f-section">Comorbidades</div>
         <div class="check-grid">
-          <div class="check-item" id="chk-has" onclick="toggleCheck(this,'has')"><input type="checkbox" id="cb-has"><label for="cb-has">Hipertensao (HAS)</label></div>
+          <div class="check-item" id="chk-has" onclick="toggleCheck(this,'has')"><input type="checkbox" id="cb-has"><label for="cb-has">Hipertensão (HAS)</label></div>
           <div class="check-item" id="chk-dm" onclick="toggleCheck(this,'dm')"><input type="checkbox" id="cb-dm"><label for="cb-dm">Diabetes (DM)</label></div>
           <div class="check-item" id="chk-obs" onclick="toggleCheck(this,'obesidade')"><input type="checkbox" id="cb-obs"><label for="cb-obs">Obesidade</label></div>
           <div class="check-item" id="chk-tab" onclick="toggleCheck(this,'tabagismo')"><input type="checkbox" id="cb-tab"><label for="cb-tab">Tabagismo</label></div>
-          <div class="check-item" id="chk-drc" onclick="toggleCheckDRC(this)"><input type="checkbox" id="cb-drc"><label for="cb-drc">Doenca Renal Cronica (DRC)</label></div>
-          <div class="check-item" id="chk-icc" onclick="toggleCheck(this,'icc')"><input type="checkbox" id="cb-icc"><label for="cb-icc">Insuficiencia Cardiaca</label></div>
+          <div class="check-item" id="chk-drc" onclick="toggleCheckDRC(this)"><input type="checkbox" id="cb-drc"><label for="cb-drc">Doença Renal Crônica (DRC)</label></div>
+          <div class="check-item" id="chk-icc" onclick="toggleCheck(this,'icc')"><input type="checkbox" id="cb-icc"><label for="cb-icc">Insuficiência Cardíaca</label></div>
         </div>
         <div class="drc-sel" id="drc-estagio-wrap" style="display:none;">
-          <label>Estagio da DRC</label>
+          <label>Estágio da DRC</label>
           <div class="drc-stages">
-            <button class="drc-stage" onclick="selDRC(this,'1')">Estagio 1</button>
-            <button class="drc-stage" onclick="selDRC(this,'2')">Estagio 2</button>
-            <button class="drc-stage" onclick="selDRC(this,'3')">Estagio 3</button>
-            <button class="drc-stage" onclick="selDRC(this,'4')">Estagio 4</button>
-            <button class="drc-stage" onclick="selDRC(this,'5')">Estagio 5</button>
-            <button class="drc-stage" onclick="selDRC(this,'5D')">Estagio 5D (Dialise)</button>
+            <button class="drc-stage" onclick="selDRC(this,'1')">Estágio 1</button>
+            <button class="drc-stage" onclick="selDRC(this,'2')">Estágio 2</button>
+            <button class="drc-stage" onclick="selDRC(this,'3')">Estágio 3</button>
+            <button class="drc-stage" onclick="selDRC(this,'4')">Estágio 4</button>
+            <button class="drc-stage" onclick="selDRC(this,'5')">Estágio 5</button>
+            <button class="drc-stage" onclick="selDRC(this,'5D')">Estágio 5D (Diálise)</button>
           </div>
         </div>
         <div class="f-row f1" style="margin-top:12px;"><div class="f-group"><label>Outras comorbidades</label><input type="text" id="an-outras" placeholder="Ex: dislipidemia, hiperuricemia, apneia do sono..."></div></div>
@@ -1072,14 +1035,14 @@ canvas.logo-canvas-nav{height:70px;width:auto;}
         <div class="obj-grid">
           <div class="check-item" id="chk-emagrecimento" onclick="toggleCheck(this,'emagrecimento')"><input type="checkbox" id="cb-emag"><label for="cb-emag">Emagrecimento</label></div>
           <div class="check-item" id="chk-tabagismo-obj" onclick="toggleCheck(this,'cessar_tabagismo')"><input type="checkbox" id="cb-tabobj"><label for="cb-tabobj">Cessar tabagismo</label></div>
-          <div class="check-item" id="chk-pressao-obj" onclick="toggleCheck(this,'controle_pressao')"><input type="checkbox" id="cb-paobj"><label for="cb-paobj">Controle pressorico</label></div>
+          <div class="check-item" id="chk-pressao-obj" onclick="toggleCheck(this,'controle_pressao')"><input type="checkbox" id="cb-paobj"><label for="cb-paobj">Controle pressórico</label></div>
           <div class="check-item" id="chk-dm-obj" onclick="toggleCheck(this,'controle_dm')"><input type="checkbox" id="cb-dmobj"><label for="cb-dmobj">Controle da DM</label></div>
           <div class="check-item" id="chk-esporte-obj" onclick="toggleCheck(this,'meta_esportiva')"><input type="checkbox" id="cb-esobj"><label for="cb-esobj">Meta esportiva</label></div>
           <div class="check-item" id="chk-qualidade-obj" onclick="toggleCheck(this,'qualidade_vida')"><input type="checkbox" id="cb-qvobj"><label for="cb-qvobj">Qualidade de vida</label></div>
         </div>
         <div class="f-row f1" id="meta-esportiva-detalhe" style="display:none;"><div class="f-group"><label>Descreva a meta esportiva</label><input type="text" id="an-meta-esportiva" placeholder="Ex: Correr 5km, completar uma caminhada de 30min sem parar..."></div></div>
         <div class="f-section">Disponibilidade para treinos</div>
-        <div style="font-size:11px;color:var(--text-3);margin-bottom:8px;">Selecione os dias disponiveis:</div>
+        <div style="font-size:11px;color:var(--text-3);margin-bottom:8px;">Selecione os dias disponíveis:</div>
         <div class="dias-grid">
           <button class="dia-btn" onclick="toggleDia(this,'seg')">SEG</button>
           <button class="dia-btn" onclick="toggleDia(this,'ter')">TER</button>
@@ -1089,7 +1052,7 @@ canvas.logo-canvas-nav{height:70px;width:auto;}
           <button class="dia-btn" onclick="toggleDia(this,'sab')">SAB</button>
           <button class="dia-btn" onclick="toggleDia(this,'dom')">DOM</button>
         </div>
-        <div class="f-row f1" style="margin-top:10px;"><div class="f-group"><label>Observacoes sobre disponibilidade</label><input type="text" id="an-disp-obs" placeholder="Ex: so pela manha, apos dialise nao pode treinar..."></div></div>
+        <div class="f-row f1" style="margin-top:10px;"><div class="f-group"><label>Observações sobre disponibilidade</label><input type="text" id="an-disp-obs" placeholder="Ex: só pela manhã, após diálise não pode treinar..."></div></div>
 
         <div class="f-save-bar" style="margin-top:16px;">
           <button class="pac-btn" onclick="salvarAnamnese()">Salvar anamnese</button>
@@ -1100,7 +1063,7 @@ canvas.logo-canvas-nav{height:70px;width:auto;}
           <div class="ai-icon">&#129302;</div>
           <div class="ai-txt">
             <strong>Gerar Protocolo Completo com IA</strong>
-            <span>Com base na anamnese, gera dieta, suplementacao, treino e plano de 12 meses baseado em evidencias</span>
+            <span>Com base na anamnese, gera dieta, suplementação, treino e plano de 12 meses baseado em evidências</span>
           </div>
           <button class="ai-gen-btn" id="ai-gen-btn" onclick="gerarProtocoloIA()">
             <span class="ai-gen-txt">GERAR PROTOCOLO</span>
@@ -1125,14 +1088,14 @@ canvas.logo-canvas-nav{height:70px;width:auto;}
 
       <!-- TAB PERFIL -->
       <div class="pac-tab-content" id="tab-perfil">
-        <div class="f-section">Dados clinicos</div>
+        <div class="f-section">Dados clínicos</div>
         <div class="f-row"><div class="f-group"><label>Nome completo</label><input type="text" id="p-nome"></div><div class="f-group"><label>Data de nascimento</label><input type="date" id="p-nasc"></div></div>
-        <div class="f-row"><div class="f-group"><label>Diagnostico principal</label><input type="text" id="p-diag" placeholder="DRC estagio 3, HAS, DM2..."></div><div class="f-group"><label>Unidade</label><select id="p-unidade"><option value="rl">RL</option><option value="santos">Santos</option><option value="tatuape">Tatuape</option><option value="todas">Todas</option></select></div></div>
-        <div class="f-row f3"><div class="f-group"><label>Peso (kg)</label><input type="number" id="p-peso" step="0.1"></div><div class="f-group"><label>Altura (cm)</label><input type="number" id="p-altura"></div><div class="f-group"><label>Meta proteina/dia (g)</label><input type="number" id="p-prot"></div></div>
-        <div class="f-section">Parametros wearable</div>
+        <div class="f-row"><div class="f-group"><label>Diagnóstico principal</label><input type="text" id="p-diag" placeholder="DRC estágio 3, HAS, DM2..."></div><div class="f-group"><label>Unidade</label><select id="p-unidade"><option value="rl">RL</option><option value="santos">Santos</option><option value="tatuape">Tatuapé</option><option value="todas">Todas</option></select></div></div>
+        <div class="f-row f3"><div class="f-group"><label>Peso (kg)</label><input type="number" id="p-peso" step="0.1"></div><div class="f-group"><label>Altura (cm)</label><input type="number" id="p-altura"></div><div class="f-group"><label>Meta proteína/dia (g)</label><input type="number" id="p-prot"></div></div>
+        <div class="f-section">Parâmetros wearable</div>
         <div class="f-row f3"><div class="f-group"><label>HRV baseline (ms)</label><input type="number" id="p-hrv"></div><div class="f-group"><label>RHR baseline (bpm)</label><input type="number" id="p-rhr"></div><div class="f-group"><label>Meta atividade/semana (km)</label><input type="number" id="p-km" step="0.5"></div></div>
         <div class="f-section">Meta de performance</div>
-        <div class="f-row f3"><div class="f-group"><label>Descricao</label><input type="text" id="p-meta-desc" placeholder="Caminhar 5km sem parar"></div><div class="f-group"><label>Alvo</label><input type="text" id="p-meta-alvo" placeholder="60 minutos"></div><div class="f-group"><label>Prazo</label><input type="date" id="p-meta-prazo"></div></div>
+        <div class="f-row f3"><div class="f-group"><label>Descrição</label><input type="text" id="p-meta-desc" placeholder="Caminhar 5km sem parar"></div><div class="f-group"><label>Alvo</label><input type="text" id="p-meta-alvo" placeholder="60 minutos"></div><div class="f-group"><label>Prazo</label><input type="date" id="p-meta-prazo"></div></div>
         <div class="f-save-bar">
           <button class="pac-btn" onclick="salvarPerfil()">Salvar perfil</button>
           <span class="f-save-msg" id="msg-perfil"></span>
@@ -1143,13 +1106,13 @@ canvas.logo-canvas-nav{height:70px;width:auto;}
       <div class="pac-tab-content" id="tab-exames">
         <div class="f-section">Registrar novo exame</div>
         <div class="f-card">
-          <div class="f-row f3"><div class="f-group"><label>Data da coleta</label><input type="date" id="ex-data"></div><div class="f-group"><label>Tipo</label><input type="text" id="ex-tipo" placeholder="Bioquimica, Hemograma..."></div><div class="f-group"><label>Observacao</label><input type="text" id="ex-obs" placeholder="Opcional"></div></div>
-          <div class="f-section" style="margin-top:12px;">Parametros</div>
+          <div class="f-row f3"><div class="f-group"><label>Data da coleta</label><input type="date" id="ex-data"></div><div class="f-group"><label>Tipo</label><input type="text" id="ex-tipo" placeholder="Bioquímica, Hemograma..."></div><div class="f-group"><label>Observação</label><input type="text" id="ex-obs" placeholder="Opcional"></div></div>
+          <div class="f-section" style="margin-top:12px;">Parâmetros</div>
           <div id="ex-params-list" class="f-list"></div>
-          <button class="f-add-btn" onclick="addParam()" style="margin-top:8px;">+ Parametro</button>
+          <button class="f-add-btn" onclick="addParam()" style="margin-top:8px;">+ Parâmetro</button>
           <div class="f-save-bar"><button class="pac-btn" onclick="salvarExame()">Registrar exame</button><span class="f-save-msg" id="msg-exame"></span></div>
         </div>
-        <div class="f-section">Historico</div>
+        <div class="f-section">Histórico</div>
         <div id="ex-historico"></div>
       </div>
 
@@ -1158,11 +1121,11 @@ canvas.logo-canvas-nav{height:70px;width:auto;}
         <div class="f-section">Registrar consulta</div>
         <div class="f-card">
           <div class="f-row f3"><div class="f-group"><label>Data</label><input type="date" id="co-data"></div><div class="f-group"><label>Tipo</label><select id="co-tipo"><option value="presencial">Presencial</option><option value="teleconsulta">Teleconsulta</option></select></div><div class="f-group"><label>Retorno em</label><input type="date" id="co-retorno"></div></div>
-          <div class="f-row f1"><div class="f-group"><label>Motivo / queixa principal</label><input type="text" id="co-motivo" placeholder="Consulta de rotina, reavaliacao..."></div></div>
-          <div class="f-row f1"><div class="f-group"><label>Resumo clinico</label><textarea id="co-resumo" placeholder="Evolucao, ajustes, observacoes..."></textarea></div></div>
+          <div class="f-row f1"><div class="f-group"><label>Motivo / queixa principal</label><input type="text" id="co-motivo" placeholder="Consulta de rotina, reavaliação..."></div></div>
+          <div class="f-row f1"><div class="f-group"><label>Resumo clínico</label><textarea id="co-resumo" placeholder="Evolução, ajustes, observações..."></textarea></div></div>
           <div class="f-save-bar"><button class="pac-btn" onclick="salvarConsulta()">Registrar consulta</button><span class="f-save-msg" id="msg-consulta"></span></div>
         </div>
-        <div class="f-section">Historico</div>
+        <div class="f-section">Histórico</div>
         <div id="co-historico"></div>
       </div>
 
@@ -1170,8 +1133,8 @@ canvas.logo-canvas-nav{height:70px;width:auto;}
       <div class="pac-tab-content" id="tab-metas">
         <div class="f-section">Nova meta</div>
         <div class="f-card">
-          <div class="f-row f3"><div class="f-group"><label>Categoria</label><select id="me-cat"><option value="pressao">Pressao arterial</option><option value="peso">Peso</option><option value="laboratorial">Laboratorial</option><option value="atividade">Atividade fisica</option><option value="medicacao">Medicacao</option></select></div><div class="f-group"><label>Valor alvo</label><input type="text" id="me-alvo" placeholder="ex: 130/80 mmHg"></div><div class="f-group"><label>Prazo</label><input type="date" id="me-prazo"></div></div>
-          <div class="f-row f1"><div class="f-group"><label>Descricao da meta</label><input type="text" id="me-desc" placeholder="Manter PA controlada abaixo de 130/80 mmHg"></div></div>
+          <div class="f-row f3"><div class="f-group"><label>Categoria</label><select id="me-cat"><option value="pressao">Pressão arterial</option><option value="peso">Peso</option><option value="laboratorial">Laboratorial</option><option value="atividade">Atividade física</option><option value="medicacao">Medicação</option></select></div><div class="f-group"><label>Valor alvo</label><input type="text" id="me-alvo" placeholder="ex: 130/80 mmHg"></div><div class="f-group"><label>Prazo</label><input type="date" id="me-prazo"></div></div>
+          <div class="f-row f1"><div class="f-group"><label>Descrição da meta</label><input type="text" id="me-desc" placeholder="Manter PA controlada abaixo de 130/80 mmHg"></div></div>
           <div class="f-save-bar"><button class="pac-btn" onclick="salvarMeta()">Adicionar meta</button><span class="f-save-msg" id="msg-meta"></span></div>
         </div>
         <div class="f-section">Metas ativas</div>
@@ -1185,7 +1148,7 @@ canvas.logo-canvas-nav{height:70px;width:auto;}
         <button class="f-add-btn" onclick="addMed()">+ Medicamento</button>
         <div class="f-save-bar">
           <button class="pac-btn" onclick="salvarProtocolo('medicamentos')">Salvar medicamentos</button>
-          <button class="pac-btn sec" onclick="abrirPrescricao()" style="margin-left:8px;">Gerar Prescricao PDF</button>
+          <button class="pac-btn sec" onclick="abrirPrescricao()" style="margin-left:8px;">Gerar Prescrição PDF</button>
           <span class="f-save-msg" id="msg-medicamentos"></span>
         </div>
       </div>
@@ -1195,18 +1158,18 @@ canvas.logo-canvas-nav{height:70px;width:auto;}
         <div class="f-section">Macros prescritos</div>
         <div class="f-row f3">
           <div class="f-group"><label>Calorias/dia (kcal)</label><input type="number" id="d-kcal"></div>
-          <div class="f-group"><label>Proteina/dia (g)</label><input type="number" id="d-prot"></div>
+          <div class="f-group"><label>Proteína/dia (g)</label><input type="number" id="d-prot"></div>
           <div class="f-group"><label>Carboidrato/dia (g)</label><input type="number" id="d-carb"></div>
         </div>
         <div class="f-row f3">
           <div class="f-group"><label>Gordura/dia (g)</label><input type="number" id="d-gord"></div>
-          <div class="f-group"><label>Potassio max/dia (mg)</label><input type="number" id="d-pot" placeholder="opcional"></div>
-          <div class="f-group"><label>Fosforo max/dia (mg)</label><input type="number" id="d-fos" placeholder="opcional"></div>
+          <div class="f-group"><label>Potássio max/dia (mg)</label><input type="number" id="d-pot" placeholder="opcional"></div>
+          <div class="f-group"><label>Fósforo max/dia (mg)</label><input type="number" id="d-fos" placeholder="opcional"></div>
         </div>
-        <div class="f-section">Restricoes e orientacoes</div>
-        <div class="f-row f1"><div class="f-group"><label>Alimentos restritos</label><textarea id="d-restr" placeholder="Ex: embutidos, laticinios em excesso, banana..."></textarea></div></div>
+        <div class="f-section">Restrições e orientações</div>
+        <div class="f-row f1"><div class="f-group"><label>Alimentos restritos</label><textarea id="d-restr" placeholder="Ex: embutidos, laticínios em excesso, banana..."></textarea></div></div>
         <div class="f-row f1"><div class="f-group"><label>Alimentos recomendados</label><textarea id="d-rec" placeholder="Ex: arroz, frango grelhado, azeite, legumes..."></textarea></div></div>
-        <div class="f-row f1"><div class="f-group"><label>Observacoes nutricionais</label><textarea id="d-obs" placeholder="Timing, jejum, refeicoes especiais..."></textarea></div></div>
+        <div class="f-row f1"><div class="f-group"><label>Observações nutricionais</label><textarea id="d-obs" placeholder="Timing, jejum, refeições especiais..."></textarea></div></div>
         <div class="f-save-bar"><button class="pac-btn" onclick="salvarProtocolo('dieta')">Salvar dieta</button><span class="f-save-msg" id="msg-dieta"></span></div>
       </div>
 
@@ -1215,19 +1178,19 @@ canvas.logo-canvas-nav{height:70px;width:auto;}
         <div class="f-section">Suplementos prescritos</div>
         <div id="sup-lista" class="f-list" style="margin-bottom:10px;"></div>
         <button class="f-add-btn" onclick="addSup()">+ Suplemento</button>
-        <div class="f-row f1" style="margin-top:14px;"><div class="f-group"><label>Observacoes gerais</label><textarea id="sup-obs" placeholder="Interacoes, cuidados, ordem de uso..."></textarea></div></div>
-        <div class="f-save-bar"><button class="pac-btn" onclick="salvarProtocolo('suplementacao')">Salvar suplementacao</button><span class="f-save-msg" id="msg-suplementacao"></span></div>
+        <div class="f-row f1" style="margin-top:14px;"><div class="f-group"><label>Observações gerais</label><textarea id="sup-obs" placeholder="Interações, cuidados, ordem de uso..."></textarea></div></div>
+        <div class="f-save-bar"><button class="pac-btn" onclick="salvarProtocolo('suplementacao')">Salvar suplementação</button><span class="f-save-msg" id="msg-suplementacao"></span></div>
       </div>
 
       <!-- TAB TREINO -->
       <div class="pac-tab-content" id="tab-treino">
-        <div class="f-section">Protocolo de atividade fisica</div>
-        <div class="f-row f3"><div class="f-group"><label>Modalidade principal</label><input type="text" id="tr-mod" placeholder="Caminhada, musculacao, natacao..."></div><div class="f-group"><label>Frequencia semanal</label><input type="text" id="tr-freq" placeholder="3x por semana"></div><div class="f-group"><label>Duracao por sessao</label><input type="text" id="tr-dur" placeholder="30-45 minutos"></div></div>
-        <div class="f-row f3"><div class="f-group"><label>Intensidade</label><select id="tr-int"><option value="">Selecione...</option><option value="leve">Leve (conversa facil)</option><option value="moderada">Moderada (algum esforco)</option><option value="vigorosa">Vigorosa (dificil falar)</option></select></div><div class="f-group"><label>FC alvo (bpm)</label><input type="text" id="tr-fc" placeholder="ex: 100-130 bpm"></div><div class="f-group"><label>Meta km ou min/semana</label><input type="text" id="tr-meta" placeholder="ex: 15km ou 150min"></div></div>
-        <div class="f-section">Sessoes da semana</div>
+        <div class="f-section">Protocolo de atividade física</div>
+        <div class="f-row f3"><div class="f-group"><label>Modalidade principal</label><input type="text" id="tr-mod" placeholder="Caminhada, musculação, natação..."></div><div class="f-group"><label>Frequência semanal</label><input type="text" id="tr-freq" placeholder="3x por semana"></div><div class="f-group"><label>Duração por sessão</label><input type="text" id="tr-dur" placeholder="30-45 minutos"></div></div>
+        <div class="f-row f3"><div class="f-group"><label>Intensidade</label><select id="tr-int"><option value="">Selecione...</option><option value="leve">Leve (conversa fácil)</option><option value="moderada">Moderada (algum esforço)</option><option value="vigorosa">Vigorosa (difícil falar)</option></select></div><div class="f-group"><label>FC alvo (bpm)</label><input type="text" id="tr-fc" placeholder="ex: 100-130 bpm"></div><div class="f-group"><label>Meta km ou min/semana</label><input type="text" id="tr-meta" placeholder="ex: 15km ou 150min"></div></div>
+        <div class="f-section">Sessões da semana</div>
         <div id="tr-sessoes" class="f-list" style="margin-bottom:10px;"></div>
-        <button class="f-add-btn" onclick="addSessao()">+ Sessao</button>
-        <div class="f-row f1" style="margin-top:14px;"><div class="f-group"><label>Restricoes e precaucoes</label><textarea id="tr-restr" placeholder="Evitar esforco em dias de dialise, monitorar FC, sinais de alerta..."></textarea></div></div>
+        <button class="f-add-btn" onclick="addSessao()">+ Sessão</button>
+        <div class="f-row f1" style="margin-top:14px;"><div class="f-group"><label>Restrições e precauções</label><textarea id="tr-restr" placeholder="Evitar esforço em dias de diálise, monitorar FC, sinais de alerta..."></textarea></div></div>
         <div class="f-save-bar"><button class="pac-btn" onclick="salvarProtocolo('treino')">Salvar treino</button><span class="f-save-msg" id="msg-treino"></span></div>
       </div>
 
@@ -1238,7 +1201,7 @@ canvas.logo-canvas-nav{height:70px;width:auto;}
         <div class="f-section" style="margin-top:16px;">Fases do protocolo</div>
         <div id="plan-fases" class="f-list" style="margin-bottom:10px;"></div>
         <button class="f-add-btn" onclick="addFase()">+ Fase</button>
-        <div class="f-row f1" style="margin-top:14px;"><div class="f-group"><label>Observacoes gerais do plano</label><textarea id="plan-obs" placeholder="Progressao esperada, marcos, reavaliacoes..."></textarea></div></div>
+        <div class="f-row f1" style="margin-top:14px;"><div class="f-group"><label>Observações gerais do plano</label><textarea id="plan-obs" placeholder="Progressão esperada, marcos, reavaliações..."></textarea></div></div>
         <div class="f-save-bar"><button class="pac-btn" onclick="salvarProtocolo('planejamento')">Salvar planejamento</button><span class="f-save-msg" id="msg-planejamento"></span></div>
       </div>
 
@@ -1658,7 +1621,7 @@ canvas.logo-canvas-nav{height:70px;width:auto;}
           <textarea id="msg-resp" rows="2" style="flex:1;font-family:inherit;font-size:12px;color:var(--text);background:rgba(255,255,255,0.05);border:1px solid var(--border);border-radius:6px;padding:8px 11px;outline:none;resize:none;" placeholder="Responda ao paciente..."></textarea>
           <button class="pac-btn" onclick="enviarResposta()" style="align-self:flex-end;">Enviar</button>
         </div>
-        <div style="font-size:10px;color:var(--text-3);margin-top:6px;">Visivel imediatamente no portal do paciente.</div>
+        <div style="font-size:10px;color:var(--text-3);margin-top:6px;">Visível imediatamente no portal do paciente.</div>
       </div>
 
     </div><!-- /pac-ficha -->
@@ -1676,14 +1639,14 @@ canvas.logo-canvas-nav{height:70px;width:auto;}
     <span class="ind-nav-logo" onclick="voltarHome()">APEX</span>
     <div class="ind-nav-sep"></div>
     <nav class="ind-breadcrumb" id="ind-breadcrumb">
-      <span class="ind-bc-item active">Indicadores Clinicos</span>
+      <span class="ind-bc-item active">Indicadores Clínicos</span>
     </nav>
     <button class="ind-btn ind-btn-sair" onclick="sairIndicadores()">&#10005; Sair</button>
   </div>
 
   <!-- TELA INTERMEDIARIA: TRS CRONICO -->
   <div class="cron-mid" id="cron-mid">
-    <p class="ind-home-eyebrow">TRS Cronico</p>
+    <p class="ind-home-eyebrow">TRS Crônico</p>
     <h2 class="ind-home-title">O que deseja <strong>acessar?</strong></h2>
     <div class="cron-mid-grid">
 
@@ -1691,9 +1654,9 @@ canvas.logo-canvas-nav{height:70px;width:auto;}
         <div class="trs-card-bg"></div>
         <div class="trs-card-overlay"></div>
         <div class="trs-card-content">
-          <div class="trs-card-label">Visualizacao</div>
+          <div class="trs-card-label">Visualização</div>
           <div class="trs-card-title">Dashboard</div>
-          <div class="trs-card-desc">Indicadores consolidados da rede — graficos, metas e evolucao mensal.</div>
+          <div class="trs-card-desc">Indicadores consolidados da rede — gráficos, metas e evolução mensal.</div>
           <div class="trs-card-tags">
             <span class="trs-tag">Rede completa</span>
             <span class="trs-tag">Por unidade</span>
@@ -1707,8 +1670,8 @@ canvas.logo-canvas-nav{height:70px;width:auto;}
         <div class="trs-card-overlay"></div>
         <div class="trs-card-content">
           <div class="trs-card-label">Entrada de dados</div>
-          <div class="trs-card-title">Lancamento Mensal</div>
-          <div class="trs-card-desc">Preenchimento dos indicadores mensais por unidade — RL, Santos e Tatuape.</div>
+          <div class="trs-card-title">Lançamento Mensal</div>
+          <div class="trs-card-desc">Preenchimento dos indicadores mensais por unidade — RL, Santos e Tatuapé.</div>
           <div class="trs-card-tags">
             <span class="trs-tag">Por unidade</span>
             <span class="trs-tag">Supabase</span>
@@ -1722,13 +1685,13 @@ canvas.logo-canvas-nav{height:70px;width:auto;}
 
   <!-- TELA SELECAO DE UNIDADE -->
   <div class="unit-sel" id="unit-sel">
-    <p class="ind-home-eyebrow">Lancamento Mensal — TRS Cronico</p>
+    <p class="ind-home-eyebrow">Lançamento Mensal — TRS Crônico</p>
     <h2 class="ind-home-title">Selecione a <strong>unidade</strong></h2>
     <div class="unit-grid">
       <div class="unit-card featured" onclick="abrirLancamento('rl')">
         <div class="unit-card-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" stroke="#3E4F5C" stroke-width="1.4" stroke-linejoin="round"/><polyline points="9 22 9 12 15 12 15 22" stroke="#3E4F5C" stroke-width="1.4" stroke-linejoin="round"/></svg></div>
         <div class="unit-card-name">RL</div>
-        <div class="unit-card-sub">Republica do Libano<br>Sao Paulo - SP</div>
+        <div class="unit-card-sub">República do Líbano<br>São Paulo - SP</div>
       </div>
       <div class="unit-card featured" onclick="abrirLancamento('santos')">
         <div class="unit-card-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" stroke="#3E4F5C" stroke-width="1.4" stroke-linejoin="round"/><polyline points="9 22 9 12 15 12 15 22" stroke="#3E4F5C" stroke-width="1.4" stroke-linejoin="round"/></svg></div>
@@ -1737,8 +1700,8 @@ canvas.logo-canvas-nav{height:70px;width:auto;}
       </div>
       <div class="unit-card featured" onclick="abrirLancamento('tatuape')">
         <div class="unit-card-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" stroke="#3E4F5C" stroke-width="1.4" stroke-linejoin="round"/><polyline points="9 22 9 12 15 12 15 22" stroke="#3E4F5C" stroke-width="1.4" stroke-linejoin="round"/></svg></div>
-        <div class="unit-card-name">Tatuape</div>
-        <div class="unit-card-sub">Sao Paulo - SP</div>
+        <div class="unit-card-name">Tatuapé</div>
+        <div class="unit-card-sub">São Paulo - SP</div>
       </div>
       <div class="unit-card disabled">
         <div class="unit-card-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="#3E4F5C" stroke-width="1.4"/><line x1="12" y1="8" x2="12" y2="12" stroke="#3E4F5C" stroke-width="1.4" stroke-linecap="round"/><line x1="12" y1="16" x2="12.01" y2="16" stroke="#3E4F5C" stroke-width="1.4" stroke-linecap="round"/></svg></div>
@@ -1750,8 +1713,8 @@ canvas.logo-canvas-nav{height:70px;width:auto;}
 
   <!-- HOME -->
   <div class="ind-home active" id="ind-home">
-    <p class="ind-home-eyebrow">Indicadores Clinicos</p>
-    <h2 class="ind-home-title">Selecione um <strong>servico</strong></h2>
+    <p class="ind-home-eyebrow">Indicadores Clínicos</p>
+    <h2 class="ind-home-title">Selecione um <strong>serviço</strong></h2>
     <div class="ind-trs-grid">
 
       <div class="trs-card tc-cron" onclick="abrirCronico()">
@@ -1759,9 +1722,9 @@ canvas.logo-canvas-nav{height:70px;width:auto;}
         <div class="trs-card-overlay"></div>
         <div class="trs-card-content">
           <div class="trs-card-label">Terapia Renal Substitutiva</div>
-          <div class="trs-card-title">Gestao TRS Cronico</div>
-          <div class="trs-card-desc">Dashboard mensal e lancamento de dados das unidades RL, Santos e Tatuape.</div>
-          <div class="trs-card-tags"><span class="trs-tag">Dashboard</span><span class="trs-tag">Lancamento</span><span class="trs-tag">Por unidade</span></div>
+          <div class="trs-card-title">Gestão TRS Crônico</div>
+          <div class="trs-card-desc">Dashboard mensal e lançamento de dados das unidades RL, Santos e Tatuapé.</div>
+          <div class="trs-card-tags"><span class="trs-tag">Dashboard</span><span class="trs-tag">Lançamento</span><span class="trs-tag">Por unidade</span></div>
         </div>
         <div class="trs-card-arrow">&#8594;</div>
       </div>
@@ -1771,9 +1734,9 @@ canvas.logo-canvas-nav{height:70px;width:auto;}
         <div class="trs-card-overlay"></div>
         <div class="trs-card-content">
           <div class="trs-card-label">Terapia Renal Substitutiva</div>
-          <div class="trs-card-title">Gestao TRS Agudo</div>
-          <div class="trs-card-desc">Lancamento semanal, acessos venosos e intercorrencias por hospital.</div>
-          <div class="trs-card-tags"><span class="trs-tag">HD - CRRT - DP - SLED</span><span class="trs-tag">Intercorrencias</span><span class="trs-tag">Por hospital</span></div>
+          <div class="trs-card-title">Gestão TRS Agudo</div>
+          <div class="trs-card-desc">Lançamento semanal, acessos venosos e intercorrências por hospital.</div>
+          <div class="trs-card-tags"><span class="trs-tag">HD - CRRT - DP - SLED</span><span class="trs-tag">Intercorrências</span><span class="trs-tag">Por hospital</span></div>
         </div>
         <div class="trs-card-arrow">&#8594;</div>
       </div>
@@ -1784,8 +1747,8 @@ canvas.logo-canvas-nav{height:70px;width:auto;}
         <div class="trs-card-content">
           <div class="trs-card-label">Sala da Diretoria</div>
           <div class="trs-card-title">Painel de Indicadores</div>
-          <div class="trs-card-desc">Visao executiva em TV 16:9 — Cronico e Agudo em tempo real com atualizacao automatica.</div>
-          <div class="trs-card-tags"><span class="trs-tag">Cronico + Agudo</span><span class="trs-tag">TV 16:9</span><span class="trs-tag">Auto-atualizacao</span></div>
+          <div class="trs-card-desc">Visão executiva em TV 16:9 — Crônico e Agudo em tempo real com atualização automática.</div>
+          <div class="trs-card-tags"><span class="trs-tag">Crônico + Agudo</span><span class="trs-tag">TV 16:9</span><span class="trs-tag">Auto-atualização</span></div>
         </div>
         <div class="trs-card-arrow">&#8594;</div>
       </div>
@@ -1794,9 +1757,9 @@ canvas.logo-canvas-nav{height:70px;width:auto;}
         <div class="trs-card-bg"></div>
         <div class="trs-card-overlay"></div>
         <div class="trs-card-content">
-          <div class="trs-card-label">Planos de Saude</div>
-          <div class="trs-card-title">Relatorio por Plano</div>
-          <div class="trs-card-desc">Indicadores segmentados por plano de saude para reunioes com gestores. Comparativo plano x total da clinica.</div>
+          <div class="trs-card-label">Planos de Saúde</div>
+          <div class="trs-card-title">Relatório por Plano</div>
+          <div class="trs-card-desc">Indicadores segmentados por plano de saúde para reuniões com gestores. Comparativo plano x total da clínica.</div>
           <div class="trs-card-tags"><span class="trs-tag">Por plano</span><span class="trs-tag">Comparativo</span><span class="trs-tag">Gera PDF</span></div>
         </div>
         <div class="trs-card-arrow">&#8594;</div>
@@ -1945,10 +1908,6 @@ function abrirQualidade(){
   updateBreadcrumb('qualidade');
 }
 
-function abrirCalculadoras(){
-  showAppScreen('screen-calculadoras');
-  updateBreadcrumb('calculadoras');
-}
 
 function abrirIndicadoresFromNefro(){
   abrirIndicadores();
@@ -1961,8 +1920,8 @@ function abrirPacientesDireto(){
 }
 
 /* Breadcrumb for top nav */
-const NAV_NAMES={dashboard:'Dashboard',nefrologia:'Nefrologia',qualidade:'Qualidade',calculadoras:'Calculadoras',outros:'Outros Modulos',pacientes:'Meus Pacientes',ficha:'Ficha do Paciente'};
-const NAV_PARENTS={nefrologia:'dashboard',qualidade:'nefrologia',calculadoras:'nefrologia',outros:'dashboard',pacientes:'dashboard',ficha:'pacientes'};
+const NAV_NAMES={dashboard:'Dashboard',nefrologia:'Nefrologia',qualidade:'Qualidade',outros:'Outros Módulos',pacientes:'Meus Pacientes',ficha:'Ficha do Paciente'};
+const NAV_PARENTS={nefrologia:'dashboard',qualidade:'nefrologia',outros:'dashboard',pacientes:'dashboard',ficha:'pacientes'};
 
 function updateBreadcrumb(layer){
   const bc=document.getElementById('breadcrumb');
@@ -1980,7 +1939,6 @@ function goToNav(layer){
   if(layer==='dashboard') voltarMainDash();
   else if(layer==='nefrologia') abrirNefrologia();
   else if(layer==='qualidade') abrirQualidade();
-  else if(layer==='calculadoras') abrirCalculadoras();
   else if(layer==='outros') abrirOutros();
   else if(layer==='pacientes') abrirPacientesDireto();
 }
@@ -2003,7 +1961,8 @@ function logout(){
 function updateNavUser(){
   const nome = PERFIL && PERFIL.nome ? PERFIL.nome : 'Dr. Bruno';
   document.getElementById('nav-user-name').textContent = nome;
-  document.getElementById('hero-nome').textContent = nome;
+  const heroNome = document.getElementById('hero-nome');
+  if(heroNome) heroNome.textContent = nome;
 }
 
 /* ============================================================
@@ -2018,7 +1977,9 @@ function fecharLogin(){
   document.getElementById('login-screen').style.display='none';
   document.getElementById('app-main').style.display='block';
   document.getElementById('login-err').textContent='';
+  document.body.classList.add('logged-in');
   updateNavUser();
+  updateHeroGreeting();
 }
 function fecharLoginFora(e){/* no-op in new design */}
 
@@ -2026,7 +1987,7 @@ function fecharLoginFora(e){/* no-op in new design */}
 let PERFIL = null;
 
 // -- BREADCRUMB (ind-overlay) --
-const BC_HOME = {label:'Indicadores Clinicos', fn:'voltarHome'};
+const BC_HOME = {label:'Indicadores Clínicos', fn:'voltarHome'};
 let BC_TRAIL = [BC_HOME];
 
 function setBreadcrumb(items){
@@ -2108,18 +2069,18 @@ function aplicarPermissoesOperador(){
   if(cardDash)cardDash.style.display='';
   const cardLanc=document.getElementById('card-cron-lancamento');
   if(cardLanc)cardLanc.setAttribute('onclick',`abrirLancamentoDireto('${unidade}')`);
-  setBreadcrumb([{label:`Lancamento — ${PERFIL.nome}`,fn:null}]);
+  setBreadcrumb([{label:`Lançamento — ${PERFIL.nome}`,fn:null}]);
 }
 
 function abrirLancamentoDireto(unidade){
-  const nomes={rl:'RL',santos:'Santos',tatuape:'Tatuape'};
+  const nomes={rl:'RL',santos:'Santos',tatuape:'Tatuapé'};
   document.getElementById('ind-home').classList.remove('active');
   document.getElementById('cron-mid').classList.remove('active');
   document.getElementById('unit-sel').classList.remove('active');
   document.getElementById('ind-content').classList.add('active');
   setBreadcrumb([
-    {label:'TRS Cronico', onclick:'abrirCronico()'},
-    {label:'Lancamento — '+(nomes[unidade]||unidade)}
+    {label:'TRS Crônico', onclick:'abrirCronico()'},
+    {label:'Lançamento — '+(nomes[unidade]||unidade)}
   ]);
   document.querySelectorAll('.ind-iframe').forEach(f=>f.classList.remove('active'));
   const iframe=document.getElementById(`iframe-lanc-${unidade}`);
@@ -2134,7 +2095,7 @@ function voltarHome(){
   document.getElementById('cron-mid').classList.remove('active');
   document.getElementById('unit-sel').classList.remove('active');
   document.getElementById('ind-content').classList.remove('active');
-  setBreadcrumb([{label:'Indicadores Clinicos'}]);
+  setBreadcrumb([{label:'Indicadores Clínicos'}]);
 }
 
 function abrirCronico(){
@@ -2143,8 +2104,8 @@ function abrirCronico(){
   document.getElementById('ind-content').classList.remove('active');
   document.getElementById('cron-mid').classList.add('active');
   setBreadcrumb([
-    {label:'Indicadores Clinicos', onclick:'voltarHome()'},
-    {label:'TRS Cronico'}
+    {label:'Indicadores Clínicos', onclick:'voltarHome()'},
+    {label:'TRS Crônico'}
   ]);
 }
 
@@ -2152,8 +2113,8 @@ function abrirDashboardCron(){
   document.getElementById('cron-mid').classList.remove('active');
   document.getElementById('ind-content').classList.add('active');
   setBreadcrumb([
-    {label:'Indicadores Clinicos', onclick:'voltarHome()'},
-    {label:'TRS Cronico', onclick:'abrirCronico()'},
+    {label:'Indicadores Clínicos', onclick:'voltarHome()'},
+    {label:'TRS Crônico', onclick:'abrirCronico()'},
     {label:'Dashboard'}
   ]);
   document.querySelectorAll('.ind-iframe').forEach(f=>f.classList.remove('active'));
@@ -2166,20 +2127,20 @@ function abrirSelecaoUnidade(){
   document.getElementById('cron-mid').classList.remove('active');
   document.getElementById('unit-sel').classList.add('active');
   setBreadcrumb([
-    {label:'Indicadores Clinicos', onclick:'voltarHome()'},
-    {label:'TRS Cronico', onclick:'abrirCronico()'},
-    {label:'Lancamento Mensal'}
+    {label:'Indicadores Clínicos', onclick:'voltarHome()'},
+    {label:'TRS Crônico', onclick:'abrirCronico()'},
+    {label:'Lançamento Mensal'}
   ]);
 }
 
 function abrirLancamento(unidade){
-  const nomes={rl:'RL',santos:'Santos',tatuape:'Tatuape'};
+  const nomes={rl:'RL',santos:'Santos',tatuape:'Tatuapé'};
   document.getElementById('unit-sel').classList.remove('active');
   document.getElementById('ind-content').classList.add('active');
   setBreadcrumb([
-    {label:'Indicadores Clinicos', onclick:'voltarHome()'},
-    {label:'TRS Cronico', onclick:'abrirCronico()'},
-    {label:'Lancamento Mensal', onclick:'abrirSelecaoUnidade()'},
+    {label:'Indicadores Clínicos', onclick:'voltarHome()'},
+    {label:'TRS Crônico', onclick:'abrirCronico()'},
+    {label:'Lançamento Mensal', onclick:'abrirSelecaoUnidade()'},
     {label:nomes[unidade]||unidade}
   ]);
   document.querySelectorAll('.ind-iframe').forEach(f=>f.classList.remove('active'));
@@ -2198,7 +2159,7 @@ function abrirPainelTV(){
   document.getElementById('ind-home').classList.remove('active');
   document.getElementById('ind-content').classList.add('active');
   setBreadcrumb([
-    {label:'Indicadores Clinicos', onclick:'voltarHome()'},
+    {label:'Indicadores Clínicos', onclick:'voltarHome()'},
     {label:'Painel de Indicadores'}
   ]);
   const iframe=document.getElementById('iframe-tv');
@@ -2211,7 +2172,7 @@ function abrirAgudo(){
   document.getElementById('ind-home').classList.remove('active');
   document.getElementById('ind-content').classList.add('active');
   setBreadcrumb([
-    {label:'Indicadores Clinicos', onclick:'voltarHome()'},
+    {label:'Indicadores Clínicos', onclick:'voltarHome()'},
     {label:'TRS Agudo'}
   ]);
   const iframe=document.getElementById('iframe-agudo');
@@ -2230,8 +2191,8 @@ function sairIndicadores(){
   document.querySelectorAll('.unit-card:not(.disabled)').forEach(c=>{c.style.display='';});
   const cardCron=document.querySelector('.trs-card.cron');
   if(cardCron){
-    cardCron.querySelector('.trs-card-title').textContent='Gestao TRS Cronico';
-    cardCron.querySelector('.trs-card-desc').textContent='Dashboard mensal e lancamento de dados das unidades RL, Santos e Tatuape.';
+    cardCron.querySelector('.trs-card-title').textContent='Gestão TRS Crônico';
+    cardCron.querySelector('.trs-card-desc').textContent='Dashboard mensal e lançamento de dados das unidades RL, Santos e Tatuapé.';
     cardCron.setAttribute('onclick','abrirCronico()');
   }
   const cardDash=document.getElementById('card-cron-dashboard');
@@ -2272,7 +2233,7 @@ async function carregarListaPacientes(){
     grid.innerHTML='<div class="pac-empty">Nenhum paciente cadastrado ainda.<br>Clique em "+ Novo paciente" para comecar.</div>';
     return;
   }
-  const unLabel = u=>({rl:'RL',santos:'Santos',tatuape:'Tatuape',todas:'Todas'})[u]||'—';
+  const unLabel = u=>({rl:'RL',santos:'Santos',tatuape:'Tatuapé',todas:'Todas'})[u]||'—';
   grid.innerHTML = data.map(p=>`
     <div class="pac-card" onclick="abrirFicha('${p.id}','${escH(p.nome)}','${escH(p.diagnostico_principal||'')}')">
       <div class="pac-card-name">${escH(p.nome)}</div>
@@ -2442,7 +2403,7 @@ async function carregarConsultas(){
 async function salvarMeta(){
   if(!PAC_ATUAL?.id){ showMsg('msg-meta','Salve o perfil primeiro','erro'); return; }
   const desc=document.getElementById('me-desc').value;
-  if(!desc){ showMsg('msg-meta','Descricao obrigatoria','erro'); return; }
+  if(!desc){ showMsg('msg-meta','Descrição obrigatória','erro'); return; }
   const body={paciente_id:PAC_ATUAL.id,categoria:document.getElementById('me-cat').value,descricao_meta:desc,valor_alvo:document.getElementById('me-alvo').value||null,prazo:document.getElementById('me-prazo').value||null,status:'ativa'};
   const r=await fetch(`${SUPA_URL}/rest/v1/metas_clinicas`,{method:'POST',headers:H(),body:JSON.stringify(body)});
   if(r.ok){ showMsg('msg-meta','Adicionado ✓'); ['me-desc','me-alvo','me-prazo'].forEach(id=>document.getElementById(id).value=''); await carregarMetas(); }
@@ -2490,7 +2451,7 @@ function addSup(){
   list.appendChild(div);
 }
 function addSessao(){
-  const dias=['Segunda','Terca','Quarta','Quinta','Sexta','Sabado','Domingo'];const list=document.getElementById('tr-sessoes');const div=document.createElement('div');div.className='f-list-item';
+  const dias=['Segunda','Terça','Quarta','Quinta','Sexta','Sábado','Domingo'];const list=document.getElementById('tr-sessoes');const div=document.createElement('div');div.className='f-list-item';
   div.innerHTML=`<div class="f-group"><label>Dia</label><select>${dias.map(d=>`<option>${d}</option>`).join('')}</select></div><div class="f-group"><label>Atividade</label><input type="text" placeholder="Corrida leve 30min"></div><div class="f-group"><label>Obs</label><input type="text" placeholder="Opcional"></div><button class="f-remove-btn" onclick="this.parentElement.remove()">✕</button>`;
   list.appendChild(div);
 }
@@ -2514,7 +2475,7 @@ async function carregarProtocolo(tipo){
     const set=(id,v)=>{const el=document.getElementById(id);if(el&&v!=null)el.value=v;};
     set('tr-mod',c.modalidade);set('tr-freq',c.frequencia);set('tr-dur',c.duracao);set('tr-int',c.intensidade);set('tr-fc',c.fc_alvo);set('tr-meta',c.meta);set('tr-restr',c.restricoes);
     const list=document.getElementById('tr-sessoes');list.innerHTML='';
-    (c.sessoes||[]).forEach(s=>{const div=document.createElement('div');div.className='f-list-item';const dias=['Segunda','Terca','Quarta','Quinta','Sexta','Sabado','Domingo'];
+    (c.sessoes||[]).forEach(s=>{const div=document.createElement('div');div.className='f-list-item';const dias=['Segunda','Terça','Quarta','Quinta','Sexta','Sábado','Domingo'];
       div.innerHTML=`<div class="f-group"><label>Dia</label><select>${dias.map(d=>`<option${d===s.dia?' selected':''}>${d}</option>`).join('')}</select></div><div class="f-group"><label>Atividade</label><input type="text" value="${escH(s.atividade||'')}"></div><div class="f-group"><label>Obs</label><input type="text" value="${escH(s.obs||'')}"></div><button class="f-remove-btn" onclick="this.parentElement.remove()">✕</button>`;
       list.appendChild(div);});
   }
@@ -2537,7 +2498,7 @@ async function carregarProtocolo(tipo){
     (c.fases||[]).forEach(f=>{const div=document.createElement('div');div.className='f-list-item';
       div.innerHTML=`<div class="f-group"><label>Fase</label><input type="text" value="${escH(f.nome||'')}"></div><div class="f-group"><label>Periodo</label><input type="text" value="${escH(f.periodo||'')}"></div><div class="f-group"><label>Objetivo</label><input type="text" value="${escH(f.objetivo||'')}"></div><button class="f-remove-btn" onclick="this.parentElement.remove()">✕</button>`;
       list.appendChild(div);});
-    const planDias=document.getElementById('plan-dias');const dias=['Segunda','Terca','Quarta','Quinta','Sexta','Sabado','Domingo'];
+    const planDias=document.getElementById('plan-dias');const dias=['Segunda','Terça','Quarta','Quinta','Sexta','Sábado','Domingo'];
     planDias.innerHTML=dias.map(d=>`<div style="display:flex;align-items:baseline;gap:10px;margin-bottom:10px;"><div style="width:70px;font-size:10px;font-weight:600;color:var(--text-3);text-transform:uppercase;">${d}</div><div class="f-group" style="flex:1;margin:0;"><input type="text" id="plan-${d.toLowerCase()}" value="${escH((c.dias||{})[d]||'')}" placeholder="Atividade, consulta, descanso..."></div></div>`).join('');
   }
 }
@@ -2549,7 +2510,7 @@ async function salvarProtocolo(tipo){
   if(tipo==='treino'){const g=id=>document.getElementById(id)?.value||null;const sessoes=[];document.querySelectorAll('#tr-sessoes .f-list-item').forEach(row=>{const sels=row.querySelectorAll('select,input');sessoes.push({dia:sels[0].value,atividade:sels[1].value,obs:sels[2].value});});conteudo={modalidade:g('tr-mod'),frequencia:g('tr-freq'),duracao:g('tr-dur'),intensidade:g('tr-int'),fc_alvo:g('tr-fc'),meta:g('tr-meta'),restricoes:g('tr-restr'),sessoes};}
   if(tipo==='medicamentos'){const itens=[];document.querySelectorAll('#med-lista .f-list-item').forEach(row=>{const ins=row.querySelectorAll('input');if(ins[0].value)itens.push({nome:ins[0].value,dose:ins[1].value,horario:ins[2].value,alerta:ins[3].value});});conteudo={itens};}
   if(tipo==='suplementacao'){const itens=[];document.querySelectorAll('#sup-lista .f-list-item').forEach(row=>{const ins=row.querySelectorAll('input');if(ins[0].value)itens.push({nome:ins[0].value,dose:ins[1].value,horario:ins[2].value});});conteudo={itens,obs:document.getElementById('sup-obs')?.value||null};}
-  if(tipo==='planejamento'){const dias={};['Segunda','Terca','Quarta','Quinta','Sexta','Sabado','Domingo'].forEach(d=>{const el=document.getElementById('plan-'+d.toLowerCase());if(el)dias[d]=el.value;});const fases=[];document.querySelectorAll('#plan-fases .f-list-item').forEach(row=>{const ins=row.querySelectorAll('input');if(ins[0].value)fases.push({nome:ins[0].value,periodo:ins[1].value,objetivo:ins[2].value});});conteudo={dias,fases,obs:document.getElementById('plan-obs')?.value||null};}
+  if(tipo==='planejamento'){const dias={};['Segunda','Terça','Quarta','Quinta','Sexta','Sábado','Domingo'].forEach(d=>{const el=document.getElementById('plan-'+d.toLowerCase());if(el)dias[d]=el.value;});const fases=[];document.querySelectorAll('#plan-fases .f-list-item').forEach(row=>{const ins=row.querySelectorAll('input');if(ins[0].value)fases.push({nome:ins[0].value,periodo:ins[1].value,objetivo:ins[2].value});});conteudo={dias,fases,obs:document.getElementById('plan-obs')?.value||null};}
   const body={paciente_id:PAC_ATUAL.id,tipo,conteudo,atualizado_por:'Dr. Bruno P. Biluca',atualizado_em:new Date().toISOString()};
   const r=await fetch(`${SUPA_URL}/rest/v1/protocolos?on_conflict=paciente_id,tipo`,{method:'POST',headers:{...H(),'Prefer':'resolution=merge-duplicates,return=minimal'},body:JSON.stringify(body)});
   if(r.ok||r.status===201||r.status===204) showMsg('msg-'+tipo,'Salvo ✓');
@@ -2653,35 +2614,35 @@ function buildAnamnesePrompt(){
   const historia = document.getElementById('an-historia')?.value||'';const outras = document.getElementById('an-outras')?.value||'';
   const metaEsportiva = document.getElementById('an-meta-esportiva')?.value||'';const diasObs = document.getElementById('an-disp-obs')?.value||'';
   const comorb = Array.from(AN_COMORBIDADES).join(', ')||'nenhuma';
-  const drcTxt = AN_COMORBIDADES.has('drc')&&AN_DRC_ESTAGIO ? ` (DRC estagio ${AN_DRC_ESTAGIO})` : '';
-  const obj = Array.from(AN_OBJETIVOS).join(', ')||'nao especificados';
-  const dias = Array.from(AN_DIAS).join(', ')||'nao informado';
+  const drcTxt = AN_COMORBIDADES.has('drc')&&AN_DRC_ESTAGIO ? ` (DRC estágio ${AN_DRC_ESTAGIO})` : '';
+  const obj = Array.from(AN_OBJETIVOS).join(', ')||'não especificados';
+  const dias = Array.from(AN_DIAS).join(', ')||'não informado';
 
-  return `Voce e o Dr. Bruno P. Biluca, nefrologista (CRM-SP 151.041), especialista em medicina renal e performance humana. Com base na anamnese abaixo, gere um protocolo clinico completo e baseado em evidencias para este paciente.
+  return `Você é o Dr. Bruno P. Biluca, nefrologista (CRM-SP 151.041), especialista em medicina renal e performance humana. Com base na anamnese abaixo, gere um protocolo clínico completo e baseado em evidências para este paciente.
 
 DADOS DO PACIENTE:
 - Nome: ${nome}
 - Peso: ${peso}kg | Altura: ${altura}cm | IMC: ${imc}
 - Comorbidades: ${comorb}${drcTxt}
 - Outras: ${outras}
-- Historia pregressa: ${historia}
+- História pregressa: ${historia}
 - Objetivos: ${obj}
-- Meta esportiva: ${metaEsportiva||'nao definida'}
-- Dias disponiveis para treino: ${dias}
-- Observacoes: ${diasObs}
+- Meta esportiva: ${metaEsportiva||'não definida'}
+- Dias disponíveis para treino: ${dias}
+- Observações: ${diasObs}
 
-Responda APENAS com um JSON valido (sem markdown, sem backticks, sem texto fora do JSON) com esta estrutura exata:
+Responda APENAS com um JSON válido (sem markdown, sem backticks, sem texto fora do JSON) com esta estrutura exata:
 
 {
-  "dieta": {"kcal": 1800,"prot": 80,"carb": 220,"gord": 55,"pot": null,"fos": null,"restr": "Alimentos restritos","rec": "Alimentos recomendados","obs": "Observacoes"},
-  "suplementacao": {"itens": [{"nome": "Nome", "dose": "dose", "horario": "horario"}],"obs": "Alertas"},
-  "treino": {"modalidade": "Modalidade","frequencia": "Xx por semana","duracao": "XX-XX minutos","intensidade": "leve|moderada|vigorosa","fc_alvo": "XXX-XXX bpm","meta": "meta semanal","sessoes": [{"dia": "Segunda", "atividade": "descricao", "obs": "obs"}],"restricoes": "Restricoes"},
-  "planejamento": {"obs": "Obs gerais","fases": [{"nome": "Fase 1", "periodo": "Meses 1-3", "objetivo": "Objetivo"}],"dias": {"Segunda": "atividade","Terca": "atividade","Quarta": "atividade","Quinta": "atividade","Sexta": "atividade","Sabado": "atividade","Domingo": "atividade"}},
+  "dieta": {"kcal": 1800,"prot": 80,"carb": 220,"gord": 55,"pot": null,"fos": null,"restr": "Alimentos restritos","rec": "Alimentos recomendados","obs": "Observações"},
+  "suplementacao": {"itens": [{"nome": "Nome", "dose": "dose", "horario": "horário"}],"obs": "Alertas"},
+  "treino": {"modalidade": "Modalidade","frequencia": "Xx por semana","duracao": "XX-XX minutos","intensidade": "leve|moderada|vigorosa","fc_alvo": "XXX-XXX bpm","meta": "meta semanal","sessoes": [{"dia": "Segunda", "atividade": "descrição", "obs": "obs"}],"restricoes": "Restrições"},
+  "planejamento": {"obs": "Obs gerais","fases": [{"nome": "Fase 1", "periodo": "Meses 1-3", "objetivo": "Objetivo"}],"dias": {"Segunda": "atividade","Terça": "atividade","Quarta": "atividade","Quinta": "atividade","Sexta": "atividade","Sábado": "atividade","Domingo": "atividade"}},
   "metas": [{"categoria": "pressao", "descricao_meta": "desc", "valor_alvo": "valor", "unidade": "un"}],
-  "interacoes": "Texto sobre interacoes medicamentosas"
+  "interacoes": "Texto sobre interações medicamentosas"
 }
 
-Base suas recomendacoes nas diretrizes KDIGO (DRC), JNC 8 (HAS), ADA (DM), ACSM (exercicio) e ISSN (nutricao esportiva). Considere SEMPRE as limitacoes impostas pelas comorbidades.`;
+Base suas recomendações nas diretrizes KDIGO (DRC), JNC 8 (HAS), ADA (DM), ACSM (exercício) e ISSN (nutrição esportiva). Considere SEMPRE as limitações impostas pelas comorbidades.`;
 }
 
 async function gerarProtocoloIA(){
@@ -2732,7 +2693,7 @@ async function abrirPrescricao(){
   const itensForms = [];document.querySelectorAll('#med-lista .f-list-item').forEach(row=>{const ins=row.querySelectorAll('input');if(ins[0]?.value) itensForms.push({nome:ins[0].value,dose:ins[1]?.value||'',horario:ins[2]?.value||''});});
   const listaFinal = itensForms.length ? itensForms : itens;
   const idade = pac.data_nascimento ? Math.floor((new Date()-new Date(pac.data_nascimento))/31557600000) : '';
-  document.getElementById('rx-paciente-info').innerHTML=`<strong>Paciente:</strong> ${pac.nome||'—'}${idade?' · '+idade+' anos':''}<br><strong>Diagnostico:</strong> ${pac.diagnostico_principal||'—'}`;
+  document.getElementById('rx-paciente-info').innerHTML=`<strong>Paciente:</strong> ${pac.nome||'—'}${idade?' · '+idade+' anos':''}<br><strong>Diagnóstico:</strong> ${pac.diagnostico_principal||'—'}`;
   document.getElementById('rx-data').textContent=new Date().toLocaleDateString('pt-BR');
   document.getElementById('rx-items').innerHTML=listaFinal.length
     ? listaFinal.map((m,i)=>`<div class="rx-item"><div class="rx-item-nome">${i+1}. ${escH(m.nome)}${m.dose?' — '+escH(m.dose):''}</div><div class="rx-item-dose">${m.horario?'Posologia: '+escH(m.horario):''}${m.alerta?'<br><span style="color:#C0392B;font-size:10px;">'+escH(m.alerta)+'</span>':''}</div></div>`).join('')
@@ -2758,56 +2719,56 @@ function carregarApiKeyProf(){const k = localStorage.getItem('brunoApiKey')||loc
 const DASH_TASKS=[
   {id:1,f:"tech",t:"Revisar codigo React Native do APEX Health",d:"Rodar expo start, testar fluxos, listar bugs visuais",w:1,p:"alta",s:"todo",sub:"Health"},
   {id:2,f:"tech",t:"Configurar Supabase Pro (producao)",d:"Migrar de free tier, habilitar backups, RLS",w:1,p:"alta",s:"todo",sub:"Health"},
-  {id:3,f:"tech",t:"Integracao Oura API — OAuth2 + sync",d:"OAuth2 flow, edge function sync-wearable, testar com Oura Ring",w:2,p:"alta",s:"todo",sub:"Health"},
-  {id:4,f:"tech",t:"Integracao Apple HealthKit",d:"react-native-health, permissoes granulares, sync background",w:2,p:"alta",s:"todo",sub:"Health"},
+  {id:3,f:"tech",t:"Integração Oura API — OAuth2 + sync",d:"OAuth2 flow, edge function sync-wearable, testar com Oura Ring",w:2,p:"alta",s:"todo",sub:"Health"},
+  {id:4,f:"tech",t:"Integração Apple HealthKit",d:"react-native-health, permissões granulares, sync background",w:2,p:"alta",s:"todo",sub:"Health"},
   {id:5,f:"tech",t:"Jarvis IA — conectar Claude API ao app",d:"Edge function jarvis-chat funcional com contexto do paciente",w:3,p:"alta",s:"todo",sub:"Health"},
   {id:6,f:"tech",t:"APEX Hub — ajustes finais index.html",d:"Revisar links, SEO basico, meta tags, verificar deploy Vercel",w:3,p:"media",s:"todo",sub:"Hub"},
   {id:7,f:"tech",t:"APEX Health landing — formulario de leads",d:"Form de captura na portal_pacientes.html, integrar com CRM",w:4,p:"media",s:"todo",sub:"Hub"},
   {id:8,f:"tech",t:"Gateway de pagamento (Stripe/Asaas)",d:"Cobrancas recorrentes para Move, Care, Elite",w:4,p:"alta",s:"todo",sub:"Health"},
-  {id:9,f:"tech",t:"Fluxo de onboarding no app",d:"Pagamento -> conta -> download -> parear wearable -> agendar consulta",w:5,p:"alta",s:"todo",sub:"Health"},
-  {id:10,f:"tech",t:"APEX Pro — prototipo painel medico",d:"Prescricao (dieta+suplementos+meds), lista pacientes, dashboard",w:5,p:"media",s:"todo",sub:"Pro"},
+  {id:9,f:"tech",t:"Fluxo de onboarding no app",d:"Pagamento → conta → download → parear wearable → agendar consulta",w:5,p:"alta",s:"todo",sub:"Health"},
+  {id:10,f:"tech",t:"APEX Pro — protótipo painel médico",d:"Prescrição (dieta+suplementos+meds), lista pacientes, dashboard",w:5,p:"media",s:"todo",sub:"Pro"},
   {id:11,f:"tech",t:"Publicar app na App Store (TestFlight)",d:"Build iOS, submeter TestFlight, testar com 5-10 pessoas",w:6,p:"alta",s:"todo",sub:"Health"},
   {id:12,f:"tech",t:"Publicar app no Google Play (beta)",d:"Build Android, publicar teste interno",w:6,p:"media",s:"todo",sub:"Health"},
-  {id:13,f:"tech",t:"APEX Pro — prescricao digital ICP-Brasil",d:"PDF com assinatura digital, disponibilizar no app do paciente",w:7,p:"alta",s:"todo",sub:"Pro"},
-  {id:14,f:"tech",t:"Integracao Garmin Health API",d:"Aplicacao enterprise, OAuth 1.0a, webhooks, sync",w:7,p:"media",s:"todo",sub:"Health"},
+  {id:13,f:"tech",t:"APEX Pro — prescrição digital ICP-Brasil",d:"PDF com assinatura digital, disponibilizar no app do paciente",w:7,p:"alta",s:"todo",sub:"Pro"},
+  {id:14,f:"tech",t:"Integração Garmin Health API",d:"Aplicação enterprise, OAuth 1.0a, webhooks, sync",w:7,p:"media",s:"todo",sub:"Health"},
   {id:15,f:"tech",t:"APEX Read — estrutura inicial do blog",d:"Blog integrado ao Hub, artigos, categorias",w:8,p:"media",s:"todo",sub:"Read"},
-  {id:16,f:"tech",t:"Testes de carga e seguranca",d:"50+ usuarios simulados, pen test basico, OWASP top 10",w:9,p:"alta",s:"todo",sub:"Health"},
-  {id:17,f:"tech",t:"App Store — submissao oficial",d:"Versao final, review Apple Guidelines 5.1.1 e 5.1.3",w:10,p:"alta",s:"todo",sub:"Health"},
-  {id:18,f:"tech",t:"APEX Pro — modulo de treinos (Ed. Fisica)",d:"Interface para Ed. Fisica prescrever treinos no app",w:11,p:"media",s:"todo",sub:"Pro"},
-  {id:19,f:"tech",t:"Lancamento soft — 10-20 usuarios Move",d:"Primeiros usuarios, metricas, feedback",w:12,p:"alta",s:"todo",sub:"Health"},
-  {id:20,f:"legal",t:"Consultar contador especializado em saude",d:"CNAE, regime tributario, custos de abertura",w:1,p:"alta",s:"todo",sub:"Societario"},
-  {id:21,f:"legal",t:"Abrir CNPJ (SLU ou LTDA)",d:"CNAE 8630-5/03, inscricao municipal, alvara",w:2,p:"alta",s:"todo",sub:"Societario"},
-  {id:22,f:"legal",t:"Abrir conta PJ",d:"Separar financas pessoais da empresa desde o dia 1",w:2,p:"alta",s:"todo",sub:"Societario"},
-  {id:23,f:"legal",t:"Contratar advogado — contratos e LGPD",d:"Contrato servicos, termos de uso, politica de privacidade",w:3,p:"alta",s:"todo",sub:"Contratos"},
-  {id:24,f:"legal",t:"Obter certificado digital ICP-Brasil",d:"e-CPF para assinatura digital de prescricoes",w:3,p:"alta",s:"todo",sub:"Regulatorio"},
-  {id:25,f:"legal",t:"Registrar CRM como PJ",d:"Verificar necessidade junto ao CRM regional para telemedicina",w:4,p:"media",s:"todo",sub:"Regulatorio"},
-  {id:26,f:"legal",t:"Elaborar DPIA (Relatorio de Impacto LGPD)",d:"Mapear dados coletados, finalidade, riscos, medidas",w:5,p:"alta",s:"todo",sub:"LGPD"},
-  {id:27,f:"legal",t:"Termos de uso + Politica de Privacidade finais",d:"Validar com advogado, implementar aceite no app",w:6,p:"alta",s:"todo",sub:"LGPD"},
-  {id:28,f:"legal",t:"Contrato com Prof. de Educacao Fisica",d:"CREF ativo, prescricao de treinos — PJ ou autonomo",w:7,p:"alta",s:"todo",sub:"Equipe"},
-  {id:29,f:"legal",t:"Contrato com Nutricionista (parceria)",d:"Modelo: por paciente ou fixo. PJ ou autonomo",w:8,p:"media",s:"todo",sub:"Equipe"},
+  {id:16,f:"tech",t:"Testes de carga e seguranca",d:"50+ usuários simulados, pen test básico, OWASP top 10",w:9,p:"alta",s:"todo",sub:"Health"},
+  {id:17,f:"tech",t:"App Store — submissão oficial",d:"Versão final, review Apple Guidelines 5.1.1 e 5.1.3",w:10,p:"alta",s:"todo",sub:"Health"},
+  {id:18,f:"tech",t:"APEX Pro — módulo de treinos (Ed. Física)",d:"Interface para Ed. Física prescrever treinos no app",w:11,p:"media",s:"todo",sub:"Pro"},
+  {id:19,f:"tech",t:"Lançamento soft — 10-20 usuários Move",d:"Primeiros usuários, métricas, feedback",w:12,p:"alta",s:"todo",sub:"Health"},
+  {id:20,f:"legal",t:"Consultar contador especializado em saúde",d:"CNAE, regime tributário, custos de abertura",w:1,p:"alta",s:"todo",sub:"Societário"},
+  {id:21,f:"legal",t:"Abrir CNPJ (SLU ou LTDA)",d:"CNAE 8630-5/03, inscrição municipal, alvará",w:2,p:"alta",s:"todo",sub:"Societário"},
+  {id:22,f:"legal",t:"Abrir conta PJ",d:"Separar finanças pessoais da empresa desde o dia 1",w:2,p:"alta",s:"todo",sub:"Societário"},
+  {id:23,f:"legal",t:"Contratar advogado — contratos e LGPD",d:"Contrato serviços, termos de uso, política de privacidade",w:3,p:"alta",s:"todo",sub:"Contratos"},
+  {id:24,f:"legal",t:"Obter certificado digital ICP-Brasil",d:"e-CPF para assinatura digital de prescrições",w:3,p:"alta",s:"todo",sub:"Regulatório"},
+  {id:25,f:"legal",t:"Registrar CRM como PJ",d:"Verificar necessidade junto ao CRM regional para telemedicina",w:4,p:"media",s:"todo",sub:"Regulatório"},
+  {id:26,f:"legal",t:"Elaborar DPIA (Relatório de Impacto LGPD)",d:"Mapear dados coletados, finalidade, riscos, medidas",w:5,p:"alta",s:"todo",sub:"LGPD"},
+  {id:27,f:"legal",t:"Termos de uso + Política de Privacidade finais",d:"Validar com advogado, implementar aceite no app",w:6,p:"alta",s:"todo",sub:"LGPD"},
+  {id:28,f:"legal",t:"Contrato com Prof. de Educação Física",d:"CREF ativo, prescrição de treinos — PJ ou autônomo",w:7,p:"alta",s:"todo",sub:"Equipe"},
+  {id:29,f:"legal",t:"Contrato com Nutricionista (parceria)",d:"Modelo: por paciente ou fixo. PJ ou autônomo",w:8,p:"media",s:"todo",sub:"Equipe"},
   {id:30,f:"legal",t:"Designar DPO (Encarregado LGPD)",d:"Bruno inicialmente ou terceirizar consultoria",w:9,p:"media",s:"todo",sub:"LGPD"},
-  {id:31,f:"legal",t:"Contrato farmacia de manipulacao (Ultra)",d:"Preco por formula, prazo, logistica, rastreamento",w:10,p:"baixa",s:"todo",sub:"Parcerias"},
-  {id:32,f:"legal",t:"Registro de marca APEX Health no INPI",d:"Protocolar registro, prazo 12-18 meses",w:11,p:"media",s:"todo",sub:"Societario"},
+  {id:31,f:"legal",t:"Contrato farmácia de manipulação (Ultra)",d:"Preço por fórmula, prazo, logística, rastreamento",w:10,p:"baixa",s:"todo",sub:"Parcerias"},
+  {id:32,f:"legal",t:"Registro de marca APEX Health no INPI",d:"Protocolar registro, prazo 12-18 meses",w:11,p:"media",s:"todo",sub:"Societário"},
   {id:33,f:"mkt",t:"Identidade visual APEX Health para Instagram",d:"Paleta, fontes, templates posts (carrossel, reels, stories)",w:1,p:"alta",s:"todo",sub:"Instagram"},
-  {id:34,f:"mkt",t:"Calendario editorial — Mes 1",d:"12 posts (3x/sem): educativo, cases, bastidores, wearable",w:1,p:"alta",s:"todo",sub:"Instagram"},
-  {id:35,f:"mkt",t:"Serie: O que seu wearable diz sobre voce",d:"HRV, sono, temperatura, Body Battery — 4 posts",w:2,p:"alta",s:"todo",sub:"Instagram"},
-  {id:36,f:"mkt",t:"Serie: Comorbidade nao e desculpa",d:"Diabetes+exercicio, hipertensao+treino, obesidade+wearable — 4 posts",w:3,p:"alta",s:"todo",sub:"Instagram"},
-  {id:37,f:"mkt",t:"Artigo: HRV — O numero que muda tudo",d:"Artigo longo, referencias cientificas, graficos do app",w:4,p:"media",s:"todo",sub:"Read"},
+  {id:34,f:"mkt",t:"Calendário editorial — Mês 1",d:"12 posts (3x/sem): educativo, cases, bastidores, wearable",w:1,p:"alta",s:"todo",sub:"Instagram"},
+  {id:35,f:"mkt",t:"Série: O que seu wearable diz sobre você",d:"HRV, sono, temperatura, Body Battery — 4 posts",w:2,p:"alta",s:"todo",sub:"Instagram"},
+  {id:36,f:"mkt",t:"Série: Comorbidade não é desculpa",d:"Diabetes+exercício, hipertensão+treino, obesidade+wearable — 4 posts",w:3,p:"alta",s:"todo",sub:"Instagram"},
+  {id:37,f:"mkt",t:"Artigo: HRV — O número que muda tudo",d:"Artigo longo, referências científicas, gráficos do app",w:4,p:"media",s:"todo",sub:"Read"},
   {id:38,f:"mkt",t:"Reels: bastidores do app APEX Health",d:"Tela real do app, dados wearable, Jarvis respondendo",w:4,p:"alta",s:"todo",sub:"Instagram"},
-  {id:39,f:"mkt",t:"Serie: Protocolo na pratica",d:"wearable -> dados -> Jarvis -> medico -> protocolo — 4 posts",w:5,p:"alta",s:"todo",sub:"Instagram"},
-  {id:40,f:"mkt",t:"Desafio APEX 30 Dias (gratuito)",d:"30 dias monitorando sono+HRV com posts diarios. Leads+autoridade",w:6,p:"alta",s:"todo",sub:"Campanha"},
-  {id:41,f:"mkt",t:"Artigo: Suplementacao baseada em dados",d:"Vitamina D, magnesio, creatina, omega-3 — quando e como monitorar",w:6,p:"media",s:"todo",sub:"Read"},
+  {id:39,f:"mkt",t:"Série: Protocolo na prática",d:"wearable -> dados -> Jarvis -> médico -> protocolo — 4 posts",w:5,p:"alta",s:"todo",sub:"Instagram"},
+  {id:40,f:"mkt",t:"Desafio APEX 30 Dias (gratuito)",d:"30 dias monitorando sono+HRV com posts diários. Leads+autoridade",w:6,p:"alta",s:"todo",sub:"Campanha"},
+  {id:41,f:"mkt",t:"Artigo: Suplementação baseada em dados",d:"Vitamina D, magnésio, creatina, ômega-3 — quando e como monitorar",w:6,p:"media",s:"todo",sub:"Read"},
   {id:42,f:"mkt",t:"Parceria com microinfluenciadores",d:"Enviar Oura Ring + acesso beta para 2-3 influenciadores fitness",w:7,p:"media",s:"todo",sub:"Parcerias"},
-  {id:43,f:"mkt",t:"Conteudo continuo 3x/semana",d:"Carrosseis educativos + reels + stories interativos",w:7,p:"alta",s:"todo",sub:"Instagram"},
-  {id:44,f:"mkt",t:"Artigo: Exercicio com comorbidades — guia",d:"Artigo flagship SEO. APEX Read + LinkedIn",w:8,p:"media",s:"todo",sub:"Read"},
-  {id:45,f:"mkt",t:"Captar primeiros 5 pacientes Care",d:"Rede pessoal + seguidores engajados. Oferta de lancamento",w:9,p:"alta",s:"todo",sub:"Vendas"},
-  {id:46,f:"mkt",t:"Pagina de vendas com depoimentos",d:"Feedback dos primeiros 20 Move, social proof na landing",w:10,p:"alta",s:"todo",sub:"Vendas"},
-  {id:47,f:"mkt",t:"APEX Day — evento online gratuito",d:"Live 2h: palestra wearables+saude, demo app, Q&A",w:11,p:"media",s:"todo",sub:"Campanha"},
-  {id:48,f:"mkt",t:"Rascunho artigo cientifico",d:"Aderencia a protocolos com wearables+IA. Coletar dados iniciais",w:12,p:"baixa",s:"todo",sub:"Academico"},
+  {id:43,f:"mkt",t:"Conteúdo contínuo 3x/semana",d:"Carrosséis educativos + reels + stories interativos",w:7,p:"alta",s:"todo",sub:"Instagram"},
+  {id:44,f:"mkt",t:"Artigo: Exercício com comorbidades — guia",d:"Artigo flagship SEO. APEX Read + LinkedIn",w:8,p:"media",s:"todo",sub:"Read"},
+  {id:45,f:"mkt",t:"Captar primeiros 5 pacientes Care",d:"Rede pessoal + seguidores engajados. Oferta de lançamento",w:9,p:"alta",s:"todo",sub:"Vendas"},
+  {id:46,f:"mkt",t:"Página de vendas com depoimentos",d:"Feedback dos primeiros 20 Move, social proof na landing",w:10,p:"alta",s:"todo",sub:"Vendas"},
+  {id:47,f:"mkt",t:"APEX Day — evento online gratuito",d:"Live 2h: palestra wearables+saúde, demo app, Q&A",w:11,p:"media",s:"todo",sub:"Campanha"},
+  {id:48,f:"mkt",t:"Rascunho artigo científico",d:"Aderência a protocolos com wearables+IA. Coletar dados iniciais",w:12,p:"baixa",s:"todo",sub:"Acadêmico"},
 ];
 
 const DASH_FRONTS={tech:{l:"Plataformas",e:"⚡",c:"#5B9E50"},legal:{l:"Legal",e:"⚖️",c:"#C4A35A"},mkt:{l:"Marketing",e:"📣",c:"#8B7AAE"}};
-const DASH_STATUS={todo:{l:"A fazer",c:"#666"},doing:{l:"Em andamento",c:"#C4A35A"},done:{l:"Concluido",c:"#5B9E50"},blocked:{l:"Bloqueado",c:"#E05252"}};
+const DASH_STATUS={todo:{l:"A fazer",c:"#666"},doing:{l:"Em andamento",c:"#C4A35A"},done:{l:"Concluído",c:"#5B9E50"},blocked:{l:"Bloqueado",c:"#E05252"}};
 const DASH_PRIO={alta:"#E05252",media:"#C4A35A",baixa:"#5AADA0"};
 
 let dashTasks, dashView='overview', dashFilter='all', dashSaveKey='apex-dash-tasks-v1';
@@ -2858,7 +2819,7 @@ function fecharDashboard(){document.getElementById('dash-overlay').classList.rem
 
 /* planejamento — dias da semana no carregamento inicial */
 function initPlanDias(){
-  const dias=['Segunda','Terca','Quarta','Quinta','Sexta','Sabado','Domingo'];const el=document.getElementById('plan-dias');if(!el) return;
+  const dias=['Segunda','Terça','Quarta','Quinta','Sexta','Sábado','Domingo'];const el=document.getElementById('plan-dias');if(!el) return;
   el.innerHTML=dias.map(d=>`<div style="display:flex;align-items:baseline;gap:10px;margin-bottom:10px;"><div style="width:70px;font-size:10px;font-weight:600;color:var(--text-3);text-transform:uppercase;">${d}</div><div class="f-group" style="flex:1;margin:0;"><input type="text" id="plan-${d.toLowerCase()}" placeholder="Atividade, consulta, descanso..."></div></div>`).join('');
 }
 
@@ -4256,6 +4217,19 @@ function wizAIReject(index){
 }
 
 /* ═══ FIM WIZARD PRESCRIÇÃO ═══ */
+
+// Hero contextual greeting
+function updateHeroGreeting(){
+  const h=new Date().getHours();
+  const greet=h<12?'Bom dia':h<18?'Boa tarde':'Boa noite';
+  const el=document.getElementById('hero-greeting-dynamic');
+  if(el) el.innerHTML=greet+', <strong id="hero-nome">Dr. Bruno</strong>';
+  const days=['Domingo','Segunda-feira','Terça-feira','Quarta-feira','Quinta-feira','Sexta-feira','Sábado'];
+  const months=['janeiro','fevereiro','março','abril','maio','junho','julho','agosto','setembro','outubro','novembro','dezembro'];
+  const d=new Date();
+  const dateEl=document.getElementById('hero-date');
+  if(dateEl) dateEl.textContent=days[d.getDay()]+', '+d.getDate()+' de '+months[d.getMonth()]+' de '+d.getFullYear();
+}
 
 </script>
 </body>
