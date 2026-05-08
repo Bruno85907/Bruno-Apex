@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>APEX PRO — Portal Profissional</title>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#1E2D50;--navy-deep:#121D33;--navy-mid:#253A65;
+  --teal:#028090;--teal-light:#04b5c8;
+  --bg:#FAF9F5;--bg-card:#FFFFFF;
+  --border:rgba(30,45,80,0.12);--border-hover:rgba(30,45,80,0.25);
+  --gold:#C4A35A;--gold-light:#d4b76a;--gold-dim:rgba(196,163,90,0.10);--gold-border:rgba(196,163,90,0.25);
+  --text:#1E2D3D;--text-2:#5A6A7A;--text-3:#8A96A3;
+  --green:#5B9E50;--red:#E05252;
+  --radius:14px;--radius-sm:8px;
+  --shadow-card:0 2px 16px rgba(30,45,80,0.08);
+  --shadow-card-hover:0 8px 32px rgba(30,45,80,0.14);
+  --font-serif:'Instrument Serif', Georgia, serif;
+  --font-sans:'Inter', system-ui, -apple-system, sans-serif;
+  --sidebar-w:260px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:var(--font-sans);background:var(--navy-deep);color:var(--text);min-height:100vh;-webkit-font-smoothing:antialiased;overflow:hidden;}
+
+/* ============================================================
+   LOGIN SCREEN
+   ============================================================ */
+#login-screen{
+  position:fixed;inset:0;z-index:500;display:flex;
+  transition:opacity .8s cubic-bezier(.4,0,.2,1), transform .8s cubic-bezier(.4,0,.2,1);
+}
+#login-screen.hiding{opacity:0;transform:scale(1.02);}
+
+.login-photo{flex:1;position:relative;overflow:hidden;display:flex;align-items:flex-end;padding:48px;}
+.login-photo-bg{position:absolute;inset:0;background:url('https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=1400&q=80') center/cover no-repeat;transition:transform 25s ease;}
+.login-photo:hover .login-photo-bg{transform:scale(1.04);}
+.login-photo::after{content:'';position:absolute;inset:0;background:linear-gradient(0deg,rgba(18,29,51,0.94) 0%,rgba(18,29,51,0.4) 35%,rgba(18,29,51,0.2) 100%);}
+.login-photo::before{content:'';position:absolute;inset:0;z-index:1;
+  background-image:radial-gradient(circle 1px, rgba(196,163,90,0.12) 98%, transparent 100%);background-size:28px 28px;}
+.login-photo-content{position:relative;z-index:2;max-width:480px;}
+.login-photo-title{font-family:var(--font-serif);font-size:clamp(28px,4vw,42px);font-weight:400;color:#fff;line-height:1.2;margin-bottom:14px;}
+.login-photo-title strong{font-weight:700;color:var(--gold-light);}
+.login-photo-sub{font-size:13px;color:rgba(255,255,255,0.55);line-height:1.8;max-width:400px;}
+
+.login-form-side{width:480px;background:var(--navy-deep);display:flex;flex-direction:column;justify-content:center;align-items:center;padding:48px;position:relative;}
+.login-form-side::before{content:'';position:absolute;top:0;left:0;bottom:0;width:1px;background:linear-gradient(180deg,transparent,rgba(212,168,83,0.25),transparent);}
+.login-form-wrap{width:100%;max-width:340px;}
+.login-logo-wrap{display:flex;align-items:center;justify-content:center;margin-bottom:44px;}
+.login-welcome{font-family:var(--font-serif);font-size:24px;font-weight:400;color:#F0EFEC;margin-bottom:6px;}
+.login-welcome strong{font-weight:700;color:var(--gold);}
+.login-desc{font-size:12px;color:rgba(255,255,255,0.55);margin-bottom:32px;line-height:1.7;}
+.login-field{margin-bottom:16px;}
+.login-field label{display:block;font-size:10px;font-weight:600;letter-spacing:1.5px;color:rgba(255,255,255,0.3);margin-bottom:7px;text-transform:uppercase;}
+.login-field input{width:100%;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.07);border-radius:var(--radius-sm);padding:12px 14px;font-family:inherit;font-size:14px;color:#F0EFEC;outline:none;transition:all .2s;}
+.login-field input:focus{border-color:var(--gold);background:rgba(255,255,255,0.06);box-shadow:0 0 0 3px rgba(212,168,83,0.08);}
+.login-field input::placeholder{color:rgba(255,255,255,0.3);}
+.btn-login{width:100%;background:linear-gradient(135deg,var(--gold),var(--gold-light));color:var(--navy-deep);border:none;border-radius:var(--radius-sm);padding:13px;font-family:inherit;font-size:13px;font-weight:700;letter-spacing:1.5px;cursor:pointer;transition:all .2s;margin-top:8px;box-shadow:0 4px 16px rgba(212,168,83,0.25);}
+.btn-login:hover{transform:translateY(-1px);box-shadow:0 6px 24px rgba(212,168,83,0.35);}
+.btn-login:disabled{opacity:0.6;cursor:wait;transform:none;}
+.login-err{font-size:11px;color:var(--red);margin-top:12px;text-align:center;min-height:18px;}
+.login-footer{margin-top:40px;text-align:center;font-size:10px;color:rgba(255,255,255,0.3);line-height:1.8;}
+.login-footer a{color:var(--gold);text-decoration:none;opacity:.7;transition:opacity .2s;}
+.login-footer a:hover{opacity:1;}
+
+@media(max-width:900px){
+  #login-screen{flex-direction:column;}
+  .login-photo{height:35vh;flex:none;padding:24px;}
+  .login-form-side{width:100%;flex:1;}
+  .login-form-side::before{display:none;}
+}
+
+/* ============================================================
+   APP SHELL (hidden until login)
+   ============================================================ */
+#app-shell{display:none;width:100%;min-height:100vh;}
+#app-shell.visible{display:flex;}
+
+/* ============================================================
+   SIDEBAR
+   ============================================================ */
+.sidebar{
+  position:fixed;left:0;top:0;bottom:0;width:var(--sidebar-w);
+  background:linear-gradient(180deg, var(--navy-deep) 0%, var(--navy) 40%, var(--navy-mid) 100%);
+  display:flex;flex-direction:column;z-index:200;
+  border-right:1px solid rgba(196,163,90,0.15);
+  overflow:hidden;transition:width .3s cubic-bezier(.4,0,.2,1);
+}
+.sb-logo{padding:24px 22px 20px;border-bottom:1px solid rgba(255,255,255,0.06);flex-shrink:0;}
+.sb-logo-brand{font-family:var(--font-sans);font-size:16px;font-weight:700;color:#fff;letter-spacing:1.5px;}
+.sb-logo-brand span{color:var(--gold);}
+.sb-logo-context{font-size:10px;color:rgba(255,255,255,0.35);margin-top:4px;letter-spacing:0.5px;}
+
+.sb-nav{flex:1;overflow-y:auto;padding:16px 0;scrollbar-width:thin;scrollbar-color:rgba(255,255,255,0.1) transparent;}
+.sb-nav::-webkit-scrollbar{width:4px;}
+.sb-nav::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.1);border-radius:4px;}
+
+.sb-item{display:flex;align-items:center;gap:12px;padding:10px 22px;margin:1px 8px;border-radius:8px;
+  font-size:12px;font-weight:500;color:rgba(255,255,255,0.55);cursor:pointer;transition:all .2s;user-select:none;position:relative;}
+.sb-item:hover{color:rgba(255,255,255,0.85);background:rgba(255,255,255,0.04);}
+.sb-item.active{color:var(--gold);background:rgba(196,163,90,0.1);}
+.sb-item.active::before{content:'';position:absolute;left:0;top:50%;transform:translateY(-50%);width:3px;height:20px;border-radius:0 3px 3px 0;background:var(--gold);}
+.sb-item-icon{width:18px;height:18px;display:flex;align-items:center;justify-content:center;flex-shrink:0;opacity:0.7;}
+.sb-item.active .sb-item-icon{opacity:1;}
+
+.sb-module-label{display:flex;align-items:center;gap:12px;padding:10px 22px;margin:1px 8px;border-radius:8px;
+  font-size:12px;font-weight:500;color:rgba(255,255,255,0.55);cursor:pointer;transition:all .2s;user-select:none;}
+.sb-module-label:hover{color:rgba(255,255,255,0.85);background:rgba(255,255,255,0.04);}
+.sb-module-label.open{color:rgba(255,255,255,0.85);}
+.sb-module-icon{width:18px;height:18px;display:flex;align-items:center;justify-content:center;flex-shrink:0;opacity:0.7;}
+.sb-module-label.open .sb-module-icon{opacity:1;}
+.sb-chevron{margin-left:auto;font-size:10px;opacity:0.4;transition:transform .25s;}
+.sb-module-label.open .sb-chevron{transform:rotate(90deg);opacity:0.6;}
+
+.sb-children{overflow:hidden;max-height:0;transition:max-height .3s ease;}
+.sb-children.open{max-height:500px;}
+.sb-child{display:flex;align-items:center;gap:10px;padding:8px 22px 8px 54px;margin:0 8px;border-radius:6px;
+  font-size:11px;font-weight:400;color:rgba(255,255,255,0.4);cursor:pointer;transition:all .2s;position:relative;}
+.sb-child:hover{color:rgba(255,255,255,0.75);background:rgba(255,255,255,0.03);}
+.sb-child.active{color:var(--gold);font-weight:600;}
+.sb-child.active::before{content:'';position:absolute;left:40px;top:50%;transform:translateY(-50%);width:4px;height:4px;border-radius:50%;background:var(--gold);}
+.sb-child-dot{width:4px;height:4px;border-radius:50%;background:rgba(255,255,255,0.2);flex-shrink:0;transition:background .2s;}
+.sb-child.active .sb-child-dot{background:var(--gold);}
+
+.sb-divider{height:1px;background:rgba(255,255,255,0.06);margin:12px 22px;}
+
+.sb-footer{padding:16px 22px;border-top:1px solid rgba(255,255,255,0.06);flex-shrink:0;display:flex;flex-direction:column;gap:8px;}
+.sb-user{display:flex;align-items:center;gap:10px;}
+.sb-avatar{width:32px;height:32px;border-radius:50%;background:rgba(196,163,90,0.15);border:1px solid rgba(196,163,90,0.25);
+  display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:var(--gold);}
+.sb-user-info{flex:1;min-width:0;}
+.sb-user-name{font-size:11px;font-weight:600;color:rgba(255,255,255,0.8);}
+.sb-user-role{font-size:9px;color:rgba(255,255,255,0.3);text-transform:uppercase;letter-spacing:0.5px;}
+.sb-btn-sair{font-family:inherit;font-size:9px;font-weight:600;letter-spacing:1px;text-transform:uppercase;
+  color:rgba(255,255,255,0.35);background:transparent;border:1px solid rgba(255,255,255,0.1);
+  border-radius:6px;padding:7px 0;cursor:pointer;transition:all .2s;width:100%;text-align:center;}
+.sb-btn-sair:hover{color:rgba(255,200,200,0.7);border-color:rgba(255,200,200,0.2);}
+
+/* ============================================================
+   MAIN CONTENT
+   ============================================================ */
+.main{margin-left:var(--sidebar-w);flex:1;min-height:100vh;position:relative;background:var(--bg);}
+.main::before{content:'';position:fixed;top:0;right:0;bottom:0;left:var(--sidebar-w);z-index:0;pointer-events:none;
+  background-image:radial-gradient(circle 1.2px, rgba(196,163,90,0.12) 98%, transparent 100%);
+  background-size:28px 28px;
+  mask-image:radial-gradient(ellipse 60% 50% at 50% 50%, black 10%, transparent 70%);
+  -webkit-mask-image:radial-gradient(ellipse 60% 50% at 50% 50%, black 10%, transparent 70%);}
+
+.topbar{position:sticky;top:0;z-index:100;
+  background:rgba(250,249,245,0.85);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+  border-bottom:1px solid var(--border);padding:0 40px;height:56px;display:flex;align-items:center;gap:12px;}
+.topbar-breadcrumb{display:flex;align-items:center;gap:6px;font-size:12px;}
+.topbar-bc-item{color:var(--text-3);cursor:pointer;transition:color .15s;font-weight:500;background:none;border:none;font-family:inherit;padding:0;font-size:inherit;}
+.topbar-bc-item:hover{color:var(--navy);}
+.topbar-bc-sep{color:var(--text-3);opacity:0.4;font-size:10px;}
+.topbar-bc-active{color:var(--navy);font-weight:600;cursor:default;}
+
+.content-page{display:none;padding:40px;animation:fadeIn .35s ease;position:relative;z-index:1;}
+.content-page.active{display:block;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
+
+.rv{opacity:0;transform:translateY(20px);transition:opacity .6s cubic-bezier(.4,0,.2,1), transform .6s cubic-bezier(.4,0,.2,1);}
+.rv.visible{opacity:1;transform:translateY(0);}
+
+/* ============================================================
+   DASHBOARD HOME
+   ============================================================ */
+.dash-greeting{font-family:var(--font-serif);font-size:clamp(24px,3vw,32px);font-weight:400;color:var(--text);margin-bottom:4px;}
+.dash-greeting strong{font-weight:700;color:var(--navy);}
+.dash-date{font-size:12px;color:var(--text-2);margin-bottom:6px;}
+.dash-tagline{font-size:13px;color:var(--text-2);line-height:1.7;max-width:560px;margin-bottom:36px;}
+.dash-section-label{font-size:9px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--text-3);margin-bottom:16px;}
+
+.quick-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;max-width:960px;}
+.quick-card{position:relative;background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);
+  cursor:pointer;transition:all .35s cubic-bezier(.4,0,.2,1);overflow:hidden;min-height:180px;
+  display:flex;flex-direction:column;justify-content:flex-end;box-shadow:var(--shadow-card);}
+.quick-card:hover{transform:translateY(-5px);border-color:var(--navy);box-shadow:var(--shadow-card-hover);}
+.qc-bg{position:absolute;inset:0;background-size:cover;background-position:center;transition:transform 8s ease;}
+.quick-card:hover .qc-bg{transform:scale(1.06);}
+.qc-overlay{position:absolute;inset:0;transition:opacity .35s;}
+.quick-card:hover .qc-overlay{opacity:0.92;}
+.qc-content{position:relative;z-index:2;padding:20px 22px;}
+.qc-icon{width:36px;height:36px;border-radius:8px;background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.2);
+  display:flex;align-items:center;justify-content:center;color:#fff;margin-bottom:10px;}
+.qc-title{font-family:var(--font-serif);font-size:16px;font-weight:400;color:#fff;margin-bottom:4px;text-shadow:0 1px 3px rgba(0,0,0,0.3);}
+.qc-desc{font-size:10px;color:rgba(255,255,255,0.65);line-height:1.6;text-shadow:0 1px 2px rgba(0,0,0,0.2);}
+.qc-badge{position:absolute;top:14px;right:14px;font-size:8px;font-weight:600;letter-spacing:.5px;padding:3px 9px;border-radius:8px;
+  display:inline-flex;align-items:center;gap:4px;z-index:2;}
+.qc-badge.live{background:rgba(91,158,80,0.15);color:var(--green);border:1px solid rgba(91,158,80,0.2);}
+.qc-badge.soon{background:rgba(255,255,255,0.1);color:rgba(255,255,255,0.5);border:1px solid rgba(255,255,255,0.15);}
+.pulse-d{width:5px;height:5px;border-radius:50%;background:currentColor;animation:pulse-dot 2s ease infinite;}
+@keyframes pulse-dot{0%,100%{opacity:1;box-shadow:0 0 0 0 rgba(91,158,80,.4);}50%{opacity:.5;box-shadow:0 0 0 6px rgba(91,158,80,0);}}
+
+.qc-nefro .qc-bg{background-image:url('https://images.unsplash.com/photo-1579684385127-1ef15d508118?w=800&q=75');}
+.qc-nefro .qc-overlay{background:linear-gradient(135deg,rgba(30,45,80,0.88),rgba(18,29,51,0.92));}
+.qc-pac .qc-bg{background-image:url('https://images.unsplash.com/photo-1666214280557-f1b5022eb634?w=800&q=75');}
+.qc-pac .qc-overlay{background:linear-gradient(135deg,rgba(2,100,112,0.85),rgba(18,29,51,0.92));}
+.qc-plan .qc-bg{background-image:url('https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&q=75');}
+.qc-plan .qc-overlay{background:linear-gradient(135deg,rgba(55,75,55,0.85),rgba(18,29,51,0.92));}
+
+/* ============================================================
+   TRS CARDS
+   ============================================================ */
+.page-eyebrow{font-size:9px;font-weight:700;letter-spacing:4px;text-transform:uppercase;color:var(--navy);opacity:0.5;margin-bottom:8px;}
+.page-title{font-family:var(--font-serif);font-size:clamp(22px,3vw,30px);font-weight:400;color:var(--text);margin-bottom:8px;}
+.page-title strong{font-weight:700;}
+.page-desc{font-size:13px;color:var(--text-2);line-height:1.7;margin-bottom:32px;max-width:600px;}
+
+.trs-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;max-width:960px;}
+.trs-card{position:relative;background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);
+  cursor:pointer;transition:all .35s cubic-bezier(.4,0,.2,1);overflow:hidden;min-height:220px;
+  display:flex;flex-direction:column;justify-content:flex-end;box-shadow:var(--shadow-card);}
+.trs-card:hover{border-color:var(--navy);box-shadow:var(--shadow-card-hover);transform:translateY(-4px);}
+.trs-card-bg{position:absolute;inset:0;background-size:cover;background-position:center;transition:transform 8s ease;}
+.trs-card:hover .trs-card-bg{transform:scale(1.08);}
+.trs-card-overlay{position:absolute;inset:0;transition:opacity .35s;}
+.trs-card:hover .trs-card-overlay{opacity:0.92;}
+.trs-card-content{position:relative;z-index:2;padding:22px 24px;}
+.trs-card-arrow{position:absolute;top:16px;right:16px;z-index:3;font-size:16px;color:rgba(255,255,255,0.4);transition:all .3s;}
+.trs-card:hover .trs-card-arrow{color:#fff;transform:translateX(3px);}
+.trs-card-label{font-size:8px;font-weight:600;letter-spacing:2px;text-transform:uppercase;margin-bottom:6px;color:rgba(255,255,255,0.5);}
+.trs-card-title{font-family:var(--font-serif);font-size:17px;font-weight:400;color:#fff;margin-bottom:5px;line-height:1.3;text-shadow:0 1px 3px rgba(0,0,0,0.3);}
+.trs-card-desc{font-size:10px;color:rgba(255,255,255,0.65);line-height:1.7;margin-bottom:12px;text-shadow:0 1px 2px rgba(0,0,0,0.2);}
+.trs-card-tags{display:flex;gap:4px;flex-wrap:wrap;}
+.trs-tag{font-size:8px;font-weight:500;padding:3px 8px;border-radius:4px;color:rgba(255,255,255,0.75);
+  background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.15);letter-spacing:.3px;}
+
+.tc-cron .trs-card-bg{background-image:url('https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=75');}
+.tc-cron .trs-card-overlay{background:linear-gradient(135deg,rgba(30,45,80,0.85),rgba(18,29,51,0.90));}
+.tc-agud .trs-card-bg{background-image:url('https://images.unsplash.com/photo-1516549655169-df83a0774514?w=800&q=75');}
+.tc-agud .trs-card-overlay{background:linear-gradient(135deg,rgba(2,100,112,0.82),rgba(18,29,51,0.90));}
+.tc-tv .trs-card-bg{background-image:url('https://images.unsplash.com/photo-1551076805-e1869033e561?w=800&q=75');}
+.tc-tv .trs-card-overlay{background:linear-gradient(135deg,rgba(50,70,58,0.82),rgba(18,29,51,0.90));}
+.tc-relat .trs-card-bg{background-image:url('https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=800&q=75');}
+.tc-relat .trs-card-overlay{background:linear-gradient(135deg,rgba(30,45,80,0.82),rgba(18,29,51,0.90));}
+
+/* ============================================================
+   UNIT SELECTION
+   ============================================================ */
+.unit-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;max-width:800px;}
+.unit-card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:28px 20px;
+  text-align:center;cursor:pointer;transition:all .3s cubic-bezier(.4,0,.2,1);box-shadow:var(--shadow-card);}
+.unit-card:hover{transform:translateY(-4px);border-color:var(--teal);box-shadow:var(--shadow-card-hover);}
+.unit-card.disabled{opacity:0.4;cursor:not-allowed;pointer-events:none;}
+.unit-card-icon{width:44px;height:44px;border-radius:12px;background:rgba(30,45,80,0.05);border:1px solid rgba(30,45,80,0.12);
+  display:flex;align-items:center;justify-content:center;margin:0 auto 14px;transition:all .3s;}
+.unit-card:hover .unit-card-icon{background:rgba(2,128,144,0.08);border-color:rgba(2,128,144,0.2);}
+.unit-card-name{font-family:var(--font-serif);font-size:17px;font-weight:400;color:var(--text);margin-bottom:4px;}
+.unit-card-sub{font-size:10px;color:var(--text-3);line-height:1.6;}
+
+/* ============================================================
+   EMPTY STATE
+   ============================================================ */
+.empty-state{text-align:center;padding:80px 20px;max-width:480px;margin:0 auto;}
+.empty-icon{margin-bottom:24px;}
+.empty-badge{display:inline-flex;align-items:center;gap:6px;font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;
+  color:var(--teal);background:rgba(2,128,144,0.06);border:1px solid rgba(2,128,144,0.15);
+  border-radius:20px;padding:5px 14px;margin-bottom:16px;}
+.empty-badge .dot{width:6px;height:6px;border-radius:50%;background:var(--teal);opacity:0.6;animation:pulse-dot 2s ease infinite;}
+.empty-title{font-family:var(--font-serif);font-size:22px;font-weight:400;color:var(--text);margin-bottom:10px;}
+.empty-desc{font-size:13px;color:var(--text-2);line-height:1.8;}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media(max-width:900px){
+  #login-screen{flex-direction:column;}
+  .login-photo{height:35vh;flex:none;padding:24px;}
+  .login-form-side{width:100%;flex:1;}
+  .login-form-side::before{display:none;}
+  .sidebar{width:60px;overflow:visible;}
+  .sb-logo-brand,.sb-logo-context,.sb-item span,.sb-module-label span,.sb-chevron,
+  .sb-children,.sb-user-info,.sb-btn-sair{display:none;}
+  .sb-item,.sb-module-label{justify-content:center;padding:12px 0;margin:1px 4px;}
+  .sb-logo{padding:16px 0;text-align:center;}
+  .sb-footer{padding:12px 0;align-items:center;}
+  .main{margin-left:60px;}
+  .topbar{padding:0 20px;}
+  .content-page{padding:24px 20px;}
+  .quick-grid{grid-template-columns:1fr;}
+  .trs-grid{grid-template-columns:1fr;}
+  .unit-grid{grid-template-columns:1fr 1fr;}
+}
+</style>
+</head>
+<body>
+
+<!-- ============================================================
+     LOGIN SCREEN
+     ============================================================ -->
+<div id="login-screen">
+  <div class="login-photo">
+    <div class="login-photo-bg"></div>
+    <div class="login-photo-content">
+      <h1 class="login-photo-title">Dados que <strong>transformam</strong> a prática clínica</h1>
+      <p class="login-photo-sub">Indicadores em tempo real, protocolos inteligentes e gestão integrada de pacientes para profissionais de saúde.</p>
+    </div>
+  </div>
+  <div class="login-form-side">
+    <div class="login-form-wrap">
+      <div class="login-logo-wrap">
+        <div style="font-family:var(--font-sans);font-size:18px;font-weight:700;color:#fff;letter-spacing:1px;">APEX <span style="color:var(--gold);">Pro</span></div>
+      </div>
+      <div class="login-welcome">Acesso <strong>profissional</strong></div>
+      <div class="login-desc">Entre com suas credenciais para acessar indicadores, protocolos e gestão de pacientes.</div>
+      <div class="login-field">
+        <label>E-mail institucional</label>
+        <input type="email" id="login-email" placeholder="seu@clínica.com.br">
+      </div>
+      <div class="login-field">
+        <label>Senha</label>
+        <input type="password" id="login-senha" placeholder="••••••••">
+      </div>
+      <button class="btn-login" id="btn-login" onclick="doLogin()">ENTRAR</button>
+      <div class="login-err" id="login-err"></div>
+      <div class="login-footer">
+        Plataforma APEX &mdash; apex.med.br<br>
+        <a href="#">Esqueceu sua senha?</a> &middot; <a href="#">Solicitar acesso</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================
+     APP SHELL (sidebar + main)
+     ============================================================ -->
+<div id="app-shell">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sb-logo">
+      <div class="sb-logo-brand">APEX <span>Pro</span></div>
+      <div class="sb-logo-context">Fenix Nefrologia</div>
+    </div>
+    <nav class="sb-nav">
+      <div class="sb-item active" data-page="dashboard" onclick="navTo('dashboard')">
+        <span class="sb-item-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></span>
+        <span>Dashboard</span>
+      </div>
+      <div class="sb-divider"></div>
+      <div class="sb-module-label open" onclick="toggleModule(this)">
+        <span class="sb-module-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="9"/></svg></span>
+        <span>Qualidade</span>
+        <span class="sb-chevron">›</span>
+      </div>
+      <div class="sb-children open">
+        <div class="sb-child" data-page="indicadores" onclick="navTo('indicadores')"><span class="sb-child-dot"></span>Indicadores TRS</div>
+        <div class="sb-child" data-page="dashboards" onclick="navTo('dashboards')"><span class="sb-child-dot"></span>Dashboards</div>
+        <div class="sb-child" data-page="relatorios" onclick="navTo('relatorios')"><span class="sb-child-dot"></span>Relatórios</div>
+      </div>
+      <div class="sb-divider"></div>
+      <div class="sb-item" data-page="planejamento" onclick="navTo('planejamento')">
+        <span class="sb-item-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M7 14l3-3 3 3 4-5"/></svg></span>
+        <span>Plan. Estratégico</span>
+      </div>
+      <div class="sb-divider"></div>
+      <div class="sb-module-label" onclick="toggleModule(this)">
+        <span class="sb-module-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="9" cy="7" r="4"/><path d="M2 21v-1a7 7 0 0114 0v1"/><path d="M19 8v6M22 11h-6"/></svg></span>
+        <span>Pacientes</span>
+        <span class="sb-chevron">›</span>
+      </div>
+      <div class="sb-children">
+        <div class="sb-child" data-page="prontuario" onclick="navTo('prontuario')"><span class="sb-child-dot"></span>Prontuário CKM</div>
+        <div class="sb-child" data-page="lista-pacientes" onclick="navTo('lista-pacientes')"><span class="sb-child-dot"></span>Lista de Pacientes</div>
+      </div>
+    </nav>
+    <div class="sb-footer">
+      <div class="sb-user">
+        <div class="sb-avatar">B</div>
+        <div class="sb-user-info">
+          <div class="sb-user-name">Dr. Bruno</div>
+          <div class="sb-user-role">Nefrologista</div>
+        </div>
+      </div>
+      <button class="sb-btn-sair" onclick="doLogout()">Sair</button>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <div class="main">
+    <div class="topbar">
+      <nav class="topbar-breadcrumb" id="topbar-bc"><span class="topbar-bc-active">Dashboard</span></nav>
+    </div>
+
+    <!-- PAGE: DASHBOARD -->
+    <div class="content-page active" id="page-dashboard">
+      <h1 class="dash-greeting rv" id="dash-greeting"></h1>
+      <p class="dash-date rv" id="dash-date"></p>
+      <p class="dash-tagline rv">Gestão clínica integrada — indicadores, protocolos, prescrição e acompanhamento de pacientes.</p>
+      <div class="dash-section-label rv">Acesso Rápido</div>
+      <div class="quick-grid">
+        <div class="quick-card qc-nefro rv" onclick="navTo('indicadores')">
+          <div class="qc-bg"></div><div class="qc-overlay"></div>
+          <span class="qc-badge live"><span class="pulse-d"></span> Ativo</span>
+          <div class="qc-content">
+            <div class="qc-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/></svg></div>
+            <div class="qc-title">Indicadores TRS</div>
+            <div class="qc-desc">Dashboards de qualidade TRS Crônico e Agudo</div>
+          </div>
+        </div>
+        <div class="quick-card qc-pac rv" onclick="navTo('prontuario')">
+          <div class="qc-bg"></div><div class="qc-overlay"></div>
+          <span class="qc-badge live"><span class="pulse-d"></span> Ativo</span>
+          <div class="qc-content">
+            <div class="qc-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="9" cy="7" r="4"/><path d="M2 21v-1a7 7 0 0114 0v1"/></svg></div>
+            <div class="qc-title">Prontuário CKM</div>
+            <div class="qc-desc">Acompanhamento individual e prescrição digital</div>
+          </div>
+        </div>
+        <div class="quick-card qc-plan rv" onclick="navTo('planejamento')">
+          <div class="qc-bg"></div><div class="qc-overlay"></div>
+          <span class="qc-badge soon">Em breve</span>
+          <div class="qc-content">
+            <div class="qc-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M7 14l3-3 3 3 4-5"/></svg></div>
+            <div class="qc-title">Plan. Estratégico</div>
+            <div class="qc-desc">Metas, indicadores e planejamento do serviço</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PAGE: INDICADORES TRS -->
+    <div class="content-page" id="page-indicadores">
+      <p class="page-eyebrow rv">Qualidade</p>
+      <h2 class="page-title rv">Indicadores <strong>TRS</strong></h2>
+      <p class="page-desc rv">Selecione um serviço para visualizar dashboards, lançar dados ou gerar relatórios.</p>
+      <div class="trs-grid">
+        <div class="trs-card tc-cron rv" onclick="navTo('trs-cronico')">
+          <div class="trs-card-bg"></div><div class="trs-card-overlay"></div>
+          <div class="trs-card-content">
+            <div class="trs-card-label">Terapia Renal Substitutiva</div>
+            <div class="trs-card-title">Gestão TRS Crônico</div>
+            <div class="trs-card-desc">Dashboard mensal e lançamento de dados das unidades RL, Santos e Tatuapé.</div>
+            <div class="trs-card-tags"><span class="trs-tag">Dashboard</span><span class="trs-tag">Lançamento</span><span class="trs-tag">Por unidade</span></div>
+          </div>
+          <div class="trs-card-arrow">&#8594;</div>
+        </div>
+        <div class="trs-card tc-agud rv" onclick="window.open('https://www.apex.med.br/dashboard_trs_completo.html','_blank')">
+          <div class="trs-card-bg"></div><div class="trs-card-overlay"></div>
+          <div class="trs-card-content">
+            <div class="trs-card-label">Terapia Renal Substitutiva</div>
+            <div class="trs-card-title">Gestão TRS Agudo</div>
+            <div class="trs-card-desc">Lançamento semanal, acessos venosos e intercorrências por hospital.</div>
+            <div class="trs-card-tags"><span class="trs-tag">HD · CRRT · DP · SLED</span><span class="trs-tag">Intercorrências</span></div>
+          </div>
+          <div class="trs-card-arrow">&#8594;</div>
+        </div>
+        <div class="trs-card tc-tv rv" onclick="window.open('https://www.apex.med.br/dashboard_trs_completo.html','_blank')">
+          <div class="trs-card-bg"></div><div class="trs-card-overlay"></div>
+          <div class="trs-card-content">
+            <div class="trs-card-label">Sala da Diretoria</div>
+            <div class="trs-card-title">Painel de Indicadores</div>
+            <div class="trs-card-desc">Visão executiva em TV 16:9 — Crônico e Agudo em tempo real com atualização automática.</div>
+            <div class="trs-card-tags"><span class="trs-tag">Crônico + Agudo</span><span class="trs-tag">TV 16:9</span><span class="trs-tag">Auto-refresh</span></div>
+          </div>
+          <div class="trs-card-arrow">&#8594;</div>
+        </div>
+        <div class="trs-card tc-relat rv" onclick="alert('Relatório por Plano — em desenvolvimento')">
+          <div class="trs-card-bg"></div><div class="trs-card-overlay"></div>
+          <div class="trs-card-content">
+            <div class="trs-card-label">Planos de Saúde</div>
+            <div class="trs-card-title">Relatório por Plano</div>
+            <div class="trs-card-desc">Indicadores segmentados por plano de saúde para reuniões com gestores.</div>
+            <div class="trs-card-tags"><span class="trs-tag">Por plano</span><span class="trs-tag">Comparativo</span><span class="trs-tag">Gera PDF</span></div>
+          </div>
+          <div class="trs-card-arrow">&#8594;</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PAGE: TRS CRÔNICO -->
+    <div class="content-page" id="page-trs-cronico">
+      <p class="page-eyebrow rv">Indicadores TRS</p>
+      <h2 class="page-title rv">TRS <strong>Crônico</strong></h2>
+      <p class="page-desc rv">Escolha entre visualizar o dashboard consolidado ou lançar dados mensais por unidade.</p>
+      <div class="trs-grid">
+        <div class="trs-card tc-cron rv" onclick="alert('Dashboard Crônico — em desenvolvimento')">
+          <div class="trs-card-bg"></div><div class="trs-card-overlay"></div>
+          <div class="trs-card-content">
+            <div class="trs-card-label">Visualização</div>
+            <div class="trs-card-title">Dashboard</div>
+            <div class="trs-card-desc">Indicadores consolidados da rede — gráficos, metas e evolução mensal.</div>
+            <div class="trs-card-tags"><span class="trs-tag">Rede completa</span><span class="trs-tag">Por unidade</span></div>
+          </div>
+          <div class="trs-card-arrow">&#8594;</div>
+        </div>
+        <div class="trs-card tc-cron rv" onclick="navTo('unidades')">
+          <div class="trs-card-bg"></div><div class="trs-card-overlay"></div>
+          <div class="trs-card-content">
+            <div class="trs-card-label">Entrada de dados</div>
+            <div class="trs-card-title">Lançamento Mensal</div>
+            <div class="trs-card-desc">Preenchimento dos indicadores mensais por unidade — RL, Santos e Tatuapé.</div>
+            <div class="trs-card-tags"><span class="trs-tag">Por unidade</span><span class="trs-tag">Supabase</span></div>
+          </div>
+          <div class="trs-card-arrow">&#8594;</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PAGE: UNIDADES -->
+    <div class="content-page" id="page-unidades">
+      <p class="page-eyebrow rv">TRS Crônico — Lançamento</p>
+      <h2 class="page-title rv">Selecione a <strong>unidade</strong></h2>
+      <p class="page-desc rv">Escolha a unidade para abrir o formulário de lançamento mensal.</p>
+      <div class="unit-grid">
+        <div class="unit-card rv" onclick="alert('Lançamento RL — em desenvolvimento')">
+          <div class="unit-card-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" stroke="var(--navy)" stroke-width="1.4" stroke-linejoin="round"/><polyline points="9 22 9 12 15 12 15 22" stroke="var(--navy)" stroke-width="1.4" stroke-linejoin="round"/></svg></div>
+          <div class="unit-card-name">RL</div>
+          <div class="unit-card-sub">República do Líbano<br>São Paulo — SP</div>
+        </div>
+        <div class="unit-card rv" onclick="alert('Lançamento Santos — em desenvolvimento')">
+          <div class="unit-card-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" stroke="var(--navy)" stroke-width="1.4" stroke-linejoin="round"/><polyline points="9 22 9 12 15 12 15 22" stroke="var(--navy)" stroke-width="1.4" stroke-linejoin="round"/></svg></div>
+          <div class="unit-card-name">Santos</div>
+          <div class="unit-card-sub">Praiamar<br>Santos — SP</div>
+        </div>
+        <div class="unit-card rv" onclick="alert('Lançamento Tatuapé — em desenvolvimento')">
+          <div class="unit-card-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" stroke="var(--navy)" stroke-width="1.4" stroke-linejoin="round"/><polyline points="9 22 9 12 15 12 15 22" stroke="var(--navy)" stroke-width="1.4" stroke-linejoin="round"/></svg></div>
+          <div class="unit-card-name">Tatuapé</div>
+          <div class="unit-card-sub">São Paulo — SP</div>
+        </div>
+        <div class="unit-card disabled rv">
+          <div class="unit-card-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="var(--text-3)" stroke-width="1.4"/><line x1="12" y1="8" x2="12" y2="12" stroke="var(--text-3)" stroke-width="1.4" stroke-linecap="round"/><line x1="12" y1="16" x2="12.01" y2="16" stroke="var(--text-3)" stroke-width="1.4" stroke-linecap="round"/></svg></div>
+          <div class="unit-card-name">Nova unidade</div>
+          <div class="unit-card-sub">Em breve</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PAGE: DASHBOARDS -->
+    <div class="content-page" id="page-dashboards">
+      <p class="page-eyebrow rv">Qualidade</p>
+      <h2 class="page-title rv"><strong>Dashboards</strong></h2>
+      <div class="empty-state rv">
+        <div class="empty-icon"><svg width="80" height="80" viewBox="0 0 80 80" fill="none"><rect x="8" y="8" width="64" height="64" rx="16" fill="rgba(30,45,80,0.04)" stroke="var(--border)" stroke-width="1.5"/><rect x="18" y="24" width="20" height="32" rx="4" fill="rgba(2,128,144,0.06)" stroke="rgba(2,128,144,0.2)" stroke-width="1"/><rect x="42" y="18" width="20" height="38" rx="4" fill="rgba(30,45,80,0.06)" stroke="rgba(30,45,80,0.15)" stroke-width="1"/></svg></div>
+        <div class="empty-badge"><span class="dot"></span> Em Desenvolvimento</div>
+        <div class="empty-title">Dashboards Consolidados</div>
+        <div class="empty-desc">Painéis visuais com indicadores agregados, tendências históricas e comparativos entre unidades estarão disponíveis aqui em breve.</div>
+      </div>
+    </div>
+
+    <!-- PAGE: RELATÓRIOS -->
+    <div class="content-page" id="page-relatorios">
+      <p class="page-eyebrow rv">Qualidade</p>
+      <h2 class="page-title rv"><strong>Relatórios</strong></h2>
+      <div class="empty-state rv">
+        <div class="empty-icon"><svg width="80" height="80" viewBox="0 0 80 80" fill="none"><rect x="8" y="8" width="64" height="64" rx="16" fill="rgba(30,45,80,0.04)" stroke="var(--border)" stroke-width="1.5"/><rect x="20" y="22" width="40" height="4" rx="2" fill="rgba(30,45,80,0.12)"/><rect x="20" y="32" width="28" height="4" rx="2" fill="rgba(30,45,80,0.08)"/><rect x="20" y="42" width="34" height="4" rx="2" fill="rgba(30,45,80,0.08)"/><circle cx="56" cy="52" r="12" fill="rgba(196,163,90,0.08)" stroke="var(--gold)" stroke-width="1.5"/><path d="M52 52l3 3 5-6" stroke="var(--gold)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <div class="empty-badge"><span class="dot"></span> Em Desenvolvimento</div>
+        <div class="empty-title">Relatórios Gerenciais</div>
+        <div class="empty-desc">Relatórios em PDF para reuniões com diretoria, planos de saúde e auditorias de qualidade assistencial.</div>
+      </div>
+    </div>
+
+    <!-- PAGE: PLANEJAMENTO ESTRATÉGICO -->
+    <div class="content-page" id="page-planejamento">
+      <p class="page-eyebrow rv">Gestão</p>
+      <h2 class="page-title rv">Planejamento <strong>Estratégico</strong></h2>
+      <div class="empty-state rv">
+        <div class="empty-icon"><svg width="80" height="80" viewBox="0 0 80 80" fill="none"><rect x="8" y="8" width="64" height="64" rx="16" fill="rgba(30,45,80,0.04)" stroke="var(--border)" stroke-width="1.5"/><path d="M25 50l8-8 8 8 12-14" stroke="var(--teal)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="25" cy="50" r="3" fill="rgba(2,128,144,0.2)" stroke="var(--teal)" stroke-width="1"/><circle cx="33" cy="42" r="3" fill="rgba(2,128,144,0.2)" stroke="var(--teal)" stroke-width="1"/><circle cx="41" cy="50" r="3" fill="rgba(2,128,144,0.2)" stroke="var(--teal)" stroke-width="1"/><circle cx="53" cy="36" r="3" fill="rgba(2,128,144,0.2)" stroke="var(--teal)" stroke-width="1"/></svg></div>
+        <div class="empty-badge"><span class="dot"></span> Em Desenvolvimento</div>
+        <div class="empty-title">Planejamento Estratégico</div>
+        <div class="empty-desc">Metas SMART, OKRs do serviço, análise SWOT, cronogramas de projetos e acompanhamento de indicadores estratégicos para a Fenix Nefrologia.</div>
+      </div>
+    </div>
+
+    <!-- PAGE: PRONTUÁRIO CKM -->
+    <div class="content-page" id="page-prontuario">
+      <p class="page-eyebrow rv">Pacientes</p>
+      <h2 class="page-title rv">Prontuário <strong>CKM</strong></h2>
+      <div class="empty-state rv">
+        <div class="empty-icon"><svg width="80" height="80" viewBox="0 0 80 80" fill="none"><rect x="8" y="8" width="64" height="64" rx="16" fill="rgba(30,45,80,0.04)" stroke="var(--border)" stroke-width="1.5"/><circle cx="32" cy="30" r="8" fill="rgba(30,45,80,0.06)" stroke="var(--navy)" stroke-width="1.4"/><path d="M20 56v-2a12 12 0 0124 0v2" stroke="var(--navy)" stroke-width="1.4" stroke-linecap="round"/><path d="M50 28v10M55 33h-10" stroke="var(--teal)" stroke-width="1.6" stroke-linecap="round"/></svg></div>
+        <div class="empty-badge"><span class="dot"></span> Em Desenvolvimento</div>
+        <div class="empty-title">Prontuário CKM</div>
+        <div class="empty-desc">Prontuário eletrônico com 9 abas, cálculos CKD-EPI, ASCVD, KFRE e risco CKM integrado. Acompanhamento longitudinal do paciente renal.</div>
+      </div>
+    </div>
+
+    <!-- PAGE: LISTA DE PACIENTES -->
+    <div class="content-page" id="page-lista-pacientes">
+      <p class="page-eyebrow rv">Pacientes</p>
+      <h2 class="page-title rv">Lista de <strong>Pacientes</strong></h2>
+      <div class="empty-state rv">
+        <div class="empty-icon"><svg width="80" height="80" viewBox="0 0 80 80" fill="none"><rect x="8" y="8" width="64" height="64" rx="16" fill="rgba(30,45,80,0.04)" stroke="var(--border)" stroke-width="1.5"/><rect x="18" y="24" width="44" height="6" rx="3" fill="rgba(30,45,80,0.1)"/><rect x="18" y="36" width="44" height="6" rx="3" fill="rgba(30,45,80,0.07)"/><rect x="18" y="48" width="44" height="6" rx="3" fill="rgba(30,45,80,0.05)"/></svg></div>
+        <div class="empty-badge"><span class="dot"></span> Em Desenvolvimento</div>
+        <div class="empty-title">Lista de Pacientes</div>
+        <div class="empty-desc">Busca, filtros e listagem completa de pacientes com acesso rápido ao prontuário CKM individual.</div>
+      </div>
+    </div>
+
+  </div><!-- /main -->
+</div><!-- /app-shell -->
+
+<script>
+/* ============================================================
+   LOGIN
+   ============================================================ */
+function doLogin() {
+  var btn = document.getElementById('btn-login');
+  var err = document.getElementById('login-err');
+  var email = document.getElementById('login-email').value.trim();
+  var senha = document.getElementById('login-senha').value;
+
+  err.textContent = '';
+  if (!email || !senha) { err.textContent = 'Preencha e-mail e senha.'; return; }
+
+  btn.disabled = true;
+  btn.textContent = 'ENTRANDO...';
+
+  setTimeout(function(){
+    var loginScreen = document.getElementById('login-screen');
+    loginScreen.classList.add('hiding');
+
+    setTimeout(function(){
+      loginScreen.style.display = 'none';
+      document.body.style.overflow = '';
+      document.body.style.background = 'var(--bg)';
+      document.getElementById('app-shell').classList.add('visible');
+      initApp();
+    }, 800);
+  }, 600);
+}
+
+function doLogout() {
+  var loginScreen = document.getElementById('login-screen');
+  document.getElementById('app-shell').classList.remove('visible');
+  document.body.style.background = 'var(--navy-deep)';
+  document.body.style.overflow = 'hidden';
+  loginScreen.style.display = 'flex';
+  loginScreen.classList.remove('hiding');
+
+  document.getElementById('btn-login').disabled = false;
+  document.getElementById('btn-login').textContent = 'ENTRAR';
+  document.getElementById('login-email').value = '';
+  document.getElementById('login-senha').value = '';
+  document.getElementById('login-err').textContent = '';
+
+  navTo('dashboard');
+}
+
+/* Allow Enter key to submit */
+document.getElementById('login-senha').addEventListener('keydown', function(e){
+  if(e.key === 'Enter') doLogin();
+});
+
+/* ============================================================
+   APP INIT
+   ============================================================ */
+function initApp() {
+  var now = new Date();
+  var h = now.getHours();
+  var saud = h < 12 ? 'Bom dia' : h < 18 ? 'Boa tarde' : 'Boa noite';
+  document.getElementById('dash-greeting').innerHTML = saud + ', <strong>Dr. Bruno</strong>';
+  var dias = ['Domingo','Segunda-feira','Terça-feira','Quarta-feira','Quinta-feira','Sexta-feira','Sábado'];
+  var meses = ['janeiro','fevereiro','março','abril','maio','junho','julho','agosto','setembro','outubro','novembro','dezembro'];
+  document.getElementById('dash-date').textContent = dias[now.getDay()] + ', ' + now.getDate() + ' de ' + meses[now.getMonth()] + ' de ' + now.getFullYear();
+
+  /* Trigger reveal animations */
+  setTimeout(function(){
+    document.querySelectorAll('#page-dashboard .rv').forEach(function(el){ observer.observe(el); });
+  }, 100);
+}
+
+/* ============================================================
+   SCROLL REVEAL
+   ============================================================ */
+var observer = new IntersectionObserver(function(entries){
+  entries.forEach(function(e){ if(e.isIntersecting) e.target.classList.add('visible'); });
+}, {threshold: 0.1});
+
+/* ============================================================
+   NAVIGATION
+   ============================================================ */
+var NAV = {
+  'dashboard':       { label:'Dashboard',          parent:null,          sidebar:'dashboard',      bc:['Dashboard'] },
+  'indicadores':     { label:'Indicadores TRS',    parent:'dashboard',   sidebar:'indicadores',    bc:['Dashboard','Qualidade','Indicadores TRS'] },
+  'trs-cronico':     { label:'TRS Crônico',        parent:'indicadores', sidebar:'indicadores',    bc:['Dashboard','Qualidade','Indicadores TRS','TRS Crônico'] },
+  'unidades':        { label:'Selecionar Unidade', parent:'trs-cronico', sidebar:'indicadores',    bc:['Dashboard','Qualidade','Indicadores TRS','TRS Crônico','Unidades'] },
+  'dashboards':      { label:'Dashboards',         parent:'dashboard',   sidebar:'dashboards',     bc:['Dashboard','Qualidade','Dashboards'] },
+  'relatorios':      { label:'Relatórios',         parent:'dashboard',   sidebar:'relatorios',     bc:['Dashboard','Qualidade','Relatórios'] },
+  'planejamento':    { label:'Plan. Estratégico',  parent:'dashboard',   sidebar:'planejamento',   bc:['Dashboard','Plan. Estratégico'] },
+  'prontuario':      { label:'Prontuário CKM',     parent:'dashboard',   sidebar:'prontuario',     bc:['Dashboard','Pacientes','Prontuário CKM'] },
+  'lista-pacientes': { label:'Lista de Pacientes', parent:'dashboard',   sidebar:'lista-pacientes',bc:['Dashboard','Pacientes','Lista de Pacientes'] }
+};
+
+var BC_MAP = {
+  'Dashboard':'dashboard','Qualidade':null,'Indicadores TRS':'indicadores',
+  'TRS Crônico':'trs-cronico','Unidades':'unidades','Dashboards':'dashboards',
+  'Relatórios':'relatorios','Plan. Estratégico':'planejamento',
+  'Pacientes':null,'Prontuário CKM':'prontuario','Lista de Pacientes':'lista-pacientes'
+};
+
+function navTo(pageId) {
+  var info = NAV[pageId]; if (!info) return;
+
+  document.querySelectorAll('.content-page').forEach(function(p){ p.classList.remove('active'); });
+  document.getElementById('page-' + pageId).classList.add('active');
+
+  /* Sidebar active */
+  document.querySelectorAll('.sb-item, .sb-child').forEach(function(el){ el.classList.remove('active'); });
+  var st = document.querySelector('[data-page="' + info.sidebar + '"]');
+  if (st) {
+    st.classList.add('active');
+    var pc = st.closest('.sb-children');
+    if (pc && !pc.classList.contains('open')) { pc.classList.add('open'); pc.previousElementSibling.classList.add('open'); }
+  }
+  var ti = document.querySelector('.sb-item[data-page="' + pageId + '"]');
+  if (ti) ti.classList.add('active');
+
+  /* Breadcrumb */
+  var bc = document.getElementById('topbar-bc');
+  bc.innerHTML = info.bc.map(function(label, i) {
+    var last = i === info.bc.length - 1;
+    var sep = i > 0 ? '<span class="topbar-bc-sep"> › </span>' : '';
+    var target = BC_MAP[label];
+    if (last) return sep + '<span class="topbar-bc-active">' + label + '</span>';
+    if (target) return sep + '<span class="topbar-bc-item" onclick="navTo(\'' + target + '\')">' + label + '</span>';
+    return sep + '<span style="color:var(--text-3);font-size:12px;font-weight:500;">' + label + '</span>';
+  }).join('');
+
+  document.querySelector('.main').scrollTo({top:0, behavior:'smooth'});
+  setTimeout(function(){
+    document.querySelectorAll('#page-' + pageId + ' .rv:not(.visible)').forEach(function(el){ observer.observe(el); });
+  }, 50);
+}
+
+function toggleModule(label) {
+  label.classList.toggle('open');
+  var ch = label.nextElementSibling;
+  if (ch && ch.classList.contains('sb-children')) ch.classList.toggle('open');
+}
+</script>
+</body>
+</html>
