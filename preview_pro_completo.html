@@ -20,6 +20,12 @@
   --font-serif:'Instrument Serif', Georgia, serif;
   --font-sans:'Inter', system-ui, -apple-system, sans-serif;
   --sidebar-w:260px;
+
+/* CKM extended palette */
+--ckm-teal:#0F6E56;--ckm-teal-dark:#085041;
+--ckm-purple:#534AB7;--ckm-orange:#D85A30;--ckm-amber:#BA7517;--ckm-pink:#D4537E;
+--bg-deep:#f0efeb;
+
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
 html{scroll-behavior:smooth;}
@@ -284,6 +290,167 @@ body{font-family:var(--font-sans);background:var(--navy-deep);color:var(--text);
   .trs-grid{grid-template-columns:1fr;}
   .unit-grid{grid-template-columns:1fr 1fr;}
 }
+
+/* ============================================================
+   PRONTUÁRIO CKM — Integrated styles
+   ============================================================ */
+
+
+
+.ckm-nav-section{margin-bottom:16px;}
+.ckm-nav-section-title{font-size:9px;font-weight:600;letter-spacing:0.8px;text-transform:uppercase;color:var(--text-3);padding:8px 12px 4px;margin-bottom:2px;}
+
+
+
+
+
+
+
+
+
+.pac-header-card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:18px 22px;margin-bottom:16px;box-shadow:var(--shadow-card);display:flex;align-items:center;gap:16px;}
+.pac-avatar{width:52px;height:52px;border-radius:50%;background:rgba(2,128,144,0.08);border:2px solid rgba(2,128,144,0.15);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .2s;overflow:hidden;flex-shrink:0;}
+.pac-avatar:hover{border-color:var(--teal);box-shadow:0 0 0 3px rgba(2,128,144,0.1);}
+.pac-avatar img{width:100%;height:100%;object-fit:cover;}
+.pac-avatar-placeholder{font-size:18px;font-weight:600;color:var(--teal);letter-spacing:-0.5px;}
+.pac-info{flex:1;min-width:0;}
+.pac-name{font-family:var(--font-serif);font-size:22px;font-weight:400;color:var(--text);margin-bottom:2px;}
+.pac-demo{font-size:12px;color:var(--text-2);}
+.pac-badges{display:flex;gap:6px;flex-wrap:wrap;flex-shrink:0;}
+.badge{font-size:10px;font-weight:600;padding:4px 10px;border-radius:6px;letter-spacing:0.3px;white-space:nowrap;}
+.b-gn{background:#EAF3DE;color:#27500A;}
+.b-yl{background:#FAEEDA;color:#633806;}
+.b-or{background:#FAECE7;color:#712B13;}
+.b-rd{background:#FCEBEB;color:#791F1F;}
+.b-bl{background:#E6F1FB;color:#0C447C;}
+.b-pr{background:#EEEDFE;color:#3C3489;}
+.b-tl{background:#E1F5EE;color:#085041;}
+
+.tab-bar{display:flex;gap:2px;margin-bottom:16px;padding:4px;background:var(--bg-card);border:1px solid var(--border);border-radius:10px;overflow-x:auto;box-shadow:var(--shadow-card);}
+.tab-btn{padding:7px 14px;border-radius:7px;border:none;background:transparent;color:var(--text-3);font-family:inherit;font-size:11px;font-weight:600;cursor:pointer;transition:all .15s;white-space:nowrap;}
+.tab-btn:hover{background:rgba(30,45,80,0.04);color:var(--text-2);}
+.tab-btn.active{background:var(--teal);color:#fff;}
+
+.sidebar-view{display:none;}
+.sidebar-view.active{display:block;}
+.tab-content{display:none;}
+.tab-content.active{display:block;}
+
+.ckm-card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:20px 22px;margin-bottom:14px;box-shadow:var(--shadow-card);transition:all .2s;}
+.ckm-card:hover{box-shadow:var(--shadow-card-hover);}
+.ckm-card-header{display:flex;align-items:center;gap:10px;margin-bottom:16px;}
+.ckm-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
+.ckm-card-title{font-size:14px;font-weight:600;color:var(--text);}
+
+.f-row{display:flex;gap:12px;margin-bottom:12px;}
+.f-row.f1{display:block;}
+.f-row.f3 .f-group{flex:1;}
+.f-group{flex:1;display:flex;flex-direction:column;gap:4px;}
+.f-group label{font-size:11px;font-weight:500;color:var(--text-2);}
+.f-group input,.f-group select,.f-group textarea{font-family:inherit;font-size:13px;padding:9px 12px;border:1px solid var(--border);border-radius:8px;background:var(--bg);color:var(--text);outline:none;transition:border-color .2s;}
+.f-group input:focus,.f-group select:focus,.f-group textarea:focus{border-color:var(--teal);box-shadow:0 0 0 3px rgba(2,128,144,0.08);}
+.f-group textarea{resize:vertical;min-height:80px;line-height:1.6;}
+.f-group input::placeholder,.f-group textarea::placeholder{color:var(--text-3);font-size:12px;}
+
+.check-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:6px;margin-bottom:10px;}
+.check-item{display:flex;align-items:center;gap:8px;padding:8px 12px;border:1px solid var(--border);border-radius:8px;cursor:pointer;transition:all .15s;font-size:12px;color:var(--text-2);user-select:none;}
+.check-item:hover{border-color:var(--border-hover);background:rgba(30,45,80,0.02);}
+.check-item.checked{border-color:var(--teal);background:rgba(2,128,144,0.05);color:var(--teal);font-weight:600;}
+.check-item input[type="checkbox"]{accent-color:var(--teal);width:14px;height:14px;pointer-events:none;}
+
+.select-row{display:flex;gap:12px;margin-top:10px;margin-bottom:10px;}
+.select-row .f-group{flex:1;}
+
+.template-select{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:10px;}
+.tpl-btn{padding:5px 12px;border-radius:7px;border:1px solid var(--border);background:transparent;color:var(--text-3);font-family:inherit;font-size:11px;font-weight:500;cursor:pointer;transition:all .15s;}
+.tpl-btn:hover{border-color:var(--border-hover);color:var(--text-2);}
+.tpl-btn.active{border-color:var(--ckm-purple);background:rgba(83,74,183,0.06);color:var(--ckm-purple);font-weight:600;}
+
+.cid-wrapper{position:relative;}
+.cid-dropdown{position:absolute;top:100%;left:0;right:0;background:var(--bg-card);border:1px solid var(--border);border-radius:8px;box-shadow:var(--shadow-card-hover);max-height:200px;overflow-y:auto;z-index:50;display:none;}
+.cid-dropdown.show{display:block;}
+.cid-option{padding:8px 12px;font-size:12px;cursor:pointer;transition:background .1s;display:flex;gap:8px;}
+.cid-option:hover{background:rgba(2,128,144,0.06);}
+.cid-option .cid-code{font-weight:600;color:var(--teal);min-width:45px;}
+.cid-option .cid-desc{color:var(--text-2);}
+
+@media(max-width:768px){
+  
+  
+  .ckm-nav-section{margin-bottom:0;display:flex;gap:4px;}
+  .ckm-nav-section-title{display:none;}
+  .sb-item{white-space:nowrap;padding:6px 12px;font-size:11px;}
+  
+  .pac-header-card{flex-wrap:wrap;}
+  .pac-badges{width:100%;margin-top:4px;}
+  .tab-bar{overflow-x:auto;}
+  .f-row,.f-row.f3{flex-direction:column;}
+  .check-grid{grid-template-columns:1fr 1fr;}
+  #tab-class > div:first-child{grid-template-columns:1fr;}
+}
+
+.ef-segments{display:flex;flex-direction:column;gap:10px;}
+.ef-seg-label{font-size:11px;font-weight:600;color:var(--text);display:block;margin-bottom:4px;}
+.ef-seg-ta{font-family:inherit;font-size:12px;padding:9px 12px;border:1px solid var(--border);border-radius:8px;background:var(--bg);color:var(--text);outline:none;transition:border-color .2s;width:100%;resize:vertical;line-height:1.6;}
+.ef-seg-ta:focus{border-color:var(--teal);box-shadow:0 0 0 3px rgba(2,128,144,0.08);}
+
+.kdigo-highlight{outline:3px solid var(--navy);outline-offset:-2px;font-weight:700 !important;}
+
+.ckm-stage.active-stage{border-color:var(--teal);background:rgba(2,128,144,0.08);}
+.ckm-stage.active-stage div:first-child{color:var(--teal) !important;}
+.ckm-stage.active-stage div:last-child{color:var(--ckm-teal-dark) !important;}
+
+.sm-criteria{display:flex;flex-direction:column;gap:6px;}
+.sm-crit{display:flex;align-items:center;gap:10px;padding:8px 12px;border:1px solid var(--border);border-radius:8px;font-size:12px;color:var(--text-2);transition:all .15s;}
+.sm-crit.met{border-color:#E05252;background:rgba(224,82,82,0.04);color:var(--text);}
+.sm-icon{font-size:14px;width:18px;text-align:center;}
+.sm-crit.met .sm-icon{color:#E05252;}
+
+.tto-alert{padding:10px 14px;border-radius:8px;font-size:12px;font-weight:500;margin-bottom:8px;display:flex;align-items:center;gap:8px;}
+.tto-alert.danger{background:#FCEBEB;color:#791F1F;border:1px solid rgba(224,82,82,0.2);}
+.tto-alert.warning{background:#FAEEDA;color:#633806;border:1px solid rgba(186,117,23,0.2);}
+.tto-alert.info{background:#E6F1FB;color:#0C447C;border:1px solid rgba(24,95,165,0.2);}
+
+.tto-cat{margin-bottom:14px;}
+.tto-cat-title{font-size:12px;font-weight:600;color:var(--text);margin-bottom:6px;display:flex;align-items:center;gap:6px;}
+.tto-cat-title .tto-dot{width:6px;height:6px;border-radius:50%;}
+.tto-drug{padding:8px 14px;border:1px solid var(--border);border-radius:8px;margin-bottom:4px;font-size:12px;display:flex;justify-content:space-between;align-items:center;}
+.tto-drug .tto-ev{font-size:10px;color:var(--text-3);font-weight:500;}
+
+.metric-mini{background:var(--bg-deep);border-radius:8px;padding:10px 12px;text-align:center;}
+.mm-label{font-size:9px;font-weight:600;letter-spacing:0.5px;text-transform:uppercase;color:var(--text-3);margin-bottom:3px;}
+.mm-val{font-size:18px;font-weight:700;color:var(--text);}
+
+.rx-med-item{background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:12px;margin-bottom:8px;}
+.rx-med-item .f-row{margin-bottom:8px;}
+
+.sol-cat{margin-bottom:16px;}
+.sol-cat-title{font-size:12px;font-weight:600;margin-bottom:8px;display:flex;align-items:center;gap:6px;}
+.sol-cat-title .sol-dot{width:8px;height:8px;border-radius:50%;}
+.sol-exam{display:flex;align-items:center;gap:8px;padding:6px 10px;border:1px solid var(--border);border-radius:6px;margin-bottom:4px;font-size:11px;cursor:pointer;transition:all .15s;}
+.sol-exam:hover{background:rgba(2,128,144,0.03);}
+.sol-exam.checked{border-color:var(--teal);background:rgba(2,128,144,0.05);}
+.sol-exam input[type="checkbox"]{accent-color:var(--teal);pointer-events:none;}
+.sol-exam .sol-interval{margin-left:auto;font-size:9px;color:var(--text-3);font-weight:500;}
+.sol-exam .sol-cond{font-size:9px;color:var(--ckm-amber);font-style:italic;}
+
+/* CKM View Tabs — horizontal navigation replacing prontuário sidebar */
+.ckm-view-tabs{display:flex;gap:2px;padding:4px;background:var(--bg-card);border:1px solid var(--border);border-radius:10px;margin-bottom:16px;overflow-x:auto;box-shadow:var(--shadow-card);}
+.ckm-view-tab{display:flex;align-items:center;gap:6px;padding:8px 14px;border-radius:7px;border:none;background:transparent;color:var(--text-3);font-family:inherit;font-size:11px;font-weight:600;cursor:pointer;transition:all .15s;white-space:nowrap;}
+.ckm-view-tab:hover{background:rgba(30,45,80,0.04);color:var(--text-2);}
+.ckm-view-tab.active{background:var(--navy);color:#fff;}
+.ckm-view-tab .vt-icon{width:14px;height:14px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.ckm-view-tab .vt-icon svg{width:12px;height:12px;}
+
+/* CKM responsive */
+@media(max-width:900px){
+  .ckm-view-tabs{overflow-x:auto;-webkit-overflow-scrolling:touch;}
+  .f-row,.f-row.f3{flex-direction:column;}
+  .check-grid{grid-template-columns:1fr 1fr;}
+  .pac-header-card{flex-wrap:wrap;}
+  .pac-badges{width:100%;margin-top:4px;}
+}
+
 </style>
 </head>
 <body>
@@ -569,12 +736,835 @@ body{font-family:var(--font-sans);background:var(--navy-deep);color:var(--text);
     <div class="content-page" id="page-prontuario">
       <p class="page-eyebrow rv">Pacientes</p>
       <h2 class="page-title rv">Prontuário <strong>CKM</strong></h2>
-      <div class="empty-state rv">
-        <div class="empty-icon"><svg width="80" height="80" viewBox="0 0 80 80" fill="none"><rect x="8" y="8" width="64" height="64" rx="16" fill="rgba(30,45,80,0.04)" stroke="var(--border)" stroke-width="1.5"/><circle cx="32" cy="30" r="8" fill="rgba(30,45,80,0.06)" stroke="var(--navy)" stroke-width="1.4"/><path d="M20 56v-2a12 12 0 0124 0v2" stroke="var(--navy)" stroke-width="1.4" stroke-linecap="round"/><path d="M50 28v10M55 33h-10" stroke="var(--teal)" stroke-width="1.6" stroke-linecap="round"/></svg></div>
-        <div class="empty-badge"><span class="dot"></span> Em Desenvolvimento</div>
-        <div class="empty-title">Prontuário CKM</div>
-        <div class="empty-desc">Prontuário eletrônico com 9 abas, cálculos CKD-EPI, ASCVD, KFRE e risco CKM integrado. Acompanhamento longitudinal do paciente renal.</div>
+
+
+      <!-- CKM VIEW TABS (was prontuário sidebar) -->
+      <div class="ckm-view-tabs">
+        <button class="ckm-view-tab active" onclick="ckmSelectView(this,'primeira')">
+          <span class="vt-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/></svg></span>
+          Primeira consulta
+        </button>
+        <button class="ckm-view-tab" onclick="ckmSelectView(this,'retorno')">
+          <span class="vt-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 105.64-8.36L1 10"/></svg></span>
+          Retorno
+        </button>
+        <button class="ckm-view-tab" onclick="ckmSelectView(this,'receituario')">
+          <span class="vt-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="9" y1="13" x2="15" y2="13"/><line x1="9" y1="17" x2="13" y2="17"/></svg></span>
+          Receituário
+        </button>
+        <button class="ckm-view-tab" onclick="ckmSelectView(this,'exames-sol')">
+          <span class="vt-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3v2m6-2v2M9 19v2m6-2v2M3 9h2m-2 6h2m14-6h2m-2 6h2"/><rect x="7" y="7" width="10" height="10" rx="1"/></svg></span>
+          Solicitar exames
+        </button>
+        <button class="ckm-view-tab" onclick="ckmSelectView(this,'atestado')">
+          <span class="vt-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v16H4z"/><path d="M9 9h6M9 13h4"/></svg></span>
+          Atestado
+        </button>
+        <button class="ckm-view-tab" onclick="ckmSelectView(this,'encaminhamento')">
+          <span class="vt-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6"/><path d="M10 14L21 3"/><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/></svg></span>
+          Encaminhamento
+        </button>
       </div>
+
+
+    <!-- HEADER PACIENTE -->
+    <div class="pac-header-card">
+      <div class="pac-avatar" onclick="document.getElementById('avatar-input').click()" title="Clique para adicionar foto">
+        <input type="file" id="avatar-input" accept="image/*" style="display:none;" onchange="handleAvatar(event)">
+        <span class="pac-avatar-placeholder" id="avatar-placeholder">JS</span>
+      </div>
+      <div class="pac-info">
+        <div class="pac-name" id="pac-nome-display">João Silva</div>
+        <div class="pac-demo" id="pac-demo-display">58 anos · Masculino</div>
+      </div>
+      <div class="pac-badges" id="pac-badges">
+        <span class="badge b-yl" id="badge-imc">IMC 31.2</span>
+        <span class="badge b-or" id="badge-tfge">TFGe 42</span>
+        <span class="badge b-pr" id="badge-ckm">CKM 3</span>
+      </div>
+    </div>
+
+    <!-- VIEW: PRIMEIRA CONSULTA -->
+    <div class="sidebar-view active" id="view-primeira">
+
+      <!-- TAB BAR -->
+      <div class="tab-bar">
+        <button class="tab-btn active" onclick="openTab(this,'tab-anam')">Anamnese</button>
+        <button class="tab-btn" onclick="openTab(this,'tab-lab')">Exames</button>
+        <button class="tab-btn" onclick="openTab(this,'tab-ef')">Ex. físico</button>
+        <button class="tab-btn" onclick="openTab(this,'tab-class')">Classif.</button>
+        <button class="tab-btn" onclick="openTab(this,'tab-risk')">Riscos</button>
+        <button class="tab-btn" onclick="openTab(this,'tab-tto')">Tratamento</button>
+        <button class="tab-btn" onclick="openTab(this,'tab-prx')">Prescrição</button>
+        <button class="tab-btn" onclick="openTab(this,'tab-dash')">Dashboard</button>
+        <button class="tab-btn" onclick="openTab(this,'tab-metas')">Metas</button>
+      </div>
+
+      <!-- TAB: ANAMNESE -->
+      <div class="tab-content active" id="tab-anam">
+
+        <!-- CARD 1: QUEIXA PRINCIPAL -->
+        <div class="ckm-card">
+          <div class="ckm-card-header">
+            <div class="ckm-dot" style="background:var(--ckm-teal);"></div>
+            <div class="ckm-card-title">Queixa principal</div>
+          </div>
+          <div class="f-row">
+            <div class="f-group" style="flex:2;">
+              <label>Queixa principal com CID-10</label>
+              <div class="cid-wrapper">
+                <input type="text" id="qp-input" placeholder="Digite o CID ou descrição..." oninput="filterCID(this.value)" onfocus="filterCID(this.value)" autocomplete="off">
+                <div class="cid-dropdown" id="cid-dropdown"></div>
+              </div>
+            </div>
+            <div class="f-group" style="flex:1;">
+              <label>Duração</label>
+              <input type="text" id="qp-duracao" placeholder="Ex: 3 meses, 2 anos...">
+            </div>
+          </div>
+        </div>
+
+        <!-- CARD 2: HDA -->
+        <div class="ckm-card">
+          <div class="ckm-card-header">
+            <div class="ckm-dot" style="background:var(--ckm-purple);"></div>
+            <div class="ckm-card-title">História da doença atual (HDA)</div>
+          </div>
+          <div style="margin-bottom:8px;">
+            <label style="font-size:11px;font-weight:500;color:var(--text-2);display:block;margin-bottom:6px;">Template</label>
+            <div class="template-select">
+              <button class="tpl-btn active" onclick="setTemplate(this,'livre')">Escrita livre</button>
+              <button class="tpl-btn" onclick="setTemplate(this,'edema')">Edema</button>
+              <button class="tpl-btn" onclick="setTemplate(this,'dispneia')">Dispneia</button>
+              <button class="tpl-btn" onclick="setTemplate(this,'dor_toracica')">Dor torácica</button>
+              <button class="tpl-btn" onclick="setTemplate(this,'oliguria')">Oligúria</button>
+              <button class="tpl-btn" onclick="setTemplate(this,'poliuria')">Poliúria/polidipsia</button>
+              <button class="tpl-btn" onclick="setTemplate(this,'fadiga')">Fadiga</button>
+            </div>
+          </div>
+          <div class="f-row f1">
+            <div class="f-group">
+              <textarea id="hda-text" rows="5" placeholder="Descreva a história da doença atual..."></textarea>
+            </div>
+          </div>
+        </div>
+
+        <!-- CARD 3: HPP E COMORBIDADES -->
+        <div class="ckm-card">
+          <div class="ckm-card-header">
+            <div class="ckm-dot" style="background:var(--ckm-orange);"></div>
+            <div class="ckm-card-title">HPP e comorbidades</div>
+          </div>
+          <div class="check-grid">
+            <div class="check-item" onclick="toggleCk(this)"><input type="checkbox"> HAS</div>
+            <div class="check-item" onclick="toggleCk(this)"><input type="checkbox"> DM2</div>
+            <div class="check-item" onclick="toggleCk(this)"><input type="checkbox"> DRC</div>
+            <div class="check-item" onclick="toggleCk(this)"><input type="checkbox"> DLP</div>
+            <div class="check-item" onclick="toggleCk(this)"><input type="checkbox"> IC</div>
+            <div class="check-item" onclick="toggleCk(this)"><input type="checkbox"> IAM</div>
+            <div class="check-item" onclick="toggleCk(this)"><input type="checkbox"> AVC</div>
+            <div class="check-item" onclick="toggleCk(this)"><input type="checkbox"> DAP</div>
+            <div class="check-item" onclick="toggleCk(this)"><input type="checkbox"> SAOS</div>
+            <div class="check-item" onclick="toggleCk(this)"><input type="checkbox"> Esteatose</div>
+          </div>
+          <div class="select-row">
+            <div class="f-group">
+              <label>Tipo de IC</label>
+              <select><option value="">N/A</option><option>ICFEp</option><option>ICFEr</option></select>
+            </div>
+            <div class="f-group">
+              <label>Diálise</label>
+              <select><option value="">Não</option><option>Sim</option></select>
+            </div>
+            <div class="f-group">
+              <label>Etnia</label>
+              <select><option>Geral</option><option>Asiático</option></select>
+            </div>
+          </div>
+          <div class="f-row f1">
+            <div class="f-group">
+              <label>Outros antecedentes / cirurgias</label>
+              <textarea id="hpp-outros" rows="2" placeholder="Cirurgias prévias, outros antecedentes relevantes..."></textarea>
+            </div>
+          </div>
+        </div>
+
+        <!-- CARD 4: MEDICAÇÕES, ALERGIAS E HÁBITOS -->
+        <div class="ckm-card">
+          <div class="ckm-card-header">
+            <div class="ckm-dot" style="background:var(--ckm-amber);"></div>
+            <div class="ckm-card-title">Medicações, alergias e hábitos</div>
+          </div>
+          <div class="f-row f1">
+            <div class="f-group">
+              <label>Medicações em uso</label>
+              <textarea id="med-uso" rows="3" placeholder="Liste as medicações atuais com doses e posologia..."></textarea>
+            </div>
+          </div>
+          <div class="f-row f1">
+            <div class="f-group">
+              <label>Alergias</label>
+              <input type="text" id="alergias" placeholder="Medicamentosas, alimentares, ambientais...">
+            </div>
+          </div>
+          <div class="f-row" style="gap:12px;">
+            <div class="f-group">
+              <label>Tabagismo</label>
+              <select id="tabagismo"><option value="">Não</option><option>Ativo</option><option>Ex-tabagista</option></select>
+            </div>
+            <div class="f-group">
+              <label>Etilismo</label>
+              <select id="etilismo"><option value="">Não</option><option>Social</option><option>Moderado</option><option>Pesado</option></select>
+            </div>
+            <div class="f-group">
+              <label>Atividade (min/sem)</label>
+              <input type="number" id="atividade-min" placeholder="0">
+            </div>
+            <div class="f-group">
+              <label>Sono (h)</label>
+              <input type="number" id="sono-h" placeholder="7" step="0.5">
+            </div>
+          </div>
+        </div>
+
+        <!-- CARD 5: HISTÓRIA FAMILIAR -->
+        <div class="ckm-card">
+          <div class="ckm-card-header">
+            <div class="ckm-dot" style="background:var(--ckm-pink);"></div>
+            <div class="ckm-card-title">História familiar</div>
+          </div>
+          <div class="check-grid">
+            <div class="check-item" onclick="toggleCk(this)"><input type="checkbox"> DCV precoce</div>
+            <div class="check-item" onclick="toggleCk(this)"><input type="checkbox"> DM</div>
+            <div class="check-item" onclick="toggleCk(this)"><input type="checkbox"> DRC</div>
+            <div class="check-item" onclick="toggleCk(this)"><input type="checkbox"> Ca colorretal</div>
+            <div class="check-item" onclick="toggleCk(this)"><input type="checkbox"> Ca mama</div>
+            <div class="check-item" onclick="toggleCk(this)"><input type="checkbox"> Osteoporose</div>
+          </div>
+          <div class="select-row" style="max-width:250px;">
+            <div class="f-group">
+              <label>Menopausa</label>
+              <select><option value="">N/A</option><option>Pré</option><option>Pós</option></select>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /tab-anam -->
+
+      <!-- PLACEHOLDER TABS (Fase 2 e 3) -->
+      <div class="tab-content" id="tab-lab">
+
+        <!-- HEMATOLOGIA -->
+        <div class="ckm-card">
+          <div class="ckm-card-header">
+            <div class="ckm-dot" style="background:#E05252;"></div>
+            <div class="ckm-card-title">Hematologia</div>
+          </div>
+          <div class="f-row">
+            <div class="f-group"><label>Hemoglobina (g/dL)</label><input type="number" id="ex-hb" step="0.1" placeholder="12.0"></div>
+            <div class="f-group"><label>Hematócrito (%)</label><input type="number" id="ex-ht" step="0.1" placeholder="36"></div>
+            <div class="f-group"><label>Leucócitos (/mm³)</label><input type="number" id="ex-leuco" placeholder="7500"></div>
+            <div class="f-group"><label>Plaquetas (x10³)</label><input type="number" id="ex-plaq" placeholder="250"></div>
+          </div>
+        </div>
+
+        <!-- BIOQUÍMICA -->
+        <div class="ckm-card">
+          <div class="ckm-card-header">
+            <div class="ckm-dot" style="background:var(--ckm-teal);"></div>
+            <div class="ckm-card-title">Bioquímica</div>
+          </div>
+          <div class="f-row">
+            <div class="f-group"><label>Glicemia jejum (mg/dL)</label><input type="number" id="ex-gj" placeholder="100"></div>
+            <div class="f-group"><label>HbA1c (%)</label><input type="number" id="ex-hba1c" step="0.1" placeholder="5.7"></div>
+            <div class="f-group"><label>Creatinina (mg/dL)</label><input type="number" id="ex-cr" step="0.01" placeholder="1.0" oninput="autoCalcTFGe()"></div>
+            <div class="f-group"><label>Ureia (mg/dL)</label><input type="number" id="ex-ureia" placeholder="40"></div>
+          </div>
+          <div class="f-row">
+            <div class="f-group"><label>Sódio (mEq/L)</label><input type="number" id="ex-na" placeholder="140"></div>
+            <div class="f-group"><label>Potássio (mEq/L)</label><input type="number" id="ex-k" step="0.1" placeholder="4.5"></div>
+            <div class="f-group"><label>Bicarbonato (mEq/L)</label><input type="number" id="ex-bic" step="0.1" placeholder="24"></div>
+            <div class="f-group"><label>Ácido úrico (mg/dL)</label><input type="number" id="ex-au" step="0.1" placeholder="5.5"></div>
+          </div>
+        </div>
+
+        <!-- PERFIL LIPÍDICO -->
+        <div class="ckm-card">
+          <div class="ckm-card-header">
+            <div class="ckm-dot" style="background:var(--ckm-amber);"></div>
+            <div class="ckm-card-title">Perfil lipídico</div>
+          </div>
+          <div class="f-row">
+            <div class="f-group"><label>Col. total (mg/dL)</label><input type="number" id="ex-ct" placeholder="200"></div>
+            <div class="f-group"><label>LDL (mg/dL)</label><input type="number" id="ex-ldl" placeholder="120"></div>
+            <div class="f-group"><label>HDL (mg/dL)</label><input type="number" id="ex-hdl" placeholder="45"></div>
+            <div class="f-group"><label>Triglicerídeos (mg/dL)</label><input type="number" id="ex-tg" placeholder="150"></div>
+          </div>
+        </div>
+
+        <!-- FUNÇÃO HEPÁTICA E RENAL -->
+        <div class="ckm-card">
+          <div class="ckm-card-header">
+            <div class="ckm-dot" style="background:var(--ckm-purple);"></div>
+            <div class="ckm-card-title">Função hepática e renal</div>
+          </div>
+          <div class="f-row">
+            <div class="f-group"><label>ALT (U/L)</label><input type="number" id="ex-alt" placeholder="25" oninput="autoCalcFIB4()"></div>
+            <div class="f-group"><label>AST (U/L)</label><input type="number" id="ex-ast" placeholder="22" oninput="autoCalcFIB4()"></div>
+            <div class="f-group"><label>RAC urinária (mg/g)</label><input type="number" id="ex-rac" step="0.1" placeholder="< 30"></div>
+            <div class="f-group">
+              <label>TFGe (auto)</label>
+              <input type="text" id="ex-tfge" readonly style="opacity:.7;background:rgba(2,128,144,0.04);font-weight:600;" placeholder="—">
+            </div>
+          </div>
+        </div>
+
+        <!-- ENDÓCRINO -->
+        <div class="ckm-card">
+          <div class="ckm-card-header">
+            <div class="ckm-dot" style="background:var(--ckm-pink);"></div>
+            <div class="ckm-card-title">Endócrino e outros</div>
+          </div>
+          <div class="f-row">
+            <div class="f-group"><label>TSH (mUI/L)</label><input type="number" id="ex-tsh" step="0.01" placeholder="2.5"></div>
+            <div class="f-group"><label>Vitamina D (ng/mL)</label><input type="number" id="ex-vitd" step="0.1" placeholder="30"></div>
+            <div class="f-group"><label>Ferritina (ng/mL)</label><input type="number" id="ex-ferr" placeholder="100"></div>
+            <div class="f-group"><label>PTH (pg/mL)</label><input type="number" id="ex-pth" placeholder="45"></div>
+          </div>
+        </div>
+
+        <!-- IMAGEM E OUTROS -->
+        <div class="ckm-card">
+          <div class="ckm-card-header">
+            <div class="ckm-dot" style="background:var(--navy);"></div>
+            <div class="ckm-card-title">Imagem e outros exames</div>
+          </div>
+          <div class="f-row f1">
+            <div class="f-group">
+              <textarea id="ex-imagem" rows="4" placeholder="ECG, ecocardiograma, USG renal, doppler, fundo de olho, densitometria..."></textarea>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <div class="tab-content" id="tab-ef">
+
+        <!-- SINAIS VITAIS E ANTROPOMETRIA -->
+        <div class="ckm-card">
+          <div class="ckm-card-header">
+            <div class="ckm-dot" style="background:var(--ckm-teal);"></div>
+            <div class="ckm-card-title">Sinais vitais e antropometria</div>
+          </div>
+          <div class="f-row">
+            <div class="f-group"><label>PAS (mmHg)</label><input type="number" id="ef-pas" placeholder="120"></div>
+            <div class="f-group"><label>PAD (mmHg)</label><input type="number" id="ef-pad" placeholder="80"></div>
+            <div class="f-group"><label>FC (bpm)</label><input type="number" id="ef-fc" placeholder="72"></div>
+            <div class="f-group"><label>FR (irpm)</label><input type="number" id="ef-fr" placeholder="16"></div>
+          </div>
+          <div class="f-row">
+            <div class="f-group"><label>SpO2 (%)</label><input type="number" id="ef-spo2" placeholder="97"></div>
+            <div class="f-group"><label>Peso (kg)</label><input type="number" id="ef-peso" step="0.1" placeholder="85" oninput="autoCalcIMC()"></div>
+            <div class="f-group"><label>Altura (cm)</label><input type="number" id="ef-altura" placeholder="175" oninput="autoCalcIMC()"></div>
+            <div class="f-group"><label>CA (cm)</label><input type="number" id="ef-ca" step="0.5" placeholder="98"></div>
+          </div>
+          <div class="f-row" style="max-width:50%;">
+            <div class="f-group">
+              <label>IMC (auto)</label>
+              <div style="display:flex;gap:8px;align-items:center;">
+                <input type="text" id="ef-imc" readonly style="opacity:.7;background:rgba(2,128,144,0.04);font-weight:600;flex:1;" placeholder="—">
+                <span class="badge b-yl" id="ef-imc-badge" style="display:none;"></span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- EXAME SEGMENTAR -->
+        <div class="ckm-card">
+          <div class="ckm-card-header">
+            <div class="ckm-dot" style="background:var(--ckm-purple);"></div>
+            <div class="ckm-card-title">Exame segmentar</div>
+            <button style="margin-left:auto;font-size:10px;font-weight:600;color:var(--teal);background:rgba(2,128,144,0.06);border:1px solid rgba(2,128,144,0.15);border-radius:6px;padding:4px 12px;cursor:pointer;font-family:inherit;" onclick="preencherTemplatesEF()">Preencher templates</button>
+          </div>
+          <div class="ef-segments">
+            <div class="ef-seg">
+              <label class="ef-seg-label">Estado geral</label>
+              <textarea class="ef-seg-ta" id="ef-seg-eg" rows="2" placeholder="Estado geral do paciente..."></textarea>
+            </div>
+            <div class="ef-seg">
+              <label class="ef-seg-label">Cabeça e pescoço</label>
+              <textarea class="ef-seg-ta" id="ef-seg-cp" rows="2" placeholder="Adenomegalias, tireoide, jugulares..."></textarea>
+            </div>
+            <div class="ef-seg">
+              <label class="ef-seg-label">Aparelho respiratório</label>
+              <textarea class="ef-seg-ta" id="ef-seg-ar" rows="2" placeholder="Murmúrio vesicular, ruídos..."></textarea>
+            </div>
+            <div class="ef-seg">
+              <label class="ef-seg-label">Aparelho cardiovascular</label>
+              <textarea class="ef-seg-ta" id="ef-seg-ac" rows="2" placeholder="Ritmo, bulhas, sopros, pulsos..."></textarea>
+            </div>
+            <div class="ef-seg">
+              <label class="ef-seg-label">Abdome</label>
+              <textarea class="ef-seg-ta" id="ef-seg-ab" rows="2" placeholder="Inspeção, palpação, percussão..."></textarea>
+            </div>
+            <div class="ef-seg">
+              <label class="ef-seg-label">Extremidades</label>
+              <textarea class="ef-seg-ta" id="ef-seg-ex" rows="2" placeholder="Edema, panturrilhas, pulsos..."></textarea>
+            </div>
+            <div class="ef-seg">
+              <label class="ef-seg-label">Neurológico</label>
+              <textarea class="ef-seg-ta" id="ef-seg-ne" rows="2" placeholder="Nível de consciência, déficits..."></textarea>
+            </div>
+            <div class="ef-seg">
+              <label class="ef-seg-label">Pele</label>
+              <textarea class="ef-seg-ta" id="ef-seg-pe" rows="2" placeholder="Integridade, lesões..."></textarea>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <div class="tab-content" id="tab-class">
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
+
+          <!-- IMC -->
+          <div class="ckm-card" style="margin-bottom:0;">
+            <div class="ckm-card-header"><div class="ckm-dot" style="background:var(--ckm-amber);"></div><div class="ckm-card-title">IMC</div></div>
+            <div style="display:flex;align-items:baseline;gap:10px;margin-bottom:6px;">
+              <span style="font-size:28px;font-weight:700;color:var(--text);" id="cl-imc-val">—</span>
+              <span style="font-size:13px;color:var(--text-2);">kg/m²</span>
+            </div>
+            <span class="badge b-yl" id="cl-imc-badge" style="display:none;"></span>
+          </div>
+
+          <!-- PA -->
+          <div class="ckm-card" style="margin-bottom:0;">
+            <div class="ckm-card-header"><div class="ckm-dot" style="background:#E05252;"></div><div class="ckm-card-title">Pressão arterial</div></div>
+            <div style="display:flex;align-items:baseline;gap:6px;margin-bottom:6px;">
+              <span style="font-size:28px;font-weight:700;color:var(--text);" id="cl-pa-val">—</span>
+              <span style="font-size:13px;color:var(--text-2);">mmHg</span>
+            </div>
+            <span class="badge b-gn" id="cl-pa-badge" style="display:none;"></span>
+          </div>
+
+          <!-- GLICÊMICO -->
+          <div class="ckm-card" style="margin-bottom:0;">
+            <div class="ckm-card-header"><div class="ckm-dot" style="background:var(--ckm-purple);"></div><div class="ckm-card-title">Perfil glicêmico</div></div>
+            <div style="display:flex;gap:20px;margin-bottom:6px;">
+              <div><span style="font-size:12px;color:var(--text-3);display:block;">GJ</span><span style="font-size:22px;font-weight:700;color:var(--text);" id="cl-gj-val">—</span></div>
+              <div><span style="font-size:12px;color:var(--text-3);display:block;">HbA1c</span><span style="font-size:22px;font-weight:700;color:var(--text);" id="cl-hba1c-val">—</span></div>
+            </div>
+            <span class="badge b-gn" id="cl-glic-badge" style="display:none;"></span>
+          </div>
+
+          <!-- TFGe -->
+          <div class="ckm-card" style="margin-bottom:0;">
+            <div class="ckm-card-header"><div class="ckm-dot" style="background:var(--teal);"></div><div class="ckm-card-title">TFGe (CKD-EPI 2021)</div></div>
+            <div style="display:flex;align-items:baseline;gap:6px;margin-bottom:6px;">
+              <span style="font-size:28px;font-weight:700;color:var(--text);" id="cl-tfge-val">—</span>
+              <span style="font-size:13px;color:var(--text-2);">mL/min/1.73m²</span>
+            </div>
+            <span class="badge b-gn" id="cl-tfge-badge" style="display:none;"></span>
+          </div>
+
+          <!-- CA -->
+          <div class="ckm-card" style="margin-bottom:0;">
+            <div class="ckm-card-header"><div class="ckm-dot" style="background:var(--ckm-orange);"></div><div class="ckm-card-title">Circunferência abdominal</div></div>
+            <div style="display:flex;align-items:baseline;gap:6px;margin-bottom:6px;">
+              <span style="font-size:28px;font-weight:700;color:var(--text);" id="cl-ca-val">—</span>
+              <span style="font-size:13px;color:var(--text-2);">cm</span>
+            </div>
+            <span class="badge b-gn" id="cl-ca-badge" style="display:none;"></span>
+          </div>
+
+          <!-- FIB-4 -->
+          <div class="ckm-card" style="margin-bottom:0;">
+            <div class="ckm-card-header"><div class="ckm-dot" style="background:var(--ckm-pink);"></div><div class="ckm-card-title">FIB-4 (fibrose hepática)</div></div>
+            <div style="display:flex;align-items:baseline;gap:6px;margin-bottom:6px;">
+              <span style="font-size:28px;font-weight:700;color:var(--text);" id="cl-fib4-val">—</span>
+            </div>
+            <span class="badge b-gn" id="cl-fib4-badge" style="display:none;"></span>
+          </div>
+
+        </div>
+
+        <!-- KDIGO CGA HEAT MAP -->
+        <div class="ckm-card" style="margin-top:14px;">
+          <div class="ckm-card-header"><div class="ckm-dot" style="background:var(--teal);"></div><div class="ckm-card-title">KDIGO CGA — Mapa de risco</div></div>
+          <div style="overflow-x:auto;">
+            <table id="kdigo-table" style="width:100%;border-collapse:collapse;font-size:11px;text-align:center;">
+              <thead>
+                <tr>
+                  <th style="padding:6px;border:1px solid var(--border);background:var(--bg-deep);"></th>
+                  <th style="padding:6px;border:1px solid var(--border);background:var(--bg-deep);">A1<br><span style="font-weight:400;font-size:9px;">&lt;30 mg/g</span></th>
+                  <th style="padding:6px;border:1px solid var(--border);background:var(--bg-deep);">A2<br><span style="font-weight:400;font-size:9px;">30-299</span></th>
+                  <th style="padding:6px;border:1px solid var(--border);background:var(--bg-deep);">A3<br><span style="font-weight:400;font-size:9px;">≥300</span></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td style="padding:6px;border:1px solid var(--border);font-weight:600;background:var(--bg-deep);">G1 ≥90</td><td class="kdigo-cell" data-g="1" data-a="1" style="padding:6px;border:1px solid var(--border);background:#EAF3DE;color:#27500A;">Baixo</td><td class="kdigo-cell" data-g="1" data-a="2" style="padding:6px;border:1px solid var(--border);background:#FAEEDA;color:#633806;">Moderado</td><td class="kdigo-cell" data-g="1" data-a="3" style="padding:6px;border:1px solid var(--border);background:#FAECE7;color:#712B13;">Alto</td></tr>
+                <tr><td style="padding:6px;border:1px solid var(--border);font-weight:600;background:var(--bg-deep);">G2 60-89</td><td class="kdigo-cell" data-g="2" data-a="1" style="padding:6px;border:1px solid var(--border);background:#EAF3DE;color:#27500A;">Baixo</td><td class="kdigo-cell" data-g="2" data-a="2" style="padding:6px;border:1px solid var(--border);background:#FAEEDA;color:#633806;">Moderado</td><td class="kdigo-cell" data-g="2" data-a="3" style="padding:6px;border:1px solid var(--border);background:#FAECE7;color:#712B13;">Alto</td></tr>
+                <tr><td style="padding:6px;border:1px solid var(--border);font-weight:600;background:var(--bg-deep);">G3a 45-59</td><td class="kdigo-cell" data-g="3" data-a="1" style="padding:6px;border:1px solid var(--border);background:#FAEEDA;color:#633806;">Moderado</td><td class="kdigo-cell" data-g="3" data-a="2" style="padding:6px;border:1px solid var(--border);background:#FAECE7;color:#712B13;">Alto</td><td class="kdigo-cell" data-g="3" data-a="3" style="padding:6px;border:1px solid var(--border);background:#FCEBEB;color:#791F1F;">Muito alto</td></tr>
+                <tr><td style="padding:6px;border:1px solid var(--border);font-weight:600;background:var(--bg-deep);">G3b 30-44</td><td class="kdigo-cell" data-g="4" data-a="1" style="padding:6px;border:1px solid var(--border);background:#FAECE7;color:#712B13;">Alto</td><td class="kdigo-cell" data-g="4" data-a="2" style="padding:6px;border:1px solid var(--border);background:#FCEBEB;color:#791F1F;">Muito alto</td><td class="kdigo-cell" data-g="4" data-a="3" style="padding:6px;border:1px solid var(--border);background:#FCEBEB;color:#791F1F;">Muito alto</td></tr>
+                <tr><td style="padding:6px;border:1px solid var(--border);font-weight:600;background:var(--bg-deep);">G4 15-29</td><td class="kdigo-cell" data-g="5" data-a="1" style="padding:6px;border:1px solid var(--border);background:#FCEBEB;color:#791F1F;">Muito alto</td><td class="kdigo-cell" data-g="5" data-a="2" style="padding:6px;border:1px solid var(--border);background:#FCEBEB;color:#791F1F;">Muito alto</td><td class="kdigo-cell" data-g="5" data-a="3" style="padding:6px;border:1px solid var(--border);background:#FCEBEB;color:#791F1F;">Muito alto</td></tr>
+                <tr><td style="padding:6px;border:1px solid var(--border);font-weight:600;background:var(--bg-deep);">G5 &lt;15</td><td class="kdigo-cell" data-g="6" data-a="1" style="padding:6px;border:1px solid var(--border);background:#FCEBEB;color:#791F1F;">Muito alto</td><td class="kdigo-cell" data-g="6" data-a="2" style="padding:6px;border:1px solid var(--border);background:#FCEBEB;color:#791F1F;">Muito alto</td><td class="kdigo-cell" data-g="6" data-a="3" style="padding:6px;border:1px solid var(--border);background:#FCEBEB;color:#791F1F;">Muito alto</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div style="margin-top:10px;display:flex;align-items:center;gap:8px;">
+            <span style="font-size:11px;color:var(--text-3);">Posição do paciente:</span>
+            <span class="badge b-tl" id="cl-kdigo-pos" style="display:none;"></span>
+            <span style="font-size:11px;color:var(--text-3);margin-left:8px;">Monitoramento:</span>
+            <span style="font-size:11px;font-weight:600;color:var(--text);" id="cl-kdigo-freq">—</span>
+          </div>
+        </div>
+
+        <!-- CKM STAGING -->
+        <div class="ckm-card" style="margin-top:14px;">
+          <div class="ckm-card-header"><div class="ckm-dot" style="background:var(--navy);"></div><div class="ckm-card-title">CKM Staging (AHA 2023)</div></div>
+          <div class="ckm-stages" style="display:flex;gap:8px;">
+            <div class="ckm-stage" id="ckm-s0" style="flex:1;padding:10px;border-radius:8px;border:1px solid var(--border);text-align:center;transition:all .2s;">
+              <div style="font-size:18px;font-weight:700;color:var(--text-3);">0</div>
+              <div style="font-size:9px;color:var(--text-3);margin-top:2px;">Sem fatores</div>
+            </div>
+            <div class="ckm-stage" id="ckm-s1" style="flex:1;padding:10px;border-radius:8px;border:1px solid var(--border);text-align:center;transition:all .2s;">
+              <div style="font-size:18px;font-weight:700;color:var(--text-3);">1</div>
+              <div style="font-size:9px;color:var(--text-3);margin-top:2px;">Obesidade</div>
+            </div>
+            <div class="ckm-stage" id="ckm-s2" style="flex:1;padding:10px;border-radius:8px;border:1px solid var(--border);text-align:center;transition:all .2s;">
+              <div style="font-size:18px;font-weight:700;color:var(--text-3);">2</div>
+              <div style="font-size:9px;color:var(--text-3);margin-top:2px;">Metabólico</div>
+            </div>
+            <div class="ckm-stage" id="ckm-s3" style="flex:1;padding:10px;border-radius:8px;border:1px solid var(--border);text-align:center;transition:all .2s;">
+              <div style="font-size:18px;font-weight:700;color:var(--text-3);">3</div>
+              <div style="font-size:9px;color:var(--text-3);margin-top:2px;">DRC/DM2</div>
+            </div>
+            <div class="ckm-stage" id="ckm-s4" style="flex:1;padding:10px;border-radius:8px;border:1px solid var(--border);text-align:center;transition:all .2s;">
+              <div style="font-size:18px;font-weight:700;color:var(--text-3);">4</div>
+              <div style="font-size:9px;color:var(--text-3);margin-top:2px;">DCV/IC</div>
+            </div>
+          </div>
+          <div style="margin-top:10px;">
+            <button style="font-family:inherit;font-size:11px;font-weight:600;color:#fff;background:var(--teal);border:none;border-radius:8px;padding:8px 18px;cursor:pointer;transition:all .15s;" onclick="runAllClassifications()">Calcular todas as classificações</button>
+            <span style="font-size:10px;color:var(--text-3);margin-left:8px;">Preencha Exames e Ex. físico primeiro</span>
+          </div>
+        </div>
+
+      </div>
+      <div class="tab-content" id="tab-risk">
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px;">
+
+          <!-- ASCVD -->
+          <div class="ckm-card" style="margin-bottom:0;">
+            <div class="ckm-card-header"><div class="ckm-dot" style="background:#E05252;"></div><div class="ckm-card-title">ASCVD 10 anos</div></div>
+            <div style="font-size:10px;color:var(--text-3);margin-bottom:10px;">Pooled Cohort Equations — risco cardiovascular aterosclerótico</div>
+            <div class="f-row">
+              <div class="f-group"><label>Tabagismo atual?</label><select id="risk-smoke"><option value="0">Não</option><option value="1">Sim</option></select></div>
+              <div class="f-group"><label>Anti-hipertensivo?</label><select id="risk-antihtn"><option value="0">Não</option><option value="1">Sim</option></select></div>
+            </div>
+            <div style="display:flex;align-items:baseline;gap:10px;margin-top:8px;">
+              <span style="font-size:32px;font-weight:700;color:var(--text);" id="risk-ascvd-val">—</span>
+              <span style="font-size:14px;color:var(--text-2);">%</span>
+            </div>
+            <span class="badge b-gn" id="risk-ascvd-badge" style="display:none;margin-top:6px;"></span>
+          </div>
+
+          <!-- KFRE -->
+          <div class="ckm-card" style="margin-bottom:0;">
+            <div class="ckm-card-header"><div class="ckm-dot" style="background:var(--teal);"></div><div class="ckm-card-title">KFRE 5 anos</div></div>
+            <div style="font-size:10px;color:var(--text-3);margin-bottom:10px;">Kidney Failure Risk Equation — 4 variáveis</div>
+            <div style="font-size:10px;color:var(--text-3);margin-bottom:6px;">Usa: idade, sexo, TFGe e RAC das abas anteriores</div>
+            <div style="display:flex;align-items:baseline;gap:10px;margin-top:8px;">
+              <span style="font-size:32px;font-weight:700;color:var(--text);" id="risk-kfre-val">—</span>
+              <span style="font-size:14px;color:var(--text-2);">%</span>
+            </div>
+            <span class="badge b-gn" id="risk-kfre-badge" style="display:none;margin-top:6px;"></span>
+          </div>
+
+        </div>
+
+        <!-- SÍNDROME METABÓLICA -->
+        <div class="ckm-card">
+          <div class="ckm-card-header"><div class="ckm-dot" style="background:var(--ckm-purple);"></div><div class="ckm-card-title">Síndrome Metabólica (IDF)</div></div>
+          <div style="font-size:10px;color:var(--text-3);margin-bottom:12px;">Diagnóstico: ≥ 3 critérios presentes</div>
+          <div class="sm-criteria">
+            <div class="sm-crit" id="sm-ca"><span class="sm-icon" id="sm-ca-icon">○</span> CA elevada (M ≥ 94cm, F ≥ 80cm)</div>
+            <div class="sm-crit" id="sm-tg"><span class="sm-icon" id="sm-tg-icon">○</span> Triglicerídeos ≥ 150 mg/dL</div>
+            <div class="sm-crit" id="sm-hdl"><span class="sm-icon" id="sm-hdl-icon">○</span> HDL baixo (M &lt; 40, F &lt; 50 mg/dL)</div>
+            <div class="sm-crit" id="sm-pa"><span class="sm-icon" id="sm-pa-icon">○</span> PA ≥ 130/85 mmHg</div>
+            <div class="sm-crit" id="sm-gli"><span class="sm-icon" id="sm-gli-icon">○</span> Glicemia jejum ≥ 100 mg/dL</div>
+          </div>
+          <div style="display:flex;align-items:center;gap:10px;margin-top:12px;">
+            <span style="font-size:13px;color:var(--text-2);">Critérios:</span>
+            <span style="font-size:22px;font-weight:700;color:var(--text);" id="sm-count">0</span>
+            <span style="font-size:13px;color:var(--text-2);">/ 5</span>
+            <span class="badge b-gn" id="sm-badge" style="margin-left:8px;">Ausente</span>
+          </div>
+        </div>
+
+        <div style="margin-top:14px;">
+          <button style="font-family:inherit;font-size:11px;font-weight:600;color:#fff;background:var(--teal);border:none;border-radius:8px;padding:8px 18px;cursor:pointer;" onclick="runAllRisks()">Calcular todos os riscos</button>
+          <span style="font-size:10px;color:var(--text-3);margin-left:8px;">Preencha Exames, Ex. físico e Anamnese primeiro</span>
+        </div>
+
+      </div>
+      <div class="tab-content" id="tab-tto">
+
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;">
+          <div style="font-size:13px;color:var(--text-2);">Plano terapêutico baseado em guidelines 2024-2026</div>
+          <button style="font-family:inherit;font-size:11px;font-weight:600;color:#fff;background:var(--teal);border:none;border-radius:8px;padding:8px 18px;cursor:pointer;" onclick="runTratamento()">Gerar plano terapêutico</button>
+        </div>
+
+        <!-- ALERTAS -->
+        <div id="tto-alertas"></div>
+
+        <!-- CONDUTAS POR CATEGORIA -->
+        <div id="tto-condutas">
+          <div class="ckm-card" style="text-align:center;padding:32px;">
+            <div style="font-size:13px;color:var(--text-3);">Preencha as abas anteriores e clique em "Gerar plano terapêutico"</div>
+          </div>
+        </div>
+
+      </div>
+      <!-- TAB PRESCRIÇÃO -->
+      <div class="tab-content" id="tab-prx">
+        <div class="ckm-card">
+          <div class="ckm-card-header"><div class="ckm-dot" style="background:var(--ckm-teal);"></div><div class="ckm-card-title">Prescrição proposta</div></div>
+          <div style="font-size:10px;color:var(--text-3);margin-bottom:12px;">Gerada automaticamente pela aba Tratamento. Edite antes de enviar.</div>
+          <div id="prx-lista" style="margin-bottom:14px;">
+            <div style="font-size:12px;color:var(--text-3);text-align:center;padding:20px;">Gere o plano terapêutico primeiro</div>
+          </div>
+          <div style="display:flex;gap:8px;">
+            <button class="prx-send-btn" onclick="enviarReceituario()" style="font-family:inherit;font-size:11px;font-weight:600;color:#fff;background:var(--teal);border:none;border-radius:8px;padding:8px 18px;cursor:pointer;">Enviar para receituário</button>
+            <button style="font-family:inherit;font-size:11px;font-weight:500;color:var(--text-2);background:transparent;border:1px solid var(--border);border-radius:8px;padding:8px 18px;cursor:pointer;" onclick="addMedPrx()">+ Adicionar medicamento</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB DASHBOARD -->
+      <div class="tab-content" id="tab-dash">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px;">
+          <!-- GAUGE ASCVD -->
+          <div class="ckm-card" style="margin-bottom:0;">
+            <div class="ckm-card-header"><div class="ckm-dot" style="background:#E05252;"></div><div class="ckm-card-title">Risco ASCVD 10a</div></div>
+            <div style="text-align:center;padding:10px 0;">
+              <canvas id="gauge-ascvd" width="200" height="120"></canvas>
+              <div style="font-size:24px;font-weight:700;color:var(--text);margin-top:-10px;" id="dash-ascvd">—%</div>
+            </div>
+          </div>
+          <!-- GAUGE KFRE -->
+          <div class="ckm-card" style="margin-bottom:0;">
+            <div class="ckm-card-header"><div class="ckm-dot" style="background:var(--teal);"></div><div class="ckm-card-title">Risco KFRE 5a</div></div>
+            <div style="text-align:center;padding:10px 0;">
+              <canvas id="gauge-kfre" width="200" height="120"></canvas>
+              <div style="font-size:24px;font-weight:700;color:var(--text);margin-top:-10px;" id="dash-kfre">—%</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- RADAR 5 EIXOS -->
+        <div class="ckm-card">
+          <div class="ckm-card-header"><div class="ckm-dot" style="background:var(--navy);"></div><div class="ckm-card-title">Perfil de risco CKM — Radar 5 eixos</div></div>
+          <div style="text-align:center;padding:10px 0;">
+            <canvas id="radar-ckm" width="360" height="300"></canvas>
+          </div>
+        </div>
+
+        <!-- MÉTRICAS RESUMO -->
+        <div class="ckm-card" style="margin-top:14px;">
+          <div class="ckm-card-header"><div class="ckm-dot" style="background:var(--gold);"></div><div class="ckm-card-title">Resumo do paciente</div></div>
+          <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;" id="dash-metrics">
+            <div class="metric-mini"><div class="mm-label">IMC</div><div class="mm-val" id="dm-imc">—</div></div>
+            <div class="metric-mini"><div class="mm-label">PAS/PAD</div><div class="mm-val" id="dm-pa">—</div></div>
+            <div class="metric-mini"><div class="mm-label">HbA1c</div><div class="mm-val" id="dm-hba1c">—</div></div>
+            <div class="metric-mini"><div class="mm-label">TFGe</div><div class="mm-val" id="dm-tfge">—</div></div>
+            <div class="metric-mini"><div class="mm-label">RAC</div><div class="mm-val" id="dm-rac">—</div></div>
+            <div class="metric-mini"><div class="mm-label">LDL</div><div class="mm-val" id="dm-ldl">—</div></div>
+            <div class="metric-mini"><div class="mm-label">CKM</div><div class="mm-val" id="dm-ckm">—</div></div>
+            <div class="metric-mini"><div class="mm-label">FIB-4</div><div class="mm-val" id="dm-fib4">—</div></div>
+          </div>
+        </div>
+
+        <div style="margin-top:14px;">
+          <button style="font-family:inherit;font-size:11px;font-weight:600;color:#fff;background:var(--teal);border:none;border-radius:8px;padding:8px 18px;cursor:pointer;" onclick="runDashboard()">Atualizar dashboard</button>
+        </div>
+      </div>
+
+      <!-- TAB METAS -->
+      <div class="tab-content" id="tab-metas">
+        <div class="ckm-card">
+          <div class="ckm-card-header"><div class="ckm-dot" style="background:var(--ckm-teal);"></div><div class="ckm-card-title">Metas progressivas</div></div>
+          <div style="font-size:10px;color:var(--text-3);margin-bottom:14px;">Calculadas automaticamente a partir dos valores atuais</div>
+          <div style="overflow-x:auto;">
+            <table style="width:100%;border-collapse:collapse;font-size:12px;" id="metas-table">
+              <thead>
+                <tr style="background:var(--bg-deep);">
+                  <th style="padding:8px 12px;text-align:left;border:1px solid var(--border);font-weight:600;">Parâmetro</th>
+                  <th style="padding:8px 12px;text-align:center;border:1px solid var(--border);font-weight:600;">Atual</th>
+                  <th style="padding:8px 12px;text-align:center;border:1px solid var(--border);font-weight:600;">3 meses</th>
+                  <th style="padding:8px 12px;text-align:center;border:1px solid var(--border);font-weight:600;">6 meses</th>
+                  <th style="padding:8px 12px;text-align:center;border:1px solid var(--border);font-weight:600;">12 meses</th>
+                </tr>
+              </thead>
+              <tbody id="metas-body">
+                <tr><td colspan="5" style="padding:20px;text-align:center;color:var(--text-3);border:1px solid var(--border);">Calcule as classificações primeiro</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div style="margin-top:14px;">
+            <button style="font-family:inherit;font-size:11px;font-weight:600;color:#fff;background:var(--teal);border:none;border-radius:8px;padding:8px 18px;cursor:pointer;" onclick="runMetas()">Gerar metas</button>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /view-primeira -->
+
+    <!-- VIEW: RETORNO -->
+    <div class="sidebar-view" id="view-retorno">
+      <div class="ckm-card">
+        <div class="ckm-card-header"><div class="ckm-dot" style="background:var(--ckm-teal);"></div><div class="ckm-card-title">Consulta de retorno</div></div>
+        <div style="font-size:10px;color:var(--text-3);margin-bottom:14px;">Compare valores atuais com o baseline salvo</div>
+
+        <div style="display:flex;gap:8px;margin-bottom:16px;">
+          <button style="font-family:inherit;font-size:11px;font-weight:600;color:#fff;background:var(--teal);border:none;border-radius:8px;padding:8px 18px;cursor:pointer;" onclick="salvarBaseline()">Salvar baseline atual</button>
+          <span style="font-size:10px;color:var(--text-3);align-self:center;" id="baseline-status">Nenhum baseline salvo</span>
+        </div>
+
+        <div class="f-row" style="margin-bottom:4px;font-size:10px;font-weight:600;color:var(--text-3);text-transform:uppercase;letter-spacing:0.5px;">Dados do retorno</div>
+        <div class="f-row">
+          <div class="f-group"><label>Peso atual (kg)</label><input type="number" id="ret-peso" step="0.1"></div>
+          <div class="f-group"><label>PAS (mmHg)</label><input type="number" id="ret-pas"></div>
+          <div class="f-group"><label>PAD (mmHg)</label><input type="number" id="ret-pad"></div>
+        </div>
+        <div class="f-row">
+          <div class="f-group"><label>HbA1c (%)</label><input type="number" id="ret-hba1c" step="0.1"></div>
+          <div class="f-group"><label>Creatinina (mg/dL)</label><input type="number" id="ret-cr" step="0.01"></div>
+          <div class="f-group"><label>RAC (mg/g)</label><input type="number" id="ret-rac" step="0.1"></div>
+        </div>
+        <div class="f-row">
+          <div class="f-group"><label>LDL (mg/dL)</label><input type="number" id="ret-ldl"></div>
+          <div class="f-group"><label>CA (cm)</label><input type="number" id="ret-ca" step="0.5"></div>
+        </div>
+        <div class="f-row f1">
+          <div class="f-group"><label>Evolução clínica</label><textarea id="ret-evolucao" rows="4" placeholder="Descreva a evolução desde a última consulta..."></textarea></div>
+        </div>
+
+        <button style="font-family:inherit;font-size:11px;font-weight:600;color:#fff;background:var(--navy);border:none;border-radius:8px;padding:8px 18px;cursor:pointer;margin-top:8px;" onclick="compararRetorno()">Comparar com baseline</button>
+
+        <div id="ret-comparativo" style="display:none;margin-top:16px;"></div>
+      </div>
+    </div>
+
+    <!-- VIEW: RECEITUÁRIO -->
+    <div class="sidebar-view" id="view-receituario">
+      <div class="ckm-card">
+        <div class="ckm-card-header"><div class="ckm-dot" style="background:var(--ckm-teal);"></div><div class="ckm-card-title">Receituário</div></div>
+        <div class="f-row" style="margin-bottom:14px;">
+          <div class="f-group"><label>Tipo</label>
+            <select id="rx-tipo" onchange="toggleRxTipo()"><option value="simples">Simples</option><option value="especial">Controle especial</option></select>
+          </div>
+        </div>
+        <div style="background:var(--bg-deep);border-radius:10px;padding:14px 18px;margin-bottom:14px;">
+          <div style="font-size:10px;font-weight:600;color:var(--text-3);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:8px;">Dados do médico</div>
+          <div class="f-row">
+            <div class="f-group"><label>Nome</label><input type="text" id="rx-med-nome" value="Dr. Bruno Piubelli Biluca"></div>
+            <div class="f-group"><label>CRM</label><input type="text" id="rx-med-crm" placeholder="CRM-SP 000000"></div>
+          </div>
+          <div class="f-row f1">
+            <div class="f-group"><label>Endereço</label><input type="text" id="rx-med-end" placeholder="Consultório, endereço, telefone"></div>
+          </div>
+        </div>
+        <div style="font-size:10px;font-weight:600;color:var(--text-3);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:8px;">Medicamentos</div>
+        <div id="rx-med-list"></div>
+        <button style="font-family:inherit;font-size:11px;font-weight:500;color:var(--teal);background:rgba(2,128,144,0.06);border:1px solid rgba(2,128,144,0.15);border-radius:8px;padding:6px 14px;cursor:pointer;margin-bottom:14px;" onclick="addRxMed()">+ Adicionar medicamento</button>
+        <div style="border-top:1px solid var(--border);padding-top:14px;display:flex;gap:8px;">
+          <button style="font-family:inherit;font-size:11px;font-weight:600;color:#fff;background:var(--teal);border:none;border-radius:8px;padding:8px 18px;cursor:pointer;" onclick="gerarReceita()">Gerar receita</button>
+          <button style="font-family:inherit;font-size:11px;font-weight:500;color:var(--text-2);background:transparent;border:1px solid var(--border);border-radius:8px;padding:8px 14px;cursor:pointer;" onclick="imprimirReceita()">Imprimir</button>
+        </div>
+        <div id="rx-output" style="display:none;margin-top:14px;background:#fff;border:1px solid var(--border);border-radius:10px;padding:20px;font-size:12px;line-height:1.8;"></div>
+      </div>
+    </div>
+
+    <!-- VIEW: SOLICITAR EXAMES -->
+    <div class="sidebar-view" id="view-exames-sol">
+      <div class="ckm-card">
+        <div class="ckm-card-header"><div class="ckm-dot" style="background:var(--teal);"></div><div class="ckm-card-title">Solicitar exames</div></div>
+
+        <!-- TIMELINE -->
+        <div style="margin-bottom:20px;">
+          <div style="font-size:10px;font-weight:600;color:var(--text-3);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:8px;">Timeline 12 meses</div>
+          <div style="position:relative;height:24px;background:var(--bg-deep);border-radius:12px;overflow:hidden;">
+            <div id="sol-timeline-fill" style="height:100%;background:linear-gradient(90deg,var(--teal),rgba(2,128,144,0.3));border-radius:12px;transition:width .3s;width:42%;"></div>
+            <div style="position:absolute;top:0;left:0;right:0;bottom:0;display:flex;align-items:center;justify-content:space-between;padding:0 10px;font-size:9px;font-weight:600;color:var(--text-2);">
+              <span>Início</span><span>3m</span><span>6m</span><span>12m</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- CATEGORIAS -->
+        <div id="sol-categorias"></div>
+
+        <div style="border-top:1px solid var(--border);padding-top:14px;margin-top:14px;display:flex;gap:8px;">
+          <button style="font-family:inherit;font-size:11px;font-weight:600;color:#fff;background:var(--teal);border:none;border-radius:8px;padding:8px 18px;cursor:pointer;" onclick="gerarSolicitacao()">Gerar solicitação</button>
+          <button style="font-family:inherit;font-size:11px;font-weight:500;color:var(--text-2);background:transparent;border:1px solid var(--border);border-radius:8px;padding:8px 14px;cursor:pointer;" onclick="marcarTodosSol()">Selecionar indicados</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- VIEW: ATESTADO -->
+    <div class="sidebar-view" id="view-atestado">
+      <div class="ckm-card">
+        <div class="ckm-card-header"><div class="ckm-dot" style="background:var(--ckm-amber);"></div><div class="ckm-card-title">Atestado</div></div>
+        <div class="f-row f1">
+          <div class="f-group">
+            <label>Texto do atestado</label>
+            <textarea id="at-texto" rows="8" placeholder="Atesto para os devidos fins que o(a) paciente _____, portador(a) do RG _____, esteve sob meus cuidados médicos em _____, necessitando de _____ dias de afastamento de suas atividades, a partir de _____."></textarea>
+          </div>
+        </div>
+        <div class="f-row">
+          <div class="f-group"><label>CID (opcional)</label><input type="text" id="at-cid" placeholder="A pedido do paciente"></div>
+          <div class="f-group"><label>Dias de afastamento</label><input type="number" id="at-dias" placeholder="1"></div>
+        </div>
+        <div style="border-top:1px solid var(--border);padding-top:14px;margin-top:8px;text-align:center;">
+          <div style="font-size:11px;color:var(--text-3);margin-bottom:4px;">_________________________________</div>
+          <div style="font-size:11px;font-weight:600;color:var(--text);">Dr. Bruno Piubelli Biluca</div>
+          <div style="font-size:10px;color:var(--text-3);">CRM-SP · Nefrologia</div>
+        </div>
+        <div style="margin-top:14px;display:flex;gap:8px;">
+          <button style="font-family:inherit;font-size:11px;font-weight:600;color:#fff;background:var(--teal);border:none;border-radius:8px;padding:8px 18px;cursor:pointer;">Imprimir</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- VIEW: ENCAMINHAMENTO -->
+    <div class="sidebar-view" id="view-encaminhamento">
+      <div class="ckm-card">
+        <div class="ckm-card-header"><div class="ckm-dot" style="background:var(--ckm-purple);"></div><div class="ckm-card-title">Encaminhamento</div></div>
+        <div class="f-row">
+          <div class="f-group"><label>Especialidade</label><input type="text" id="enc-esp" placeholder="Cardiologia, Endocrinologia, Oftalmologia..."></div>
+          <div class="f-group"><label>Prioridade</label>
+            <select id="enc-prio"><option>Eletivo</option><option>Prioritário</option><option>Urgente</option></select>
+          </div>
+        </div>
+        <div class="f-row f1">
+          <div class="f-group">
+            <label>Motivo do encaminhamento</label>
+            <textarea id="enc-motivo" rows="5" placeholder="Descreva o motivo do encaminhamento, dados clínicos relevantes, exames recentes..."></textarea>
+          </div>
+        </div>
+        <div style="border-top:1px solid var(--border);padding-top:14px;margin-top:8px;text-align:center;">
+          <div style="font-size:11px;color:var(--text-3);margin-bottom:4px;">_________________________________</div>
+          <div style="font-size:11px;font-weight:600;color:var(--text);">Dr. Bruno Piubelli Biluca</div>
+          <div style="font-size:10px;color:var(--text-3);">CRM-SP · Nefrologia</div>
+        </div>
+        <div style="margin-top:14px;display:flex;gap:8px;">
+          <button style="font-family:inherit;font-size:11px;font-weight:600;color:#fff;background:var(--teal);border:none;border-radius:8px;padding:8px 18px;cursor:pointer;">Imprimir</button>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
     </div>
 
     <!-- PAGE: LISTA DE PACIENTES -->
@@ -592,6 +1582,7 @@ body{font-family:var(--font-sans);background:var(--navy-deep);color:var(--text);
   </div><!-- /main -->
 </div><!-- /app-shell -->
 
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 <script>
 /* ============================================================
    LOGIN
@@ -729,6 +1720,916 @@ function toggleModule(label) {
   label.classList.toggle('open');
   var ch = label.nextElementSibling;
   if (ch && ch.classList.contains('sb-children')) ch.classList.toggle('open');
+}
+
+/* ============================================================
+   PRONTUÁRIO CKM — Calculations & Navigation
+   ============================================================ */
+
+/* CKM View Tab Navigation */
+function ckmSelectView(el, viewId) {
+  document.querySelectorAll('.ckm-view-tab').forEach(function(t){ t.classList.remove('active'); });
+  document.querySelectorAll('.sidebar-view').forEach(function(v){ v.classList.remove('active'); });
+  if(el) el.classList.add('active');
+  var view = document.getElementById('view-' + viewId);
+  if(view) view.classList.add('active');
+}
+
+var CID10 = [
+  ["E11","DM2"],["I10","HAS essencial"],["I50.0","IC congestiva"],
+  ["N18.3","DRC G3"],["N18.4","DRC G4"],["N18.5","DRC G5"],
+  ["E66.0","Obesidade"],["E78.5","Dislipidemia"],["E78.0","Hipercolesterolemia"],
+  ["G47.3","Apneia do sono"],["K76.0","Esteatose hepática"],["I25","Cardiopatia isquêmica"],
+  ["I63","AVC isquêmico"],["R60.0","Edema"],["R06.0","Dispneia"],
+  ["D63.1","Anemia DRC"],["E03","Hipotireoidismo"],["M81","Osteoporose"],["R34","Oligúria"]
+];
+
+var HDA_TEMPLATES = {
+  livre: "",
+  edema: "Paciente refere edema em _____ (localização), com início há _____, de caráter _____. Piora com _____. Melhora com _____. Cacifo ___/4+. Sintomas associados: _____.",
+  dispneia: "Dispneia aos _____ esforços (NYHA ___/IV), início há _____. Ortopneia: ___. DPN: ___. Edema: ___. Tosse: ___.",
+  dor_toracica: "Dor torácica tipo _____ em _____, com irradiação para _____, duração _____, início _____. Piora com _____. Melhora com _____.",
+  oliguria: "Redução do débito urinário há _____, estimado em ___ mL/dia. Edema: ___. Diuréticos: ___.",
+  poliuria: "Poliúria há _____, noctúria ___x. Polidipsia: ___. Polifagia: ___. Perda ponderal: ___.",
+  fadiga: "Fadiga/astenia há _____, caráter _____. Piora com _____. Sono: ___h. Humor: _____."
+};
+
+function openTab(btn, tabId) {
+  btn.closest('.tab-bar').querySelectorAll('.tab-btn').forEach(function(b){b.classList.remove('active');});
+  btn.classList.add('active');
+  btn.closest('.sidebar-view').querySelectorAll('.tab-content').forEach(function(t){t.classList.remove('active');});
+  document.getElementById(tabId).classList.add('active');
+  /* Auto-run ao trocar de aba */
+  if (tabId === 'tab-class') try { runAllClassifications(); } catch(e) { console.error('Classif error:', e); }
+  if (tabId === 'tab-risk') try { runAllClassifications(); runAllRisks(); } catch(e) { console.error('Risk error:', e); }
+  if (tabId === 'tab-tto') try { runTratamento(); } catch(e) { console.error('Tto error:', e); }
+  if (tabId === 'tab-dash') try { runDashboard(); } catch(e) { console.error('Dash error:', e); }
+  if (tabId === 'tab-metas') try { runMetas(); } catch(e) { console.error('Metas error:', e); }
+}
+
+);
+  if(el) el.classList.add('active');
+  document.querySelectorAll('.sidebar-view').forEach(function(v){v.classList.remove('active');});
+  document.getElementById('view-' + viewId).classList.add('active');
+}
+
+function toggleCk(el) {
+  var cb = el.querySelector('input[type="checkbox"]');
+  cb.checked = !cb.checked;
+  el.classList.toggle('checked', cb.checked);
+}
+
+function setTemplate(btn, key) {
+  btn.closest('.template-select').querySelectorAll('.tpl-btn').forEach(function(b){b.classList.remove('active');});
+  btn.classList.add('active');
+  var ta = document.getElementById('hda-text');
+  if (key !== 'livre' && ta.value.trim() === '') {
+    ta.value = HDA_TEMPLATES[key] || '';
+  } else if (key !== 'livre') {
+    if (confirm('Substituir o texto atual pelo template?')) {
+      ta.value = HDA_TEMPLATES[key] || '';
+    }
+  }
+}
+
+function filterCID(val) {
+  var dd = document.getElementById('cid-dropdown');
+  if (!val || val.length < 1) { dd.classList.remove('show'); return; }
+  var q = val.toLowerCase();
+  var matches = CID10.filter(function(c){ return c[0].toLowerCase().indexOf(q) !== -1 || c[1].toLowerCase().indexOf(q) !== -1; });
+  if (matches.length === 0) { dd.classList.remove('show'); return; }
+  dd.innerHTML = matches.map(function(c){
+    return '<div class="cid-option" onclick="selectCID(\''+c[0]+'\',\''+c[1]+'\')"><span class="cid-code">'+c[0]+'</span><span class="cid-desc">'+c[1]+'</span></div>';
+  }).join('');
+  dd.classList.add('show');
+}
+
+function selectCID(code, desc) {
+  document.getElementById('qp-input').value = code + ' — ' + desc;
+  document.getElementById('cid-dropdown').classList.remove('show');
+}
+
+document.addEventListener('click', function(e) {
+  if (!e.target.closest('.cid-wrapper')) {
+    document.getElementById('cid-dropdown').classList.remove('show');
+  }
+});
+
+function handleAvatar(event) {
+  var file = event.target.files[0];
+  if (!file) return;
+  var reader = new FileReader();
+  reader.onload = function(e) {
+    var av = document.querySelector('.pac-avatar');
+    av.innerHTML = '<img src="' + e.target.result + '" alt="Foto paciente">';
+  };
+  reader.readAsDataURL(file);
+}
+
+/* ===== FÓRMULAS CKM ===== */
+
+function calcTFGe(cr, idade, sexo) {
+  if (isNaN(cr) || isNaN(idade) || !sexo) return NaN;
+  var k = sexo === 'F' ? 0.7 : 0.9;
+  var a = sexo === 'F' ? -0.241 : -0.302;
+  var m = sexo === 'F' ? 1.012 : 1;
+  return Math.round(142 * Math.pow(Math.min(cr/k, 1), a) * Math.pow(Math.max(cr/k, 1), -1.2) * Math.pow(0.9938, idade) * m);
+}
+
+function calcIMC(peso, altura) {
+  if (isNaN(peso) || isNaN(altura) || altura === 0) return NaN;
+  return peso / Math.pow(altura / 100, 2);
+}
+
+function calcFIB4(idade, ast, alt, plaq) {
+  if (isNaN(idade) || isNaN(ast) || isNaN(alt) || isNaN(plaq) || plaq === 0 || alt === 0) return NaN;
+  return (idade * ast) / (plaq * Math.sqrt(alt));
+}
+
+function classIMC(v, etnia) {
+  if (isNaN(v)) return {t:'—',c:'b-yl'};
+  if (etnia === 'Asiático') {
+    if (v < 18.5) return {t:'Baixo peso',c:'b-bl'};
+    if (v < 23) return {t:'Eutrófico',c:'b-gn'};
+    if (v < 27.5) return {t:'Sobrepeso',c:'b-yl'};
+    return {t:'Obesidade I+',c:'b-or'};
+  }
+  if (v < 18.5) return {t:'Baixo peso',c:'b-bl'};
+  if (v < 25) return {t:'Eutrófico',c:'b-gn'};
+  if (v < 30) return {t:'Sobrepeso',c:'b-yl'};
+  if (v < 35) return {t:'Obesidade I',c:'b-or'};
+  if (v < 40) return {t:'Obesidade II',c:'b-rd'};
+  return {t:'Obesidade III',c:'b-rd'};
+}
+
+function classPA(pas, pad) {
+  if (isNaN(pas) || isNaN(pad)) return {t:'—',c:'b-gn'};
+  if (pas >= 180 || pad >= 120) return {t:'Crise hipertensiva',c:'b-rd'};
+  if (pas >= 140 || pad >= 90) return {t:'HAS 2',c:'b-or'};
+  if (pas >= 130 || pad >= 80) return {t:'HAS 1',c:'b-yl'};
+  if (pas >= 120 && pad < 80) return {t:'Elevada',c:'b-yl'};
+  return {t:'Normal',c:'b-gn'};
+}
+
+function classTFGe(v) {
+  if (isNaN(v)) return {g:'—',t:'—',c:'b-gn'};
+  if (v >= 90) return {g:'G1',t:'Normal',c:'b-gn'};
+  if (v >= 60) return {g:'G2',t:'Leve',c:'b-gn'};
+  if (v >= 45) return {g:'G3a',t:'Leve-mod',c:'b-yl'};
+  if (v >= 30) return {g:'G3b',t:'Mod-grave',c:'b-or'};
+  if (v >= 15) return {g:'G4',t:'Grave',c:'b-rd'};
+  return {g:'G5',t:'Falência',c:'b-rd'};
+}
+
+function classGlic(gj, hba1c) {
+  if (isNaN(gj) && isNaN(hba1c)) return {t:'—',c:'b-gn'};
+  if ((!isNaN(gj) && gj >= 126) || (!isNaN(hba1c) && hba1c >= 6.5)) return {t:'Diabetes',c:'b-rd'};
+  if ((!isNaN(gj) && gj >= 100) || (!isNaN(hba1c) && hba1c >= 5.7)) return {t:'Pré-diabetes',c:'b-yl'};
+  return {t:'Normal',c:'b-gn'};
+}
+
+function classFIB4(v) {
+  if (isNaN(v)) return {t:'—',c:'b-gn'};
+  if (v < 1.30) return {t:'Improvável',c:'b-gn'};
+  if (v <= 2.67) return {t:'Indeterminado',c:'b-yl'};
+  return {t:'Fibrose provável',c:'b-rd'};
+}
+
+function classCA(v, sexo) {
+  if (isNaN(v) || !sexo) return {t:'—',c:'b-gn'};
+  var lim = sexo === 'M' ? 94 : 80;
+  if (v >= lim) return {t:'Elevada',c:'b-or'};
+  return {t:'Normal',c:'b-gn'};
+}
+
+function getSexo() {
+  var demo = document.getElementById('pac-demo-display').textContent;
+  if (demo.indexOf('Masculino') !== -1) return 'M';
+  if (demo.indexOf('Feminino') !== -1) return 'F';
+  return 'M';
+}
+
+function getIdade() {
+  var demo = document.getElementById('pac-demo-display').textContent;
+  var m = demo.match(/(\d+)\s*anos?/);
+  return m ? parseInt(m[1]) : NaN;
+}
+
+function getEtnia() {
+  var selects = document.querySelectorAll('#tab-anam select');
+  for (var i = 0; i < selects.length; i++) {
+    if (selects[i].value === 'Asiático') return 'Asiático';
+  }
+  return 'Geral';
+}
+
+function setBadge(id, text, cls) {
+  var el = document.getElementById(id);
+  if (!el) return;
+  el.textContent = text;
+  el.className = 'badge ' + cls;
+  el.style.display = text === '—' ? 'none' : '';
+}
+
+/* Auto-calc on input */
+function autoCalcIMC() {
+  var peso = parseFloat(document.getElementById('ef-peso').value);
+  var alt = parseFloat(document.getElementById('ef-altura').value);
+  var imc = calcIMC(peso, alt);
+  var imcEl = document.getElementById('ef-imc');
+  var bdg = document.getElementById('ef-imc-badge');
+  if (!isNaN(imc)) {
+    imcEl.value = imc.toFixed(1);
+    var c = classIMC(imc, getEtnia());
+    bdg.textContent = c.t;
+    bdg.className = 'badge ' + c.c;
+    bdg.style.display = '';
+  } else {
+    imcEl.value = '';
+    bdg.style.display = 'none';
+  }
+}
+
+function autoCalcTFGe() {
+  var cr = parseFloat(document.getElementById('ex-cr').value);
+  var idade = getIdade();
+  var sexo = getSexo();
+  var tfge = calcTFGe(cr, idade, sexo);
+  var el = document.getElementById('ex-tfge');
+  if (!isNaN(tfge)) {
+    el.value = tfge + ' mL/min/1.73m²';
+  } else {
+    el.value = '';
+  }
+}
+
+function autoCalcFIB4() {}
+
+function preencherTemplatesEF() {
+  var templates = {
+    'ef-seg-eg': 'BEG, corado, hidratado, acianótico, anictérico, eupneico.',
+    'ef-seg-cp': 'Sem adenomegalias. Tireoide tópica, não palpável. Jugulares sem estase.',
+    'ef-seg-ar': 'MV presente e simétrico, sem ruídos adventícios.',
+    'ef-seg-ac': 'RCR em 2T, BNF, sem sopros. Pulsos simétricos.',
+    'ef-seg-ab': 'Plano, flácido, indolor à palpação, sem visceromegalias. RHA+.',
+    'ef-seg-ex': 'Sem edema. Panturrilhas livres. Pulsos pediais presentes.',
+    'ef-seg-ne': 'Lúcido e orientado. Sem déficits focais.',
+    'ef-seg-pe': 'Íntegra, sem lesões.'
+  };
+  var anyFilled = false;
+  for (var id in templates) {
+    if (document.getElementById(id).value.trim()) { anyFilled = true; break; }
+  }
+  if (anyFilled && !confirm('Substituir os campos já preenchidos?')) return;
+  for (var id in templates) {
+    document.getElementById(id).value = templates[id];
+  }
+}
+
+/* CLASSIFICAÇÕES COMPLETAS */
+function runAllClassifications() {
+  var peso = parseFloat(document.getElementById('ef-peso').value);
+  var alt = parseFloat(document.getElementById('ef-altura').value);
+  var pas = parseFloat(document.getElementById('ef-pas').value);
+  var pad = parseFloat(document.getElementById('ef-pad').value);
+  var gj = parseFloat(document.getElementById('ex-gj').value);
+  var hba1c = parseFloat(document.getElementById('ex-hba1c').value);
+  var cr = parseFloat(document.getElementById('ex-cr').value);
+  var rac = parseFloat(document.getElementById('ex-rac').value);
+  var ast = parseFloat(document.getElementById('ex-ast').value);
+  var alt_v = parseFloat(document.getElementById('ex-alt').value);
+  var plaq = parseFloat(document.getElementById('ex-plaq').value);
+  var ca = parseFloat(document.getElementById('ef-ca').value);
+  var idade = getIdade();
+  var sexo = getSexo();
+  var etnia = getEtnia();
+
+  // IMC
+  var imc = calcIMC(peso, alt);
+  var imcC = classIMC(imc, etnia);
+  document.getElementById('cl-imc-val').textContent = isNaN(imc) ? '—' : imc.toFixed(1);
+  setBadge('cl-imc-badge', imcC.t, imcC.c);
+  setBadge('badge-imc', isNaN(imc) ? '—' : 'IMC ' + imc.toFixed(1), imcC.c);
+
+  // PA
+  var paC = classPA(pas, pad);
+  document.getElementById('cl-pa-val').textContent = (!isNaN(pas) && !isNaN(pad)) ? pas + '/' + pad : '—';
+  setBadge('cl-pa-badge', paC.t, paC.c);
+
+  // Glicêmico
+  var glicC = classGlic(gj, hba1c);
+  document.getElementById('cl-gj-val').textContent = isNaN(gj) ? '—' : Math.round(gj);
+  document.getElementById('cl-hba1c-val').textContent = isNaN(hba1c) ? '—' : hba1c.toFixed(1) + '%';
+  setBadge('cl-glic-badge', glicC.t, glicC.c);
+
+  // TFGe
+  var tfge = calcTFGe(cr, idade, sexo);
+  var tfgeC = classTFGe(tfge);
+  document.getElementById('cl-tfge-val').textContent = isNaN(tfge) ? '—' : tfge;
+  setBadge('cl-tfge-badge', tfgeC.g + ' — ' + tfgeC.t, tfgeC.c);
+  setBadge('badge-tfge', isNaN(tfge) ? '—' : 'TFGe ' + tfge, tfgeC.c);
+
+  // CA
+  var caC = classCA(ca, sexo);
+  document.getElementById('cl-ca-val').textContent = isNaN(ca) ? '—' : ca;
+  setBadge('cl-ca-badge', caC.t, caC.c);
+
+  // FIB-4
+  var fib4 = calcFIB4(idade, ast, alt_v, plaq);
+  var fib4C = classFIB4(fib4);
+  document.getElementById('cl-fib4-val').textContent = isNaN(fib4) ? '—' : fib4.toFixed(2);
+  setBadge('cl-fib4-badge', fib4C.t, fib4C.c);
+
+  // KDIGO CGA
+  highlightKDIGO(tfge, rac);
+
+  // CKM Staging
+  calcCKM(imc, pas, gj, hba1c, tfge, cr);
+}
+
+function highlightKDIGO(tfge, rac) {
+  document.querySelectorAll('.kdigo-highlight').forEach(function(c){c.classList.remove('kdigo-highlight');});
+  if (isNaN(tfge) || isNaN(rac)) {
+    document.getElementById('cl-kdigo-pos').style.display = 'none';
+    document.getElementById('cl-kdigo-freq').textContent = '—';
+    return;
+  }
+  var gRow;
+  if (tfge >= 90) gRow = 1; else if (tfge >= 60) gRow = 2; else if (tfge >= 45) gRow = 3;
+  else if (tfge >= 30) gRow = 4; else if (tfge >= 15) gRow = 5; else gRow = 6;
+  var aCol;
+  if (rac < 30) aCol = 1; else if (rac < 300) aCol = 2; else aCol = 3;
+  var cell = document.querySelector('.kdigo-cell[data-g="'+gRow+'"][data-a="'+aCol+'"]');
+  if (cell) {
+    cell.classList.add('kdigo-highlight');
+    var risco = cell.textContent.trim();
+    setBadge('cl-kdigo-pos', risco, cell.className.indexOf('b-gn') !== -1 ? 'b-gn' : cell.style.background.indexOf('EAF3DE') !== -1 ? 'b-gn' : 'b-tl');
+    var freqMap = {'Baixo':'Anual','Moderado':'Anual','Alto':'Semestral','Muito alto':'3/3 meses'};
+    document.getElementById('cl-kdigo-freq').textContent = freqMap[risco] || '—';
+    var badgeCls = 'b-gn';
+    if (risco === 'Moderado') badgeCls = 'b-yl';
+    if (risco === 'Alto') badgeCls = 'b-or';
+    if (risco === 'Muito alto') badgeCls = 'b-rd';
+    setBadge('cl-kdigo-pos', risco, badgeCls);
+  }
+}
+
+/* ===== ASCVD Pooled Cohort ===== */
+function calcASCVD(idade, sexo, ct, hdl, pas, smoke, antihtn, dm2) {
+  if (isNaN(idade)||isNaN(ct)||isNaN(hdl)||isNaN(pas)) return NaN;
+  var la=Math.log(idade),lt=Math.log(ct),lh=Math.log(hdl),lp=Math.log(pas);
+  var s=smoke?1:0,dm=dm2?1:0;
+  if(sexo==='F'){
+    var ix=-29.799*la+4.884*la*la+13.54*lt-3.114*la*lt-13.578*lh+3.149*la*lh+2.019*(antihtn?lp:0)+1.957*(antihtn?0:lp)+7.574*s-1.665*la*s+0.661*dm;
+    return Math.round((1-Math.pow(0.9665,Math.exp(ix-(-29.1817))))*1000)/10;
+  } else {
+    var ix=12.344*la+11.853*lt-2.664*la*lt-7.99*lh+1.769*la*lh+1.797*(antihtn?lp:0)+1.764*(antihtn?0:lp)+7.837*s-1.795*la*s+0.658*dm;
+    return Math.round((1-Math.pow(0.9144,Math.exp(ix-61.1816)))*1000)/10;
+  }
+}
+
+function classASCVD(v){
+  if(isNaN(v))return{t:'—',c:'b-gn'};
+  if(v<5)return{t:'Baixo',c:'b-gn'};
+  if(v<7.5)return{t:'Borderline',c:'b-yl'};
+  if(v<20)return{t:'Alto',c:'b-or'};
+  return{t:'Muito alto',c:'b-rd'};
+}
+
+/* ===== KFRE 4 variáveis ===== */
+function calcKFRE(idade, sexo, tfge, rac) {
+  if(isNaN(idade)||isNaN(tfge)||isNaN(rac)||rac<=0)return NaN;
+  var sx=sexo==='F'?1:0;
+  var sum=(-0.2201*(idade/10-7.036))+(0.2467*(sx-0.5642))+(-0.5567*(tfge/5-7.222))+(0.451*(Math.log(rac)-5.137));
+  return Math.round((1-Math.pow(0.9832,Math.exp(sum)))*1000)/10;
+}
+
+function classKFRE(v){
+  if(isNaN(v))return{t:'—',c:'b-gn'};
+  if(v<3)return{t:'Baixo',c:'b-gn'};
+  if(v<10)return{t:'Referir nefro',c:'b-yl'};
+  return{t:'Preparar TRS',c:'b-rd'};
+}
+
+function runAllRisks(){
+  var idade=getIdade(),sexo=getSexo();
+  var ct=parseFloat(document.getElementById('ex-ct').value);
+  var hdl=parseFloat(document.getElementById('ex-hdl').value);
+  var pas=parseFloat(document.getElementById('ef-pas').value);
+  var cr=parseFloat(document.getElementById('ex-cr').value);
+  var rac=parseFloat(document.getElementById('ex-rac').value);
+  var smoke=document.getElementById('risk-smoke').value==='1';
+  var antihtn=document.getElementById('risk-antihtn').value==='1';
+  var checks=document.querySelectorAll('#tab-anam .check-item.checked');
+  var dm2=false;checks.forEach(function(c){if(c.textContent.trim()==='DM2')dm2=true;});
+  var tfge=calcTFGe(cr,idade,sexo);
+
+  var ascvd=calcASCVD(idade,sexo,ct,hdl,pas,smoke,antihtn,dm2);
+  var ascvdC=classASCVD(ascvd);
+  document.getElementById('risk-ascvd-val').textContent=isNaN(ascvd)?'—':ascvd.toFixed(1);
+  setBadge('risk-ascvd-badge',ascvdC.t,ascvdC.c);
+
+  var kfre=calcKFRE(idade,sexo,tfge,rac);
+  var kfreC=classKFRE(kfre);
+  document.getElementById('risk-kfre-val').textContent=isNaN(kfre)?'—':kfre.toFixed(1);
+  setBadge('risk-kfre-badge',kfreC.t,kfreC.c);
+
+  // Síndrome Metabólica
+  var ca=parseFloat(document.getElementById('ef-ca').value);
+  var pad=parseFloat(document.getElementById('ef-pad').value);
+  var tg=parseFloat(document.getElementById('ex-tg').value);
+  var gj=parseFloat(document.getElementById('ex-gj').value);
+  var count=0;
+  var limCA=sexo==='M'?94:80,limHDL=sexo==='M'?40:50;
+
+  function setCrit(id,met){var el=document.getElementById(id);if(met){el.classList.add('met');el.querySelector('.sm-icon').textContent='●';}else{el.classList.remove('met');el.querySelector('.sm-icon').textContent='○';}if(met)count++;}
+  setCrit('sm-ca',!isNaN(ca)&&ca>=limCA);
+  setCrit('sm-tg',!isNaN(tg)&&tg>=150);
+  setCrit('sm-hdl',!isNaN(hdl)&&hdl<limHDL);
+  setCrit('sm-pa',(!isNaN(pas)&&pas>=130)||(!isNaN(pad)&&pad>=85));
+  setCrit('sm-gli',!isNaN(gj)&&gj>=100);
+
+  document.getElementById('sm-count').textContent=count;
+  setBadge('sm-badge',count>=3?'Presente':'Ausente',count>=3?'b-rd':'b-gn');
+}
+
+/* ===== TRATAMENTO ===== */
+function runTratamento(){
+  var idade=getIdade(),sexo=getSexo();
+  var pas=parseFloat(document.getElementById('ef-pas').value);
+  var pad=parseFloat(document.getElementById('ef-pad').value);
+  var gj=parseFloat(document.getElementById('ex-gj').value);
+  var hba1c=parseFloat(document.getElementById('ex-hba1c').value);
+  var cr=parseFloat(document.getElementById('ex-cr').value);
+  var rac=parseFloat(document.getElementById('ex-rac').value);
+  var k=parseFloat(document.getElementById('ex-k').value);
+  var ldl=parseFloat(document.getElementById('ex-ldl').value);
+  var hb=parseFloat(document.getElementById('ex-hb').value);
+  var bic=parseFloat(document.getElementById('ex-bic').value);
+  var vitd=parseFloat(document.getElementById('ex-vitd').value);
+  var peso=parseFloat(document.getElementById('ef-peso').value);
+  var alt=parseFloat(document.getElementById('ef-altura').value);
+  var imc=calcIMC(peso,alt);
+  var tfge=calcTFGe(cr,idade,sexo);
+
+  var checks=document.querySelectorAll('#tab-anam .check-item.checked');
+  var has={};checks.forEach(function(c){var t=c.textContent.trim();has[t]=true;});
+
+  var alertas=[],condutas=[];
+  var prescricao=[];
+
+  // Alertas
+  if(!isNaN(k)&&k>=5.5)alertas.push({t:'danger',m:'Hipercalemia (K '+k.toFixed(1)+'): considerar Patiromer ou Ciclossilicato de Zircônio'});
+  var kfre=calcKFRE(idade,sexo,tfge,rac);
+  if(!isNaN(kfre)&&kfre>=10)alertas.push({t:'warning',m:'KFRE ≥ 10% — Preparar TRS (fístula, diálise peritoneal, transplante)'});
+  if(!isNaN(tfge)&&tfge<30)alertas.push({t:'warning',m:'TFGe < 30 — Referência nefrológica obrigatória'});
+
+  // Estilo de vida
+  condutas.push({cat:'Estilo de vida',cor:'var(--ckm-teal)',drugs:[{d:'MEV: dieta DASH/mediterrânea + atividade ≥ 150 min/sem + cessação tabágica',e:'Base universal'}]});
+
+  // Hipertensão
+  if(!isNaN(pas)&&pas>=130){
+    var drHAS=[];
+    if(!isNaN(rac)&&rac>=30)drHAS.push({d:'IECA/BRA dose máxima — Losartana 50-100mg/dia',e:'KDIGO 2024'});
+    else drHAS.push({d:'Anti-hipertensivo — avaliar IECA/BRA',e:'Guideline HAS'});
+    if(pas>=160)drHAS.push({d:'Combinação: + Anlodipino 5mg/dia',e:'PA estágio 2'});
+    condutas.push({cat:'Hipertensão',cor:'#E05252',drugs:drHAS});
+    drHAS.forEach(function(d){prescricao.push(d.d);});
+  }
+
+  // Diabetes
+  var isDM2=has['DM2']||(!isNaN(hba1c)&&hba1c>=6.5)||(!isNaN(gj)&&gj>=126);
+  if(isDM2){
+    var drDM=[];
+    drDM.push({d:'Metformina XR 500-2000 mg/dia',e:'ADA 2026'});
+    if(has['IC']||has['IAM']||(!isNaN(tfge)&&tfge<60)||(!isNaN(rac)&&rac>=30)){
+      drDM.push({d:'iSGLT2 — Dapagliflozina 10mg/dia',e:'DAPA-CKD/EMPA-KIDNEY'});
+      drDM.push({d:'GLP-1 RA — Semaglutida 0.25→1.0 mg SC/sem',e:'FLOW/SELECT'});
+    }
+    if(!isNaN(rac)&&rac>=30&&!isNaN(tfge)&&tfge>=25&&(isNaN(k)||k<5)){
+      drDM.push({d:'Finerenona 10-20mg/dia',e:'FIDELIO/FIGARO'});
+      alertas.push({t:'info',m:'Terapia tripla cardiorrenal indicada (iSGLT2 + Finerenona + GLP-1 RA)'});
+    }
+    condutas.push({cat:'Diabetes',cor:'var(--ckm-purple)',drugs:drDM});
+    drDM.forEach(function(d){prescricao.push(d.d);});
+  }
+
+  // DRC sem DM
+  if(!isDM2&&!isNaN(tfge)&&tfge<60){
+    var drDRC=[];
+    if(!isNaN(rac)&&rac>=30)drDRC.push({d:'IECA/BRA dose máxima',e:'DRC + albuminúria'});
+    drDRC.push({d:'iSGLT2 — Dapagliflozina 10mg/dia',e:'DAPA-CKD'});
+    condutas.push({cat:'DRC sem DM',cor:'var(--teal)',drugs:drDRC});
+    drDRC.forEach(function(d){prescricao.push(d.d);});
+  }
+
+  // Obesidade
+  if(!isNaN(imc)&&imc>=30){
+    condutas.push({cat:'Obesidade',cor:'var(--ckm-amber)',drugs:[{d:'Semaglutida 2.4mg ou Tirzepatida SC/sem',e:'SURMOUNT/STEP'}]});
+    prescricao.push('Semaglutida 2.4mg ou Tirzepatida SC/sem');
+  }
+
+  // Dislipidemia
+  var ldlMeta=has['IAM']||has['AVC']||has['DAP']?55:(isDM2?70:100);
+  if(!isNaN(ldl)&&ldl>ldlMeta){
+    condutas.push({cat:'Dislipidemia (meta LDL < '+ldlMeta+')',cor:'var(--ckm-orange)',drugs:[{d:'Rosuvastatina 20-40 mg/dia',e:'Baseado em risco'}]});
+    prescricao.push('Rosuvastatina 20-40 mg/dia');
+  }
+
+  // IC
+  if(has['IC']){
+    var drIC=[{d:'iSGLT2 obrigatório',e:'DAPA-HF/EMPEROR'}];
+    drIC.push({d:'Sacubitril/Valsartana 49/51→97/103 mg 2x/dia',e:'PARADIGM-HF'});
+    drIC.push({d:'Carvedilol 3.125→25 mg 2x/dia',e:'ICFEr'});
+    if(isNaN(k)||k<5)drIC.push({d:'Espironolactona 25 mg/dia',e:'RALES'});
+    condutas.push({cat:'Insuficiência cardíaca',cor:'#E05252',drugs:drIC});
+    drIC.forEach(function(d){prescricao.push(d.d);});
+  }
+
+  // Anemia DRC
+  if(!isNaN(hb)&&hb<10&&!isNaN(tfge)&&tfge<60){
+    condutas.push({cat:'Anemia da DRC',cor:'var(--ckm-pink)',drugs:[{d:'Ferro IV + ESA se necessário',e:'KDIGO 2025'}]});
+    prescricao.push('Ferro IV + ESA se necessário');
+  }
+
+  // Acidose
+  if(!isNaN(bic)&&bic<22){
+    condutas.push({cat:'Acidose metabólica',cor:'var(--ckm-purple)',drugs:[{d:'NaHCO3 500mg 2-6 comp/dia',e:'Meta bic 22-26'}]});
+    prescricao.push('NaHCO3 500mg 2-6 comp/dia');
+  }
+
+  // Vitamina D
+  if(!isNaN(vitd)&&vitd<20){
+    condutas.push({cat:'Hipovitaminose D',cor:'var(--ckm-amber)',drugs:[{d:'Colecalciferol 50.000 UI/sem x 8 sem, depois 1000-2000 UI/dia',e:'Manutenção'}]});
+    prescricao.push('Colecalciferol 50.000 UI/sem x 8 sem');
+  }
+
+  // Render alertas
+  var alertHtml='';
+  alertas.forEach(function(a){alertHtml+='<div class="tto-alert '+a.t+'"><strong>⚠</strong> '+a.m+'</div>';});
+  document.getElementById('tto-alertas').innerHTML=alertHtml;
+
+  // Render condutas
+  var condHtml='';
+  condutas.forEach(function(c){
+    condHtml+='<div class="tto-cat"><div class="tto-cat-title"><div class="tto-dot" style="background:'+c.cor+';"></div>'+c.cat+'</div>';
+    c.drugs.forEach(function(d){
+      condHtml+='<div class="tto-drug"><span>'+d.d+'</span><span class="tto-ev">'+d.e+'</span></div>';
+    });
+    condHtml+='</div>';
+  });
+  document.getElementById('tto-condutas').innerHTML=condHtml||'<div class="ckm-card" style="text-align:center;padding:20px;"><div style="font-size:12px;color:var(--text-3);">Nenhuma conduta gerada — verifique os dados</div></div>';
+
+  // Salvar prescrição global
+  window._prescricao=prescricao;
+  renderPrescricao();
+}
+
+function renderPrescricao(){
+  var prx=window._prescricao||[];
+  if(prx.length===0){document.getElementById('prx-lista').innerHTML='<div style="font-size:12px;color:var(--text-3);text-align:center;padding:20px;">Gere o plano terapêutico primeiro</div>';return;}
+  var h='';
+  prx.forEach(function(d,i){
+    h+='<div class="tto-drug" style="margin-bottom:6px;"><span>'+(i+1)+'. '+d+'</span><button style="font-size:9px;color:var(--red);background:transparent;border:none;cursor:pointer;" onclick="removePrx('+i+')">remover</button></div>';
+  });
+  document.getElementById('prx-lista').innerHTML=h;
+}
+
+function removePrx(i){window._prescricao.splice(i,1);renderPrescricao();}
+function addMedPrx(){var m=prompt('Medicamento + dose + posologia:');if(m){window._prescricao=window._prescricao||[];window._prescricao.push(m);renderPrescricao();}}
+function enviarReceituario(){
+  selectSidebar(document.querySelectorAll('.sb-item')[2],'receituario');
+  var prx=window._prescricao||[];
+  if(prx.length>0){
+    document.getElementById('rx-med-list').innerHTML='';
+    prx.forEach(function(d){addRxMedWith(d);});
+  }
+}
+
+/* ===== RECEITUÁRIO ===== */
+function addRxMed(){addRxMedWith('');}
+function addRxMedWith(nome){
+  var list=document.getElementById('rx-med-list');
+  var div=document.createElement('div');div.className='rx-med-item';
+  div.innerHTML='<div class="f-row"><div class="f-group"><label>Medicamento + concentração</label><input type="text" value="'+(nome||'')+'" placeholder="Losartana 50mg"></div><div class="f-group"><label>Forma</label><select><option>Comprimido</option><option>Cápsula</option><option>Solução</option><option>Injetável</option><option>Caneta SC</option><option>Creme</option></select></div></div><div class="f-row"><div class="f-group"><label>Posologia</label><input type="text" placeholder="1x ao dia, pela manhã"></div><div class="f-group"><label>Quantidade (dias)</label><input type="number" value="30"></div></div><button style="font-size:10px;color:var(--red);background:transparent;border:none;cursor:pointer;" onclick="this.parentElement.remove()">Remover</button>';
+  list.appendChild(div);
+}
+function toggleRxTipo(){}
+function gerarReceita(){
+  var nome=document.getElementById('rx-med-nome').value;
+  var crm=document.getElementById('rx-med-crm').value;
+  var end=document.getElementById('rx-med-end').value;
+  var tipo=document.getElementById('rx-tipo').value;
+  var items=document.querySelectorAll('.rx-med-item');
+  var h='<div style="text-align:center;margin-bottom:16px;"><strong>'+nome+'</strong><br><span style="font-size:11px;color:var(--text-2);">'+crm+'</span><br><span style="font-size:10px;color:var(--text-3);">'+end+'</span></div>';
+  if(tipo==='especial')h+='<div style="text-align:center;font-size:11px;font-weight:600;color:var(--red);margin-bottom:10px;border:1px solid var(--red);border-radius:6px;padding:4px;">RECEITUÁRIO DE CONTROLE ESPECIAL</div>';
+  h+='<div style="border-top:1px solid var(--border);padding-top:10px;">';
+  var pacNome=document.getElementById('pac-nome-display').textContent;
+  h+='<p style="margin-bottom:10px;"><strong>Paciente:</strong> '+pacNome+'</p>';
+  items.forEach(function(item,i){
+    var inputs=item.querySelectorAll('input');
+    var sel=item.querySelector('select');
+    h+='<p>'+(i+1)+') <strong>'+inputs[0].value+'</strong> — '+sel.value+'<br><span style="color:var(--text-2);">'+inputs[1].value+' — '+inputs[2].value+' dias</span></p>';
+  });
+  h+='</div><div style="margin-top:24px;text-align:center;"><div style="border-top:1px solid var(--text-3);width:200px;margin:0 auto;padding-top:6px;font-size:11px;">'+nome+'<br>'+crm+'</div></div>';
+  var out=document.getElementById('rx-output');
+  out.innerHTML=h;out.style.display='block';
+}
+function imprimirReceita(){gerarReceita();window.print();}
+
+/* ===== SOLICITAR EXAMES ===== */
+var EXAMES_CKM=[
+  {cat:'Rotina CKM',cor:'#0F6E56',exames:[
+    {n:'Hemograma',int:3,cond:'sempre'},{n:'Creatinina + TFGe',int:3,cond:'sempre'},{n:'RAC urinária',int:3,cond:'sempre'},
+    {n:'Glicemia + HbA1c',int:3,cond:'sempre'},{n:'Perfil lipídico',int:6,cond:'sempre'},{n:'Na, K, Bic',int:3,cond:'sempre'},
+    {n:'Ácido úrico',int:6,cond:'sempre'},{n:'ALT, AST',int:6,cond:'sempre'},
+    {n:'Ca, P, PTH',int:6,cond:'TFGe < 45'},{n:'Ferritina + IST',int:6,cond:'TFGe < 60'},
+    {n:'TSH',int:12,cond:'sexo F ou idade ≥ 50'},{n:'Vitamina D',int:12,cond:'idade ≥ 50 ou TFGe < 60'}
+  ]},
+  {cat:'Imagem',cor:'#185FA5',exames:[
+    {n:'ECG repouso',int:12,cond:'idade ≥ 40 ou DM2'},{n:'Ecocardiograma',int:12,cond:'DM2 ou IC'},
+    {n:'USG renal',int:12,cond:'TFGe < 60'},{n:'Fundo de olho',int:12,cond:'DM2'},
+    {n:'USG abdome (esteatose)',int:12,cond:'DM2 ou esteatose'}
+  ]},
+  {cat:'Rastreio preventivo',cor:'#D4537E',exames:[
+    {n:'Colonoscopia',int:12,cond:'idade ≥ 45'},{n:'Mamografia',int:12,cond:'sexo F e idade ≥ 40'},
+    {n:'Papanicolau',int:12,cond:'sexo F e 25-65a'},{n:'PSA',int:12,cond:'sexo M e idade ≥ 50'},
+    {n:'Densitometria (DEXA)',int:12,cond:'F ≥ 65 ou M ≥ 70'}
+  ]},
+  {cat:'Vacinas',cor:'#534AB7',exames:[
+    {n:'Influenza anual',int:12,cond:'idade ≥ 60 ou DM2 ou TFGe < 60'},
+    {n:'Pneumocócica',int:12,cond:'idade ≥ 65 ou TFGe < 60'},
+    {n:'Hepatite B',int:12,cond:'TFGe < 60'},
+    {n:'Herpes-zóster (Shingrix)',int:12,cond:'idade ≥ 50'}
+  ]}
+];
+
+function renderSolExames(){
+  var h='';
+  EXAMES_CKM.forEach(function(cat){
+    h+='<div class="sol-cat"><div class="sol-cat-title"><div class="sol-dot" style="background:'+cat.cor+';"></div>'+cat.cat+'</div>';
+    cat.exames.forEach(function(ex){
+      h+='<div class="sol-exam" onclick="var cb=this.querySelector(\'input\');cb.checked=!cb.checked;this.classList.toggle(\'checked\',cb.checked);"><input type="checkbox"> '+ex.n+'<span class="sol-interval">'+ex.int+'m</span><span class="sol-cond">'+ex.cond+'</span></div>';
+    });
+    h+='</div>';
+  });
+  document.getElementById('sol-categorias').innerHTML=h;
+}
+
+function marcarTodosSol(){
+  document.querySelectorAll('.sol-exam').forEach(function(e){e.classList.add('checked');e.querySelector('input').checked=true;});
+}
+function gerarSolicitacao(){alert('Solicitação gerada com os exames selecionados.');}
+
+/* ===== DASHBOARD ===== */
+function runDashboard(){
+  runAllClassifications();
+  runAllRisks();
+  var imc=document.getElementById('cl-imc-val').textContent;
+  var pa=document.getElementById('cl-pa-val').textContent;
+  var hba1c=document.getElementById('cl-hba1c-val').textContent;
+  var tfge=document.getElementById('cl-tfge-val').textContent;
+  var rac=document.getElementById('ex-rac').value||'—';
+  var ldl=document.getElementById('ex-ldl').value||'—';
+  var fib4=document.getElementById('cl-fib4-val').textContent;
+  document.getElementById('dm-imc').textContent=imc;
+  document.getElementById('dm-pa').textContent=pa;
+  document.getElementById('dm-hba1c').textContent=hba1c;
+  document.getElementById('dm-tfge').textContent=tfge;
+  document.getElementById('dm-rac').textContent=rac;
+  document.getElementById('dm-ldl').textContent=ldl;
+  document.getElementById('dm-fib4').textContent=fib4;
+
+  var ckmStage=0;
+  document.querySelectorAll('.ckm-stage.active-stage').forEach(function(s){
+    var n=parseInt(s.querySelector('div').textContent);if(!isNaN(n))ckmStage=n;
+  });
+  document.getElementById('dm-ckm').textContent=ckmStage;
+
+  var ascvdVal=parseFloat(document.getElementById('risk-ascvd-val').textContent)||0;
+  var kfreVal=parseFloat(document.getElementById('risk-kfre-val').textContent)||0;
+  document.getElementById('dash-ascvd').textContent=ascvdVal?ascvdVal.toFixed(1)+'%':'—%';
+  document.getElementById('dash-kfre').textContent=kfreVal?kfreVal.toFixed(1)+'%':'—%';
+
+  drawGauge('gauge-ascvd',ascvdVal,30);
+  drawGauge('gauge-kfre',kfreVal,30);
+  drawRadar(ascvdVal,kfreVal,ckmStage);
+}
+
+function drawGauge(canvasId,value,max){
+  var c=document.getElementById(canvasId);if(!c)return;
+  var ctx=c.getContext('2d');var w=c.width,h=c.height;
+  ctx.clearRect(0,0,w,h);
+  var cx=w/2,cy=h-10,r=70;
+  ctx.beginPath();ctx.arc(cx,cy,r,Math.PI,2*Math.PI);ctx.strokeStyle='#e8e6e0';ctx.lineWidth=12;ctx.lineCap='round';ctx.stroke();
+  if(value>0){
+    var pct=Math.min(value/max,1);
+    ctx.beginPath();ctx.arc(cx,cy,r,Math.PI,Math.PI+pct*Math.PI);
+    var col=pct<0.25?'#5B9E50':pct<0.5?'#C4A35A':pct<0.75?'#D85A30':'#E05252';
+    ctx.strokeStyle=col;ctx.lineWidth=12;ctx.lineCap='round';ctx.stroke();
+  }
+}
+
+function drawRadar(ascvd,kfre,ckm){
+  var c=document.getElementById('radar-ckm');if(!c||typeof Chart==='undefined')return;
+  if(window._radarChart)window._radarChart.destroy();
+  var tfge=parseFloat(document.getElementById('cl-tfge-val').textContent)||0;
+  var imc=parseFloat(document.getElementById('cl-imc-val').textContent)||0;
+  var fib4=parseFloat(document.getElementById('cl-fib4-val').textContent)||0;
+
+  var cardio=Math.min(10,ascvd/3);
+  var renal=Math.min(10,(120-tfge)/12);
+  var metab=Math.min(10,ckm*2.5);
+  var obes=Math.min(10,Math.max(0,(imc-18.5)/3));
+  var hep=Math.min(10,fib4*3);
+
+  window._radarChart=new Chart(c,{
+    type:'radar',
+    data:{
+      labels:['Cardiovascular','Renal','Metabólico','Obesidade','Hepático'],
+      datasets:[{label:'Risco CKM',data:[cardio,renal,metab,obes,hep],
+        backgroundColor:'rgba(2,128,144,0.15)',borderColor:'#028090',borderWidth:2,pointBackgroundColor:'#028090',pointRadius:4}]
+    },
+    options:{
+      responsive:false,
+      scales:{r:{beginAtZero:true,max:10,ticks:{stepSize:2,font:{size:10},backdropColor:'transparent'},
+        pointLabels:{font:{size:11,family:'Inter'}},grid:{color:'rgba(30,45,80,0.08)'}}},
+      plugins:{legend:{display:false}}
+    }
+  });
+}
+
+/* ===== METAS ===== */
+function runMetas(){
+  var peso=parseFloat(document.getElementById('ef-peso').value);
+  var alt=parseFloat(document.getElementById('ef-altura').value);
+  var imc=calcIMC(peso,alt);
+  var pas=parseFloat(document.getElementById('ef-pas').value);
+  var hba1c=parseFloat(document.getElementById('ex-hba1c').value);
+  var ldl=parseFloat(document.getElementById('ex-ldl').value);
+  var tfge=parseFloat(document.getElementById('cl-tfge-val').textContent);
+  var rac=parseFloat(document.getElementById('ex-rac').value);
+  var checks=document.querySelectorAll('#tab-anam .check-item.checked');
+  var has={};checks.forEach(function(c){has[c.textContent.trim()]=true;});
+  var isDM2=has['DM2']||(!isNaN(hba1c)&&hba1c>=6.5);
+  var isDCV=has['IAM']||has['AVC']||has['DAP'];
+
+  var rows=[];
+  if(!isNaN(imc)&&imc>=25){
+    var obeso=imc>=30;
+    rows.push({p:'Peso',atual:peso.toFixed(1)+' kg',m3:(peso*(obeso?0.95:0.97)).toFixed(1)+' kg ('+(obeso?'-5%':'-3%')+')',m6:(peso*(obeso?0.90:0.95)).toFixed(1)+' kg',m12:(peso*(obeso?0.85:0.90)).toFixed(1)+' kg'});
+  }
+  if(!isNaN(pas)&&pas>=130){
+    rows.push({p:'PAS',actual:Math.round(pas)+' mmHg',m3:'< 140',m6:'< 130',m12:'< 120'});
+  }
+  if(isDM2&&!isNaN(hba1c)){
+    rows.push({p:'HbA1c',actual:hba1c.toFixed(1)+'%',m3:Math.max(7,hba1c-1).toFixed(1)+'%',m6:Math.max(7,hba1c-1.5).toFixed(1)+'%',m12:'< 7%'});
+  }
+  var ldlMeta=isDCV?55:(isDM2?70:100);
+  if(!isNaN(ldl)&&ldl>ldlMeta){
+    rows.push({p:'LDL',actual:Math.round(ldl)+' mg/dL',m3:'< '+ldlMeta,m6:'Manter',m12:'Manter'});
+  }
+  rows.push({p:'TFGe',actual:isNaN(tfge)?'—':tfge+' mL/min',m3:'Estável',m6:'Estável',m12:'Queda < 5/ano'});
+  if(!isNaN(rac)&&rac>=30){
+    rows.push({p:'RAC',actual:Math.round(rac)+' mg/g',m3:Math.round(rac*0.7)+' (-30%)',m6:Math.round(rac*0.5)+' (-50%)',m12:'< 30 mg/g'});
+  }
+
+  var h='';
+  rows.forEach(function(r){
+    h+='<tr><td style="padding:8px 12px;border:1px solid var(--border);font-weight:600;">'+r.p+'</td>';
+    h+='<td style="padding:8px 12px;border:1px solid var(--border);text-align:center;">'+(r.atual||r.actual||'—')+'</td>';
+    h+='<td style="padding:8px 12px;border:1px solid var(--border);text-align:center;color:var(--ckm-teal);font-weight:500;">'+r.m3+'</td>';
+    h+='<td style="padding:8px 12px;border:1px solid var(--border);text-align:center;color:var(--ckm-teal);font-weight:500;">'+r.m6+'</td>';
+    h+='<td style="padding:8px 12px;border:1px solid var(--border);text-align:center;color:var(--ckm-teal);font-weight:500;">'+r.m12+'</td></tr>';
+  });
+  document.getElementById('metas-body').innerHTML=h||'<tr><td colspan="5" style="padding:20px;text-align:center;color:var(--text-3);border:1px solid var(--border);">Dados insuficientes</td></tr>';
+}
+
+/* ===== RETORNO ===== */
+function salvarBaseline(){
+  var peso=parseFloat(document.getElementById('ef-peso').value);
+  var pas=parseFloat(document.getElementById('ef-pas').value);
+  var pad=parseFloat(document.getElementById('ef-pad').value);
+  var hba1c=parseFloat(document.getElementById('ex-hba1c').value);
+  var cr=parseFloat(document.getElementById('ex-cr').value);
+  var rac=parseFloat(document.getElementById('ex-rac').value);
+  var ldl=parseFloat(document.getElementById('ex-ldl').value);
+  var ca=parseFloat(document.getElementById('ef-ca').value);
+  var tfge=parseFloat(document.getElementById('cl-tfge-val').textContent);
+  var imc=parseFloat(document.getElementById('cl-imc-val').textContent);
+  window._baseline={peso:peso,pas:pas,pad:pad,hba1c:hba1c,cr:cr,rac:rac,ldl:ldl,ca:ca,tfge:tfge,imc:imc,data:new Date().toLocaleDateString('pt-BR')};
+  document.getElementById('baseline-status').textContent='Baseline salvo em '+window._baseline.data;
+  document.getElementById('baseline-status').style.color='var(--green)';
+}
+
+function compararRetorno(){
+  if(!window._baseline){alert('Salve um baseline primeiro (na primeira consulta).');return;}
+  var b=window._baseline;
+  var campos=[
+    {n:'Peso',u:'kg',base:b.peso,ret:parseFloat(document.getElementById('ret-peso').value),inv:true},
+    {n:'PAS',u:'mmHg',base:b.pas,ret:parseFloat(document.getElementById('ret-pas').value),inv:true},
+    {n:'HbA1c',u:'%',base:b.hba1c,ret:parseFloat(document.getElementById('ret-hba1c').value),inv:true},
+    {n:'LDL',u:'mg/dL',base:b.ldl,ret:parseFloat(document.getElementById('ret-ldl').value),inv:true},
+    {n:'RAC',u:'mg/g',base:b.rac,ret:parseFloat(document.getElementById('ret-rac').value),inv:true},
+    {n:'CA',u:'cm',base:b.ca,ret:parseFloat(document.getElementById('ret-ca').value),inv:true},
+    {n:'TFGe',u:'mL/min',base:b.tfge,ret:calcTFGe(parseFloat(document.getElementById('ret-cr').value),getIdade(),getSexo()),inv:false}
+  ];
+  var h='<div style="font-size:11px;font-weight:600;color:var(--text);margin-bottom:8px;">Comparativo (baseline '+b.data+')</div>';
+  h+='<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:8px;">';
+  campos.forEach(function(c){
+    if(isNaN(c.base)||isNaN(c.ret))return;
+    var delta=c.ret-c.base;
+    var pct=c.base!==0?Math.round((delta/c.base)*100):0;
+    var melhorou=c.inv?(delta<0):(delta>0);
+    var cor=melhorou?'var(--green)':'var(--red)';
+    var seta=delta>0?'↑':(delta<0?'↓':'→');
+    h+='<div style="background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:10px;"><div style="font-size:9px;font-weight:600;color:var(--text-3);text-transform:uppercase;">'+c.n+'</div>';
+    h+='<div style="font-size:16px;font-weight:700;color:var(--text);">'+c.ret.toFixed(1)+'</div>';
+    h+='<div style="font-size:10px;color:'+cor+';font-weight:600;">'+seta+' '+(delta>0?'+':'')+delta.toFixed(1)+' '+c.u+' ('+pct+'%)</div>';
+    h+='<div style="font-size:9px;color:var(--text-3);">Base: '+c.base.toFixed(1)+'</div></div>';
+  });
+  h+='</div>';
+  var comp=document.getElementById('ret-comparativo');
+  comp.innerHTML=h;comp.style.display='block';
+}
+
+/* ===== INIT ===== */
+document.addEventListener('DOMContentLoaded',function(){
+  renderSolExames();
+  // Timeline position based on current month
+  var month=new Date().getMonth();
+  var pct=Math.round((month/11)*100);
+  var fill=document.getElementById('sol-timeline-fill');
+  if(fill)fill.style.width=pct+'%';
+
+  /* Demo data — paciente João Silva, 58a, M */
+  function setVal(id,v){var el=document.getElementById(id);if(el)el.value=v;}
+  /* Exames */
+  setVal('ex-cr','2.1');
+  setVal('ex-gj','142');
+  setVal('ex-hba1c','7.8');
+  setVal('ex-ct','220');
+  setVal('ex-hdl','38');
+  setVal('ex-ldl','138');
+  setVal('ex-tg','195');
+  setVal('ex-hb','11.2');
+  setVal('ex-ht','34');
+  setVal('ex-plaq','198');
+  setVal('ex-na','139');
+  setVal('ex-k','5.1');
+  setVal('ex-bic','20');
+  setVal('ex-ast','32');
+  setVal('ex-alt','28');
+  setVal('ex-au','8.2');
+  setVal('ex-rac','320');
+  setVal('ex-vitd','18');
+  setVal('ex-tfge','');
+  /* Ex. físico */
+  setVal('ef-peso','96');
+  setVal('ef-altura','175');
+  setVal('ef-pas','158');
+  setVal('ef-pad','94');
+  setVal('ef-fc','82');
+  setVal('ef-ca','108');
+  /* Auto-calc IMC e TFGe */
+  autoCalcIMC();
+  autoCalcTFGe();
+  /* Marcar comorbidades demo */
+  var demoComorbidades=['HAS','DM2','DRC','DLP','IC'];
+  document.querySelectorAll('#tab-anam .check-item').forEach(function(item){
+    var txt=item.textContent.trim();
+    if(demoComorbidades.indexOf(txt)!==-1){
+      item.querySelector('input[type="checkbox"]').checked=true;
+      item.classList.add('checked');
+    }
+  });
+});
+
+function calcCKM(imc, pas, gj, hba1c, tfge) {
+  document.querySelectorAll('.ckm-stage').forEach(function(s){s.classList.remove('active-stage');});
+  var checks = document.querySelectorAll('#tab-anam .check-item.checked');
+  var hasIC = false, hasIAM = false, hasAVC = false, hasDAP = false, hasDM2 = false, hasHAS = false, hasDLP = false, hasDRC = false;
+  checks.forEach(function(c) {
+    var t = c.textContent.trim();
+    if (t === 'IC') hasIC = true;
+    if (t === 'IAM') hasIAM = true;
+    if (t === 'AVC') hasAVC = true;
+    if (t === 'DAP') hasDAP = true;
+    if (t === 'DM2') hasDM2 = true;
+    if (t === 'HAS') hasHAS = true;
+    if (t === 'DLP') hasDLP = true;
+    if (t === 'DRC') hasDRC = true;
+  });
+
+  var stage = 0;
+  if (!isNaN(imc) && imc >= 30) stage = 1;
+  if (hasHAS || hasDLP || (!isNaN(gj) && gj >= 100) || (!isNaN(hba1c) && hba1c >= 5.7)) stage = 2;
+  if (hasDM2 || hasDRC || (!isNaN(tfge) && tfge < 60)) stage = 3;
+  if (hasIC || hasIAM || hasAVC || hasDAP) stage = 4;
+
+  document.getElementById('ckm-s' + stage).classList.add('active-stage');
+  var ckmCls = stage <= 1 ? 'b-gn' : stage === 2 ? 'b-yl' : stage === 3 ? 'b-pr' : 'b-rd';
+  setBadge('badge-ckm', 'CKM ' + stage, ckmCls);
 }
 </script>
 </body>
