@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Painel de Lançamento — TRS Agudo</title>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#1E2D50;--navy-deep:#121D33;
+  --teal:#028090;--teal-light:#04b5c8;
+  --bg:#FAF9F5;--bg-card:#FFFFFF;
+  --border:rgba(30,45,80,0.10);
+  --gold:#C4A35A;--gold-light:#d4b76a;--gold-dim:rgba(196,163,90,0.10);
+  --text:#1E2D3D;--text-2:#5A6A7A;--text-3:#8A96A3;
+  --green:#5B9E50;--red:#E05252;
+  --radius:14px;
+  --shadow-card:0 2px 16px rgba(30,45,80,0.06);
+  --font-serif:'Instrument Serif',Georgia,serif;
+  --font-sans:'Inter',system-ui,-apple-system,sans-serif;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:var(--font-sans);background:var(--bg);color:var(--text);
+  -webkit-font-smoothing:antialiased;overflow-x:hidden;min-height:100vh;}
+body::before{content:'';position:fixed;inset:0;z-index:-2;
+  background:radial-gradient(ellipse 80% 60% at 20% 10%,rgba(30,45,80,0.04),transparent 50%),
+  radial-gradient(ellipse 60% 50% at 80% 80%,rgba(30,45,80,0.06),transparent 50%);}
+
+/* Header */
+.header-bar{background:linear-gradient(135deg,var(--navy-deep) 0%,var(--navy) 60%,#2a4070 100%);
+  padding:0;position:relative;overflow:hidden;}
+.header-bar::after{content:'';position:absolute;inset:0;
+  background-image:radial-gradient(circle 1px,rgba(196,163,90,0.12) 98%,transparent 100%);
+  background-size:24px 24px;pointer-events:none;}
+.header-top{display:flex;align-items:center;justify-content:space-between;
+  padding:20px 40px 0;position:relative;z-index:2;}
+.header-brand{display:flex;align-items:center;gap:20px;}
+.header-logo-text{font-size:13px;font-weight:700;color:#fff;letter-spacing:2px;}
+.header-logo-text span{color:var(--gold);}
+.header-title-area{position:relative;z-index:2;padding:28px 40px 28px;}
+.header-title{font-family:var(--font-serif);font-size:28px;font-weight:400;color:#fff;margin-bottom:4px;}
+.header-subtitle{font-size:13px;color:rgba(255,255,255,0.5);font-weight:400;}
+.header-subtitle strong{color:rgba(255,255,255,0.8);font-weight:600;}
+.header-divider{height:3px;background:linear-gradient(90deg,var(--gold),var(--gold-light),rgba(196,163,90,0.1));}
+
+.btn-header{font-family:inherit;font-size:11px;font-weight:600;letter-spacing:.4px;
+  padding:8px 18px;border-radius:8px;cursor:pointer;transition:all .2s;border:none;
+  background:rgba(255,255,255,0.08);color:rgba(255,255,255,0.7);border:1px solid rgba(255,255,255,0.15);
+  text-decoration:none;display:inline-flex;align-items:center;gap:6px;}
+.btn-header:hover{background:rgba(255,255,255,0.14);color:#fff;}
+
+/* Container */
+.container{max-width:900px;margin:0 auto;padding:32px 40px 60px;}
+
+/* Section labels */
+.section-label{display:flex;align-items:center;gap:12px;margin-bottom:20px;margin-top:36px;}
+.section-label:first-child{margin-top:0;}
+.section-label h2{font-family:var(--font-serif);font-size:20px;font-weight:400;color:var(--navy);white-space:nowrap;}
+.section-label .line{flex:1;height:1px;background:linear-gradient(90deg,var(--border),transparent);}
+
+/* Card */
+.card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);
+  padding:28px 32px;box-shadow:var(--shadow-card);margin-bottom:16px;}
+
+/* Form */
+.form-row{display:grid;gap:16px;margin-bottom:16px;}
+.form-row.cols-2{grid-template-columns:1fr 1fr;}
+.form-row.cols-3{grid-template-columns:1fr 1fr 1fr;}
+.form-row.cols-5{grid-template-columns:1fr 1fr 1fr 1fr 1fr;}
+
+.form-group{display:flex;flex-direction:column;gap:6px;}
+.form-label{font-size:10px;font-weight:700;color:var(--text-3);text-transform:uppercase;letter-spacing:1.2px;}
+.form-input{font-family:var(--font-sans);font-size:15px;font-weight:500;color:var(--navy);
+  border:1px solid rgba(30,45,80,0.12);border-radius:10px;padding:12px 16px;
+  background:rgba(30,45,80,0.02);outline:none;transition:all .2s;width:100%;}
+.form-input:focus{border-color:var(--teal);background:#fff;box-shadow:0 0 0 3px rgba(2,128,144,0.08);}
+.form-input::placeholder{color:var(--text-3);font-weight:400;}
+.form-input[type="number"]{-moz-appearance:textfield;}
+.form-input[type="number"]::-webkit-inner-spin-button{opacity:1;}
+
+.form-hint{font-size:10px;color:var(--text-3);margin-top:2px;}
+
+/* Month selector styled */
+.month-select-wrap{display:flex;align-items:center;gap:16px;}
+.month-select-wrap .form-input{max-width:220px;font-size:16px;font-weight:600;}
+
+/* IC dynamic list */
+.ic-entries{display:flex;flex-direction:column;gap:10px;}
+.ic-entry{display:flex;align-items:center;gap:10px;}
+.ic-entry .form-input.ic-name{flex:1;}
+.ic-entry .form-input.ic-qty{width:80px;text-align:center;}
+.ic-remove{width:32px;height:32px;border-radius:8px;border:1px solid rgba(224,82,82,0.2);
+  background:rgba(224,82,82,0.06);color:var(--red);cursor:pointer;display:flex;
+  align-items:center;justify-content:center;font-size:16px;font-weight:700;
+  transition:all .2s;flex-shrink:0;}
+.ic-remove:hover{background:rgba(224,82,82,0.15);border-color:var(--red);}
+
+.btn-add-ic{font-family:inherit;font-size:11px;font-weight:600;color:var(--teal);
+  background:rgba(2,128,144,0.06);border:1px dashed rgba(2,128,144,0.3);
+  border-radius:8px;padding:10px 18px;cursor:pointer;transition:all .2s;
+  margin-top:8px;width:100%;}
+.btn-add-ic:hover{background:rgba(2,128,144,0.12);border-color:var(--teal);}
+
+/* Action buttons */
+.actions{display:flex;gap:12px;margin-top:28px;}
+.btn-save{font-family:inherit;font-size:14px;font-weight:700;letter-spacing:.5px;
+  background:linear-gradient(135deg,var(--gold),var(--gold-light));
+  color:var(--navy-deep);border:none;border-radius:10px;
+  padding:14px 36px;cursor:pointer;transition:all .2s;flex:1;}
+.btn-save:hover{transform:translateY(-1px);box-shadow:0 6px 20px rgba(196,163,90,0.3);}
+.btn-save:active{transform:translateY(0);}
+
+.btn-dashboard{font-family:inherit;font-size:13px;font-weight:600;
+  background:var(--navy);color:#fff;border:none;border-radius:10px;
+  padding:14px 28px;cursor:pointer;transition:all .2s;text-decoration:none;
+  display:inline-flex;align-items:center;gap:8px;}
+.btn-dashboard:hover{background:var(--navy-deep);transform:translateY(-1px);}
+
+/* Saved months list */
+.saved-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;margin-top:16px;}
+.saved-item{display:flex;align-items:center;justify-content:space-between;
+  padding:14px 18px;border-radius:10px;background:rgba(30,45,80,0.02);
+  border:1px solid rgba(30,45,80,0.06);transition:all .2s;}
+.saved-item:hover{background:rgba(30,45,80,0.04);border-color:rgba(30,45,80,0.12);}
+.saved-month{font-family:var(--font-serif);font-size:18px;color:var(--navy);}
+.saved-sessions{font-size:11px;color:var(--text-3);font-weight:600;}
+.saved-badge{display:inline-flex;align-items:center;gap:4px;font-size:9px;font-weight:700;
+  color:var(--green);background:rgba(91,158,80,0.08);padding:3px 8px;border-radius:4px;}
+.saved-actions{display:flex;gap:6px;}
+.saved-btn{width:28px;height:28px;border-radius:6px;border:1px solid rgba(30,45,80,0.1);
+  background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;
+  font-size:12px;color:var(--text-3);transition:all .2s;}
+.saved-btn:hover{background:rgba(30,45,80,0.06);color:var(--navy);}
+.saved-btn.delete:hover{background:rgba(224,82,82,0.08);color:var(--red);border-color:rgba(224,82,82,0.2);}
+
+/* Toast */
+.toast{position:fixed;bottom:24px;right:24px;padding:14px 24px;border-radius:10px;
+  background:var(--navy);color:#fff;font-size:13px;font-weight:600;
+  box-shadow:0 8px 32px rgba(30,45,80,0.3);transform:translateY(100px);opacity:0;
+  transition:all .3s ease;z-index:1000;}
+.toast.show{transform:translateY(0);opacity:1;}
+.toast.success{background:var(--green);}
+.toast.error{background:var(--red);}
+
+/* Totals display */
+.totals-bar{display:flex;align-items:center;gap:20px;padding:16px 20px;
+  background:rgba(30,45,80,0.03);border-radius:10px;margin-top:12px;}
+.total-item{display:flex;align-items:baseline;gap:6px;}
+.total-label{font-size:10px;font-weight:700;color:var(--text-3);text-transform:uppercase;letter-spacing:1px;}
+.total-value{font-family:var(--font-serif);font-size:22px;color:var(--navy);}
+
+@media(max-width:700px){
+  .form-row.cols-2,.form-row.cols-3,.form-row.cols-5{grid-template-columns:1fr;}
+  .container{padding:24px 20px 40px;}
+  .header-top,.header-title-area{padding-left:20px;padding-right:20px;}
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header-bar">
+  <div class="header-top">
+    <div class="header-brand">
+      <div class="header-logo-text">APEX <span>Pro</span></div>
+    </div>
+    <a href="dashboard_trs_completo.html" class="btn-header">← Dashboard</a>
+  </div>
+  <div class="header-title-area">
+    <h1 class="header-title">Painel de Lançamento Mensal</h1>
+    <p class="header-subtitle"><strong>Hospital Mont Serrat</strong> · Terapia Renal Substitutiva · Dados mensais</p>
+  </div>
+</div>
+<div class="header-divider"></div>
+
+<div class="container">
+
+  <!-- MÊS DE REFERÊNCIA -->
+  <div class="section-label"><h2>Mês de Referência</h2><div class="line"></div></div>
+  <div class="card">
+    <div class="month-select-wrap">
+      <div class="form-group">
+        <label class="form-label">Selecione o Mês</label>
+        <input type="month" id="mesRef" class="form-input" value="2026-05">
+      </div>
+      <div id="mesStatus" style="font-size:12px;color:var(--text-3);margin-top:18px;"></div>
+    </div>
+  </div>
+
+  <!-- PACIENTES -->
+  <div class="section-label"><h2>Pacientes</h2><div class="line"></div></div>
+  <div class="card">
+    <div class="form-row cols-2">
+      <div class="form-group">
+        <label class="form-label">Pacientes Únicos</label>
+        <input type="number" id="pacientes" class="form-input" min="0" placeholder="Ex: 19">
+        <div class="form-hint">Total de pacientes distintos atendidos no mês</div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Dias com Atendimento</label>
+        <input type="number" id="diasAtend" class="form-input" min="0" placeholder="Ex: 30">
+        <div class="form-hint">Dias úteis com pelo menos 1 sessão</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SESSÕES POR MODALIDADE -->
+  <div class="section-label"><h2>Sessões por Modalidade</h2><div class="line"></div></div>
+  <div class="card">
+    <div class="form-row cols-5">
+      <div class="form-group">
+        <label class="form-label">HD</label>
+        <input type="number" id="sesHD" class="form-input ses-input" min="0" placeholder="0" value="0">
+        <div class="form-hint">Hemodiálise</div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">SLED</label>
+        <input type="number" id="sesSLED" class="form-input ses-input" min="0" placeholder="0" value="0">
+        <div class="form-hint">Sustained Low-Eff.</div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Plasmaférese</label>
+        <input type="number" id="sesPlasma" class="form-input ses-input" min="0" placeholder="0" value="0">
+        <div class="form-hint">Troca plasmática</div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">CRRT</label>
+        <input type="number" id="sesCRRT" class="form-input ses-input" min="0" placeholder="0" value="0">
+        <div class="form-hint">Terapia contínua</div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">DP</label>
+        <input type="number" id="sesDP" class="form-input ses-input" min="0" placeholder="0" value="0">
+        <div class="form-hint">Diálise peritoneal</div>
+      </div>
+    </div>
+    <div class="totals-bar" id="totalSessoes">
+      <div class="total-item"><span class="total-label">Total Sessões</span><span class="total-value" id="totalSesVal">0</span></div>
+    </div>
+  </div>
+
+  <!-- ACESSOS VENOSOS -->
+  <div class="section-label"><h2>Acessos Venosos</h2><div class="line"></div></div>
+  <div class="card">
+    <div class="form-row cols-3">
+      <div class="form-group">
+        <label class="form-label">FAV (Fístula)</label>
+        <input type="number" id="acFAV" class="form-input ac-input" min="0" placeholder="0" value="0">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Permcath</label>
+        <input type="number" id="acPerm" class="form-input ac-input" min="0" placeholder="0" value="0">
+      </div>
+      <div class="form-group">
+        <label class="form-label">CDL (Shilley)</label>
+        <input type="number" id="acCDL" class="form-input ac-input" min="0" placeholder="0" value="0">
+      </div>
+    </div>
+    <div class="totals-bar">
+      <div class="total-item"><span class="total-label">Total Acessos</span><span class="total-value" id="totalAcVal">0</span></div>
+      <div class="total-item"><span class="total-label">Taxa FAV</span><span class="total-value" id="taxaFAVVal">0%</span></div>
+    </div>
+  </div>
+
+  <!-- INTERCORRÊNCIAS -->
+  <div class="section-label"><h2>Intercorrências</h2><div class="line"></div></div>
+  <div class="card">
+    <div class="ic-entries" id="icList">
+      <!-- Dynamic rows added here -->
+    </div>
+    <button class="btn-add-ic" onclick="addIC()">+ Adicionar Intercorrência</button>
+    <div class="totals-bar" style="margin-top:16px;">
+      <div class="total-item"><span class="total-label">Total IC</span><span class="total-value" id="totalICVal">0</span></div>
+      <div class="total-item"><span class="total-label">Taxa IC</span><span class="total-value" id="taxaICVal">0%</span></div>
+    </div>
+  </div>
+
+  <!-- AÇÕES -->
+  <div class="actions">
+    <button class="btn-save" onclick="salvarMes()">Salvar Mês →</button>
+    <a href="dashboard_trs_completo.html" class="btn-dashboard">Ver Dashboard →</a>
+  </div>
+
+  <!-- MESES SALVOS -->
+  <div class="section-label" style="margin-top:48px;"><h2>Meses Salvos</h2><div class="line"></div></div>
+  <div id="savedMonths" class="saved-list"></div>
+
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+var STORAGE_KEY = 'trs_mensal_mont_serrat';
+var IC_TIPOS_COMUNS = ['Hipotensão','Desconforto Respiratório','Taquicardia','Náuseas',
+  'Calafrios','Dor','Bradicardia','Vômito','Tremores','Febre','Hematoma',
+  'Hipertensão','Mau Funcionamento do Cateter','Sangramento','Câimbras'];
+
+/* ═══ INIT ═══ */
+function init() {
+  migrateWeeklyData();
+  updateTotals();
+  renderSavedMonths();
+  checkMesStatus();
+
+  // Event listeners
+  document.getElementById('mesRef').addEventListener('change', function() {
+    checkMesStatus();
+    loadMes(this.value);
+  });
+
+  document.querySelectorAll('.ses-input').forEach(function(el) {
+    el.addEventListener('input', updateTotals);
+  });
+  document.querySelectorAll('.ac-input').forEach(function(el) {
+    el.addEventListener('input', updateTotals);
+  });
+
+  // Add 3 default IC rows
+  addIC('Hipotensão');
+  addIC('Desconforto Respiratório');
+  addIC('Mau Funcionamento do Cateter');
+}
+
+/* ═══ MIGRATE WEEKLY → MONTHLY ═══ */
+function migrateWeeklyData() {
+  var saved = getData();
+  // If monthly data already exists, skip migration
+  if (saved && saved.length > 0) return;
+
+  var weekly = localStorage.getItem('trs_agudo_mont_serrat');
+  if (!weekly) return;
+
+  var weeks = JSON.parse(weekly);
+  var months = {};
+
+  weeks.forEach(function(w) {
+    var wNum = parseInt(w.semana.split('W')[1]);
+    var mes;
+    if (wNum <= 9) mes = '2026-02';
+    else if (wNum <= 13) mes = '2026-03';
+    else mes = '2026-04';
+
+    if (!months[mes]) {
+      months[mes] = {
+        mes: mes, hospital: 'mont_serrat',
+        pacientes: 0, diasAtend: 0,
+        sessoes: {hd:0,sled:0,plasmaferese:0,crrt:0,dp:0},
+        acessos: {fav:0,permcath:0,cdl:0},
+        ic: {}
+      };
+    }
+    var m = months[mes];
+    m.pacientes = Math.max(m.pacientes, w.pac || 0);
+    m.sessoes.hd += (w.sessoes.hd || 0);
+    m.sessoes.sled += (w.sessoes.sled || 0);
+    m.sessoes.crrt += (w.sessoes.crrt || 0);
+    m.sessoes.dp += (w.sessoes.dp || 0);
+    m.acessos.fav += (w.acessos.fav || 0);
+    m.acessos.permcath += (w.acessos.permcath || 0);
+    m.acessos.cdl += (w.acessos.cdl || 0);
+    if (w.ic) {
+      w.ic.forEach(function(ic) {
+        if (!m.ic[ic.nome]) m.ic[ic.nome] = 0;
+        m.ic[ic.nome] += ic.qtd;
+      });
+    }
+  });
+
+  // Apply corrections from PDF data
+  // March: 54 sessions (HD 52, SLED 2), 14 patients, FAV 4, Permcath 14, CDL 36
+  if (months['2026-03']) {
+    months['2026-03'].pacientes = 14;
+    months['2026-03'].sessoes.hd = 52;
+    months['2026-03'].sessoes.sled = 2;
+    months['2026-03'].acessos.fav = 4;
+    months['2026-03'].acessos.permcath = 14;
+    months['2026-03'].acessos.cdl = 36;
+    months['2026-03'].diasAtend = 22;
+  }
+
+  // April: add 5 plasmaférese, correct totals
+  if (months['2026-04']) {
+    months['2026-04'].pacientes = 19;
+    months['2026-04'].sessoes.hd = 80;
+    months['2026-04'].sessoes.plasmaferese = 5;
+    months['2026-04'].acessos.cdl = 57;
+    months['2026-04'].acessos.fav = 22;
+    months['2026-04'].acessos.permcath = 12;
+    months['2026-04'].diasAtend = 30;
+  }
+
+  // Feb
+  if (months['2026-02']) {
+    months['2026-02'].pacientes = 4;
+    months['2026-02'].diasAtend = 10;
+  }
+
+  // Convert IC objects to arrays and save
+  var result = [];
+  Object.keys(months).sort().forEach(function(k) {
+    var m = months[k];
+    var icArr = [];
+    Object.keys(m.ic).forEach(function(nome) {
+      if (m.ic[nome] > 0) icArr.push({nome: nome, qtd: m.ic[nome]});
+    });
+    icArr.sort(function(a, b) { return b.qtd - a.qtd; });
+    m.ic = icArr;
+    result.push(m);
+  });
+
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(result));
+  showToast('Dados semanais migrados para formato mensal', 'success');
+}
+
+/* ═══ DATA ACCESS ═══ */
+function getData() {
+  var raw = localStorage.getItem(STORAGE_KEY);
+  return raw ? JSON.parse(raw) : [];
+}
+
+function saveData(data) {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+}
+
+function getMes(mesKey) {
+  var data = getData();
+  for (var i = 0; i < data.length; i++) {
+    if (data[i].mes === mesKey) return data[i];
+  }
+  return null;
+}
+
+/* ═══ CHECK IF MONTH EXISTS ═══ */
+function checkMesStatus() {
+  var mes = document.getElementById('mesRef').value;
+  var existing = getMes(mes);
+  var el = document.getElementById('mesStatus');
+  if (existing) {
+    var total = totalSessoes(existing);
+    el.innerHTML = '<span style="color:var(--green);font-weight:600;">✓ Dados existentes</span> · ' + total + ' sessões';
+  } else {
+    el.innerHTML = '<span style="color:var(--text-3);">Nenhum dado salvo para este mês</span>';
+  }
+}
+
+/* ═══ LOAD MONTH INTO FORM ═══ */
+function loadMes(mesKey) {
+  var m = getMes(mesKey);
+  if (!m) {
+    clearForm();
+    return;
+  }
+  document.getElementById('pacientes').value = m.pacientes || '';
+  document.getElementById('diasAtend').value = m.diasAtend || '';
+  document.getElementById('sesHD').value = m.sessoes.hd || 0;
+  document.getElementById('sesSLED').value = m.sessoes.sled || 0;
+  document.getElementById('sesPlasma').value = m.sessoes.plasmaferese || 0;
+  document.getElementById('sesCRRT').value = m.sessoes.crrt || 0;
+  document.getElementById('sesDP').value = m.sessoes.dp || 0;
+  document.getElementById('acFAV').value = m.acessos.fav || 0;
+  document.getElementById('acPerm').value = m.acessos.permcath || 0;
+  document.getElementById('acCDL').value = m.acessos.cdl || 0;
+
+  // IC
+  document.getElementById('icList').innerHTML = '';
+  if (m.ic && m.ic.length > 0) {
+    m.ic.forEach(function(ic) { addIC(ic.nome, ic.qtd); });
+  } else {
+    addIC('Hipotensão');
+    addIC('Desconforto Respiratório');
+    addIC('Mau Funcionamento do Cateter');
+  }
+  updateTotals();
+}
+
+function clearForm() {
+  document.getElementById('pacientes').value = '';
+  document.getElementById('diasAtend').value = '';
+  ['sesHD','sesSLED','sesPlasma','sesCRRT','sesDP','acFAV','acPerm','acCDL'].forEach(function(id) {
+    document.getElementById(id).value = 0;
+  });
+  document.getElementById('icList').innerHTML = '';
+  addIC('Hipotensão');
+  addIC('Desconforto Respiratório');
+  addIC('Mau Funcionamento do Cateter');
+  updateTotals();
+}
+
+/* ═══ IC MANAGEMENT ═══ */
+function addIC(nome, qtd) {
+  var list = document.getElementById('icList');
+  var div = document.createElement('div');
+  div.className = 'ic-entry';
+
+  // Create datalist for suggestions
+  var dlId = 'ic-dl-' + Date.now() + Math.random().toString(36).substr(2, 5);
+  var dlHTML = '<datalist id="' + dlId + '">';
+  IC_TIPOS_COMUNS.forEach(function(t) { dlHTML += '<option value="' + t + '">'; });
+  dlHTML += '</datalist>';
+
+  div.innerHTML = '<input type="text" class="form-input ic-name" placeholder="Tipo de IC" list="' + dlId + '" value="' + (nome || '') + '">' +
+    dlHTML +
+    '<input type="number" class="form-input ic-qty" min="0" placeholder="0" value="' + (qtd || 0) + '" oninput="updateTotals()">' +
+    '<button class="ic-remove" onclick="this.parentElement.remove();updateTotals();">×</button>';
+
+  list.appendChild(div);
+}
+
+/* ═══ TOTALS ═══ */
+function updateTotals() {
+  var ses = getInt('sesHD') + getInt('sesSLED') + getInt('sesPlasma') + getInt('sesCRRT') + getInt('sesDP');
+  document.getElementById('totalSesVal').textContent = ses;
+
+  var ac = getInt('acFAV') + getInt('acPerm') + getInt('acCDL');
+  document.getElementById('totalAcVal').textContent = ac;
+
+  var fav = getInt('acFAV');
+  var taxaFAV = ac > 0 ? ((fav / ac) * 100).toFixed(1) : '0';
+  document.getElementById('taxaFAVVal').textContent = taxaFAV + '%';
+
+  var totalIC = 0;
+  document.querySelectorAll('.ic-qty').forEach(function(el) { totalIC += (parseInt(el.value) || 0); });
+  document.getElementById('totalICVal').textContent = totalIC;
+  var taxaIC = ses > 0 ? ((totalIC / ses) * 100).toFixed(1) : '0';
+  document.getElementById('taxaICVal').textContent = taxaIC + '%';
+}
+
+function getInt(id) { return parseInt(document.getElementById(id).value) || 0; }
+
+function totalSessoes(m) {
+  return (m.sessoes.hd||0) + (m.sessoes.sled||0) + (m.sessoes.plasmaferese||0) + (m.sessoes.crrt||0) + (m.sessoes.dp||0);
+}
+
+/* ═══ SAVE ═══ */
+function salvarMes() {
+  var mes = document.getElementById('mesRef').value;
+  if (!mes) { showToast('Selecione um mês', 'error'); return; }
+
+  var pac = getInt('pacientes');
+  if (pac <= 0) { showToast('Preencha o número de pacientes', 'error'); return; }
+
+  var entry = {
+    mes: mes,
+    hospital: 'mont_serrat',
+    pacientes: pac,
+    diasAtend: getInt('diasAtend'),
+    sessoes: {
+      hd: getInt('sesHD'),
+      sled: getInt('sesSLED'),
+      plasmaferese: getInt('sesPlasma'),
+      crrt: getInt('sesCRRT'),
+      dp: getInt('sesDP')
+    },
+    acessos: {
+      fav: getInt('acFAV'),
+      permcath: getInt('acPerm'),
+      cdl: getInt('acCDL')
+    },
+    ic: []
+  };
+
+  // Collect IC
+  document.querySelectorAll('.ic-entry').forEach(function(row) {
+    var nome = row.querySelector('.ic-name').value.trim();
+    var qtd = parseInt(row.querySelector('.ic-qty').value) || 0;
+    if (nome && qtd > 0) {
+      entry.ic.push({nome: nome, qtd: qtd});
+    }
+  });
+  entry.ic.sort(function(a, b) { return b.qtd - a.qtd; });
+
+  // Save
+  var data = getData();
+  var idx = -1;
+  for (var i = 0; i < data.length; i++) {
+    if (data[i].mes === mes) { idx = i; break; }
+  }
+  if (idx >= 0) {
+    data[idx] = entry;
+  } else {
+    data.push(entry);
+    data.sort(function(a, b) { return a.mes.localeCompare(b.mes); });
+  }
+
+  saveData(data);
+  renderSavedMonths();
+  checkMesStatus();
+
+  var total = totalSessoes(entry);
+  showToast(formatMes(mes) + ' salvo · ' + total + ' sessões', 'success');
+}
+
+/* ═══ RENDER SAVED MONTHS ═══ */
+function renderSavedMonths() {
+  var data = getData();
+  var el = document.getElementById('savedMonths');
+
+  if (data.length === 0) {
+    el.innerHTML = '<div style="text-align:center;padding:24px;color:var(--text-3);font-size:13px;">Nenhum mês salvo ainda</div>';
+    return;
+  }
+
+  var html = '';
+  data.forEach(function(m) {
+    var total = totalSessoes(m);
+    html += '<div class="saved-item">' +
+      '<div><div class="saved-month">' + formatMes(m.mes) + '</div>' +
+      '<div class="saved-sessions">' + total + ' sessões · ' + m.pacientes + ' pac.</div></div>' +
+      '<div class="saved-actions">' +
+        '<button class="saved-btn" title="Editar" onclick="editMes(\'' + m.mes + '\')">✎</button>' +
+        '<button class="saved-btn delete" title="Excluir" onclick="deleteMes(\'' + m.mes + '\')">×</button>' +
+      '</div>' +
+    '</div>';
+  });
+  el.innerHTML = html;
+}
+
+function editMes(mesKey) {
+  document.getElementById('mesRef').value = mesKey;
+  loadMes(mesKey);
+  checkMesStatus();
+  window.scrollTo({top: 0, behavior: 'smooth'});
+}
+
+function deleteMes(mesKey) {
+  if (!confirm('Excluir dados de ' + formatMes(mesKey) + '?')) return;
+  var data = getData().filter(function(m) { return m.mes !== mesKey; });
+  saveData(data);
+  renderSavedMonths();
+  checkMesStatus();
+  showToast(formatMes(mesKey) + ' excluído', 'success');
+}
+
+/* ═══ HELPERS ═══ */
+function formatMes(mesKey) {
+  var parts = mesKey.split('-');
+  var meses = ['','Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
+  return meses[parseInt(parts[1])] + '/' + parts[0];
+}
+
+function showToast(msg, type) {
+  var el = document.getElementById('toast');
+  el.textContent = msg;
+  el.className = 'toast ' + (type || '') + ' show';
+  setTimeout(function() { el.className = 'toast'; }, 3000);
+}
+
+/* ═══ INIT ═══ */
+if (document.readyState === 'complete') init();
+else window.addEventListener('load', init);
+</script>
+
+</body>
+</html>
