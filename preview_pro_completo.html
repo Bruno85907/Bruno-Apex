@@ -1767,12 +1767,6 @@ function openTab(btn, tabId) {
   if (tabId === 'tab-metas') try { runMetas(); } catch(e) { console.error('Metas error:', e); }
 }
 
-);
-  if(el) el.classList.add('active');
-  document.querySelectorAll('.sidebar-view').forEach(function(v){v.classList.remove('active');});
-  document.getElementById('view-' + viewId).classList.add('active');
-}
-
 function toggleCk(el) {
   var cb = el.querySelector('input[type="checkbox"]');
   cb.checked = !cb.checked;
