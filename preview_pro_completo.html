@@ -263,6 +263,36 @@ body{font-family:var(--font-sans);background:var(--navy-deep);color:var(--text);
 .pe-section{margin-bottom:36px;}
 .pe-section-label{font-size:9px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:var(--text-3);margin-bottom:16px;display:flex;align-items:center;gap:8px;}
 .pe-section-label::after{content:'';flex:1;height:1px;background:var(--border);}
+.pe-add-btn{display:inline-flex;align-items:center;gap:5px;font-size:10px;font-weight:600;letter-spacing:0.5px;text-transform:uppercase;color:var(--teal);background:rgba(2,128,144,0.06);border:1px solid rgba(2,128,144,0.18);border-radius:6px;padding:5px 12px;cursor:pointer;transition:all 0.2s;}
+.pe-add-btn:hover{background:rgba(2,128,144,0.12);border-color:rgba(2,128,144,0.35);}
+.pe-proj-delete{position:absolute;top:12px;right:12px;background:none;border:none;color:var(--text-3);cursor:pointer;opacity:0;transition:opacity 0.2s;}
+.pe-sub-card{position:relative;}
+.pe-sub-card:hover .pe-proj-delete{opacity:1;}
+.pe-proj-delete:hover{color:var(--red);}
+
+/* OKR Framework */
+.okr-obj{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:20px 24px;margin-bottom:16px;position:relative;}
+.okr-obj-header{display:flex;align-items:center;gap:10px;margin-bottom:12px;}
+.okr-obj-badge{font-size:9px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;padding:3px 10px;border-radius:5px;}
+.okr-obj-title{font-size:14px;font-weight:700;color:var(--text-1);}
+.okr-kr-list{display:flex;flex-direction:column;gap:8px;margin-bottom:14px;}
+.okr-kr{display:flex;align-items:center;gap:10px;padding:10px 14px;background:var(--bg);border:1px solid var(--border);border-radius:10px;font-size:12px;color:var(--text-2);}
+.okr-kr-num{font-size:9px;font-weight:700;color:var(--text-3);letter-spacing:1px;min-width:24px;}
+.okr-kr-text{flex:1;}
+.okr-kr-bar{width:80px;height:5px;background:rgba(0,0,0,0.06);border-radius:3px;overflow:hidden;}
+.okr-kr-fill{height:100%;border-radius:3px;transition:width 0.4s;}
+.okr-kr-pct{font-size:10px;font-weight:600;color:var(--text-3);min-width:30px;text-align:right;}
+.okr-init-label{font-size:9px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-3);margin-bottom:8px;}
+.okr-init-list{display:flex;flex-direction:column;gap:4px;}
+.okr-init{display:flex;align-items:center;gap:8px;padding:6px 10px;font-size:11px;color:var(--text-2);border-radius:6px;}
+.okr-init:hover{background:rgba(2,128,144,0.03);}
+.okr-init-check{width:14px;height:14px;border:1.5px solid var(--border);border-radius:4px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.2s;flex-shrink:0;}
+.okr-init-check.done{background:var(--teal);border-color:var(--teal);}
+.okr-init-check.done::after{content:'✓';color:#fff;font-size:9px;font-weight:700;}
+.okr-init-text{flex:1;}
+.okr-init-text.done{text-decoration:line-through;opacity:0.5;}
+.okr-init-date{font-size:10px;color:var(--text-3);white-space:nowrap;}
+.okr-empty{text-align:center;padding:40px 20px;color:var(--text-3);font-size:13px;}
 
 /* MVV cards */
 .pe-mvv-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:8px;}
@@ -359,6 +389,30 @@ body{font-family:var(--font-sans);background:var(--navy-deep);color:var(--text);
 .pac-table td{padding:14px;border-bottom:1px solid var(--border);font-size:13px;color:var(--text);vertical-align:middle;}
 .pac-table tr:hover td{background:rgba(2,128,144,0.03);cursor:pointer;}
 .pac-table tr:last-child td{border-bottom:none;}
+.pac-actions{display:flex;gap:6px;justify-content:center;}
+.pac-action-btn{background:none;border:1px solid var(--border);border-radius:6px;padding:5px 7px;cursor:pointer;color:var(--text-3);transition:all 0.2s;display:inline-flex;align-items:center;}
+.pac-action-btn:hover{color:var(--teal);border-color:rgba(2,128,144,0.3);background:rgba(2,128,144,0.04);}
+.pac-action-btn.pac-del:hover{color:var(--red);border-color:rgba(220,38,38,0.3);background:rgba(220,38,38,0.04);}
+
+/* Minha Agenda */
+.agenda-timeline{display:flex;flex-direction:column;gap:0;position:relative;}
+.agenda-month{position:relative;padding-left:28px;padding-bottom:28px;border-left:2px solid var(--border);margin-left:6px;}
+.agenda-month:last-child{border-left-color:transparent;}
+.agenda-month-header{display:flex;align-items:center;gap:10px;margin-bottom:12px;position:relative;}
+.agenda-month-dot{width:14px;height:14px;border-radius:50%;position:absolute;left:-35px;top:1px;border:2px solid var(--card);}
+.agenda-month-label{font-size:14px;font-weight:700;color:var(--text-1);font-family:var(--font-heading);}
+.agenda-month-badge{font-size:9px;font-weight:600;letter-spacing:0.5px;padding:2px 8px;border-radius:4px;}
+.agenda-items{display:flex;flex-direction:column;gap:4px;}
+.agenda-item{display:flex;align-items:flex-start;gap:10px;padding:8px 12px;border-radius:8px;transition:background 0.2s;}
+.agenda-item:hover{background:rgba(2,128,144,0.03);}
+.agenda-item-check{width:16px;height:16px;border:1.5px solid var(--border);border-radius:4px;flex-shrink:0;margin-top:1px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.2s;}
+.agenda-item-check.done{background:var(--teal);border-color:var(--teal);}
+.agenda-item-check.done::after{content:'✓';color:#fff;font-size:10px;font-weight:700;}
+.agenda-item.done{opacity:0.5;}
+.agenda-item-content{flex:1;}
+.agenda-item-title{font-size:13px;color:var(--text-1);font-weight:500;}
+.agenda-item.done .agenda-item-title{text-decoration:line-through;}
+.agenda-item-proj{font-size:10px;color:var(--text-3);margin-top:1px;}
 
 .pac-row-name{display:flex;align-items:center;gap:10px;}
 .pac-row-avatar{width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,var(--navy),var(--teal));display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#fff;flex-shrink:0;}
@@ -509,6 +563,41 @@ body{font-family:var(--font-sans);background:var(--navy-deep);color:var(--text);
   #tab-class > div:first-child{grid-template-columns:1fr;}
 }
 
+/* ============================================================
+   PLANEJAMENTO ESTRATÉGICO — SELETOR EMPRESA/PROJETO
+   ============================================================ */
+.pe-selector{margin-bottom:32px;}
+.pe-org-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;max-width:800px;}
+.pe-org-card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:28px;
+  cursor:pointer;transition:all .3s cubic-bezier(.4,0,.2,1);box-shadow:var(--shadow-card);position:relative;overflow:hidden;}
+.pe-org-card:hover{border-color:var(--navy);box-shadow:var(--shadow-card-hover);transform:translateY(-3px);}
+.pe-org-card.active-org{border-color:var(--gold);box-shadow:0 4px 24px rgba(196,163,90,0.18);}
+.pe-org-card.active-org::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--gold),var(--gold-light));}
+.pe-org-icon{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;margin-bottom:14px;font-size:18px;font-weight:700;}
+.pe-org-name{font-family:var(--font-serif);font-size:18px;color:var(--navy);margin-bottom:4px;}
+.pe-org-desc{font-size:11px;color:var(--text-2);line-height:1.7;margin-bottom:14px;}
+.pe-org-projects{display:flex;flex-wrap:wrap;gap:6px;}
+.pe-org-proj-tag{font-size:9px;font-weight:600;padding:4px 10px;border-radius:6px;letter-spacing:.3px;}
+
+.pe-sub-list{display:grid;grid-template-columns:1fr 1fr;gap:16px;max-width:800px;}
+.pe-sub-card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:24px;
+  cursor:pointer;transition:all .3s;box-shadow:var(--shadow-card);}
+.pe-sub-card:hover{border-color:var(--navy);box-shadow:var(--shadow-card-hover);transform:translateY(-2px);}
+.pe-sub-card.active-sub{border-color:var(--teal);box-shadow:0 4px 20px rgba(2,128,144,0.15);}
+.pe-sub-icon{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;margin-bottom:10px;font-size:14px;}
+.pe-sub-name{font-size:14px;font-weight:600;color:var(--navy);margin-bottom:3px;}
+.pe-sub-desc{font-size:11px;color:var(--text-2);line-height:1.6;}
+.pe-sub-status{margin-top:10px;font-size:9px;font-weight:600;display:inline-block;padding:3px 10px;border-radius:6px;}
+
+.pe-breadcrumb-bar{display:flex;align-items:center;gap:8px;margin-bottom:24px;font-size:12px;}
+.pe-bc-link{color:var(--teal);cursor:pointer;font-weight:500;background:none;border:none;font-family:inherit;font-size:inherit;padding:0;transition:color .15s;}
+.pe-bc-link:hover{color:var(--navy);}
+.pe-bc-sep{color:var(--text-3);opacity:0.4;font-size:10px;}
+.pe-bc-current{color:var(--navy);font-weight:600;}
+
+.pe-view{display:none;}
+.pe-view.active{display:block;}
+
 .ef-segments{display:flex;flex-direction:column;gap:10px;}
 .ef-seg-label{font-size:11px;font-weight:600;color:var(--text);display:block;margin-bottom:4px;}
 .ef-seg-ta{font-family:inherit;font-size:12px;padding:9px 12px;border:1px solid var(--border);border-radius:8px;background:var(--bg);color:var(--text);outline:none;transition:border-color .2s;width:100%;resize:vertical;line-height:1.6;}
@@ -589,7 +678,7 @@ body{font-family:var(--font-sans);background:var(--navy-deep);color:var(--text);
   <div class="login-form-side">
     <div class="login-form-wrap">
       <div class="login-logo-wrap">
-        <div style="font-family:var(--font-sans);font-size:18px;font-weight:700;color:#fff;letter-spacing:1px;">APEX <span style="color:var(--gold);">Pro</span></div>
+        <img src="landing-page/Logo.probranco.png" alt="Apex Pro" style="height:44px;opacity:0.95;">
       </div>
       <div class="login-welcome">Acesso <strong>profissional</strong></div>
       <div class="login-desc">Entre com suas credenciais para acessar indicadores, protocolos e gestão de pacientes.</div>
@@ -619,7 +708,7 @@ body{font-family:var(--font-sans);background:var(--navy-deep);color:var(--text);
   <!-- SIDEBAR -->
   <aside class="sidebar">
     <div class="sb-logo">
-      <div class="sb-logo-brand">APEX <span>Pro</span></div>
+      <img src="landing-page/Logo.probranco.png" alt="Apex Pro" style="height:34px;opacity:0.95;">
       <div class="sb-logo-context">Fenix Nefrologia</div>
     </div>
     <nav class="sb-nav">
@@ -628,20 +717,29 @@ body{font-family:var(--font-sans);background:var(--navy-deep);color:var(--text);
         <span>Dashboard</span>
       </div>
       <div class="sb-divider"></div>
+      <div class="sb-item" data-page="agenda" onclick="navTo('agenda')">
+        <span class="sb-item-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></span>
+        <span>Minha Agenda</span>
+      </div>
+      <div class="sb-divider"></div>
       <div class="sb-module-label open" onclick="toggleModule(this)">
+        <span class="sb-module-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M7 14l3-3 3 3 4-5"/></svg></span>
+        <span>Gestão</span>
+        <span class="sb-chevron">›</span>
+      </div>
+      <div class="sb-children open">
+        <div class="sb-child" data-page="planejamento" onclick="navTo('planejamento')"><span class="sb-child-dot"></span>Plan. Estratégico</div>
+      </div>
+      <div class="sb-divider"></div>
+      <div class="sb-module-label" onclick="toggleModule(this)">
         <span class="sb-module-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="9"/></svg></span>
         <span>Qualidade</span>
         <span class="sb-chevron">›</span>
       </div>
-      <div class="sb-children open">
+      <div class="sb-children">
         <div class="sb-child" data-page="indicadores" onclick="navTo('indicadores')"><span class="sb-child-dot"></span>Indicadores TRS</div>
         <div class="sb-child" data-page="dashboards" onclick="navTo('dashboards')"><span class="sb-child-dot"></span>Dashboards</div>
         <div class="sb-child" data-page="relatorios" onclick="navTo('relatorios')"><span class="sb-child-dot"></span>Relatórios</div>
-      </div>
-      <div class="sb-divider"></div>
-      <div class="sb-item" data-page="planejamento" onclick="navTo('planejamento')">
-        <span class="sb-item-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M7 14l3-3 3 3 4-5"/></svg></span>
-        <span>Plan. Estratégico</span>
       </div>
       <div class="sb-divider"></div>
       <div class="sb-module-label" onclick="toggleModule(this)">
@@ -650,8 +748,8 @@ body{font-family:var(--font-sans);background:var(--navy-deep);color:var(--text);
         <span class="sb-chevron">›</span>
       </div>
       <div class="sb-children">
-        <div class="sb-child" data-page="prontuario" onclick="navTo('prontuario')"><span class="sb-child-dot"></span>Prontuário CKM</div>
         <div class="sb-child" data-page="lista-pacientes" onclick="navTo('lista-pacientes')"><span class="sb-child-dot"></span>Lista de Pacientes</div>
+        <div class="sb-child" data-page="prontuario" onclick="navTo('prontuario')"><span class="sb-child-dot"></span>Prontuário CKM</div>
       </div>
     </nav>
     <div class="sb-footer">
@@ -679,33 +777,155 @@ body{font-family:var(--font-sans);background:var(--navy-deep);color:var(--text);
       <p class="dash-tagline rv">Gestão clínica integrada — indicadores, protocolos, prescrição e acompanhamento de pacientes.</p>
       <div class="dash-section-label rv">Acesso Rápido</div>
       <div class="quick-grid">
-        <div class="quick-card qc-nefro rv" onclick="navTo('indicadores')">
-          <div class="qc-bg"></div><div class="qc-overlay"></div>
-          <span class="qc-badge live"><span class="pulse-d"></span> Ativo</span>
-          <div class="qc-content">
-            <div class="qc-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/></svg></div>
-            <div class="qc-title">Indicadores TRS</div>
-            <div class="qc-desc">Dashboards de qualidade TRS Crônico e Agudo</div>
-          </div>
-        </div>
-        <div class="quick-card qc-pac rv" onclick="navTo('prontuario')">
-          <div class="qc-bg"></div><div class="qc-overlay"></div>
-          <span class="qc-badge live"><span class="pulse-d"></span> Ativo</span>
-          <div class="qc-content">
-            <div class="qc-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="9" cy="7" r="4"/><path d="M2 21v-1a7 7 0 0114 0v1"/></svg></div>
-            <div class="qc-title">Prontuário CKM</div>
-            <div class="qc-desc">Acompanhamento individual e prescrição digital</div>
-          </div>
-        </div>
         <div class="quick-card qc-plan rv" onclick="navTo('planejamento')">
           <div class="qc-bg"></div><div class="qc-overlay"></div>
           <span class="qc-badge live"><span class="pulse-d"></span> Ativo</span>
           <div class="qc-content">
             <div class="qc-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M7 14l3-3 3 3 4-5"/></svg></div>
-            <div class="qc-title">Plan. Estratégico</div>
-            <div class="qc-desc">Metas, indicadores e planejamento do serviço</div>
+            <div class="qc-title">Gestão</div>
+            <div class="qc-desc">Planejamento estratégico, metas e projetos do serviço</div>
           </div>
         </div>
+        <div class="quick-card qc-nefro rv" onclick="navTo('indicadores')">
+          <div class="qc-bg"></div><div class="qc-overlay"></div>
+          <span class="qc-badge live"><span class="pulse-d"></span> Ativo</span>
+          <div class="qc-content">
+            <div class="qc-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="9"/></svg></div>
+            <div class="qc-title">Qualidade</div>
+            <div class="qc-desc">Indicadores TRS, dashboards e relatórios gerenciais</div>
+          </div>
+        </div>
+        <div class="quick-card qc-pac rv" onclick="navTo('lista-pacientes')">
+          <div class="qc-bg"></div><div class="qc-overlay"></div>
+          <span class="qc-badge live"><span class="pulse-d"></span> Ativo</span>
+          <div class="qc-content">
+            <div class="qc-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="9" cy="7" r="4"/><path d="M2 21v-1a7 7 0 0114 0v1"/><path d="M19 8v6M22 11h-6"/></svg></div>
+            <div class="qc-title">Pacientes</div>
+            <div class="qc-desc">Prontuário CKM, acompanhamento e prescrição digital</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PAGE: MINHA AGENDA -->
+    <div class="content-page" id="page-agenda">
+      <p class="page-eyebrow rv">Planejamento</p>
+      <h2 class="page-title rv">Minha <strong>Agenda</strong></h2>
+      <p class="page-desc rv">Visão consolidada de todas as etapas dos seus projetos, distribuídas ao longo do tempo.</p>
+
+      <!-- Timeline por mês -->
+      <div class="agenda-timeline rv">
+
+        <!-- MAIO 2026 — CONCLUÍDO -->
+        <div class="agenda-month">
+          <div class="agenda-month-header">
+            <div class="agenda-month-dot" style="background:var(--teal);"></div>
+            <div class="agenda-month-label">Maio 2026</div>
+            <span class="agenda-month-badge" style="background:rgba(2,128,144,0.08);color:var(--teal);">Em Andamento</span>
+          </div>
+          <div class="agenda-items">
+            <div class="agenda-item done"><div class="agenda-item-check done"></div><div class="agenda-item-content"><div class="agenda-item-title">Sidebar reorganizada em 3 módulos</div><div class="agenda-item-proj">APEX Pro</div></div></div>
+            <div class="agenda-item done"><div class="agenda-item-check done"></div><div class="agenda-item-content"><div class="agenda-item-title">CRUD pacientes + editar/excluir</div><div class="agenda-item-proj">APEX Pro</div></div></div>
+            <div class="agenda-item done"><div class="agenda-item-check done"></div><div class="agenda-item-content"><div class="agenda-item-title">Prontuário CKM: Hidratação, Bioimpedância, Tabagismo</div><div class="agenda-item-proj">APEX Pro</div></div></div>
+            <div class="agenda-item done"><div class="agenda-item-check done"></div><div class="agenda-item-content"><div class="agenda-item-title">Logo AX integrado (sidebar + login)</div><div class="agenda-item-proj">APEX Pro</div></div></div>
+            <div class="agenda-item done"><div class="agenda-item-check done"></div><div class="agenda-item-content"><div class="agenda-item-title">Plan. Estratégico com seletor de organizações</div><div class="agenda-item-proj">APEX Pro</div></div></div>
+            <div class="agenda-item done"><div class="agenda-item-check done"></div><div class="agenda-item-content"><div class="agenda-item-title">Estrutura OKR implementada nos projetos</div><div class="agenda-item-proj">APEX Pro</div></div></div>
+            <div class="agenda-item done"><div class="agenda-item-check done"></div><div class="agenda-item-content"><div class="agenda-item-title">Landing page v1 deployada</div><div class="agenda-item-proj">APEX Landing</div></div></div>
+            <div class="agenda-item done"><div class="agenda-item-check done"></div><div class="agenda-item-content"><div class="agenda-item-title">3 artigos Insights publicados</div><div class="agenda-item-proj">APEX Insights</div></div></div>
+          </div>
+        </div>
+
+        <!-- JUNHO 2026 -->
+        <div class="agenda-month">
+          <div class="agenda-month-header">
+            <div class="agenda-month-dot" style="background:var(--gold);"></div>
+            <div class="agenda-month-label">Junho 2026</div>
+            <span class="agenda-month-badge" style="background:rgba(196,163,90,0.08);color:var(--gold);">Próximo</span>
+          </div>
+          <div class="agenda-items">
+            <div class="agenda-item"><div class="agenda-item-check"></div><div class="agenda-item-content"><div class="agenda-item-title">Refatorar: CSS/JS em arquivos separados</div><div class="agenda-item-proj">APEX Pro</div></div></div>
+            <div class="agenda-item"><div class="agenda-item-check"></div><div class="agenda-item-content"><div class="agenda-item-title">Estratégia Instagram: 3 posts/semana</div><div class="agenda-item-proj">APEX Landing</div></div></div>
+            <div class="agenda-item"><div class="agenda-item-check"></div><div class="agenda-item-content"><div class="agenda-item-title">Integrar Google Analytics + Meta Pixel</div><div class="agenda-item-proj">APEX Landing</div></div></div>
+            <div class="agenda-item"><div class="agenda-item-check"></div><div class="agenda-item-content"><div class="agenda-item-title">Mapear temas prioritários IEP</div><div class="agenda-item-proj">Fenix IEP</div></div></div>
+            <div class="agenda-item"><div class="agenda-item-check"></div><div class="agenda-item-content"><div class="agenda-item-title">Levantar processos da unidade RL</div><div class="agenda-item-proj">Fenix Diálise</div></div></div>
+            <div class="agenda-item"><div class="agenda-item-check"></div><div class="agenda-item-content"><div class="agenda-item-title">Consolidar dados financeiros RL (12m)</div><div class="agenda-item-proj">Fenix Diálise</div></div></div>
+          </div>
+        </div>
+
+        <!-- JULHO 2026 -->
+        <div class="agenda-month">
+          <div class="agenda-month-header">
+            <div class="agenda-month-dot" style="background:var(--text-3);"></div>
+            <div class="agenda-month-label">Julho 2026</div>
+          </div>
+          <div class="agenda-items">
+            <div class="agenda-item"><div class="agenda-item-check"></div><div class="agenda-item-content"><div class="agenda-item-title">Auth com roles (admin/médico/equipe)</div><div class="agenda-item-proj">APEX Pro</div></div></div>
+            <div class="agenda-item"><div class="agenda-item-check"></div><div class="agenda-item-content"><div class="agenda-item-title">Selecionar plataforma LMS</div><div class="agenda-item-proj">Fenix IEP</div></div></div>
+            <div class="agenda-item"><div class="agenda-item-check"></div><div class="agenda-item-content"><div class="agenda-item-title">Mapear gaps entre unidades</div><div class="agenda-item-proj">Fenix Diálise</div></div></div>
+            <div class="agenda-item"><div class="agenda-item-check"></div><div class="agenda-item-content"><div class="agenda-item-title">Escrever artigo: DRC e Qualidade de Vida</div><div class="agenda-item-proj">APEX Insights</div></div></div>
+          </div>
+        </div>
+
+        <!-- AGOSTO 2026 -->
+        <div class="agenda-month">
+          <div class="agenda-month-header">
+            <div class="agenda-month-dot" style="background:var(--text-3);"></div>
+            <div class="agenda-month-label">Agosto 2026</div>
+          </div>
+          <div class="agenda-items">
+            <div class="agenda-item"><div class="agenda-item-check"></div><div class="agenda-item-content"><div class="agenda-item-title">Gráficos de evolução temporal (Chart.js)</div><div class="agenda-item-proj">APEX Pro</div></div></div>
+            <div class="agenda-item"><div class="agenda-item-check"></div><div class="agenda-item-content"><div class="agenda-item-title">Gravar módulo piloto: DRC e CKM</div><div class="agenda-item-proj">Fenix IEP</div></div></div>
+            <div class="agenda-item"><div class="agenda-item-check"></div><div class="agenda-item-content"><div class="agenda-item-title">Redigir manual operacional v1</div><div class="agenda-item-proj">Fenix Diálise</div></div></div>
+            <div class="agenda-item"><div class="agenda-item-check"></div><div class="agenda-item-content"><div class="agenda-item-title">Modelar cenários de expansão financeira</div><div class="agenda-item-proj">Fenix Diálise</div></div></div>
+          </div>
+        </div>
+
+        <!-- SETEMBRO 2026 -->
+        <div class="agenda-month">
+          <div class="agenda-month-header">
+            <div class="agenda-month-dot" style="background:var(--text-3);"></div>
+            <div class="agenda-month-label">Setembro 2026</div>
+          </div>
+          <div class="agenda-items">
+            <div class="agenda-item"><div class="agenda-item-check"></div><div class="agenda-item-content"><div class="agenda-item-title">PDF automático mensal de indicadores</div><div class="agenda-item-proj">APEX Pro</div></div></div>
+            <div class="agenda-item"><div class="agenda-item-check"></div><div class="agenda-item-content"><div class="agenda-item-title">Lançar inscrições 1º ciclo IEP</div><div class="agenda-item-proj">Fenix IEP</div></div></div>
+            <div class="agenda-item"><div class="agenda-item-check"></div><div class="agenda-item-content"><div class="agenda-item-title">Submeter ao CEP institucional</div><div class="agenda-item-proj">Fenix IEP</div></div></div>
+            <div class="agenda-item"><div class="agenda-item-check"></div><div class="agenda-item-content"><div class="agenda-item-title">Criar dashboard financeiro no Pro</div><div class="agenda-item-proj">Fenix Diálise</div></div></div>
+            <div class="agenda-item"><div class="agenda-item-check"></div><div class="agenda-item-content"><div class="agenda-item-title">Definir escopo MVP app do paciente</div><div class="agenda-item-proj">APEX App</div></div></div>
+          </div>
+        </div>
+
+        <!-- OUT-DEZ 2026 -->
+        <div class="agenda-month">
+          <div class="agenda-month-header">
+            <div class="agenda-month-dot" style="background:var(--text-3);"></div>
+            <div class="agenda-month-label">Outubro — Dezembro 2026</div>
+          </div>
+          <div class="agenda-items">
+            <div class="agenda-item"><div class="agenda-item-check"></div><div class="agenda-item-content"><div class="agenda-item-title">Prototipar assessor virtual (prompt + knowledge base)</div><div class="agenda-item-proj">APEX App</div></div></div>
+            <div class="agenda-item"><div class="agenda-item-check"></div><div class="agenda-item-content"><div class="agenda-item-title">Treinar assessor com protocolos CKM + plano</div><div class="agenda-item-proj">APEX App</div></div></div>
+            <div class="agenda-item"><div class="agenda-item-check"></div><div class="agenda-item-content"><div class="agenda-item-title">Integração WhatsApp (lembretes + plano)</div><div class="agenda-item-proj">APEX Pro</div></div></div>
+            <div class="agenda-item"><div class="agenda-item-check"></div><div class="agenda-item-content"><div class="agenda-item-title">Teste piloto na unidade Santos</div><div class="agenda-item-proj">Fenix Diálise</div></div></div>
+            <div class="agenda-item"><div class="agenda-item-check"></div><div class="agenda-item-content"><div class="agenda-item-title">Redigir e submeter primeiro artigo</div><div class="agenda-item-proj">Fenix IEP</div></div></div>
+            <div class="agenda-item"><div class="agenda-item-check"></div><div class="agenda-item-content"><div class="agenda-item-title">Beta fechado assessor com 5 pacientes</div><div class="agenda-item-proj">APEX App</div></div></div>
+          </div>
+        </div>
+
+        <!-- Q1-Q2 2027 -->
+        <div class="agenda-month">
+          <div class="agenda-month-header">
+            <div class="agenda-month-dot" style="background:var(--ckm-purple);"></div>
+            <div class="agenda-month-label">Q1 — Q2 2027</div>
+            <span class="agenda-month-badge" style="background:rgba(83,74,183,0.08);color:var(--ckm-purple);">Horizonte</span>
+          </div>
+          <div class="agenda-items">
+            <div class="agenda-item"><div class="agenda-item-check"></div><div class="agenda-item-content"><div class="agenda-item-title">App APEX Patient (PWA) — MVP</div><div class="agenda-item-proj">APEX App</div></div></div>
+            <div class="agenda-item"><div class="agenda-item-check"></div><div class="agenda-item-content"><div class="agenda-item-title">Assessor virtual via WhatsApp Business API</div><div class="agenda-item-proj">APEX App</div></div></div>
+            <div class="agenda-item"><div class="agenda-item-check"></div><div class="agenda-item-content"><div class="agenda-item-title">Onboarding self-service + billing</div><div class="agenda-item-proj">APEX Pro</div></div></div>
+            <div class="agenda-item"><div class="agenda-item-check"></div><div class="agenda-item-content"><div class="agenda-item-title">Multi-tenant + RLS por clínica</div><div class="agenda-item-proj">APEX Pro</div></div></div>
+          </div>
+        </div>
+
       </div>
     </div>
 
@@ -819,24 +1039,163 @@ body{font-family:var(--font-sans);background:var(--navy-deep);color:var(--text);
     <!-- PAGE: DASHBOARDS -->
     <div class="content-page" id="page-dashboards">
       <p class="page-eyebrow rv">Qualidade</p>
-      <h2 class="page-title rv"><strong>Dashboards</strong></h2>
-      <div class="empty-state rv">
-        <div class="empty-icon"><svg width="80" height="80" viewBox="0 0 80 80" fill="none"><rect x="8" y="8" width="64" height="64" rx="16" fill="rgba(30,45,80,0.04)" stroke="var(--border)" stroke-width="1.5"/><rect x="18" y="24" width="20" height="32" rx="4" fill="rgba(2,128,144,0.06)" stroke="rgba(2,128,144,0.2)" stroke-width="1"/><rect x="42" y="18" width="20" height="38" rx="4" fill="rgba(30,45,80,0.06)" stroke="rgba(30,45,80,0.15)" stroke-width="1"/></svg></div>
-        <div class="empty-badge"><span class="dot"></span> Em Desenvolvimento</div>
-        <div class="empty-title">Dashboards Consolidados</div>
-        <div class="empty-desc">Painéis visuais com indicadores agregados, tendências históricas e comparativos entre unidades estarão disponíveis aqui em breve.</div>
+      <h2 class="page-title rv">Dashboards <strong>Consolidados</strong></h2>
+      <p class="page-desc rv">Visão integrada dos indicadores TRS Agudo e Crônico — Mont Serrat e rede de clínicas.</p>
+
+      <!-- TRS AGUDO — RESUMO TRIMESTRAL -->
+      <div class="pe-section rv">
+        <div class="pe-section-label">TRS Agudo — Mont Serrat (Fev–Abr/2026)</div>
+        <div class="pe-kpi-grid" style="grid-template-columns:repeat(4,1fr);">
+          <div class="pe-kpi-card">
+            <div class="pe-kpi-value" style="color:var(--teal);">37</div>
+            <div class="pe-kpi-label">Pacientes Atendidos</div>
+            <div class="pe-kpi-trend up">+375% <span>Fev→Abr</span></div>
+          </div>
+          <div class="pe-kpi-card">
+            <div class="pe-kpi-value" style="color:var(--navy);">159</div>
+            <div class="pe-kpi-label">Sessões Realizadas</div>
+            <div class="pe-kpi-trend up">+550% <span>Fev→Abr</span></div>
+          </div>
+          <div class="pe-kpi-card">
+            <div class="pe-kpi-value" style="color:var(--gold);">46</div>
+            <div class="pe-kpi-label">Intercorrências</div>
+            <div class="pe-kpi-trend neutral">monitorar <span>crescimento</span></div>
+          </div>
+          <div class="pe-kpi-card">
+            <div class="pe-kpi-value" style="color:var(--green);">91</div>
+            <div class="pe-kpi-label">Acessos Vasculares</div>
+            <div class="pe-kpi-trend stable">CDL 63% <span>predominante</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- COMPARATIVO MENSAL AGUDO -->
+      <div class="pe-section rv">
+        <div class="pe-section-label">Evolução Mensal — TRS Agudo</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;">
+          <!-- FEV -->
+          <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:24px;box-shadow:var(--shadow-card);">
+            <div style="font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--text-3);margin-bottom:12px;">Fevereiro/2026</div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+              <div><div style="font-family:var(--font-serif);font-size:28px;color:var(--navy);">4</div><div style="font-size:10px;color:var(--text-3);">Pacientes</div></div>
+              <div><div style="font-family:var(--font-serif);font-size:28px;color:var(--teal);">14</div><div style="font-size:10px;color:var(--text-3);">Sessões</div></div>
+            </div>
+            <div style="margin-top:12px;font-size:11px;color:var(--text-2);line-height:1.7;">
+              <strong>Modalidades:</strong> HD 14<br>
+              <strong>ICs:</strong> 1
+            </div>
+          </div>
+          <!-- MAR -->
+          <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:24px;box-shadow:var(--shadow-card);">
+            <div style="font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--text-3);margin-bottom:12px;">Março/2026</div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+              <div><div style="font-family:var(--font-serif);font-size:28px;color:var(--navy);">14</div><div style="font-size:10px;color:var(--text-3);">Pacientes</div></div>
+              <div><div style="font-family:var(--font-serif);font-size:28px;color:var(--teal);">54</div><div style="font-size:10px;color:var(--text-3);">Sessões</div></div>
+            </div>
+            <div style="margin-top:12px;font-size:11px;color:var(--text-2);line-height:1.7;">
+              <strong>Modalidades:</strong> HD 52, SLED 2<br>
+              <strong>ICs:</strong> 7
+            </div>
+          </div>
+          <!-- ABR -->
+          <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:24px;box-shadow:var(--shadow-card);border-left:3px solid var(--gold);">
+            <div style="font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:12px;">Abril/2026 — Atual</div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+              <div><div style="font-family:var(--font-serif);font-size:28px;color:var(--navy);">19</div><div style="font-size:10px;color:var(--text-3);">Pacientes</div></div>
+              <div><div style="font-family:var(--font-serif);font-size:28px;color:var(--teal);">91</div><div style="font-size:10px;color:var(--text-3);">Sessões</div></div>
+            </div>
+            <div style="margin-top:12px;font-size:11px;color:var(--text-2);line-height:1.7;">
+              <strong>Modalidades:</strong> HD 80, SLED 6, Plasmaférese 5<br>
+              <strong>ICs:</strong> 38 (13 tipos)<br>
+              <strong>Acessos:</strong> CDL 57, FAV 22, Permcath 12
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TRS CRÔNICO — REDE -->
+      <div class="pe-section rv">
+        <div class="pe-section-label">TRS Crônico — Rede de Clínicas</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;">
+          <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:24px;box-shadow:var(--shadow-card);text-align:center;">
+            <div style="font-size:10px;font-weight:700;color:var(--text-3);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;">República do Líbano</div>
+            <div style="font-family:var(--font-serif);font-size:32px;color:var(--navy);margin-bottom:4px;">—</div>
+            <div style="font-size:10px;color:var(--text-3);">Aguardando lançamento</div>
+            <div style="margin-top:12px;"><span style="font-size:9px;font-weight:600;padding:3px 10px;border-radius:6px;background:rgba(245,158,11,0.08);color:#F59E0B;border:1px solid rgba(245,158,11,0.2);">Pendente</span></div>
+          </div>
+          <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:24px;box-shadow:var(--shadow-card);text-align:center;">
+            <div style="font-size:10px;font-weight:700;color:var(--text-3);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;">Santos</div>
+            <div style="font-family:var(--font-serif);font-size:32px;color:var(--navy);margin-bottom:4px;">—</div>
+            <div style="font-size:10px;color:var(--text-3);">Aguardando lançamento</div>
+            <div style="margin-top:12px;"><span style="font-size:9px;font-weight:600;padding:3px 10px;border-radius:6px;background:rgba(245,158,11,0.08);color:#F59E0B;border:1px solid rgba(245,158,11,0.2);">Pendente</span></div>
+          </div>
+          <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:24px;box-shadow:var(--shadow-card);text-align:center;">
+            <div style="font-size:10px;font-weight:700;color:var(--text-3);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;">Tatuapé</div>
+            <div style="font-family:var(--font-serif);font-size:32px;color:var(--navy);margin-bottom:4px;">—</div>
+            <div style="font-size:10px;color:var(--text-3);">Aguardando lançamento</div>
+            <div style="margin-top:12px;"><span style="font-size:9px;font-weight:600;padding:3px 10px;border-radius:6px;background:rgba(245,158,11,0.08);color:#F59E0B;border:1px solid rgba(245,158,11,0.2);">Pendente</span></div>
+          </div>
+        </div>
       </div>
     </div>
 
     <!-- PAGE: RELATÓRIOS -->
     <div class="content-page" id="page-relatorios">
       <p class="page-eyebrow rv">Qualidade</p>
-      <h2 class="page-title rv"><strong>Relatórios</strong></h2>
-      <div class="empty-state rv">
-        <div class="empty-icon"><svg width="80" height="80" viewBox="0 0 80 80" fill="none"><rect x="8" y="8" width="64" height="64" rx="16" fill="rgba(30,45,80,0.04)" stroke="var(--border)" stroke-width="1.5"/><rect x="20" y="22" width="40" height="4" rx="2" fill="rgba(30,45,80,0.12)"/><rect x="20" y="32" width="28" height="4" rx="2" fill="rgba(30,45,80,0.08)"/><rect x="20" y="42" width="34" height="4" rx="2" fill="rgba(30,45,80,0.08)"/><circle cx="56" cy="52" r="12" fill="rgba(196,163,90,0.08)" stroke="var(--gold)" stroke-width="1.5"/><path d="M52 52l3 3 5-6" stroke="var(--gold)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-        <div class="empty-badge"><span class="dot"></span> Em Desenvolvimento</div>
-        <div class="empty-title">Relatórios Gerenciais</div>
-        <div class="empty-desc">Relatórios em PDF para reuniões com diretoria, planos de saúde e auditorias de qualidade assistencial.</div>
+      <h2 class="page-title rv"><strong>Relatórios</strong> Gerenciais</h2>
+      <p class="page-desc rv">Relatórios em PDF para reuniões com diretoria, planos de saúde e auditorias de qualidade assistencial.</p>
+
+      <div class="pe-section rv">
+        <div class="pe-section-label">Relatórios Disponíveis</div>
+        <div class="pe-proj-list">
+          <div class="pe-proj-card" style="cursor:pointer;" onclick="window.open('https://www.apex.med.br/Dashboard_TRS_Abril_2026_print.html','_blank')">
+            <div class="pe-proj-num" style="background:var(--teal);color:#fff;">PDF</div>
+            <div class="pe-proj-info">
+              <div class="pe-proj-name">Dashboard TRS Agudo — Abril/2026</div>
+              <div class="pe-proj-detail">3 páginas landscape A4 — KPIs, modalidades, acessos vasculares e intercorrências do Mont Serrat.</div>
+            </div>
+            <div style="text-align:right;">
+              <span class="pe-proj-status st-concl">Gerado</span>
+              <div class="pe-proj-date">08/05/2026</div>
+            </div>
+          </div>
+
+          <div class="pe-proj-card" style="opacity:0.6;">
+            <div class="pe-proj-num" style="background:var(--navy);color:#fff;">PDF</div>
+            <div class="pe-proj-info">
+              <div class="pe-proj-name">Comparativo Trimestral TRS Agudo</div>
+              <div class="pe-proj-detail">Fev–Abr/2026 — evolução de pacientes, sessões, modalidades e intercorrências.</div>
+            </div>
+            <div style="text-align:right;">
+              <span class="pe-proj-status st-plan">Planejado</span>
+              <div class="pe-proj-date">Próxima geração</div>
+            </div>
+          </div>
+
+          <div class="pe-proj-card" style="opacity:0.6;">
+            <div class="pe-proj-num" style="background:var(--gold);color:var(--navy-deep);">PDF</div>
+            <div class="pe-proj-info">
+              <div class="pe-proj-name">Relatório TRS Crônico — Rede</div>
+              <div class="pe-proj-detail">Indicadores consolidados das unidades RL, Santos e Tatuapé — mensal.</div>
+            </div>
+            <div style="text-align:right;">
+              <span class="pe-proj-status st-pausa">Aguardando</span>
+              <div class="pe-proj-date">Dep: dados</div>
+            </div>
+          </div>
+
+          <div class="pe-proj-card" style="opacity:0.6;">
+            <div class="pe-proj-num" style="background:rgba(30,45,80,0.08);color:var(--text-3);">PDF</div>
+            <div class="pe-proj-info">
+              <div class="pe-proj-name">Relatório por Plano de Saúde</div>
+              <div class="pe-proj-detail">Indicadores segmentados por operadora — para reuniões com gestores de saúde.</div>
+            </div>
+            <div style="text-align:right;">
+              <span class="pe-proj-status st-plan">Planejado</span>
+              <div class="pe-proj-date">Q3/2026</div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -844,7 +1203,240 @@ body{font-family:var(--font-sans);background:var(--navy-deep);color:var(--text);
     <div class="content-page" id="page-planejamento">
       <p class="page-eyebrow rv">Gestão</p>
       <h2 class="page-title rv">Planejamento <strong>Estratégico</strong></h2>
-      <p class="page-desc rv">Diretrizes, metas e projetos estratégicos da Fenix Nefrologia.</p>
+      <p class="page-desc rv" id="pe-subtitle">Selecione uma organização para acessar suas diretrizes, metas e projetos.</p>
+
+      <!-- VIEW: SELETOR DE ORGANIZAÇÃO -->
+      <div class="pe-view active" id="pe-view-orgs">
+        <div class="pe-section rv">
+          <div class="pe-section-label">Organizações</div>
+          <div class="pe-org-grid">
+            <!-- APEX -->
+            <div class="pe-org-card rv" onclick="peSelectOrg('apex')">
+              <div class="pe-org-icon" style="background:linear-gradient(135deg,var(--navy),var(--navy-mid));color:var(--gold);">AX</div>
+              <div class="pe-org-name">APEX Health</div>
+              <div class="pe-org-desc">Ecossistema digital de saúde — plataforma profissional, app do paciente, conteúdo educativo e integrações.</div>
+              <div class="pe-org-projects">
+                <span class="pe-org-proj-tag" style="background:rgba(2,128,144,0.08);color:var(--teal);border:1px solid rgba(2,128,144,0.2);">Pro</span>
+                <span class="pe-org-proj-tag" style="background:rgba(30,45,80,0.06);color:var(--navy);border:1px solid rgba(30,45,80,0.15);">App</span>
+                <span class="pe-org-proj-tag" style="background:rgba(196,163,90,0.08);color:var(--gold);border:1px solid var(--gold-border);">Insights</span>
+                <span class="pe-org-proj-tag" style="background:rgba(91,158,80,0.08);color:var(--green);border:1px solid rgba(91,158,80,0.2);">Landing</span>
+              </div>
+            </div>
+            <!-- FENIX -->
+            <div class="pe-org-card rv" onclick="peSelectOrg('fenix')">
+              <div class="pe-org-icon" style="background:linear-gradient(135deg,#085041,var(--ckm-teal));color:#fff;">FN</div>
+              <div class="pe-org-name">Fenix Nefrologia</div>
+              <div class="pe-org-desc">Clínica de nefrologia — projetos de ensino, pesquisa e modelo de clínica de diálise replicável.</div>
+              <div class="pe-org-projects">
+                <span class="pe-org-proj-tag" style="background:rgba(83,74,183,0.08);color:var(--ckm-purple);border:1px solid rgba(83,74,183,0.2);">IEP</span>
+                <span class="pe-org-proj-tag" style="background:rgba(216,90,48,0.08);color:var(--ckm-orange);border:1px solid rgba(216,90,48,0.2);">Clín. Diálise</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- VIEW: FENIX — SELETOR DE PROJETOS -->
+      <div class="pe-view" id="pe-view-fenix">
+        <div class="pe-breadcrumb-bar">
+          <button class="pe-bc-link" onclick="peBackToOrgs()">Organizações</button>
+          <span class="pe-bc-sep">›</span>
+          <span class="pe-bc-current">Fenix Nefrologia</span>
+        </div>
+        <div class="pe-section rv">
+          <div class="pe-section-label" style="display:flex;align-items:center;justify-content:space-between;">
+            Projetos — Fenix Nefrologia
+            <button class="pe-add-btn" onclick="abrirModalNovoProjeto('fenix')" title="Novo Projeto">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+              Novo Projeto
+            </button>
+          </div>
+          <div class="pe-sub-list" id="pe-sub-list-fenix">
+            <div class="pe-sub-card rv" onclick="peSelectProject('fenix-iep')">
+              <div class="pe-sub-icon" style="background:rgba(83,74,183,0.1);color:var(--ckm-purple);">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg>
+              </div>
+              <div class="pe-sub-name">IEP — Instituto de Ensino e Pesquisa</div>
+              <div class="pe-sub-desc">Educação continuada, publicações científicas, residência e fellowship em nefrologia.</div>
+              <span class="pe-sub-status" style="background:rgba(245,158,11,0.08);color:#F59E0B;border:1px solid rgba(245,158,11,0.2);">Em Estruturação</span>
+            </div>
+            <div class="pe-sub-card rv" onclick="peSelectProject('fenix-modelo')">
+              <div class="pe-sub-icon" style="background:rgba(216,90,48,0.1);color:var(--ckm-orange);">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+              </div>
+              <div class="pe-sub-name">Clínica Diálise Replicável</div>
+              <div class="pe-sub-desc">Estruturação do modelo de clínica de diálise replicável — protocolos, fluxos, indicadores e gestão operacional.</div>
+              <span class="pe-sub-status" style="background:rgba(245,158,11,0.08);color:#F59E0B;border:1px solid rgba(245,158,11,0.2);">Em Estruturação</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- VIEW: FENIX > IEP (OKR) -->
+      <div class="pe-view" id="pe-view-fenix-iep">
+        <div class="pe-breadcrumb-bar">
+          <button class="pe-bc-link" onclick="peBackToOrgs()">Organizações</button>
+          <span class="pe-bc-sep">›</span>
+          <button class="pe-bc-link" onclick="peSelectOrg('fenix')">Fenix Nefrologia</button>
+          <span class="pe-bc-sep">›</span>
+          <span class="pe-bc-current">IEP</span>
+        </div>
+
+        <div class="pe-section rv" style="margin-top:16px;">
+          <div class="pe-section-label">OKRs — Instituto de Ensino e Pesquisa</div>
+
+          <!-- OKR 1 -->
+          <div class="okr-obj rv">
+            <div class="okr-obj-header">
+              <span class="okr-obj-badge" style="background:rgba(83,74,183,0.08);color:var(--ckm-purple);">O1</span>
+              <span class="okr-obj-title">Estruturar programa de educação continuada em nefrologia</span>
+            </div>
+            <div class="okr-kr-list">
+              <div class="okr-kr">
+                <span class="okr-kr-num">KR1</span>
+                <span class="okr-kr-text">Definir grade curricular com 12 módulos temáticos</span>
+                <div class="okr-kr-bar"><div class="okr-kr-fill" style="width:0%;background:var(--ckm-purple);"></div></div>
+                <span class="okr-kr-pct">0%</span>
+              </div>
+              <div class="okr-kr">
+                <span class="okr-kr-num">KR2</span>
+                <span class="okr-kr-text">Produzir 4 aulas gravadas por trimestre</span>
+                <div class="okr-kr-bar"><div class="okr-kr-fill" style="width:0%;background:var(--ckm-purple);"></div></div>
+                <span class="okr-kr-pct">0%</span>
+              </div>
+              <div class="okr-kr">
+                <span class="okr-kr-num">KR3</span>
+                <span class="okr-kr-text">Alcançar 50 profissionais inscritos no primeiro ciclo</span>
+                <div class="okr-kr-bar"><div class="okr-kr-fill" style="width:0%;background:var(--ckm-purple);"></div></div>
+                <span class="okr-kr-pct">0%</span>
+              </div>
+            </div>
+            <div class="okr-init-label">Iniciativas</div>
+            <div class="okr-init-list">
+              <div class="okr-init"><div class="okr-init-check" onclick="this.classList.toggle('done');this.nextElementSibling.classList.toggle('done')"></div><span class="okr-init-text">Mapear temas prioritários com equipe clínica</span><span class="okr-init-date">Jun 2026</span></div>
+              <div class="okr-init"><div class="okr-init-check" onclick="this.classList.toggle('done');this.nextElementSibling.classList.toggle('done')"></div><span class="okr-init-text">Selecionar plataforma de hospedagem (LMS)</span><span class="okr-init-date">Jul 2026</span></div>
+              <div class="okr-init"><div class="okr-init-check" onclick="this.classList.toggle('done');this.nextElementSibling.classList.toggle('done')"></div><span class="okr-init-text">Gravar módulo piloto: DRC e Estadiamento CKM</span><span class="okr-init-date">Ago 2026</span></div>
+              <div class="okr-init"><div class="okr-init-check" onclick="this.classList.toggle('done');this.nextElementSibling.classList.toggle('done')"></div><span class="okr-init-text">Lançar inscrições para primeiro ciclo</span><span class="okr-init-date">Set 2026</span></div>
+            </div>
+          </div>
+
+          <!-- OKR 2 -->
+          <div class="okr-obj rv">
+            <div class="okr-obj-header">
+              <span class="okr-obj-badge" style="background:rgba(83,74,183,0.08);color:var(--ckm-purple);">O2</span>
+              <span class="okr-obj-title">Iniciar produção científica institucional</span>
+            </div>
+            <div class="okr-kr-list">
+              <div class="okr-kr">
+                <span class="okr-kr-num">KR1</span>
+                <span class="okr-kr-text">Submeter 2 artigos originais até dezembro/2026</span>
+                <div class="okr-kr-bar"><div class="okr-kr-fill" style="width:0%;background:var(--ckm-purple);"></div></div>
+                <span class="okr-kr-pct">0%</span>
+              </div>
+              <div class="okr-kr">
+                <span class="okr-kr-num">KR2</span>
+                <span class="okr-kr-text">Apresentar 3 trabalhos em congresso nacional</span>
+                <div class="okr-kr-bar"><div class="okr-kr-fill" style="width:0%;background:var(--ckm-purple);"></div></div>
+                <span class="okr-kr-pct">0%</span>
+              </div>
+            </div>
+            <div class="okr-init-label">Iniciativas</div>
+            <div class="okr-init-list">
+              <div class="okr-init"><div class="okr-init-check" onclick="this.classList.toggle('done');this.nextElementSibling.classList.toggle('done')"></div><span class="okr-init-text">Definir linhas de pesquisa prioritárias</span><span class="okr-init-date">Jun 2026</span></div>
+              <div class="okr-init"><div class="okr-init-check" onclick="this.classList.toggle('done');this.nextElementSibling.classList.toggle('done')"></div><span class="okr-init-text">Montar banco de dados retrospectivo (TRS + CKM)</span><span class="okr-init-date">Jul-Ago 2026</span></div>
+              <div class="okr-init"><div class="okr-init-check" onclick="this.classList.toggle('done');this.nextElementSibling.classList.toggle('done')"></div><span class="okr-init-text">Submeter ao CEP institucional</span><span class="okr-init-date">Set 2026</span></div>
+              <div class="okr-init"><div class="okr-init-check" onclick="this.classList.toggle('done');this.nextElementSibling.classList.toggle('done')"></div><span class="okr-init-text">Redigir e submeter primeiro artigo</span><span class="okr-init-date">Nov 2026</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- VIEW: FENIX > CLÍNICA DIÁLISE REPLICÁVEL (OKR) -->
+      <div class="pe-view" id="pe-view-fenix-modelo">
+        <div class="pe-breadcrumb-bar">
+          <button class="pe-bc-link" onclick="peBackToOrgs()">Organizações</button>
+          <span class="pe-bc-sep">›</span>
+          <button class="pe-bc-link" onclick="peSelectOrg('fenix')">Fenix Nefrologia</button>
+          <span class="pe-bc-sep">›</span>
+          <span class="pe-bc-current">Clínica Diálise Replicável</span>
+        </div>
+
+        <div class="pe-section rv" style="margin-top:16px;">
+          <div class="pe-section-label">OKRs — Clínica Diálise Replicável</div>
+
+          <!-- OKR 1 -->
+          <div class="okr-obj rv">
+            <div class="okr-obj-header">
+              <span class="okr-obj-badge" style="background:rgba(216,90,48,0.08);color:var(--ckm-orange);">O1</span>
+              <span class="okr-obj-title">Padronizar protocolos operacionais para replicação</span>
+            </div>
+            <div class="okr-kr-list">
+              <div class="okr-kr">
+                <span class="okr-kr-num">KR1</span>
+                <span class="okr-kr-text">Documentar 100% dos protocolos clínicos da unidade-modelo (RL)</span>
+                <div class="okr-kr-bar"><div class="okr-kr-fill" style="width:0%;background:var(--ckm-orange);"></div></div>
+                <span class="okr-kr-pct">0%</span>
+              </div>
+              <div class="okr-kr">
+                <span class="okr-kr-num">KR2</span>
+                <span class="okr-kr-text">Criar manual operacional com fluxos, checklists e indicadores</span>
+                <div class="okr-kr-bar"><div class="okr-kr-fill" style="width:0%;background:var(--ckm-orange);"></div></div>
+                <span class="okr-kr-pct">0%</span>
+              </div>
+              <div class="okr-kr">
+                <span class="okr-kr-num">KR3</span>
+                <span class="okr-kr-text">Validar modelo em 1 unidade piloto (Santos ou Tatuapé)</span>
+                <div class="okr-kr-bar"><div class="okr-kr-fill" style="width:0%;background:var(--ckm-orange);"></div></div>
+                <span class="okr-kr-pct">0%</span>
+              </div>
+            </div>
+            <div class="okr-init-label">Iniciativas</div>
+            <div class="okr-init-list">
+              <div class="okr-init"><div class="okr-init-check" onclick="this.classList.toggle('done');this.nextElementSibling.classList.toggle('done')"></div><span class="okr-init-text">Levantar todos os processos atuais da unidade RL</span><span class="okr-init-date">Jun 2026</span></div>
+              <div class="okr-init"><div class="okr-init-check" onclick="this.classList.toggle('done');this.nextElementSibling.classList.toggle('done')"></div><span class="okr-init-text">Mapear gaps entre unidades (RL vs Santos vs Tatuapé)</span><span class="okr-init-date">Jul 2026</span></div>
+              <div class="okr-init"><div class="okr-init-check" onclick="this.classList.toggle('done');this.nextElementSibling.classList.toggle('done')"></div><span class="okr-init-text">Redigir manual operacional v1</span><span class="okr-init-date">Ago-Set 2026</span></div>
+              <div class="okr-init"><div class="okr-init-check" onclick="this.classList.toggle('done');this.nextElementSibling.classList.toggle('done')"></div><span class="okr-init-text">Teste piloto na unidade Santos</span><span class="okr-init-date">Out 2026</span></div>
+              <div class="okr-init"><div class="okr-init-check" onclick="this.classList.toggle('done');this.nextElementSibling.classList.toggle('done')"></div><span class="okr-init-text">Ajustar e documentar aprendizados</span><span class="okr-init-date">Nov 2026</span></div>
+            </div>
+          </div>
+
+          <!-- OKR 2 -->
+          <div class="okr-obj rv">
+            <div class="okr-obj-header">
+              <span class="okr-obj-badge" style="background:rgba(216,90,48,0.08);color:var(--ckm-orange);">O2</span>
+              <span class="okr-obj-title">Estabelecer modelo financeiro sustentável por unidade</span>
+            </div>
+            <div class="okr-kr-list">
+              <div class="okr-kr">
+                <span class="okr-kr-num">KR1</span>
+                <span class="okr-kr-text">Definir custo fixo/variável por máquina de diálise</span>
+                <div class="okr-kr-bar"><div class="okr-kr-fill" style="width:0%;background:var(--ckm-orange);"></div></div>
+                <span class="okr-kr-pct">0%</span>
+              </div>
+              <div class="okr-kr">
+                <span class="okr-kr-num">KR2</span>
+                <span class="okr-kr-text">Projetar breakeven para unidade com 30 pacientes</span>
+                <div class="okr-kr-bar"><div class="okr-kr-fill" style="width:0%;background:var(--ckm-orange);"></div></div>
+                <span class="okr-kr-pct">0%</span>
+              </div>
+            </div>
+            <div class="okr-init-label">Iniciativas</div>
+            <div class="okr-init-list">
+              <div class="okr-init"><div class="okr-init-check" onclick="this.classList.toggle('done');this.nextElementSibling.classList.toggle('done')"></div><span class="okr-init-text">Consolidar dados financeiros da unidade RL (12 meses)</span><span class="okr-init-date">Jun-Jul 2026</span></div>
+              <div class="okr-init"><div class="okr-init-check" onclick="this.classList.toggle('done');this.nextElementSibling.classList.toggle('done')"></div><span class="okr-init-text">Modelar cenários de expansão (20, 30, 50 pacientes)</span><span class="okr-init-date">Ago 2026</span></div>
+              <div class="okr-init"><div class="okr-init-check" onclick="this.classList.toggle('done');this.nextElementSibling.classList.toggle('done')"></div><span class="okr-init-text">Criar dashboard financeiro no APEX Pro</span><span class="okr-init-date">Set 2026</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- VIEW: APEX — CONTEÚDO ESTRATÉGICO (existente) -->
+      <div class="pe-view" id="pe-view-apex">
+        <div class="pe-breadcrumb-bar">
+          <button class="pe-bc-link" onclick="peBackToOrgs()">Organizações</button>
+          <span class="pe-bc-sep">›</span>
+          <span class="pe-bc-current">APEX Health</span>
+        </div>
 
       <!-- MISSÃO / VISÃO / VALORES -->
       <div class="pe-section rv">
@@ -1054,6 +1646,125 @@ body{font-family:var(--font-sans);background:var(--navy-deep);color:var(--text);
 
         </div>
       </div>
+
+      <!-- OKRs APEX — Construção Geral -->
+      <div class="pe-section rv">
+        <div class="pe-section-label">OKRs — Construção APEX (Health + Pro)</div>
+
+        <!-- OKR: APEX Pro -->
+        <div class="okr-obj rv">
+          <div class="okr-obj-header">
+            <span class="okr-obj-badge" style="background:rgba(2,128,144,0.08);color:var(--teal);">O1</span>
+            <span class="okr-obj-title">APEX Pro — Plataforma profissional robusta e comercializável</span>
+          </div>
+          <div class="okr-kr-list">
+            <div class="okr-kr">
+              <span class="okr-kr-num">KR1</span>
+              <span class="okr-kr-text">Separar monolito HTML em módulos JS reutilizáveis</span>
+              <div class="okr-kr-bar"><div class="okr-kr-fill" style="width:10%;background:var(--teal);"></div></div>
+              <span class="okr-kr-pct">10%</span>
+            </div>
+            <div class="okr-kr">
+              <span class="okr-kr-num">KR2</span>
+              <span class="okr-kr-text">Implementar RLS multi-tenant por clinic_id no Supabase</span>
+              <div class="okr-kr-bar"><div class="okr-kr-fill" style="width:5%;background:var(--teal);"></div></div>
+              <span class="okr-kr-pct">5%</span>
+            </div>
+            <div class="okr-kr">
+              <span class="okr-kr-num">KR3</span>
+              <span class="okr-kr-text">Gráficos de evolução temporal no prontuário (TFGe, PA, peso)</span>
+              <div class="okr-kr-bar"><div class="okr-kr-fill" style="width:0%;background:var(--teal);"></div></div>
+              <span class="okr-kr-pct">0%</span>
+            </div>
+            <div class="okr-kr">
+              <span class="okr-kr-num">KR4</span>
+              <span class="okr-kr-text">Onboarding self-service + billing (Stripe/Asaas)</span>
+              <div class="okr-kr-bar"><div class="okr-kr-fill" style="width:0%;background:var(--teal);"></div></div>
+              <span class="okr-kr-pct">0%</span>
+            </div>
+          </div>
+          <div class="okr-init-label">Iniciativas</div>
+          <div class="okr-init-list">
+            <div class="okr-init"><div class="okr-init-check done" onclick="this.classList.toggle('done');this.nextElementSibling.classList.toggle('done')"></div><span class="okr-init-text done">Sidebar 3 módulos (Gestão/Qualidade/Pacientes)</span><span class="okr-init-date">Mai 2026 ✓</span></div>
+            <div class="okr-init"><div class="okr-init-check done" onclick="this.classList.toggle('done');this.nextElementSibling.classList.toggle('done')"></div><span class="okr-init-text done">CRUD completo pacientes (criar/editar/excluir)</span><span class="okr-init-date">Mai 2026 ✓</span></div>
+            <div class="okr-init"><div class="okr-init-check done" onclick="this.classList.toggle('done');this.nextElementSibling.classList.toggle('done')"></div><span class="okr-init-text done">Prontuário CKM com Hidratação/Bioimpedância/Tabagismo</span><span class="okr-init-date">Mai 2026 ✓</span></div>
+            <div class="okr-init"><div class="okr-init-check" onclick="this.classList.toggle('done');this.nextElementSibling.classList.toggle('done')"></div><span class="okr-init-text">Refatorar: extrair CSS/JS em arquivos separados</span><span class="okr-init-date">Jun 2026</span></div>
+            <div class="okr-init"><div class="okr-init-check" onclick="this.classList.toggle('done');this.nextElementSibling.classList.toggle('done')"></div><span class="okr-init-text">Implementar auth com roles (admin/médico/equipe)</span><span class="okr-init-date">Jul 2026</span></div>
+            <div class="okr-init"><div class="okr-init-check" onclick="this.classList.toggle('done');this.nextElementSibling.classList.toggle('done')"></div><span class="okr-init-text">Gráficos Chart.js de evolução temporal</span><span class="okr-init-date">Ago 2026</span></div>
+            <div class="okr-init"><div class="okr-init-check" onclick="this.classList.toggle('done');this.nextElementSibling.classList.toggle('done')"></div><span class="okr-init-text">PDF automático mensal de indicadores</span><span class="okr-init-date">Set 2026</span></div>
+            <div class="okr-init"><div class="okr-init-check" onclick="this.classList.toggle('done');this.nextElementSibling.classList.toggle('done')"></div><span class="okr-init-text">Integração WhatsApp (lembretes + plano)</span><span class="okr-init-date">Nov 2026</span></div>
+            <div class="okr-init"><div class="okr-init-check" onclick="this.classList.toggle('done');this.nextElementSibling.classList.toggle('done')"></div><span class="okr-init-text">Onboarding wizard + billing</span><span class="okr-init-date">Q2 2027</span></div>
+          </div>
+        </div>
+
+        <!-- OKR: APEX Health (App + Assessor) -->
+        <div class="okr-obj rv">
+          <div class="okr-obj-header">
+            <span class="okr-obj-badge" style="background:rgba(30,45,80,0.08);color:var(--navy);">O2</span>
+            <span class="okr-obj-title">APEX Health — App do paciente + Assessor Virtual</span>
+          </div>
+          <div class="okr-kr-list">
+            <div class="okr-kr">
+              <span class="okr-kr-num">KR1</span>
+              <span class="okr-kr-text">App APEX Patient (PWA) com login e plano pessoal</span>
+              <div class="okr-kr-bar"><div class="okr-kr-fill" style="width:0%;background:var(--navy);"></div></div>
+              <span class="okr-kr-pct">0%</span>
+            </div>
+            <div class="okr-kr">
+              <span class="okr-kr-num">KR2</span>
+              <span class="okr-kr-text">Assessor virtual treinado com protocolo do paciente</span>
+              <div class="okr-kr-bar"><div class="okr-kr-fill" style="width:0%;background:var(--navy);"></div></div>
+              <span class="okr-kr-pct">0%</span>
+            </div>
+            <div class="okr-kr">
+              <span class="okr-kr-num">KR3</span>
+              <span class="okr-kr-text">Integração assessor via WhatsApp ou app</span>
+              <div class="okr-kr-bar"><div class="okr-kr-fill" style="width:0%;background:var(--navy);"></div></div>
+              <span class="okr-kr-pct">0%</span>
+            </div>
+          </div>
+          <div class="okr-init-label">Iniciativas</div>
+          <div class="okr-init-list">
+            <div class="okr-init"><div class="okr-init-check" onclick="this.classList.toggle('done');this.nextElementSibling.classList.toggle('done')"></div><span class="okr-init-text">Definir escopo MVP do app do paciente</span><span class="okr-init-date">Set 2026</span></div>
+            <div class="okr-init"><div class="okr-init-check" onclick="this.classList.toggle('done');this.nextElementSibling.classList.toggle('done')"></div><span class="okr-init-text">Prototipar assessor virtual (prompt + base de conhecimento)</span><span class="okr-init-date">Out 2026</span></div>
+            <div class="okr-init"><div class="okr-init-check" onclick="this.classList.toggle('done');this.nextElementSibling.classList.toggle('done')"></div><span class="okr-init-text">Treinar assessor com protocolos CKM + plano do paciente</span><span class="okr-init-date">Nov 2026</span></div>
+            <div class="okr-init"><div class="okr-init-check" onclick="this.classList.toggle('done');this.nextElementSibling.classList.toggle('done')"></div><span class="okr-init-text">Testar com 5 pacientes reais (beta fechado)</span><span class="okr-init-date">Dez 2026</span></div>
+            <div class="okr-init"><div class="okr-init-check" onclick="this.classList.toggle('done');this.nextElementSibling.classList.toggle('done')"></div><span class="okr-init-text">Conectar assessor ao WhatsApp Business API</span><span class="okr-init-date">Q1 2027</span></div>
+          </div>
+        </div>
+
+        <!-- OKR: Landing + Conteúdo -->
+        <div class="okr-obj rv">
+          <div class="okr-obj-header">
+            <span class="okr-obj-badge" style="background:rgba(196,163,90,0.08);color:var(--gold);">O3</span>
+            <span class="okr-obj-title">Landing Page + Conteúdo — Posicionamento e conversão</span>
+          </div>
+          <div class="okr-kr-list">
+            <div class="okr-kr">
+              <span class="okr-kr-num">KR1</span>
+              <span class="okr-kr-text">Landing page com taxa de conversão > 5% (visita → contato)</span>
+              <div class="okr-kr-bar"><div class="okr-kr-fill" style="width:30%;background:var(--gold);"></div></div>
+              <span class="okr-kr-pct">30%</span>
+            </div>
+            <div class="okr-kr">
+              <span class="okr-kr-num">KR2</span>
+              <span class="okr-kr-text">Publicar 6 artigos Insights até dezembro/2026</span>
+              <div class="okr-kr-bar"><div class="okr-kr-fill" style="width:50%;background:var(--gold);"></div></div>
+              <span class="okr-kr-pct">50%</span>
+            </div>
+          </div>
+          <div class="okr-init-label">Iniciativas</div>
+          <div class="okr-init-list">
+            <div class="okr-init"><div class="okr-init-check done" onclick="this.classList.toggle('done');this.nextElementSibling.classList.toggle('done')"></div><span class="okr-init-text done">Landing page v1 deployada (apex.med.br)</span><span class="okr-init-date">Mai 2026 ✓</span></div>
+            <div class="okr-init"><div class="okr-init-check done" onclick="this.classList.toggle('done');this.nextElementSibling.classList.toggle('done')"></div><span class="okr-init-text done">3 artigos Insights publicados</span><span class="okr-init-date">Mai 2026 ✓</span></div>
+            <div class="okr-init"><div class="okr-init-check" onclick="this.classList.toggle('done');this.nextElementSibling.classList.toggle('done')"></div><span class="okr-init-text">Estratégia Instagram: 3 posts/semana, 11 temas</span><span class="okr-init-date">Jun 2026</span></div>
+            <div class="okr-init"><div class="okr-init-check" onclick="this.classList.toggle('done');this.nextElementSibling.classList.toggle('done')"></div><span class="okr-init-text">Integrar Google Analytics + Meta Pixel</span><span class="okr-init-date">Jun 2026</span></div>
+            <div class="okr-init"><div class="okr-init-check" onclick="this.classList.toggle('done');this.nextElementSibling.classList.toggle('done')"></div><span class="okr-init-text">Escrever 3 artigos adicionais (DRC, Wearables, CKM)</span><span class="okr-init-date">Jul-Set 2026</span></div>
+          </div>
+        </div>
+      </div>
+
+      </div><!-- /pe-view-apex -->
     </div>
 
     <!-- PAGE: PRONTUÁRIO CKM -->
@@ -1251,6 +1962,184 @@ body{font-family:var(--font-sans);background:var(--navy-deep);color:var(--text);
             <div class="f-group">
               <label>Sono (h)</label>
               <input type="number" id="sono-h" placeholder="7" step="0.5">
+            </div>
+          </div>
+          <!-- TABAGISMO — METAS DE CESSAÇÃO -->
+          <div id="tabagismo-metas-wrap" style="display:none;margin-top:8px;padding:14px 16px;background:rgba(224,82,82,0.04);border:1px solid rgba(224,82,82,0.12);border-radius:8px;">
+            <div style="font-size:11px;font-weight:600;color:var(--red);margin-bottom:8px;">Metas para cessação do tabagismo</div>
+            <div class="f-row" style="gap:12px;">
+              <div class="f-group">
+                <label>Cigarros/dia</label>
+                <input type="number" id="tab-cigarros-dia" placeholder="0">
+              </div>
+              <div class="f-group">
+                <label>Anos fumando</label>
+                <input type="number" id="tab-anos" placeholder="0">
+              </div>
+              <div class="f-group">
+                <label>Carga tabágica (maços-ano)</label>
+                <input type="number" id="tab-carga" placeholder="0" step="0.1" readonly style="background:rgba(30,45,80,0.03);">
+              </div>
+            </div>
+            <div class="f-row" style="gap:12px;margin-top:6px;">
+              <div class="f-group">
+                <label>Meta de cessação</label>
+                <select id="tab-meta-cessacao">
+                  <option value="">Selecione</option>
+                  <option>Redução gradual (50% em 30 dias)</option>
+                  <option>Cessação completa em 60 dias</option>
+                  <option>Cessação imediata</option>
+                  <option>Manutenção de cessação</option>
+                </select>
+              </div>
+              <div class="f-group">
+                <label>Tratamento farmacológico</label>
+                <select id="tab-tratamento">
+                  <option value="">Nenhum</option>
+                  <option>Vareniclina</option>
+                  <option>Bupropiona</option>
+                  <option>TRN (adesivo)</option>
+                  <option>TRN (goma)</option>
+                  <option>Combinado</option>
+                </select>
+              </div>
+            </div>
+            <div class="f-row f1" style="margin-top:6px;">
+              <div class="f-group">
+                <label>Observações tabagismo</label>
+                <textarea id="tab-obs" rows="2" placeholder="Tentativas anteriores, gatilhos, suporte psicológico..."></textarea>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- CARD 4B: HIDRATAÇÃO -->
+        <div class="ckm-card">
+          <div class="ckm-card-header">
+            <div class="ckm-dot" style="background:var(--teal);"></div>
+            <div class="ckm-card-title">Hidratação</div>
+          </div>
+          <div class="f-row" style="gap:12px;">
+            <div class="f-group">
+              <label>Ingestão hídrica (mL/dia)</label>
+              <input type="number" id="hidra-ml-dia" placeholder="2000" step="100">
+            </div>
+            <div class="f-group">
+              <label>Meta hídrica (mL/dia)</label>
+              <input type="number" id="hidra-meta" placeholder="2500" step="100">
+            </div>
+            <div class="f-group">
+              <label>Restrição hídrica?</label>
+              <select id="hidra-restricao">
+                <option value="">Não</option>
+                <option>Sim — 1000mL/dia</option>
+                <option>Sim — 1500mL/dia</option>
+                <option>Sim — outra</option>
+              </select>
+            </div>
+          </div>
+          <div class="f-row" style="gap:12px;margin-top:6px;">
+            <div class="f-group">
+              <label>Tipo de líquidos mais consumidos</label>
+              <input type="text" id="hidra-tipo" placeholder="Água, café, chá, sucos, refrigerante...">
+            </div>
+            <div class="f-group">
+              <label>Sódio urinário 24h (mEq/L)</label>
+              <input type="number" id="hidra-sodio-u" placeholder="" step="0.1">
+            </div>
+          </div>
+          <div class="f-row f1" style="margin-top:6px;">
+            <div class="f-group">
+              <label>Observações hidratação</label>
+              <textarea id="hidra-obs" rows="2" placeholder="Edema, restrição, estratégias de monitoramento..."></textarea>
+            </div>
+          </div>
+        </div>
+
+        <!-- CARD 4C: BIOIMPEDÂNCIA -->
+        <div class="ckm-card">
+          <div class="ckm-card-header">
+            <div class="ckm-dot" style="background:var(--ckm-purple);"></div>
+            <div class="ckm-card-title">Dados de Bioimpedância</div>
+          </div>
+          <div class="f-row" style="gap:12px;">
+            <div class="f-group">
+              <label>Data do exame</label>
+              <input type="date" id="bio-data">
+            </div>
+            <div class="f-group">
+              <label>Equipamento</label>
+              <select id="bio-equipamento">
+                <option value="">Selecione</option>
+                <option>InBody 270</option>
+                <option>InBody 370</option>
+                <option>InBody 570</option>
+                <option>InBody 770</option>
+                <option>Tanita MC-780</option>
+                <option>Seca mBCA 525</option>
+                <option>Biodynamics 310e</option>
+                <option>Outro</option>
+              </select>
+            </div>
+          </div>
+          <div class="f-row" style="gap:12px;margin-top:6px;">
+            <div class="f-group">
+              <label>Peso (kg)</label>
+              <input type="number" id="bio-peso" placeholder="" step="0.1">
+            </div>
+            <div class="f-group">
+              <label>Massa Magra (kg)</label>
+              <input type="number" id="bio-massa-magra" placeholder="" step="0.1">
+            </div>
+            <div class="f-group">
+              <label>Massa Gorda (kg)</label>
+              <input type="number" id="bio-massa-gorda" placeholder="" step="0.1">
+            </div>
+            <div class="f-group">
+              <label>% Gordura</label>
+              <input type="number" id="bio-perc-gordura" placeholder="" step="0.1">
+            </div>
+          </div>
+          <div class="f-row" style="gap:12px;margin-top:6px;">
+            <div class="f-group">
+              <label>Água Corporal Total (L)</label>
+              <input type="number" id="bio-act" placeholder="" step="0.1">
+            </div>
+            <div class="f-group">
+              <label>Água Intracelular (L)</label>
+              <input type="number" id="bio-aic" placeholder="" step="0.1">
+            </div>
+            <div class="f-group">
+              <label>Água Extracelular (L)</label>
+              <input type="number" id="bio-aec" placeholder="" step="0.1">
+            </div>
+            <div class="f-group">
+              <label>Razão AEC/ACT</label>
+              <input type="number" id="bio-razao-aec" placeholder="" step="0.001" readonly style="background:rgba(30,45,80,0.03);">
+            </div>
+          </div>
+          <div class="f-row" style="gap:12px;margin-top:6px;">
+            <div class="f-group">
+              <label>Massa Muscular Esquelética (kg)</label>
+              <input type="number" id="bio-mme" placeholder="" step="0.1">
+            </div>
+            <div class="f-group">
+              <label>Metabolismo Basal (kcal)</label>
+              <input type="number" id="bio-tmb" placeholder="" step="1">
+            </div>
+            <div class="f-group">
+              <label>Gordura Visceral (nível)</label>
+              <input type="number" id="bio-gv" placeholder="" step="1">
+            </div>
+            <div class="f-group">
+              <label>Ângulo de Fase (°)</label>
+              <input type="number" id="bio-angulo-fase" placeholder="" step="0.1">
+            </div>
+          </div>
+          <div class="f-row f1" style="margin-top:6px;">
+            <div class="f-group">
+              <label>Observações bioimpedância</label>
+              <textarea id="bio-obs" rows="2" placeholder="Comparativo com exame anterior, metas, interpretação..."></textarea>
             </div>
           </div>
         </div>
@@ -1922,16 +2811,63 @@ body{font-family:var(--font-sans);background:var(--navy-deep);color:var(--text);
               <th>Condições</th>
               <th>Último atendimento</th>
               <th>Status</th>
+              <th style="width:80px;text-align:center;">Ações</th>
             </tr>
           </thead>
           <tbody id="pac-tbody">
-            <tr><td colspan="4" style="text-align:center;padding:40px;color:var(--text-3);font-size:13px;">Carregando pacientes...</td></tr>
+            <tr><td colspan="5" style="text-align:center;padding:40px;color:var(--text-3);font-size:13px;">Carregando pacientes...</td></tr>
           </tbody>
         </table>
       </div>
     </div>
 
     <!-- Modal: Novo Paciente -->
+    <!-- MODAL: NOVO PROJETO -->
+    <div class="modal-overlay" id="modal-novo-proj">
+      <div class="modal-box">
+        <button class="modal-close" onclick="fecharModalNovoProjeto()"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+        <div class="modal-title">Novo Projeto</div>
+        <div class="modal-desc">Crie um novo projeto dentro da organização selecionada.</div>
+
+        <div class="modal-field">
+          <label>Nome do projeto</label>
+          <input type="text" id="nproj-nome" placeholder="Ex: Telemedicina Renal">
+        </div>
+        <div class="modal-field">
+          <label>Descrição</label>
+          <textarea id="nproj-desc" rows="3" placeholder="Descreva o objetivo e escopo do projeto..." style="width:100%;border:1px solid var(--border);border-radius:8px;padding:10px 12px;font-size:13px;font-family:var(--font-body);resize:vertical;background:var(--bg);color:var(--text-1);"></textarea>
+        </div>
+        <div class="modal-row">
+          <div class="modal-field">
+            <label>Status</label>
+            <select id="nproj-status">
+              <option value="Em Estruturação">Em Estruturação</option>
+              <option value="Ativo">Ativo</option>
+              <option value="Concluído">Concluído</option>
+            </select>
+          </div>
+          <div class="modal-field">
+            <label>Cor do ícone</label>
+            <select id="nproj-cor">
+              <option value="teal">Teal</option>
+              <option value="purple">Roxo</option>
+              <option value="orange">Laranja</option>
+              <option value="navy">Navy</option>
+              <option value="gold">Dourado</option>
+            </select>
+          </div>
+        </div>
+        <input type="hidden" id="nproj-org" value="">
+
+        <div id="nproj-error" style="font-size:11px;color:var(--red);min-height:16px;margin-top:4px;"></div>
+
+        <div class="modal-actions">
+          <button class="modal-btn-cancel" onclick="fecharModalNovoProjeto()">Cancelar</button>
+          <button class="modal-btn-save" onclick="salvarNovoProjeto()">Criar Projeto</button>
+        </div>
+      </div>
+    </div>
+
     <div class="modal-overlay" id="modal-novo-pac">
       <div class="modal-box">
         <button class="modal-close" onclick="fecharModalNovoPaciente()"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
@@ -2136,13 +3072,14 @@ var NAV = {
   'unidades':        { label:'Selecionar Unidade', parent:'trs-cronico', sidebar:'indicadores',    bc:['Dashboard','Qualidade','Indicadores TRS','TRS Crônico','Unidades'] },
   'dashboards':      { label:'Dashboards',         parent:'dashboard',   sidebar:'dashboards',     bc:['Dashboard','Qualidade','Dashboards'] },
   'relatorios':      { label:'Relatórios',         parent:'dashboard',   sidebar:'relatorios',     bc:['Dashboard','Qualidade','Relatórios'] },
-  'planejamento':    { label:'Plan. Estratégico',  parent:'dashboard',   sidebar:'planejamento',   bc:['Dashboard','Plan. Estratégico'] },
+  'agenda':          { label:'Minha Agenda',        parent:'dashboard',   sidebar:'agenda',         bc:['Dashboard','Minha Agenda'] },
+  'planejamento':    { label:'Plan. Estratégico',  parent:'dashboard',   sidebar:'planejamento',   bc:['Dashboard','Gestão','Plan. Estratégico'] },
   'prontuario':      { label:'Prontuário CKM',     parent:'dashboard',   sidebar:'prontuario',     bc:['Dashboard','Pacientes','Prontuário CKM'] },
   'lista-pacientes': { label:'Lista de Pacientes', parent:'dashboard',   sidebar:'lista-pacientes',bc:['Dashboard','Pacientes','Lista de Pacientes'] }
 };
 
 var BC_MAP = {
-  'Dashboard':'dashboard','Qualidade':null,'Indicadores TRS':'indicadores',
+  'Dashboard':'dashboard','Minha Agenda':'agenda','Gestão':null,'Qualidade':null,'Indicadores TRS':'indicadores',
   'TRS Crônico':'trs-cronico','Unidades':'unidades','Dashboards':'dashboards',
   'Relatórios':'relatorios','Plan. Estratégico':'planejamento',
   'Pacientes':null,'Prontuário CKM':'prontuario','Lista de Pacientes':'lista-pacientes'
@@ -2190,6 +3127,152 @@ function toggleModule(label) {
   var ch = label.nextElementSibling;
   if (ch && ch.classList.contains('sb-children')) ch.classList.toggle('open');
 }
+
+/* ============================================================
+   PLANEJAMENTO ESTRATÉGICO — Seletor Empresa/Projeto
+   ============================================================ */
+function peShowView(viewId) {
+  document.querySelectorAll('#page-planejamento .pe-view').forEach(function(v) { v.classList.remove('active'); });
+  var target = document.getElementById('pe-view-' + viewId);
+  if (target) target.classList.add('active');
+  /* Re-trigger scroll reveal */
+  setTimeout(function(){
+    document.querySelectorAll('#page-planejamento .rv:not(.visible)').forEach(function(el){ observer.observe(el); });
+  }, 50);
+}
+
+function peSelectOrg(orgId) {
+  if (orgId === 'apex') {
+    peShowView('apex');
+    document.getElementById('pe-subtitle').textContent = 'Diretrizes, metas e projetos estratégicos da APEX Health.';
+  } else if (orgId === 'fenix') {
+    peShowView('fenix');
+    document.getElementById('pe-subtitle').textContent = 'Selecione um projeto da Fenix Nefrologia.';
+  }
+}
+
+function peSelectProject(projectId) {
+  peShowView(projectId);
+  var subtitles = {
+    'fenix-iep': 'IEP — Instituto de Ensino e Pesquisa',
+    'fenix-modelo': 'Clínica Diálise Replicável'
+  };
+  document.getElementById('pe-subtitle').textContent = subtitles[projectId] || '';
+}
+
+function peBackToOrgs() {
+  peShowView('orgs');
+  document.getElementById('pe-subtitle').textContent = 'Selecione uma organização para acessar suas diretrizes, metas e projetos.';
+}
+
+/* ============================================================
+   CRUD — Novo Projeto
+   ============================================================ */
+var projetos_custom = [];
+
+function abrirModalNovoProjeto(orgId) {
+  document.getElementById('nproj-org').value = orgId;
+  document.getElementById('nproj-nome').value = '';
+  document.getElementById('nproj-desc').value = '';
+  document.getElementById('nproj-status').value = 'Em Estruturação';
+  document.getElementById('nproj-cor').value = 'teal';
+  document.getElementById('nproj-error').textContent = '';
+  document.getElementById('modal-novo-proj').classList.add('active');
+}
+
+function fecharModalNovoProjeto() {
+  document.getElementById('modal-novo-proj').classList.remove('active');
+}
+
+var PE_CORES = {
+  teal:   { bg:'rgba(2,128,144,0.1)',   color:'var(--teal)',       border:'rgba(2,128,144,0.2)' },
+  purple: { bg:'rgba(83,74,183,0.1)',    color:'var(--ckm-purple)', border:'rgba(83,74,183,0.2)' },
+  orange: { bg:'rgba(216,90,48,0.1)',    color:'var(--ckm-orange)', border:'rgba(216,90,48,0.2)' },
+  navy:   { bg:'rgba(30,45,80,0.1)',     color:'var(--navy)',       border:'rgba(30,45,80,0.2)' },
+  gold:   { bg:'rgba(196,163,90,0.1)',   color:'var(--gold)',       border:'var(--gold-border)' }
+};
+
+var PE_STATUS_STYLES = {
+  'Em Estruturação': { bg:'rgba(245,158,11,0.08)', color:'#F59E0B', border:'rgba(245,158,11,0.2)' },
+  'Ativo':           { bg:'rgba(91,158,80,0.08)',  color:'var(--green)', border:'rgba(91,158,80,0.2)' },
+  'Concluído':       { bg:'rgba(2,128,144,0.08)',  color:'var(--teal)',  border:'rgba(2,128,144,0.2)' }
+};
+
+function salvarNovoProjeto() {
+  var nome = document.getElementById('nproj-nome').value.trim();
+  var desc = document.getElementById('nproj-desc').value.trim();
+  var status = document.getElementById('nproj-status').value;
+  var cor = document.getElementById('nproj-cor').value;
+  var org = document.getElementById('nproj-org').value;
+
+  if (!nome) { document.getElementById('nproj-error').textContent = 'Informe o nome do projeto.'; return; }
+
+  var proj = { id: 'proj-' + Date.now(), nome: nome, desc: desc, status: status, cor: cor, org: org };
+  projetos_custom.push(proj);
+
+  renderProjetoCustom(proj);
+  fecharModalNovoProjeto();
+}
+
+function renderProjetoCustom(proj) {
+  var list = document.getElementById('pe-sub-list-' + proj.org);
+  if (!list) return;
+
+  var c = PE_CORES[proj.cor] || PE_CORES.teal;
+  var s = PE_STATUS_STYLES[proj.status] || PE_STATUS_STYLES['Em Estruturação'];
+
+  var card = document.createElement('div');
+  card.className = 'pe-sub-card rv visible';
+  card.setAttribute('data-proj-id', proj.id);
+  card.innerHTML = '<div class="pe-sub-icon" style="background:' + c.bg + ';color:' + c.color + ';">' +
+    '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M7 4V2M17 4V2M3 10h18"/></svg>' +
+    '</div>' +
+    '<div class="pe-sub-name">' + proj.nome + '</div>' +
+    '<div class="pe-sub-desc">' + (proj.desc || 'Sem descrição') + '</div>' +
+    '<span class="pe-sub-status" style="background:' + s.bg + ';color:' + s.color + ';border:1px solid ' + s.border + ';">' + proj.status + '</span>' +
+    '<button class="pe-proj-delete" onclick="event.stopPropagation();deletarProjeto(\'' + proj.id + '\')" title="Excluir projeto">' +
+    '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6"/><path d="M10 11v6M14 11v6"/></svg>' +
+    '</button>';
+  list.appendChild(card);
+}
+
+function deletarProjeto(projId) {
+  if (!confirm('Excluir este projeto?')) return;
+  projetos_custom = projetos_custom.filter(function(p) { return p.id !== projId; });
+  var el = document.querySelector('[data-proj-id="' + projId + '"]');
+  if (el) el.remove();
+}
+
+/* ============================================================
+   TABAGISMO — show/hide metas de cessação
+   ============================================================ */
+document.addEventListener('DOMContentLoaded', function() {
+  var tabSelect = document.getElementById('tabagismo');
+  if (tabSelect) {
+    tabSelect.addEventListener('change', function() {
+      var wrap = document.getElementById('tabagismo-metas-wrap');
+      if (wrap) wrap.style.display = (this.value === 'Ativo' || this.value === 'Ex-tabagista') ? 'block' : 'none';
+    });
+  }
+  /* Carga tabágica auto-calc */
+  ['tab-cigarros-dia','tab-anos'].forEach(function(id) {
+    var el = document.getElementById(id);
+    if (el) el.addEventListener('input', function() {
+      var cig = parseFloat(document.getElementById('tab-cigarros-dia').value) || 0;
+      var anos = parseFloat(document.getElementById('tab-anos').value) || 0;
+      document.getElementById('tab-carga').value = ((cig / 20) * anos).toFixed(1);
+    });
+  });
+  /* Bioimpedância AEC/ACT auto-calc */
+  ['bio-aec','bio-act'].forEach(function(id) {
+    var el = document.getElementById(id);
+    if (el) el.addEventListener('input', function() {
+      var aec = parseFloat(document.getElementById('bio-aec').value) || 0;
+      var act = parseFloat(document.getElementById('bio-act').value) || 0;
+      document.getElementById('bio-razao-aec').value = act > 0 ? (aec / act).toFixed(3) : '';
+    });
+  });
+});
 
 /* ============================================================
    PRONTUÁRIO CKM — Calculations & Navigation
@@ -3201,6 +4284,18 @@ function fillProntuario(dados) {
   /* Recalcular valores derivados */
   try { autoCalcIMC(); } catch(e) {}
   try { autoCalcTFGe(); } catch(e) {}
+  /* Restaurar visibilidade condicional do tabagismo */
+  try {
+    var tabVal = document.getElementById('tabagismo').value;
+    var tabWrap = document.getElementById('tabagismo-metas-wrap');
+    if (tabWrap) tabWrap.style.display = (tabVal === 'Ativo' || tabVal === 'Ex-tabagista') ? 'block' : 'none';
+  } catch(e) {}
+  /* Recalcular bioimpedância */
+  try {
+    var aec = parseFloat(document.getElementById('bio-aec').value) || 0;
+    var act = parseFloat(document.getElementById('bio-act').value) || 0;
+    if (act > 0) document.getElementById('bio-razao-aec').value = (aec / act).toFixed(3);
+  } catch(e) {}
 }
 
 /* ID do paciente atualmente visualizado no prontuário */
@@ -3354,7 +4449,7 @@ function renderPacientes(lista) {
   var countEl = document.getElementById('pac-count');
 
   if (!lista || lista.length === 0) {
-    tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;padding:48px;color:var(--text-3);font-size:13px;">Nenhum paciente cadastrado. Clique em "Novo Paciente" para começar.</td></tr>';
+    tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;padding:48px;color:var(--text-3);font-size:13px;">Nenhum paciente cadastrado. Clique em "Novo Paciente" para começar.</td></tr>';
     if (countEl) countEl.textContent = '0 pacientes';
     return;
   }
@@ -3383,6 +4478,7 @@ function renderPacientes(lista) {
     html += '<td>' + (tagsHtml || '<span style="color:var(--text-3);">—</span>') + '</td>';
     html += '<td style="font-size:12px;color:var(--text-2);">' + lastVisit + '</td>';
     html += '<td><span class="pac-row-tag ' + statusClass + '">' + statusLabel + '</span></td>';
+    html += '<td class="pac-actions"><button class="pac-action-btn" onclick="event.stopPropagation();editarPaciente(\'' + p.id + '\')" title="Editar"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></button><button class="pac-action-btn pac-del" onclick="event.stopPropagation();excluirPaciente(\'' + p.id + '\',\'' + p.name.replace(/'/g,"\\\'") + '\')" title="Excluir"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6"/><path d="M10 11v6M14 11v6"/></svg></button></td>';
     html += '</tr>';
   });
 
@@ -3414,6 +4510,7 @@ function fecharModalNovoPaciente() {
   document.getElementById('np-telefone').value = '';
   document.getElementById('np-condicoes').value = '';
   document.getElementById('np-error').textContent = '';
+  resetModalPaciente();
 }
 
 /* Salvar novo paciente */
@@ -3460,6 +4557,99 @@ async function salvarNovoPaciente() {
   } finally {
     btn.disabled = false;
     btn.textContent = 'Cadastrar';
+  }
+}
+
+/* Editar paciente — abre modal preenchido */
+function editarPaciente(patientId) {
+  var pac = allPacientes.find(function(p) { return p.id === patientId; });
+  if (!pac) return;
+
+  document.getElementById('np-nome').value = pac.name || '';
+  document.getElementById('np-nascimento').value = pac.date_of_birth || '';
+  document.getElementById('np-sexo').value = pac.sex || '';
+  document.getElementById('np-email').value = pac.email_personal || '';
+  document.getElementById('np-telefone').value = pac.phone || '';
+  document.getElementById('np-condicoes').value = (pac.conditions || []).join(', ');
+  document.getElementById('np-error').textContent = '';
+
+  var btn = document.getElementById('np-btn-save');
+  btn.textContent = 'Salvar Alterações';
+  btn.onclick = function() { atualizarPaciente(patientId); };
+
+  var modal = document.getElementById('modal-novo-pac');
+  modal.querySelector('.modal-title').textContent = 'Editar Paciente';
+  modal.querySelector('.modal-desc').textContent = 'Atualize os dados do paciente.';
+  modal.classList.add('active');
+}
+
+/* Atualizar paciente no Supabase */
+async function atualizarPaciente(patientId) {
+  var nome = document.getElementById('np-nome').value.trim();
+  var nasc = document.getElementById('np-nascimento').value;
+  var sexo = document.getElementById('np-sexo').value;
+  var email = document.getElementById('np-email').value.trim();
+  var tel = document.getElementById('np-telefone').value.trim();
+  var conds = document.getElementById('np-condicoes').value.trim();
+  var errEl = document.getElementById('np-error');
+  var btn = document.getElementById('np-btn-save');
+
+  errEl.textContent = '';
+  if (!nome) { errEl.textContent = 'Nome é obrigatório.'; return; }
+
+  var condArray = conds ? conds.split(',').map(function(c) { return c.trim(); }).filter(Boolean) : [];
+
+  btn.disabled = true;
+  btn.textContent = 'Salvando...';
+
+  try {
+    var { error } = await supabase.from('patients')
+      .update({
+        name: nome,
+        date_of_birth: nasc || null,
+        sex: sexo || null,
+        email_personal: email || null,
+        phone: tel || null,
+        conditions: condArray
+      })
+      .eq('id', patientId);
+
+    if (error) throw error;
+
+    resetModalPaciente();
+    fecharModalNovoPaciente();
+    await carregarListaPacientes();
+  } catch(e) {
+    errEl.textContent = 'Erro: ' + e.message;
+  } finally {
+    btn.disabled = false;
+    btn.textContent = 'Salvar Alterações';
+  }
+}
+
+/* Reset modal para modo "Novo" */
+function resetModalPaciente() {
+  var btn = document.getElementById('np-btn-save');
+  btn.textContent = 'Cadastrar';
+  btn.onclick = salvarNovoPaciente;
+  var modal = document.getElementById('modal-novo-pac');
+  modal.querySelector('.modal-title').textContent = 'Novo Paciente';
+  modal.querySelector('.modal-desc').textContent = 'Cadastre os dados básicos do paciente.';
+}
+
+/* Excluir paciente */
+async function excluirPaciente(patientId, nome) {
+  if (!confirm('Excluir o paciente "' + nome + '"? Esta ação não pode ser desfeita.')) return;
+
+  try {
+    var { error } = await supabase.from('patients')
+      .delete()
+      .eq('id', patientId);
+
+    if (error) throw error;
+    await carregarListaPacientes();
+  } catch(e) {
+    alert('Erro ao excluir: ' + e.message);
   }
 }
 
