@@ -270,6 +270,54 @@ body{font-family:var(--font-sans);background:var(--navy-deep);color:var(--text);
 .empty-desc{font-size:13px;color:var(--text-2);line-height:1.8;}
 
 /* ============================================================
+   LISTA DE PACIENTES
+   ============================================================ */
+.pac-toolbar{display:flex;align-items:center;gap:12px;margin-bottom:24px;flex-wrap:wrap;}
+.pac-search-wrap{flex:1;min-width:200px;position:relative;}
+.pac-search-wrap input{width:100%;background:var(--card);border:1px solid var(--border);border-radius:10px;padding:11px 14px 11px 38px;font-family:inherit;font-size:13px;color:var(--text);outline:none;transition:border-color .2s;}
+.pac-search-wrap input:focus{border-color:var(--teal);}
+.pac-search-wrap svg{position:absolute;left:12px;top:50%;transform:translateY(-50%);width:16px;height:16px;stroke:var(--text-3);pointer-events:none;}
+.btn-novo-pac{display:inline-flex;align-items:center;gap:6px;background:linear-gradient(135deg,var(--teal),#04b5c8);color:#fff;border:none;border-radius:10px;padding:11px 20px;font-family:inherit;font-size:12px;font-weight:700;letter-spacing:0.5px;cursor:pointer;transition:all .2s;white-space:nowrap;}
+.btn-novo-pac:hover{transform:translateY(-1px);box-shadow:0 4px 16px rgba(2,128,144,0.3);}
+.btn-novo-pac svg{width:16px;height:16px;}
+.pac-count{font-size:11px;color:var(--text-3);margin-left:auto;}
+
+.pac-table{width:100%;border-collapse:separate;border-spacing:0;}
+.pac-table th{font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--text-3);text-align:left;padding:10px 14px;border-bottom:1px solid var(--border);}
+.pac-table td{padding:14px;border-bottom:1px solid var(--border);font-size:13px;color:var(--text);vertical-align:middle;}
+.pac-table tr:hover td{background:rgba(2,128,144,0.03);cursor:pointer;}
+.pac-table tr:last-child td{border-bottom:none;}
+
+.pac-row-name{display:flex;align-items:center;gap:10px;}
+.pac-row-avatar{width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,var(--navy),var(--teal));display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#fff;flex-shrink:0;}
+.pac-row-nome-txt{font-weight:600;color:var(--text);}
+.pac-row-email{font-size:11px;color:var(--text-3);}
+.pac-row-tag{display:inline-block;font-size:9px;font-weight:700;letter-spacing:0.5px;padding:3px 8px;border-radius:6px;margin-right:4px;}
+.pac-row-tag.t-has{background:rgba(239,68,68,0.08);color:#ef4444;}
+.pac-row-tag.t-dm{background:rgba(245,158,11,0.08);color:#f59e0b;}
+.pac-row-tag.t-drc{background:rgba(139,92,246,0.08);color:#8b5cf6;}
+.pac-row-tag.t-obes{background:rgba(6,182,212,0.08);color:#06b6d4;}
+.pac-row-tag.t-ckm{background:rgba(236,72,153,0.08);color:#ec4899;}
+.pac-row-tag.t-ativo{background:rgba(34,197,94,0.08);color:#22c55e;}
+
+/* Modal Novo Paciente */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:9999;display:none;align-items:center;justify-content:center;backdrop-filter:blur(4px);}
+.modal-overlay.active{display:flex;}
+.modal-box{background:var(--card);border-radius:16px;padding:32px;width:100%;max-width:480px;box-shadow:0 16px 48px rgba(0,0,0,0.15);position:relative;}
+.modal-title{font-family:var(--font-serif);font-size:22px;color:var(--text);margin-bottom:4px;}
+.modal-desc{font-size:12px;color:var(--text-3);margin-bottom:24px;}
+.modal-field{margin-bottom:16px;}
+.modal-field label{display:block;font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-3);margin-bottom:6px;}
+.modal-field input,.modal-field select{width:100%;background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:10px 12px;font-family:inherit;font-size:13px;color:var(--text);outline:none;transition:border-color .2s;}
+.modal-field input:focus,.modal-field select:focus{border-color:var(--teal);}
+.modal-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.modal-actions{display:flex;gap:10px;justify-content:flex-end;margin-top:24px;}
+.modal-btn-cancel{background:none;border:1px solid var(--border);border-radius:8px;padding:10px 20px;font-family:inherit;font-size:12px;color:var(--text-2);cursor:pointer;}
+.modal-btn-save{background:linear-gradient(135deg,var(--teal),#04b5c8);border:none;border-radius:8px;padding:10px 24px;font-family:inherit;font-size:12px;font-weight:700;color:#fff;cursor:pointer;transition:all .2s;}
+.modal-btn-save:hover{transform:translateY(-1px);box-shadow:0 4px 12px rgba(2,128,144,0.3);}
+.modal-close{position:absolute;top:16px;right:16px;background:none;border:none;cursor:pointer;color:var(--text-3);padding:4px;}
+
+/* ============================================================
    RESPONSIVE
    ============================================================ */
 @media(max-width:900px){
@@ -1575,11 +1623,84 @@ body{font-family:var(--font-sans);background:var(--navy-deep);color:var(--text);
     <div class="content-page" id="page-lista-pacientes">
       <p class="page-eyebrow rv">Pacientes</p>
       <h2 class="page-title rv">Lista de <strong>Pacientes</strong></h2>
-      <div class="empty-state rv">
-        <div class="empty-icon"><svg width="80" height="80" viewBox="0 0 80 80" fill="none"><rect x="8" y="8" width="64" height="64" rx="16" fill="rgba(30,45,80,0.04)" stroke="var(--border)" stroke-width="1.5"/><rect x="18" y="24" width="44" height="6" rx="3" fill="rgba(30,45,80,0.1)"/><rect x="18" y="36" width="44" height="6" rx="3" fill="rgba(30,45,80,0.07)"/><rect x="18" y="48" width="44" height="6" rx="3" fill="rgba(30,45,80,0.05)"/></svg></div>
-        <div class="empty-badge"><span class="dot"></span> Em Desenvolvimento</div>
-        <div class="empty-title">Lista de Pacientes</div>
-        <div class="empty-desc">Busca, filtros e listagem completa de pacientes com acesso rápido ao prontuário CKM individual.</div>
+
+      <!-- Toolbar: busca + novo -->
+      <div class="pac-toolbar rv">
+        <div class="pac-search-wrap">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          <input type="text" id="pac-search" placeholder="Buscar por nome, condição ou e-mail..." oninput="filtrarPacientes()">
+        </div>
+        <button class="btn-novo-pac" onclick="abrirModalNovoPaciente()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          Novo Paciente
+        </button>
+        <span class="pac-count" id="pac-count"></span>
+      </div>
+
+      <!-- Tabela -->
+      <div style="background:var(--card);border:1px solid var(--border);border-radius:14px;overflow:hidden;" class="rv">
+        <table class="pac-table">
+          <thead>
+            <tr>
+              <th>Paciente</th>
+              <th>Condições</th>
+              <th>Último atendimento</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody id="pac-tbody">
+            <tr><td colspan="4" style="text-align:center;padding:40px;color:var(--text-3);font-size:13px;">Carregando pacientes...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Modal: Novo Paciente -->
+    <div class="modal-overlay" id="modal-novo-pac">
+      <div class="modal-box">
+        <button class="modal-close" onclick="fecharModalNovoPaciente()"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+        <div class="modal-title">Novo Paciente</div>
+        <div class="modal-desc">Cadastre os dados básicos do paciente.</div>
+
+        <div class="modal-field">
+          <label>Nome completo</label>
+          <input type="text" id="np-nome" placeholder="Nome do paciente">
+        </div>
+        <div class="modal-row">
+          <div class="modal-field">
+            <label>Data de nascimento</label>
+            <input type="date" id="np-nascimento">
+          </div>
+          <div class="modal-field">
+            <label>Sexo</label>
+            <select id="np-sexo">
+              <option value="">Selecione</option>
+              <option value="M">Masculino</option>
+              <option value="F">Feminino</option>
+            </select>
+          </div>
+        </div>
+        <div class="modal-row">
+          <div class="modal-field">
+            <label>E-mail</label>
+            <input type="email" id="np-email" placeholder="email@exemplo.com">
+          </div>
+          <div class="modal-field">
+            <label>Telefone</label>
+            <input type="tel" id="np-telefone" placeholder="(11) 99999-9999">
+          </div>
+        </div>
+        <div class="modal-field">
+          <label>Condições principais</label>
+          <input type="text" id="np-condicoes" placeholder="HAS, DM2, DRC... (separado por vírgula)">
+        </div>
+
+        <div id="np-error" style="font-size:11px;color:var(--red);min-height:16px;margin-top:4px;"></div>
+
+        <div class="modal-actions">
+          <button class="modal-btn-cancel" onclick="fecharModalNovoPaciente()">Cancelar</button>
+          <button class="modal-btn-save" id="np-btn-save" onclick="salvarNovoPaciente()">Cadastrar</button>
+        </div>
       </div>
     </div>
 
@@ -1783,6 +1904,9 @@ function navTo(pageId) {
   setTimeout(function(){
     document.querySelectorAll('#page-' + pageId + ' .rv:not(.visible)').forEach(function(el){ observer.observe(el); });
   }, 50);
+
+  /* Carregar dados da página ao navegar */
+  if (pageId === 'lista-pacientes' && currentDoctor) carregarListaPacientes();
 }
 
 function toggleModule(label) {
@@ -2900,6 +3024,211 @@ async function listarProntuarios(patientId) {
     .eq('doctor_id', currentDoctor.id)
     .order('created_at', { ascending: false });
   return data || [];
+}
+
+/* ============================================================
+   LISTA DE PACIENTES — CRUD (Supabase)
+   ============================================================ */
+var allPacientes = [];
+
+/* Carregar lista de pacientes do médico logado */
+async function carregarListaPacientes() {
+  if (!currentDoctor) return;
+  var { data, error } = await supabase.from('patients')
+    .select('id, name, email_personal, phone, date_of_birth, sex, conditions, active, last_visit, created_at')
+    .eq('doctor_id', currentDoctor.id)
+    .order('name', { ascending: true });
+
+  allPacientes = data || [];
+  renderPacientes(allPacientes);
+}
+
+/* Calcular idade */
+function calcIdade(dob) {
+  if (!dob) return '';
+  var hoje = new Date();
+  var nasc = new Date(dob);
+  var idade = hoje.getFullYear() - nasc.getFullYear();
+  var m = hoje.getMonth() - nasc.getMonth();
+  if (m < 0 || (m === 0 && hoje.getDate() < nasc.getDate())) idade--;
+  return idade;
+}
+
+/* Gerar iniciais */
+function getIniciais(nome) {
+  var partes = nome.trim().split(/\s+/);
+  if (partes.length === 1) return partes[0].charAt(0).toUpperCase();
+  return (partes[0].charAt(0) + partes[partes.length - 1].charAt(0)).toUpperCase();
+}
+
+/* Tag de condição → classe CSS */
+function condTagClass(cond) {
+  var c = cond.trim().toUpperCase();
+  if (c === 'HAS') return 't-has';
+  if (c === 'DM2' || c === 'DM') return 't-dm';
+  if (c === 'DRC') return 't-drc';
+  if (c.includes('OBES')) return 't-obes';
+  if (c.includes('CKM')) return 't-ckm';
+  return '';
+}
+
+/* Renderizar tabela */
+function renderPacientes(lista) {
+  var tbody = document.getElementById('pac-tbody');
+  var countEl = document.getElementById('pac-count');
+
+  if (!lista || lista.length === 0) {
+    tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;padding:48px;color:var(--text-3);font-size:13px;">Nenhum paciente cadastrado. Clique em "Novo Paciente" para começar.</td></tr>';
+    if (countEl) countEl.textContent = '0 pacientes';
+    return;
+  }
+
+  if (countEl) countEl.textContent = lista.length + ' paciente' + (lista.length > 1 ? 's' : '');
+
+  var html = '';
+  lista.forEach(function(p) {
+    var idade = calcIdade(p.date_of_birth);
+    var sexLabel = p.sex === 'M' ? 'Masculino' : p.sex === 'F' ? 'Feminino' : '';
+    var demoText = [idade ? idade + ' anos' : '', sexLabel].filter(Boolean).join(' · ');
+
+    var tagsHtml = '';
+    if (p.conditions && p.conditions.length > 0) {
+      p.conditions.forEach(function(c) {
+        if (c.trim()) tagsHtml += '<span class="pac-row-tag ' + condTagClass(c) + '">' + c.trim().toUpperCase() + '</span>';
+      });
+    }
+
+    var lastVisit = p.last_visit ? new Date(p.last_visit).toLocaleDateString('pt-BR') : '—';
+    var statusClass = p.active ? 't-ativo' : '';
+    var statusLabel = p.active ? 'Ativo' : 'Inativo';
+
+    html += '<tr onclick="selecionarPaciente(\'' + p.id + '\')">';
+    html += '<td><div class="pac-row-name"><div class="pac-row-avatar">' + getIniciais(p.name) + '</div><div><div class="pac-row-nome-txt">' + p.name + '</div><div class="pac-row-email">' + (demoText || p.email_personal || '') + '</div></div></div></td>';
+    html += '<td>' + (tagsHtml || '<span style="color:var(--text-3);">—</span>') + '</td>';
+    html += '<td style="font-size:12px;color:var(--text-2);">' + lastVisit + '</td>';
+    html += '<td><span class="pac-row-tag ' + statusClass + '">' + statusLabel + '</span></td>';
+    html += '</tr>';
+  });
+
+  tbody.innerHTML = html;
+}
+
+/* Filtrar por busca */
+function filtrarPacientes() {
+  var q = document.getElementById('pac-search').value.trim().toLowerCase();
+  if (!q) { renderPacientes(allPacientes); return; }
+  var filtrados = allPacientes.filter(function(p) {
+    var condStr = (p.conditions || []).join(' ').toLowerCase();
+    return p.name.toLowerCase().includes(q) || (p.email_personal || '').toLowerCase().includes(q) || condStr.includes(q);
+  });
+  renderPacientes(filtrados);
+}
+
+/* Modal: abrir/fechar */
+function abrirModalNovoPaciente() {
+  document.getElementById('modal-novo-pac').classList.add('active');
+  document.getElementById('np-nome').focus();
+}
+function fecharModalNovoPaciente() {
+  document.getElementById('modal-novo-pac').classList.remove('active');
+  document.getElementById('np-nome').value = '';
+  document.getElementById('np-nascimento').value = '';
+  document.getElementById('np-sexo').value = '';
+  document.getElementById('np-email').value = '';
+  document.getElementById('np-telefone').value = '';
+  document.getElementById('np-condicoes').value = '';
+  document.getElementById('np-error').textContent = '';
+}
+
+/* Salvar novo paciente */
+async function salvarNovoPaciente() {
+  var nome = document.getElementById('np-nome').value.trim();
+  var nasc = document.getElementById('np-nascimento').value;
+  var sexo = document.getElementById('np-sexo').value;
+  var email = document.getElementById('np-email').value.trim();
+  var tel = document.getElementById('np-telefone').value.trim();
+  var conds = document.getElementById('np-condicoes').value.trim();
+  var errEl = document.getElementById('np-error');
+  var btn = document.getElementById('np-btn-save');
+
+  errEl.textContent = '';
+  if (!nome) { errEl.textContent = 'Nome é obrigatório.'; return; }
+  if (!currentDoctor) { errEl.textContent = 'Faça login primeiro.'; return; }
+
+  var condArray = conds ? conds.split(',').map(function(c) { return c.trim(); }).filter(Boolean) : [];
+
+  btn.disabled = true;
+  btn.textContent = 'Salvando...';
+
+  try {
+    var { data, error } = await supabase.from('patients')
+      .insert({
+        name: nome,
+        doctor_id: currentDoctor.id,
+        date_of_birth: nasc || null,
+        sex: sexo || null,
+        email_personal: email || null,
+        phone: tel || null,
+        conditions: condArray,
+        active: true
+      })
+      .select()
+      .single();
+
+    if (error) throw error;
+
+    fecharModalNovoPaciente();
+    await carregarListaPacientes();
+  } catch(e) {
+    errEl.textContent = 'Erro: ' + e.message;
+  } finally {
+    btn.disabled = false;
+    btn.textContent = 'Cadastrar';
+  }
+}
+
+/* Selecionar paciente → ir para prontuário */
+async function selecionarPaciente(patientId) {
+  var pac = allPacientes.find(function(p) { return p.id === patientId; });
+  if (!pac) return;
+
+  currentPatientId = patientId;
+  currentProntuarioId = null;
+
+  /* Atualizar header do prontuário */
+  var nomeEl = document.getElementById('pac-nome-display');
+  var demoEl = document.getElementById('pac-demo-display');
+  var avatarEl = document.getElementById('avatar-placeholder');
+
+  if (nomeEl) nomeEl.textContent = pac.name;
+  var idade = calcIdade(pac.date_of_birth);
+  var sexLabel = pac.sex === 'M' ? 'Masculino' : pac.sex === 'F' ? 'Feminino' : '';
+  if (demoEl) demoEl.textContent = [idade ? idade + ' anos' : '', sexLabel].filter(Boolean).join(' · ') || '';
+  if (avatarEl) avatarEl.textContent = getIniciais(pac.name);
+
+  /* Limpar formulários antes de carregar */
+  document.querySelectorAll('#view-primeira input, #view-primeira select, #view-primeira textarea').forEach(function(el) {
+    if (el.type === 'checkbox') { el.checked = false; var item = el.closest('.check-item'); if (item) item.classList.remove('checked'); }
+    else el.value = '';
+  });
+
+  /* Resetar badges */
+  var statusEl = document.getElementById('save-status');
+  if (statusEl) { statusEl.textContent = 'Carregando...'; statusEl.style.color = 'var(--gold)'; }
+
+  /* Carregar último prontuário do paciente */
+  await carregarUltimoProntuario(patientId);
+
+  if (!currentProntuarioId && statusEl) {
+    statusEl.textContent = 'Novo prontuário';
+    statusEl.style.color = 'var(--text-3)';
+  }
+
+  /* Atualizar last_visit */
+  await supabase.from('patients').update({ last_visit: new Date().toISOString() }).eq('id', patientId);
+
+  /* Navegar para prontuário */
+  navTo('prontuario');
 }
 </script>
 </body>
