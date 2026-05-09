@@ -782,6 +782,10 @@ body{font-family:var(--font-sans);background:var(--navy-deep);color:var(--text);
         <span class="badge b-or" id="badge-tfge">TFGe 42</span>
         <span class="badge b-pr" id="badge-ckm">CKM 3</span>
       </div>
+      <div style="display:flex;align-items:center;gap:12px;margin-left:auto;">
+        <span id="save-status" style="font-size:11px;color:var(--text-3);white-space:nowrap;"></span>
+        <button onclick="salvarProntuarioSupabase()" style="font-family:inherit;font-size:11px;font-weight:700;color:#fff;background:linear-gradient(135deg,var(--teal),#04b5c8);border:none;border-radius:8px;padding:9px 22px;cursor:pointer;white-space:nowrap;letter-spacing:0.5px;box-shadow:0 2px 8px rgba(2,128,144,0.25);transition:all .2s;" onmouseover="this.style.transform='translateY(-1px)';this.style.boxShadow='0 4px 16px rgba(2,128,144,0.35)'" onmouseout="this.style.transform='';this.style.boxShadow='0 2px 8px rgba(2,128,144,0.25)'">Salvar Prontuário</button>
+      </div>
     </div>
 
     <!-- VIEW: PRIMEIRA CONSULTA -->
@@ -1582,12 +1586,23 @@ body{font-family:var(--font-sans);background:var(--navy-deep);color:var(--text);
   </div><!-- /main -->
 </div><!-- /app-shell -->
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 <script>
 /* ============================================================
-   LOGIN
+   SUPABASE CLIENT
    ============================================================ */
-function doLogin() {
+var SUPABASE_URL = 'https://syzmsixhjlutsynnqivv.supabase.co';
+var SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InN5em1zaXhoamx1dHN5bm5xaXZ2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQxMjkxMDMsImV4cCI6MjA4OTcwNTEwM30.poYHMbqAp1bQoZ4tehBoIHbwG5XMaaAcZPNR8Wsywnw';
+var supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
+
+/* Estado global da sessão */
+var currentUser = null;
+var currentDoctor = null;
+/* ============================================================
+   LOGIN — Supabase Auth
+   ============================================================ */
+async function doLogin() {
   var btn = document.getElementById('btn-login');
   var err = document.getElementById('login-err');
   var email = document.getElementById('login-email').value.trim();
@@ -1599,21 +1614,56 @@ function doLogin() {
   btn.disabled = true;
   btn.textContent = 'ENTRANDO...';
 
-  setTimeout(function(){
-    var loginScreen = document.getElementById('login-screen');
-    loginScreen.classList.add('hiding');
+  try {
+    var { data, error } = await supabase.auth.signInWithPassword({ email: email, password: senha });
+    if (error) throw error;
 
-    setTimeout(function(){
-      loginScreen.style.display = 'none';
-      document.body.style.overflow = '';
-      document.body.style.background = 'var(--bg)';
-      document.getElementById('app-shell').classList.add('visible');
-      initApp();
-    }, 800);
-  }, 600);
+    currentUser = data.user;
+
+    /* Buscar perfil do médico */
+    var { data: doctorData, error: docErr } = await supabase
+      .from('doctors')
+      .select('*')
+      .eq('user_id', currentUser.id)
+      .single();
+
+    if (docErr || !doctorData) {
+      err.textContent = 'Conta não vinculada a um médico. Contate o suporte.';
+      btn.disabled = false;
+      btn.textContent = 'ENTRAR';
+      await supabase.auth.signOut();
+      return;
+    }
+
+    currentDoctor = doctorData;
+    enterApp();
+
+  } catch(e) {
+    var msg = e.message || 'Erro ao autenticar.';
+    if (msg.includes('Invalid login')) msg = 'E-mail ou senha incorretos.';
+    err.textContent = msg;
+    btn.disabled = false;
+    btn.textContent = 'ENTRAR';
+  }
 }
 
-function doLogout() {
+function enterApp() {
+  var loginScreen = document.getElementById('login-screen');
+  loginScreen.classList.add('hiding');
+  setTimeout(function(){
+    loginScreen.style.display = 'none';
+    document.body.style.overflow = '';
+    document.body.style.background = 'var(--bg)';
+    document.getElementById('app-shell').classList.add('visible');
+    initApp();
+  }, 800);
+}
+
+async function doLogout() {
+  await supabase.auth.signOut();
+  currentUser = null;
+  currentDoctor = null;
+
   var loginScreen = document.getElementById('login-screen');
   document.getElementById('app-shell').classList.remove('visible');
   document.body.style.background = 'var(--navy-deep)';
@@ -1630,6 +1680,24 @@ function doLogout() {
   navTo('dashboard');
 }
 
+/* Verificar sessão existente ao carregar a página */
+(async function checkSession() {
+  var { data: { session } } = await supabase.auth.getSession();
+  if (session) {
+    currentUser = session.user;
+    var { data: doctorData } = await supabase
+      .from('doctors')
+      .select('*')
+      .eq('user_id', currentUser.id)
+      .single();
+
+    if (doctorData) {
+      currentDoctor = doctorData;
+      enterApp();
+    }
+  }
+})();
+
 /* Allow Enter key to submit */
 document.getElementById('login-senha').addEventListener('keydown', function(e){
   if(e.key === 'Enter') doLogin();
@@ -1642,7 +1710,8 @@ function initApp() {
   var now = new Date();
   var h = now.getHours();
   var saud = h < 12 ? 'Bom dia' : h < 18 ? 'Boa tarde' : 'Boa noite';
-  document.getElementById('dash-greeting').innerHTML = saud + ', <strong>Dr. Bruno</strong>';
+  var docName = currentDoctor ? currentDoctor.name : 'Dr. Bruno';
+  document.getElementById('dash-greeting').innerHTML = saud + ', <strong>' + docName + '</strong>';
   var dias = ['Domingo','Segunda-feira','Terça-feira','Quarta-feira','Quinta-feira','Sexta-feira','Sábado'];
   var meses = ['janeiro','fevereiro','março','abril','maio','junho','julho','agosto','setembro','outubro','novembro','dezembro'];
   document.getElementById('dash-date').textContent = dias[now.getDay()] + ', ' + now.getDate() + ' de ' + meses[now.getMonth()] + ' de ' + now.getFullYear();
@@ -2624,6 +2693,213 @@ function calcCKM(imc, pas, gj, hba1c, tfge) {
   document.getElementById('ckm-s' + stage).classList.add('active-stage');
   var ckmCls = stage <= 1 ? 'b-gn' : stage === 2 ? 'b-yl' : stage === 3 ? 'b-pr' : 'b-rd';
   setBadge('badge-ckm', 'CKM ' + stage, ckmCls);
+}
+
+/* ============================================================
+   PRONTUÁRIO CKM — SAVE / LOAD (Supabase)
+   ============================================================ */
+
+/* Coleta todos os inputs/selects/textareas dentro de um container */
+function collectFormData(containerId) {
+  var container = document.getElementById(containerId);
+  if (!container) return {};
+  var data = {};
+
+  /* Inputs e textareas */
+  container.querySelectorAll('input, textarea, select').forEach(function(el) {
+    if (!el.id && !el.name) return;
+    var key = el.id || el.name;
+    if (el.type === 'checkbox') {
+      data[key] = el.checked;
+    } else if (el.type === 'radio') {
+      if (el.checked) data[el.name] = el.value;
+    } else {
+      data[key] = el.value;
+    }
+  });
+
+  /* Checkboxes estilizados (check-items) */
+  var checkedItems = [];
+  container.querySelectorAll('.check-item.checked').forEach(function(item) {
+    checkedItems.push(item.textContent.trim());
+  });
+  if (checkedItems.length > 0) data['_checkedItems'] = checkedItems;
+
+  return data;
+}
+
+/* Preenche campos de um container a partir de dados salvos */
+function fillFormData(containerId, data) {
+  if (!data || typeof data !== 'object') return;
+  var container = document.getElementById(containerId);
+  if (!container) return;
+
+  Object.keys(data).forEach(function(key) {
+    if (key === '_checkedItems') return; /* tratado separadamente */
+    var el = document.getElementById(key) || container.querySelector('[name="' + key + '"]');
+    if (!el) return;
+    if (el.type === 'checkbox') {
+      el.checked = !!data[key];
+      var item = el.closest('.check-item');
+      if (item) item.classList.toggle('checked', !!data[key]);
+    } else if (el.type === 'radio') {
+      if (el.value === data[key]) el.checked = true;
+    } else {
+      el.value = data[key];
+    }
+  });
+
+  /* Restaurar check-items */
+  if (data['_checkedItems'] && Array.isArray(data['_checkedItems'])) {
+    container.querySelectorAll('.check-item').forEach(function(item) {
+      var txt = item.textContent.trim();
+      var cb = item.querySelector('input[type="checkbox"]');
+      if (data['_checkedItems'].indexOf(txt) !== -1) {
+        if (cb) cb.checked = true;
+        item.classList.add('checked');
+      } else {
+        if (cb) cb.checked = false;
+        item.classList.remove('checked');
+      }
+    });
+  }
+}
+
+/* Coleta TODOS os dados do prontuário */
+function collectProntuario() {
+  /* Helper para capturar texto de um elemento */
+  function getText(id) { var el = document.getElementById(id); return el ? el.textContent : ''; }
+
+  return {
+    anamnese: collectFormData('tab-anam'),
+    exame_fisico: collectFormData('tab-ef'),
+    exames_lab: collectFormData('tab-lab'),
+    prescricao: collectFormData('tab-prx'),
+    conduta: collectFormData('tab-tto'),
+    metas: collectFormData('tab-metas'),
+    /* Cálculos: capturar valores computados exibidos na tela */
+    calculos: {
+      imc: getText('cl-imc-val'),
+      tfge: getText('cl-tfge-val'),
+      ascvd: getText('cl-ascvd-val'),
+      kfre2: getText('cl-kfre2-val'),
+      kfre5: getText('cl-kfre5-val'),
+      fib4: getText('cl-fib4-val')
+    }
+  };
+}
+
+/* Preenche TODOS os dados do prontuário */
+function fillProntuario(dados) {
+  if (!dados) return;
+  if (dados.anamnese) fillFormData('tab-anam', dados.anamnese);
+  if (dados.exame_fisico) fillFormData('tab-ef', dados.exame_fisico);
+  if (dados.exames_lab) fillFormData('tab-lab', dados.exames_lab);
+  if (dados.prescricao) fillFormData('tab-prx', dados.prescricao);
+  if (dados.conduta) fillFormData('tab-tto', dados.conduta);
+  if (dados.metas) fillFormData('tab-metas', dados.metas);
+  /* Recalcular valores derivados */
+  try { autoCalcIMC(); } catch(e) {}
+  try { autoCalcTFGe(); } catch(e) {}
+}
+
+/* ID do paciente atualmente visualizado no prontuário */
+var currentPatientId = null;
+var currentProntuarioId = null;
+
+/* Salvar prontuário no Supabase */
+async function salvarProntuarioSupabase() {
+  if (!currentDoctor) { alert('Faça login primeiro.'); return; }
+
+  var dados = collectProntuario();
+  var statusEl = document.getElementById('save-status');
+
+  /* Se não tem paciente selecionado, usar o primeiro paciente do médico */
+  if (!currentPatientId) {
+    var { data: pts } = await supabase.from('patients').select('id').eq('doctor_id', currentDoctor.id).limit(1);
+    if (pts && pts.length > 0) {
+      currentPatientId = pts[0].id;
+    } else {
+      alert('Nenhum paciente cadastrado. Cadastre um paciente primeiro.');
+      return;
+    }
+  }
+
+  try {
+    if (statusEl) { statusEl.textContent = 'Salvando...'; statusEl.style.color = 'var(--gold)'; }
+
+    var payload = {
+      anamnese: dados.anamnese,
+      exame_fisico: dados.exame_fisico,
+      exames_lab: dados.exames_lab,
+      calculos: dados.calculos,
+      prescricao: dados.prescricao,
+      conduta: dados.conduta,
+      metas: dados.metas
+    };
+
+    if (currentProntuarioId) {
+      /* Atualizar existente */
+      var { error } = await supabase.from('prontuarios_ckm')
+        .update(payload)
+        .eq('id', currentProntuarioId);
+      if (error) throw error;
+    } else {
+      /* Criar novo */
+      payload.patient_id = currentPatientId;
+      payload.doctor_id = currentDoctor.id;
+      payload.tipo = 'primeira_consulta';
+      payload.status = 'rascunho';
+      var { data: novo, error } = await supabase.from('prontuarios_ckm')
+        .insert(payload)
+        .select()
+        .single();
+      if (error) throw error;
+      currentProntuarioId = novo.id;
+    }
+
+    if (statusEl) { statusEl.textContent = 'Salvo ✓ ' + new Date().toLocaleTimeString('pt-BR'); statusEl.style.color = 'var(--green)'; }
+  } catch(e) {
+    console.error('Erro ao salvar prontuário:', e);
+    if (statusEl) { statusEl.textContent = 'Erro ao salvar: ' + e.message; statusEl.style.color = 'var(--red)'; }
+  }
+}
+
+/* Carregar último prontuário do paciente */
+async function carregarUltimoProntuario(patientId) {
+  if (!currentDoctor) return;
+  currentPatientId = patientId;
+
+  var { data, error } = await supabase.from('prontuarios_ckm')
+    .select('*')
+    .eq('patient_id', patientId)
+    .eq('doctor_id', currentDoctor.id)
+    .order('created_at', { ascending: false })
+    .limit(1)
+    .single();
+
+  if (data) {
+    currentProntuarioId = data.id;
+    fillProntuario(data);
+    var statusEl = document.getElementById('save-status');
+    if (statusEl) {
+      statusEl.textContent = 'Carregado — ' + new Date(data.updated_at).toLocaleString('pt-BR');
+      statusEl.style.color = 'var(--teal)';
+    }
+  } else {
+    currentProntuarioId = null;
+  }
+}
+
+/* Listar prontuários de um paciente */
+async function listarProntuarios(patientId) {
+  if (!currentDoctor) return [];
+  var { data, error } = await supabase.from('prontuarios_ckm')
+    .select('id, tipo, status, created_at, updated_at')
+    .eq('patient_id', patientId)
+    .eq('doctor_id', currentDoctor.id)
+    .order('created_at', { ascending: false });
+  return data || [];
 }
 </script>
 </body>
