@@ -147,7 +147,7 @@ body{font-family:var(--font-sans);background:var(--navy-deep);color:var(--text);
 /* ============================================================
    MAIN CONTENT
    ============================================================ */
-.main{margin-left:var(--sidebar-w);flex:1;min-height:100vh;position:relative;background:var(--bg);}
+.main{margin-left:var(--sidebar-w);flex:1;height:100vh;overflow-y:auto;position:relative;background:var(--bg);}
 .main::before{content:'';position:fixed;top:0;right:0;bottom:0;left:var(--sidebar-w);z-index:0;pointer-events:none;
   background-image:radial-gradient(circle 1.2px, rgba(196,163,90,0.12) 98%, transparent 100%);
   background-size:28px 28px;
