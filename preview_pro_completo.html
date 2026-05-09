@@ -157,6 +157,9 @@ body{font-family:var(--font-sans);background:var(--navy-deep);color:var(--text);
 .topbar{position:sticky;top:0;z-index:100;
   background:rgba(250,249,245,0.85);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
   border-bottom:1px solid var(--border);padding:0 40px;height:56px;display:flex;align-items:center;gap:12px;}
+.topbar-back{display:none;align-items:center;justify-content:center;width:32px;height:32px;border:1px solid var(--border);border-radius:var(--radius-sm);background:var(--bg-card);color:var(--text-2);cursor:pointer;font-size:16px;transition:all .15s;flex-shrink:0;margin-right:4px;}
+.topbar-back:hover{background:var(--navy);color:#fff;border-color:var(--navy);}
+.topbar-back.visible{display:flex;}
 .topbar-breadcrumb{display:flex;align-items:center;gap:6px;font-size:12px;}
 .topbar-bc-item{color:var(--text-3);cursor:pointer;transition:color .15s;font-weight:500;background:none;border:none;font-family:inherit;padding:0;font-size:inherit;}
 .topbar-bc-item:hover{color:var(--navy);}
@@ -812,6 +815,7 @@ body{font-family:var(--font-sans);background:var(--navy-deep);color:var(--text);
   <!-- MAIN -->
   <div class="main">
     <div class="topbar">
+      <button class="topbar-back" id="topbar-back" onclick="navBack()" title="Voltar">&#8249;</button>
       <nav class="topbar-breadcrumb" id="topbar-bc"><span class="topbar-bc-active">Dashboard</span></nav>
     </div>
 
@@ -3127,6 +3131,15 @@ function navTo(pageId) {
   var ti = document.querySelector('.sb-item[data-page="' + pageId + '"]');
   if (ti) ti.classList.add('active');
 
+  /* Back button */
+  var backBtn = document.getElementById('topbar-back');
+  if (info.parent) {
+    backBtn.classList.add('visible');
+    backBtn.setAttribute('data-back', info.parent);
+  } else {
+    backBtn.classList.remove('visible');
+  }
+
   /* Breadcrumb */
   var bc = document.getElementById('topbar-bc');
   bc.innerHTML = info.bc.map(function(label, i) {
@@ -3146,6 +3159,12 @@ function navTo(pageId) {
   /* Carregar dados da página ao navegar */
   if (pageId === 'lista-pacientes' && currentDoctor) carregarListaPacientes();
   if (pageId === 'agenda') initCalendar();
+}
+
+function navBack() {
+  var backBtn = document.getElementById('topbar-back');
+  var target = backBtn.getAttribute('data-back');
+  if (target) navTo(target);
 }
 
 function toggleModule(label) {
