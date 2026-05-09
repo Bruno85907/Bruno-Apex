@@ -394,25 +394,70 @@ body{font-family:var(--font-sans);background:var(--navy-deep);color:var(--text);
 .pac-action-btn:hover{color:var(--teal);border-color:rgba(2,128,144,0.3);background:rgba(2,128,144,0.04);}
 .pac-action-btn.pac-del:hover{color:var(--red);border-color:rgba(220,38,38,0.3);background:rgba(220,38,38,0.04);}
 
-/* Minha Agenda */
-.agenda-timeline{display:flex;flex-direction:column;gap:0;position:relative;}
-.agenda-month{position:relative;padding-left:28px;padding-bottom:28px;border-left:2px solid var(--border);margin-left:6px;}
-.agenda-month:last-child{border-left-color:transparent;}
-.agenda-month-header{display:flex;align-items:center;gap:10px;margin-bottom:12px;position:relative;}
-.agenda-month-dot{width:14px;height:14px;border-radius:50%;position:absolute;left:-35px;top:1px;border:2px solid var(--card);}
-.agenda-month-label{font-size:14px;font-weight:700;color:var(--text-1);font-family:var(--font-heading);}
-.agenda-month-badge{font-size:9px;font-weight:600;letter-spacing:0.5px;padding:2px 8px;border-radius:4px;}
-.agenda-items{display:flex;flex-direction:column;gap:4px;}
-.agenda-item{display:flex;align-items:flex-start;gap:10px;padding:8px 12px;border-radius:8px;transition:background 0.2s;}
-.agenda-item:hover{background:rgba(2,128,144,0.03);}
-.agenda-item-check{width:16px;height:16px;border:1.5px solid var(--border);border-radius:4px;flex-shrink:0;margin-top:1px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.2s;}
-.agenda-item-check.done{background:var(--teal);border-color:var(--teal);}
-.agenda-item-check.done::after{content:'✓';color:#fff;font-size:10px;font-weight:700;}
-.agenda-item.done{opacity:0.5;}
-.agenda-item-content{flex:1;}
-.agenda-item-title{font-size:13px;color:var(--text-1);font-weight:500;}
-.agenda-item.done .agenda-item-title{text-decoration:line-through;}
-.agenda-item-proj{font-size:10px;color:var(--text-3);margin-top:1px;}
+/* ── Minha Agenda · Weekly Calendar ── */
+.cal-wrap{display:flex;flex-direction:column;gap:0;height:calc(100vh - 180px);min-height:600px;}
+.cal-toolbar{display:flex;align-items:center;justify-content:space-between;padding:0 0 16px;flex-shrink:0;}
+.cal-nav{display:flex;align-items:center;gap:8px;}
+.cal-nav-btn{display:flex;align-items:center;justify-content:center;width:34px;height:34px;border:1px solid var(--border);border-radius:var(--radius-sm);background:var(--bg-card);color:var(--text);cursor:pointer;font-size:15px;transition:background .15s,border-color .15s;}
+.cal-nav-btn:hover{background:var(--navy);color:#fff;border-color:var(--navy);}
+.cal-week-label{font-family:var(--font-serif);font-size:1.05rem;color:var(--text);min-width:220px;text-align:center;}
+.cal-today-btn{padding:6px 16px;border:1px solid var(--border);border-radius:var(--radius-sm);background:var(--bg-card);color:var(--text);font-family:var(--font-sans);font-size:.82rem;font-weight:500;cursor:pointer;transition:background .15s,color .15s,border-color .15s;}
+.cal-today-btn:hover{background:var(--teal);color:#fff;border-color:var(--teal);}
+.cal-toolbar-right{display:flex;align-items:center;gap:10px;}
+.cal-new-btn{display:flex;align-items:center;gap:6px;padding:7px 18px;background:var(--navy);color:#fff;border:none;border-radius:var(--radius-sm);font-family:var(--font-sans);font-size:.82rem;font-weight:600;cursor:pointer;transition:background .15s;}
+.cal-new-btn:hover{background:var(--teal);}
+.cal-new-btn svg{width:14px;height:14px;flex-shrink:0;}
+.cal-grid-wrap{flex:1;overflow:hidden;border:1px solid var(--border);border-radius:var(--radius);background:var(--bg-card);display:flex;flex-direction:column;}
+.cal-day-header-row{display:grid;grid-template-columns:56px repeat(7,1fr);border-bottom:1px solid var(--border);flex-shrink:0;background:var(--bg-card);position:sticky;top:0;z-index:10;}
+.cal-time-gutter-head{border-right:1px solid var(--border);}
+.cal-day-head{padding:10px 6px 8px;text-align:center;border-right:1px solid var(--border);cursor:default;}
+.cal-day-head:last-child{border-right:none;}
+.cal-day-name{font-family:var(--font-sans);font-size:.7rem;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--text-3);}
+.cal-day-num{font-family:var(--font-serif);font-size:1.35rem;line-height:1.1;color:var(--text);margin-top:2px;}
+.cal-day-head.is-today .cal-day-name{color:var(--teal);}
+.cal-day-head.is-today .cal-day-num{display:inline-flex;align-items:center;justify-content:center;width:34px;height:34px;background:var(--teal);color:#fff;border-radius:50%;margin-top:2px;}
+.cal-body-scroll{flex:1;overflow-y:auto;overflow-x:hidden;scroll-behavior:smooth;}
+.cal-body-scroll::-webkit-scrollbar{width:5px;}
+.cal-body-scroll::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px;}
+.cal-time-grid{display:grid;grid-template-columns:56px repeat(7,1fr);position:relative;}
+.cal-time-label{grid-column:1;height:60px;display:flex;align-items:flex-start;justify-content:flex-end;padding:4px 8px 0 0;font-family:var(--font-sans);font-size:.68rem;color:var(--text-3);border-right:1px solid var(--border);box-sizing:border-box;flex-shrink:0;}
+.cal-day-cell{height:60px;border-right:1px solid var(--border);border-bottom:1px solid rgba(0,0,0,0.05);box-sizing:border-box;position:relative;transition:background .1s;}
+.cal-day-cell:last-child{border-right:none;}
+.cal-day-cell.is-today{background:rgba(2,128,144,0.03);}
+.cal-day-cell.is-weekend{background:rgba(0,0,0,0.012);}
+.cal-events-layer{position:absolute;top:0;left:56px;right:0;bottom:0;display:grid;grid-template-columns:repeat(7,1fr);pointer-events:none;}
+.cal-col-events{position:relative;pointer-events:none;}
+.cal-event{position:absolute;left:3px;right:3px;border-radius:5px;padding:4px 7px;overflow:hidden;cursor:pointer;pointer-events:all;transition:filter .15s,transform .1s;box-sizing:border-box;z-index:2;}
+.cal-event:hover{filter:brightness(0.92);transform:scaleX(0.98);}
+.cal-event-title{font-family:var(--font-sans);font-size:.72rem;font-weight:600;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;line-height:1.3;}
+.cal-event-time{font-family:var(--font-sans);font-size:.65rem;color:rgba(255,255,255,0.82);line-height:1.2;margin-top:1px;}
+.cal-now-line{position:absolute;left:0;right:0;height:2px;background:#E53935;z-index:20;pointer-events:none;}
+.cal-now-dot{position:absolute;left:-4px;top:-4px;width:10px;height:10px;border-radius:50%;background:#E53935;}
+.cal-modal-backdrop{display:none;position:fixed;inset:0;background:rgba(20,30,50,0.45);z-index:9999;align-items:center;justify-content:center;backdrop-filter:blur(4px);}
+.cal-modal-backdrop.is-open{display:flex;}
+.cal-modal{background:var(--bg-card);border:1px solid var(--border);border-radius:calc(var(--radius)*1.5);width:100%;max-width:480px;padding:28px 30px 24px;box-shadow:0 20px 60px rgba(20,30,50,0.18);display:flex;flex-direction:column;gap:18px;}
+.cal-modal-header{display:flex;align-items:center;justify-content:space-between;}
+.cal-modal-title{font-family:var(--font-serif);font-size:1.2rem;color:var(--navy);}
+.cal-modal-close{background:none;border:none;font-size:1.3rem;color:var(--text-3);cursor:pointer;padding:2px 6px;border-radius:4px;line-height:1;transition:color .15s,background .15s;}
+.cal-modal-close:hover{color:var(--text);background:var(--border);}
+.cal-form-row{display:flex;flex-direction:column;gap:5px;}
+.cal-form-row.two-col{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.cal-form-row.two-col>*{display:flex;flex-direction:column;gap:5px;}
+.cal-label{font-family:var(--font-sans);font-size:.75rem;font-weight:600;color:var(--text-2);text-transform:uppercase;letter-spacing:.05em;}
+.cal-input,.cal-select{padding:8px 11px;border:1px solid var(--border);border-radius:var(--radius-sm);background:var(--bg);color:var(--text);font-family:var(--font-sans);font-size:.87rem;outline:none;transition:border-color .15s;}
+.cal-input:focus,.cal-select:focus{border-color:var(--teal);}
+.cal-dow-group{display:flex;gap:6px;flex-wrap:wrap;}
+.cal-dow-chip{display:none;}
+.cal-dow-chip+label{display:flex;align-items:center;justify-content:center;width:36px;height:36px;border:1px solid var(--border);border-radius:50%;font-family:var(--font-sans);font-size:.72rem;font-weight:600;color:var(--text-2);cursor:pointer;transition:background .15s,border-color .15s,color .15s;}
+.cal-dow-chip:checked+label{background:var(--navy);border-color:var(--navy);color:#fff;}
+.cal-color-group{display:flex;gap:8px;}
+.cal-color-radio{display:none;}
+.cal-color-swatch{width:26px;height:26px;border-radius:50%;cursor:pointer;border:3px solid transparent;transition:border-color .15s,transform .1s;box-sizing:border-box;}
+.cal-color-radio:checked+.cal-color-swatch{border-color:var(--text);transform:scale(1.15);}
+.cal-save-btn{width:100%;padding:10px;background:var(--navy);color:#fff;border:none;border-radius:var(--radius-sm);font-family:var(--font-sans);font-size:.9rem;font-weight:600;cursor:pointer;transition:background .15s;margin-top:4px;}
+.cal-save-btn:hover{background:var(--teal);}
+.cal-dow-row{display:none;}
+.cal-dow-row.visible{display:flex;flex-direction:column;gap:5px;}
 
 .pac-row-name{display:flex;align-items:center;gap:10px;}
 .pac-row-avatar{width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,var(--navy),var(--teal));display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#fff;flex-shrink:0;}
@@ -678,7 +723,7 @@ body{font-family:var(--font-sans);background:var(--navy-deep);color:var(--text);
   <div class="login-form-side">
     <div class="login-form-wrap">
       <div class="login-logo-wrap">
-        <img src="landing-page/Logo.probranco-cropped.png" alt="Apex Pro" style="height:44px;opacity:0.95;">
+        <img src="landing-page/logo-ax-white.png" alt="Apex Pro" style="height:54px;">
       </div>
       <div class="login-welcome">Acesso <strong>profissional</strong></div>
       <div class="login-desc">Entre com suas credenciais para acessar indicadores, protocolos e gestão de pacientes.</div>
@@ -708,7 +753,7 @@ body{font-family:var(--font-sans);background:var(--navy-deep);color:var(--text);
   <!-- SIDEBAR -->
   <aside class="sidebar">
     <div class="sb-logo">
-      <img src="landing-page/Logo.probranco-cropped.png" alt="Apex Pro" style="height:34px;opacity:0.95;">
+      <img src="landing-page/logo-ax-white.png" alt="Apex Pro" style="height:38px;">
       <div class="sb-logo-context">Fenix Nefrologia</div>
     </div>
     <nav class="sb-nav">
@@ -807,125 +852,105 @@ body{font-family:var(--font-sans);background:var(--navy-deep);color:var(--text);
       </div>
     </div>
 
-    <!-- PAGE: MINHA AGENDA -->
+    <!-- PAGE: MINHA AGENDA — Weekly Calendar -->
     <div class="content-page" id="page-agenda">
       <p class="page-eyebrow rv">Planejamento</p>
       <h2 class="page-title rv">Minha <strong>Agenda</strong></h2>
-      <p class="page-desc rv">Visão consolidada de todas as etapas dos seus projetos, distribuídas ao longo do tempo.</p>
+      <p class="page-desc rv">Visualize e gerencie seus compromissos clínicos, horários de diálise e tarefas de projeto em uma única visão.</p>
 
-      <!-- Timeline por mês -->
-      <div class="agenda-timeline rv">
-
-        <!-- MAIO 2026 — CONCLUÍDO -->
-        <div class="agenda-month">
-          <div class="agenda-month-header">
-            <div class="agenda-month-dot" style="background:var(--teal);"></div>
-            <div class="agenda-month-label">Maio 2026</div>
-            <span class="agenda-month-badge" style="background:rgba(2,128,144,0.08);color:var(--teal);">Em Andamento</span>
+      <div class="cal-wrap rv">
+        <div class="cal-toolbar">
+          <div class="cal-nav">
+            <button class="cal-nav-btn" onclick="navigateWeek(-1)" title="Semana anterior">&#8249;</button>
+            <span class="cal-week-label" id="calWeekLabel"></span>
+            <button class="cal-nav-btn" onclick="navigateWeek(1)" title="Próxima semana">&#8250;</button>
+            <button class="cal-today-btn" onclick="goToToday()">Hoje</button>
           </div>
-          <div class="agenda-items">
-            <div class="agenda-item done"><div class="agenda-item-check done"></div><div class="agenda-item-content"><div class="agenda-item-title">Sidebar reorganizada em 3 módulos</div><div class="agenda-item-proj">APEX Pro</div></div></div>
-            <div class="agenda-item done"><div class="agenda-item-check done"></div><div class="agenda-item-content"><div class="agenda-item-title">CRUD pacientes + editar/excluir</div><div class="agenda-item-proj">APEX Pro</div></div></div>
-            <div class="agenda-item done"><div class="agenda-item-check done"></div><div class="agenda-item-content"><div class="agenda-item-title">Prontuário CKM: Hidratação, Bioimpedância, Tabagismo</div><div class="agenda-item-proj">APEX Pro</div></div></div>
-            <div class="agenda-item done"><div class="agenda-item-check done"></div><div class="agenda-item-content"><div class="agenda-item-title">Logo AX integrado (sidebar + login)</div><div class="agenda-item-proj">APEX Pro</div></div></div>
-            <div class="agenda-item done"><div class="agenda-item-check done"></div><div class="agenda-item-content"><div class="agenda-item-title">Plan. Estratégico com seletor de organizações</div><div class="agenda-item-proj">APEX Pro</div></div></div>
-            <div class="agenda-item done"><div class="agenda-item-check done"></div><div class="agenda-item-content"><div class="agenda-item-title">Estrutura OKR implementada nos projetos</div><div class="agenda-item-proj">APEX Pro</div></div></div>
-            <div class="agenda-item done"><div class="agenda-item-check done"></div><div class="agenda-item-content"><div class="agenda-item-title">Landing page v1 deployada</div><div class="agenda-item-proj">APEX Landing</div></div></div>
-            <div class="agenda-item done"><div class="agenda-item-check done"></div><div class="agenda-item-content"><div class="agenda-item-title">3 artigos Insights publicados</div><div class="agenda-item-proj">APEX Insights</div></div></div>
+          <div class="cal-toolbar-right">
+            <button class="cal-new-btn" onclick="openCalModal()">
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="8" y1="2" x2="8" y2="14"/><line x1="2" y1="8" x2="14" y2="8"/></svg>
+              Novo Evento
+            </button>
           </div>
         </div>
-
-        <!-- JUNHO 2026 -->
-        <div class="agenda-month">
-          <div class="agenda-month-header">
-            <div class="agenda-month-dot" style="background:var(--gold);"></div>
-            <div class="agenda-month-label">Junho 2026</div>
-            <span class="agenda-month-badge" style="background:rgba(196,163,90,0.08);color:var(--gold);">Próximo</span>
+        <div class="cal-grid-wrap">
+          <div class="cal-day-header-row" id="calDayHeaders">
+            <div class="cal-time-gutter-head"></div>
           </div>
-          <div class="agenda-items">
-            <div class="agenda-item"><div class="agenda-item-check"></div><div class="agenda-item-content"><div class="agenda-item-title">Refatorar: CSS/JS em arquivos separados</div><div class="agenda-item-proj">APEX Pro</div></div></div>
-            <div class="agenda-item"><div class="agenda-item-check"></div><div class="agenda-item-content"><div class="agenda-item-title">Estratégia Instagram: 3 posts/semana</div><div class="agenda-item-proj">APEX Landing</div></div></div>
-            <div class="agenda-item"><div class="agenda-item-check"></div><div class="agenda-item-content"><div class="agenda-item-title">Integrar Google Analytics + Meta Pixel</div><div class="agenda-item-proj">APEX Landing</div></div></div>
-            <div class="agenda-item"><div class="agenda-item-check"></div><div class="agenda-item-content"><div class="agenda-item-title">Mapear temas prioritários IEP</div><div class="agenda-item-proj">Fenix IEP</div></div></div>
-            <div class="agenda-item"><div class="agenda-item-check"></div><div class="agenda-item-content"><div class="agenda-item-title">Levantar processos da unidade RL</div><div class="agenda-item-proj">Fenix Diálise</div></div></div>
-            <div class="agenda-item"><div class="agenda-item-check"></div><div class="agenda-item-content"><div class="agenda-item-title">Consolidar dados financeiros RL (12m)</div><div class="agenda-item-proj">Fenix Diálise</div></div></div>
+          <div class="cal-body-scroll" id="calBodyScroll">
+            <div class="cal-time-grid" id="calTimeGrid"></div>
           </div>
         </div>
+      </div>
 
-        <!-- JULHO 2026 -->
-        <div class="agenda-month">
-          <div class="agenda-month-header">
-            <div class="agenda-month-dot" style="background:var(--text-3);"></div>
-            <div class="agenda-month-label">Julho 2026</div>
+      <!-- Modal Novo Evento -->
+      <div class="cal-modal-backdrop" id="calModalBackdrop" onclick="closeCalModal(event)">
+        <div class="cal-modal" onclick="event.stopPropagation()">
+          <div class="cal-modal-header">
+            <span class="cal-modal-title">Novo Evento</span>
+            <button class="cal-modal-close" onclick="closeCalModal()">&#215;</button>
           </div>
-          <div class="agenda-items">
-            <div class="agenda-item"><div class="agenda-item-check"></div><div class="agenda-item-content"><div class="agenda-item-title">Auth com roles (admin/médico/equipe)</div><div class="agenda-item-proj">APEX Pro</div></div></div>
-            <div class="agenda-item"><div class="agenda-item-check"></div><div class="agenda-item-content"><div class="agenda-item-title">Selecionar plataforma LMS</div><div class="agenda-item-proj">Fenix IEP</div></div></div>
-            <div class="agenda-item"><div class="agenda-item-check"></div><div class="agenda-item-content"><div class="agenda-item-title">Mapear gaps entre unidades</div><div class="agenda-item-proj">Fenix Diálise</div></div></div>
-            <div class="agenda-item"><div class="agenda-item-check"></div><div class="agenda-item-content"><div class="agenda-item-title">Escrever artigo: DRC e Qualidade de Vida</div><div class="agenda-item-proj">APEX Insights</div></div></div>
+          <div class="cal-form-row">
+            <label class="cal-label" for="calEvtTitle">Título</label>
+            <input class="cal-input" id="calEvtTitle" type="text" placeholder="Ex.: Consultório, Reunião Clínica…" autocomplete="off">
           </div>
+          <div class="cal-form-row">
+            <label class="cal-label" for="calEvtTipo">Tipo</label>
+            <select class="cal-select" id="calEvtTipo" onchange="handleTipoChange()">
+              <option value="recorrente">Recorrente (semanal)</option>
+              <option value="unico">Único</option>
+              <option value="tarefa">Tarefa / OKR</option>
+            </select>
+          </div>
+          <div class="cal-form-row" id="calEvtDataRow" style="display:none;">
+            <label class="cal-label" for="calEvtData">Data</label>
+            <input class="cal-input" id="calEvtData" type="date">
+          </div>
+          <div class="cal-dow-row visible" id="calEvtDowRow">
+            <label class="cal-label">Dias da semana</label>
+            <div class="cal-dow-group">
+              <input class="cal-dow-chip" type="checkbox" id="dow0" value="1"><label for="dow0">Seg</label>
+              <input class="cal-dow-chip" type="checkbox" id="dow1" value="2"><label for="dow1">Ter</label>
+              <input class="cal-dow-chip" type="checkbox" id="dow2" value="3"><label for="dow2">Qua</label>
+              <input class="cal-dow-chip" type="checkbox" id="dow3" value="4"><label for="dow3">Qui</label>
+              <input class="cal-dow-chip" type="checkbox" id="dow4" value="5"><label for="dow4">Sex</label>
+              <input class="cal-dow-chip" type="checkbox" id="dow5" value="6"><label for="dow5">Sáb</label>
+              <input class="cal-dow-chip" type="checkbox" id="dow6" value="0"><label for="dow6">Dom</label>
+            </div>
+          </div>
+          <div class="cal-form-row two-col">
+            <div>
+              <label class="cal-label" for="calEvtStart">Hora início</label>
+              <input class="cal-input" id="calEvtStart" type="time" value="08:00">
+            </div>
+            <div>
+              <label class="cal-label" for="calEvtEnd">Hora fim</label>
+              <input class="cal-input" id="calEvtEnd" type="time" value="09:00">
+            </div>
+          </div>
+          <div class="cal-form-row">
+            <label class="cal-label" for="calEvtProjeto">Projeto (opcional)</label>
+            <select class="cal-select" id="calEvtProjeto">
+              <option value="">— Nenhum —</option>
+              <option value="fenix">Fenix Nefrologia</option>
+              <option value="apex">APEX Pro</option>
+              <option value="iep">IEP / Pesquisa</option>
+              <option value="dialise-rl">Diálise — Unidade RL</option>
+              <option value="dialise-santos">Diálise — Unidade Santos</option>
+            </select>
+          </div>
+          <div class="cal-form-row">
+            <label class="cal-label">Cor</label>
+            <div class="cal-color-group">
+              <input class="cal-color-radio" type="radio" name="calColor" id="cc-teal" value="#028090" checked><label class="cal-color-swatch" for="cc-teal" style="background:#028090;"></label>
+              <input class="cal-color-radio" type="radio" name="calColor" id="cc-navy" value="#1E2D50"><label class="cal-color-swatch" for="cc-navy" style="background:#1E2D50;"></label>
+              <input class="cal-color-radio" type="radio" name="calColor" id="cc-gold" value="#C4A35A"><label class="cal-color-swatch" for="cc-gold" style="background:#C4A35A;"></label>
+              <input class="cal-color-radio" type="radio" name="calColor" id="cc-purple" value="#534AB7"><label class="cal-color-swatch" for="cc-purple" style="background:#534AB7;"></label>
+              <input class="cal-color-radio" type="radio" name="calColor" id="cc-coral" value="#D85A30"><label class="cal-color-swatch" for="cc-coral" style="background:#D85A30;"></label>
+            </div>
+          </div>
+          <button class="cal-save-btn" onclick="saveCalEvent()">Salvar evento</button>
         </div>
-
-        <!-- AGOSTO 2026 -->
-        <div class="agenda-month">
-          <div class="agenda-month-header">
-            <div class="agenda-month-dot" style="background:var(--text-3);"></div>
-            <div class="agenda-month-label">Agosto 2026</div>
-          </div>
-          <div class="agenda-items">
-            <div class="agenda-item"><div class="agenda-item-check"></div><div class="agenda-item-content"><div class="agenda-item-title">Gráficos de evolução temporal (Chart.js)</div><div class="agenda-item-proj">APEX Pro</div></div></div>
-            <div class="agenda-item"><div class="agenda-item-check"></div><div class="agenda-item-content"><div class="agenda-item-title">Gravar módulo piloto: DRC e CKM</div><div class="agenda-item-proj">Fenix IEP</div></div></div>
-            <div class="agenda-item"><div class="agenda-item-check"></div><div class="agenda-item-content"><div class="agenda-item-title">Redigir manual operacional v1</div><div class="agenda-item-proj">Fenix Diálise</div></div></div>
-            <div class="agenda-item"><div class="agenda-item-check"></div><div class="agenda-item-content"><div class="agenda-item-title">Modelar cenários de expansão financeira</div><div class="agenda-item-proj">Fenix Diálise</div></div></div>
-          </div>
-        </div>
-
-        <!-- SETEMBRO 2026 -->
-        <div class="agenda-month">
-          <div class="agenda-month-header">
-            <div class="agenda-month-dot" style="background:var(--text-3);"></div>
-            <div class="agenda-month-label">Setembro 2026</div>
-          </div>
-          <div class="agenda-items">
-            <div class="agenda-item"><div class="agenda-item-check"></div><div class="agenda-item-content"><div class="agenda-item-title">PDF automático mensal de indicadores</div><div class="agenda-item-proj">APEX Pro</div></div></div>
-            <div class="agenda-item"><div class="agenda-item-check"></div><div class="agenda-item-content"><div class="agenda-item-title">Lançar inscrições 1º ciclo IEP</div><div class="agenda-item-proj">Fenix IEP</div></div></div>
-            <div class="agenda-item"><div class="agenda-item-check"></div><div class="agenda-item-content"><div class="agenda-item-title">Submeter ao CEP institucional</div><div class="agenda-item-proj">Fenix IEP</div></div></div>
-            <div class="agenda-item"><div class="agenda-item-check"></div><div class="agenda-item-content"><div class="agenda-item-title">Criar dashboard financeiro no Pro</div><div class="agenda-item-proj">Fenix Diálise</div></div></div>
-            <div class="agenda-item"><div class="agenda-item-check"></div><div class="agenda-item-content"><div class="agenda-item-title">Definir escopo MVP app do paciente</div><div class="agenda-item-proj">APEX App</div></div></div>
-          </div>
-        </div>
-
-        <!-- OUT-DEZ 2026 -->
-        <div class="agenda-month">
-          <div class="agenda-month-header">
-            <div class="agenda-month-dot" style="background:var(--text-3);"></div>
-            <div class="agenda-month-label">Outubro — Dezembro 2026</div>
-          </div>
-          <div class="agenda-items">
-            <div class="agenda-item"><div class="agenda-item-check"></div><div class="agenda-item-content"><div class="agenda-item-title">Prototipar assessor virtual (prompt + knowledge base)</div><div class="agenda-item-proj">APEX App</div></div></div>
-            <div class="agenda-item"><div class="agenda-item-check"></div><div class="agenda-item-content"><div class="agenda-item-title">Treinar assessor com protocolos CKM + plano</div><div class="agenda-item-proj">APEX App</div></div></div>
-            <div class="agenda-item"><div class="agenda-item-check"></div><div class="agenda-item-content"><div class="agenda-item-title">Integração WhatsApp (lembretes + plano)</div><div class="agenda-item-proj">APEX Pro</div></div></div>
-            <div class="agenda-item"><div class="agenda-item-check"></div><div class="agenda-item-content"><div class="agenda-item-title">Teste piloto na unidade Santos</div><div class="agenda-item-proj">Fenix Diálise</div></div></div>
-            <div class="agenda-item"><div class="agenda-item-check"></div><div class="agenda-item-content"><div class="agenda-item-title">Redigir e submeter primeiro artigo</div><div class="agenda-item-proj">Fenix IEP</div></div></div>
-            <div class="agenda-item"><div class="agenda-item-check"></div><div class="agenda-item-content"><div class="agenda-item-title">Beta fechado assessor com 5 pacientes</div><div class="agenda-item-proj">APEX App</div></div></div>
-          </div>
-        </div>
-
-        <!-- Q1-Q2 2027 -->
-        <div class="agenda-month">
-          <div class="agenda-month-header">
-            <div class="agenda-month-dot" style="background:var(--ckm-purple);"></div>
-            <div class="agenda-month-label">Q1 — Q2 2027</div>
-            <span class="agenda-month-badge" style="background:rgba(83,74,183,0.08);color:var(--ckm-purple);">Horizonte</span>
-          </div>
-          <div class="agenda-items">
-            <div class="agenda-item"><div class="agenda-item-check"></div><div class="agenda-item-content"><div class="agenda-item-title">App APEX Patient (PWA) — MVP</div><div class="agenda-item-proj">APEX App</div></div></div>
-            <div class="agenda-item"><div class="agenda-item-check"></div><div class="agenda-item-content"><div class="agenda-item-title">Assessor virtual via WhatsApp Business API</div><div class="agenda-item-proj">APEX App</div></div></div>
-            <div class="agenda-item"><div class="agenda-item-check"></div><div class="agenda-item-content"><div class="agenda-item-title">Onboarding self-service + billing</div><div class="agenda-item-proj">APEX Pro</div></div></div>
-            <div class="agenda-item"><div class="agenda-item-check"></div><div class="agenda-item-content"><div class="agenda-item-title">Multi-tenant + RLS por clínica</div><div class="agenda-item-proj">APEX Pro</div></div></div>
-          </div>
-        </div>
-
       </div>
     </div>
 
@@ -3120,6 +3145,7 @@ function navTo(pageId) {
 
   /* Carregar dados da página ao navegar */
   if (pageId === 'lista-pacientes' && currentDoctor) carregarListaPacientes();
+  if (pageId === 'agenda') initCalendar();
 }
 
 function toggleModule(label) {
@@ -4696,6 +4722,234 @@ async function selecionarPaciente(patientId) {
   /* Navegar para prontuário */
   navTo('prontuario');
 }
+
+/* ═══════════════════════════════════════════════════════
+   MINHA AGENDA — Weekly Calendar Engine
+   ═══════════════════════════════════════════════════════ */
+(function(){
+  var CAL_START_HOUR = 7;
+  var CAL_END_HOUR   = 20;
+  var SLOT_H         = 60;
+  var DAY_LABELS     = ['Seg','Ter','Qua','Qui','Sex','Sáb','Dom'];
+  var MONTH_NAMES    = ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
+
+  var calWeekStart = null;
+  var nowLineTimer = null;
+
+  /* Event store — in-memory, will persist to Supabase later */
+  var calEvents = [
+    { id:1, title:'Consultório',              type:'recorrente', dows:[1,3],   startH:8,  startM:0, endH:12, endM:0,  color:'#028090', projeto:'fenix' },
+    { id:2, title:'Visita Hospitalar',        type:'recorrente', dows:[1],     startH:14, startM:0, endH:18, endM:0,  color:'#1E2D50', projeto:'fenix' },
+    { id:3, title:'Diálise — Unidade RL',     type:'recorrente', dows:[2],     startH:7,  startM:0, endH:12, endM:0,  color:'#534AB7', projeto:'dialise-rl' },
+    { id:4, title:'Reunião Clínica',          type:'recorrente', dows:[3],     startH:14, startM:0, endH:17, endM:0,  color:'#C4A35A', projeto:'apex' },
+    { id:5, title:'Diálise — Unidade Santos', type:'recorrente', dows:[4],     startH:7,  startM:0, endH:12, endM:0,  color:'#534AB7', projeto:'dialise-santos' },
+    { id:6, title:'Consultório',              type:'recorrente', dows:[5],     startH:8,  startM:0, endH:11, endM:0,  color:'#028090', projeto:'fenix' },
+    { id:7, title:'Pesquisa / IEP',           type:'recorrente', dows:[5],     startH:14, startM:0, endH:16, endM:0,  color:'#D85A30', projeto:'iep' }
+  ];
+  var nextId = 8;
+
+  function localMidnight(d){ var r=new Date(d); r.setHours(0,0,0,0); return r; }
+  function mondayOf(d){
+    var r=localMidnight(d); var day=r.getDay();
+    r.setDate(r.getDate() + (day===0 ? -6 : 1-day));
+    return r;
+  }
+  function addDays(d,n){ var r=new Date(d); r.setDate(r.getDate()+n); return r; }
+  function isoDate(d){
+    return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+  }
+  function isoWeekday(d){ var w=d.getDay(); return w===0?7:w; }
+
+  function formatWeekLabel(mon){
+    var sun=addDays(mon,6);
+    return 'Semana de '+mon.getDate()+' '+MONTH_NAMES[mon.getMonth()]+' – '+sun.getDate()+' '+MONTH_NAMES[sun.getMonth()]+' '+sun.getFullYear();
+  }
+
+  function getEventsForWeek(weekMon){
+    var result=[];
+    for(var col=0;col<7;col++){
+      var day=addDays(weekMon,col);
+      var iso=isoDate(day);
+      var dow=isoWeekday(day);
+      calEvents.forEach(function(ev){
+        if(ev.type==='recorrente' && ev.dows.indexOf(dow)>=0){
+          result.push(Object.assign({},ev,{colIndex:col,dayDate:day}));
+        } else if((ev.type==='unico'||ev.type==='tarefa') && ev.date===iso){
+          result.push(Object.assign({},ev,{colIndex:col,dayDate:day}));
+        }
+      });
+    }
+    return result;
+  }
+
+  function renderCalendarWeek(){
+    if(!calWeekStart) return;
+    var today=localMidnight(new Date());
+    document.getElementById('calWeekLabel').textContent=formatWeekLabel(calWeekStart);
+
+    /* Day headers */
+    var headRow=document.getElementById('calDayHeaders');
+    while(headRow.children.length>1) headRow.removeChild(headRow.lastChild);
+    for(var col=0;col<7;col++){
+      var day=addDays(calWeekStart,col);
+      var isToday=day.toDateString()===today.toDateString();
+      var cell=document.createElement('div');
+      cell.className='cal-day-head'+(isToday?' is-today':'');
+      cell.innerHTML='<div class="cal-day-name">'+DAY_LABELS[col]+'</div><div class="cal-day-num">'+day.getDate()+'</div>';
+      headRow.appendChild(cell);
+    }
+
+    /* Time grid */
+    var grid=document.getElementById('calTimeGrid');
+    grid.innerHTML='';
+    var totalHours=CAL_END_HOUR-CAL_START_HOUR;
+    for(var h=0;h<totalHours;h++){
+      var hour=CAL_START_HOUR+h;
+      var label=document.createElement('div');
+      label.className='cal-time-label';
+      label.textContent=String(hour).padStart(2,'0')+':00';
+      grid.appendChild(label);
+      for(var c=0;c<7;c++){
+        var d=addDays(calWeekStart,c);
+        var td=d.toDateString()===today.toDateString();
+        var we=c>=5;
+        var cell2=document.createElement('div');
+        cell2.className='cal-day-cell'+(td?' is-today':'')+(we?' is-weekend':'');
+        grid.appendChild(cell2);
+      }
+    }
+
+    /* Events overlay */
+    var layer=document.createElement('div');
+    layer.className='cal-events-layer';
+    layer.style.height=(totalHours*SLOT_H)+'px';
+    var cols=[];
+    for(var i=0;i<7;i++){
+      var colDiv=document.createElement('div');
+      colDiv.className='cal-col-events';
+      layer.appendChild(colDiv);
+      cols.push(colDiv);
+    }
+    getEventsForWeek(calWeekStart).forEach(function(ev){
+      var startMin=(ev.startH-CAL_START_HOUR)*60+ev.startM;
+      var endMin=(ev.endH-CAL_START_HOUR)*60+ev.endM;
+      var top=(startMin/60)*SLOT_H;
+      var height=Math.max(((endMin-startMin)/60)*SLOT_H-2,18);
+      var block=document.createElement('div');
+      block.className='cal-event';
+      block.style.cssText='top:'+top+'px;height:'+height+'px;background:'+ev.color+';';
+      block.innerHTML='<div class="cal-event-title">'+ev.title+'</div><div class="cal-event-time">'+String(ev.startH).padStart(2,'0')+':'+String(ev.startM).padStart(2,'0')+' – '+String(ev.endH).padStart(2,'0')+':'+String(ev.endM).padStart(2,'0')+'</div>';
+      cols[ev.colIndex].appendChild(block);
+    });
+    grid.style.position='relative';
+    layer.style.position='absolute';
+    layer.style.top='0';
+    layer.style.left='56px';
+    layer.style.right='0';
+    layer.style.bottom='0';
+    layer.style.pointerEvents='none';
+    grid.appendChild(layer);
+
+    renderNowLine(today);
+  }
+
+  function renderNowLine(today){
+    var existing=document.getElementById('calNowLine');
+    if(existing) existing.remove();
+    var now=new Date();
+    var nowDay=localMidnight(now);
+    var colIndex=-1;
+    for(var col=0;col<7;col++){
+      if(addDays(calWeekStart,col).toDateString()===nowDay.toDateString()){ colIndex=col; break; }
+    }
+    if(colIndex<0) return;
+    var nowMin=now.getHours()*60+now.getMinutes();
+    var startMin=CAL_START_HOUR*60;
+    var endMin=CAL_END_HOUR*60;
+    if(nowMin<startMin||nowMin>endMin) return;
+    var top=((nowMin-startMin)/60)*SLOT_H;
+    var layer=document.getElementById('calTimeGrid').querySelector('.cal-events-layer');
+    if(!layer) return;
+    var colW=layer.offsetWidth/7;
+    var lineEl=document.createElement('div');
+    lineEl.id='calNowLine';
+    lineEl.className='cal-now-line';
+    lineEl.style.cssText='top:'+top+'px;left:'+(colIndex*colW)+'px;width:'+colW+'px;';
+    lineEl.innerHTML='<div class="cal-now-dot"></div>';
+    layer.appendChild(lineEl);
+  }
+
+  function scrollToNineAM(){
+    var scroll=document.getElementById('calBodyScroll');
+    if(scroll) scroll.scrollTop=2*SLOT_H-10;
+  }
+
+  window.navigateWeek=function(delta){
+    calWeekStart=addDays(calWeekStart,delta*7);
+    renderCalendarWeek();
+  };
+  window.goToToday=function(){
+    calWeekStart=mondayOf(new Date());
+    renderCalendarWeek();
+    setTimeout(scrollToNineAM,80);
+  };
+  window.initCalendar=function(){
+    if(!calWeekStart) calWeekStart=mondayOf(new Date());
+    renderCalendarWeek();
+    setTimeout(scrollToNineAM,80);
+    if(nowLineTimer) clearInterval(nowLineTimer);
+    nowLineTimer=setInterval(function(){ renderNowLine(localMidnight(new Date())); },60000);
+  };
+
+  /* Modal */
+  window.openCalModal=function(){
+    document.getElementById('calEvtTitle').value='';
+    document.getElementById('calEvtTipo').value='recorrente';
+    document.getElementById('calEvtStart').value='08:00';
+    document.getElementById('calEvtEnd').value='09:00';
+    document.getElementById('calEvtProjeto').value='';
+    document.querySelectorAll('.cal-dow-chip').forEach(function(c){ c.checked=false; });
+    var tealRadio=document.querySelector('input[name="calColor"][value="#028090"]');
+    if(tealRadio) tealRadio.checked=true;
+    handleTipoChange();
+    document.getElementById('calModalBackdrop').classList.add('is-open');
+    setTimeout(function(){ document.getElementById('calEvtTitle').focus(); },80);
+  };
+  window.closeCalModal=function(e){
+    if(e && e.target!==document.getElementById('calModalBackdrop') && !e.target.classList.contains('cal-modal-close')) return;
+    document.getElementById('calModalBackdrop').classList.remove('is-open');
+  };
+  window.handleTipoChange=function(){
+    var tipo=document.getElementById('calEvtTipo').value;
+    var dowRow=document.getElementById('calEvtDowRow');
+    var dataRow=document.getElementById('calEvtDataRow');
+    if(tipo==='recorrente'){ dowRow.classList.add('visible'); dataRow.style.display='none'; }
+    else{ dowRow.classList.remove('visible'); dataRow.style.display='flex'; }
+  };
+  window.saveCalEvent=function(){
+    var title=document.getElementById('calEvtTitle').value.trim();
+    if(!title){ document.getElementById('calEvtTitle').focus(); document.getElementById('calEvtTitle').style.borderColor='#E53935'; setTimeout(function(){document.getElementById('calEvtTitle').style.borderColor='';},1500); return; }
+    var tipo=document.getElementById('calEvtTipo').value;
+    var startV=document.getElementById('calEvtStart').value;
+    var endV=document.getElementById('calEvtEnd').value;
+    var projeto=document.getElementById('calEvtProjeto').value;
+    var colorEl=document.querySelector('input[name="calColor"]:checked');
+    var color=colorEl?colorEl.value:'#028090';
+    var parts1=startV.split(':'); var parts2=endV.split(':');
+    var ev={id:nextId++,title:title,type:tipo,startH:parseInt(parts1[0]),startM:parseInt(parts1[1]),endH:parseInt(parts2[0]),endM:parseInt(parts2[1]),color:color,projeto:projeto};
+    if(tipo==='recorrente'){
+      ev.dows=[];
+      document.querySelectorAll('.cal-dow-chip:checked').forEach(function(c){ ev.dows.push(parseInt(c.value)); });
+      if(!ev.dows.length) ev.dows=[1];
+    } else {
+      ev.date=document.getElementById('calEvtData').value||isoDate(new Date());
+    }
+    calEvents.push(ev);
+    document.getElementById('calModalBackdrop').classList.remove('is-open');
+    renderCalendarWeek();
+  };
+})();
+
 </script>
 </body>
 </html>
