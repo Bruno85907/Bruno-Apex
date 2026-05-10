@@ -491,6 +491,54 @@ body{font-family:var(--font-sans);background:var(--navy-deep);color:var(--text);
 .modal-btn-save:hover{transform:translateY(-1px);box-shadow:0 4px 12px rgba(2,128,144,0.3);}
 .modal-close{position:absolute;top:16px;right:16px;background:none;border:none;cursor:pointer;color:var(--text-3);padding:4px;}
 
+/* Wizard Novo Projeto */
+.wiz-box{max-width:620px;padding:0;overflow:hidden;}
+.wiz-header{display:flex;align-items:center;gap:0;padding:20px 28px 16px;border-bottom:1px solid var(--border);position:relative;}
+.wiz-step-ind{display:flex;align-items:center;gap:0;flex:1;}
+.wiz-dot{width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:var(--text-3);background:var(--bg);border:2px solid var(--border);transition:all .3s;flex-shrink:0;}
+.wiz-dot.active{background:var(--teal);color:#fff;border-color:var(--teal);}
+.wiz-dot.done{background:var(--navy);color:#fff;border-color:var(--navy);}
+.wiz-line{flex:1;height:2px;background:var(--border);margin:0 6px;transition:background .3s;}
+.wiz-line.done{background:var(--navy);}
+.wiz-step-labels{display:flex;justify-content:space-between;padding:0 28px 12px;font-size:10px;font-weight:600;letter-spacing:0.5px;text-transform:uppercase;color:var(--text-3);}
+.wiz-body{padding:24px 28px 16px;min-height:320px;max-height:60vh;overflow-y:auto;}
+.wiz-footer{display:flex;justify-content:space-between;align-items:center;padding:16px 28px 20px;border-top:1px solid var(--border);}
+.wiz-btn{border:none;border-radius:8px;padding:10px 22px;font-family:inherit;font-size:12px;font-weight:700;cursor:pointer;transition:all .2s;}
+.wiz-btn-back{background:none;border:1px solid var(--border);color:var(--text-2);}
+.wiz-btn-back:hover{background:var(--bg);}
+.wiz-btn-next{background:linear-gradient(135deg,var(--teal),#04b5c8);color:#fff;}
+.wiz-btn-next:hover{transform:translateY(-1px);box-shadow:0 4px 12px rgba(2,128,144,0.3);}
+.wiz-btn-next:disabled{opacity:0.4;cursor:not-allowed;transform:none;box-shadow:none;}
+.wiz-btn-create{background:linear-gradient(135deg,var(--navy),var(--navy-mid));color:#fff;}
+.wiz-btn-create:hover{transform:translateY(-1px);box-shadow:0 4px 12px rgba(30,45,80,0.3);}
+.wiz-step{display:none;}
+.wiz-step.active{display:block;}
+.wiz-section-title{font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--teal);margin-bottom:12px;}
+.wiz-gen-anim{text-align:center;padding:40px 0;}
+.wiz-gen-spinner{width:48px;height:48px;border:3px solid var(--border);border-top-color:var(--teal);border-radius:50%;animation:wizSpin 0.8s linear infinite;margin:0 auto 16px;}
+@keyframes wizSpin{to{transform:rotate(360deg)}}
+.wiz-gen-text{font-size:13px;color:var(--text-2);}
+.wiz-roadmap{display:flex;gap:8px;margin-bottom:20px;}
+.wiz-phase{flex:1;background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:10px;position:relative;}
+.wiz-phase-label{font-size:10px;font-weight:700;letter-spacing:0.5px;text-transform:uppercase;margin-bottom:4px;}
+.wiz-phase-dates{font-size:10px;color:var(--text-3);margin-bottom:6px;}
+.wiz-phase-tasks{font-size:11px;color:var(--text-2);line-height:1.6;}
+.wiz-okr-card{background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:12px;margin-bottom:10px;}
+.wiz-okr-title{font-size:12px;font-weight:700;color:var(--text);margin-bottom:6px;display:flex;align-items:center;gap:6px;}
+.wiz-okr-badge{font-size:10px;font-weight:700;color:var(--teal);background:rgba(2,128,144,0.08);padding:2px 8px;border-radius:4px;}
+.wiz-kr{font-size:11px;color:var(--text-2);padding:3px 0 3px 20px;position:relative;}
+.wiz-kr::before{content:'';position:absolute;left:6px;top:10px;width:6px;height:6px;border-radius:50%;background:var(--gold);}
+.wiz-agenda-item{display:flex;align-items:center;gap:10px;padding:10px 12px;background:var(--bg);border:1px solid var(--border);border-radius:8px;margin-bottom:8px;font-size:12px;}
+.wiz-agenda-check{width:18px;height:18px;border-radius:4px;border:2px solid var(--teal);cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .2s;}
+.wiz-agenda-check.checked{background:var(--teal);border-color:var(--teal);}
+.wiz-agenda-check.checked::after{content:'✓';color:#fff;font-size:11px;font-weight:700;}
+.wiz-agenda-icon{font-size:14px;}
+.wiz-agenda-info{flex:1;}
+.wiz-agenda-name{font-weight:600;color:var(--text);}
+.wiz-agenda-date{font-size:10px;color:var(--text-3);margin-top:2px;}
+.wiz-edit-btn{background:none;border:none;color:var(--text-3);cursor:pointer;font-size:11px;padding:4px 8px;border-radius:4px;transition:all .15s;}
+.wiz-edit-btn:hover{background:rgba(2,128,144,0.06);color:var(--teal);}
+
 /* ============================================================
    RESPONSIVE
    ============================================================ */
@@ -2853,46 +2901,109 @@ body{font-family:var(--font-sans);background:var(--navy-deep);color:var(--text);
     <!-- Modal: Novo Paciente -->
     <!-- MODAL: NOVO PROJETO -->
     <div class="modal-overlay" id="modal-novo-proj">
-      <div class="modal-box">
+      <div class="modal-box wiz-box">
         <button class="modal-close" onclick="fecharModalNovoProjeto()"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
-        <div class="modal-title">Novo Projeto</div>
-        <div class="modal-desc">Crie um novo projeto dentro da organização selecionada.</div>
 
-        <div class="modal-field">
-          <label>Nome do projeto</label>
-          <input type="text" id="nproj-nome" placeholder="Ex: Telemedicina Renal">
-        </div>
-        <div class="modal-field">
-          <label>Descrição</label>
-          <textarea id="nproj-desc" rows="3" placeholder="Descreva o objetivo e escopo do projeto..." style="width:100%;border:1px solid var(--border);border-radius:8px;padding:10px 12px;font-size:13px;font-family:var(--font-body);resize:vertical;background:var(--bg);color:var(--text-1);"></textarea>
-        </div>
-        <div class="modal-row">
-          <div class="modal-field">
-            <label>Status</label>
-            <select id="nproj-status">
-              <option value="Em Estruturação">Em Estruturação</option>
-              <option value="Ativo">Ativo</option>
-              <option value="Concluído">Concluído</option>
-            </select>
-          </div>
-          <div class="modal-field">
-            <label>Cor do ícone</label>
-            <select id="nproj-cor">
-              <option value="teal">Teal</option>
-              <option value="purple">Roxo</option>
-              <option value="orange">Laranja</option>
-              <option value="navy">Navy</option>
-              <option value="gold">Dourado</option>
-            </select>
+        <!-- Step indicators -->
+        <div class="wiz-header">
+          <div class="wiz-step-ind">
+            <div class="wiz-dot active" id="wiz-dot-1">1</div>
+            <div class="wiz-line" id="wiz-line-1"></div>
+            <div class="wiz-dot" id="wiz-dot-2">2</div>
+            <div class="wiz-line" id="wiz-line-2"></div>
+            <div class="wiz-dot" id="wiz-dot-3">3</div>
+            <div class="wiz-line" id="wiz-line-3"></div>
+            <div class="wiz-dot" id="wiz-dot-4">4</div>
           </div>
         </div>
-        <input type="hidden" id="nproj-org" value="">
+        <div class="wiz-step-labels">
+          <span>Briefing</span><span>Geração</span><span>Revisão</span><span>Agenda</span>
+        </div>
 
-        <div id="nproj-error" style="font-size:11px;color:var(--red);min-height:16px;margin-top:4px;"></div>
+        <!-- STEP 1: Briefing -->
+        <div class="wiz-body">
+          <div class="wiz-step active" id="wiz-step-1">
+            <div class="wiz-section-title">Briefing do Projeto</div>
+            <div class="modal-field">
+              <label>Nome do projeto</label>
+              <input type="text" id="nproj-nome" placeholder="Ex: Telemedicina Renal">
+            </div>
+            <div class="modal-row">
+              <div class="modal-field">
+                <label>Organização</label>
+                <select id="nproj-org">
+                  <option value="apex">APEX Health</option>
+                  <option value="fenix">Fenix Nefrologia</option>
+                </select>
+              </div>
+              <div class="modal-field">
+                <label>Prazo estimado</label>
+                <input type="text" id="nproj-prazo" placeholder="Ex: 6 meses, Dez/2026">
+              </div>
+            </div>
+            <div class="modal-field">
+              <label>Objetivo (1-2 frases)</label>
+              <textarea id="nproj-desc" rows="3" placeholder="Descreva o que este projeto pretende alcançar..." style="width:100%;border:1px solid var(--border);border-radius:8px;padding:10px 12px;font-size:13px;font-family:var(--font-body);resize:vertical;background:var(--bg);color:var(--text);"></textarea>
+            </div>
+            <div class="modal-row">
+              <div class="modal-field">
+                <label>Cor do ícone</label>
+                <select id="nproj-cor">
+                  <option value="teal">Teal</option>
+                  <option value="purple">Roxo</option>
+                  <option value="orange">Laranja</option>
+                  <option value="navy">Navy</option>
+                  <option value="gold">Dourado</option>
+                </select>
+              </div>
+              <div class="modal-field">
+                <label>Status inicial</label>
+                <select id="nproj-status">
+                  <option value="Em Estruturação">Em Estruturação</option>
+                  <option value="Ativo">Ativo</option>
+                </select>
+              </div>
+            </div>
+            <div id="nproj-error" style="font-size:11px;color:var(--red);min-height:16px;"></div>
+          </div>
 
-        <div class="modal-actions">
-          <button class="modal-btn-cancel" onclick="fecharModalNovoProjeto()">Cancelar</button>
-          <button class="modal-btn-save" onclick="salvarNovoProjeto()">Criar Projeto</button>
+          <!-- STEP 2: Geração -->
+          <div class="wiz-step" id="wiz-step-2">
+            <div class="wiz-gen-anim" id="wiz-gen-loading">
+              <div class="wiz-gen-spinner"></div>
+              <div class="wiz-gen-text">O assessor virtual está analisando seu briefing...</div>
+            </div>
+            <div id="wiz-gen-result" style="display:none;">
+              <div class="wiz-section-title" style="color:var(--green);">✓ Planejamento gerado com sucesso</div>
+              <p style="font-size:12px;color:var(--text-2);margin-bottom:16px;">Revise o roadmap, OKRs e tarefas na próxima etapa.</p>
+            </div>
+          </div>
+
+          <!-- STEP 3: Revisão -->
+          <div class="wiz-step" id="wiz-step-3">
+            <div class="wiz-section-title">Roadmap</div>
+            <div class="wiz-roadmap" id="wiz-roadmap"></div>
+
+            <div class="wiz-section-title" style="margin-top:16px;">OKRs Sugeridos</div>
+            <div id="wiz-okrs"></div>
+
+            <div class="wiz-section-title" style="margin-top:16px;">Tarefas</div>
+            <div id="wiz-tasks"></div>
+          </div>
+
+          <!-- STEP 4: Agenda -->
+          <div class="wiz-step" id="wiz-step-4">
+            <div class="wiz-section-title">Eventos para a Minha Agenda</div>
+            <p style="font-size:12px;color:var(--text-2);margin-bottom:16px;">Selecione quais marcos e tarefas deseja adicionar à sua agenda.</p>
+            <div id="wiz-agenda-list"></div>
+          </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="wiz-footer">
+          <button class="wiz-btn wiz-btn-back" id="wiz-btn-back" onclick="wizBack()" style="display:none;">Voltar</button>
+          <div></div>
+          <button class="wiz-btn wiz-btn-next" id="wiz-btn-next" onclick="wizNext()">Próximo</button>
         </div>
       </div>
     </div>
@@ -3215,18 +3326,251 @@ function peBackToOrgs() {
    ============================================================ */
 var projetos_custom = [];
 
+/* ============================================================
+   WIZARD NOVO PROJETO — 4 etapas
+   ============================================================ */
+var wizStep = 1;
+var wizGenData = null; /* dados gerados pelo assessor */
+
 function abrirModalNovoProjeto(orgId) {
+  wizStep = 1;
   document.getElementById('nproj-org').value = orgId;
   document.getElementById('nproj-nome').value = '';
   document.getElementById('nproj-desc').value = '';
+  document.getElementById('nproj-prazo').value = '';
   document.getElementById('nproj-status').value = 'Em Estruturação';
   document.getElementById('nproj-cor').value = 'teal';
   document.getElementById('nproj-error').textContent = '';
+  wizGenData = null;
+  wizUpdateUI();
   document.getElementById('modal-novo-proj').classList.add('active');
 }
 
 function fecharModalNovoProjeto() {
   document.getElementById('modal-novo-proj').classList.remove('active');
+}
+
+function wizUpdateUI() {
+  /* Steps visibility */
+  for (var i = 1; i <= 4; i++) {
+    var step = document.getElementById('wiz-step-' + i);
+    var dot = document.getElementById('wiz-dot-' + i);
+    if (step) step.classList.toggle('active', i === wizStep);
+    if (dot) {
+      dot.classList.toggle('active', i === wizStep);
+      dot.classList.toggle('done', i < wizStep);
+    }
+    if (i < 4) {
+      var line = document.getElementById('wiz-line-' + i);
+      if (line) line.classList.toggle('done', i < wizStep);
+    }
+  }
+  /* Back button */
+  var backBtn = document.getElementById('wiz-btn-back');
+  backBtn.style.display = wizStep > 1 ? '' : 'none';
+  /* Next button text */
+  var nextBtn = document.getElementById('wiz-btn-next');
+  if (wizStep === 2) {
+    nextBtn.style.display = wizGenData ? '' : 'none';
+    nextBtn.textContent = 'Revisar Plano';
+  } else if (wizStep === 4) {
+    nextBtn.textContent = 'Criar Projeto';
+    nextBtn.className = 'wiz-btn wiz-btn-create';
+  } else {
+    nextBtn.style.display = '';
+    nextBtn.textContent = 'Próximo';
+    nextBtn.className = 'wiz-btn wiz-btn-next';
+  }
+}
+
+function wizNext() {
+  if (wizStep === 1) {
+    var nome = document.getElementById('nproj-nome').value.trim();
+    if (!nome) { document.getElementById('nproj-error').textContent = 'Informe o nome do projeto.'; return; }
+    document.getElementById('nproj-error').textContent = '';
+    wizStep = 2;
+    wizUpdateUI();
+    wizGenerate();
+  } else if (wizStep === 2) {
+    wizStep = 3;
+    wizUpdateUI();
+    wizRenderReview();
+  } else if (wizStep === 3) {
+    wizStep = 4;
+    wizUpdateUI();
+    wizRenderAgenda();
+  } else if (wizStep === 4) {
+    wizFinalize();
+  }
+}
+
+function wizBack() {
+  if (wizStep > 1) {
+    wizStep--;
+    wizUpdateUI();
+  }
+}
+
+/* ---------- STEP 2: Geração (simulada) ---------- */
+function wizGenerate() {
+  var loading = document.getElementById('wiz-gen-loading');
+  var result = document.getElementById('wiz-gen-result');
+  loading.style.display = '';
+  result.style.display = 'none';
+  document.getElementById('wiz-btn-next').style.display = 'none';
+
+  var nome = document.getElementById('nproj-nome').value.trim();
+  var desc = document.getElementById('nproj-desc').value.trim();
+  var prazo = document.getElementById('nproj-prazo').value.trim() || '6 meses';
+
+  setTimeout(function() {
+    wizGenData = gerarPlanoProjeto(nome, desc, prazo);
+    loading.style.display = 'none';
+    result.style.display = '';
+    var nextBtn = document.getElementById('wiz-btn-next');
+    nextBtn.style.display = '';
+    nextBtn.textContent = 'Revisar Plano';
+  }, 2200);
+}
+
+function gerarPlanoProjeto(nome, desc, prazo) {
+  var hoje = new Date();
+  var m1 = new Date(hoje); m1.setDate(m1.getDate() + 7);
+  var m2 = new Date(hoje); m2.setMonth(m2.getMonth() + 2);
+  var m3 = new Date(hoje); m3.setMonth(m3.getMonth() + 4);
+  var mFim = new Date(hoje); mFim.setMonth(mFim.getMonth() + 6);
+
+  function fmt(d) { return d.toLocaleDateString('pt-BR', { day:'2-digit', month:'short' }).replace('.',''); }
+
+  return {
+    roadmap: [
+      { fase: 'Planejamento', cor: 'var(--teal)', inicio: fmt(m1), fim: fmt(m2), tarefas: ['Definir escopo detalhado', 'Mapear stakeholders', 'Estabelecer cronograma'] },
+      { fase: 'Execução', cor: 'var(--gold)', inicio: fmt(m2), fim: fmt(m3), tarefas: ['Implementar módulo principal', 'Testes com usuários piloto', 'Ajustar com feedback'] },
+      { fase: 'Consolidação', cor: 'var(--navy)', inicio: fmt(m3), fim: fmt(mFim), tarefas: ['Documentar processos', 'Treinar equipe', 'Lançamento oficial'] }
+    ],
+    okrs: [
+      { obj: 'Entregar ' + nome + ' com qualidade e dentro do prazo', krs: [
+        'Completar 100% dos marcos do roadmap até ' + fmt(mFim),
+        'Atingir nota ≥ 4/5 de satisfação dos stakeholders',
+        'Zero retrabalho crítico após lançamento'
+      ]},
+      { obj: 'Garantir adoção e impacto mensurável', krs: [
+        'Onboard de 80% dos usuários-alvo no primeiro mês',
+        'Reduzir em 30% o tempo do processo-alvo',
+        'Documentação completa publicada até o go-live'
+      ]}
+    ],
+    marcos: [
+      { nome: 'Kick-off — ' + nome, data: m1, tipo: 'marco' },
+      { nome: 'Fim do planejamento', data: m2, tipo: 'marco' },
+      { nome: 'Revisão de meio-termo', data: m3, tipo: 'marco' },
+      { nome: 'Go-live', data: mFim, tipo: 'marco' }
+    ],
+    tarefas: [
+      { nome: 'Definir escopo detalhado', data: new Date(m1.getTime() + 7*86400000), tipo: 'tarefa' },
+      { nome: 'Mapear stakeholders', data: new Date(m1.getTime() + 14*86400000), tipo: 'tarefa' },
+      { nome: 'Implementar módulo principal', data: new Date(m2.getTime() + 14*86400000), tipo: 'tarefa' },
+      { nome: 'Testes com usuários piloto', data: new Date(m2.getTime() + 30*86400000), tipo: 'tarefa' },
+      { nome: 'Documentar processos', data: new Date(m3.getTime() + 14*86400000), tipo: 'tarefa' }
+    ]
+  };
+}
+
+/* ---------- STEP 3: Revisão ---------- */
+function wizRenderReview() {
+  if (!wizGenData) return;
+  /* Roadmap */
+  var rmHtml = '';
+  wizGenData.roadmap.forEach(function(f) {
+    rmHtml += '<div class="wiz-phase"><div class="wiz-phase-label" style="color:' + f.cor + ';">' + f.fase + '</div>' +
+      '<div class="wiz-phase-dates">' + f.inicio + ' → ' + f.fim + '</div>' +
+      '<div class="wiz-phase-tasks">' + f.tarefas.map(function(t){ return '• ' + t; }).join('<br>') + '</div></div>';
+  });
+  document.getElementById('wiz-roadmap').innerHTML = rmHtml;
+
+  /* OKRs */
+  var okrHtml = '';
+  wizGenData.okrs.forEach(function(o, i) {
+    okrHtml += '<div class="wiz-okr-card"><div class="wiz-okr-title"><span class="wiz-okr-badge">O' + (i+1) + '</span>' + o.obj + '</div>';
+    o.krs.forEach(function(kr) { okrHtml += '<div class="wiz-kr">' + kr + '</div>'; });
+    okrHtml += '</div>';
+  });
+  document.getElementById('wiz-okrs').innerHTML = okrHtml;
+
+  /* Tarefas */
+  var tkHtml = '';
+  wizGenData.roadmap.forEach(function(f) {
+    f.tarefas.forEach(function(t) {
+      tkHtml += '<div style="font-size:11px;color:var(--text-2);padding:4px 0 4px 12px;border-left:2px solid ' + f.cor + ';">☐ ' + t + ' <span style="color:var(--text-3);font-size:10px;">— ' + f.fase + '</span></div>';
+    });
+  });
+  document.getElementById('wiz-tasks').innerHTML = tkHtml;
+}
+
+/* ---------- STEP 4: Agenda ---------- */
+function wizRenderAgenda() {
+  if (!wizGenData) return;
+  var items = [];
+  wizGenData.marcos.forEach(function(m) {
+    items.push({ nome: m.nome, data: m.data, tipo: 'marco', checked: true });
+  });
+  wizGenData.tarefas.forEach(function(t) {
+    items.push({ nome: t.nome, data: t.data, tipo: 'tarefa', checked: false });
+  });
+
+  var html = '';
+  items.forEach(function(item, idx) {
+    var dStr = item.data.toLocaleDateString('pt-BR', { day:'2-digit', month:'short', year:'numeric' }).replace('.','');
+    html += '<div class="wiz-agenda-item">' +
+      '<div class="wiz-agenda-check' + (item.checked ? ' checked' : '') + '" data-wiz-idx="' + idx + '" onclick="wizToggleAgenda(this)"></div>' +
+      '<div class="wiz-agenda-icon">' + (item.tipo === 'marco' ? '🏁' : '📋') + '</div>' +
+      '<div class="wiz-agenda-info"><div class="wiz-agenda-name">' + item.nome + '</div><div class="wiz-agenda-date">' + dStr + '</div></div>' +
+      '</div>';
+  });
+  document.getElementById('wiz-agenda-list').innerHTML = html;
+  window._wizAgendaItems = items;
+}
+
+function wizToggleAgenda(el) {
+  el.classList.toggle('checked');
+  var idx = parseInt(el.getAttribute('data-wiz-idx'));
+  if (window._wizAgendaItems && window._wizAgendaItems[idx]) {
+    window._wizAgendaItems[idx].checked = !window._wizAgendaItems[idx].checked;
+  }
+}
+
+/* ---------- FINALIZAR ---------- */
+function wizFinalize() {
+  var nome = document.getElementById('nproj-nome').value.trim();
+  var desc = document.getElementById('nproj-desc').value.trim();
+  var status = document.getElementById('nproj-status').value;
+  var cor = document.getElementById('nproj-cor').value;
+  var org = document.getElementById('nproj-org').value;
+
+  /* Salvar projeto */
+  var proj = { id: 'proj-' + Date.now(), nome: nome, desc: desc, status: status, cor: cor, org: org };
+  projetos_custom.push(proj);
+  renderProjetoCustom(proj);
+
+  /* Adicionar itens marcados à agenda */
+  if (window._wizAgendaItems) {
+    window._wizAgendaItems.forEach(function(item) {
+      if (!item.checked) return;
+      var d = item.data;
+      var newEvt = {
+        id: Date.now() + Math.random(),
+        title: item.nome,
+        type: 'unique',
+        date: d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0'),
+        startH: 9, startM: 0, endH: 10, endM: 0,
+        color: item.tipo === 'marco' ? '#C4A35A' : '#028090',
+        project: nome
+      };
+      if (typeof calEvents !== 'undefined') calEvents.push(newEvt);
+    });
+  }
+
+  fecharModalNovoProjeto();
 }
 
 var PE_CORES = {
@@ -3242,22 +3586,6 @@ var PE_STATUS_STYLES = {
   'Ativo':           { bg:'rgba(91,158,80,0.08)',  color:'var(--green)', border:'rgba(91,158,80,0.2)' },
   'Concluído':       { bg:'rgba(2,128,144,0.08)',  color:'var(--teal)',  border:'rgba(2,128,144,0.2)' }
 };
-
-function salvarNovoProjeto() {
-  var nome = document.getElementById('nproj-nome').value.trim();
-  var desc = document.getElementById('nproj-desc').value.trim();
-  var status = document.getElementById('nproj-status').value;
-  var cor = document.getElementById('nproj-cor').value;
-  var org = document.getElementById('nproj-org').value;
-
-  if (!nome) { document.getElementById('nproj-error').textContent = 'Informe o nome do projeto.'; return; }
-
-  var proj = { id: 'proj-' + Date.now(), nome: nome, desc: desc, status: status, cor: cor, org: org };
-  projetos_custom.push(proj);
-
-  renderProjetoCustom(proj);
-  fecharModalNovoProjeto();
-}
 
 function renderProjetoCustom(proj) {
   var list = document.getElementById('pe-sub-list-' + proj.org);
