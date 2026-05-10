@@ -1079,36 +1079,30 @@ body{font-family:var(--font-sans);background:var(--navy-deep);color:var(--text);
 
     <!-- PAGE: TRS CRÔNICO -->
     <div class="content-page" id="page-trs-cronico">
-      <p class="page-eyebrow rv">Indicadores TRS</p>
+      <p class="page-eyebrow rv">Qualidade Fenix</p>
       <h2 class="page-title rv">TRS <strong>Crônico</strong></h2>
-      <p class="page-desc rv">Escolha entre visualizar o dashboard consolidado ou lançar dados mensais por unidade.</p>
-      <div class="trs-grid">
-        <div class="trs-card tc-cron rv" onclick="alert('Dashboard Crônico — em desenvolvimento')">
-          <div class="trs-card-bg"></div><div class="trs-card-overlay"></div>
-          <div class="trs-card-content">
-            <div class="trs-card-label">Visualização</div>
-            <div class="trs-card-title">Dashboard</div>
-            <div class="trs-card-desc">Indicadores consolidados da rede — gráficos, metas e evolução mensal.</div>
-            <div class="trs-card-tags"><span class="trs-tag">Rede completa</span><span class="trs-tag">Por unidade</span></div>
-          </div>
-          <div class="trs-card-arrow">&#8594;</div>
-        </div>
-        <div class="trs-card tc-cron rv" onclick="navTo('unidades')">
-          <div class="trs-card-bg"></div><div class="trs-card-overlay"></div>
-          <div class="trs-card-content">
-            <div class="trs-card-label">Entrada de dados</div>
-            <div class="trs-card-title">Lançamento Mensal</div>
-            <div class="trs-card-desc">Preenchimento dos indicadores mensais por unidade — RL, Santos e Tatuapé.</div>
-            <div class="trs-card-tags"><span class="trs-tag">Por unidade</span><span class="trs-tag">Supabase</span></div>
-          </div>
-          <div class="trs-card-arrow">&#8594;</div>
-        </div>
+      <p class="page-desc rv">Indicadores mensais de hemodiálise crônica — lançamento, acompanhamento e evolução por unidade.</p>
+
+      <!-- KPI resumo rede -->
+      <div id="trs-c-kpi-row" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;margin-top:20px;" class="rv"></div>
+
+      <!-- Grid de meses por unidade -->
+      <div class="pe-section rv" style="margin-top:28px;">
+        <div class="pe-section-label">Lançamentos por Unidade</div>
+        <div id="trs-c-units-grid" style="display:grid;grid-template-columns:1fr;gap:20px;margin-top:12px;"></div>
+      </div>
+
+      <!-- Ações -->
+      <div style="display:flex;gap:12px;margin-top:24px;" class="rv">
+        <button class="wiz-btn-next" style="font-size:13px;padding:10px 20px;" onclick="navTo('unidades')">
+          <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:-2px;margin-right:6px;"><path d="M12 5l-5 5-5-5"/></svg>Lançar Dados
+        </button>
       </div>
     </div>
 
     <!-- PAGE: UNIDADES -->
     <div class="content-page" id="page-unidades">
-      <p class="page-eyebrow rv">TRS Crônico — Lançamento</p>
+      <p class="page-eyebrow rv">Qualidade Fenix — TRS Crônico</p>
       <h2 class="page-title rv">Selecione a <strong>unidade</strong></h2>
       <p class="page-desc rv">Escolha a unidade para abrir o formulário de lançamento mensal.</p>
       <div class="unit-grid">
@@ -3495,6 +3489,8 @@ function navTo(pageId) {
   /* Carregar dados da página ao navegar */
   if (pageId === 'lista-pacientes' && currentDoctor) carregarListaPacientes();
   if (pageId === 'agenda') initCalendar();
+  if (pageId === 'trs-cronico') carregarTrsCronico();
+  if (pageId === 'trs-agudo') renderTrsAgudo();
 }
 
 function navBack() {
@@ -3507,6 +3503,189 @@ function toggleModule(label) {
   label.classList.toggle('open');
   var ch = label.nextElementSibling;
   if (ch && ch.classList.contains('sb-children')) ch.classList.toggle('open');
+}
+
+/* ============================================================
+   TRS CRÔNICO — Carregamento de dados do Supabase
+   ============================================================ */
+var _trsCData = null;
+var MESES_LABEL = ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
+
+async function carregarTrsCronico() {
+  var kpiRow = document.getElementById('trs-c-kpi-row');
+  var unitsGrid = document.getElementById('trs-c-units-grid');
+  if (!kpiRow || !unitsGrid) return;
+
+  if (!_trsCData) {
+    kpiRow.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:20px;color:var(--text-3);font-size:13px;">Carregando dados do Supabase...</div>';
+    try {
+      var resp = await supabase.from('dados_mensais').select('*').eq('ano', 2026).order('mes');
+      _trsCData = resp.data || [];
+    } catch(e) { _trsCData = []; }
+  }
+
+  var data = _trsCData;
+  if (!data.length) {
+    kpiRow.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:30px;color:var(--text-3);">Nenhum dado encontrado.</div>';
+    return;
+  }
+
+  /* Último mês com dados da rede */
+  var ultimo = data[data.length - 1];
+  var ulMes = MESES_LABEL[ultimo.mes] + '/' + ultimo.ano;
+
+  /* KPI row — resumo rede (último mês com dados) */
+  var totalPac = (parseInt(ultimo.pac_rl)||0) + (parseInt(ultimo.pac_santos)||0) + (parseInt(ultimo.pac_tatuape)||0);
+  var totalSes = (parseInt(ultimo.ses_rl)||0) + (parseInt(ultimo.ses_santos)||0) + (parseInt(ultimo.ses_tatuape)||0);
+  kpiRow.innerHTML =
+    '<div style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:18px;text-align:center;">' +
+      '<div style="font-size:26px;font-weight:700;color:var(--navy);">' + data.length + '</div>' +
+      '<div style="font-size:12px;color:var(--text-2);margin-top:4px;">Meses lançados</div>' +
+    '</div>' +
+    '<div style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:18px;text-align:center;">' +
+      '<div style="font-size:26px;font-weight:700;color:var(--teal);">' + totalPac + '</div>' +
+      '<div style="font-size:12px;color:var(--text-2);margin-top:4px;">Pacientes (' + ulMes + ')</div>' +
+    '</div>' +
+    '<div style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:18px;text-align:center;">' +
+      '<div style="font-size:26px;font-weight:700;color:var(--gold);">' + totalSes + '</div>' +
+      '<div style="font-size:12px;color:var(--text-2);margin-top:4px;">Sessões (' + ulMes + ')</div>' +
+    '</div>' +
+    '<div style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:18px;text-align:center;">' +
+      '<div style="font-size:26px;font-weight:700;color:var(--teal);">' + (ultimo.ktv_rl || '—') + '%</div>' +
+      '<div style="font-size:12px;color:var(--text-2);margin-top:4px;">Kt/V RL (' + ulMes + ')</div>' +
+    '</div>';
+
+  /* Unidades */
+  var unidades = [
+    { key: 'rl', nome: 'República do Líbano', cidade: 'São Paulo — SP', cor: 'var(--navy)' },
+    { key: 'santos', nome: 'Praiamar Santos', cidade: 'Santos — SP', cor: 'var(--teal)' },
+    { key: 'tatuape', nome: 'Tatuapé', cidade: 'São Paulo — SP', cor: 'var(--gold)' }
+  ];
+
+  unitsGrid.innerHTML = unidades.map(function(u) {
+    var mesesHtml = '';
+    for (var m = 0; m < 12; m++) {
+      var reg = data.find(function(d){ return d.mes === m; });
+      var preenchido = false;
+      if (reg) {
+        var pacVal = parseInt(reg['pac_' + u.key]);
+        var sesVal = parseInt(reg['ses_' + u.key]);
+        preenchido = pacVal > 0 && sesVal > 0;
+      }
+      var bgColor = preenchido ? u.cor : 'var(--bg)';
+      var txtColor = preenchido ? '#fff' : 'var(--text-3)';
+      var border = preenchido ? 'transparent' : 'var(--border)';
+      mesesHtml += '<div style="width:44px;height:44px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;background:' + bgColor + ';color:' + txtColor + ';border:1px solid ' + border + ';position:relative;">' +
+        MESES_LABEL[m] +
+        (preenchido ? '<div style="position:absolute;bottom:-2px;right:-2px;width:12px;height:12px;border-radius:50%;background:#2ecc71;border:2px solid var(--bg-card);display:flex;align-items:center;justify-content:center;"><svg width="7" height="7" fill="none" stroke="#fff" stroke-width="2.5"><polyline points="1,3.5 3,6 6,1"/></svg></div>' : '') +
+      '</div>';
+    }
+    /* Indicadores resumo da unidade — último mês preenchido */
+    var lastReg = null;
+    for (var i = data.length - 1; i >= 0; i--) {
+      var pv = parseInt(data[i]['pac_' + u.key]);
+      if (pv > 0) { lastReg = data[i]; break; }
+    }
+    var indicadores = '';
+    if (lastReg) {
+      var lm = MESES_LABEL[lastReg.mes];
+      indicadores = '<div style="display:flex;gap:16px;margin-top:14px;flex-wrap:wrap;">' +
+        '<div style="font-size:12px;color:var(--text-2);"><strong style="color:var(--text);font-size:14px;">' + (lastReg['pac_' + u.key] || '—') + '</strong> pac.</div>' +
+        '<div style="font-size:12px;color:var(--text-2);"><strong style="color:var(--text);font-size:14px;">' + (lastReg['ses_' + u.key] || '—') + '</strong> sessões</div>' +
+        '<div style="font-size:12px;color:var(--text-2);"><strong style="color:var(--text);font-size:14px;">' + (lastReg['ktv_' + u.key] || '—') + '%</strong> Kt/V</div>' +
+        '<div style="font-size:12px;color:var(--text-2);"><strong style="color:var(--text);font-size:14px;">' + (lastReg['fav_' + u.key] || '—') + '%</strong> FAV</div>' +
+        '<div style="font-size:12px;color:var(--text-2);"><strong style="color:var(--text);font-size:14px;">' + (lastReg['hb_' + u.key] || '—') + '%</strong> Hb</div>' +
+      '</div>';
+    }
+    var mesesPreenchidos = data.filter(function(d){ return parseInt(d['pac_' + u.key]) > 0; }).length;
+    return '<div style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:20px 24px;">' +
+      '<div style="display:flex;align-items:center;justify-content:space-between;">' +
+        '<div>' +
+          '<div style="font-size:16px;font-weight:700;color:var(--text);">' + u.nome + '</div>' +
+          '<div style="font-size:12px;color:var(--text-3);margin-top:2px;">' + u.cidade + '</div>' +
+        '</div>' +
+        '<div style="font-size:12px;padding:4px 12px;border-radius:20px;font-weight:600;' +
+          (mesesPreenchidos > 0 ? 'background:rgba(46,204,113,.12);color:#27ae60;' : 'background:var(--bg);color:var(--text-3);') + '">' +
+          mesesPreenchidos + '/12 meses' +
+        '</div>' +
+      '</div>' +
+      '<div style="display:flex;gap:6px;margin-top:16px;flex-wrap:wrap;">' + mesesHtml + '</div>' +
+      indicadores +
+    '</div>';
+  }).join('');
+}
+
+/* ============================================================
+   TRS AGUDO — Renderização de dados (Fev-Abr 2026)
+   ============================================================ */
+var TRS_AGUDO_DATA = [
+  { mes: 1, label: 'Fev/2026', sessoes: 38, catJugular: 85, intercorrencias: 4.1, ktv: 89, modalidades: { hd: 28, crrt: 6, sled: 3, dp: 1 }, hospital: 'Mont Serrat' },
+  { mes: 2, label: 'Mar/2026', sessoes: 45, catJugular: 88, intercorrencias: 3.5, ktv: 90, modalidades: { hd: 33, crrt: 7, sled: 4, dp: 1 }, hospital: 'Mont Serrat' },
+  { mes: 3, label: 'Abr/2026', sessoes: 42, catJugular: 87, intercorrencias: 3.2, ktv: 91, modalidades: { hd: 30, crrt: 7, sled: 4, dp: 1 }, hospital: 'Mont Serrat' }
+];
+
+function renderTrsAgudo() {
+  var page = document.getElementById('page-trs-agudo');
+  if (!page || page.getAttribute('data-rendered') === '1') return;
+  page.setAttribute('data-rendered', '1');
+
+  var kpiRow = page.querySelector('[style*="grid-template-columns"]');
+  if (!kpiRow) return;
+
+  /* Último mês */
+  var ult = TRS_AGUDO_DATA[TRS_AGUDO_DATA.length - 1];
+
+  /* Atualizar KPIs com dados reais */
+  var kpiCards = kpiRow.children;
+  if (kpiCards[0]) kpiCards[0].querySelector('div').textContent = ult.sessoes;
+  if (kpiCards[1]) kpiCards[1].querySelector('div').textContent = ult.catJugular + '%';
+  if (kpiCards[2]) kpiCards[2].querySelector('div').textContent = ult.intercorrencias + '%';
+  if (kpiCards[3]) kpiCards[3].querySelector('div').textContent = ult.ktv + '%';
+
+  /* Adicionar grid de meses + tendência */
+  var sections = page.querySelectorAll('.pe-section');
+  var mesesSection = document.createElement('div');
+  mesesSection.className = 'pe-section rv visible';
+  mesesSection.style.marginTop = '24px';
+
+  var mesesHtml = '<div class="pe-section-label">Meses Lançados — ' + ult.hospital + '</div>';
+  mesesHtml += '<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin-top:12px;">';
+
+  TRS_AGUDO_DATA.forEach(function(m) {
+    var modStr = 'HD ' + m.modalidades.hd + ' · CRRT ' + m.modalidades.crrt + ' · SLED ' + m.modalidades.sled + ' · DP ' + m.modalidades.dp;
+    mesesHtml += '<div style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:18px;position:relative;overflow:hidden;">' +
+      '<div style="position:absolute;top:0;left:0;width:4px;height:100%;background:var(--teal);"></div>' +
+      '<div style="font-size:13px;font-weight:700;color:var(--navy);">' + m.label + '</div>' +
+      '<div style="font-size:11px;color:var(--text-3);margin-top:2px;">' + m.hospital + '</div>' +
+      '<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px;">' +
+        '<div><div style="font-size:18px;font-weight:700;color:var(--teal);">' + m.sessoes + '</div><div style="font-size:10px;color:var(--text-3);">sessões</div></div>' +
+        '<div><div style="font-size:18px;font-weight:700;color:var(--navy);">' + m.ktv + '%</div><div style="font-size:10px;color:var(--text-3);">Kt/V</div></div>' +
+        '<div><div style="font-size:18px;font-weight:700;color:var(--gold);">' + m.intercorrencias + '%</div><div style="font-size:10px;color:var(--text-3);">interc.</div></div>' +
+        '<div><div style="font-size:18px;font-weight:700;color:var(--teal);">' + m.catJugular + '%</div><div style="font-size:10px;color:var(--text-3);">jugular</div></div>' +
+      '</div>' +
+      '<div style="font-size:10px;color:var(--text-3);margin-top:10px;border-top:1px solid var(--border);padding-top:8px;">' + modStr + '</div>' +
+      '<div style="position:absolute;top:12px;right:14px;width:18px;height:18px;border-radius:50%;background:#2ecc71;display:flex;align-items:center;justify-content:center;"><svg width="10" height="10" fill="none" stroke="#fff" stroke-width="2.5"><polyline points="1.5,5 4,8 8.5,2"/></svg></div>' +
+    '</div>';
+  });
+
+  mesesHtml += '</div>';
+
+  /* Meses futuros */
+  mesesHtml += '<div style="display:flex;gap:6px;margin-top:16px;flex-wrap:wrap;">';
+  for (var m = 0; m < 12; m++) {
+    var preenchido = TRS_AGUDO_DATA.find(function(d){ return d.mes === m; });
+    mesesHtml += '<div style="width:44px;height:44px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;' +
+      (preenchido ? 'background:var(--teal);color:#fff;' : 'background:var(--bg);color:var(--text-3);border:1px solid var(--border);') + '">' +
+      MESES_LABEL[m] +
+      '</div>';
+  }
+  mesesHtml += '</div>';
+
+  mesesSection.innerHTML = mesesHtml;
+
+  /* Inserir antes do último section (Dashboard Completo) */
+  var lastSection = sections[sections.length - 1];
+  if (lastSection) lastSection.parentNode.insertBefore(mesesSection, lastSection);
 }
 
 /* ============================================================
