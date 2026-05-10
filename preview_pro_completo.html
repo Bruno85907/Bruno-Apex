@@ -829,13 +829,26 @@ body{font-family:var(--font-sans);background:var(--navy-deep);color:var(--text);
       <div class="sb-divider"></div>
       <div class="sb-module-label" onclick="toggleModule(this)">
         <span class="sb-module-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="9"/></svg></span>
-        <span>Qualidade</span>
+        <span>Qualidade Fenix</span>
         <span class="sb-chevron">›</span>
       </div>
       <div class="sb-children">
-        <div class="sb-child" data-page="indicadores" onclick="navTo('indicadores')"><span class="sb-child-dot"></span>Indicadores TRS</div>
-        <div class="sb-child" data-page="dashboards" onclick="navTo('dashboards')"><span class="sb-child-dot"></span>Dashboards</div>
+        <div class="sb-child" data-page="trs-cronico" onclick="navTo('trs-cronico')"><span class="sb-child-dot"></span>TRS Crônico</div>
+        <div class="sb-child" data-page="trs-agudo" onclick="navTo('trs-agudo')"><span class="sb-child-dot"></span>TRS Agudo</div>
+        <div class="sb-child" data-page="painel-executivo" onclick="navTo('painel-executivo')"><span class="sb-child-dot"></span>Painel Executivo</div>
         <div class="sb-child" data-page="relatorios" onclick="navTo('relatorios')"><span class="sb-child-dot"></span>Relatórios</div>
+      </div>
+      <div class="sb-divider"></div>
+      <div class="sb-module-label" onclick="toggleModule(this)">
+        <span class="sb-module-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0016.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 002 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg></span>
+        <span>Clínica APEX</span>
+        <span class="sb-chevron">›</span>
+      </div>
+      <div class="sb-children">
+        <div class="sb-child" data-page="clinica-visao" onclick="navTo('clinica-visao')"><span class="sb-child-dot"></span>Visão Geral</div>
+        <div class="sb-child" data-page="clinica-protocolos" onclick="navTo('clinica-protocolos')"><span class="sb-child-dot"></span>Protocolos</div>
+        <div class="sb-child" data-page="clinica-aderencia" onclick="navTo('clinica-aderencia')"><span class="sb-child-dot"></span>Aderência</div>
+        <div class="sb-child" data-page="clinica-relatorios" onclick="navTo('clinica-relatorios')"><span class="sb-child-dot"></span>Relatórios</div>
       </div>
       <div class="sb-divider"></div>
       <div class="sb-module-label" onclick="toggleModule(this)">
@@ -883,13 +896,22 @@ body{font-family:var(--font-sans);background:var(--navy-deep);color:var(--text);
             <div class="qc-desc">Planejamento estratégico, metas e projetos do serviço</div>
           </div>
         </div>
-        <div class="quick-card qc-nefro rv" onclick="navTo('indicadores')">
+        <div class="quick-card qc-nefro rv" onclick="navTo('trs-cronico')">
           <div class="qc-bg"></div><div class="qc-overlay"></div>
           <span class="qc-badge live"><span class="pulse-d"></span> Ativo</span>
           <div class="qc-content">
             <div class="qc-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="9"/></svg></div>
-            <div class="qc-title">Qualidade</div>
-            <div class="qc-desc">Indicadores TRS, dashboards e relatórios gerenciais</div>
+            <div class="qc-title">Qualidade Fenix</div>
+            <div class="qc-desc">TRS Crônico e Agudo, painel executivo e relatórios</div>
+          </div>
+        </div>
+        <div class="quick-card qc-pac rv" onclick="navTo('clinica-visao')" style="background:linear-gradient(135deg,#1a1a2e,#16213e);">
+          <div class="qc-bg"></div><div class="qc-overlay"></div>
+          <span class="qc-badge live"><span class="pulse-d"></span> Ativo</span>
+          <div class="qc-content">
+            <div class="qc-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0016.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 002 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg></div>
+            <div class="qc-title">Clínica APEX</div>
+            <div class="qc-desc">Protocolos CKM, aderência ao plano e indicadores operacionais</div>
           </div>
         </div>
         <div class="quick-card qc-pac rv" onclick="navTo('lista-pacientes')">
@@ -1006,9 +1028,9 @@ body{font-family:var(--font-sans);background:var(--navy-deep);color:var(--text);
       </div>
     </div>
 
-    <!-- PAGE: INDICADORES TRS -->
+    <!-- PAGE: INDICADORES TRS (legacy — redirect to trs-cronico) -->
     <div class="content-page" id="page-indicadores">
-      <p class="page-eyebrow rv">Qualidade</p>
+      <p class="page-eyebrow rv">Qualidade Fenix</p>
       <h2 class="page-title rv">Indicadores <strong>TRS</strong></h2>
       <p class="page-desc rv">Selecione um serviço para visualizar dashboards, lançar dados ou gerar relatórios.</p>
       <div class="trs-grid">
@@ -1113,10 +1135,10 @@ body{font-family:var(--font-sans);background:var(--navy-deep);color:var(--text);
       </div>
     </div>
 
-    <!-- PAGE: DASHBOARDS -->
-    <div class="content-page" id="page-dashboards">
-      <p class="page-eyebrow rv">Qualidade</p>
-      <h2 class="page-title rv">Dashboards <strong>Consolidados</strong></h2>
+    <!-- PAGE: PAINEL EXECUTIVO (ex-Dashboards) -->
+    <div class="content-page" id="page-painel-executivo">
+      <p class="page-eyebrow rv">Qualidade Fenix</p>
+      <h2 class="page-title rv">Painel <strong>Executivo</strong></h2>
       <p class="page-desc rv">Visão integrada dos indicadores TRS Agudo e Crônico — Mont Serrat e rede de clínicas.</p>
 
       <!-- TRS AGUDO — RESUMO TRIMESTRAL -->
@@ -1218,7 +1240,7 @@ body{font-family:var(--font-sans);background:var(--navy-deep);color:var(--text);
 
     <!-- PAGE: RELATÓRIOS -->
     <div class="content-page" id="page-relatorios">
-      <p class="page-eyebrow rv">Qualidade</p>
+      <p class="page-eyebrow rv">Qualidade Fenix</p>
       <h2 class="page-title rv"><strong>Relatórios</strong> Gerenciais</h2>
       <p class="page-desc rv">Relatórios em PDF para reuniões com diretoria, planos de saúde e auditorias de qualidade assistencial.</p>
 
@@ -1271,6 +1293,202 @@ body{font-family:var(--font-sans);background:var(--navy-deep);color:var(--text);
               <span class="pe-proj-status st-plan">Planejado</span>
               <div class="pe-proj-date">Q3/2026</div>
             </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PAGE: TRS AGUDO -->
+    <div class="content-page" id="page-trs-agudo">
+      <p class="page-eyebrow rv">Qualidade Fenix</p>
+      <h2 class="page-title rv">TRS <strong>Agudo</strong></h2>
+      <p class="page-desc rv">Indicadores de Terapia Renal Substitutiva em contexto agudo — acessos, modalidades, intercorrências e desfechos.</p>
+
+      <div class="pe-section rv">
+        <div class="pe-section-label">Indicadores em Tempo Real</div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-top:12px;">
+          <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:20px;text-align:center;">
+            <div style="font-size:28px;font-weight:700;color:var(--teal);">42</div>
+            <div style="font-size:13px;color:var(--text-2);margin-top:4px;">Sessões / mês</div>
+          </div>
+          <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:20px;text-align:center;">
+            <div style="font-size:28px;font-weight:700;color:var(--navy);">87%</div>
+            <div style="font-size:13px;color:var(--text-2);margin-top:4px;">Cateter em jugular</div>
+          </div>
+          <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:20px;text-align:center;">
+            <div style="font-size:28px;font-weight:700;color:var(--gold);">3.2%</div>
+            <div style="font-size:13px;color:var(--text-2);margin-top:4px;">Taxa de intercorrências</div>
+          </div>
+          <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:20px;text-align:center;">
+            <div style="font-size:28px;font-weight:700;color:var(--teal);">91%</div>
+            <div style="font-size:13px;color:var(--text-2);margin-top:4px;">Adequação Kt/V</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="pe-section rv" style="margin-top:24px;">
+        <div class="pe-section-label">Dashboard Completo</div>
+        <div class="pe-proj-list">
+          <div class="pe-proj-card" style="cursor:pointer;" onclick="window.open('https://www.apex.med.br/dashboard_trs_completo.html','_blank')">
+            <div class="pe-proj-num" style="background:var(--teal);color:#fff;"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12 L6 4 L10 8 L14 2"/></svg></div>
+            <div class="pe-proj-info">
+              <div class="pe-proj-name">Painel TRS Agudo — Interativo</div>
+              <div class="pe-proj-detail">Dashboard dinâmico com filtros por período, modalidade e unidade. Dados atualizados em tempo real.</div>
+            </div>
+            <div style="text-align:right;"><span style="font-size:12px;color:var(--teal);font-weight:600;">Abrir ↗</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PAGE: CLÍNICA APEX — VISÃO GERAL -->
+    <div class="content-page" id="page-clinica-visao">
+      <p class="page-eyebrow rv">Clínica APEX</p>
+      <h2 class="page-title rv">Visão <strong>Geral</strong></h2>
+      <p class="page-desc rv">Painel operacional da clínica particular — pacientes ativos, protocolos em andamento e indicadores de aderência.</p>
+
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;margin-top:24px;" class="rv">
+        <div style="background:linear-gradient(135deg,var(--navy),#2a3f6e);border-radius:var(--radius);padding:24px;color:#fff;">
+          <div style="font-size:13px;opacity:.7;">Pacientes Ativos</div>
+          <div style="font-size:32px;font-weight:700;margin-top:8px;">0</div>
+          <div style="font-size:12px;opacity:.5;margin-top:4px;">aguardando primeiro cadastro</div>
+        </div>
+        <div style="background:linear-gradient(135deg,var(--teal),#04b5c8);border-radius:var(--radius);padding:24px;color:#fff;">
+          <div style="font-size:13px;opacity:.7;">Protocolos Ativos</div>
+          <div style="font-size:32px;font-weight:700;margin-top:8px;">2</div>
+          <div style="font-size:12px;opacity:.5;margin-top:4px;">CKM Stage · DRC Conservador</div>
+        </div>
+        <div style="background:linear-gradient(135deg,var(--gold),#d4b76a);border-radius:var(--radius);padding:24px;color:#fff;">
+          <div style="font-size:13px;opacity:.7;">Aderência Média</div>
+          <div style="font-size:32px;font-weight:700;margin-top:8px;">—</div>
+          <div style="font-size:12px;opacity:.5;margin-top:4px;">dados insuficientes</div>
+        </div>
+        <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:24px;">
+          <div style="font-size:13px;color:var(--text-2);">Consultas este mês</div>
+          <div style="font-size:32px;font-weight:700;color:var(--navy);margin-top:8px;">0</div>
+          <div style="font-size:12px;color:var(--text-3);margin-top:4px;">nenhuma registrada</div>
+        </div>
+      </div>
+
+      <div class="pe-section rv" style="margin-top:32px;">
+        <div class="pe-section-label">Próximas Consultas</div>
+        <div style="text-align:center;padding:40px 20px;color:var(--text-3);font-size:14px;">
+          Nenhuma consulta agendada. Use <strong>Minha Agenda</strong> para agendar atendimentos.
+        </div>
+      </div>
+    </div>
+
+    <!-- PAGE: CLÍNICA APEX — PROTOCOLOS -->
+    <div class="content-page" id="page-clinica-protocolos">
+      <p class="page-eyebrow rv">Clínica APEX</p>
+      <h2 class="page-title rv"><strong>Protocolos</strong> Clínicos</h2>
+      <p class="page-desc rv">Protocolos estruturados para acompanhamento longitudinal de pacientes com Síndrome CKM e DRC conservador.</p>
+
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px;margin-top:24px;" class="rv">
+        <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;">
+          <div style="background:linear-gradient(135deg,var(--navy),#2a3f6e);padding:20px 24px;color:#fff;">
+            <div style="font-size:11px;text-transform:uppercase;letter-spacing:1px;opacity:.7;">Protocolo</div>
+            <div style="font-size:18px;font-weight:700;margin-top:4px;">Síndrome CKM</div>
+          </div>
+          <div style="padding:20px 24px;">
+            <div style="font-size:13px;color:var(--text-2);line-height:1.6;">
+              Avaliação integrada cardiovascular-renal-metabólica. Inclui estadiamento CKM (0-4), risco ASCVD/KFRE, metas terapêuticas e plano de ação personalizado.
+            </div>
+            <div style="margin-top:16px;display:flex;gap:8px;flex-wrap:wrap;">
+              <span style="font-size:11px;padding:4px 10px;background:var(--bg);border-radius:20px;color:var(--text-2);">CKD-EPI</span>
+              <span style="font-size:11px;padding:4px 10px;background:var(--bg);border-radius:20px;color:var(--text-2);">ASCVD</span>
+              <span style="font-size:11px;padding:4px 10px;background:var(--bg);border-radius:20px;color:var(--text-2);">KFRE</span>
+              <span style="font-size:11px;padding:4px 10px;background:var(--bg);border-radius:20px;color:var(--text-2);">HbA1c</span>
+            </div>
+            <div style="margin-top:16px;font-size:12px;color:var(--teal);font-weight:600;cursor:pointer;" onclick="navTo('prontuario')">Abrir Prontuário CKM →</div>
+          </div>
+        </div>
+        <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;">
+          <div style="background:linear-gradient(135deg,var(--teal),#04b5c8);padding:20px 24px;color:#fff;">
+            <div style="font-size:11px;text-transform:uppercase;letter-spacing:1px;opacity:.7;">Protocolo</div>
+            <div style="font-size:18px;font-weight:700;margin-top:4px;">DRC Conservador</div>
+          </div>
+          <div style="padding:20px 24px;">
+            <div style="font-size:13px;color:var(--text-2);line-height:1.6;">
+              Manejo conservador da doença renal crônica estágios 3b-5. Foco em nefroproteção, controle pressórico, manejo de anemia e distúrbios minerais.
+            </div>
+            <div style="margin-top:16px;display:flex;gap:8px;flex-wrap:wrap;">
+              <span style="font-size:11px;padding:4px 10px;background:var(--bg);border-radius:20px;color:var(--text-2);">TFG</span>
+              <span style="font-size:11px;padding:4px 10px;background:var(--bg);border-radius:20px;color:var(--text-2);">Albuminúria</span>
+              <span style="font-size:11px;padding:4px 10px;background:var(--bg);border-radius:20px;color:var(--text-2);">iSGLT2</span>
+              <span style="font-size:11px;padding:4px 10px;background:var(--bg);border-radius:20px;color:var(--text-2);">finerenona</span>
+            </div>
+            <div style="margin-top:16px;font-size:12px;color:var(--teal);font-weight:600;cursor:pointer;" onclick="navTo('prontuario')">Abrir Prontuário CKM →</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PAGE: CLÍNICA APEX — ADERÊNCIA -->
+    <div class="content-page" id="page-clinica-aderencia">
+      <p class="page-eyebrow rv">Clínica APEX</p>
+      <h2 class="page-title rv"><strong>Aderência</strong> ao Plano</h2>
+      <p class="page-desc rv">Acompanhamento da aderência dos pacientes às metas terapêuticas, exames e consultas de retorno.</p>
+
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-top:24px;" class="rv">
+        <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:20px;text-align:center;">
+          <div style="font-size:28px;font-weight:700;color:var(--teal);">—</div>
+          <div style="font-size:13px;color:var(--text-2);margin-top:4px;">Aderência medicamentosa</div>
+        </div>
+        <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:20px;text-align:center;">
+          <div style="font-size:28px;font-weight:700;color:var(--navy);">—</div>
+          <div style="font-size:13px;color:var(--text-2);margin-top:4px;">Exames em dia</div>
+        </div>
+        <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:20px;text-align:center;">
+          <div style="font-size:28px;font-weight:700;color:var(--gold);">—</div>
+          <div style="font-size:13px;color:var(--text-2);margin-top:4px;">Retornos realizados</div>
+        </div>
+        <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:20px;text-align:center;">
+          <div style="font-size:28px;font-weight:700;color:var(--teal);">—</div>
+          <div style="font-size:13px;color:var(--text-2);margin-top:4px;">Metas atingidas</div>
+        </div>
+      </div>
+
+      <div class="pe-section rv" style="margin-top:32px;">
+        <div class="pe-section-label">Pacientes por Nível de Aderência</div>
+        <div style="text-align:center;padding:40px 20px;color:var(--text-3);font-size:14px;">
+          Dados de aderência serão exibidos após o cadastro dos primeiros pacientes e registro de acompanhamentos.
+        </div>
+      </div>
+    </div>
+
+    <!-- PAGE: CLÍNICA APEX — RELATÓRIOS -->
+    <div class="content-page" id="page-clinica-relatorios">
+      <p class="page-eyebrow rv">Clínica APEX</p>
+      <h2 class="page-title rv"><strong>Relatórios</strong> da Clínica</h2>
+      <p class="page-desc rv">Relatórios operacionais e clínicos para acompanhamento da performance da Clínica APEX.</p>
+
+      <div class="pe-section rv">
+        <div class="pe-section-label">Relatórios Disponíveis</div>
+        <div class="pe-proj-list">
+          <div class="pe-proj-card" style="opacity:.5;cursor:default;">
+            <div class="pe-proj-num" style="background:var(--navy);color:#fff;">PDF</div>
+            <div class="pe-proj-info">
+              <div class="pe-proj-name">Relatório Mensal de Aderência</div>
+              <div class="pe-proj-detail">Consolidado mensal com taxa de aderência por protocolo, exames realizados e metas atingidas.</div>
+            </div>
+            <div style="text-align:right;"><span style="font-size:11px;color:var(--text-3);">Em breve</span></div>
+          </div>
+          <div class="pe-proj-card" style="opacity:.5;cursor:default;">
+            <div class="pe-proj-num" style="background:var(--teal);color:#fff;">PDF</div>
+            <div class="pe-proj-info">
+              <div class="pe-proj-name">Evolução Clínica Individual</div>
+              <div class="pe-proj-detail">Relatório por paciente com histórico de TFG, albuminúria, HbA1c e demais marcadores ao longo do tempo.</div>
+            </div>
+            <div style="text-align:right;"><span style="font-size:11px;color:var(--text-3);">Em breve</span></div>
+          </div>
+          <div class="pe-proj-card" style="opacity:.5;cursor:default;">
+            <div class="pe-proj-num" style="background:var(--gold);color:#fff;">PDF</div>
+            <div class="pe-proj-info">
+              <div class="pe-proj-name">Indicadores Operacionais</div>
+              <div class="pe-proj-detail">Consultas realizadas, taxa de retorno, novos pacientes e receita por período.</div>
+            </div>
+            <div style="text-align:right;"><span style="font-size:11px;color:var(--text-3);">Em breve</span></div>
           </div>
         </div>
       </div>
@@ -3206,22 +3424,29 @@ var observer = new IntersectionObserver(function(entries){
    NAVIGATION
    ============================================================ */
 var NAV = {
-  'dashboard':       { label:'Dashboard',          parent:null,          sidebar:'dashboard',      bc:['Dashboard'] },
-  'indicadores':     { label:'Indicadores TRS',    parent:'dashboard',   sidebar:'indicadores',    bc:['Dashboard','Qualidade','Indicadores TRS'] },
-  'trs-cronico':     { label:'TRS Crônico',        parent:'indicadores', sidebar:'indicadores',    bc:['Dashboard','Qualidade','Indicadores TRS','TRS Crônico'] },
-  'unidades':        { label:'Selecionar Unidade', parent:'trs-cronico', sidebar:'indicadores',    bc:['Dashboard','Qualidade','Indicadores TRS','TRS Crônico','Unidades'] },
-  'dashboards':      { label:'Dashboards',         parent:'dashboard',   sidebar:'dashboards',     bc:['Dashboard','Qualidade','Dashboards'] },
-  'relatorios':      { label:'Relatórios',         parent:'dashboard',   sidebar:'relatorios',     bc:['Dashboard','Qualidade','Relatórios'] },
-  'agenda':          { label:'Minha Agenda',        parent:'dashboard',   sidebar:'agenda',         bc:['Dashboard','Minha Agenda'] },
-  'planejamento':    { label:'Plan. Estratégico',  parent:'dashboard',   sidebar:'planejamento',   bc:['Dashboard','Gestão','Plan. Estratégico'] },
-  'prontuario':      { label:'Prontuário CKM',     parent:'dashboard',   sidebar:'prontuario',     bc:['Dashboard','Pacientes','Prontuário CKM'] },
-  'lista-pacientes': { label:'Lista de Pacientes', parent:'dashboard',   sidebar:'lista-pacientes',bc:['Dashboard','Pacientes','Lista de Pacientes'] }
+  'dashboard':           { label:'Dashboard',          parent:null,          sidebar:'dashboard',          bc:['Dashboard'] },
+  'trs-cronico':         { label:'TRS Crônico',        parent:'dashboard',   sidebar:'trs-cronico',        bc:['Dashboard','Qualidade Fenix','TRS Crônico'] },
+  'unidades':            { label:'Selecionar Unidade', parent:'trs-cronico', sidebar:'trs-cronico',        bc:['Dashboard','Qualidade Fenix','TRS Crônico','Unidades'] },
+  'trs-agudo':           { label:'TRS Agudo',          parent:'dashboard',   sidebar:'trs-agudo',          bc:['Dashboard','Qualidade Fenix','TRS Agudo'] },
+  'painel-executivo':    { label:'Painel Executivo',   parent:'dashboard',   sidebar:'painel-executivo',   bc:['Dashboard','Qualidade Fenix','Painel Executivo'] },
+  'relatorios':          { label:'Relatórios',         parent:'dashboard',   sidebar:'relatorios',         bc:['Dashboard','Qualidade Fenix','Relatórios'] },
+  'clinica-visao':       { label:'Visão Geral',        parent:'dashboard',   sidebar:'clinica-visao',      bc:['Dashboard','Clínica APEX','Visão Geral'] },
+  'clinica-protocolos':  { label:'Protocolos',         parent:'dashboard',   sidebar:'clinica-protocolos', bc:['Dashboard','Clínica APEX','Protocolos'] },
+  'clinica-aderencia':   { label:'Aderência',          parent:'dashboard',   sidebar:'clinica-aderencia',  bc:['Dashboard','Clínica APEX','Aderência'] },
+  'clinica-relatorios':  { label:'Relatórios Clínica',  parent:'dashboard',   sidebar:'clinica-relatorios', bc:['Dashboard','Clínica APEX','Relatórios Clínica'] },
+  'agenda':              { label:'Minha Agenda',       parent:'dashboard',   sidebar:'agenda',             bc:['Dashboard','Minha Agenda'] },
+  'planejamento':        { label:'Plan. Estratégico',  parent:'dashboard',   sidebar:'planejamento',       bc:['Dashboard','Gestão','Plan. Estratégico'] },
+  'prontuario':          { label:'Prontuário CKM',     parent:'dashboard',   sidebar:'prontuario',         bc:['Dashboard','Pacientes','Prontuário CKM'] },
+  'lista-pacientes':     { label:'Lista de Pacientes', parent:'dashboard',   sidebar:'lista-pacientes',    bc:['Dashboard','Pacientes','Lista de Pacientes'] }
 };
 
 var BC_MAP = {
-  'Dashboard':'dashboard','Minha Agenda':'agenda','Gestão':null,'Qualidade':null,'Indicadores TRS':'indicadores',
-  'TRS Crônico':'trs-cronico','Unidades':'unidades','Dashboards':'dashboards',
-  'Relatórios':'relatorios','Plan. Estratégico':'planejamento',
+  'Dashboard':'dashboard','Minha Agenda':'agenda','Gestão':null,
+  'Qualidade Fenix':null,'TRS Crônico':'trs-cronico','Unidades':'unidades',
+  'TRS Agudo':'trs-agudo','Painel Executivo':'painel-executivo','Relatórios':'relatorios',
+  'Clínica APEX':null,'Visão Geral':'clinica-visao','Protocolos':'clinica-protocolos',
+  'Aderência':'clinica-aderencia','Relatórios Clínica':'clinica-relatorios',
+  'Plan. Estratégico':'planejamento',
   'Pacientes':null,'Prontuário CKM':'prontuario','Lista de Pacientes':'lista-pacientes'
 };
 
