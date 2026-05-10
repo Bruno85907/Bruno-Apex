@@ -1144,11 +1144,11 @@ body{font-family:var(--font-sans);background:var(--navy-deep);color:var(--text);
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:12px;">
           <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:20px;">
             <div style="font-size:13px;font-weight:600;color:var(--text);margin-bottom:12px;">Adequação Dialítica</div>
-            <canvas id="ud-chart-adequacao" height="180"></canvas>
+            <div style="position:relative;height:220px;"><canvas id="ud-chart-adequacao"></canvas></div>
           </div>
           <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:20px;">
             <div style="font-size:13px;font-weight:600;color:var(--text);margin-bottom:12px;">Acesso Vascular e Volemia</div>
-            <canvas id="ud-chart-acesso" height="180"></canvas>
+            <div style="position:relative;height:220px;"><canvas id="ud-chart-acesso"></canvas></div>
           </div>
         </div>
       </div>
@@ -1382,7 +1382,7 @@ body{font-family:var(--font-sans);background:var(--navy-deep);color:var(--text);
       <div class="pe-section rv" style="margin-top:24px;">
         <div class="pe-section-label">Evolução dos Indicadores</div>
         <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:20px;margin-top:12px;">
-          <canvas id="agudo-chart-evolucao" height="200"></canvas>
+          <div style="position:relative;height:260px;"><canvas id="agudo-chart-evolucao"></canvas></div>
         </div>
       </div>
 
@@ -3772,7 +3772,7 @@ async function renderUnidadeDetalhe() {
   if (window._udChart1) window._udChart1.destroy();
   if (window._udChart2) window._udChart2.destroy();
 
-  var chartOpts = { responsive: true, maintainAspectRatio: false, plugins: { legend: { position:'bottom', labels: { font: { family:'Inter', size:11 }, usePointStyle:true, pointStyle:'circle' } } }, scales: { y: { min:0, max:100, grid: { color:'rgba(0,0,0,.06)' }, ticks: { font: { family:'Inter', size:11 }, callback: function(v){return v+'%';} } }, x: { grid: { display:false }, ticks: { font: { family:'Inter', size:11 } } } } };
+  var chartOpts = { responsive: true, maintainAspectRatio: false, plugins: { legend: { position:'bottom', labels: { font: { family:'Inter', size:11 }, usePointStyle:true, pointStyle:'circle', padding:14 } } }, scales: { y: { suggestMin:40, suggestMax:100, grid: { color:'rgba(0,0,0,.06)' }, ticks: { font: { family:'Inter', size:11 }, callback: function(v){return v+'%';} } }, x: { grid: { display:false }, ticks: { font: { family:'Inter', size:11 } } } } };
 
   var ctx1 = document.getElementById('ud-chart-adequacao');
   if (ctx1) {
