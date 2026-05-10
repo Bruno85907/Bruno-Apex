@@ -1129,35 +1129,9 @@ body{font-family:var(--font-sans);background:var(--navy-deep);color:var(--text);
       </div>
     </div>
 
-    <!-- PAGE: DETALHE DA UNIDADE (dinâmico) -->
+    <!-- PAGE: DETALHE DA UNIDADE (lançamento crônico via iframe) -->
     <div class="content-page" id="page-unidade-detalhe">
-      <p class="page-eyebrow rv" id="ud-eyebrow">Qualidade Fenix — TRS Crônico</p>
-      <h2 class="page-title rv" id="ud-title">Unidade</h2>
-      <p class="page-desc rv" id="ud-desc">Indicadores mensais, evolução e lançamento de dados.</p>
-
-      <!-- KPI resumo -->
-      <div id="ud-kpi-row" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:14px;margin-top:20px;" class="rv"></div>
-
-      <!-- Gráficos de evolução -->
-      <div class="pe-section rv" style="margin-top:28px;">
-        <div class="pe-section-label">Evolução dos Indicadores</div>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:12px;">
-          <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:20px;">
-            <div style="font-size:13px;font-weight:600;color:var(--text);margin-bottom:12px;">Adequação Dialítica</div>
-            <div style="position:relative;height:220px;"><canvas id="ud-chart-adequacao"></canvas></div>
-          </div>
-          <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:20px;">
-            <div style="font-size:13px;font-weight:600;color:var(--text);margin-bottom:12px;">Acesso Vascular e Volemia</div>
-            <div style="position:relative;height:220px;"><canvas id="ud-chart-acesso"></canvas></div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Tabela de meses -->
-      <div class="pe-section rv" style="margin-top:24px;">
-        <div class="pe-section-label">Dados por Mês</div>
-        <div id="ud-tabela" style="margin-top:12px;overflow-x:auto;"></div>
-      </div>
+      <iframe id="ud-iframe" style="width:100%;border:none;min-height:calc(100vh - 80px);" src="about:blank"></iframe>
     </div>
 
     <!-- PAGE: PAINEL EXECUTIVO (ex-Dashboards) -->
@@ -1344,70 +1318,9 @@ body{font-family:var(--font-sans);background:var(--navy-deep);color:var(--text);
       </div>
     </div>
 
-    <!-- PAGE: TRS AGUDO — DETALHE SERVIÇO (Mont Serrat) -->
+    <!-- PAGE: TRS AGUDO — DETALHE SERVIÇO (Mont Serrat) — lançamento via iframe -->
     <div class="content-page" id="page-trs-agudo-servico">
-      <p class="page-eyebrow rv">Qualidade Fenix — TRS Agudo</p>
-      <h2 class="page-title rv">Hospital <strong>Mont Serrat</strong></h2>
-      <p class="page-desc rv">Indicadores de TRS Agudo — acessos vasculares, modalidades, intercorrências e adequação dialítica.</p>
-
-      <!-- KPIs último mês -->
-      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;margin-top:20px;" class="rv">
-        <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:18px;text-align:center;">
-          <div style="font-size:26px;font-weight:700;color:var(--teal);">42</div>
-          <div style="font-size:12px;color:var(--text-2);margin-top:4px;">Sessões (Abr/26)</div>
-        </div>
-        <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:18px;text-align:center;">
-          <div style="font-size:26px;font-weight:700;color:var(--navy);">87%</div>
-          <div style="font-size:12px;color:var(--text-2);margin-top:4px;">Cateter jugular</div>
-        </div>
-        <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:18px;text-align:center;">
-          <div style="font-size:26px;font-weight:700;color:var(--gold);">3.2%</div>
-          <div style="font-size:12px;color:var(--text-2);margin-top:4px;">Intercorrências</div>
-        </div>
-        <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:18px;text-align:center;">
-          <div style="font-size:26px;font-weight:700;color:var(--teal);">91%</div>
-          <div style="font-size:12px;color:var(--text-2);margin-top:4px;">Adequação Kt/V</div>
-        </div>
-      </div>
-
-      <!-- Meses lançados com cards detalhados -->
-      <div class="pe-section rv" style="margin-top:28px;">
-        <div class="pe-section-label">Meses Lançados</div>
-        <div id="agudo-meses-grid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:12px;"></div>
-        <!-- Grid visual 12 meses -->
-        <div id="agudo-meses-pills" style="display:flex;gap:6px;margin-top:16px;flex-wrap:wrap;"></div>
-      </div>
-
-      <!-- Gráfico evolução -->
-      <div class="pe-section rv" style="margin-top:24px;">
-        <div class="pe-section-label">Evolução dos Indicadores</div>
-        <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:20px;margin-top:12px;">
-          <div style="position:relative;height:260px;"><canvas id="agudo-chart-evolucao"></canvas></div>
-        </div>
-      </div>
-
-      <!-- Dashboard externo -->
-      <div class="pe-section rv" style="margin-top:24px;">
-        <div class="pe-section-label">Dashboard Completo</div>
-        <div class="pe-proj-list">
-          <div class="pe-proj-card" style="cursor:pointer;" onclick="window.open('https://www.apex.med.br/dashboard_trs_completo.html','_blank')">
-            <div class="pe-proj-num" style="background:var(--teal);color:#fff;"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12 L6 4 L10 8 L14 2"/></svg></div>
-            <div class="pe-proj-info">
-              <div class="pe-proj-name">Painel TRS Agudo — Interativo</div>
-              <div class="pe-proj-detail">Dashboard dinâmico com filtros por período, modalidade e unidade. Dados atualizados em tempo real.</div>
-            </div>
-            <div style="text-align:right;"><span style="font-size:12px;color:var(--teal);font-weight:600;">Abrir ↗</span></div>
-          </div>
-          <div class="pe-proj-card" style="cursor:pointer;" onclick="window.open('https://www.apex.med.br/Dashboard_TRS_Abril_2026_print.html','_blank')">
-            <div class="pe-proj-num" style="background:var(--navy);color:#fff;">PDF</div>
-            <div class="pe-proj-info">
-              <div class="pe-proj-name">Dashboard TRS Agudo — Abril/2026</div>
-              <div class="pe-proj-detail">3 páginas landscape A4 — KPIs, modalidades, acessos vasculares e intercorrências.</div>
-            </div>
-            <div style="text-align:right;"><span style="font-size:12px;color:var(--teal);font-weight:600;">Abrir ↗</span></div>
-          </div>
-        </div>
-      </div>
+      <iframe id="agudo-iframe" style="width:100%;border:none;min-height:calc(100vh - 80px);" src="about:blank"></iframe>
     </div>
 
     <!-- PAGE: CLÍNICA APEX — VISÃO GERAL -->
@@ -3568,8 +3481,8 @@ function navTo(pageId) {
   if (pageId === 'lista-pacientes' && currentDoctor) carregarListaPacientes();
   if (pageId === 'agenda') initCalendar();
   if (pageId === 'trs-cronico') carregarTrsCronico();
-  if (pageId === 'trs-agudo-servico') renderTrsAgudoServico();
-  if (pageId === 'unidade-detalhe') renderUnidadeDetalhe();
+  if (pageId === 'trs-agudo-servico') document.getElementById('agudo-iframe').src = 'painel_lancamento_mensal.html?embed=1';
+  /* unidade-detalhe iframe src is set by abrirUnidade() */
 }
 
 function navBack() {
@@ -3711,203 +3624,9 @@ function abrirUnidade(key) {
   NAV['unidade-detalhe'].label = info.nome;
   NAV['unidade-detalhe'].bc = ['Dashboard','Qualidade Fenix','TRS Crônico','Unidades', info.nome];
   BC_MAP[info.nome] = null;
+  /* Setar iframe com template de lançamento da unidade */
+  document.getElementById('ud-iframe').src = 'fenix_lanc.html?unidade=' + key + '&embed=1';
   navTo('unidade-detalhe');
-}
-
-async function renderUnidadeDetalhe() {
-  if (!_selectedUnit) return;
-  var u = UNIDADES_INFO[_selectedUnit];
-  var key = _selectedUnit;
-
-  document.getElementById('ud-eyebrow').textContent = 'Qualidade Fenix — TRS Crônico';
-  document.getElementById('ud-title').innerHTML = '<strong>' + u.nome + '</strong>';
-  document.getElementById('ud-desc').textContent = u.cidade + ' — Indicadores mensais, evolução e dados detalhados.';
-
-  /* Carregar dados do Supabase */
-  if (!_trsCData) {
-    try {
-      var resp = await supabase.from('dados_mensais').select('*').eq('ano', 2026).order('mes');
-      _trsCData = resp.data || [];
-    } catch(e) { _trsCData = []; }
-  }
-
-  /* Filtrar meses com dados desta unidade */
-  var mesesUnit = _trsCData.filter(function(d){ return parseInt(d['pac_' + key]) > 0; });
-  var ultimo = mesesUnit.length ? mesesUnit[mesesUnit.length - 1] : null;
-
-  /* KPIs */
-  var kpiRow = document.getElementById('ud-kpi-row');
-  if (ultimo) {
-    kpiRow.innerHTML =
-      '<div style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:16px;text-align:center;">' +
-        '<div style="font-size:24px;font-weight:700;color:' + u.cor + ';">' + (ultimo['pac_' + key] || '—') + '</div>' +
-        '<div style="font-size:11px;color:var(--text-2);margin-top:4px;">Pacientes</div></div>' +
-      '<div style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:16px;text-align:center;">' +
-        '<div style="font-size:24px;font-weight:700;color:' + u.cor + ';">' + (ultimo['ses_' + key] || '—') + '</div>' +
-        '<div style="font-size:11px;color:var(--text-2);margin-top:4px;">Sessões</div></div>' +
-      '<div style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:16px;text-align:center;">' +
-        '<div style="font-size:24px;font-weight:700;color:' + u.cor + ';">' + (ultimo['ktv_' + key] || '—') + '%</div>' +
-        '<div style="font-size:11px;color:var(--text-2);margin-top:4px;">Kt/V</div></div>' +
-      '<div style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:16px;text-align:center;">' +
-        '<div style="font-size:24px;font-weight:700;color:' + u.cor + ';">' + (ultimo['fav_' + key] || '—') + '%</div>' +
-        '<div style="font-size:11px;color:var(--text-2);margin-top:4px;">FAV</div></div>' +
-      '<div style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:16px;text-align:center;">' +
-        '<div style="font-size:24px;font-weight:700;color:' + u.cor + ';">' + (ultimo['hb_' + key] || '—') + '%</div>' +
-        '<div style="font-size:11px;color:var(--text-2);margin-top:4px;">Hb alvo</div></div>' +
-      '<div style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:16px;text-align:center;">' +
-        '<div style="font-size:24px;font-weight:700;color:' + u.cor + ';">' + mesesUnit.length + '/12</div>' +
-        '<div style="font-size:11px;color:var(--text-2);margin-top:4px;">Meses</div></div>';
-  }
-
-  /* Gráficos Chart.js */
-  var labels = mesesUnit.map(function(d){ return MESES_LABEL[d.mes]; });
-  var ktvData = mesesUnit.map(function(d){ return parseFloat(d['ktv_' + key]) || 0; });
-  var favData = mesesUnit.map(function(d){ return parseFloat(d['fav_' + key]) || 0; });
-  var hbData = mesesUnit.map(function(d){ return parseFloat(d['hb_' + key]) || 0; });
-  var volData = mesesUnit.map(function(d){ return parseFloat(d['vol_' + key]) || 0; });
-  var fosData = mesesUnit.map(function(d){ return parseFloat(d['fos_' + key]) || 0; });
-  var gpidData = mesesUnit.map(function(d){ return parseFloat(d['gpid_' + key]) || 0; });
-
-  /* Destruir charts anteriores */
-  if (window._udChart1) window._udChart1.destroy();
-  if (window._udChart2) window._udChart2.destroy();
-
-  var chartOpts = { responsive: true, maintainAspectRatio: false, plugins: { legend: { position:'bottom', labels: { font: { family:'Inter', size:11 }, usePointStyle:true, pointStyle:'circle', padding:14 } } }, scales: { y: { suggestMin:40, suggestMax:100, grid: { color:'rgba(0,0,0,.06)' }, ticks: { font: { family:'Inter', size:11 }, callback: function(v){return v+'%';} } }, x: { grid: { display:false }, ticks: { font: { family:'Inter', size:11 } } } } };
-
-  var ctx1 = document.getElementById('ud-chart-adequacao');
-  if (ctx1) {
-    window._udChart1 = new Chart(ctx1.getContext('2d'), {
-      type: 'line',
-      data: {
-        labels: labels,
-        datasets: [
-          { label:'Kt/V', data:ktvData, borderColor:u.cor, backgroundColor:'rgba('+u.corRgb+',.1)', fill:true, tension:.3, pointRadius:5, pointBackgroundColor:u.cor },
-          { label:'Hb alvo', data:hbData, borderColor:'#C4A35A', backgroundColor:'rgba(196,163,90,.1)', fill:false, tension:.3, pointRadius:5, pointBackgroundColor:'#C4A35A', borderDash:[5,3] },
-          { label:'Fósforo', data:fosData, borderColor:'#028090', backgroundColor:'transparent', fill:false, tension:.3, pointRadius:4, pointBackgroundColor:'#028090' }
-        ]
-      },
-      options: chartOpts
-    });
-  }
-
-  var ctx2 = document.getElementById('ud-chart-acesso');
-  if (ctx2) {
-    window._udChart2 = new Chart(ctx2.getContext('2d'), {
-      type: 'line',
-      data: {
-        labels: labels,
-        datasets: [
-          { label:'FAV', data:favData, borderColor:u.cor, backgroundColor:'rgba('+u.corRgb+',.1)', fill:true, tension:.3, pointRadius:5, pointBackgroundColor:u.cor },
-          { label:'Volemia', data:volData, borderColor:'#028090', backgroundColor:'transparent', fill:false, tension:.3, pointRadius:4, pointBackgroundColor:'#028090' },
-          { label:'GPID', data:gpidData, borderColor:'#C4A35A', backgroundColor:'transparent', fill:false, tension:.3, pointRadius:4, pointBackgroundColor:'#C4A35A', borderDash:[5,3] }
-        ]
-      },
-      options: chartOpts
-    });
-  }
-
-  /* Tabela de dados */
-  var tabela = document.getElementById('ud-tabela');
-  var indicadores = [
-    { label:'Pacientes', campo:'pac_' },
-    { label:'Sessões', campo:'ses_' },
-    { label:'Kt/V (%)', campo:'ktv_' },
-    { label:'FAV (%)', campo:'fav_' },
-    { label:'Hb alvo (%)', campo:'hb_' },
-    { label:'Fósforo (%)', campo:'fos_' },
-    { label:'GPID (%)', campo:'gpid_' },
-    { label:'Volemia (%)', campo:'vol_' },
-    { label:'ECW (%)', campo:'ecw_' },
-    { label:'Potássio (%)', campo:'pot_' }
-  ];
-
-  var thtml = '<table style="width:100%;border-collapse:collapse;font-size:13px;font-family:Inter,sans-serif;">';
-  thtml += '<thead><tr style="border-bottom:2px solid var(--border);"><th style="text-align:left;padding:10px 12px;color:var(--text-2);font-weight:600;font-size:12px;">Indicador</th>';
-  mesesUnit.forEach(function(d){ thtml += '<th style="text-align:center;padding:10px 8px;color:var(--text-2);font-weight:600;font-size:12px;">' + MESES_LABEL[d.mes] + '/' + d.ano + '</th>'; });
-  thtml += '</tr></thead><tbody>';
-
-  indicadores.forEach(function(ind, idx) {
-    var bg = idx % 2 === 0 ? 'var(--bg)' : 'var(--bg-card)';
-    thtml += '<tr style="background:' + bg + ';"><td style="padding:8px 12px;font-weight:500;color:var(--text);">' + ind.label + '</td>';
-    mesesUnit.forEach(function(d) {
-      var val = d[ind.campo + key];
-      thtml += '<td style="text-align:center;padding:8px;color:var(--text);">' + (val && val !== '0' ? val : '—') + '</td>';
-    });
-    thtml += '</tr>';
-  });
-
-  thtml += '</tbody></table>';
-  tabela.innerHTML = thtml;
-}
-
-/* ============================================================
-   TRS AGUDO — Serviço Mont Serrat (detalhe)
-   ============================================================ */
-var TRS_AGUDO_DATA = [
-  { mes: 1, label: 'Fev/2026', sessoes: 38, catJugular: 85, intercorrencias: 4.1, ktv: 89, modalidades: { hd: 28, crrt: 6, sled: 3, dp: 1 }, hospital: 'Mont Serrat' },
-  { mes: 2, label: 'Mar/2026', sessoes: 45, catJugular: 88, intercorrencias: 3.5, ktv: 90, modalidades: { hd: 33, crrt: 7, sled: 4, dp: 1 }, hospital: 'Mont Serrat' },
-  { mes: 3, label: 'Abr/2026', sessoes: 42, catJugular: 87, intercorrencias: 3.2, ktv: 91, modalidades: { hd: 30, crrt: 7, sled: 4, dp: 1 }, hospital: 'Mont Serrat' }
-];
-
-function renderTrsAgudoServico() {
-  var mesesGrid = document.getElementById('agudo-meses-grid');
-  var mesesPills = document.getElementById('agudo-meses-pills');
-  if (!mesesGrid) return;
-
-  /* Cards de meses */
-  mesesGrid.innerHTML = TRS_AGUDO_DATA.map(function(m) {
-    var modStr = 'HD ' + m.modalidades.hd + ' · CRRT ' + m.modalidades.crrt + ' · SLED ' + m.modalidades.sled + ' · DP ' + m.modalidades.dp;
-    return '<div style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:18px;position:relative;overflow:hidden;">' +
-      '<div style="position:absolute;top:0;left:0;width:4px;height:100%;background:var(--teal);"></div>' +
-      '<div style="font-size:14px;font-weight:700;color:var(--navy);font-family:\'Instrument Serif\',serif;">' + m.label + '</div>' +
-      '<div style="font-size:11px;color:var(--text-3);margin-top:2px;">' + m.hospital + '</div>' +
-      '<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px;">' +
-        '<div><div style="font-size:20px;font-weight:700;color:var(--teal);">' + m.sessoes + '</div><div style="font-size:10px;color:var(--text-3);">sessões</div></div>' +
-        '<div><div style="font-size:20px;font-weight:700;color:var(--navy);">' + m.ktv + '%</div><div style="font-size:10px;color:var(--text-3);">Kt/V</div></div>' +
-        '<div><div style="font-size:20px;font-weight:700;color:var(--gold);">' + m.intercorrencias + '%</div><div style="font-size:10px;color:var(--text-3);">interc.</div></div>' +
-        '<div><div style="font-size:20px;font-weight:700;color:var(--teal);">' + m.catJugular + '%</div><div style="font-size:10px;color:var(--text-3);">jugular</div></div>' +
-      '</div>' +
-      '<div style="font-size:10px;color:var(--text-3);margin-top:10px;border-top:1px solid var(--border);padding-top:8px;">' + modStr + '</div>' +
-      '<div style="position:absolute;top:12px;right:14px;width:18px;height:18px;border-radius:50%;background:#2ecc71;display:flex;align-items:center;justify-content:center;"><svg width="10" height="10" fill="none" stroke="#fff" stroke-width="2.5"><polyline points="1.5,5 4,8 8.5,2"/></svg></div>' +
-    '</div>';
-  }).join('');
-
-  /* Pills 12 meses */
-  var pillsHtml = '';
-  for (var m = 0; m < 12; m++) {
-    var preenchido = TRS_AGUDO_DATA.find(function(d){ return d.mes === m; });
-    pillsHtml += '<div style="width:44px;height:44px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;' +
-      (preenchido ? 'background:var(--teal);color:#fff;' : 'background:var(--bg);color:var(--text-3);border:1px solid var(--border);') + '">' +
-      MESES_LABEL[m] + '</div>';
-  }
-  mesesPills.innerHTML = pillsHtml;
-
-  /* Gráfico evolução */
-  if (window._agudoChart) window._agudoChart.destroy();
-  var ctx = document.getElementById('agudo-chart-evolucao');
-  if (ctx) {
-    var labels = TRS_AGUDO_DATA.map(function(d){ return d.label; });
-    window._agudoChart = new Chart(ctx.getContext('2d'), {
-      type: 'line',
-      data: {
-        labels: labels,
-        datasets: [
-          { label:'Kt/V (%)', data: TRS_AGUDO_DATA.map(function(d){return d.ktv;}), borderColor:'#1E2D50', backgroundColor:'rgba(30,45,80,.1)', fill:true, tension:.3, pointRadius:6, pointBackgroundColor:'#1E2D50' },
-          { label:'Jugular (%)', data: TRS_AGUDO_DATA.map(function(d){return d.catJugular;}), borderColor:'#028090', backgroundColor:'transparent', fill:false, tension:.3, pointRadius:5, pointBackgroundColor:'#028090' },
-          { label:'Interc. (%)', data: TRS_AGUDO_DATA.map(function(d){return d.intercorrencias;}), borderColor:'#C4A35A', backgroundColor:'transparent', fill:false, tension:.3, pointRadius:5, pointBackgroundColor:'#C4A35A', borderDash:[5,3], yAxisID:'y1' }
-        ]
-      },
-      options: {
-        responsive: true, maintainAspectRatio: false,
-        plugins: { legend: { position:'bottom', labels: { font: { family:'Inter', size:11 }, usePointStyle:true, pointStyle:'circle' } } },
-        scales: {
-          y: { min:0, max:100, grid: { color:'rgba(0,0,0,.06)' }, ticks: { font: { family:'Inter', size:11 }, callback: function(v){return v+'%';} } },
-          y1: { position:'right', min:0, max:10, grid: { display:false }, ticks: { font: { family:'Inter', size:11 }, callback: function(v){return v+'%';} } },
-          x: { grid: { display:false }, ticks: { font: { family:'Inter', size:11 } } }
-        }
-      }
-    });
-  }
 }
 
 /* ============================================================

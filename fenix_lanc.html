@@ -104,7 +104,7 @@ body{font-family:'Space Grotesk',system-ui,sans-serif;color:var(--text-primary);
       <span class="secao-title">Atividade</span>
       <span class="secao-toggle open" id="tog-s-atividade">▾</span>
     </div>
-    <div class="secao-body grid-4" id="s-atividade">
+    <div class="secao-body grid-3" id="s-atividade">
       <div class="campo">
         <label class="campo-lbl">Pacientes</label>
         <input type="number" class="inp" id="f-pac" placeholder="0" min="0" oninput="markChanged(this)"/>
@@ -114,11 +114,6 @@ body{font-family:'Space Grotesk',system-ui,sans-serif;color:var(--text-primary);
         <label class="campo-lbl">Sessões</label>
         <input type="number" class="inp" id="f-ses" placeholder="0" min="0" oninput="markChanged(this)"/>
         <span class="inp-hint">Total de sessões no mês</span>
-      </div>
-      <div class="campo">
-        <label class="campo-lbl">Sessões Extras</label>
-        <input type="number" class="inp" id="f-ses-extras" placeholder="0" min="0" oninput="markChanged(this)"/>
-        <span class="inp-hint">Sessões extras realizadas no período</span>
       </div>
       <div class="campo">
         <label class="campo-lbl">Admissões</label>
@@ -165,10 +160,6 @@ body{font-family:'Space Grotesk',system-ui,sans-serif;color:var(--text-primary);
         <label class="campo-lbl">Internação <span class="campo-unit">%</span></label>
         <input type="number" class="inp" id="f-int" placeholder="0.0" min="0" max="100" step="0.1" oninput="markChanged(this)"/>
         <span class="inp-hint">Taxa de internação</span>
-      <div class="campo">
-        <label class="campo-lbl">Nº Internações</label>
-        <input type="number" class="inp" id="f-int-num" placeholder="0" min="0" oninput="markChanged(this)"/>
-        <span class="inp-hint">Número absoluto de internações</span>
       </div>
       <div class="campo">
         <label class="campo-lbl">Faltas</label>
@@ -211,8 +202,6 @@ body{font-family:'Space Grotesk',system-ui,sans-serif;color:var(--text-primary);
         <span class="inp-hint">Meta: zero</span>
       </div>
     </div>
-  </div>
-
     <!-- Causas de internação -->
     <div style="margin-top:16px;">
       <div style="font-size:9px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--text-muted);margin-bottom:12px;">Causas de internação</div>
@@ -243,6 +232,7 @@ body{font-family:'Space Grotesk',system-ui,sans-serif;color:var(--text-primary);
         </div>
       </div>
     </div>
+  </div>
 
   <!-- ── SEÇÃO 3: ADEQUAÇÃO ── -->
   <div class="secao">
@@ -423,11 +413,9 @@ const CAMPOS={
   'f-sai':          `sai_${U}`,
   'f-cons-nefro':   `cons_nefro_${U}`,
   'f-cons-esp':     `cons_esp_${U}`,
-  'f-ses-extras':   `ses_extras_${U}`,
   'f-obi':          `obi_${U}`,
   'f-obi-pct':      `obi_pct_${U}`,
   'f-int':          `int_${U}`,
-  'f-int-num':      `int_num_${U}`,
   'f-fal':          `fal_${U}`,
   'f-fal-pct':      `fal_pct_${U}`,
   'f-tx':           `tx_${U}`,
@@ -495,7 +483,7 @@ async function carregarDados(){
   const cols=Object.values(CAMPOS).join(',');
   try{
     const resp=await fetch(
-      `${SUPA_URL}/rest/v1/dados_mensais?ano=eq.${m.ano}&mes=eq.${m.mes}&select=*`,
+      `${SUPA_URL}/rest/v1/dados_mensais?ano=eq.${m.ano}&mes=eq.${m.mes}&select=${cols}`,
       {headers:getHeaders()}
     );
     const rows=await resp.json();

@@ -290,6 +290,14 @@ body::before{content:'';position:fixed;inset:0;z-index:-2;
 <div class="toast" id="toast"></div>
 
 <script>
+/* Embed mode: esconder header quando carregado como iframe */
+(function(){
+  var params = new URLSearchParams(window.location.search);
+  if (params.get('embed') === '1') {
+    document.querySelectorAll('.header-bar, .header-divider').forEach(function(el){ el.style.display = 'none'; });
+  }
+})();
+
 var STORAGE_KEY = 'trs_mensal_mont_serrat';
 var IC_TIPOS_COMUNS = ['Hipotensão','Desconforto Respiratório','Taquicardia','Náuseas',
   'Calafrios','Dor','Bradicardia','Vômito','Tremores','Febre','Hematoma',
