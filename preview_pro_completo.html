@@ -774,7 +774,7 @@ body{font-family:var(--font-sans);background:var(--navy-deep);color:var(--text);
   <div class="login-form-side">
     <div class="login-form-wrap">
       <div class="login-logo-wrap">
-        <img src="landing-page/logo-ax-white.png" alt="Apex Pro" style="height:54px;">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 650 440" style="height:54px;width:auto;"><defs><linearGradient id="lgGold" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#C9A84C"/><stop offset="50%" stop-color="#B8941F"/><stop offset="100%" stop-color="#C9A84C"/></linearGradient></defs><path d="M200 10L10 426L105 426L145 320L335 320L295 426L385 426L200 10ZM170 260L200 180L260 260Z" fill="white"/><path d="M320 10L420 200L320 426L420 426L480 280L540 426L638 426L530 200L630 10L535 10L480 140L425 10Z" fill="white"/><rect x="500" y="345" width="90" height="60" rx="12" transform="rotate(-20,545,375)" fill="url(#lgGold)"/></svg>
       </div>
       <div class="login-welcome">Acesso <strong>profissional</strong></div>
       <div class="login-desc">Entre com suas credenciais para acessar indicadores, protocolos e gestão de pacientes.</div>
@@ -804,7 +804,7 @@ body{font-family:var(--font-sans);background:var(--navy-deep);color:var(--text);
   <!-- SIDEBAR -->
   <aside class="sidebar">
     <div class="sb-logo">
-      <img src="landing-page/logo-ax-white.png" alt="Apex Pro" style="height:38px;">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 650 440" style="height:38px;width:auto;"><defs><linearGradient id="lgGold2" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#C9A84C"/><stop offset="50%" stop-color="#B8941F"/><stop offset="100%" stop-color="#C9A84C"/></linearGradient></defs><path d="M200 10L10 426L105 426L145 320L335 320L295 426L385 426L200 10ZM170 260L200 180L260 260Z" fill="white"/><path d="M320 10L420 200L320 426L420 426L480 280L540 426L638 426L530 200L630 10L535 10L480 140L425 10Z" fill="white"/><rect x="500" y="345" width="90" height="60" rx="12" transform="rotate(-20,545,375)" fill="url(#lgGold2)"/></svg>
       <div class="sb-logo-context">Fenix Nefrologia</div>
     </div>
     <nav class="sb-nav">
@@ -827,12 +827,12 @@ body{font-family:var(--font-sans);background:var(--navy-deep);color:var(--text);
         <div class="sb-child" data-page="planejamento" onclick="navTo('planejamento')"><span class="sb-child-dot"></span>Plan. Estratégico</div>
       </div>
       <div class="sb-divider"></div>
-      <div class="sb-module-label" onclick="toggleModule(this)">
+      <div class="sb-module-label open" onclick="toggleModule(this)">
         <span class="sb-module-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="9"/></svg></span>
         <span>Qualidade Fenix</span>
         <span class="sb-chevron">›</span>
       </div>
-      <div class="sb-children">
+      <div class="sb-children open">
         <div class="sb-child" data-page="trs-cronico" onclick="navTo('trs-cronico')"><span class="sb-child-dot"></span>TRS Crônico</div>
         <div class="sb-child" data-page="trs-agudo" onclick="navTo('trs-agudo')"><span class="sb-child-dot"></span>TRS Agudo</div>
         <div class="sb-child" data-page="painel-executivo" onclick="navTo('painel-executivo')"><span class="sb-child-dot"></span>Painel Executivo</div>
@@ -1241,7 +1241,7 @@ body{font-family:var(--font-sans);background:var(--navy-deep);color:var(--text);
     <div class="content-page" id="page-relatorios">
       <p class="page-eyebrow rv">Qualidade Fenix</p>
       <h2 class="page-title rv"><strong>Relatórios</strong> Gerenciais</h2>
-      <p class="page-desc rv">Relatórios em PDF para reuniões com diretoria, planos de saúde e auditorias de qualidade assistencial.</p>
+      <p class="page-desc rv">Relatórios em PDF e dashboards interativos para reuniões com diretoria, planos de saúde e auditorias de qualidade assistencial.</p>
 
       <div class="pe-section rv">
         <div class="pe-section-label">Relatórios Disponíveis</div>
@@ -1258,42 +1258,88 @@ body{font-family:var(--font-sans);background:var(--navy-deep);color:var(--text);
             </div>
           </div>
 
-          <div class="pe-proj-card" style="opacity:0.6;">
-            <div class="pe-proj-num" style="background:var(--navy);color:#fff;">PDF</div>
+          <div class="pe-proj-card" style="cursor:pointer;" onclick="navTo('relatorio-cronico')">
+            <div class="pe-proj-num" style="background:var(--gold);color:var(--navy-deep);">
+              <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="2" y="2" width="12" height="12" rx="2"/><path d="M5 8h6M5 5.5h6M5 10.5h3"/></svg>
+            </div>
             <div class="pe-proj-info">
-              <div class="pe-proj-name">Comparativo Trimestral TRS Agudo</div>
-              <div class="pe-proj-detail">Fev–Abr/2026 — evolução de pacientes, sessões, modalidades e intercorrências.</div>
+              <div class="pe-proj-name">Dashboard TRS Crônico — Rede</div>
+              <div class="pe-proj-detail">Dashboard interativo com indicadores consolidados das unidades RL, Santos e Tatuapé — mensal.</div>
             </div>
             <div style="text-align:right;">
-              <span class="pe-proj-status st-plan">Planejado</span>
-              <div class="pe-proj-date">Próxima geração</div>
-            </div>
-          </div>
-
-          <div class="pe-proj-card" style="opacity:0.6;">
-            <div class="pe-proj-num" style="background:var(--gold);color:var(--navy-deep);">PDF</div>
-            <div class="pe-proj-info">
-              <div class="pe-proj-name">Relatório TRS Crônico — Rede</div>
-              <div class="pe-proj-detail">Indicadores consolidados das unidades RL, Santos e Tatuapé — mensal.</div>
-            </div>
-            <div style="text-align:right;">
-              <span class="pe-proj-status st-pausa">Aguardando</span>
-              <div class="pe-proj-date">Dep: dados</div>
-            </div>
-          </div>
-
-          <div class="pe-proj-card" style="opacity:0.6;">
-            <div class="pe-proj-num" style="background:rgba(30,45,80,0.08);color:var(--text-3);">PDF</div>
-            <div class="pe-proj-info">
-              <div class="pe-proj-name">Relatório por Plano de Saúde</div>
-              <div class="pe-proj-detail">Indicadores segmentados por operadora — para reuniões com gestores de saúde.</div>
-            </div>
-            <div style="text-align:right;">
-              <span class="pe-proj-status st-plan">Planejado</span>
-              <div class="pe-proj-date">Q3/2026</div>
+              <span class="pe-proj-status st-concl">Ativo</span>
+              <div class="pe-proj-date">Dados Supabase</div>
             </div>
           </div>
         </div>
+      </div>
+    </div>
+
+    <!-- PAGE: RELATÓRIO CRÔNICO — DASHBOARD -->
+    <div class="content-page" id="page-relatorio-cronico">
+      <div style="display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:16px;">
+        <div>
+          <p class="page-eyebrow rv">Qualidade Fenix — Relatório</p>
+          <h2 class="page-title rv">Dashboard TRS <strong>Crônico</strong></h2>
+        </div>
+        <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;" class="rv">
+          <select id="rc-mes" onchange="renderRelatorioCronico()" style="padding:8px 14px;border-radius:var(--radius);border:1px solid var(--border);background:var(--bg-card);color:var(--text);font-size:13px;font-family:var(--font-sans);cursor:pointer;">
+            <option value="auto">Último mês</option>
+          </select>
+          <select id="rc-filtro" onchange="renderRelatorioCronico()" style="padding:8px 14px;border-radius:var(--radius);border:1px solid var(--border);background:var(--bg-card);color:var(--text);font-size:13px;font-family:var(--font-sans);cursor:pointer;">
+            <option value="rede">Rede (consolidado)</option>
+            <option value="rl">República do Líbano</option>
+            <option value="santos">Praiamar Santos</option>
+            <option value="tatuape">Tatuapé</option>
+          </select>
+          <div id="rc-parcial-badge" style="display:none;font-size:11px;padding:4px 12px;border-radius:20px;font-weight:600;background:rgba(196,163,90,.15);color:var(--gold);">Parcial</div>
+        </div>
+      </div>
+      <div id="rc-loading" style="text-align:center;padding:40px;color:var(--text-3);font-size:13px;" class="rv">Carregando dados do Supabase...</div>
+      <div id="rc-content" style="display:none;">
+
+        <!-- S1: VOLUMETRIA -->
+        <div class="pe-section rv" style="margin-top:24px;">
+          <div class="pe-section-label">Volumetria</div>
+          <div id="rc-sec-volumetria" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;"></div>
+        </div>
+
+        <!-- S2: DESFECHOS CLÍNICOS -->
+        <div class="pe-section rv" style="margin-top:28px;">
+          <div class="pe-section-label">Desfechos Clínicos</div>
+          <div id="rc-sec-desfechos" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px;"></div>
+        </div>
+
+        <!-- S3: AVALIAÇÃO NUTRICIONAL -->
+        <div class="pe-section rv" style="margin-top:28px;">
+          <div class="pe-section-label">Avaliação Nutricional</div>
+          <div id="rc-sec-nutricional" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;"></div>
+        </div>
+
+        <!-- S4: ADEQUAÇÃO DA DIÁLISE -->
+        <div class="pe-section rv" style="margin-top:28px;">
+          <div class="pe-section-label">Adequação da Diálise</div>
+          <div id="rc-sec-adequacao" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;"></div>
+        </div>
+
+        <!-- S5: QUALIDADE DE VIDA -->
+        <div class="pe-section rv" style="margin-top:28px;">
+          <div class="pe-section-label">Qualidade de Vida</div>
+          <div id="rc-sec-qualidade" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;"></div>
+        </div>
+
+        <!-- S6: CARDIOVASCULAR -->
+        <div class="pe-section rv" style="margin-top:28px;">
+          <div class="pe-section-label">Cardiovascular</div>
+          <div id="rc-sec-cardio" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;"></div>
+        </div>
+
+        <!-- S7: COMPOSIÇÃO CORPORAL -->
+        <div class="pe-section rv" style="margin-top:28px;">
+          <div class="pe-section-label">Composição Corporal</div>
+          <div id="rc-sec-composicao" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;"></div>
+        </div>
+
       </div>
     </div>
 
@@ -3355,19 +3401,40 @@ async function doLogout() {
 
 /* Verificar sessão existente ao carregar a página */
 (async function checkSession() {
-  var { data: { session } } = await supabase.auth.getSession();
-  if (session) {
+  try {
+    var { data: { session }, error: sessErr } = await supabase.auth.getSession();
+    if (sessErr || !session || !session.user) {
+      /* Sem sessão válida — manter tela de login */
+      await supabase.auth.signOut().catch(function(){});
+      return;
+    }
+    /* Verificar se a sessão não expirou */
+    var expiresAt = session.expires_at;
+    if (expiresAt && (expiresAt * 1000) < Date.now()) {
+      await supabase.auth.signOut().catch(function(){});
+      return;
+    }
     currentUser = session.user;
-    var { data: doctorData } = await supabase
+    var { data: doctorData, error: docErr } = await supabase
       .from('doctors')
       .select('*')
       .eq('user_id', currentUser.id)
       .single();
 
-    if (doctorData) {
-      currentDoctor = doctorData;
-      enterApp();
+    if (docErr || !doctorData) {
+      /* Sessão válida mas sem perfil de médico — logout por segurança */
+      await supabase.auth.signOut().catch(function(){});
+      currentUser = null;
+      return;
     }
+    currentDoctor = doctorData;
+    enterApp();
+  } catch(e) {
+    /* Qualquer erro = manter na tela de login por segurança */
+    console.error('Erro ao verificar sessão:', e);
+    await supabase.auth.signOut().catch(function(){});
+    currentUser = null;
+    currentDoctor = null;
   }
 })();
 
@@ -3414,6 +3481,7 @@ var NAV = {
   'trs-agudo-servico':   { label:'Mont Serrat',        parent:'trs-agudo',     sidebar:'trs-agudo',          bc:['Dashboard','Qualidade Fenix','TRS Agudo','Mont Serrat'] },
   'painel-executivo':    { label:'Painel Executivo',   parent:'dashboard',     sidebar:'painel-executivo',   bc:['Dashboard','Qualidade Fenix','Painel Executivo'] },
   'relatorios':          { label:'Relatórios',         parent:'dashboard',     sidebar:'relatorios',         bc:['Dashboard','Qualidade Fenix','Relatórios'] },
+  'relatorio-cronico':   { label:'Dashboard Crônico',  parent:'relatorios',    sidebar:'relatorios',         bc:['Dashboard','Qualidade Fenix','Relatórios','Dashboard Crônico'] },
   'clinica-visao':       { label:'Visão Geral',        parent:'dashboard',     sidebar:'clinica-visao',      bc:['Dashboard','Clínica APEX','Visão Geral'] },
   'clinica-protocolos':  { label:'Protocolos',         parent:'dashboard',     sidebar:'clinica-protocolos', bc:['Dashboard','Clínica APEX','Protocolos'] },
   'clinica-aderencia':   { label:'Aderência',          parent:'dashboard',     sidebar:'clinica-aderencia',  bc:['Dashboard','Clínica APEX','Aderência'] },
@@ -3428,7 +3496,7 @@ var BC_MAP = {
   'Dashboard':'dashboard','Minha Agenda':'agenda','Gestão':null,
   'Qualidade Fenix':null,'TRS Crônico':'trs-cronico','Unidades':'unidades','Detalhe':null,
   'TRS Agudo':'trs-agudo','Mont Serrat':'trs-agudo-servico',
-  'Painel Executivo':'painel-executivo','Relatórios':'relatorios',
+  'Painel Executivo':'painel-executivo','Relatórios':'relatorios','Dashboard Crônico':'relatorio-cronico',
   'Clínica APEX':null,'Visão Geral':'clinica-visao','Protocolos':'clinica-protocolos',
   'Aderência':'clinica-aderencia','Relatórios Clínica':'clinica-relatorios',
   'Plan. Estratégico':'planejamento',
@@ -3481,6 +3549,7 @@ function navTo(pageId) {
   if (pageId === 'lista-pacientes' && currentDoctor) carregarListaPacientes();
   if (pageId === 'agenda') initCalendar();
   if (pageId === 'trs-cronico') carregarTrsCronico();
+  if (pageId === 'relatorio-cronico') carregarRelatorioCronico();
   if (pageId === 'trs-agudo-servico') document.getElementById('agudo-iframe').src = 'painel_lancamento_mensal.html?embed=1';
   /* unidade-detalhe iframe src is set by abrirUnidade() */
 }
@@ -3605,6 +3674,209 @@ async function carregarTrsCronico() {
       indicadores +
     '</div>';
   }).join('');
+}
+
+/* ============================================================
+   RELATÓRIO CRÔNICO — Dashboard completo
+   ============================================================ */
+var _rcData = null;
+
+async function carregarRelatorioCronico() {
+  var loadEl = document.getElementById('rc-loading');
+  var contentEl = document.getElementById('rc-content');
+  if (!loadEl || !contentEl) return;
+
+  if (!_rcData) {
+    loadEl.style.display = '';
+    contentEl.style.display = 'none';
+    try {
+      var resp = await supabase.from('dados_mensais').select('*').eq('ano', 2026).order('mes');
+      _rcData = resp.data || [];
+    } catch(e) { _rcData = []; }
+  }
+
+  if (!_rcData.length) {
+    loadEl.innerHTML = '<div style="padding:40px;color:var(--text-3);">Nenhum dado encontrado para 2026.</div>';
+    return;
+  }
+
+  /* Populate month selector */
+  var mesSelect = document.getElementById('rc-mes');
+  var currentVal = mesSelect.value;
+  mesSelect.innerHTML = '<option value="auto">Último mês</option>';
+  _rcData.forEach(function(d) {
+    mesSelect.innerHTML += '<option value="' + d.mes + '">' + MESES_LABEL[d.mes] + '/2026</option>';
+  });
+  mesSelect.value = currentVal;
+
+  loadEl.style.display = 'none';
+  contentEl.style.display = '';
+  renderRelatorioCronico();
+}
+
+function renderRelatorioCronico() {
+  if (!_rcData || !_rcData.length) return;
+
+  var mesSelect = document.getElementById('rc-mes');
+  var filtroSelect = document.getElementById('rc-filtro');
+  var parcialBadge = document.getElementById('rc-parcial-badge');
+
+  var mesVal = mesSelect.value;
+  var filtro = filtroSelect.value;
+
+  /* Find the row for selected month */
+  var row;
+  if (mesVal === 'auto') {
+    row = _rcData[_rcData.length - 1];
+  } else {
+    row = _rcData.find(function(d) { return d.mes === parseInt(mesVal); });
+  }
+  if (!row) { row = _rcData[_rcData.length - 1]; }
+
+  var units = ['rl', 'santos', 'tatuape'];
+
+  /* Helper: get value for a field considering filter */
+  function getVal(field) {
+    if (filtro !== 'rede') {
+      var v = row[field + '_' + filtro];
+      return v !== null && v !== undefined && v !== '' ? parseFloat(v) : null;
+    }
+    /* Rede: sum for counts, average for percentages */
+    return null; /* handled by specific helpers */
+  }
+
+  function sumField(field) {
+    if (filtro !== 'rede') {
+      var v = row[field + '_' + filtro];
+      return v !== null && v !== undefined && v !== '' ? parseFloat(v) : null;
+    }
+    var total = 0, count = 0;
+    units.forEach(function(u) {
+      var v = row[field + '_' + u];
+      if (v !== null && v !== undefined && v !== '') { total += parseFloat(v); count++; }
+    });
+    return count > 0 ? total : null;
+  }
+
+  function avgField(field) {
+    if (filtro !== 'rede') {
+      var v = row[field + '_' + filtro];
+      return v !== null && v !== undefined && v !== '' ? parseFloat(v) : null;
+    }
+    var total = 0, count = 0;
+    units.forEach(function(u) {
+      var v = row[field + '_' + u];
+      if (v !== null && v !== undefined && v !== '') { total += parseFloat(v); count++; }
+    });
+    return count > 0 ? Math.round((total / count) * 10) / 10 : null;
+  }
+
+  /* Parcial badge */
+  if (filtro === 'rede') {
+    var filledUnits = 0;
+    units.forEach(function(u) {
+      if (row['pac_' + u] !== null && row['pac_' + u] !== undefined && row['pac_' + u] !== '' && parseFloat(row['pac_' + u]) > 0) filledUnits++;
+    });
+    if (filledUnits > 0 && filledUnits < 3) {
+      parcialBadge.style.display = '';
+      parcialBadge.textContent = 'Parcial — ' + filledUnits + '/3 unidades';
+    } else {
+      parcialBadge.style.display = 'none';
+    }
+  } else {
+    parcialBadge.style.display = 'none';
+  }
+
+  /* KPI card builder */
+  function kpiCard(label, value, unit, meta, metaDir, opts) {
+    opts = opts || {};
+    var display = value !== null ? (Number.isInteger(value) ? value : value.toFixed(1)) : '—';
+    if (unit && value !== null) display += unit;
+    var metaOk = false;
+    var metaLabel = '';
+    if (meta !== null && meta !== undefined && value !== null) {
+      if (metaDir === 'gte') metaOk = value >= meta;
+      else if (metaDir === 'lte') metaOk = value <= meta;
+      else if (metaDir === 'eq0') metaOk = value === 0;
+      metaLabel = metaDir === 'eq0' ? 'Meta: zero' : 'Meta: ' + (metaDir === 'gte' ? '≥' : '≤') + meta + (unit || '');
+    }
+    var valColor = value === null ? 'var(--text-3)' : (meta !== null && meta !== undefined ? (metaOk ? 'var(--green, #27ae60)' : 'var(--red, #e74c3c)') : 'var(--navy)');
+    if (opts.alwaysNavy) valColor = value === null ? 'var(--text-3)' : 'var(--navy)';
+    var metaBadge = '';
+    if (meta !== null && meta !== undefined && value !== null) {
+      metaBadge = '<div style="margin-top:8px;font-size:10px;padding:3px 10px;border-radius:20px;font-weight:600;display:inline-block;' +
+        (metaOk ? 'background:rgba(46,204,113,.12);color:#27ae60;">' + (opts.metaOkLabel || 'Meta atingida') :
+        'background:rgba(231,76,60,.1);color:#e74c3c;">' + metaLabel) + '</div>';
+    } else if (meta !== null && meta !== undefined && value === null) {
+      metaBadge = '<div style="margin-top:8px;font-size:10px;padding:3px 10px;border-radius:20px;font-weight:600;display:inline-block;background:var(--bg);color:var(--text-3);">' + metaLabel + '</div>';
+    }
+    return '<div style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:16px 18px;">' +
+      '<div style="font-size:11px;color:var(--text-2);font-weight:500;line-height:1.3;">' + label + '</div>' +
+      '<div style="font-size:24px;font-weight:700;color:' + valColor + ';margin-top:6px;">' + display + '</div>' +
+      metaBadge +
+    '</div>';
+  }
+
+  /* S1: VOLUMETRIA */
+  var volHtml = '';
+  volHtml += kpiCard('Pacientes', sumField('pac'), '', null, null, {alwaysNavy:true});
+  volHtml += kpiCard('Sessões', sumField('ses'), '', null, null, {alwaysNavy:true});
+  volHtml += kpiCard('Admissões', sumField('adm'), '', null, null, {alwaysNavy:true});
+  volHtml += kpiCard('Saídas', sumField('sai'), '', null, null, {alwaysNavy:true});
+  volHtml += kpiCard('Cons. Especialista', sumField('cons_esp'), '', null, null, {alwaysNavy:true});
+  volHtml += kpiCard('Cons. Nefro', sumField('cons_nefro'), '', null, null, {alwaysNavy:true});
+  document.getElementById('rc-sec-volumetria').innerHTML = volHtml;
+
+  /* S2: DESFECHOS CLÍNICOS */
+  var desHtml = '';
+  desHtml += kpiCard('Evento Adverso Grave', sumField('eag'), '', 0, 'eq0');
+  desHtml += kpiCard('Risco Suicídio', sumField('sui'), '', 0, 'eq0');
+  desHtml += kpiCard('Óbito', sumField('obi'), '', null, null, {alwaysNavy:true});
+  desHtml += kpiCard('Mortalidade', avgField('obi_pct'), '%', null, null, {alwaysNavy:true});
+  desHtml += kpiCard('Nº Faltas', sumField('fal'), '', null, null, {alwaysNavy:true});
+  desHtml += kpiCard('% Faltas', avgField('fal_pct'), '%', 1, 'lte');
+  desHtml += kpiCard('Inscrição Tx Renal', avgField('tx'), '%', 55, 'gte');
+  desHtml += kpiCard('Inf. Corrente Sang.', sumField('ics'), '', 0, 'eq0');
+  desHtml += kpiCard('Inf. Cateter/FAV', sumField('icf'), '', 0, 'eq0');
+  desHtml += kpiCard('Queda Interna', sumField('que'), '', 0, 'eq0');
+  desHtml += kpiCard('Taxa Internação', avgField('int'), '%', 6, 'lte');
+  document.getElementById('rc-sec-desfechos').innerHTML = desHtml;
+
+  /* S3: AVALIAÇÃO NUTRICIONAL */
+  var nutHtml = '';
+  nutHtml += kpiCard('Fósforo ≤5,5 mg/dl', avgField('fos'), '%', 70, 'gte');
+  nutHtml += kpiCard('Potássio <6,0 mmol/L', avgField('pot'), '%', 80, 'gte');
+  nutHtml += kpiCard('Albumina ≥3,5 mg/dl', avgField('alb'), ' g/dl', null, null, {alwaysNavy:true});
+  nutHtml += kpiCard('IMC Eutrófico', avgField('imc'), '', null, null, {alwaysNavy:true});
+  document.getElementById('rc-sec-nutricional').innerHTML = nutHtml;
+
+  /* S4: ADEQUAÇÃO DA DIÁLISE */
+  var adeqHtml = '';
+  adeqHtml += kpiCard('Kt/V ≥1,2', avgField('ktv'), '%', 80, 'gte');
+  adeqHtml += kpiCard('Vol. Convectivo ≥69L', avgField('vol'), '%', 80, 'gte');
+  adeqHtml += kpiCard('FAV/Prótese', avgField('fav'), '%', 80, 'gte');
+  document.getElementById('rc-sec-adequacao').innerHTML = adeqHtml;
+
+  /* S5: QUALIDADE DE VIDA */
+  var qvHtml = '';
+  qvHtml += kpiCard('KDQOL-SF36 Mental', avgField('kdqol_mental'), '', 50, 'gte');
+  qvHtml += kpiCard('KDQOL-SF36 Físico', avgField('kdqol_fisico'), '', 50, 'gte');
+  qvHtml += kpiCard('Hemoglobina 10-12 g/dl', avgField('hb'), '%', 70, 'gte');
+  document.getElementById('rc-sec-qualidade').innerHTML = qvHtml;
+
+  /* S6: CARDIOVASCULAR */
+  var cvHtml = '';
+  cvHtml += kpiCard('Ganho Peso Interdialitico', avgField('gpid'), '%', 70, 'gte');
+  cvHtml += kpiCard('Água Extracelular <15%', avgField('ecw'), '%', 70, 'gte');
+  cvHtml += kpiCard('Hb Glicada', avgField('hbg'), '%', null, null, {alwaysNavy:true});
+  document.getElementById('rc-sec-cardio').innerHTML = cvHtml;
+
+  /* S7: COMPOSIÇÃO CORPORAL */
+  var ccHtml = '';
+  ccHtml += kpiCard('Ângulo de Fase >4°', avgField('ang'), '%', 70, 'gte');
+  ccHtml += kpiCard('Fisioterapia', avgField('fis'), '%', 90, 'gte');
+  ccHtml += kpiCard('PTH 130-585 pg/ml', avgField('pth'), '%', 70, 'gte');
+  document.getElementById('rc-sec-composicao').innerHTML = ccHtml;
 }
 
 /* ============================================================
