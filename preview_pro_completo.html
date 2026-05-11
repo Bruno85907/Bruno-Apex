@@ -1275,72 +1275,9 @@ body{font-family:var(--font-sans);background:var(--navy-deep);color:var(--text);
       </div>
     </div>
 
-    <!-- PAGE: RELATÓRIO CRÔNICO — DASHBOARD -->
+    <!-- PAGE: RELATÓRIO CRÔNICO — DASHBOARD (iframe standalone) -->
     <div class="content-page" id="page-relatorio-cronico">
-      <div style="display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:16px;">
-        <div>
-          <p class="page-eyebrow rv">Qualidade Fenix — Relatório</p>
-          <h2 class="page-title rv">Dashboard TRS <strong>Crônico</strong></h2>
-        </div>
-        <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;" class="rv">
-          <select id="rc-mes" onchange="renderRelatorioCronico()" style="padding:8px 14px;border-radius:var(--radius);border:1px solid var(--border);background:var(--bg-card);color:var(--text);font-size:13px;font-family:var(--font-sans);cursor:pointer;">
-            <option value="auto">Último mês</option>
-          </select>
-          <select id="rc-filtro" onchange="renderRelatorioCronico()" style="padding:8px 14px;border-radius:var(--radius);border:1px solid var(--border);background:var(--bg-card);color:var(--text);font-size:13px;font-family:var(--font-sans);cursor:pointer;">
-            <option value="rede">Rede (consolidado)</option>
-            <option value="rl">República do Líbano</option>
-            <option value="santos">Praiamar Santos</option>
-            <option value="tatuape">Tatuapé</option>
-          </select>
-          <div id="rc-parcial-badge" style="display:none;font-size:11px;padding:4px 12px;border-radius:20px;font-weight:600;background:rgba(196,163,90,.15);color:var(--gold);">Parcial</div>
-        </div>
-      </div>
-      <div id="rc-loading" style="text-align:center;padding:40px;color:var(--text-3);font-size:13px;" class="rv">Carregando dados do Supabase...</div>
-      <div id="rc-content" style="display:none;">
-
-        <!-- S1: VOLUMETRIA -->
-        <div class="pe-section rv" style="margin-top:24px;">
-          <div class="pe-section-label">Volumetria</div>
-          <div id="rc-sec-volumetria" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;"></div>
-        </div>
-
-        <!-- S2: DESFECHOS CLÍNICOS -->
-        <div class="pe-section rv" style="margin-top:28px;">
-          <div class="pe-section-label">Desfechos Clínicos</div>
-          <div id="rc-sec-desfechos" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px;"></div>
-        </div>
-
-        <!-- S3: AVALIAÇÃO NUTRICIONAL -->
-        <div class="pe-section rv" style="margin-top:28px;">
-          <div class="pe-section-label">Avaliação Nutricional</div>
-          <div id="rc-sec-nutricional" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;"></div>
-        </div>
-
-        <!-- S4: ADEQUAÇÃO DA DIÁLISE -->
-        <div class="pe-section rv" style="margin-top:28px;">
-          <div class="pe-section-label">Adequação da Diálise</div>
-          <div id="rc-sec-adequacao" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;"></div>
-        </div>
-
-        <!-- S5: QUALIDADE DE VIDA -->
-        <div class="pe-section rv" style="margin-top:28px;">
-          <div class="pe-section-label">Qualidade de Vida</div>
-          <div id="rc-sec-qualidade" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;"></div>
-        </div>
-
-        <!-- S6: CARDIOVASCULAR -->
-        <div class="pe-section rv" style="margin-top:28px;">
-          <div class="pe-section-label">Cardiovascular</div>
-          <div id="rc-sec-cardio" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;"></div>
-        </div>
-
-        <!-- S7: COMPOSIÇÃO CORPORAL -->
-        <div class="pe-section rv" style="margin-top:28px;">
-          <div class="pe-section-label">Composição Corporal</div>
-          <div id="rc-sec-composicao" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;"></div>
-        </div>
-
-      </div>
+      <iframe id="cronico-iframe" style="width:100%;border:none;min-height:calc(100vh - 80px);" src="about:blank"></iframe>
     </div>
 
     <!-- PAGE: TRS AGUDO -->
@@ -3549,7 +3486,7 @@ function navTo(pageId) {
   if (pageId === 'lista-pacientes' && currentDoctor) carregarListaPacientes();
   if (pageId === 'agenda') initCalendar();
   if (pageId === 'trs-cronico') carregarTrsCronico();
-  if (pageId === 'relatorio-cronico') carregarRelatorioCronico();
+  if (pageId === 'relatorio-cronico') document.getElementById('cronico-iframe').src = 'dashboard_fenix_cronico.html';
   if (pageId === 'trs-agudo-servico') document.getElementById('agudo-iframe').src = 'painel_lancamento_mensal.html?embed=1';
   /* unidade-detalhe iframe src is set by abrirUnidade() */
 }
@@ -3677,11 +3614,17 @@ async function carregarTrsCronico() {
 }
 
 /* ============================================================
-   RELATÓRIO CRÔNICO — Dashboard completo
+   RELATÓRIO CRÔNICO — removido (agora via iframe standalone)
    ============================================================ */
-var _rcData = null;
 
-async function carregarRelatorioCronico() {
+/* Placeholder para manter compatibilidade caso algo chame estas funções */
+function carregarRelatorioCronico() {}
+function renderRelatorioCronico() {}
+
+/* --- FIM RELATÓRIO CRÔNICO --- */
+if (false) { /* bloco morto para pular o JS antigo */
+var _rcData_REMOVED = null;
+async function _carregarRelatorioCronico_OLD() {
   var loadEl = document.getElementById('rc-loading');
   var contentEl = document.getElementById('rc-content');
   if (!loadEl || !contentEl) return;
@@ -3878,6 +3821,7 @@ function renderRelatorioCronico() {
   ccHtml += kpiCard('PTH 130-585 pg/ml', avgField('pth'), '%', 70, 'gte');
   document.getElementById('rc-sec-composicao').innerHTML = ccHtml;
 }
+} /* fim if(false) — bloco morto do relatório crônico antigo */
 
 /* ============================================================
    UNIDADE DETALHE — Dados + Gráficos (Chart.js)

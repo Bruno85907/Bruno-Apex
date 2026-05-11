@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>APEX — Dashboard Indicadores Fenix</title>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<style>
+:root{
+  --navy:#1E2D50;--navy-deep:#121D33;
+  --teal:#028090;--teal-light:#04b5c8;
+  --bg:#FAF9F5;--bg-card:#FFFFFF;
+  --border:rgba(30,45,80,0.10);
+  --gold:#C4A35A;--gold-light:#d4b76a;--gold-dim:rgba(196,163,90,0.10);
+  --text:#1E2D3D;--text-2:#5A6A7A;--text-3:#8A96A3;
+  --green:#5B9E50;--green-bg:rgba(91,158,80,0.08);--green-border:rgba(91,158,80,0.20);
+  --red:#E05252;--red-bg:rgba(224,82,82,0.08);--red-border:rgba(224,82,82,0.20);
+  --amber:#F59E0B;--amber-bg:rgba(245,158,11,0.08);
+  --radius:14px;
+  --shadow-card:0 2px 16px rgba(30,45,80,0.06);
+  --shadow-card-hover:0 8px 32px rgba(30,45,80,0.12);
+  --font-serif:'Instrument Serif',Georgia,serif;
+  --font-sans:'Inter',system-ui,-apple-system,sans-serif;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:var(--font-sans);background:var(--bg);color:var(--text);min-height:100vh;-webkit-font-smoothing:antialiased;overflow-x:hidden;}
+body::before{content:'';position:fixed;inset:0;z-index:-2;
+  background:radial-gradient(ellipse 80% 60% at 20% 10%, rgba(30,45,80,0.04), transparent 50%),
+  radial-gradient(ellipse 60% 50% at 80% 80%, rgba(30,45,80,0.06), transparent 50%);}
+
+/* HEADER */
+.header-bar{background:linear-gradient(135deg, var(--navy-deep) 0%, var(--navy) 60%, #2a4070 100%);position:relative;overflow:hidden;}
+.header-bar::after{content:'';position:absolute;inset:0;background-image:radial-gradient(circle 1px, rgba(196,163,90,0.12) 98%, transparent 100%);background-size:24px 24px;pointer-events:none;}
+.header-top{display:flex;align-items:center;justify-content:space-between;padding:20px 40px 0;position:relative;z-index:2;}
+.header-brand{display:flex;align-items:center;gap:16px;}
+.header-logo-text{font-size:13px;font-weight:700;color:#fff;letter-spacing:2px;}
+.header-logo-text span{color:var(--gold);}
+.header-actions{display:flex;align-items:center;gap:12px;}
+.btn-header{font-family:inherit;font-size:11px;font-weight:600;letter-spacing:.4px;padding:8px 18px;border-radius:8px;cursor:pointer;transition:all .2s;border:none;text-decoration:none;display:inline-flex;align-items:center;gap:6px;}
+.btn-export{background:rgba(255,255,255,0.08);color:rgba(255,255,255,0.7);border:1px solid rgba(255,255,255,0.15);}
+.btn-export:hover{background:rgba(255,255,255,0.14);color:#fff;}
+.btn-back{background:transparent;color:rgba(255,255,255,0.5);border:1px solid rgba(255,255,255,0.12);}
+.btn-back:hover{color:var(--gold-light);border-color:rgba(255,255,255,0.3);}
+.header-title-area{position:relative;z-index:2;padding:28px 40px 12px;}
+.header-title{font-family:var(--font-serif);font-size:32px;font-weight:400;color:#fff;margin-bottom:4px;}
+.header-subtitle{font-size:13px;color:rgba(255,255,255,0.5);font-weight:400;letter-spacing:.3px;}
+.header-subtitle strong{color:rgba(255,255,255,0.8);font-weight:600;}
+.header-divider{height:3px;background:linear-gradient(90deg, var(--gold), var(--gold-light), rgba(196,163,90,0.1));}
+
+/* FILTER TABS */
+.filter-bar{position:relative;z-index:2;display:flex;align-items:center;gap:12px;padding:16px 40px 24px;flex-wrap:wrap;}
+.filter-tab{font-family:var(--font-sans);font-size:12px;font-weight:600;padding:7px 18px;border-radius:8px;border:1px solid rgba(255,255,255,0.15);background:rgba(255,255,255,0.04);color:rgba(255,255,255,0.55);cursor:pointer;transition:all .2s;}
+.filter-tab:hover{background:rgba(255,255,255,0.1);color:rgba(255,255,255,0.8);}
+.filter-tab.active{background:rgba(196,163,90,0.15);color:var(--gold-light);border-color:rgba(196,163,90,0.35);}
+.filter-year{font-size:11px;color:rgba(255,255,255,0.35);margin-left:auto;font-weight:400;}
+.parcial-badge{display:none;font-size:10px;font-weight:600;padding:4px 14px;border-radius:20px;background:rgba(245,158,11,0.15);color:var(--amber);margin-left:8px;}
+
+/* CONTAINER */
+.container{max-width:1200px;margin:0 auto;padding:0 40px;}
+
+/* SECTION LABELS */
+.section-label{display:flex;align-items:center;gap:12px;margin-bottom:24px;margin-top:48px;}
+.section-label h2{font-family:var(--font-serif);font-size:22px;font-weight:400;color:var(--navy);}
+.section-label .line{flex:1;height:1px;background:linear-gradient(90deg,var(--border),transparent);}
+
+/* KPI GRID */
+.kpi-grid{display:grid;grid-template-columns:repeat(auto-fit, minmax(140px, 1fr));gap:14px;margin-bottom:24px;}
+.kpi-card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:20px 22px;position:relative;overflow:hidden;box-shadow:var(--shadow-card);transition:all .3s;}
+.kpi-card:hover{transform:translateY(-2px);box-shadow:var(--shadow-card-hover);}
+.kpi-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg, var(--navy), var(--teal));opacity:0.5;}
+.kpi-label{font-size:10px;font-weight:700;color:var(--text-3);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;line-height:1.3;}
+.kpi-value{font-family:var(--font-serif);font-size:36px;font-weight:400;color:var(--navy);line-height:1;}
+.kpi-value .unit{font-size:20px;color:var(--text-2);margin-left:2px;}
+.kpi-meta{display:inline-block;font-size:9px;font-weight:600;padding:3px 10px;border-radius:20px;margin-top:8px;}
+.kpi-meta.ok{background:var(--green-bg);color:var(--green);border:1px solid var(--green-border);}
+.kpi-meta.fail{background:var(--red-bg);color:var(--red);border:1px solid var(--red-border);}
+.kpi-meta.neutral{background:rgba(30,45,80,0.04);color:var(--text-3);border:1px solid var(--border);}
+
+/* CARDS */
+.card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:28px 32px;box-shadow:var(--shadow-card);margin-bottom:20px;}
+.card-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;}
+.card-title{font-size:11px;font-weight:700;color:var(--text-3);text-transform:uppercase;letter-spacing:1.2px;}
+.chart-wrap{position:relative;height:260px;width:100%;}
+.chart-wrap canvas{width:100%!important;height:100%!important;}
+.chart-row{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
+
+/* CBD COMPARISON */
+.cbd-grid{display:grid;grid-template-columns:repeat(auto-fit, minmax(200px, 1fr));gap:14px;margin-top:20px;}
+.cbd-card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:20px 22px;box-shadow:var(--shadow-card);}
+.cbd-title{font-size:10px;font-weight:700;color:var(--navy);text-transform:uppercase;letter-spacing:1px;margin-bottom:10px;line-height:1.3;}
+.cbd-value{font-family:var(--font-serif);font-size:32px;font-weight:400;color:var(--navy);line-height:1;}
+.cbd-ref{font-size:11px;color:var(--text-3);margin-top:6px;}
+.cbd-delta{display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:600;margin-top:4px;}
+.cbd-delta.up{color:var(--green);}
+.cbd-delta.down{color:var(--red);}
+.cbd-meta-tag{font-size:9px;font-weight:600;padding:3px 10px;border-radius:20px;margin-top:8px;display:inline-block;}
+
+/* ANÁLISE CLÍNICA */
+.analise-box{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:24px 28px;margin-top:20px;margin-bottom:16px;box-shadow:var(--shadow-card);}
+.analise-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;}
+.analise-title{font-size:11px;font-weight:700;color:var(--text-3);text-transform:uppercase;letter-spacing:1px;}
+.analise-tag{font-size:10px;color:var(--gold);font-weight:500;font-style:italic;}
+.analise-text{font-size:13px;line-height:1.7;color:var(--text-2);}
+
+/* TAXA INTERNAÇÃO */
+.intern-row{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:16px;}
+.intern-card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:24px;box-shadow:var(--shadow-card);text-align:center;}
+.intern-title{font-size:10px;font-weight:700;color:var(--text-3);text-transform:uppercase;letter-spacing:1px;margin-bottom:12px;}
+.intern-value{font-family:var(--font-serif);font-size:42px;color:var(--navy);}
+.intern-sub{font-size:11px;color:var(--text-3);margin-top:4px;}
+
+/* LOADING */
+.loading-screen{display:flex;align-items:center;justify-content:center;min-height:300px;color:var(--text-3);font-size:14px;}
+
+/* PRINT */
+@media print{
+  .header-bar{-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+  .btn-export,.btn-back{display:none!important;}
+  .container{max-width:100%;padding:0 20px;}
+  .section-label{margin-top:32px;}
+  body::before{display:none;}
+}
+
+/* ANIMATION */
+@keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+.fade-in{opacity:0;transform:translateY(12px);animation:fadeUp .5s ease forwards;}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header-bar">
+  <div class="header-top">
+    <div class="header-brand">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 650 440" style="height:36px;width:auto;">
+        <defs><linearGradient id="lgG" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#C9A84C"/><stop offset="50%" stop-color="#B8941F"/><stop offset="100%" stop-color="#C9A84C"/></linearGradient></defs>
+        <path d="M200 10L10 426L105 426L145 320L335 320L295 426L385 426L200 10ZM170 260L200 180L260 260Z" fill="white"/>
+        <path d="M320 10L420 200L320 426L420 426L480 280L540 426L638 426L530 200L630 10L535 10L480 140L425 10Z" fill="white"/>
+        <rect x="500" y="345" width="90" height="60" rx="12" transform="rotate(-20,545,375)" fill="url(#lgG)"/>
+      </svg>
+      <div>
+        <div class="header-logo-text">FÊNIX <span>NEFROLOGIA</span></div>
+      </div>
+    </div>
+    <div class="header-actions">
+      <button class="btn-header btn-export" onclick="window.print()">⬇ Exportar PDF</button>
+      <button class="btn-header btn-back" onclick="history.back()">← Voltar</button>
+    </div>
+  </div>
+  <div class="header-title-area">
+    <div class="header-title">Dashboard de Indicadores Clínicos</div>
+    <div class="header-subtitle"><strong>República do Líbano</strong> · <strong>Praiamar (Santos)</strong> · <strong>Tatuapé</strong></div>
+  </div>
+  <div class="filter-bar">
+    <button class="filter-tab active" data-filter="rede" onclick="setFilter('rede')">⬡ Rede Completa</button>
+    <button class="filter-tab" data-filter="rl" onclick="setFilter('rl')">RL</button>
+    <button class="filter-tab" data-filter="santos" onclick="setFilter('santos')">Santos</button>
+    <button class="filter-tab" data-filter="tatuape" onclick="setFilter('tatuape')">Tatuapé</button>
+    <span id="parcial-badge" class="parcial-badge"></span>
+    <span class="filter-year">2026 — Atualizado mensalmente pela equipe clínica</span>
+  </div>
+  <div class="header-divider"></div>
+</div>
+
+<!-- CONTENT -->
+<div id="main-content">
+  <div class="loading-screen" id="loading">Carregando dados do Supabase...</div>
+</div>
+
+<script>
+/* ============================================================
+   CONFIG & GLOBALS
+   ============================================================ */
+var SUPA_URL = 'https://bfrqbpimzheipfqxvioo.supabase.co';
+var SUPA_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJmcnFicGltemhlaXBmcXh2aW9vIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDYxMTIyNzAsImV4cCI6MjA2MTY4ODI3MH0.FXnQn6MBQf-w0Wlq3YdLkHONMHkYjFRERQmZZGxfkng';
+var supabase = window.supabase.createClient(SUPA_URL, SUPA_KEY);
+
+var MESES = ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
+var UNITS = ['rl','santos','tatuape'];
+var UNIT_COLORS = {rl:'#1E2D50', santos:'#028090', tatuape:'#C4A35A'};
+var UNIT_LABELS = {rl:'RL', santos:'Santos', tatuape:'Tatuapé'};
+var CBD = {fos:68, pot:82, alb:91, imc:46, ktv:70, vol:78, fav:69, hb:58, ang:65};
+var currentFilter = 'rede';
+var allData = [];
+var charts = {};
+
+/* ============================================================
+   DATA LOADING
+   ============================================================ */
+async function loadData() {
+  try {
+    var resp = await supabase.from('dados_mensais').select('*').eq('ano', 2026).order('mes');
+    allData = resp.data || [];
+  } catch(e) { allData = []; }
+  if (!allData.length) {
+    document.getElementById('loading').innerHTML = 'Nenhum dado encontrado para 2026.';
+    return;
+  }
+  document.getElementById('loading').style.display = 'none';
+  renderAll();
+}
+
+/* ============================================================
+   FILTER
+   ============================================================ */
+function setFilter(f) {
+  currentFilter = f;
+  document.querySelectorAll('.filter-tab').forEach(function(t) {
+    t.classList.toggle('active', t.getAttribute('data-filter') === f);
+  });
+  renderAll();
+}
+
+/* ============================================================
+   HELPERS
+   ============================================================ */
+function lastRow() { return allData[allData.length - 1]; }
+function mesLabel(m) { return MESES[m] || ''; }
+
+function sumField(row, field) {
+  if (currentFilter !== 'rede') {
+    var v = row[field + '_' + currentFilter];
+    return v !== null && v !== undefined && v !== '' ? parseFloat(v) : null;
+  }
+  var total = 0, count = 0;
+  UNITS.forEach(function(u) {
+    var v = row[field + '_' + u];
+    if (v !== null && v !== undefined && v !== '') { total += parseFloat(v); count++; }
+  });
+  return count > 0 ? total : null;
+}
+
+function avgField(row, field) {
+  if (currentFilter !== 'rede') {
+    var v = row[field + '_' + currentFilter];
+    return v !== null && v !== undefined && v !== '' ? parseFloat(v) : null;
+  }
+  var total = 0, count = 0;
+  UNITS.forEach(function(u) {
+    var v = row[field + '_' + u];
+    if (v !== null && v !== undefined && v !== '') { total += parseFloat(v); count++; }
+  });
+  return count > 0 ? Math.round((total / count) * 10) / 10 : null;
+}
+
+function fmt(v) { return v !== null ? (Number.isInteger(v) ? v.toLocaleString('pt-BR') : v.toFixed(1)) : '—'; }
+
+function metaBadge(value, meta, dir, okLabel) {
+  if (value === null || meta === null || meta === undefined) return '';
+  var ok = dir === 'eq0' ? value === 0 : dir === 'gte' ? value >= meta : value <= meta;
+  var label = ok ? (okLabel || 'Meta atingida') : (dir === 'eq0' ? 'Meta: zero' : 'Meta: ' + (dir === 'gte' ? '≥' : '≤') + meta + '%');
+  return '<div class="kpi-meta ' + (ok ? 'ok' : 'fail') + '">' + label + '</div>';
+}
+
+function kpiHTML(label, value, unit, meta, dir, opts) {
+  opts = opts || {};
+  var display = value !== null ? fmt(value) : '—';
+  if (unit && value !== null) display += '<span class="unit">' + unit + '</span>';
+  var badge = meta !== null && meta !== undefined ? metaBadge(value, meta, dir, opts.okLabel) : '';
+  if (opts.neutralMeta && value !== null) badge = '<div class="kpi-meta neutral">' + opts.neutralMeta + '</div>';
+  return '<div class="kpi-card fade-in"><div class="kpi-label">' + label + '</div><div class="kpi-value">' + display + '</div>' + badge + '</div>';
+}
+
+function cbdHTML(label, value, unit, cbdRef, cbdYear, meta, metaDir) {
+  var display = value !== null ? fmt(value) + (unit || '') : '—';
+  var valColor = value === null ? 'var(--text-3)' : 'var(--navy)';
+  var deltaHtml = '';
+  if (cbdRef !== null && cbdRef !== undefined && value !== null) {
+    var diff = Math.round(value - cbdRef);
+    var cls = diff >= 0 ? 'up' : 'down';
+    var arrow = diff >= 0 ? '▲' : '▼';
+    deltaHtml = '<div class="cbd-delta ' + cls + '">' + arrow + ' ' + Math.abs(diff) + 'pp vs CBD</div>';
+  } else if (cbdRef === null) {
+    deltaHtml = '<div style="font-size:10px;color:var(--text-3);margin-top:4px;">Sem referência disponível</div>';
+  }
+  var metaHtml = '';
+  if (meta !== null && meta !== undefined && value !== null) {
+    var ok = metaDir === 'gte' ? value >= meta : value <= meta;
+    metaHtml = '<div class="cbd-meta-tag" style="background:' + (ok ? 'var(--green-bg);color:var(--green);border:1px solid var(--green-border)' : 'var(--red-bg);color:var(--red);border:1px solid var(--red-border)') + ';">Meta ' + (metaDir === 'gte' ? '≥' : '≤') + meta + '%</div>';
+  }
+  var refLabel = cbdRef !== null && cbdRef !== undefined ? 'CBD ' + (cbdYear || 2025) + ' — ' + cbdRef + '%' : 'CBD — sem benchmark';
+  return '<div class="cbd-card"><div class="cbd-title">' + label + '</div><div class="cbd-value" style="color:' + valColor + ';">' + display + '</div><div class="cbd-ref">' + refLabel + '</div>' + deltaHtml + metaHtml + '</div>';
+}
+
+function analiseHTML(section, text) {
+  return '<div class="analise-box"><div class="analise-header"><div class="analise-title">Análise Clínica — ' + section + '</div><div class="analise-tag">IA sugere · você edita</div></div><div class="analise-text">' + (text || '<em style="color:var(--text-3);">Análise será gerada após conferência dos dados.</em>') + '</div></div>';
+}
+
+/* ============================================================
+   CHARTS
+   ============================================================ */
+function destroyChart(id) {
+  if (charts[id]) { charts[id].destroy(); delete charts[id]; }
+}
+
+function lineChart(canvasId, datasets, metaLine, yLabel) {
+  destroyChart(canvasId);
+  var canvas = document.getElementById(canvasId);
+  if (!canvas) return;
+  var labels = allData.map(function(d) { return mesLabel(d.mes).substring(0, 3); });
+  var dsList = datasets.map(function(ds) {
+    return {
+      label: ds.label,
+      data: ds.data,
+      borderColor: ds.color,
+      backgroundColor: ds.color + '18',
+      borderWidth: 2,
+      pointRadius: 4,
+      pointBackgroundColor: ds.color,
+      tension: 0.3,
+      fill: false
+    };
+  });
+  if (metaLine !== null && metaLine !== undefined) {
+    dsList.push({
+      label: 'Meta',
+      data: Array(labels.length).fill(metaLine),
+      borderColor: 'rgba(224,82,82,0.4)',
+      borderWidth: 1.5,
+      borderDash: [6, 4],
+      pointRadius: 0,
+      fill: false
+    });
+  }
+  charts[canvasId] = new Chart(canvas, {
+    type: 'line',
+    data: { labels: labels, datasets: dsList },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { position: 'bottom', labels: { usePointStyle: true, pointStyle: 'circle', font: { size: 10, family: 'Inter' } } } },
+      scales: {
+        y: { beginAtZero: false, title: { display: !!yLabel, text: yLabel || '', font: { size: 10 } }, grid: { color: 'rgba(30,45,80,0.06)' }, ticks: { font: { size: 10 } } },
+        x: { grid: { display: false }, ticks: { font: { size: 10 } } }
+      }
+    }
+  });
+}
+
+function unitSeries(field, mode) {
+  var fn = mode === 'sum' ? sumField : avgField;
+  if (currentFilter !== 'rede') {
+    return [{ label: UNIT_LABELS[currentFilter], color: UNIT_COLORS[currentFilter], data: allData.map(function(d) { var v = d[field + '_' + currentFilter]; return v !== null && v !== undefined && v !== '' ? parseFloat(v) : null; }) }];
+  }
+  return UNITS.map(function(u) {
+    return { label: UNIT_LABELS[u], color: UNIT_COLORS[u], data: allData.map(function(d) { var v = d[field + '_' + u]; return v !== null && v !== undefined && v !== '' ? parseFloat(v) : null; }) };
+  });
+}
+
+function redeSeries(field) {
+  return [{ label: 'Rede', color: UNIT_COLORS.rl, data: allData.map(function(d) { return avgField(d, field); }) }];
+}
+
+/* ============================================================
+   PARCIAL BADGE
+   ============================================================ */
+function updateParcial() {
+  var badge = document.getElementById('parcial-badge');
+  if (currentFilter !== 'rede') { badge.style.display = 'none'; return; }
+  var row = lastRow();
+  var filled = 0;
+  UNITS.forEach(function(u) {
+    if (row['pac_' + u] !== null && row['pac_' + u] !== undefined && row['pac_' + u] !== '' && parseFloat(row['pac_' + u]) > 0) filled++;
+  });
+  if (filled > 0 && filled < 3) {
+    badge.style.display = '';
+    badge.textContent = 'Parcial — ' + filled + '/3 unidades';
+  } else {
+    badge.style.display = 'none';
+  }
+}
+
+/* ============================================================
+   RENDER ALL
+   ============================================================ */
+function renderAll() {
+  var row = lastRow();
+  var mesAtual = mesLabel(row.mes) + '/2026';
+  updateParcial();
+
+  var html = '<div class="container">';
+
+  /* ---- S1: VOLUMETRIA ---- */
+  html += '<div class="section-label"><h2>Volumetria</h2><div class="line"></div></div>';
+  html += '<div class="kpi-grid" style="grid-template-columns:repeat(7, 1fr);">';
+  html += kpiHTML('Pacientes', sumField(row,'pac'), '', null, null);
+  html += kpiHTML('Sessões', sumField(row,'ses'), '', null, null);
+  html += kpiHTML('Admissões', sumField(row,'adm'), '', null, null);
+  html += kpiHTML('Saídas', sumField(row,'sai'), '', null, null);
+  html += kpiHTML('Sessões Extras', null, '', null, null); // campo não disponível
+  html += kpiHTML('Cons. Especialista', sumField(row,'cons_esp'), '', null, null);
+  html += kpiHTML('Cons. Nefro', sumField(row,'cons_nefro'), '', null, null);
+  html += '</div>';
+
+  html += '<div class="chart-row">';
+  html += '<div class="card"><div class="card-header"><div class="card-title">Pacientes — evolução mensal</div></div><div class="chart-wrap"><canvas id="chart-pac"></canvas></div></div>';
+  html += '<div class="card"><div class="card-header"><div class="card-title">Sessões — evolução mensal</div></div><div class="chart-wrap"><canvas id="chart-ses"></canvas></div></div>';
+  html += '</div>';
+
+  html += analiseHTML('Volumetria', null);
+
+  /* ---- S2: DESFECHOS CLÍNICOS ---- */
+  html += '<div class="section-label"><h2>Desfechos Clínicos</h2><div class="line"></div></div>';
+  html += '<div class="kpi-grid" style="grid-template-columns:repeat(4, 1fr);">';
+  html += kpiHTML('Evento Adverso Grave', sumField(row,'eag'), '', 0, 'eq0');
+  html += kpiHTML('Inscrição Tx Renal', avgField(row,'tx'), '%', 55, 'gte');
+  html += kpiHTML('Risco de Suicídio', sumField(row,'sui'), '', 0, 'eq0');
+  html += kpiHTML('Infecção Corrente Sang.', sumField(row,'ics'), '', 0, 'eq0');
+  html += kpiHTML('Óbito / Mortalidade', sumField(row,'obi'), '', null, null, {neutralMeta: 'Meta: zero'});
+  html += kpiHTML('Infecção Cateter / FAV', sumField(row,'icf'), '', 0, 'eq0');
+  var faltasVal = sumField(row,'fal');
+  var faltasPct = avgField(row,'fal_pct');
+  html += '<div class="kpi-card fade-in"><div class="kpi-label">Nº de Faltas / %</div><div class="kpi-value">' + fmt(faltasVal) + ' <span class="unit">/ ' + (faltasPct !== null ? faltasPct.toFixed(1) + '%' : '—') + '</span></div>' + metaBadge(faltasPct, 1, 'lte') + '</div>';
+  html += kpiHTML('Queda Interna', sumField(row,'que'), '', 0, 'eq0');
+  html += '</div>';
+
+  /* Taxa internação + causas */
+  var intVal = avgField(row,'int');
+  html += '<div class="intern-row">';
+  html += '<div class="intern-card"><div class="intern-title">Taxa de Internação — Rede</div><div class="intern-value">' + (intVal !== null ? intVal.toFixed(1) + '%' : '—') + '</div><div class="intern-sub">' + metaBadge(intVal, 6, 'lte') + '</div></div>';
+  html += '<div class="intern-card"><div class="intern-title">Causas de Internação</div><div class="chart-wrap" style="height:200px;"><canvas id="chart-causas"></canvas></div></div>';
+  html += '</div>';
+
+  html += analiseHTML('Desfechos Clínicos', null);
+
+  /* ---- S3: AVALIAÇÃO NUTRICIONAL ---- */
+  html += '<div class="section-label"><h2>Avaliação Nutricional</h2><div class="line"></div></div>';
+
+  html += '<div class="chart-row">';
+  html += '<div class="card"><div class="card-header"><div class="card-title">Fósforo ≤5,5 mg/dl — evolução mensal (meta 70%)</div></div><div class="chart-wrap"><canvas id="chart-fos"></canvas></div></div>';
+  html += '<div class="card"><div class="card-header"><div class="card-title">Potássio &lt;6,0 mmol/L — evolução mensal (meta 80%)</div></div><div class="chart-wrap"><canvas id="chart-pot"></canvas></div></div>';
+  html += '</div>';
+
+  html += '<div class="cbd-grid">';
+  html += cbdHTML('Fósforo ≤5,5 mg/dl', avgField(row,'fos'), '%', CBD.fos, 2025, 70, 'gte');
+  html += cbdHTML('Potássio <6,0 mmol/L', avgField(row,'pot'), '%', CBD.pot, 2025, 80, 'gte');
+  html += cbdHTML('Albumina ≥3,5 mg/dl ★', avgField(row,'alb'), '', CBD.alb, 2025, null, null);
+  html += cbdHTML('IMC Eutrófico ★ (Trimestral)', avgField(row,'imc'), '', CBD.imc, 2025, null, null);
+  html += '</div>';
+
+  html += analiseHTML('Avaliação Nutricional', null);
+
+  /* ---- S4: ADEQUAÇÃO DA DIÁLISE ---- */
+  html += '<div class="section-label"><h2>Adequação da Diálise</h2><div class="line"></div></div>';
+
+  html += '<div class="card"><div class="card-header"><div class="card-title">Kt/V e Volume Convectivo — evolução mensal (Rede)</div></div><div class="chart-wrap"><canvas id="chart-adeq"></canvas></div></div>';
+
+  html += '<div class="cbd-grid">';
+  html += cbdHTML('Vol. Convectivo ≥69L', avgField(row,'vol'), '%', CBD.vol, 2025, 80, 'gte');
+  html += cbdHTML('Kt/V ≥1,2', avgField(row,'ktv'), '%', CBD.ktv, 2025, 80, 'gte');
+  html += cbdHTML('FAV / Prótese', avgField(row,'fav'), '%', CBD.fav, 2025, 80, 'gte');
+  html += '</div>';
+
+  html += analiseHTML('Adequação da Diálise', null);
+
+  /* ---- S5: QUALIDADE DE VIDA ---- */
+  html += '<div class="section-label"><h2>Qualidade de Vida</h2><div class="line"></div></div>';
+
+  html += '<div class="chart-row">';
+  html += '<div class="card"><div class="card-header"><div class="card-title">KDQOL-SF36 — Evolução por período (Rede)</div></div><div class="chart-wrap"><canvas id="chart-kdqol"></canvas></div></div>';
+  html += '<div class="card" style="display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;">';
+  html += '<div class="card-title" style="margin-bottom:16px;">Hemoglobina 10-12 g/dl (% Conformidade)</div>';
+  var hbVal = avgField(row,'hb');
+  html += '<div style="font-family:var(--font-serif);font-size:52px;color:var(--navy);">' + (hbVal !== null ? hbVal.toFixed(0) + '%' : '—') + '</div>';
+  html += metaBadge(hbVal, 70, 'gte');
+  html += '<div style="margin-top:16px;padding-top:16px;border-top:1px solid var(--border);width:100%;">';
+  html += '<div class="card-title" style="margin-bottom:8px;">Hemoglobina — Comparativo CBD</div>';
+  html += '<div class="cbd-ref">CBD 2025 — ' + CBD.hb + '%</div>';
+  if (hbVal !== null) { var diff = Math.round(hbVal - CBD.hb); html += '<div class="cbd-delta ' + (diff >= 0 ? 'up' : 'down') + '">' + (diff >= 0 ? '▲' : '▼') + ' ' + Math.abs(diff) + 'pp vs CBD</div>'; }
+  html += '</div></div>';
+  html += '</div>';
+
+  html += analiseHTML('Qualidade de Vida', null);
+
+  /* ---- S6: CARDIOVASCULAR ---- */
+  html += '<div class="section-label"><h2>Cardiovascular</h2><div class="line"></div></div>';
+  html += '<div class="kpi-grid" style="grid-template-columns:repeat(3, 1fr);">';
+  html += kpiHTML('Ganho de Peso Interdialítico', avgField(row,'gpid'), '%', 70, 'gte');
+  html += kpiHTML('Água Extracelular (ECW) <15%', avgField(row,'ecw'), '%', 70, 'gte');
+  html += kpiHTML('Hb Glicada ★', avgField(row,'hbg'), '%', null, null, {neutralMeta: 'Trimestral'});
+  html += '</div>';
+
+  html += analiseHTML('Cardiovascular', null);
+
+  /* ---- S7: COMPOSIÇÃO CORPORAL ---- */
+  html += '<div class="section-label"><h2>Composição Corporal</h2><div class="line"></div></div>';
+  html += '<div class="kpi-grid" style="grid-template-columns:repeat(3, 1fr);">';
+  html += kpiHTML('Ângulo de Fase >4° (Trimestral)', avgField(row,'ang'), '%', 70, 'gte');
+  html += kpiHTML('Fisioterapia', avgField(row,'fis'), '%', 90, 'gte');
+  html += kpiHTML('PTH 130-585 pg/ml ★', avgField(row,'pth'), '%', 70, 'gte');
+  html += '</div>';
+
+  html += '<div class="cbd-grid" style="margin-bottom:16px;">';
+  html += cbdHTML('Ângulo de Fase — CBD', avgField(row,'ang'), '%', CBD.ang, 2025, 70, 'gte');
+  html += '</div>';
+
+  html += analiseHTML('Composição Corporal', null);
+
+  html += '<div style="height:60px;"></div>';
+  html += '</div>'; // container
+
+  document.getElementById('main-content').innerHTML = html;
+
+  /* Render charts after DOM update */
+  setTimeout(renderCharts, 100);
+}
+
+/* ============================================================
+   RENDER CHARTS
+   ============================================================ */
+function renderCharts() {
+  /* Pacientes evolution */
+  lineChart('chart-pac', unitSeries('pac', 'sum'), null, 'Pacientes');
+
+  /* Sessões evolution */
+  lineChart('chart-ses', unitSeries('ses', 'sum'), null, 'Sessões');
+
+  /* Fósforo evolution */
+  lineChart('chart-fos', unitSeries('fos', 'avg'), 70, '%');
+
+  /* Potássio evolution */
+  lineChart('chart-pot', unitSeries('pot', 'avg'), 80, '%');
+
+  /* Adequação: Kt/V + Vol Convectivo */
+  var ktvData = redeSeries('ktv');
+  var volData = redeSeries('vol');
+  var adeqDS = [
+    { label: 'Kt/V ≥1,2', color: '#1E2D50', data: ktvData[0].data },
+    { label: 'Vol. Convectivo ≥69L', color: '#028090', data: volData[0].data }
+  ];
+  lineChart('chart-adeq', adeqDS, 80, '%');
+
+  /* KDQOL */
+  var kdqolM = redeSeries('kdqol_mental');
+  var kdqolF = redeSeries('kdqol_fisico');
+  var kdqolDS = [
+    { label: 'Mental', color: '#1E2D50', data: kdqolM[0].data },
+    { label: 'Físico', color: '#028090', data: kdqolF[0].data }
+  ];
+  lineChart('chart-kdqol', kdqolDS, 50, 'Score');
+
+  /* Causas de internação - pie/doughnut */
+  renderCausas();
+}
+
+function renderCausas() {
+  destroyChart('chart-causas');
+  var canvas = document.getElementById('chart-causas');
+  if (!canvas) return;
+  var row = lastRow();
+  var causas = [
+    { label: 'Metabólica', field: 'causas_metabolica' },
+    { label: 'Infecção', field: 'causas_infeccao' },
+    { label: 'Ac. Vascular', field: 'causas_vascular' },
+    { label: 'Cardiovascular', field: 'causas_cardiovascular' },
+    { label: 'Queda', field: 'causas_queda' },
+    { label: 'Outros', field: 'causas_outros' }
+  ];
+  var data = causas.map(function(c) {
+    var v = sumField(row, c.field);
+    return v !== null ? v : 0;
+  });
+  var total = data.reduce(function(a, b) { return a + b; }, 0);
+  if (total === 0) { data = [1]; } // placeholder
+
+  charts['chart-causas'] = new Chart(canvas, {
+    type: 'doughnut',
+    data: {
+      labels: total > 0 ? causas.map(function(c) { return c.label; }) : ['Sem dados'],
+      datasets: [{
+        data: data,
+        backgroundColor: total > 0 ? ['#1E2D50','#028090','#C4A35A','#E05252','#F59E0B','#8A96A3'] : ['#e0e0e0'],
+        borderWidth: 2,
+        borderColor: '#fff'
+      }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: {
+        legend: { position: 'bottom', labels: { usePointStyle: true, pointStyle: 'circle', font: { size: 9, family: 'Inter' }, padding: 12 } }
+      }
+    }
+  });
+}
+
+/* ============================================================
+   INIT
+   ============================================================ */
+loadData();
+</script>
+</body>
+</html>
