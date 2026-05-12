@@ -1,0 +1,885 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Qualidade Assistencial — Fenix Nefrologia</title>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.js"></script>
+<style>
+:root{
+  --navy:#1E2D50;--navy-deep:#121D33;--navy-mid:#253A65;
+  --teal:#028090;--teal-light:#04b5c8;
+  --bg:#FAF9F5;--bg-card:#FFFFFF;
+  --border:rgba(30,45,80,0.12);--border-hover:rgba(30,45,80,0.25);
+  --gold:#C4A35A;--gold-light:#d4b76a;--gold-dim:rgba(196,163,90,0.10);--gold-border:rgba(196,163,90,0.25);
+  --text:#1E2D3D;--text-2:#5A6A7A;--text-3:#8A96A3;
+  --green:#5B9E50;--red:#E05252;--amber:#BA7517;
+  --shadow-card:0 2px 16px rgba(30,45,80,0.06);
+  --radius:12px;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);font-size:13px;line-height:1.5;}
+
+/* ── NAV HEADER ── */
+.nav-header{background:var(--navy);color:#fff;padding:14px 24px;display:flex;align-items:center;gap:16px;position:sticky;top:0;z-index:100;}
+.nav-title{font-size:14px;font-weight:600;letter-spacing:0.3px;}
+.nav-breadcrumb{font-size:11px;color:rgba(255,255,255,0.5);}
+.nav-unidade{margin-left:auto;display:flex;gap:6px;}
+.nav-unidade button{font-family:inherit;font-size:11px;font-weight:600;padding:6px 14px;border-radius:20px;border:1px solid rgba(255,255,255,0.2);background:transparent;color:rgba(255,255,255,0.6);cursor:pointer;transition:all 0.2s;}
+.nav-unidade button.active{background:var(--gold);color:var(--navy);border-color:var(--gold);}
+.nav-unidade button:hover:not(.active){background:rgba(255,255,255,0.08);}
+
+/* ── CONTAINER ── */
+.container{max-width:1100px;margin:0 auto;padding:24px 20px;}
+
+/* ── VIEWS ── */
+.view{display:none;}
+.view.active{display:block;}
+
+/* ── UPLOAD ZONE ── */
+.upload-section{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:24px;}
+.upload-zone{background:var(--bg-card);border:2px dashed var(--border);border-radius:var(--radius);padding:32px 24px;text-align:center;cursor:pointer;transition:all 0.25s;}
+.upload-zone:hover,.upload-zone.dragover{border-color:var(--gold);background:var(--gold-dim);}
+.upload-zone.loaded{border-color:var(--green);border-style:solid;background:rgba(91,158,80,0.05);}
+.upload-zone .uz-icon{font-size:32px;margin-bottom:8px;opacity:0.3;}
+.upload-zone.loaded .uz-icon{opacity:1;color:var(--green);}
+.upload-zone .uz-title{font-size:14px;font-weight:600;color:var(--text);margin-bottom:4px;}
+.upload-zone .uz-desc{font-size:11px;color:var(--text-3);margin-bottom:12px;}
+.upload-zone .uz-status{font-size:11px;color:var(--text-3);font-style:italic;}
+.upload-zone.loaded .uz-status{color:var(--green);font-style:normal;font-weight:600;}
+.upload-zone input{display:none;}
+
+/* ── MES SELECTOR ── */
+.mes-bar{display:flex;align-items:center;gap:12px;margin-bottom:20px;padding:12px 16px;background:var(--bg-card);border-radius:var(--radius);box-shadow:var(--shadow-card);}
+.mes-bar label{font-size:12px;font-weight:600;color:var(--text-2);}
+.mes-bar select,.mes-bar input[type="month"]{font-family:inherit;font-size:13px;padding:6px 12px;border:1px solid var(--border);border-radius:8px;background:var(--bg);color:var(--text);}
+
+/* ── PROCESS BAR ── */
+.process-bar{display:flex;align-items:center;gap:12px;margin-bottom:24px;}
+.btn-process{font-family:inherit;font-size:13px;font-weight:600;padding:10px 24px;border:none;border-radius:8px;cursor:pointer;transition:all 0.2s;}
+.btn-process.primary{background:var(--gold);color:var(--navy);}
+.btn-process.primary:hover{background:var(--gold-light);}
+.btn-process.primary:disabled{opacity:0.4;cursor:not-allowed;}
+.btn-process.secondary{background:transparent;border:1px solid var(--border);color:var(--text-2);}
+.btn-process.secondary:hover{border-color:var(--text-2);}
+.process-status{font-size:12px;color:var(--text-3);}
+.process-status.ok{color:var(--green);font-weight:600;}
+.process-status.err{color:var(--red);}
+
+/* ── SUMMARY CARDS ── */
+.summary-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin-bottom:24px;}
+.summary-card{background:var(--bg-card);border-radius:var(--radius);padding:14px 16px;box-shadow:var(--shadow-card);}
+.summary-card .sc-label{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;color:var(--text-3);margin-bottom:4px;}
+.summary-card .sc-value{font-size:22px;font-weight:700;color:var(--text);}
+.summary-card .sc-sub{font-size:10px;color:var(--text-3);margin-top:2px;}
+
+/* ── SECTION HEADERS ── */
+.section-header{display:flex;align-items:center;gap:10px;margin:24px 0 12px;padding-bottom:8px;border-bottom:1px solid var(--border);}
+.section-header .sh-dot{width:8px;height:8px;border-radius:50%;}
+.section-header .sh-title{font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:0.8px;color:var(--text-2);}
+.section-header .sh-count{font-size:11px;color:var(--text-3);margin-left:auto;}
+
+/* ── INDICATOR CARDS ── */
+.ind-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;margin-bottom:8px;}
+.ind-card{background:var(--bg-card);border-radius:var(--radius);padding:16px;box-shadow:var(--shadow-card);cursor:pointer;transition:all 0.2s;border-left:4px solid transparent;position:relative;}
+.ind-card:hover{box-shadow:0 4px 20px rgba(30,45,80,0.12);transform:translateY(-1px);}
+.ind-card .ic-name{font-size:11px;font-weight:600;color:var(--text-2);margin-bottom:6px;}
+.ind-card .ic-value{font-size:26px;font-weight:700;}
+.ind-card .ic-sub{font-size:10px;color:var(--text-3);margin-top:4px;}
+.ind-card .ic-bar{height:4px;border-radius:2px;background:rgba(0,0,0,0.06);margin-top:10px;overflow:hidden;}
+.ind-card .ic-bar-fill{height:100%;border-radius:2px;transition:width 0.6s ease;}
+.ind-card.green{border-left-color:var(--green);}
+.ind-card.green .ic-value{color:var(--green);}
+.ind-card.green .ic-bar-fill{background:var(--green);}
+.ind-card.amber{border-left-color:var(--amber);}
+.ind-card.amber .ic-value{color:var(--amber);}
+.ind-card.amber .ic-bar-fill{background:var(--amber);}
+.ind-card.red{border-left-color:var(--red);}
+.ind-card.red .ic-value{color:var(--red);}
+.ind-card.red .ic-bar-fill{background:var(--red);}
+.ind-card.gray{border-left-color:var(--text-3);}
+.ind-card.gray .ic-value{color:var(--text-3);}
+.ind-card .ic-badge{position:absolute;top:8px;right:8px;font-size:9px;font-weight:600;padding:2px 6px;border-radius:4px;background:var(--gold-dim);color:var(--gold);}
+.ind-card .ic-click{position:absolute;bottom:8px;right:12px;font-size:10px;color:var(--text-3);opacity:0;transition:opacity 0.2s;}
+.ind-card:hover .ic-click{opacity:1;}
+
+/* ── DRILL-DOWN MODAL ── */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(18,29,51,0.6);z-index:500;align-items:center;justify-content:center;padding:20px;}
+.modal-overlay.active{display:flex;}
+.modal{background:var(--bg);border-radius:16px;width:100%;max-width:800px;max-height:85vh;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 20px 60px rgba(0,0,0,0.3);}
+.modal-header{padding:20px 24px;background:var(--navy);color:#fff;display:flex;align-items:center;gap:12px;}
+.modal-header .mh-title{font-size:16px;font-weight:600;flex:1;}
+.modal-header .mh-close{width:32px;height:32px;border-radius:50%;border:none;background:rgba(255,255,255,0.1);color:#fff;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;}
+.modal-header .mh-close:hover{background:rgba(255,255,255,0.2);}
+.modal-body{padding:20px 24px;overflow-y:auto;flex:1;}
+.modal-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:20px;}
+.modal-stats .ms-box{text-align:center;padding:12px;border-radius:10px;}
+.modal-stats .ms-box.green{background:rgba(91,158,80,0.1);}
+.modal-stats .ms-box.red{background:rgba(224,82,82,0.1);}
+.modal-stats .ms-box.total{background:var(--gold-dim);}
+.ms-box .ms-num{font-size:24px;font-weight:700;}
+.ms-box.green .ms-num{color:var(--green);}
+.ms-box.red .ms-num{color:var(--red);}
+.ms-box.total .ms-num{color:var(--gold);}
+.ms-box .ms-lbl{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;color:var(--text-3);margin-top:2px;}
+
+/* Patient table */
+.pac-table{width:100%;border-collapse:collapse;font-size:12px;}
+.pac-table th{text-align:left;padding:8px 12px;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;color:var(--text-3);border-bottom:2px solid var(--border);}
+.pac-table td{padding:10px 12px;border-bottom:1px solid var(--border);}
+.pac-table tr.fora-meta{background:rgba(224,82,82,0.05);}
+.pac-table tr.fora-meta td:first-child{font-weight:600;color:var(--red);}
+.pac-table tr.na-meta td:first-child{color:var(--green);}
+.pac-table .val-badge{display:inline-block;padding:2px 8px;border-radius:4px;font-weight:600;font-size:11px;}
+.pac-table .val-badge.ok{background:rgba(91,158,80,0.1);color:var(--green);}
+.pac-table .val-badge.bad{background:rgba(224,82,82,0.1);color:var(--red);}
+
+/* Analise critica */
+.analise-section{margin-top:20px;padding-top:16px;border-top:1px solid var(--border);}
+.analise-section label{font-size:12px;font-weight:600;color:var(--text-2);display:block;margin-bottom:6px;}
+.analise-section textarea{width:100%;min-height:80px;font-family:inherit;font-size:12px;padding:10px 14px;border:1px solid var(--border);border-radius:8px;background:var(--bg-card);color:var(--text);resize:vertical;}
+.analise-section textarea:focus{outline:none;border-color:var(--gold);}
+.analise-section .btn-salvar{margin-top:8px;font-family:inherit;font-size:12px;font-weight:600;padding:8px 20px;border:none;border-radius:8px;background:var(--teal);color:#fff;cursor:pointer;}
+.analise-section .btn-salvar:hover{opacity:0.9;}
+
+/* ── EMPTY STATE ── */
+.empty-state{text-align:center;padding:60px 20px;color:var(--text-3);}
+.empty-state .es-icon{font-size:48px;opacity:0.2;margin-bottom:12px;}
+.empty-state .es-title{font-size:16px;font-weight:600;color:var(--text-2);margin-bottom:6px;}
+.empty-state .es-desc{font-size:12px;max-width:400px;margin:0 auto;}
+
+/* ── DOWNLOAD BTN ── */
+.btn-download{display:inline-flex;align-items:center;gap:6px;font-family:inherit;font-size:11px;font-weight:600;padding:6px 14px;border:1px solid var(--border);border-radius:6px;background:var(--bg-card);color:var(--text-2);cursor:pointer;text-decoration:none;transition:all 0.2s;}
+.btn-download:hover{border-color:var(--teal);color:var(--teal);}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<div class="nav-header" id="nav-header" style="display:none;">
+  <span class="nav-title" id="nav-title">Qualidade Assistencial</span>
+  <span class="nav-breadcrumb">Qualidade Fenix › Indicadores</span>
+  <div class="nav-unidade">
+    <button onclick="selectUnidade('rl')" id="btn-u-rl">RL</button>
+    <button onclick="selectUnidade('santos')" id="btn-u-santos">Santos</button>
+    <button onclick="selectUnidade('tatuape')" id="btn-u-tatuape" class="active">Tatuapé</button>
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- ════ VIEW: UPLOAD ════ -->
+  <div class="view active" id="view-upload">
+
+    <div class="mes-bar">
+      <label>Período:</label>
+      <input type="month" id="mes-sel" />
+      <div style="margin-left:auto;display:flex;gap:8px;">
+        <a class="btn-download" href="template_dados_complementares.xlsx" download>
+          ⬇ Template planilha
+        </a>
+      </div>
+    </div>
+
+    <div class="upload-section">
+      <!-- XML Upload -->
+      <div class="upload-zone" id="zone-xml" onclick="document.getElementById('inp-xml').click()">
+        <div class="uz-icon">📋</div>
+        <div class="uz-title">Lote Fleury (XML)</div>
+        <div class="uz-desc">Arraste ou clique para enviar 1 ou mais arquivos .XML</div>
+        <div class="uz-status" id="xml-status">Nenhum arquivo</div>
+        <input type="file" id="inp-xml" accept=".xml" multiple />
+      </div>
+      <!-- XLSX Upload -->
+      <div class="upload-zone" id="zone-xlsx" onclick="document.getElementById('inp-xlsx').click()">
+        <div class="uz-icon">📊</div>
+        <div class="uz-title">Dados Complementares (Excel)</div>
+        <div class="uz-desc">Planilha com dados de HD, desfechos, composição corporal</div>
+        <div class="uz-status" id="xlsx-status">Nenhum arquivo</div>
+        <input type="file" id="inp-xlsx" accept=".xlsx,.xls,.csv" />
+      </div>
+    </div>
+
+    <div class="process-bar">
+      <button class="btn-process primary" id="btn-processar" onclick="processar()" disabled>Processar e calcular indicadores</button>
+      <button class="btn-process secondary" onclick="limparTudo()">Limpar</button>
+      <span class="process-status" id="process-status"></span>
+    </div>
+
+    <!-- Preview XML -->
+    <div id="xml-preview" style="display:none;">
+      <div class="section-header">
+        <div class="sh-dot" style="background:var(--teal);"></div>
+        <span class="sh-title">Preview — Lote Fleury</span>
+        <span class="sh-count" id="xml-count"></span>
+      </div>
+      <div style="max-height:300px;overflow-y:auto;background:var(--bg-card);border-radius:var(--radius);box-shadow:var(--shadow-card);">
+        <table class="pac-table" id="xml-table">
+          <thead><tr><th>Paciente</th><th>Exames</th><th>Hb</th><th>Fósforo</th><th>K</th><th>URR</th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Preview XLSX -->
+    <div id="xlsx-preview" style="display:none;margin-top:16px;">
+      <div class="section-header">
+        <div class="sh-dot" style="background:var(--gold);"></div>
+        <span class="sh-title">Preview — Dados Complementares</span>
+        <span class="sh-count" id="xlsx-count"></span>
+      </div>
+      <div style="max-height:250px;overflow-y:auto;background:var(--bg-card);border-radius:var(--radius);box-shadow:var(--shadow-card);">
+        <table class="pac-table" id="xlsx-table">
+          <thead><tr><th>Paciente</th><th>Peso</th><th>Acesso</th><th>Faltas</th><th>GPID</th><th>ECW</th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════ VIEW: INDICADORES ════ -->
+  <div class="view" id="view-indicadores">
+    <div class="mes-bar">
+      <label>Período:</label>
+      <span id="ind-periodo" style="font-weight:600;"></span>
+      <span id="ind-unidade" style="font-size:11px;color:var(--text-3);margin-left:4px;"></span>
+      <div style="margin-left:auto;display:flex;gap:8px;">
+        <button class="btn-process secondary" onclick="voltarUpload()">← Voltar ao upload</button>
+      </div>
+    </div>
+
+    <div class="summary-row" id="summary-row"></div>
+    <div id="indicadores-container"></div>
+  </div>
+
+  <!-- Empty state -->
+  <div class="view" id="view-empty" style="display:none;">
+    <div class="empty-state">
+      <div class="es-icon">📊</div>
+      <div class="es-title">Nenhum dado carregado</div>
+      <div class="es-desc">Faça upload do lote XML do Fleury e/ou da planilha de dados complementares para gerar os indicadores.</div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL DRILL-DOWN -->
+<div class="modal-overlay" id="modal-overlay" onclick="fecharModal(event)">
+  <div class="modal" onclick="event.stopPropagation()">
+    <div class="modal-header">
+      <span class="mh-title" id="modal-title">Indicador</span>
+      <button class="mh-close" onclick="fecharModal()">&times;</button>
+    </div>
+    <div class="modal-body" id="modal-body"></div>
+  </div>
+</div>
+
+<script>
+/* ================================================================
+   ESTADO GLOBAL
+   ================================================================ */
+const params = new URLSearchParams(window.location.search);
+const EMBED = params.get('embed') === '1';
+let UNIDADE = params.get('unidade') || 'tatuape';
+const NOMES = {rl:'RL — República do Líbano', santos:'Santos — Praiamar', tatuape:'Tatuapé'};
+
+const SUPA_URL = 'https://syzmsixhjlutsynnqivv.supabase.co';
+const SUPA_KEY = 'sb_publishable_poKCFHc9n1CtIfCbAxTN0Q_dmlsEy1t';
+function getToken(){ return sessionStorage.getItem('apex_access_token') || SUPA_KEY; }
+function getHeaders(extra={}){
+  return { 'apikey':SUPA_KEY, 'Authorization':'Bearer '+getToken(), 'Content-Type':'application/json', ...extra };
+}
+
+let xmlData = [];    // [{paciente, codPedido, exames:[{codigo,nome,item,valor,unidade,referencia}]}]
+let xlsxData = [];   // [{paciente, peso, altura, tempoHD, tipoAcesso, ...}]
+let indicadoresCalc = []; // resultado final
+
+/* ================================================================
+   INIT
+   ================================================================ */
+document.addEventListener('DOMContentLoaded', () => {
+  if (EMBED) document.getElementById('nav-header').style.display = 'none';
+  else document.getElementById('nav-header').style.display = 'flex';
+
+  document.querySelectorAll('.nav-unidade button').forEach(b => b.classList.remove('active'));
+  const btn = document.getElementById('btn-u-' + UNIDADE);
+  if (btn) btn.classList.add('active');
+
+  const hoje = new Date();
+  document.getElementById('mes-sel').value = `${hoje.getFullYear()}-${String(hoje.getMonth()+1).padStart(2,'0')}`;
+
+  setupDragDrop('zone-xml', 'inp-xml', handleXmlFiles);
+  setupDragDrop('zone-xlsx', 'inp-xlsx', handleXlsxFiles);
+});
+
+function selectUnidade(u) {
+  UNIDADE = u;
+  document.querySelectorAll('.nav-unidade button').forEach(b => b.classList.remove('active'));
+  document.getElementById('btn-u-' + u).classList.add('active');
+}
+
+/* ================================================================
+   DRAG & DROP
+   ================================================================ */
+function setupDragDrop(zoneId, inputId, handler) {
+  const zone = document.getElementById(zoneId);
+  const input = document.getElementById(inputId);
+
+  ['dragenter','dragover'].forEach(e => zone.addEventListener(e, ev => { ev.preventDefault(); zone.classList.add('dragover'); }));
+  ['dragleave','drop'].forEach(e => zone.addEventListener(e, ev => { ev.preventDefault(); zone.classList.remove('dragover'); }));
+  zone.addEventListener('drop', ev => { handler(ev.dataTransfer.files); });
+  input.addEventListener('change', ev => { handler(ev.target.files); });
+}
+
+/* ================================================================
+   XML PARSER — GRUPO FLEURY
+   ================================================================ */
+function handleXmlFiles(files) {
+  xmlData = [];
+  const promises = Array.from(files).map(f => f.text().then(txt => parseFleuryXML(txt)));
+  Promise.all(promises).then(() => {
+    const zone = document.getElementById('zone-xml');
+    zone.classList.add('loaded');
+    document.getElementById('xml-status').textContent = `✓ ${xmlData.length} pacientes de ${files.length} lote(s)`;
+    renderXmlPreview();
+    checkReady();
+  });
+}
+
+function parseFleuryXML(xmlText) {
+  const parser = new DOMParser();
+  const doc = parser.parseFromString(xmlText, 'text/xml');
+  const pedidos = doc.querySelectorAll('Pedido');
+
+  pedidos.forEach(p => {
+    const nome = p.querySelector('Nome')?.textContent?.trim() || '';
+    const codPed = p.querySelector('CodPedApoio')?.textContent || '';
+
+    const existing = xmlData.find(d => d.paciente === nome);
+    const pacObj = existing || { paciente: nome, codPedido: codPed, exames: [] };
+
+    p.querySelectorAll('SuperExame').forEach(se => {
+      const codigo = se.querySelector('ExameNome')?.textContent || '';
+      se.querySelectorAll('ItemDeExame').forEach(item => {
+        const itemNome = item.querySelector('Nome')?.textContent || '';
+        const valorEl = item.querySelector('Valor[idValor]');
+        let valorNum = null;
+        let valorTxt = valorEl?.textContent || '';
+        if (valorTxt) {
+          valorNum = parseFloat(valorTxt.replace(',', '.'));
+          if (isNaN(valorNum)) valorNum = null;
+        }
+        const unidadeMed = item.querySelector('UnidadeDeMedida')?.textContent || '';
+        const refEl = item.querySelector('ValorDeReferencia Valor');
+        const refTxt = refEl?.textContent || '';
+
+        pacObj.exames.push({ codigo, nome: itemNome, valor: valorNum, valorTexto: valorTxt, unidade: unidadeMed, referencia: refTxt });
+      });
+    });
+
+    if (!existing) xmlData.push(pacObj);
+  });
+}
+
+function getExameValor(pac, nomes) {
+  if (!Array.isArray(nomes)) nomes = [nomes];
+  for (const n of nomes) {
+    const ex = pac.exames.find(e => e.nome.toLowerCase().includes(n.toLowerCase()));
+    if (ex && ex.valor !== null) return ex;
+  }
+  return null;
+}
+
+function renderXmlPreview() {
+  const tbody = document.querySelector('#xml-table tbody');
+  tbody.innerHTML = '';
+  xmlData.forEach(p => {
+    const hb = getExameValor(p, ['Hemoglobina']);
+    const fos = getExameValor(p, ['Fósforo','Fosforo']);
+    const k = getExameValor(p, ['Potássio','Potassio']);
+    const uPre = getExameValor(p, ['Ureia']);
+    const uPos = getExameValor(p, ['pós-diálise','pos-dialise']);
+    let urr = '-';
+    if (uPre?.valor && uPos?.valor) urr = Math.round((1 - uPos.valor / uPre.valor) * 100) + '%';
+
+    tbody.innerHTML += `<tr>
+      <td>${p.paciente}</td>
+      <td>${p.exames.length}</td>
+      <td>${hb ? hb.valor.toFixed(1) : '-'}</td>
+      <td>${fos ? fos.valor.toFixed(1) : '-'}</td>
+      <td>${k ? k.valor.toFixed(1) : '-'}</td>
+      <td>${urr}</td>
+    </tr>`;
+  });
+  document.getElementById('xml-count').textContent = `${xmlData.length} pacientes`;
+  document.getElementById('xml-preview').style.display = 'block';
+}
+
+/* ================================================================
+   XLSX PARSER — DADOS COMPLEMENTARES
+   ================================================================ */
+function handleXlsxFiles(files) {
+  const file = files[0];
+  const reader = new FileReader();
+  reader.onload = (e) => {
+    const wb = XLSX.read(e.target.result, {type:'array'});
+    const ws = wb.Sheets[wb.SheetNames[0]];
+    const rows = XLSX.utils.sheet_to_json(ws, {header:1, defval:''});
+
+    xlsxData = [];
+    let headerRow = -1;
+    for (let i = 0; i < rows.length; i++) {
+      const row = rows[i];
+      if (row[0] && typeof row[0] === 'string' && row[0].toLowerCase().includes('paciente')) {
+        headerRow = i;
+        break;
+      }
+    }
+    if (headerRow === -1) headerRow = 4; // default from template
+
+    for (let i = headerRow + 1; i < rows.length; i++) {
+      const r = rows[i];
+      const nome = (r[0] || '').toString().trim();
+      if (!nome) continue;
+
+      xlsxData.push({
+        paciente: nome,
+        pesoSeco: parseFloat(r[1]) || null,
+        altura: parseFloat(r[2]) || null,
+        tempoHD: parseInt(r[3]) || null,
+        tipoAcesso: (r[4] || '').toString().trim(),
+        volumePrescrito: (r[5] || '').toString().toUpperCase() === 'S',
+        faltasMes: parseInt(r[6]) || 0,
+        obito: (r[7] || '').toString().toUpperCase() === 'S',
+        internacao: (r[8] || '').toString().toUpperCase() === 'S',
+        causaInternacao: (r[9] || '').toString().trim(),
+        eventoAdverso: (r[10] || '').toString().toUpperCase() === 'S',
+        infeccaoCorrente: (r[11] || '').toString().toUpperCase() === 'S',
+        infeccaoCateter: (r[12] || '').toString().toUpperCase() === 'S',
+        queda: (r[13] || '').toString().toUpperCase() === 'S',
+        riscoSuicidio: (r[14] || '').toString().toUpperCase() === 'S',
+        inscricaoTx: (r[15] || '').toString().toUpperCase() === 'S',
+        gpid: parseFloat(r[16]) || null,
+        ecw: parseFloat(r[17]) || null,
+        anguloFase: parseFloat(r[18]) || null,
+        kdqolMental: parseFloat(r[19]) || null,
+        kdqolFisico: parseFloat(r[20]) || null,
+        fisioterapia: (r[21] || '').toString().toUpperCase() === 'S',
+      });
+    }
+
+    const zone = document.getElementById('zone-xlsx');
+    zone.classList.add('loaded');
+    document.getElementById('xlsx-status').textContent = `✓ ${xlsxData.length} pacientes`;
+    renderXlsxPreview();
+    checkReady();
+  };
+  reader.readAsArrayBuffer(file);
+}
+
+function renderXlsxPreview() {
+  const tbody = document.querySelector('#xlsx-table tbody');
+  tbody.innerHTML = '';
+  xlsxData.forEach(p => {
+    tbody.innerHTML += `<tr>
+      <td>${p.paciente}</td>
+      <td>${p.pesoSeco || '-'}</td>
+      <td>${p.tipoAcesso || '-'}</td>
+      <td>${p.faltasMes}</td>
+      <td>${p.gpid != null ? p.gpid+'%' : '-'}</td>
+      <td>${p.ecw != null ? p.ecw+'%' : '-'}</td>
+    </tr>`;
+  });
+  document.getElementById('xlsx-count').textContent = `${xlsxData.length} pacientes`;
+  document.getElementById('xlsx-preview').style.display = 'block';
+}
+
+function checkReady() {
+  document.getElementById('btn-processar').disabled = (xmlData.length === 0 && xlsxData.length === 0);
+}
+
+/* ================================================================
+   METAS — VALORES DE REFERÊNCIA PARA CADA INDICADOR
+   ================================================================ */
+const METAS = {
+  hb:          { min: 10, max: 12, unit: 'g/dL', label: 'Hemoglobina 10-12' },
+  fosforo:     { min: 3.5, max: 5.5, unit: 'mg/dL', label: 'Fósforo 3,5-5,5' },
+  potassio:    { min: 3.5, max: 5.5, unit: 'mEq/L', label: 'Potássio 3,5-5,5' },
+  albumina:    { min: 3.5, max: 999, unit: 'g/dL', label: 'Albumina ≥3,5' },
+  calcio:      { min: 8.4, max: 10.2, unit: 'mg/dL', label: 'Cálcio 8,4-10,2' },
+  pth:         { min: 150, max: 600, unit: 'pg/mL', label: 'PTH 150-600' },
+  urr:         { min: 65, max: 999, unit: '%', label: 'URR ≥65%' },
+  ktv:         { min: 1.2, max: 999, unit: '', label: 'Kt/V ≥1,2' },
+  gpid:        { min: 0, max: 5, unit: '%', label: 'GPID ≤5%' },
+  ecw:         { min: 0, max: 45, unit: '%', label: 'ECW ≤45%' },
+  fav:         { min: 0, max: 999, unit: '', label: 'Acesso FAV' },
+};
+
+/* ================================================================
+   MOTOR DE CÁLCULO
+   ================================================================ */
+function processar() {
+  const status = document.getElementById('process-status');
+  status.className = 'process-status';
+  status.textContent = 'Processando...';
+
+  // Merge XML + XLSX by patient name (case-insensitive)
+  const allPacientes = new Map();
+
+  xmlData.forEach(p => {
+    const key = p.paciente.toUpperCase().trim();
+    if (!allPacientes.has(key)) allPacientes.set(key, { nome: p.paciente, xml: null, xlsx: null });
+    allPacientes.get(key).xml = p;
+  });
+
+  xlsxData.forEach(p => {
+    const key = p.paciente.toUpperCase().trim();
+    if (!allPacientes.has(key)) allPacientes.set(key, { nome: p.paciente, xml: null, xlsx: null });
+    allPacientes.get(key).xlsx = p;
+  });
+
+  const totalPac = allPacientes.size;
+
+  // Calculate all indicators
+  indicadoresCalc = [];
+  const sections = [
+    { id: 'atividade', nome: 'Atividade', cor: 'var(--teal)' },
+    { id: 'desfechos', nome: 'Desfechos Clínicos', cor: 'var(--red)' },
+    { id: 'causas', nome: 'Causas de Internação', cor: 'var(--amber)' },
+    { id: 'adequacao', nome: 'Adequação Dialítica', cor: 'var(--navy-mid)' },
+    { id: 'nutricao', nome: 'Nutrição e Metabolismo', cor: '#534AB7' },
+    { id: 'qol', nome: 'Qualidade de Vida e Anemia', cor: 'var(--teal)' },
+    { id: 'cardio', nome: 'Cardiovascular e Composição Corporal', cor: 'var(--gold)' },
+  ];
+
+  // Helper: calculate % in target from patient-level data
+  function calcPctMeta(indicadorId, extractFn, metaCheck) {
+    const pacientes = [];
+    allPacientes.forEach(p => {
+      const val = extractFn(p);
+      if (val !== null && val !== undefined) {
+        const naMeta = metaCheck(val);
+        pacientes.push({ nome: p.nome, valor: val, naMeta });
+      }
+    });
+    const naMeta = pacientes.filter(p => p.naMeta).length;
+    const total = pacientes.length;
+    const pct = total > 0 ? Math.round(naMeta / total * 100) : null;
+    return { total, naMeta, pct, pacientes };
+  }
+
+  function addIndicador(secao, nome, result, unit, meta, tipo='pct') {
+    indicadoresCalc.push({
+      secao, nome, ...result, unit, meta, tipo
+    });
+  }
+
+  // ── ADEQUAÇÃO DIALÍTICA ──
+  const urrResult = calcPctMeta('urr',
+    p => { if (!p.xml) return null; const uPre = getExameValor(p.xml,['Ureia']); const uPos = getExameValor(p.xml,['pós-diálise','pos-dialise']); return (uPre?.valor && uPos?.valor) ? Math.round((1 - uPos.valor/uPre.valor)*100) : null; },
+    v => v >= 65
+  );
+  addIndicador('adequacao', 'Kt/V (URR ≥65%)', urrResult, '%', '≥65%');
+
+  const favResult = calcPctMeta('fav',
+    p => { if (!p.xlsx) return null; return p.xlsx.tipoAcesso || null; },
+    v => v && v.toUpperCase() === 'FAV'
+  );
+  addIndicador('adequacao', 'Acesso FAV', favResult, '', '≥80%');
+
+  const volResult = calcPctMeta('vol',
+    p => p.xlsx?.volumePrescrito !== undefined ? p.xlsx.volumePrescrito : null,
+    v => v === true
+  );
+  addIndicador('adequacao', 'Volume prescrito', volResult, '', '100%');
+
+  // ── NUTRIÇÃO E METABOLISMO ──
+  const hbResult = calcPctMeta('hb',
+    p => { if (!p.xml) return null; const e = getExameValor(p.xml,['Hemoglobina']); return e?.valor || null; },
+    v => v >= 10 && v <= 12
+  );
+  addIndicador('nutricao', 'Hemoglobina 10-12 g/dL', hbResult, '%', '10-12');
+
+  const fosResult = calcPctMeta('fos',
+    p => { if (!p.xml) return null; const e = getExameValor(p.xml,['Fósforo','Fosforo']); return e?.valor || null; },
+    v => v >= 3.5 && v <= 5.5
+  );
+  addIndicador('nutricao', 'Fósforo 3,5-5,5 mg/dL', fosResult, '%', '3,5-5,5');
+
+  const potResult = calcPctMeta('pot',
+    p => { if (!p.xml) return null; const e = getExameValor(p.xml,['Potássio','Potassio']); return e?.valor || null; },
+    v => v >= 3.5 && v <= 5.5
+  );
+  addIndicador('nutricao', 'Potássio 3,5-5,5 mEq/L', potResult, '%', '3,5-5,5');
+
+  const caResult = calcPctMeta('ca',
+    p => { if (!p.xml) return null; const e = getExameValor(p.xml,['Cálcio','Calcio']); return e?.valor || null; },
+    v => v >= 8.4 && v <= 10.2
+  );
+  addIndicador('nutricao', 'Cálcio 8,4-10,2 mg/dL', caResult, '%', '8,4-10,2');
+
+  const pthResult = calcPctMeta('pth',
+    p => { if (!p.xml) return null; const e = getExameValor(p.xml,['PTH']); return e?.valor || null; },
+    v => v >= 150 && v <= 600
+  );
+  addIndicador('nutricao', 'PTH 150-600 pg/mL', pthResult, '%', '150-600', pthResult.total > 0 ? 'pct' : 'empty');
+
+  const albResult = calcPctMeta('alb',
+    p => { if (!p.xml) return null; const e = getExameValor(p.xml,['Albumina']); return e?.valor || null; },
+    v => v >= 3.5
+  );
+  addIndicador('nutricao', 'Albumina ≥3,5 g/dL', albResult, '%', '≥3,5', albResult.total > 0 ? 'pct' : 'empty');
+
+  // ── DESFECHOS (from XLSX) ──
+  const obitoCount = xlsxData.filter(p => p.obito).length;
+  const intCount = xlsxData.filter(p => p.internacao).length;
+  const faltasCount = xlsxData.reduce((s,p) => s + p.faltasMes, 0);
+  const icsCount = xlsxData.filter(p => p.infeccaoCorrente).length;
+  const icfCount = xlsxData.filter(p => p.infeccaoCateter).length;
+  const quedaCount = xlsxData.filter(p => p.queda).length;
+  const eagCount = xlsxData.filter(p => p.eventoAdverso).length;
+  const suiCount = xlsxData.filter(p => p.riscoSuicidio).length;
+  const txCount = xlsxData.filter(p => p.inscricaoTx).length;
+
+  function addCount(secao, nome, val, meta, badge) {
+    indicadoresCalc.push({ secao, nome, pct: null, total: totalPac, naMeta: null, valor: val, unit: '', meta, tipo: 'count', pacientes: [], badge });
+  }
+
+  addCount('desfechos', 'Óbitos', obitoCount, 'Zero');
+  addCount('desfechos', 'Taxa mortalidade', totalPac > 0 ? Math.round(obitoCount/totalPac*100*10)/10 : 0, '<1%');
+  addCount('desfechos', 'Internações', intCount, 'Min');
+  addCount('desfechos', 'Faltas', faltasCount, 'Zero');
+  addCount('desfechos', 'Infecção corrente sang.', icsCount, 'Zero');
+  addCount('desfechos', 'Infecção cateter/FAV', icfCount, 'Zero');
+  addCount('desfechos', 'Queda', quedaCount, 'Zero');
+  addCount('desfechos', 'Evento adverso grave', eagCount, 'Zero');
+  addCount('desfechos', 'Risco suicídio', suiCount, 'Zero');
+  addCount('desfechos', 'Inscrição Tx renal', txCount, '');
+
+  // Causas internação
+  const causas = {Metabólica:0, Infecção:0, Vascular:0, Cardíaca:0, Queda:0, Outros:0};
+  xlsxData.filter(p => p.internacao).forEach(p => {
+    const c = p.causaInternacao || 'Outros';
+    for (const k in causas) { if (c.toLowerCase().includes(k.toLowerCase().substring(0,4))) { causas[k]++; return; } }
+    causas['Outros']++;
+  });
+  for (const [k,v] of Object.entries(causas)) {
+    addCount('causas', k, v, '');
+  }
+
+  // ── COMPOSIÇÃO CORPORAL (from XLSX) ──
+  const gpidResult = calcPctMeta('gpid',
+    p => p.xlsx?.gpid ?? null,
+    v => v <= 5
+  );
+  addIndicador('cardio', 'GPID ≤5%', gpidResult, '%', '≤5%');
+
+  const ecwResult = calcPctMeta('ecw',
+    p => p.xlsx?.ecw ?? null,
+    v => v <= 45
+  );
+  addIndicador('cardio', 'ECW ≤45%', ecwResult, '%', '≤45%');
+
+  const afResult = calcPctMeta('af',
+    p => p.xlsx?.anguloFase ?? null,
+    v => v >= 4
+  );
+  addIndicador('cardio', 'Ângulo de fase ≥4°', afResult, '%', '≥4°');
+
+  const fisioResult = calcPctMeta('fisio',
+    p => p.xlsx?.fisioterapia !== undefined ? p.xlsx.fisioterapia : null,
+    v => v === true
+  );
+  addIndicador('cardio', 'Fisioterapia', fisioResult, '', '');
+
+  // ── QOL ──
+  const kdMenResult = calcPctMeta('kdmen',
+    p => p.xlsx?.kdqolMental ?? null,
+    v => v >= 50
+  );
+  addIndicador('qol', 'KDQoL Mental ≥50', kdMenResult, '%', '≥50');
+
+  const kdFisResult = calcPctMeta('kdfis',
+    p => p.xlsx?.kdqolFisico ?? null,
+    v => v >= 50
+  );
+  addIndicador('qol', 'KDQoL Físico ≥50', kdFisResult, '%', '≥50');
+
+  // ── ATIVIDADE ──
+  addCount('atividade', 'Pacientes ativos', totalPac, '');
+  addCount('atividade', 'Sessões', xlsxData.length > 0 ? '-' : '-', '');
+
+  // Show indicators view
+  status.className = 'process-status ok';
+  status.textContent = `✓ ${indicadoresCalc.length} indicadores calculados para ${totalPac} pacientes`;
+  renderIndicadores();
+}
+
+/* ================================================================
+   RENDER INDICADORES
+   ================================================================ */
+function renderIndicadores() {
+  document.getElementById('view-upload').classList.remove('active');
+  document.getElementById('view-indicadores').classList.add('active');
+
+  const mesSel = document.getElementById('mes-sel').value;
+  const [ano, mesNum] = mesSel.split('-');
+  const meses = ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
+  document.getElementById('ind-periodo').textContent = `${meses[parseInt(mesNum)-1]} ${ano}`;
+  document.getElementById('ind-unidade').textContent = `— ${NOMES[UNIDADE] || UNIDADE}`;
+
+  // Summary cards
+  const totalPac = new Set([...xmlData.map(p=>p.paciente.toUpperCase()), ...xlsxData.map(p=>p.paciente.toUpperCase())]).size;
+  const labIndicadores = indicadoresCalc.filter(i => i.tipo === 'pct' && i.total > 0);
+  const avgMeta = labIndicadores.length > 0 ? Math.round(labIndicadores.reduce((s,i)=>s+(i.pct||0),0)/labIndicadores.length) : 0;
+
+  document.getElementById('summary-row').innerHTML = `
+    <div class="summary-card"><div class="sc-label">Pacientes</div><div class="sc-value">${totalPac}</div></div>
+    <div class="summary-card"><div class="sc-label">Indicadores</div><div class="sc-value">${indicadoresCalc.length}</div></div>
+    <div class="summary-card"><div class="sc-label">Média na meta</div><div class="sc-value" style="color:${avgMeta>=80?'var(--green)':avgMeta>=60?'var(--amber)':'var(--red)'}">${avgMeta}%</div></div>
+    <div class="summary-card"><div class="sc-label">Fontes</div><div class="sc-value" style="font-size:14px;">${xmlData.length>0?'XML':''}${xmlData.length>0&&xlsxData.length>0?' + ':''}${xlsxData.length>0?'Planilha':''}</div></div>
+  `;
+
+  // Group by section
+  const secOrder = ['adequacao','nutricao','qol','desfechos','causas','cardio','atividade'];
+  const secNomes = {
+    adequacao:'Adequação Dialítica', nutricao:'Nutrição e Metabolismo', qol:'Qualidade de Vida',
+    desfechos:'Desfechos Clínicos', causas:'Causas de Internação', cardio:'Cardiovascular e Composição Corporal',
+    atividade:'Atividade'
+  };
+  const secCores = {
+    adequacao:'var(--navy-mid)', nutricao:'#534AB7', qol:'var(--teal)',
+    desfechos:'var(--red)', causas:'var(--amber)', cardio:'var(--gold)', atividade:'var(--teal)'
+  };
+
+  let html = '';
+  secOrder.forEach(sec => {
+    const items = indicadoresCalc.filter(i => i.secao === sec);
+    if (items.length === 0) return;
+
+    html += `<div class="section-header">
+      <div class="sh-dot" style="background:${secCores[sec]}"></div>
+      <span class="sh-title">${secNomes[sec]}</span>
+      <span class="sh-count">${items.length} indicadores</span>
+    </div><div class="ind-grid">`;
+
+    items.forEach((ind, idx) => {
+      const globalIdx = indicadoresCalc.indexOf(ind);
+      if (ind.tipo === 'pct' && ind.total > 0) {
+        const pct = ind.pct;
+        const cls = pct >= 80 ? 'green' : pct >= 60 ? 'amber' : 'red';
+        html += `<div class="ind-card ${cls}" onclick="abrirDrillDown(${globalIdx})">
+          <div class="ic-name">${ind.nome}</div>
+          <div class="ic-value">${pct}%</div>
+          <div class="ic-sub">${ind.naMeta}/${ind.total} na meta (${ind.meta})</div>
+          <div class="ic-bar"><div class="ic-bar-fill" style="width:${pct}%"></div></div>
+          <div class="ic-click">Clique para detalhes →</div>
+        </div>`;
+      } else if (ind.tipo === 'count') {
+        const isZeroMeta = ind.meta === 'Zero';
+        const cls = isZeroMeta ? (ind.valor === 0 ? 'green' : 'red') : 'gray';
+        html += `<div class="ind-card ${cls}" onclick="abrirDrillDown(${globalIdx})">
+          <div class="ic-name">${ind.nome}</div>
+          <div class="ic-value">${ind.valor}</div>
+          <div class="ic-sub">${ind.meta ? 'Meta: '+ind.meta : ''}</div>
+          <div class="ic-click">Clique para detalhes →</div>
+        </div>`;
+      } else {
+        html += `<div class="ind-card gray">
+          <div class="ic-name">${ind.nome}</div>
+          <div class="ic-value">—</div>
+          <div class="ic-sub">Sem dados neste lote</div>
+          <div class="ic-badge">Trimestral</div>
+        </div>`;
+      }
+    });
+    html += '</div>';
+  });
+
+  document.getElementById('indicadores-container').innerHTML = html;
+}
+
+/* ================================================================
+   DRILL-DOWN MODAL
+   ================================================================ */
+function abrirDrillDown(idx) {
+  const ind = indicadoresCalc[idx];
+  document.getElementById('modal-title').textContent = ind.nome;
+
+  let body = '';
+
+  if (ind.tipo === 'pct' && ind.pacientes && ind.pacientes.length > 0) {
+    const naMeta = ind.pacientes.filter(p => p.naMeta).length;
+    const fora = ind.pacientes.filter(p => !p.naMeta).length;
+
+    body += `<div class="modal-stats">
+      <div class="ms-box total"><div class="ms-num">${ind.pacientes.length}</div><div class="ms-lbl">Total</div></div>
+      <div class="ms-box green"><div class="ms-num">${naMeta}</div><div class="ms-lbl">Na meta</div></div>
+      <div class="ms-box red"><div class="ms-num">${fora}</div><div class="ms-lbl">Fora da meta</div></div>
+    </div>`;
+
+    // Sort: fora da meta first
+    const sorted = [...ind.pacientes].sort((a,b) => a.naMeta - b.naMeta);
+    body += `<table class="pac-table">
+      <thead><tr><th>Paciente</th><th>Valor</th><th>Meta</th><th>Status</th></tr></thead><tbody>`;
+    sorted.forEach(p => {
+      const cls = p.naMeta ? 'na-meta' : 'fora-meta';
+      const valStr = typeof p.valor === 'number' ? p.valor.toFixed(1) : p.valor;
+      const badge = p.naMeta
+        ? `<span class="val-badge ok">✓ Na meta</span>`
+        : `<span class="val-badge bad">✗ Fora</span>`;
+      body += `<tr class="${cls}"><td>${p.nome}</td><td>${valStr}</td><td>${ind.meta}</td><td>${badge}</td></tr>`;
+    });
+    body += '</tbody></table>';
+  } else {
+    body += '<p style="color:var(--text-3);text-align:center;padding:20px;">Detalhamento não disponível para este indicador.</p>';
+  }
+
+  // Análise crítica
+  body += `<div class="analise-section">
+    <label>Análise crítica — Dr. Bruno</label>
+    <textarea id="analise-text" placeholder="Escreva sua análise crítica para este indicador neste período...">${ind.analiseCritica || ''}</textarea>
+    <button class="btn-salvar" onclick="salvarAnalise(${idx})">Salvar análise</button>
+  </div>`;
+
+  document.getElementById('modal-body').innerHTML = body;
+  document.getElementById('modal-overlay').classList.add('active');
+}
+
+function fecharModal(ev) {
+  if (ev && ev.target !== document.getElementById('modal-overlay')) return;
+  document.getElementById('modal-overlay').classList.remove('active');
+}
+
+function salvarAnalise(idx) {
+  const txt = document.getElementById('analise-text').value;
+  indicadoresCalc[idx].analiseCritica = txt;
+  // TODO: salvar no Supabase
+  alert('Análise salva localmente. Integração Supabase em breve.');
+}
+
+/* ================================================================
+   NAVIGATION
+   ================================================================ */
+function voltarUpload() {
+  document.getElementById('view-indicadores').classList.remove('active');
+  document.getElementById('view-upload').classList.add('active');
+}
+
+function limparTudo() {
+  xmlData = []; xlsxData = [];
+  document.getElementById('zone-xml').classList.remove('loaded');
+  document.getElementById('zone-xlsx').classList.remove('loaded');
+  document.getElementById('xml-status').textContent = 'Nenhum arquivo';
+  document.getElementById('xlsx-status').textContent = 'Nenhum arquivo';
+  document.getElementById('xml-preview').style.display = 'none';
+  document.getElementById('xlsx-preview').style.display = 'none';
+  document.getElementById('btn-processar').disabled = true;
+  document.getElementById('process-status').textContent = '';
+  document.getElementById('inp-xml').value = '';
+  document.getElementById('inp-xlsx').value = '';
+}
+</script>
+</body>
+</html>
