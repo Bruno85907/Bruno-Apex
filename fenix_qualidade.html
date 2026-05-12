@@ -76,16 +76,14 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);font-
 .summary-card .sc-sub{font-size:10px;color:var(--text-3);margin-top:2px;}
 
 /* ── MANUAL DATA PANEL ── */
-.dados-manuais-toggle{font-family:inherit;font-size:13px;font-weight:600;padding:10px 20px;border:2px solid var(--gold-border);border-radius:8px;background:var(--bg-card);color:var(--gold);cursor:pointer;transition:all 0.2s;margin-bottom:16px;display:flex;align-items:center;gap:8px;}
-.dados-manuais-toggle:hover{background:var(--gold-dim);border-color:var(--gold);}
-.dados-manuais-toggle.open{background:var(--gold-dim);border-color:var(--gold);}
-.dados-manuais-panel{display:none;background:var(--bg-card);border-radius:var(--radius);padding:20px 24px;box-shadow:var(--shadow-card);margin-bottom:24px;border:1px solid var(--gold-border);}
-.dados-manuais-panel.open{display:block;}
-.dm-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:16px;}
-.dm-field label{font-size:11px;font-weight:600;color:var(--text-2);display:block;margin-bottom:4px;}
-.dm-field input{font-family:inherit;font-size:13px;padding:8px 12px;border:1px solid var(--border);border-radius:8px;background:var(--bg);color:var(--text);width:100%;}
-.dm-field input:focus{outline:none;border-color:var(--gold);}
-.dm-field .dm-hint{font-size:10px;color:var(--text-3);margin-top:2px;}
+/* ── EDITABLE VALUES ── */
+.ic-value-wrap{display:flex;align-items:center;gap:6px;position:relative;}
+.ic-edit-btn{display:none;width:20px;height:20px;border-radius:4px;border:1px solid var(--border);background:var(--bg);color:var(--text-3);cursor:pointer;font-size:10px;align-items:center;justify-content:center;transition:all 0.2s;flex-shrink:0;}
+.ind-card:hover .ic-edit-btn{display:flex;}
+.ic-edit-btn:hover{border-color:var(--gold);color:var(--gold);background:var(--gold-dim);}
+.ic-edit-input{font-family:inherit;font-size:22px;font-weight:700;width:80px;padding:2px 6px;border:2px solid var(--gold);border-radius:6px;background:var(--bg-card);color:var(--text);outline:none;text-align:center;}
+.ic-edit-input:focus{box-shadow:0 0 0 3px var(--gold-dim);}
+.ic-edited{position:absolute;top:6px;right:6px;font-size:8px;font-weight:700;padding:1px 5px;border-radius:3px;background:var(--gold-dim);color:var(--gold);letter-spacing:0.3px;}
 
 /* ── SECTION HEADERS ── */
 .section-header{display:flex;align-items:center;gap:10px;margin:24px 0 12px;padding-bottom:8px;border-bottom:1px solid var(--border);}
@@ -295,33 +293,6 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);font-
 
     <div class="summary-row" id="summary-row"></div>
 
-    <!-- Dados manuais toggle + panel -->
-    <button class="dados-manuais-toggle" id="dm-toggle" onclick="toggleDadosManuais()">＋ Dados manuais</button>
-    <div class="dados-manuais-panel" id="dm-panel">
-      <div class="dm-grid">
-        <div class="dm-field">
-          <label>Sessões</label>
-          <input type="number" id="dm-sessoes" min="0" placeholder="0" onchange="onDadosManuaisChange()">
-          <div class="dm-hint">Volumetria — total de sessões no mês</div>
-        </div>
-        <div class="dm-field">
-          <label>Admissões</label>
-          <input type="number" id="dm-admissoes" min="0" placeholder="0" onchange="onDadosManuaisChange()">
-          <div class="dm-hint">Volumetria — novos pacientes</div>
-        </div>
-        <div class="dm-field">
-          <label>Saídas</label>
-          <input type="number" id="dm-saidas" min="0" placeholder="0" onchange="onDadosManuaisChange()">
-          <div class="dm-hint">Volumetria — pacientes que saíram</div>
-        </div>
-        <div class="dm-field">
-          <label>Hb Glicada % na meta</label>
-          <input type="number" id="dm-hbglicada" min="0" max="100" placeholder="0" onchange="onDadosManuaisChange()">
-          <div class="dm-hint">Cardiovascular — % pacientes com Hb Glicada na meta</div>
-        </div>
-      </div>
-    </div>
-
     <div id="indicadores-container"></div>
   </div>
 
@@ -365,7 +336,7 @@ function getHeaders(extra={}){
 let xmlData = [];    // [{paciente, codPedido, exames:[{codigo,nome,item,valor,unidade,referencia}]}]
 let xlsxData = [];   // [{paciente, peso, altura, tempoHD, tipoAcesso, ...}]
 let indicadoresCalc = []; // resultado final
-let dadosManuais = { sessoes: null, admissoes: null, saidas: null, hbGlicada: null };
+let editadosManuais = {}; // stores manually edited values by indicator index
 
 /* ================================================================
    INIT
@@ -392,29 +363,59 @@ function selectUnidade(u) {
 }
 
 /* ================================================================
-   DADOS MANUAIS
+   EDIÇÃO INLINE DE VALORES
    ================================================================ */
-function toggleDadosManuais() {
-  const panel = document.getElementById('dm-panel');
-  const toggle = document.getElementById('dm-toggle');
-  const isOpen = panel.classList.toggle('open');
-  toggle.classList.toggle('open', isOpen);
-  toggle.textContent = isOpen ? '－ Dados manuais' : '＋ Dados manuais';
-}
+function editarValor(globalIdx, event) {
+  event.stopPropagation();
+  const ind = indicadoresCalc[globalIdx];
+  const card = event.target.closest('.ind-card');
+  const valueEl = card.querySelector('.ic-value');
+  const currentVal = ind.tipo === 'pct' ? (ind.pct ?? '') : (ind.valor ?? '');
 
-function onDadosManuaisChange() {
-  const s = document.getElementById('dm-sessoes').value;
-  const a = document.getElementById('dm-admissoes').value;
-  const sa = document.getElementById('dm-saidas').value;
-  const hg = document.getElementById('dm-hbglicada').value;
-  dadosManuais.sessoes = s !== '' ? parseInt(s) : null;
-  dadosManuais.admissoes = a !== '' ? parseInt(a) : null;
-  dadosManuais.saidas = sa !== '' ? parseInt(sa) : null;
-  dadosManuais.hbGlicada = hg !== '' ? parseFloat(hg) : null;
-  // If indicators already rendered, reprocess
-  if (indicadoresCalc.length > 0) {
-    processar();
+  const input = document.createElement('input');
+  input.type = 'number';
+  input.className = 'ic-edit-input';
+  input.value = currentVal === '—' ? '' : currentVal;
+  input.min = 0;
+  if (ind.tipo === 'pct') input.max = 100;
+
+  const wrap = valueEl.closest('.ic-value-wrap');
+  const editBtn = wrap.querySelector('.ic-edit-btn');
+  if (editBtn) editBtn.style.display = 'none';
+  valueEl.style.display = 'none';
+  wrap.insertBefore(input, valueEl.nextSibling);
+  input.focus();
+  input.select();
+
+  function salvar() {
+    const newVal = input.value !== '' ? parseFloat(input.value) : null;
+    input.remove();
+    valueEl.style.display = '';
+    if (editBtn) editBtn.style.display = '';
+
+    if (newVal === null) return;
+
+    if (ind.tipo === 'pct') {
+      ind.pct = Math.round(newVal);
+      ind.editado = true;
+    } else if (ind.tipo === 'count') {
+      ind.valor = newVal;
+      ind.editado = true;
+    } else {
+      ind.pct = Math.round(newVal);
+      ind.tipo = 'pct';
+      ind.total = ind.total || 1;
+      ind.naMeta = Math.round(newVal * (ind.total || 1) / 100);
+      ind.editado = true;
+    }
+    renderIndicadores();
   }
+
+  input.addEventListener('blur', salvar);
+  input.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') { e.preventDefault(); input.blur(); }
+    if (e.key === 'Escape') { input.value = currentVal; input.blur(); }
+  });
 }
 
 /* ================================================================
@@ -672,9 +673,9 @@ function processar() {
   // 1. VOLUMETRIA
   // ═══════════════════════════════════════════
   addCount('volumetria', 'Pacientes ativos', totalPac, '');
-  addCount('volumetria', 'Sessões', dadosManuais.sessoes != null ? dadosManuais.sessoes : '—', '');
-  addCount('volumetria', 'Admissões', dadosManuais.admissoes != null ? dadosManuais.admissoes : '—', '');
-  addCount('volumetria', 'Saídas', dadosManuais.saidas != null ? dadosManuais.saidas : '—', '');
+  addCount('volumetria', 'Sessões', '—', '');
+  addCount('volumetria', 'Admissões', '—', '');
+  addCount('volumetria', 'Saídas', '—', '');
 
   // Consultas = count of unique patients with XML data (proxy for lab consults)
   const consultasCount = xmlData.length;
@@ -819,20 +820,11 @@ function processar() {
   );
   addIndicador('cardio', 'ECW ≤45%', ecwResult, '%', '≤45%');
 
-  // Hb Glicada — manual input
-  if (dadosManuais.hbGlicada != null) {
-    const hgPct = dadosManuais.hbGlicada;
-    indicadoresCalc.push({
-      secao: 'cardio', nome: 'Hb Glicada', pct: Math.round(hgPct), total: totalPac,
-      naMeta: Math.round(totalPac * hgPct / 100), unit: '%', meta: 'Na meta',
-      tipo: 'pct', pacientes: [], causasIshikawa: {}
-    });
-  } else {
-    indicadoresCalc.push({
-      secao: 'cardio', nome: 'Hb Glicada', pct: null, total: 0, naMeta: 0,
-      unit: '%', meta: '', tipo: 'empty', pacientes: [], causasIshikawa: {}
-    });
-  }
+  // Hb Glicada — editável inline
+  indicadoresCalc.push({
+    secao: 'cardio', nome: 'Hb Glicada', pct: null, total: 0, naMeta: 0,
+    unit: '%', meta: '', tipo: 'empty', pacientes: [], causasIshikawa: {}
+  });
 
   // ═══════════════════════════════════════════
   // 7. COMPOSIÇÃO CORPORAL
@@ -917,12 +909,16 @@ function renderIndicadores() {
 
     items.forEach((ind, idx) => {
       const globalIdx = indicadoresCalc.indexOf(ind);
+      const editTag = ind.editado ? '<span class="ic-edited">EDITADO</span>' : '';
+      const editBtn = `<button class="ic-edit-btn" onclick="editarValor(${globalIdx},event)" title="Editar valor">✎</button>`;
+
       if (ind.tipo === 'pct' && ind.total > 0) {
         const pct = ind.pct;
         const cls = pct >= 80 ? 'green' : pct >= 60 ? 'amber' : 'red';
         html += `<div class="ind-card ${cls}" onclick="abrirDrillDown(${globalIdx})">
+          ${editTag}
           <div class="ic-name">${ind.nome}</div>
-          <div class="ic-value">${pct}%</div>
+          <div class="ic-value-wrap"><div class="ic-value">${pct}%</div>${editBtn}</div>
           <div class="ic-sub">${ind.naMeta}/${ind.total} na meta (${ind.meta})</div>
           <div class="ic-bar"><div class="ic-bar-fill" style="width:${pct}%"></div></div>
           <div class="ic-click">Clique para detalhes →</div>
@@ -931,17 +927,18 @@ function renderIndicadores() {
         const isZeroMeta = ind.meta === 'Zero';
         const cls = isZeroMeta ? (ind.valor === 0 ? 'green' : 'red') : 'gray';
         html += `<div class="ind-card ${cls}" onclick="abrirDrillDown(${globalIdx})">
+          ${editTag}
           <div class="ic-name">${ind.nome}</div>
-          <div class="ic-value">${ind.valor}</div>
+          <div class="ic-value-wrap"><div class="ic-value">${ind.valor}</div>${editBtn}</div>
           <div class="ic-sub">${ind.meta ? 'Meta: '+ind.meta : ''}</div>
           <div class="ic-click">Clique para detalhes →</div>
         </div>`;
       } else {
         html += `<div class="ind-card gray">
+          ${editTag}
           <div class="ic-name">${ind.nome}</div>
-          <div class="ic-value">—</div>
-          <div class="ic-sub">Sem dados neste lote</div>
-          <div class="ic-badge">Trimestral</div>
+          <div class="ic-value-wrap"><div class="ic-value">${ind.pct != null ? ind.pct + '%' : '—'}</div>${editBtn}</div>
+          <div class="ic-sub">${ind.pct != null ? 'Valor editado manualmente' : 'Sem dados — clique ✎ para preencher'}</div>
         </div>`;
       }
     });
