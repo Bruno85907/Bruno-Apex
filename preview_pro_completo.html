@@ -837,7 +837,7 @@ body{font-family:var(--font-sans);background:var(--navy-deep);color:var(--text);
         <div class="sb-child" data-page="trs-agudo" onclick="navTo('trs-agudo')"><span class="sb-child-dot"></span>TRS Agudo</div>
         <div class="sb-child" data-page="painel-executivo" onclick="navTo('painel-executivo')"><span class="sb-child-dot"></span>Painel Executivo</div>
         <div class="sb-child" data-page="relatorios" onclick="navTo('relatorios')"><span class="sb-child-dot"></span>Relatórios</div>
-        <div class="sb-child" data-page="indicadores" onclick="navTo('indicadores')"><span class="sb-child-dot"></span>Indicadores</div>
+        <div class="sb-child" data-page="indicadores-qualidade" onclick="navTo('indicadores-qualidade')"><span class="sb-child-dot"></span>Indicadores</div>
       </div>
       <div class="sb-divider"></div>
       <div class="sb-module-label" onclick="toggleModule(this)">
@@ -1282,8 +1282,8 @@ body{font-family:var(--font-sans);background:var(--navy-deep);color:var(--text);
     </div>
 
     <!-- PAGE: INDICADORES DE QUALIDADE (iframe) -->
-    <div class="content-page" id="page-indicadores">
-      <iframe id="indicadores-iframe" style="width:100%;border:none;min-height:calc(100vh - 80px);" src="about:blank"></iframe>
+    <div class="content-page" id="page-indicadores-qualidade">
+      <iframe id="indicadores-qualidade-iframe" style="width:100%;border:none;min-height:calc(100vh - 80px);" src="about:blank"></iframe>
     </div>
 
     <!-- PAGE: TRS AGUDO -->
@@ -3405,7 +3405,7 @@ var NAV = {
   'painel-executivo':    { label:'Painel Executivo',   parent:'dashboard',     sidebar:'painel-executivo',   bc:['Dashboard','Qualidade Fenix','Painel Executivo'] },
   'relatorios':          { label:'Relatórios',         parent:'dashboard',     sidebar:'relatorios',         bc:['Dashboard','Qualidade Fenix','Relatórios'] },
   'relatorio-cronico':   { label:'Dashboard Crônico',  parent:'relatorios',    sidebar:'relatorios',         bc:['Dashboard','Qualidade Fenix','Relatórios','Dashboard Crônico'] },
-  'indicadores':         { label:'Indicadores',        parent:'dashboard',     sidebar:'indicadores',        bc:['Dashboard','Qualidade Fenix','Indicadores'] },
+  'indicadores-qualidade': { label:'Indicadores',      parent:'dashboard',     sidebar:'indicadores-qualidade', bc:['Dashboard','Qualidade Fenix','Indicadores'] },
   'clinica-visao':       { label:'Visão Geral',        parent:'dashboard',     sidebar:'clinica-visao',      bc:['Dashboard','Clínica APEX','Visão Geral'] },
   'clinica-protocolos':  { label:'Protocolos',         parent:'dashboard',     sidebar:'clinica-protocolos', bc:['Dashboard','Clínica APEX','Protocolos'] },
   'clinica-aderencia':   { label:'Aderência',          parent:'dashboard',     sidebar:'clinica-aderencia',  bc:['Dashboard','Clínica APEX','Aderência'] },
@@ -3420,7 +3420,7 @@ var BC_MAP = {
   'Dashboard':'dashboard','Minha Agenda':'agenda','Gestão':null,
   'Qualidade Fenix':null,'TRS Crônico':'trs-cronico','Unidades':'unidades','Detalhe':null,
   'TRS Agudo':'trs-agudo','Mont Serrat':'trs-agudo-servico',
-  'Painel Executivo':'painel-executivo','Relatórios':'relatorios','Dashboard Crônico':'relatorio-cronico','Indicadores':'indicadores',
+  'Painel Executivo':'painel-executivo','Relatórios':'relatorios','Dashboard Crônico':'relatorio-cronico','Indicadores':'indicadores-qualidade',
   'Clínica APEX':null,'Visão Geral':'clinica-visao','Protocolos':'clinica-protocolos',
   'Aderência':'clinica-aderencia','Relatórios Clínica':'clinica-relatorios',
   'Plan. Estratégico':'planejamento',
@@ -3475,7 +3475,7 @@ function navTo(pageId) {
   if (pageId === 'trs-cronico') carregarTrsCronico();
   if (pageId === 'relatorio-cronico') { sessionStorage.setItem('apex_gestor_logado','1'); document.getElementById('cronico-iframe').src = 'dashboard_fenix_C-Espacoso.html?embed=1'; }
   if (pageId === 'trs-agudo-servico') document.getElementById('agudo-iframe').src = 'painel_lancamento_mensal.html?embed=1';
-  if (pageId === 'indicadores') document.getElementById('indicadores-iframe').src = 'fenix_qualidade.html?embed=1';
+  if (pageId === 'indicadores-qualidade') document.getElementById('indicadores-qualidade-iframe').src = 'fenix_qualidade.html?embed=1';
   /* unidade-detalhe iframe src is set by abrirUnidade() */
 }
 
