@@ -3292,6 +3292,12 @@ async function doLogin() {
     }
 
     currentDoctor = doctorData;
+
+    /* Salvar token no sessionStorage para iframes (ex: lançamento de dados) */
+    if (data.session && data.session.access_token) {
+      sessionStorage.setItem('apex_access_token', data.session.access_token);
+    }
+
     enterApp();
 
   } catch(e) {
@@ -3317,6 +3323,7 @@ function enterApp() {
 
 async function doLogout() {
   await supabase.auth.signOut();
+  sessionStorage.removeItem('apex_access_token');
   currentUser = null;
   currentDoctor = null;
 
