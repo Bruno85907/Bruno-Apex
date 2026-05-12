@@ -75,6 +75,18 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);font-
 .summary-card .sc-value{font-size:22px;font-weight:700;color:var(--text);}
 .summary-card .sc-sub{font-size:10px;color:var(--text-3);margin-top:2px;}
 
+/* ── MANUAL DATA PANEL ── */
+.dados-manuais-toggle{font-family:inherit;font-size:13px;font-weight:600;padding:10px 20px;border:2px solid var(--gold-border);border-radius:8px;background:var(--bg-card);color:var(--gold);cursor:pointer;transition:all 0.2s;margin-bottom:16px;display:flex;align-items:center;gap:8px;}
+.dados-manuais-toggle:hover{background:var(--gold-dim);border-color:var(--gold);}
+.dados-manuais-toggle.open{background:var(--gold-dim);border-color:var(--gold);}
+.dados-manuais-panel{display:none;background:var(--bg-card);border-radius:var(--radius);padding:20px 24px;box-shadow:var(--shadow-card);margin-bottom:24px;border:1px solid var(--gold-border);}
+.dados-manuais-panel.open{display:block;}
+.dm-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:16px;}
+.dm-field label{font-size:11px;font-weight:600;color:var(--text-2);display:block;margin-bottom:4px;}
+.dm-field input{font-family:inherit;font-size:13px;padding:8px 12px;border:1px solid var(--border);border-radius:8px;background:var(--bg);color:var(--text);width:100%;}
+.dm-field input:focus{outline:none;border-color:var(--gold);}
+.dm-field .dm-hint{font-size:10px;color:var(--text-3);margin-top:2px;}
+
 /* ── SECTION HEADERS ── */
 .section-header{display:flex;align-items:center;gap:10px;margin:24px 0 12px;padding-bottom:8px;border-bottom:1px solid var(--border);}
 .section-header .sh-dot{width:8px;height:8px;border-radius:50%;}
@@ -135,6 +147,37 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);font-
 .pac-table .val-badge{display:inline-block;padding:2px 8px;border-radius:4px;font-weight:600;font-size:11px;}
 .pac-table .val-badge.ok{background:rgba(91,158,80,0.1);color:var(--green);}
 .pac-table .val-badge.bad{background:rgba(224,82,82,0.1);color:var(--red);}
+
+/* Clickable patient row for Ishikawa */
+.pac-row-clickable{cursor:pointer;transition:background 0.15s;}
+.pac-row-clickable:hover{background:rgba(196,163,90,0.08)!important;}
+
+/* Ishikawa panel */
+.ishikawa-panel{display:none;background:var(--bg);border:1px solid var(--border);border-radius:8px;margin:4px 12px 8px;padding:16px 20px;}
+.ishikawa-panel.open{display:block;}
+.ishikawa-title{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--navy);margin-bottom:12px;}
+.ishikawa-categories{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.ishikawa-cat{display:flex;flex-direction:column;gap:4px;padding:10px;border-radius:8px;background:var(--bg-card);border:1px solid var(--border);}
+.ishikawa-cat label{display:flex;align-items:center;gap:8px;font-size:12px;font-weight:600;color:var(--text);cursor:pointer;}
+.ishikawa-cat input[type="checkbox"]{accent-color:var(--teal);width:16px;height:16px;cursor:pointer;}
+.ishikawa-cat input[type="text"]{font-family:inherit;font-size:11px;padding:4px 8px;border:1px solid var(--border);border-radius:6px;background:var(--bg);color:var(--text);margin-top:2px;}
+.ishikawa-cat input[type="text"]:focus{outline:none;border-color:var(--gold);}
+.btn-salvar-causas{font-family:inherit;font-size:11px;font-weight:600;padding:8px 16px;border:none;border-radius:6px;background:var(--teal);color:#fff;cursor:pointer;margin-top:12px;transition:opacity 0.2s;}
+.btn-salvar-causas:hover{opacity:0.9;}
+.btn-salvar-causas.saved{background:var(--green);}
+
+/* Ishikawa summary bar */
+.ishikawa-summary{margin-top:20px;padding-top:16px;border-top:1px solid var(--border);}
+.ishikawa-summary-title{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--navy);margin-bottom:10px;}
+.ishikawa-bar-row{display:flex;align-items:center;gap:8px;margin-bottom:6px;}
+.ishikawa-bar-label{font-size:11px;font-weight:600;color:var(--text-2);width:80px;text-align:right;}
+.ishikawa-bar-track{flex:1;height:20px;background:rgba(0,0,0,0.04);border-radius:4px;overflow:hidden;position:relative;}
+.ishikawa-bar-fill{height:100%;border-radius:4px;transition:width 0.4s ease;display:flex;align-items:center;justify-content:flex-end;padding-right:6px;font-size:10px;font-weight:700;color:#fff;min-width:0;}
+.ishikawa-bar-fill.processo{background:var(--navy-mid);}
+.ishikawa-bar-fill.equipe{background:var(--teal);}
+.ishikawa-bar-fill.paciente{background:var(--gold);}
+.ishikawa-bar-fill.estrutura{background:var(--amber);}
+.ishikawa-bar-count{font-size:11px;font-weight:600;color:var(--text-3);width:20px;}
 
 /* Analise critica */
 .analise-section{margin-top:20px;padding-top:16px;border-top:1px solid var(--border);}
@@ -251,6 +294,34 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);font-
     </div>
 
     <div class="summary-row" id="summary-row"></div>
+
+    <!-- Dados manuais toggle + panel -->
+    <button class="dados-manuais-toggle" id="dm-toggle" onclick="toggleDadosManuais()">＋ Dados manuais</button>
+    <div class="dados-manuais-panel" id="dm-panel">
+      <div class="dm-grid">
+        <div class="dm-field">
+          <label>Sessões</label>
+          <input type="number" id="dm-sessoes" min="0" placeholder="0" onchange="onDadosManuaisChange()">
+          <div class="dm-hint">Volumetria — total de sessões no mês</div>
+        </div>
+        <div class="dm-field">
+          <label>Admissões</label>
+          <input type="number" id="dm-admissoes" min="0" placeholder="0" onchange="onDadosManuaisChange()">
+          <div class="dm-hint">Volumetria — novos pacientes</div>
+        </div>
+        <div class="dm-field">
+          <label>Saídas</label>
+          <input type="number" id="dm-saidas" min="0" placeholder="0" onchange="onDadosManuaisChange()">
+          <div class="dm-hint">Volumetria — pacientes que saíram</div>
+        </div>
+        <div class="dm-field">
+          <label>Hb Glicada % na meta</label>
+          <input type="number" id="dm-hbglicada" min="0" max="100" placeholder="0" onchange="onDadosManuaisChange()">
+          <div class="dm-hint">Cardiovascular — % pacientes com Hb Glicada na meta</div>
+        </div>
+      </div>
+    </div>
+
     <div id="indicadores-container"></div>
   </div>
 
@@ -294,6 +365,7 @@ function getHeaders(extra={}){
 let xmlData = [];    // [{paciente, codPedido, exames:[{codigo,nome,item,valor,unidade,referencia}]}]
 let xlsxData = [];   // [{paciente, peso, altura, tempoHD, tipoAcesso, ...}]
 let indicadoresCalc = []; // resultado final
+let dadosManuais = { sessoes: null, admissoes: null, saidas: null, hbGlicada: null };
 
 /* ================================================================
    INIT
@@ -317,6 +389,32 @@ function selectUnidade(u) {
   UNIDADE = u;
   document.querySelectorAll('.nav-unidade button').forEach(b => b.classList.remove('active'));
   document.getElementById('btn-u-' + u).classList.add('active');
+}
+
+/* ================================================================
+   DADOS MANUAIS
+   ================================================================ */
+function toggleDadosManuais() {
+  const panel = document.getElementById('dm-panel');
+  const toggle = document.getElementById('dm-toggle');
+  const isOpen = panel.classList.toggle('open');
+  toggle.classList.toggle('open', isOpen);
+  toggle.textContent = isOpen ? '－ Dados manuais' : '＋ Dados manuais';
+}
+
+function onDadosManuaisChange() {
+  const s = document.getElementById('dm-sessoes').value;
+  const a = document.getElementById('dm-admissoes').value;
+  const sa = document.getElementById('dm-saidas').value;
+  const hg = document.getElementById('dm-hbglicada').value;
+  dadosManuais.sessoes = s !== '' ? parseInt(s) : null;
+  dadosManuais.admissoes = a !== '' ? parseInt(a) : null;
+  dadosManuais.saidas = sa !== '' ? parseInt(sa) : null;
+  dadosManuais.hbGlicada = hg !== '' ? parseFloat(hg) : null;
+  // If indicators already rendered, reprocess
+  if (indicadoresCalc.length > 0) {
+    processar();
+  }
 }
 
 /* ================================================================
@@ -543,15 +641,6 @@ function processar() {
 
   // Calculate all indicators
   indicadoresCalc = [];
-  const sections = [
-    { id: 'atividade', nome: 'Atividade', cor: 'var(--teal)' },
-    { id: 'desfechos', nome: 'Desfechos Clínicos', cor: 'var(--red)' },
-    { id: 'causas', nome: 'Causas de Internação', cor: 'var(--amber)' },
-    { id: 'adequacao', nome: 'Adequação Dialítica', cor: 'var(--navy-mid)' },
-    { id: 'nutricao', nome: 'Nutrição e Metabolismo', cor: '#534AB7' },
-    { id: 'qol', nome: 'Qualidade de Vida e Anemia', cor: 'var(--teal)' },
-    { id: 'cardio', nome: 'Cardiovascular e Composição Corporal', cor: 'var(--gold)' },
-  ];
 
   // Helper: calculate % in target from patient-level data
   function calcPctMeta(indicadorId, extractFn, metaCheck) {
@@ -571,36 +660,66 @@ function processar() {
 
   function addIndicador(secao, nome, result, unit, meta, tipo='pct') {
     indicadoresCalc.push({
-      secao, nome, ...result, unit, meta, tipo
+      secao, nome, ...result, unit, meta, tipo, causasIshikawa: {}
     });
   }
 
-  // ── ADEQUAÇÃO DIALÍTICA ──
-  const urrResult = calcPctMeta('urr',
-    p => { if (!p.xml) return null; const uPre = getExameValor(p.xml,['Ureia']); const uPos = getExameValor(p.xml,['pós-diálise','pos-dialise']); return (uPre?.valor && uPos?.valor) ? Math.round((1 - uPos.valor/uPre.valor)*100) : null; },
-    v => v >= 65
-  );
-  addIndicador('adequacao', 'Kt/V (URR ≥65%)', urrResult, '%', '≥65%');
+  function addCount(secao, nome, val, meta, badge) {
+    indicadoresCalc.push({ secao, nome, pct: null, total: totalPac, naMeta: null, valor: val, unit: '', meta, tipo: 'count', pacientes: [], badge, causasIshikawa: {} });
+  }
 
-  const favResult = calcPctMeta('fav',
-    p => { if (!p.xlsx) return null; return p.xlsx.tipoAcesso || null; },
-    v => v && v.toUpperCase() === 'FAV'
-  );
-  addIndicador('adequacao', 'Acesso FAV', favResult, '', '≥80%');
+  // ═══════════════════════════════════════════
+  // 1. VOLUMETRIA
+  // ═══════════════════════════════════════════
+  addCount('volumetria', 'Pacientes ativos', totalPac, '');
+  addCount('volumetria', 'Sessões', dadosManuais.sessoes != null ? dadosManuais.sessoes : '—', '');
+  addCount('volumetria', 'Admissões', dadosManuais.admissoes != null ? dadosManuais.admissoes : '—', '');
+  addCount('volumetria', 'Saídas', dadosManuais.saidas != null ? dadosManuais.saidas : '—', '');
 
-  const volResult = calcPctMeta('vol',
-    p => p.xlsx?.volumePrescrito !== undefined ? p.xlsx.volumePrescrito : null,
-    v => v === true
-  );
-  addIndicador('adequacao', 'Volume prescrito', volResult, '', '100%');
+  // Consultas = count of unique patients with XML data (proxy for lab consults)
+  const consultasCount = xmlData.length;
+  addCount('volumetria', 'Consultas', consultasCount, '');
 
-  // ── NUTRIÇÃO E METABOLISMO ──
-  const hbResult = calcPctMeta('hb',
-    p => { if (!p.xml) return null; const e = getExameValor(p.xml,['Hemoglobina']); return e?.valor || null; },
-    v => v >= 10 && v <= 12
-  );
-  addIndicador('nutricao', 'Hemoglobina 10-12 g/dL', hbResult, '%', '10-12');
+  // ═══════════════════════════════════════════
+  // 2. DESFECHOS CLÍNICOS
+  // ═══════════════════════════════════════════
+  const obitoCount = xlsxData.filter(p => p.obito).length;
+  const intCount = xlsxData.filter(p => p.internacao).length;
+  const faltasCount = xlsxData.reduce((s,p) => s + p.faltasMes, 0);
+  const icsCount = xlsxData.filter(p => p.infeccaoCorrente).length;
+  const icfCount = xlsxData.filter(p => p.infeccaoCateter).length;
+  const quedaCount = xlsxData.filter(p => p.queda).length;
+  const eagCount = xlsxData.filter(p => p.eventoAdverso).length;
+  const suiCount = xlsxData.filter(p => p.riscoSuicidio).length;
+  const txCount = xlsxData.filter(p => p.inscricaoTx).length;
 
+  addCount('desfechos', 'Óbitos', obitoCount, 'Zero');
+  addCount('desfechos', 'Taxa mortalidade', totalPac > 0 ? Math.round(obitoCount/totalPac*100*10)/10 : 0, '<1%');
+  addCount('desfechos', 'Internações', intCount, 'Min');
+
+  // Causas de internação INSIDE desfechos
+  const causas = {Metabólica:0, Infecção:0, Vascular:0, Cardíaca:0, Queda:0, Outros:0};
+  xlsxData.filter(p => p.internacao).forEach(p => {
+    const c = p.causaInternacao || 'Outros';
+    let matched = false;
+    for (const k in causas) { if (c.toLowerCase().includes(k.toLowerCase().substring(0,4))) { causas[k]++; matched = true; break; } }
+    if (!matched) causas['Outros']++;
+  });
+  // Add causas as sub-counts inside desfechos
+  for (const [k,v] of Object.entries(causas)) {
+    if (v > 0) addCount('desfechos', 'Internação: ' + k, v, '');
+  }
+
+  addCount('desfechos', 'Faltas', faltasCount, 'Zero');
+  addCount('desfechos', 'Infecções', icsCount + icfCount, 'Zero');
+  addCount('desfechos', 'Queda', quedaCount, 'Zero');
+  addCount('desfechos', 'Evento adverso grave', eagCount, 'Zero');
+  addCount('desfechos', 'Risco suicídio', suiCount, 'Zero');
+  addCount('desfechos', 'Inscrição Tx renal', txCount, '');
+
+  // ═══════════════════════════════════════════
+  // 3. AVALIAÇÃO NUTRICIONAL
+  // ═══════════════════════════════════════════
   const fosResult = calcPctMeta('fos',
     p => { if (!p.xml) return null; const e = getExameValor(p.xml,['Fósforo','Fosforo']); return e?.valor || null; },
     v => v >= 3.5 && v <= 5.5
@@ -612,6 +731,12 @@ function processar() {
     v => v >= 3.5 && v <= 5.5
   );
   addIndicador('nutricao', 'Potássio 3,5-5,5 mEq/L', potResult, '%', '3,5-5,5');
+
+  const albResult = calcPctMeta('alb',
+    p => { if (!p.xml) return null; const e = getExameValor(p.xml,['Albumina']); return e?.valor || null; },
+    v => v >= 3.5
+  );
+  addIndicador('nutricao', 'Albumina ≥3,5 g/dL', albResult, '%', '≥3,5', albResult.total > 0 ? 'pct' : 'empty');
 
   const caResult = calcPctMeta('ca',
     p => { if (!p.xml) return null; const e = getExameValor(p.xml,['Cálcio','Calcio']); return e?.valor || null; },
@@ -625,75 +750,48 @@ function processar() {
   );
   addIndicador('nutricao', 'PTH 150-600 pg/mL', pthResult, '%', '150-600', pthResult.total > 0 ? 'pct' : 'empty');
 
-  const albResult = calcPctMeta('alb',
-    p => { if (!p.xml) return null; const e = getExameValor(p.xml,['Albumina']); return e?.valor || null; },
-    v => v >= 3.5
+  // IMC Eutrófico (from XLSX peso + altura)
+  const imcResult = calcPctMeta('imc',
+    p => {
+      if (!p.xlsx || !p.xlsx.pesoSeco || !p.xlsx.altura) return null;
+      const h = p.xlsx.altura / 100; // cm to m
+      return p.xlsx.pesoSeco / (h * h);
+    },
+    v => v >= 18.5 && v <= 24.9
   );
-  addIndicador('nutricao', 'Albumina ≥3,5 g/dL', albResult, '%', '≥3,5', albResult.total > 0 ? 'pct' : 'empty');
+  addIndicador('nutricao', 'IMC Eutrófico', imcResult, '%', '18,5-24,9', imcResult.total > 0 ? 'pct' : 'empty');
 
-  // ── DESFECHOS (from XLSX) ──
-  const obitoCount = xlsxData.filter(p => p.obito).length;
-  const intCount = xlsxData.filter(p => p.internacao).length;
-  const faltasCount = xlsxData.reduce((s,p) => s + p.faltasMes, 0);
-  const icsCount = xlsxData.filter(p => p.infeccaoCorrente).length;
-  const icfCount = xlsxData.filter(p => p.infeccaoCateter).length;
-  const quedaCount = xlsxData.filter(p => p.queda).length;
-  const eagCount = xlsxData.filter(p => p.eventoAdverso).length;
-  const suiCount = xlsxData.filter(p => p.riscoSuicidio).length;
-  const txCount = xlsxData.filter(p => p.inscricaoTx).length;
-
-  function addCount(secao, nome, val, meta, badge) {
-    indicadoresCalc.push({ secao, nome, pct: null, total: totalPac, naMeta: null, valor: val, unit: '', meta, tipo: 'count', pacientes: [], badge });
-  }
-
-  addCount('desfechos', 'Óbitos', obitoCount, 'Zero');
-  addCount('desfechos', 'Taxa mortalidade', totalPac > 0 ? Math.round(obitoCount/totalPac*100*10)/10 : 0, '<1%');
-  addCount('desfechos', 'Internações', intCount, 'Min');
-  addCount('desfechos', 'Faltas', faltasCount, 'Zero');
-  addCount('desfechos', 'Infecção corrente sang.', icsCount, 'Zero');
-  addCount('desfechos', 'Infecção cateter/FAV', icfCount, 'Zero');
-  addCount('desfechos', 'Queda', quedaCount, 'Zero');
-  addCount('desfechos', 'Evento adverso grave', eagCount, 'Zero');
-  addCount('desfechos', 'Risco suicídio', suiCount, 'Zero');
-  addCount('desfechos', 'Inscrição Tx renal', txCount, '');
-
-  // Causas internação
-  const causas = {Metabólica:0, Infecção:0, Vascular:0, Cardíaca:0, Queda:0, Outros:0};
-  xlsxData.filter(p => p.internacao).forEach(p => {
-    const c = p.causaInternacao || 'Outros';
-    for (const k in causas) { if (c.toLowerCase().includes(k.toLowerCase().substring(0,4))) { causas[k]++; return; } }
-    causas['Outros']++;
-  });
-  for (const [k,v] of Object.entries(causas)) {
-    addCount('causas', k, v, '');
-  }
-
-  // ── COMPOSIÇÃO CORPORAL (from XLSX) ──
-  const gpidResult = calcPctMeta('gpid',
-    p => p.xlsx?.gpid ?? null,
-    v => v <= 5
+  // ═══════════════════════════════════════════
+  // 4. ADEQUAÇÃO DA DIÁLISE
+  // ═══════════════════════════════════════════
+  const urrResult = calcPctMeta('urr',
+    p => { if (!p.xml) return null; const uPre = getExameValor(p.xml,['Ureia']); const uPos = getExameValor(p.xml,['pós-diálise','pos-dialise']); return (uPre?.valor && uPos?.valor) ? Math.round((1 - uPos.valor/uPre.valor)*100) : null; },
+    v => v >= 65
   );
-  addIndicador('cardio', 'GPID ≤5%', gpidResult, '%', '≤5%');
+  addIndicador('adequacao', 'Kt/V (URR ≥65%)', urrResult, '%', '≥65%');
 
-  const ecwResult = calcPctMeta('ecw',
-    p => p.xlsx?.ecw ?? null,
-    v => v <= 45
-  );
-  addIndicador('cardio', 'ECW ≤45%', ecwResult, '%', '≤45%');
-
-  const afResult = calcPctMeta('af',
-    p => p.xlsx?.anguloFase ?? null,
-    v => v >= 4
-  );
-  addIndicador('cardio', 'Ângulo de fase ≥4°', afResult, '%', '≥4°');
-
-  const fisioResult = calcPctMeta('fisio',
-    p => p.xlsx?.fisioterapia !== undefined ? p.xlsx.fisioterapia : null,
+  // Volume convectivo - from xlsx volumePrescrito
+  const volResult = calcPctMeta('vol',
+    p => p.xlsx?.volumePrescrito !== undefined ? p.xlsx.volumePrescrito : null,
     v => v === true
   );
-  addIndicador('cardio', 'Fisioterapia', fisioResult, '', '');
+  addIndicador('adequacao', 'Volume Convectivo', volResult, '', '100%');
 
-  // ── QOL ──
+  const favResult = calcPctMeta('fav',
+    p => { if (!p.xlsx) return null; return p.xlsx.tipoAcesso || null; },
+    v => v && (v.toUpperCase() === 'FAV' || v.toUpperCase().includes('PRÓTESE') || v.toUpperCase().includes('PROTESE'))
+  );
+  addIndicador('adequacao', 'FAV/Prótese (≥80%)', favResult, '', '≥80%');
+
+  // ═══════════════════════════════════════════
+  // 5. QUALIDADE DE VIDA
+  // ═══════════════════════════════════════════
+  const hbResult = calcPctMeta('hb',
+    p => { if (!p.xml) return null; const e = getExameValor(p.xml,['Hemoglobina']); return e?.valor || null; },
+    v => v >= 10 && v <= 12
+  );
+  addIndicador('qol', 'Hemoglobina 10-12 g/dL', hbResult, '%', '10-12');
+
   const kdMenResult = calcPctMeta('kdmen',
     p => p.xlsx?.kdqolMental ?? null,
     v => v >= 50
@@ -706,9 +804,53 @@ function processar() {
   );
   addIndicador('qol', 'KDQoL Físico ≥50', kdFisResult, '%', '≥50');
 
-  // ── ATIVIDADE ──
-  addCount('atividade', 'Pacientes ativos', totalPac, '');
-  addCount('atividade', 'Sessões', xlsxData.length > 0 ? '-' : '-', '');
+  // ═══════════════════════════════════════════
+  // 6. CARDIOVASCULAR
+  // ═══════════════════════════════════════════
+  const gpidResult = calcPctMeta('gpid',
+    p => p.xlsx?.gpid ?? null,
+    v => v <= 5
+  );
+  addIndicador('cardio', 'GPID ≤5%', gpidResult, '%', '≤5%');
+
+  const ecwResult = calcPctMeta('ecw',
+    p => p.xlsx?.ecw ?? null,
+    v => v <= 45
+  );
+  addIndicador('cardio', 'ECW ≤45%', ecwResult, '%', '≤45%');
+
+  // Hb Glicada — manual input
+  if (dadosManuais.hbGlicada != null) {
+    const hgPct = dadosManuais.hbGlicada;
+    indicadoresCalc.push({
+      secao: 'cardio', nome: 'Hb Glicada', pct: Math.round(hgPct), total: totalPac,
+      naMeta: Math.round(totalPac * hgPct / 100), unit: '%', meta: 'Na meta',
+      tipo: 'pct', pacientes: [], causasIshikawa: {}
+    });
+  } else {
+    indicadoresCalc.push({
+      secao: 'cardio', nome: 'Hb Glicada', pct: null, total: 0, naMeta: 0,
+      unit: '%', meta: '', tipo: 'empty', pacientes: [], causasIshikawa: {}
+    });
+  }
+
+  // ═══════════════════════════════════════════
+  // 7. COMPOSIÇÃO CORPORAL
+  // ═══════════════════════════════════════════
+  const afResult = calcPctMeta('af',
+    p => p.xlsx?.anguloFase ?? null,
+    v => v >= 4
+  );
+  addIndicador('composicao', 'Ângulo de fase ≥4°', afResult, '%', '≥4°');
+
+  const fisioResult = calcPctMeta('fisio',
+    p => p.xlsx?.fisioterapia !== undefined ? p.xlsx.fisioterapia : null,
+    v => v === true
+  );
+  addIndicador('composicao', 'Fisioterapia', fisioResult, '', '');
+
+  // PTH duplicate reference in composição corporal
+  addIndicador('composicao', 'PTH 150-600 pg/mL', pthResult, '%', '150-600', pthResult.total > 0 ? 'pct' : 'empty');
 
   // Show indicators view
   status.className = 'process-status ok';
@@ -741,16 +883,25 @@ function renderIndicadores() {
     <div class="summary-card"><div class="sc-label">Fontes</div><div class="sc-value" style="font-size:14px;">${xmlData.length>0?'XML':''}${xmlData.length>0&&xlsxData.length>0?' + ':''}${xlsxData.length>0?'Planilha':''}</div></div>
   `;
 
-  // Group by section
-  const secOrder = ['adequacao','nutricao','qol','desfechos','causas','cardio','atividade'];
+  // Section order matching TRS Crônico
+  const secOrder = ['volumetria','desfechos','nutricao','adequacao','qol','cardio','composicao'];
   const secNomes = {
-    adequacao:'Adequação Dialítica', nutricao:'Nutrição e Metabolismo', qol:'Qualidade de Vida',
-    desfechos:'Desfechos Clínicos', causas:'Causas de Internação', cardio:'Cardiovascular e Composição Corporal',
-    atividade:'Atividade'
+    volumetria:'Volumetria',
+    desfechos:'Desfechos Clínicos',
+    nutricao:'Avaliação Nutricional',
+    adequacao:'Adequação da Diálise',
+    qol:'Qualidade de Vida',
+    cardio:'Cardiovascular',
+    composicao:'Composição Corporal'
   };
   const secCores = {
-    adequacao:'var(--navy-mid)', nutricao:'#534AB7', qol:'var(--teal)',
-    desfechos:'var(--red)', causas:'var(--amber)', cardio:'var(--gold)', atividade:'var(--teal)'
+    volumetria:'var(--teal)',
+    desfechos:'var(--red)',
+    nutricao:'#534AB7',
+    adequacao:'var(--navy-mid)',
+    qol:'var(--teal)',
+    cardio:'var(--gold)',
+    composicao:'var(--amber)'
   };
 
   let html = '';
@@ -812,6 +963,7 @@ function abrirDrillDown(idx) {
   if (ind.tipo === 'pct' && ind.pacientes && ind.pacientes.length > 0) {
     const naMeta = ind.pacientes.filter(p => p.naMeta).length;
     const fora = ind.pacientes.filter(p => !p.naMeta).length;
+    const isRed = ind.pct < 80; // card would be red or amber
 
     body += `<div class="modal-stats">
       <div class="ms-box total"><div class="ms-num">${ind.pacientes.length}</div><div class="ms-lbl">Total</div></div>
@@ -819,19 +971,64 @@ function abrirDrillDown(idx) {
       <div class="ms-box red"><div class="ms-num">${fora}</div><div class="ms-lbl">Fora da meta</div></div>
     </div>`;
 
-    // Sort: fora da meta first
-    const sorted = [...ind.pacientes].sort((a,b) => a.naMeta - b.naMeta);
-    body += `<table class="pac-table">
-      <thead><tr><th>Paciente</th><th>Valor</th><th>Meta</th><th>Status</th></tr></thead><tbody>`;
-    sorted.forEach(p => {
-      const cls = p.naMeta ? 'na-meta' : 'fora-meta';
-      const valStr = typeof p.valor === 'number' ? p.valor.toFixed(1) : p.valor;
-      const badge = p.naMeta
-        ? `<span class="val-badge ok">✓ Na meta</span>`
-        : `<span class="val-badge bad">✗ Fora</span>`;
-      body += `<tr class="${cls}"><td>${p.nome}</td><td>${valStr}</td><td>${ind.meta}</td><td>${badge}</td></tr>`;
-    });
-    body += '</tbody></table>';
+    if (isRed && fora > 0) {
+      // RED/AMBER card: show only patients FORA DA META with Ishikawa
+      const foraList = ind.pacientes.filter(p => !p.naMeta);
+      body += `<table class="pac-table">
+        <thead><tr><th>Paciente</th><th>Valor</th><th>Meta</th><th>Status</th></tr></thead><tbody>`;
+      foraList.forEach((p, pIdx) => {
+        const valStr = typeof p.valor === 'number' ? p.valor.toFixed(1) : p.valor;
+        body += `<tr class="fora-meta pac-row-clickable" onclick="toggleIshikawa(${idx},'${escapeHtml(p.nome)}',this)">
+          <td>${p.nome}</td><td>${valStr}</td><td>${ind.meta}</td>
+          <td><span class="val-badge bad">✗ Fora</span></td>
+        </tr>`;
+        // Ishikawa panel placeholder
+        const savedCausas = ind.causasIshikawa[p.nome] || {};
+        body += `<tr class="ishikawa-row" id="ishi-row-${idx}-${pIdx}" style="display:none;"><td colspan="4">
+          <div class="ishikawa-panel open" id="ishi-panel-${idx}-${pIdx}">
+            <div class="ishikawa-title">Análise de causas — ${escapeHtml(p.nome)}</div>
+            <div class="ishikawa-categories">
+              <div class="ishikawa-cat">
+                <label><input type="checkbox" id="ishi-${idx}-${pIdx}-processo" ${savedCausas.processo?'checked':''}> Processo</label>
+                <input type="text" id="ishi-${idx}-${pIdx}-processo-note" placeholder="protocolo, fluxo, prescrição..." value="${escapeHtml(savedCausas.processoNote||'')}">
+              </div>
+              <div class="ishikawa-cat">
+                <label><input type="checkbox" id="ishi-${idx}-${pIdx}-equipe" ${savedCausas.equipe?'checked':''}> Equipe</label>
+                <input type="text" id="ishi-${idx}-${pIdx}-equipe-note" placeholder="treinamento, adesão, comunicação..." value="${escapeHtml(savedCausas.equipeNote||'')}">
+              </div>
+              <div class="ishikawa-cat">
+                <label><input type="checkbox" id="ishi-${idx}-${pIdx}-paciente" ${savedCausas.paciente?'checked':''}> Paciente</label>
+                <input type="text" id="ishi-${idx}-${pIdx}-paciente-note" placeholder="adesão, comorbidades, fator social..." value="${escapeHtml(savedCausas.pacienteNote||'')}">
+              </div>
+              <div class="ishikawa-cat">
+                <label><input type="checkbox" id="ishi-${idx}-${pIdx}-estrutura" ${savedCausas.estrutura?'checked':''}> Estrutura</label>
+                <input type="text" id="ishi-${idx}-${pIdx}-estrutura-note" placeholder="equipamento, insumos, espaço..." value="${escapeHtml(savedCausas.estruturaNote||'')}">
+              </div>
+            </div>
+            <button class="btn-salvar-causas" onclick="event.stopPropagation();salvarCausas(${idx},'${escapeHtml(p.nome)}',${pIdx})">Salvar causas</button>
+          </div>
+        </td></tr>`;
+      });
+      body += '</tbody></table>';
+
+      // Ishikawa summary bar
+      body += renderIshikawaSummary(ind);
+
+    } else {
+      // GREEN card: show ALL patients
+      const sorted = [...ind.pacientes].sort((a,b) => a.naMeta - b.naMeta);
+      body += `<table class="pac-table">
+        <thead><tr><th>Paciente</th><th>Valor</th><th>Meta</th><th>Status</th></tr></thead><tbody>`;
+      sorted.forEach(p => {
+        const cls = p.naMeta ? 'na-meta' : 'fora-meta';
+        const valStr = typeof p.valor === 'number' ? p.valor.toFixed(1) : p.valor;
+        const badge = p.naMeta
+          ? `<span class="val-badge ok">✓ Na meta</span>`
+          : `<span class="val-badge bad">✗ Fora</span>`;
+        body += `<tr class="${cls}"><td>${p.nome}</td><td>${valStr}</td><td>${ind.meta}</td><td>${badge}</td></tr>`;
+      });
+      body += '</tbody></table>';
+    }
   } else {
     body += '<p style="color:var(--text-3);text-align:center;padding:20px;">Detalhamento não disponível para este indicador.</p>';
   }
@@ -845,6 +1042,88 @@ function abrirDrillDown(idx) {
 
   document.getElementById('modal-body').innerHTML = body;
   document.getElementById('modal-overlay').classList.add('active');
+}
+
+function escapeHtml(str) {
+  if (!str) return '';
+  return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+}
+
+function toggleIshikawa(indIdx, pacNome, rowEl) {
+  // Find the next sibling ishikawa row
+  const ishiRow = rowEl.nextElementSibling;
+  if (!ishiRow || !ishiRow.classList.contains('ishikawa-row')) return;
+  const isVisible = ishiRow.style.display !== 'none';
+  ishiRow.style.display = isVisible ? 'none' : 'table-row';
+}
+
+function salvarCausas(indIdx, pacNome, pIdx) {
+  const ind = indicadoresCalc[indIdx];
+  if (!ind.causasIshikawa) ind.causasIshikawa = {};
+
+  const processo = document.getElementById(`ishi-${indIdx}-${pIdx}-processo`).checked;
+  const equipe = document.getElementById(`ishi-${indIdx}-${pIdx}-equipe`).checked;
+  const paciente = document.getElementById(`ishi-${indIdx}-${pIdx}-paciente`).checked;
+  const estrutura = document.getElementById(`ishi-${indIdx}-${pIdx}-estrutura`).checked;
+  const processoNote = document.getElementById(`ishi-${indIdx}-${pIdx}-processo-note`).value;
+  const equipeNote = document.getElementById(`ishi-${indIdx}-${pIdx}-equipe-note`).value;
+  const pacienteNote = document.getElementById(`ishi-${indIdx}-${pIdx}-paciente-note`).value;
+  const estruturaNote = document.getElementById(`ishi-${indIdx}-${pIdx}-estrutura-note`).value;
+
+  ind.causasIshikawa[pacNome] = {
+    processo, equipe, paciente, estrutura,
+    processoNote, equipeNote, pacienteNote, estruturaNote
+  };
+
+  // Visual feedback
+  const btn = event.target;
+  btn.textContent = '✓ Salvo';
+  btn.classList.add('saved');
+  setTimeout(() => { btn.textContent = 'Salvar causas'; btn.classList.remove('saved'); }, 1500);
+
+  // Update Ishikawa summary in modal
+  const summaryEl = document.getElementById(`ishi-summary-${indIdx}`);
+  if (summaryEl) {
+    summaryEl.outerHTML = renderIshikawaSummary(ind);
+  }
+}
+
+function renderIshikawaSummary(ind) {
+  const cats = ['processo','equipe','paciente','estrutura'];
+  const catLabels = {processo:'Processo', equipe:'Equipe', paciente:'Paciente', estrutura:'Estrutura'};
+  const catClasses = {processo:'processo', equipe:'equipe', paciente:'paciente', estrutura:'estrutura'};
+  const counts = {processo:0, equipe:0, paciente:0, estrutura:0};
+  let totalEntries = 0;
+
+  if (ind.causasIshikawa) {
+    for (const pacNome in ind.causasIshikawa) {
+      const c = ind.causasIshikawa[pacNome];
+      if (c.processo) counts.processo++;
+      if (c.equipe) counts.equipe++;
+      if (c.paciente) counts.paciente++;
+      if (c.estrutura) counts.estrutura++;
+      totalEntries++;
+    }
+  }
+
+  const foraTotal = ind.pacientes ? ind.pacientes.filter(p => !p.naMeta).length : 0;
+
+  let html = `<div class="ishikawa-summary" id="ishi-summary-${indicadoresCalc.indexOf(ind)}">
+    <div class="ishikawa-summary-title">Resumo Ishikawa — ${totalEntries}/${foraTotal} pacientes com causas atribuídas</div>`;
+
+  cats.forEach(cat => {
+    const pct = foraTotal > 0 ? Math.round(counts[cat] / foraTotal * 100) : 0;
+    html += `<div class="ishikawa-bar-row">
+      <div class="ishikawa-bar-label">${catLabels[cat]}</div>
+      <div class="ishikawa-bar-track">
+        <div class="ishikawa-bar-fill ${catClasses[cat]}" style="width:${pct}%">${counts[cat] > 0 ? counts[cat] : ''}</div>
+      </div>
+      <div class="ishikawa-bar-count">${pct}%</div>
+    </div>`;
+  });
+
+  html += '</div>';
+  return html;
 }
 
 function fecharModal(ev) {
