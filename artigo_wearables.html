@@ -4,6 +4,57 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Wearables na prática clínica — Dr. Bruno Biluca</title>
+<meta name="description" content="Como dispositivos vestíveis (Oura, Garmin, Apple Watch) geram dados clínicos úteis na nefrologia. Sono, HRV, atividade e temperatura na prática médica.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://www.apex.med.br/artigo_wearables.html">
+
+<!-- Open Graph -->
+<meta property="og:type" content="article">
+<meta property="og:title" content="Wearables na prática clínica — do pulso à decisão médica">
+<meta property="og:description" content="Como dispositivos vestíveis geram dados clínicos úteis na nefrologia. Sono, HRV, atividade e temperatura na prática médica.">
+<meta property="og:url" content="https://www.apex.med.br/artigo_wearables.html">
+<meta property="og:site_name" content="Apex Health">
+<meta property="og:locale" content="pt_BR">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Wearables na prática clínica — Dr. Bruno Biluca">
+<meta name="twitter:description" content="Dispositivos vestíveis na nefrologia: sono, HRV, atividade e temperatura na prática médica.">
+
+<!-- Schema.org -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "MedicalWebPage",
+      "@id": "https://www.apex.med.br/artigo_wearables.html#webpage",
+      "name": "Wearables na prática clínica — do pulso à decisão médica",
+      "description": "Como dispositivos vestíveis geram dados clínicos úteis na nefrologia. Oura Ring, Garmin, Apple Watch na prática médica.",
+      "url": "https://www.apex.med.br/artigo_wearables.html",
+      "isPartOf": {
+        "@type": "WebSite",
+        "@id": "https://www.apex.med.br/#website",
+        "name": "Apex Health",
+        "url": "https://www.apex.med.br"
+      },
+      "author": {
+        "@type": "Person",
+        "@id": "https://www.apex.med.br/sobre-dr-bruno-biluca.html#person",
+        "name": "Dr. Bruno Piubelli Biluca",
+        "jobTitle": "Nefrologista",
+        "url": "https://www.apex.med.br/sobre-dr-bruno-biluca.html"
+      },
+      "about": {
+        "@type": "MedicalDevice",
+        "name": "Dispositivos vestíveis de saúde"
+      },
+      "lastReviewed": "2026-05-13"
+    }
+  ]
+}
+</script>
+
 <link href="https://fonts.googleapis.com/css2?display=swap" rel="stylesheet">
 <style>
 :root{
@@ -278,13 +329,27 @@ nav{background:#FFF;border-bottom:1px solid #e8e6e1;padding:0 32px;height:52px;d
 </div>
 
 
+<!-- Footer -->
+<footer style="background:#080e1a;text-align:center;padding:48px 24px 28px;margin-top:0;">
+  <div style="display:flex;justify-content:center;flex-wrap:wrap;gap:20px;margin-bottom:20px;">
+    <a href="index.html" style="color:rgba(255,255,255,.5);text-decoration:none;font-size:13px;font-family:'Space Grotesk',sans-serif;">Início</a>
+    <a href="sobre-dr-bruno-biluca.html" style="color:rgba(255,255,255,.5);text-decoration:none;font-size:13px;font-family:'Space Grotesk',sans-serif;">O Médico</a>
+    <a href="nefrologia-doenca-renal.html" style="color:rgba(255,255,255,.5);text-decoration:none;font-size:13px;font-family:'Space Grotesk',sans-serif;">Nefrologia</a>
+    <a href="sindrome-ckm.html" style="color:rgba(255,255,255,.5);text-decoration:none;font-size:13px;font-family:'Space Grotesk',sans-serif;">Síndrome CKM</a>
+    <a href="wearables-saude-digital.html" style="color:rgba(255,255,255,.5);text-decoration:none;font-size:13px;font-family:'Space Grotesk',sans-serif;">Wearables</a>
+    <a href="dados-apex.html" style="color:rgba(255,255,255,.5);text-decoration:none;font-size:13px;font-family:'Space Grotesk',sans-serif;">Dados e Qualidade</a>
+    <a href="imprensa.html" style="color:rgba(255,255,255,.5);text-decoration:none;font-size:13px;font-family:'Space Grotesk',sans-serif;">Imprensa</a>
+  </div>
+  <p style="color:rgba(255,255,255,.2);font-size:12px;font-family:'Space Grotesk',sans-serif;">© 2026 Apex Health. Todos os direitos reservados.</p>
+</footer>
+
 <!-- Embed: esconde nav quando carregado dentro do portal -->
 <script>
 (function(){
   var ps=new URLSearchParams(window.location.search);
   if(ps.get("embed")==="1"){
     document.addEventListener("DOMContentLoaded",function(){
-      var navs=document.querySelectorAll(".apex-nav,nav,.portal-nav,.nav");
+      var navs=document.querySelectorAll(".apex-nav,nav,.portal-nav,.nav,footer");
       navs.forEach(function(n){n.style.display="none";});
       document.body.style.paddingTop="0";
     });

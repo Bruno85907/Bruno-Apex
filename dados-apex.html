@@ -1,0 +1,978 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dados APEX — Indicadores e Qualidade | Apex Health</title>
+  <meta name="description" content="Indicadores de qualidade assistencial da Fenix Nefrologia. Metodologia, métricas de desfecho e compromisso com resultados mensuráveis. Dr. Bruno Biluca.">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://www.apex.med.br/dados-apex.html">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Dados APEX — Indicadores e Qualidade">
+  <meta property="og:description" content="Indicadores de qualidade assistencial e compromisso com resultados mensuráveis na nefrologia.">
+  <meta property="og:url" content="https://www.apex.med.br/dados-apex.html">
+  <meta property="og:site_name" content="Apex Health">
+  <meta property="og:locale" content="pt_BR">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Dados APEX — Indicadores e Qualidade">
+  <meta name="twitter:description" content="Indicadores de qualidade assistencial e compromisso com resultados mensuráveis na nefrologia.">
+
+  <!-- Schema.org -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "MedicalWebPage",
+        "@id": "https://www.apex.med.br/dados-apex.html#webpage",
+        "name": "Dados APEX — Indicadores e Qualidade",
+        "description": "Indicadores de qualidade assistencial da Fenix Nefrologia e metodologia de mensuração de resultados.",
+        "url": "https://www.apex.med.br/dados-apex.html",
+        "isPartOf": {
+          "@type": "WebSite",
+          "@id": "https://www.apex.med.br/#website",
+          "name": "Apex Health",
+          "url": "https://www.apex.med.br"
+        },
+        "author": {
+          "@type": "Person",
+          "@id": "https://www.apex.med.br/sobre-dr-bruno-biluca.html#person",
+          "name": "Dr. Bruno Piubelli Biluca",
+          "jobTitle": "Nefrologista",
+          "url": "https://www.apex.med.br/sobre-dr-bruno-biluca.html"
+        },
+        "lastReviewed": "2026-05-13"
+      },
+      {
+        "@type": "FAQPage",
+        "@id": "https://www.apex.med.br/dados-apex.html#faq",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "O que é Kt/V e por que é importante?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Kt/V é o principal indicador de adequação da diálise. Mede a eficiência com que as toxinas urêmicas são removidas durante a sessão. Um Kt/V acima de 1,2 por sessão é considerado adequado. Valores consistentemente abaixo desse limiar estão associados a maior mortalidade."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "O que é a Taxa de Redução de Ureia (TRU)?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "A TRU mede a porcentagem de redução da ureia no sangue após uma sessão de hemodiálise. Valores acima de 65% indicam diálise adequada. É um indicador complementar ao Kt/V e mais intuitivo para acompanhamento rotineiro."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Por que medir indicadores de qualidade na nefrologia?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Indicadores de qualidade permitem identificar oportunidades de melhoria, comparar resultados com benchmarks nacionais e internacionais, e garantir que cada paciente receba o melhor cuidado possível. Na Fenix Nefrologia, esses dados são coletados e analisados mensalmente."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Quais indicadores a Fenix Nefrologia monitora?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Monitoramos mais de 25 indicadores organizados em seis domínios: desfechos clínicos (mortalidade, internações, infecções), avaliação nutricional (fósforo, potássio, albumina, cálcio, PTH, IMC), adequação da diálise (Kt/V, volume convectivo, acesso vascular), qualidade de vida (hemoglobina, KDQoL mental e físico), cardiovascular (GPID, ECW) e composição corporal (ângulo de fase, fisioterapia)."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "O que é a ficha técnica de cada indicador?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Cada indicador possui uma ficha técnica com definição, fórmula de cálculo, meta, referência bibliográfica, frequência de coleta e protocolo de ação para desvios. Essas fichas fazem parte do programa de qualidade da Fenix Nefrologia."
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --navy: #1E2D50;
+      --navy-deep: #121D33;
+      --teal: #028090;
+      --teal-light: #04b5c8;
+      --gold: #C4A35A;
+      --gold-light: #d4b76a;
+      --bg: #FAF9F5;
+      --bg-alt: #f0efeb;
+      --footer-bg: #0a1220;
+      --dark-section: #0a1220;
+      --radius: 14px;
+      --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--font-sans);
+      color: var(--navy);
+      background: var(--bg);
+      overflow-x: hidden;
+    }
+
+    .container { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+
+    .eyebrow {
+      font-size: 11px; font-weight: 600; color: var(--gold);
+      letter-spacing: 3.5px; text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+
+    /* ── Header ── */
+    .header {
+      position: fixed; top: 16px; left: 50%; transform: translateX(-50%);
+      z-index: 100; width: calc(100% - 48px); max-width: 1100px;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 12px 28px;
+      background: rgba(18,29,51,.82);
+      backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px);
+      border: 1px solid rgba(255,255,255,.08);
+      border-radius: 60px;
+      transition: background .3s, box-shadow .3s;
+    }
+    .header.scrolled {
+      background: rgba(18,29,51,.95);
+      box-shadow: 0 8px 32px rgba(0,0,0,.25);
+    }
+    .header-logo { display: flex; align-items: center; gap: 0; text-decoration: none; }
+    .header-logo img { height: 80px; width: auto; margin: -20px 0; }
+    .header-nav { display: flex; align-items: center; gap: 28px; }
+    .header-nav a {
+      color: rgba(255,255,255,.75); text-decoration: none;
+      font-size: 13px; font-weight: 500; letter-spacing: .3px;
+      transition: color .25s;
+    }
+    .header-nav a:hover { color: #fff; }
+    .header-cta {
+      background: var(--teal) !important; color: #fff !important;
+      padding: 10px 22px !important; border-radius: 50px;
+      font-weight: 600 !important; font-size: 13px !important;
+      transition: background .25s, transform .25s !important;
+    }
+    .header-cta:hover { background: var(--teal-light) !important; transform: scale(1.04); }
+
+    /* ── Hero ── */
+    .hub-hero {
+      background: var(--dark-section);
+      padding: 160px 0 100px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .hub-hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse at 40% 30%, rgba(2,128,144,.1) 0%, transparent 55%),
+                  radial-gradient(ellipse at 70% 70%, rgba(196,163,90,.08) 0%, transparent 50%);
+      pointer-events: none;
+    }
+    .hub-hero .eyebrow { color: var(--teal-light); }
+    .hub-hero h1 {
+      font-family: var(--font-sans);
+      font-size: clamp(36px, 5vw, 56px);
+      font-weight: 800;
+      line-height: 1.08;
+      letter-spacing: -2px;
+      color: #fff;
+      margin-bottom: 20px;
+    }
+    .hub-hero h1 em {
+      color: var(--gold);
+      font-style: normal;
+      font-weight: 800;
+    }
+    .hub-hero .hero-sub {
+      font-size: 17px;
+      line-height: 1.7;
+      color: rgba(255,255,255,.6);
+      max-width: 660px;
+      margin: 0 auto;
+    }
+    .hub-hero-content {
+      animation: heroFadeIn 1.4s cubic-bezier(.16,1,.3,1) 0.3s both;
+    }
+    @keyframes heroFadeIn {
+      from { opacity: 0; transform: translateY(50px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── Sections ── */
+    section { padding: 100px 0; }
+    section.dark { background: var(--dark-section); color: #fff; }
+    section.alt { background: var(--bg-alt); }
+
+    section h2 {
+      font-family: var(--font-sans);
+      font-size: clamp(30px, 4vw, 48px);
+      font-weight: 800;
+      letter-spacing: -1.5px;
+      line-height: 1.12;
+      margin-bottom: 24px;
+      text-align: center;
+    }
+    section h2 em {
+      color: var(--gold);
+      font-style: normal;
+      font-weight: 800;
+    }
+    section.dark h2 { color: #fff; }
+
+    .section-intro {
+      font-size: 16px;
+      line-height: 1.8;
+      color: rgba(30,45,80,.55);
+      max-width: 680px;
+      margin: 0 auto 56px;
+      text-align: center;
+    }
+    section.dark .section-intro { color: rgba(255,255,255,.55); }
+
+    /* ── Principle cards ── */
+    .principles-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 28px;
+    }
+    .principle-card {
+      background: rgba(255,255,255,.04);
+      border: 1px solid rgba(255,255,255,.08);
+      border-radius: var(--radius);
+      padding: 36px 28px;
+      transition: transform .3s cubic-bezier(.16,1,.3,1), border-color .3s;
+    }
+    .principle-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(255,255,255,.15);
+    }
+    .principle-icon {
+      font-size: 28px;
+      margin-bottom: 14px;
+    }
+    .principle-card h3 {
+      font-family: var(--font-sans);
+      font-size: 18px;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 10px;
+    }
+    .principle-card p {
+      font-size: 14px;
+      line-height: 1.7;
+      color: rgba(255,255,255,.5);
+    }
+
+    /* ── Indicator groups ── */
+    .indicator-group { margin-bottom: 64px; }
+    .indicator-group:last-child { margin-bottom: 0; }
+    .group-header {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 28px;
+    }
+    .group-icon {
+      width: 44px; height: 44px;
+      border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 20px;
+      background: rgba(2,128,144,.08);
+      flex-shrink: 0;
+    }
+    .group-header h3 {
+      font-family: var(--font-sans);
+      font-size: 22px;
+      font-weight: 800;
+      color: var(--navy);
+      letter-spacing: -.5px;
+    }
+    .indicators-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+    .indicator-card {
+      background: #fff;
+      border-radius: var(--radius);
+      padding: 28px 22px;
+      border: 1px solid rgba(30,45,80,.1);
+      box-shadow: 0 2px 12px rgba(30,45,80,.06);
+      transition: transform .3s cubic-bezier(.16,1,.3,1), box-shadow .3s;
+      display: flex;
+      flex-direction: column;
+    }
+    .indicator-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 40px rgba(30,45,80,.12);
+    }
+    .indicator-card h4 {
+      font-family: var(--font-sans);
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 6px;
+    }
+    .indicator-card p {
+      font-size: 13px;
+      line-height: 1.7;
+      color: rgba(30,45,80,.55);
+      margin-bottom: 10px;
+      flex-grow: 1;
+    }
+    .indicator-meta {
+      font-size: 11px;
+      font-weight: 600;
+      color: rgba(30,45,80,.35);
+      letter-spacing: .3px;
+      margin-bottom: 14px;
+    }
+    .indicator-meta span {
+      color: var(--teal);
+      font-weight: 700;
+    }
+    .ficha-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--navy);
+      opacity: .45;
+      text-decoration: none;
+      cursor: default;
+      padding: 8px 14px;
+      border-radius: 8px;
+      background: rgba(30,45,80,.04);
+      border: 1px solid rgba(30,45,80,.08);
+      transition: opacity .25s;
+      align-self: flex-start;
+    }
+    .ficha-link:hover { opacity: .6; }
+    .ficha-link svg {
+      width: 14px; height: 14px;
+      flex-shrink: 0;
+    }
+
+    /* ── Methodology ── */
+    .method-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 28px;
+      counter-reset: method;
+    }
+    .method-card {
+      background: rgba(255,255,255,.04);
+      border: 1px solid rgba(255,255,255,.08);
+      border-radius: var(--radius);
+      padding: 36px 28px;
+      position: relative;
+      transition: transform .3s cubic-bezier(.16,1,.3,1), border-color .3s;
+    }
+    .method-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(255,255,255,.15);
+    }
+    .method-card::before {
+      counter-increment: method;
+      content: counter(method);
+      font-size: 48px;
+      font-weight: 800;
+      color: rgba(255,255,255,.06);
+      position: absolute;
+      top: 16px;
+      right: 24px;
+      line-height: 1;
+    }
+    .method-card h3 {
+      font-family: var(--font-sans);
+      font-size: 18px;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 10px;
+    }
+    .method-card p {
+      font-size: 14px;
+      line-height: 1.7;
+      color: rgba(255,255,255,.5);
+    }
+
+    /* ── FAQ ── */
+    .faq-list {
+      max-width: 760px;
+      margin: 0 auto;
+    }
+    .faq-item {
+      border-bottom: 1px solid rgba(30,45,80,.1);
+    }
+    .faq-question {
+      width: 100%;
+      background: none;
+      border: none;
+      font-family: var(--font-sans);
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--navy);
+      text-align: left;
+      padding: 24px 0;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      transition: color .25s;
+    }
+    .faq-question:hover { color: var(--teal); }
+    .faq-question::after {
+      content: '+';
+      font-size: 22px;
+      font-weight: 300;
+      color: var(--teal);
+      flex-shrink: 0;
+      transition: transform .3s;
+    }
+    .faq-item.open .faq-question::after {
+      transform: rotate(45deg);
+    }
+    .faq-answer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height .4s cubic-bezier(.16,1,.3,1), padding .4s;
+    }
+    .faq-item.open .faq-answer {
+      max-height: 300px;
+      padding-bottom: 24px;
+    }
+    .faq-answer p {
+      font-size: 15px;
+      line-height: 1.8;
+      color: rgba(30,45,80,.6);
+    }
+
+    /* ── Author ── */
+    .author-block {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      max-width: 680px;
+      margin: 0 auto;
+      background: rgba(255,255,255,.04);
+      border: 1px solid rgba(255,255,255,.08);
+      border-radius: var(--radius);
+      padding: 32px;
+    }
+    .author-photo {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      object-fit: cover;
+      object-position: center top;
+      flex-shrink: 0;
+    }
+    .author-info h3 {
+      font-family: var(--font-sans);
+      font-size: 17px;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 4px;
+    }
+    .author-info .author-title {
+      font-size: 13px;
+      color: var(--teal-light);
+      font-weight: 500;
+      margin-bottom: 8px;
+    }
+    .author-info p {
+      font-size: 13px;
+      line-height: 1.7;
+      color: rgba(255,255,255,.5);
+    }
+    .author-link {
+      color: var(--gold);
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 13px;
+      transition: color .25s;
+    }
+    .author-link:hover { color: var(--gold-light); }
+
+    /* ── CTA ── */
+    .cta-section {
+      background: var(--dark-section);
+      text-align: center;
+      padding: 100px 0;
+    }
+    .cta-section h2 { color: #fff; margin-bottom: 16px; }
+    .cta-section p {
+      font-size: 16px;
+      line-height: 1.8;
+      color: rgba(255,255,255,.55);
+      max-width: 560px;
+      margin: 0 auto 32px;
+    }
+    .cta-btn {
+      display: inline-block;
+      background: var(--teal);
+      color: #fff;
+      padding: 16px 40px;
+      border-radius: 50px;
+      font-weight: 700;
+      font-size: 15px;
+      text-decoration: none;
+      transition: background .25s, transform .25s;
+    }
+    .cta-btn:hover {
+      background: var(--teal-light);
+      transform: scale(1.04);
+    }
+
+    /* ── Reveal ── */
+    .rv {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.9s cubic-bezier(.16,1,.3,1), transform 0.9s cubic-bezier(.16,1,.3,1);
+    }
+    .rv.visible { opacity: 1; transform: none; }
+    .rv-delay-1 { transition-delay: .1s; }
+    .rv-delay-2 { transition-delay: .2s; }
+    .rv-delay-3 { transition-delay: .3s; }
+    .rv-delay-4 { transition-delay: .4s; }
+
+    /* ── Footer ── */
+    .footer {
+      background: var(--footer-bg);
+      text-align: center;
+      padding: 56px 24px 32px;
+    }
+    .footer-logo img { height: 28px; margin-bottom: 24px; }
+    .footer-links { display: flex; justify-content: center; flex-wrap: wrap; gap: 24px; margin-bottom: 24px; }
+    .footer-links a { color: rgba(255,255,255,.5); text-decoration: none; font-size: 13px; transition: color .25s; }
+    .footer-links a:hover { color: #fff; }
+    .footer-copy { color: rgba(255,255,255,.25); font-size: 12px; }
+
+    /* ── Mobile ── */
+    @media (max-width: 768px) {
+      .header-nav a:not(.header-cta) { display: none; }
+      .hub-hero { padding: 140px 0 72px; }
+      section { padding: 72px 0; }
+      .principles-grid { grid-template-columns: 1fr; }
+      .indicators-grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 500px) {
+      .indicators-grid { grid-template-columns: 1fr; }
+      .method-grid { grid-template-columns: 1fr; }
+      .author-block { flex-direction: column; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="header" id="header">
+    <a href="index.html" class="header-logo"><img src="landing-page/logo-apex-transparent.png" alt="Apex Health"></a>
+    <nav class="header-nav">
+      <a href="index.html#metodo">O Método</a>
+      <a href="index.html#paraquem">Para Quem</a>
+      <a href="sobre-dr-bruno-biluca.html">O Médico</a>
+      <a href="imprensa.html">Imprensa</a>
+      <a href="index.html#cta-final" class="header-cta">Agendar Consulta</a>
+    </nav>
+  </header>
+
+  <!-- Hero -->
+  <section class="hub-hero">
+    <div class="container hub-hero-content">
+      <p class="eyebrow">DADOS E QUALIDADE</p>
+      <h1>Resultados que se <em>medem</em>.</h1>
+      <p class="hero-sub">Indicadores de qualidade assistencial da Fenix Nefrologia. Compromisso com transparência, mensuração e melhoria contínua.</p>
+    </div>
+  </section>
+
+  <!-- Princípios -->
+  <section class="dark">
+    <div class="container">
+      <p class="eyebrow rv" style="text-align:center; color:var(--teal-light)">PRINCÍPIOS</p>
+      <h2 class="rv rv-delay-1">Por que medimos <em>tudo</em>.</h2>
+      <p class="section-intro rv rv-delay-2">Na Fenix Nefrologia, acreditamos que qualidade assistencial precisa ser mensurável. Não basta dizer que cuidamos bem — precisamos provar com dados.</p>
+      <div class="principles-grid">
+        <div class="principle-card rv rv-delay-1">
+          <div class="principle-icon">📊</div>
+          <h3>Mensuração contínua</h3>
+          <p>Indicadores coletados e analisados mensalmente. Cada sessão de hemodiálise gera dados que alimentam a avaliação de qualidade.</p>
+        </div>
+        <div class="principle-card rv rv-delay-2">
+          <div class="principle-icon">🎯</div>
+          <h3>Benchmarks reconhecidos</h3>
+          <p>Comparação com metas nacionais (ANVISA, SBN) e internacionais (KDOQI, KDIGO). Não inventamos metas — usamos as que a evidência sustenta.</p>
+        </div>
+        <div class="principle-card rv rv-delay-3">
+          <div class="principle-icon">🔄</div>
+          <h3>Ciclo de melhoria</h3>
+          <p>Dados geram ações. Desvios são investigados com análise de causa raiz (Ishikawa) e planos de ação com responsáveis e prazos definidos.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Indicadores -->
+  <section>
+    <div class="container">
+      <p class="eyebrow rv" style="text-align:center">INDICADORES</p>
+      <h2 class="rv rv-delay-1">O que <em>monitoramos</em>.</h2>
+      <p class="section-intro rv rv-delay-2">Todos os indicadores de qualidade acompanhados pela Fenix Nefrologia, organizados por domínio clínico.</p>
+
+      <!-- Grupo 1: Desfechos -->
+      <div class="indicator-group rv">
+        <div class="group-header">
+          <div class="group-icon">📋</div>
+          <h3>Desfechos Clínicos</h3>
+        </div>
+        <div class="indicators-grid">
+          <div class="indicator-card">
+            <h4>Óbitos</h4>
+            <p>Registro e análise de mortalidade na unidade. Cada caso é revisado para identificação de fatores modificáveis.</p>
+            <div class="indicator-meta">Monitoramento: <span>mensal</span></div>
+            <a class="ficha-link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> Acessar ficha técnica</a>
+          </div>
+          <div class="indicator-card">
+            <h4>Taxa de mortalidade</h4>
+            <p>Mortalidade bruta e ajustada da unidade de diálise. Comparada com benchmarks nacionais SBN/ANVISA.</p>
+            <div class="indicator-meta">Referência: <span>SBN / ANVISA</span></div>
+            <a class="ficha-link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> Acessar ficha técnica</a>
+          </div>
+          <div class="indicator-card">
+            <h4>Internações</h4>
+            <p>Internações por todas as causas, categorizadas por motivo: infecção, cardiovascular, acesso vascular e outras.</p>
+            <div class="indicator-meta">Classificação: <span>por causa</span></div>
+            <a class="ficha-link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> Acessar ficha técnica</a>
+          </div>
+          <div class="indicator-card">
+            <h4>Faltas</h4>
+            <p>Taxa de absenteísmo às sessões de hemodiálise. Faltas repetidas impactam adequação e desfechos clínicos.</p>
+            <div class="indicator-meta">Monitoramento: <span>mensal</span></div>
+            <a class="ficha-link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> Acessar ficha técnica</a>
+          </div>
+          <div class="indicator-card">
+            <h4>Infecções</h4>
+            <p>Infecções relacionadas a cateter e acesso vascular. Principal causa de hospitalização em diálise crônica.</p>
+            <div class="indicator-meta">Meta: <span>&lt; 1 / 1.000 cateter-dia</span></div>
+            <a class="ficha-link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> Acessar ficha técnica</a>
+          </div>
+          <div class="indicator-card">
+            <h4>Queda</h4>
+            <p>Registro de quedas durante atendimento. Protocolo de prevenção com avaliação de risco individual.</p>
+            <div class="indicator-meta">Meta: <span>zero eventos</span></div>
+            <a class="ficha-link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> Acessar ficha técnica</a>
+          </div>
+          <div class="indicator-card">
+            <h4>Evento adverso grave</h4>
+            <p>Eventos sentinela que demandam investigação imediata e plano de ação com análise de causa raiz.</p>
+            <div class="indicator-meta">Protocolo: <span>notificação imediata</span></div>
+            <a class="ficha-link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> Acessar ficha técnica</a>
+          </div>
+          <div class="indicator-card">
+            <h4>Risco de suicídio</h4>
+            <p>Rastreio de saúde mental com escalas validadas. Encaminhamento para suporte psicológico especializado.</p>
+            <div class="indicator-meta">Rastreio: <span>periódico</span></div>
+            <a class="ficha-link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> Acessar ficha técnica</a>
+          </div>
+          <div class="indicator-card">
+            <h4>Inscrição transplante renal</h4>
+            <p>Acompanhamento dos pacientes elegíveis inscritos em lista de transplante renal. Indicador de acesso ao tratamento definitivo.</p>
+            <div class="indicator-meta">Meta: <span>100% dos elegíveis</span></div>
+            <a class="ficha-link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> Acessar ficha técnica</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Grupo 2: Avaliação Nutricional -->
+      <div class="indicator-group rv">
+        <div class="group-header">
+          <div class="group-icon">🥗</div>
+          <h3>Avaliação Nutricional</h3>
+        </div>
+        <div class="indicators-grid">
+          <div class="indicator-card">
+            <h4>Fósforo sérico</h4>
+            <p>Hiperfosfatemia associada a calcificação vascular e mortalidade. Controle com dieta, quelantes e prescrição dialítica.</p>
+            <div class="indicator-meta">Meta: <span>3,5 – 5,5 mg/dL</span> · KDIGO</div>
+            <a class="ficha-link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> Acessar ficha técnica</a>
+          </div>
+          <div class="indicator-card">
+            <h4>Potássio sérico</h4>
+            <p>Hipercalemia é risco de arritmia fatal. Monitoramento rigoroso com ajuste de dieta e prescrição dialítica.</p>
+            <div class="indicator-meta">Meta: <span>3,5 – 5,5 mEq/L</span> · KDIGO</div>
+            <a class="ficha-link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> Acessar ficha técnica</a>
+          </div>
+          <div class="indicator-card">
+            <h4>Albumina sérica</h4>
+            <p>Marcador de estado nutricional e inflamatório. Hipoalbuminemia está associada a pior prognóstico em diálise.</p>
+            <div class="indicator-meta">Meta: <span>≥ 3,5 g/dL</span> · KDOQI</div>
+            <a class="ficha-link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> Acessar ficha técnica</a>
+          </div>
+          <div class="indicator-card">
+            <h4>Cálcio sérico</h4>
+            <p>Distúrbio mineral-ósseo da DRC. Controle com vitamina D, quelantes de fósforo e concentração de cálcio no dialisato.</p>
+            <div class="indicator-meta">Meta: <span>8,4 – 10,2 mg/dL</span> · KDIGO</div>
+            <a class="ficha-link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> Acessar ficha técnica</a>
+          </div>
+          <div class="indicator-card">
+            <h4>IMC (Índice de Massa Corporal)</h4>
+            <p>Avaliação nutricional antropométrica. Desnutrição e obesidade impactam desfechos de forma distinta na DRC.</p>
+            <div class="indicator-meta">Meta: <span>eutrófico</span> · OMS</div>
+            <a class="ficha-link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> Acessar ficha técnica</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Grupo 3: Adequação da Diálise -->
+      <div class="indicator-group rv">
+        <div class="group-header">
+          <div class="group-icon">⚙️</div>
+          <h3>Adequação da Diálise</h3>
+        </div>
+        <div class="indicators-grid">
+          <div class="indicator-card">
+            <h4>Kt/V</h4>
+            <p>Principal indicador de eficiência da hemodiálise. Mede remoção de toxinas urêmicas por sessão. TRU ≥ 65% como complementar.</p>
+            <div class="indicator-meta">Meta: <span>≥ 1,2 por sessão</span> · KDOQI</div>
+            <a class="ficha-link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> Acessar ficha técnica</a>
+          </div>
+          <div class="indicator-card">
+            <h4>Volume convectivo</h4>
+            <p>Volume de substituição na hemodiafiltração on-line. Maior volume convectivo associado a melhor sobrevida.</p>
+            <div class="indicator-meta">Meta: <span>≥ 23 L/sessão</span> · CONVINCE</div>
+            <a class="ficha-link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> Acessar ficha técnica</a>
+          </div>
+          <div class="indicator-card">
+            <h4>FAV / Prótese</h4>
+            <p>Proporção de pacientes com fístula arteriovenosa ou prótese como acesso vascular. Padrão-ouro vs. cateter.</p>
+            <div class="indicator-meta">Meta: <span>≥ 80%</span> · SBN</div>
+            <a class="ficha-link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> Acessar ficha técnica</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Grupo 4: Qualidade de Vida -->
+      <div class="indicator-group rv">
+        <div class="group-header">
+          <div class="group-icon">💚</div>
+          <h3>Qualidade de Vida</h3>
+        </div>
+        <div class="indicators-grid">
+          <div class="indicator-card">
+            <h4>Hemoglobina</h4>
+            <p>Anemia impacta qualidade de vida e capacidade funcional. Alvo terapêutico com eritropoetina e suplementação de ferro.</p>
+            <div class="indicator-meta">Meta: <span>10 – 12 g/dL</span> · KDIGO</div>
+            <a class="ficha-link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> Acessar ficha técnica</a>
+          </div>
+          <div class="indicator-card">
+            <h4>KDQoL — Componente Mental</h4>
+            <p>Questionário validado de qualidade de vida em doença renal. Componente mental avalia saúde emocional e bem-estar psicológico.</p>
+            <div class="indicator-meta">Meta: <span>≥ 50 pontos</span></div>
+            <a class="ficha-link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> Acessar ficha técnica</a>
+          </div>
+          <div class="indicator-card">
+            <h4>KDQoL — Componente Físico</h4>
+            <p>Componente físico do questionário KDQoL. Avalia capacidade funcional, dor, vitalidade e limitações físicas.</p>
+            <div class="indicator-meta">Meta: <span>≥ 50 pontos</span></div>
+            <a class="ficha-link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> Acessar ficha técnica</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Grupo 5: Cardiovascular -->
+      <div class="indicator-group rv">
+        <div class="group-header">
+          <div class="group-icon">❤️</div>
+          <h3>Cardiovascular</h3>
+        </div>
+        <div class="indicators-grid">
+          <div class="indicator-card">
+            <h4>GPID (Ganho de Peso Interdialítico)</h4>
+            <p>Porcentagem de ganho de peso entre sessões. GPID elevado associado a sobrecarga hídrica e risco cardiovascular.</p>
+            <div class="indicator-meta">Meta: <span>≤ 5% do peso seco</span></div>
+            <a class="ficha-link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> Acessar ficha técnica</a>
+          </div>
+          <div class="indicator-card">
+            <h4>ECW (Água Extracelular)</h4>
+            <p>Marcador de estado de hidratação por bioimpedância. Sobrecarga hídrica crônica associada a hipertrofia cardíaca.</p>
+            <div class="indicator-meta">Meta: <span>≤ 45%</span></div>
+            <a class="ficha-link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> Acessar ficha técnica</a>
+          </div>
+          <div class="indicator-card">
+            <h4>Hemoglobina glicada (HbA1c)</h4>
+            <p>Marcador de controle glicêmico nos últimos 2-3 meses. Diabetes é a principal causa de DRC e fator de risco cardiovascular independente.</p>
+            <div class="indicator-meta">Meta: <span>< 7% (individualizar)</span> · ADA/KDIGO</div>
+            <a class="ficha-link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> Acessar ficha técnica</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Grupo 6: Composição Corporal -->
+      <div class="indicator-group rv">
+        <div class="group-header">
+          <div class="group-icon">🏋️</div>
+          <h3>Composição Corporal</h3>
+        </div>
+        <div class="indicators-grid">
+          <div class="indicator-card">
+            <h4>Ângulo de fase</h4>
+            <p>Marcador de integridade celular e estado nutricional por bioimpedância. Valores baixos indicam desnutrição e pior prognóstico.</p>
+            <div class="indicator-meta">Meta: <span>≥ 4°</span></div>
+            <a class="ficha-link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> Acessar ficha técnica</a>
+          </div>
+          <div class="indicator-card">
+            <h4>PTH (Paratormônio)</h4>
+            <p>Indicador do metabolismo mineral-ósseo. Níveis muito altos ou muito baixos associados a doença óssea e calcificação vascular.</p>
+            <div class="indicator-meta">Meta: <span>150 – 600 pg/mL</span> · KDIGO</div>
+            <a class="ficha-link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> Acessar ficha técnica</a>
+          </div>
+          <div class="indicator-card">
+            <h4>Fisioterapia intradialítica</h4>
+            <p>Adesão ao programa de exercício durante a hemodiálise. Melhora capacidade funcional, força muscular e qualidade de vida.</p>
+            <div class="indicator-meta">Meta: <span>100% dos elegíveis</span></div>
+            <a class="ficha-link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> Acessar ficha técnica</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Metodologia -->
+  <section class="dark">
+    <div class="container">
+      <p class="eyebrow rv" style="text-align:center; color:var(--teal-light)">METODOLOGIA</p>
+      <h2 class="rv rv-delay-1">Como transformamos dados em <em>ações</em>.</h2>
+      <p class="section-intro rv rv-delay-2">Medir é o começo. O que diferencia é o que fazemos com os dados.</p>
+      <div class="method-grid">
+        <div class="method-card rv rv-delay-1">
+          <h3>Coleta mensal</h3>
+          <p>Dados laboratoriais, registros de sessão e desfechos clínicos são compilados mensalmente em dashboard padronizado.</p>
+        </div>
+        <div class="method-card rv rv-delay-2">
+          <h3>Análise de causa raiz</h3>
+          <p>Desvios são investigados com Diagrama de Ishikawa — identificando causas em equipe, processo, materiais, ambiente e método.</p>
+        </div>
+        <div class="method-card rv rv-delay-3">
+          <h3>Plano de ação</h3>
+          <p>Cada desvio gera uma ação com responsável, prazo e indicador de acompanhamento. Resultados são revistos no ciclo seguinte.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section>
+    <div class="container">
+      <p class="eyebrow rv" style="text-align:center">PERGUNTAS FREQUENTES</p>
+      <h2 class="rv rv-delay-1">Dúvidas sobre <em>indicadores</em>.</h2>
+      <div class="faq-list">
+        <div class="faq-item rv rv-delay-1">
+          <button class="faq-question">O que é Kt/V e por que é importante?</button>
+          <div class="faq-answer"><p>Kt/V é o principal indicador de adequação da diálise. Mede a eficiência com que as toxinas urêmicas são removidas durante a sessão. Um Kt/V acima de 1,2 por sessão é considerado adequado. Valores consistentemente abaixo desse limiar estão associados a maior mortalidade.</p></div>
+        </div>
+        <div class="faq-item rv rv-delay-2">
+          <button class="faq-question">O que é a Taxa de Redução de Ureia (TRU)?</button>
+          <div class="faq-answer"><p>A TRU mede a porcentagem de redução da ureia no sangue após uma sessão de hemodiálise. Valores acima de 65% indicam diálise adequada. É um indicador complementar ao Kt/V e mais intuitivo para acompanhamento rotineiro.</p></div>
+        </div>
+        <div class="faq-item rv rv-delay-3">
+          <button class="faq-question">Por que medir indicadores de qualidade na nefrologia?</button>
+          <div class="faq-answer"><p>Indicadores de qualidade permitem identificar oportunidades de melhoria, comparar resultados com benchmarks nacionais e internacionais, e garantir que cada paciente receba o melhor cuidado possível. Na Fenix Nefrologia, esses dados são coletados e analisados mensalmente.</p></div>
+        </div>
+        <div class="faq-item rv rv-delay-1">
+          <button class="faq-question">Quais indicadores a Fenix Nefrologia monitora?</button>
+          <div class="faq-answer"><p>Monitoramos mais de 25 indicadores organizados em seis domínios: desfechos clínicos (mortalidade, internações, infecções), avaliação nutricional (fósforo, potássio, albumina, cálcio, PTH, IMC), adequação da diálise (Kt/V, volume convectivo, acesso vascular), qualidade de vida (hemoglobina, KDQoL), cardiovascular (GPID, ECW) e composição corporal (ângulo de fase, fisioterapia).</p></div>
+        </div>
+        <div class="faq-item rv rv-delay-2">
+          <button class="faq-question">O que é a ficha técnica de cada indicador?</button>
+          <div class="faq-answer"><p>Cada indicador possui uma ficha técnica com definição, fórmula de cálculo, meta, referência bibliográfica, frequência de coleta e protocolo de ação para desvios. Essas fichas fazem parte do programa de qualidade da Fenix Nefrologia e são revisadas periodicamente.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Author -->
+  <section class="dark">
+    <div class="container">
+      <p class="eyebrow rv" style="text-align:center; color:var(--teal-light)">RESPONSÁVEL</p>
+      <h2 class="rv rv-delay-1">Elaborado por <em>especialista</em>.</h2>
+      <div class="author-block rv rv-delay-2">
+        <img src="landing-page/dr-bruno-branco.jpg" alt="Dr. Bruno Biluca" class="author-photo">
+        <div class="author-info">
+          <h3>Dr. Bruno Piubelli Biluca</h3>
+          <div class="author-title">Nefrologista — CRM-SP 151.041 | RQE 70145</div>
+          <p>Diretor Médico da Fenix Nefrologia. Responsável pela implementação e monitoramento dos indicadores de qualidade assistencial. MBA em Gestão de Saúde pela FGV.</p>
+          <a href="sobre-dr-bruno-biluca.html" class="author-link">Ver perfil completo</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta-section">
+    <div class="container rv">
+      <p class="eyebrow" style="color:var(--teal-light)">QUALIDADE</p>
+      <h2>Qualidade que se <em>prova</em>.</h2>
+      <p>Conheça o modelo de acompanhamento do APEX, onde resultados são mensuráveis e o compromisso com qualidade é inegociável.</p>
+      <a href="index.html#cta-final" class="cta-btn">Agendar Consulta</a>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-logo"><img src="landing-page/logo-apex-transparent.png" alt="Apex Health"></div>
+    <div class="footer-links">
+      <a href="index.html#metodo">O Método</a>
+      <a href="index.html#paraquem">Para Quem</a>
+      <a href="index.html#jornada">Como Funciona</a>
+      <a href="sobre-dr-bruno-biluca.html">O Médico</a>
+      <a href="imprensa.html">Imprensa</a>
+      <a href="nefrologia-doenca-renal.html">Nefrologia</a>
+      <a href="sindrome-ckm.html">Síndrome CKM</a>
+      <a href="wearables-saude-digital.html">Wearables</a>
+    </div>
+    <p class="footer-copy">© 2026 Apex Health. Todos os direitos reservados.</p>
+  </footer>
+
+  <script>
+    // Header scroll
+    window.addEventListener('scroll', () => {
+      document.getElementById('header').classList.toggle('scrolled', window.scrollY > 40);
+    });
+
+    // Reveal on scroll
+    const obs = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
+    }, { threshold: 0.15 });
+    document.querySelectorAll('.rv').forEach(el => obs.observe(el));
+
+    // FAQ toggle
+    document.querySelectorAll('.faq-question').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const item = btn.parentElement;
+        const wasOpen = item.classList.contains('open');
+        document.querySelectorAll('.faq-item.open').forEach(i => i.classList.remove('open'));
+        if (!wasOpen) item.classList.add('open');
+      });
+    });
+  </script>
+
+</body>
+</html>
