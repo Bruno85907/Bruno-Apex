@@ -851,6 +851,48 @@
       font-size: 12px; color: rgba(255,255,255,0.3); letter-spacing: 0.5px;
     }
 
+    /* ===== CONTEÚDO HUB ===== */
+    .conteudo-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;
+      margin-top: 48px;
+    }
+    .conteudo-card {
+      background: #fff; border-radius: var(--radius); padding: 32px 28px;
+      border: 1px solid rgba(30,45,80,0.06);
+      text-decoration: none; color: var(--navy);
+      transition: transform 0.3s cubic-bezier(.16,1,.3,1), box-shadow 0.3s;
+    }
+    .conteudo-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 32px rgba(30,45,80,0.08);
+    }
+    .conteudo-card-icon {
+      width: 44px; height: 44px; border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 18px; font-size: 20px;
+    }
+    .conteudo-card h3 {
+      font-family: var(--font-sans); font-weight: 800; font-size: 17px;
+      line-height: 1.3; letter-spacing: -0.3px; margin-bottom: 10px;
+    }
+    .conteudo-card p {
+      font-size: 14px; line-height: 1.6; color: rgba(30,45,80,0.55);
+    }
+    .conteudo-card .card-arrow {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: 13px; font-weight: 600; color: var(--teal);
+      margin-top: 16px;
+    }
+    .conteudo-full {
+      grid-column: 1 / -1;
+      display: flex; align-items: center; justify-content: space-between;
+      background: linear-gradient(135deg, var(--navy-deep) 0%, #1a2a45 100%);
+      color: #fff; border: none;
+    }
+    .conteudo-full h3 { color: #fff; }
+    .conteudo-full p { color: rgba(255,255,255,0.5); max-width: 520px; }
+    .conteudo-full .card-arrow { color: var(--gold); }
+
     /* ===== PRO BANNER ===== */
     .pro-banner-inner {
       display: flex; align-items: center; justify-content: space-between;
@@ -975,6 +1017,10 @@
       .cta-final { padding: 72px 20px; }
       .cta-final::before { width: 320px; height: 320px; }
 
+      .conteudo-grid { grid-template-columns: 1fr; gap: 16px; }
+      .conteudo-full { flex-direction: column; text-align: center; padding: 28px 24px; }
+      .conteudo-full p { max-width: 100%; }
+
       .pro-banner-inner { flex-direction: column; text-align: center; padding: 28px 24px; gap: 20px; }
 
       .footer { padding: 36px 20px 28px; }
@@ -1009,6 +1055,7 @@
       <a href="#medico">O Médico</a>
       <a href="#resultados">Resultados</a>
       <a href="#faq">FAQ</a>
+      <a href="#conteudo">Conteúdo</a>
       <a href="preview_pro_completo.html" class="header-pro">Pro</a>
       <a href="#cta-final" class="header-cta">Agendar Consulta</a>
     </nav>
@@ -1545,6 +1592,48 @@
     </div>
   </section>
 
+  <!-- CONTEÚDO -->
+  <section class="conteudo section-pad" id="conteudo">
+    <div class="container">
+      <p class="eyebrow eyebrow-center rv" style="color:var(--gold);">Conteúdo</p>
+      <h2 class="headline-serif rv">Conhecimento baseado em <em>evidências</em></h2>
+      <p class="subtitle rv">Hubs temáticos, artigos e dados clínicos para profissionais e pacientes.</p>
+
+      <div class="conteudo-grid">
+
+        <a href="nefrologia-doenca-renal.html" class="conteudo-card rv">
+          <div class="conteudo-card-icon" style="background:rgba(2,128,144,0.08); color:var(--teal);">&#9851;</div>
+          <h3>Doença Renal Crônica</h3>
+          <p>5 estágios, estadiamento, manejo conservador e quando iniciar diálise.</p>
+          <span class="card-arrow">Explorar &rarr;</span>
+        </a>
+
+        <a href="sindrome-ckm.html" class="conteudo-card rv" style="transition-delay:0.05s">
+          <div class="conteudo-card-icon" style="background:rgba(196,163,90,0.1); color:var(--gold);">&#9829;</div>
+          <h3>Síndrome CKM</h3>
+          <p>Conexão rim-coração-metabólico: 4 pilares e estadiamento 0 a 4.</p>
+          <span class="card-arrow">Explorar &rarr;</span>
+        </a>
+
+        <a href="wearables-saude-digital.html" class="conteudo-card rv" style="transition-delay:0.1s">
+          <div class="conteudo-card-icon" style="background:rgba(2,128,144,0.08); color:var(--teal);">&#9201;</div>
+          <h3>Wearables e Saúde Digital</h3>
+          <p>Monitoramento contínuo: métricas, dispositivos e fluxo clínico.</p>
+          <span class="card-arrow">Explorar &rarr;</span>
+        </a>
+
+        <a href="dados-apex.html" class="conteudo-card conteudo-full rv" style="transition-delay:0.15s">
+          <div>
+            <h3>Indicadores de Qualidade Clínica</h3>
+            <p>25+ indicadores em 6 domínios — desfechos, nutrição, adequação, qualidade de vida, cardiovascular e composição corporal.</p>
+          </div>
+          <span class="card-arrow">Ver indicadores &rarr;</span>
+        </a>
+
+      </div>
+    </div>
+  </section>
+
   <!-- CARD PRO -->
   <section class="pro-banner section-pad" style="background:var(--bg-alt);">
     <div class="container">
@@ -1573,6 +1662,11 @@
       <a href="sobre-dr-bruno-biluca.html">O Médico</a>
       <a href="#resultados">Resultados</a>
       <a href="#faq">FAQ</a>
+      <a href="nefrologia-doenca-renal.html">DRC</a>
+      <a href="sindrome-ckm.html">CKM</a>
+      <a href="wearables-saude-digital.html">Wearables</a>
+      <a href="dados-apex.html">Indicadores</a>
+      <a href="imprensa.html">Imprensa</a>
       <a href="preview_pro_completo.html">Pro</a>
     </div>
     <p class="footer-copy">&copy; 2026 Apex Health. Todos os direitos reservados.</p>
@@ -1585,130 +1679,4 @@
       header.classList.toggle('scrolled', window.scrollY > 60);
     }, { passive: true });
 
-    // ===== HERO SLIDESHOW =====
-    const slides = document.querySelectorAll('.hero-slide');
-    const dots = document.querySelectorAll('.hero-dot');
-    let currentSlide = 0;
-    let slideInterval;
-
-    function goToSlide(i) {
-      slides[currentSlide].classList.remove('active');
-      dots[currentSlide].classList.remove('active');
-      currentSlide = i;
-      slides[currentSlide].classList.add('active');
-      dots[currentSlide].classList.add('active');
-    }
-
-    function nextSlide() {
-      goToSlide((currentSlide + 1) % slides.length);
-    }
-
-    function startSlideshow() {
-      slideInterval = setInterval(nextSlide, 5000);
-    }
-
-    dots.forEach(dot => {
-      dot.addEventListener('click', () => {
-        clearInterval(slideInterval);
-        goToSlide(parseInt(dot.dataset.slide));
-        startSlideshow();
-      });
-    });
-
-    startSlideshow();
-
-    // ===== PARTICLES =====
-    const particleContainer = document.getElementById('heroParticles');
-    const colors = ['var(--teal)', 'var(--teal-light)', 'var(--gold)', 'rgba(255,255,255,0.3)'];
-    for (let i = 0; i < 15; i++) {
-      const p = document.createElement('div');
-      p.className = 'hero-particle';
-      const size = 3 + Math.random() * 5;
-      p.style.cssText = `
-        width:${size}px; height:${size}px;
-        left:${Math.random()*100}%; top:${Math.random()*100}%;
-        background:${colors[Math.floor(Math.random()*colors.length)]};
-        animation-delay:${Math.random()*6}s;
-        animation-duration:${4+Math.random()*4}s;
-      `;
-      particleContainer.appendChild(p);
-    }
-
-    // ===== SCROLL REVEAL =====
-    const revealObserver = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-          // Trigger count-up for numbers inside
-          entry.target.querySelectorAll('.count-up:not(.counted)').forEach(el => {
-            el.classList.add('counted');
-            countUp(el);
-          });
-        }
-      });
-    }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
-
-    document.querySelectorAll('.rv').forEach(el => revealObserver.observe(el));
-
-    // ===== COUNT UP =====
-    function easeOutCubic(t) { return 1 - Math.pow(1 - t, 3); }
-
-    function countUp(el) {
-      const target = parseInt(el.dataset.target);
-      const duration = 1800;
-      const start = performance.now();
-
-      function update(now) {
-        const elapsed = now - start;
-        const progress = Math.min(elapsed / duration, 1);
-        const value = Math.round(easeOutCubic(progress) * target);
-        el.textContent = value;
-        if (progress < 1) requestAnimationFrame(update);
-      }
-      requestAnimationFrame(update);
-    }
-
-    // ===== PROGRESS BAR =====
-    const progressFill = document.getElementById('progressFill');
-    const progressWrap = document.getElementById('progressWrap');
-    let progressFired = false;
-
-    const progressObserver = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting && !progressFired) {
-          progressFired = true;
-          progressFill.style.width = '68%';
-          progressFill.classList.add('animated');
-        }
-      });
-    }, { threshold: 0.3 });
-
-    progressObserver.observe(progressWrap);
-
-    // ===== FAQ ACCORDION =====
-    document.querySelectorAll('.faq-q').forEach(btn => {
-      btn.addEventListener('click', () => {
-        const item = btn.parentElement;
-        const wasOpen = item.classList.contains('open');
-        // Close all
-        document.querySelectorAll('.faq-item.open').forEach(i => i.classList.remove('open'));
-        if (!wasOpen) item.classList.add('open');
-      });
-    });
-
-    // ===== SMOOTH SCROLL =====
-    document.querySelectorAll('a[href^="#"]').forEach(a => {
-      a.addEventListener('click', (e) => {
-        const target = document.querySelector(a.getAttribute('href'));
-        if (target) {
-          e.preventDefault();
-          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }
-      });
-    });
-
-    // ===== LUCIDE ICONS =====
-    lucide.createIcons();
-  </script>
-</body>
-</html>
+    // ==
