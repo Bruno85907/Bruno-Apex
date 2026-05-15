@@ -294,7 +294,7 @@
 
     /* ===== HERO ===== */
     .hero {
-      position: relative; height: 92vh; min-height: 700px; overflow: hidden;
+      position: relative; height: 92vh; min-height: 640px; overflow: hidden;
       display: flex; align-items: center;
     }
     .hero-slides { position: absolute; inset: 0; }
@@ -319,7 +319,7 @@
     }
     .hero-content {
       position: relative; z-index: 2; max-width: 620px;
-      padding: 80px 24px 0; margin-left: max(5vw, 40px);
+      padding: 0 24px; margin-left: max(5vw, 40px);
       opacity: 0;
     }
     .hero h1 {
@@ -1018,6 +1018,7 @@
       .cta-final::before { width: 320px; height: 320px; }
 
       .conteudo-grid { grid-template-columns: 1fr; gap: 16px; }
+      .conteudo-grid .conteudo-card[style*="grid-column: 2"] { grid-column: auto; }
       .conteudo-full { flex-direction: column; text-align: center; padding: 28px 24px; }
       .conteudo-full p { max-width: 100%; }
 
@@ -1041,44 +1042,6 @@
       .btn-teal { padding: 13px 26px; font-size: 13px; }
       .btn-outline { padding: 12px 24px; font-size: 13px; }
     }
-
-    /* ===== HEADER DROPDOWN ===== */
-    .header-dropdown { position: relative; }
-    .header-dropdown-trigger {
-      color: rgba(255,255,255,0.85); font-size: 13px; font-weight: 500;
-      cursor: pointer; display: flex; align-items: center; gap: 4px;
-      letter-spacing: 0.3px; transition: color 0.25s;
-      background: none; border: none; font-family: var(--font-sans);
-    }
-    .header-dropdown-trigger:hover { color: #fff; }
-    .header-dropdown-trigger i { width: 14px; height: 14px; transition: transform 0.25s; }
-    .header-dropdown.open .header-dropdown-trigger i { transform: rotate(180deg); }
-    .header-dropdown-menu {
-      position: absolute; top: calc(100% + 14px); left: 50%; transform: translateX(-50%);
-      min-width: 240px; padding: 8px;
-      background: rgba(18,29,51,0.97); backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
-      border: 1px solid rgba(255,255,255,0.1); border-radius: 16px;
-      opacity: 0; visibility: hidden; transform: translateX(-50%) translateY(-8px);
-      transition: opacity 0.25s, visibility 0.25s, transform 0.25s;
-      box-shadow: 0 12px 40px rgba(0,0,0,0.3);
-    }
-    .header-dropdown.open .header-dropdown-menu {
-      opacity: 1; visibility: visible; transform: translateX(-50%) translateY(0);
-    }
-    .header-dropdown-menu a {
-      display: flex; align-items: center; gap: 10px;
-      padding: 10px 14px; border-radius: 10px;
-      color: rgba(255,255,255,0.7) !important; font-size: 13px !important;
-      text-decoration: none; transition: background 0.2s, color 0.2s;
-    }
-    .header-dropdown-menu a:hover {
-      background: rgba(255,255,255,0.06); color: #fff !important;
-    }
-    .dd-icon {
-      width: 28px; height: 28px; border-radius: 8px;
-      display: flex; align-items: center; justify-content: center;
-      flex-shrink: 0;
-    }
   </style>
 </head>
 <body>
@@ -1091,40 +1054,15 @@
       <a href="#paraquem">Para Quem</a>
       <a href="#jornada">Como Funciona</a>
       <a href="#medico">O Médico</a>
-      <div class="header-dropdown" id="headerDropdown">
-        <button class="header-dropdown-trigger" aria-expanded="false" aria-haspopup="true">
-          Saúde <i data-lucide="chevron-down" style="width:14px;height:14px;stroke-width:2"></i>
-        </button>
-        <div class="header-dropdown-menu" role="menu">
-          <a href="nefrologia-doenca-renal.html" role="menuitem">
-            <div class="dd-icon" style="background:rgba(2,128,144,0.12)"><i data-lucide="activity" style="width:16px;height:16px;color:var(--teal);stroke-width:1.5"></i></div>
-            Doença Renal Crônica
-          </a>
-          <a href="sindrome-ckm.html" role="menuitem">
-            <div class="dd-icon" style="background:rgba(196,163,90,0.12)"><i data-lucide="heart-pulse" style="width:16px;height:16px;color:var(--gold);stroke-width:1.5"></i></div>
-            Síndrome CKM
-          </a>
-          <a href="wearables-saude-digital.html" role="menuitem">
-            <div class="dd-icon" style="background:rgba(2,128,144,0.12)"><i data-lucide="watch" style="width:16px;height:16px;color:var(--teal-light);stroke-width:1.5"></i></div>
-            Wearables e Saúde Digital
-          </a>
-          <a href="dados-apex.html" role="menuitem">
-            <div class="dd-icon" style="background:rgba(255,255,255,0.06)"><i data-lucide="bar-chart-3" style="width:16px;height:16px;color:rgba(255,255,255,0.5);stroke-width:1.5"></i></div>
-            Indicadores de Qualidade
-          </a>
-          <a href="imprensa.html" role="menuitem">
-            <div class="dd-icon" style="background:rgba(255,255,255,0.06)"><i data-lucide="newspaper" style="width:16px;height:16px;color:rgba(255,255,255,0.4);stroke-width:1.5"></i></div>
-            Imprensa
-          </a>
-        </div>
-      </div>
+      <a href="#resultados">Resultados</a>
       <a href="#faq">FAQ</a>
+      <a href="#conteudo">Conteúdo</a>
       <a href="preview_pro_completo.html" class="header-pro">Pro</a>
       <a href="#cta-final" class="header-cta">Agendar Consulta</a>
     </nav>
   </header>
 
-<!-- HERO -->
+  <!-- HERO -->
   <section class="hero" id="hero">
     <div class="hero-slides">
       <div class="hero-slide active" style="background-image:url('iStock-2268229853.jpg')"></div>
@@ -1153,149 +1091,45 @@
     </div>
   </section>
 
-  <!-- O CENÁRIO -->
+  <!-- O CENARIO -->
   <section class="cenario section-pad gold-dots" id="cenario">
     <div class="container">
       <div class="gold-line rv"></div>
       <p class="eyebrow eyebrow-center rv">O cenário</p>
-      <h2 class="headline-serif headline-center rv" style="font-size:clamp(28px,3.5vw,46px);max-width:740px;margin:0 auto 0;color:#fff;">
-        Coração, rim e metabolismo — quando as condições se conectam, o risco <em>multiplica</em>.
+      <h2 class="headline-serif headline-center rv" style="font-size:clamp(28px,3.5vw,46px);max-width:700px;margin:0 auto 0;color:#fff;">
+        Milhões de brasileiros vivem com condições crônicas <em>sem controle</em>.
       </h2>
-      <p style="font-size:15px;color:rgba(255,255,255,0.45);text-align:center;max-width:600px;margin:16px auto 0;line-height:1.7;" class="rv">
-        A Síndrome Cardiovascular-Renal-Metabólica (CKM) é a interação entre hipertensão, diabetes, obesidade e doença renal. Tratadas isoladamente, cada condição já oferece risco. Juntas, elas se potencializam.
-      </p>
       <div class="cenario-grid">
         <div class="cenario-stat rv">
-          <div class="cenario-num"><span class="count-up" data-target="90">0</span><span class="suffix">%</span></div>
-          <div class="cenario-label">Adultos com algum estágio CKM</div>
+          <div class="cenario-num"><span class="count-up" data-target="38">0</span><span class="suffix">M</span></div>
+          <div class="cenario-label">Hipertensos</div>
         </div>
         <div class="cenario-stat rv" style="transition-delay:0.1s">
-          <div class="cenario-num"><span class="count-up" data-target="45">0</span><span class="suffix">%</span></div>
-          <div class="cenario-label">Das mortes cardiovasculares ligadas à CKM</div>
+          <div class="cenario-num"><span class="count-up" data-target="20">0</span><span class="suffix">M</span></div>
+          <div class="cenario-label">Diabéticos T2</div>
         </div>
         <div class="cenario-stat rv" style="transition-delay:0.2s">
-          <div class="cenario-num"><span class="count-up" data-target="4">0</span><span class="suffix">x</span></div>
-          <div class="cenario-label">Risco cardiovascular quando combinadas</div>
+          <div class="cenario-num"><span class="count-up" data-target="60">0</span><span class="suffix">%</span></div>
+          <div class="cenario-label">Sobrepeso / obesidade</div>
         </div>
         <div class="cenario-stat rv" style="transition-delay:0.3s">
-          <div class="cenario-num"><span class="count-up" data-target="38">0</span><span class="suffix">M</span></div>
-          <div class="cenario-label">Hipertensos no Brasil</div>
+          <div class="cenario-num"><span class="count-up" data-target="15">0</span><span class="suffix">M</span></div>
+          <div class="cenario-label">DRC</div>
         </div>
         <div class="cenario-stat rv" style="transition-delay:0.4s">
-          <div class="cenario-num"><span class="count-up" data-target="20">0</span><span class="suffix">M</span></div>
-          <div class="cenario-label">Diabéticos T2 no Brasil</div>
+          <div class="cenario-num"><span class="count-up" data-target="80">0</span><span class="suffix">%</span></div>
+          <div class="cenario-label">Abandona tratamento</div>
         </div>
         <div class="cenario-stat rv" style="transition-delay:0.5s">
-          <div class="cenario-num"><span class="count-up" data-target="80">0</span><span class="suffix">%</span></div>
-          <div class="cenario-label">Abandona tratamento sem acompanhamento</div>
+          <div class="cenario-num"><span class="count-up" data-target="4">0</span><span class="suffix">x</span></div>
+          <div class="cenario-label">Risco cardiovascular CKM</div>
         </div>
       </div>
-      <p class="cenario-closing rv">A maioria convive com <strong>duas ou mais condições ao mesmo tempo</strong> — e é tratada de forma fragmentada.</p>
-      <p style="font-size:11px;color:rgba(255,255,255,0.25);text-align:center;margin:12px auto 0;max-width:640px;" class="rv">
-        Ndumele CE et al. <em>Circulation.</em> 2023;148(20):1606-1635. AHA Presidential Advisory. &nbsp;|&nbsp; JACC 2024 — Prevalence of CKM Syndrome.
-      </p>
+      <p class="cenario-closing rv">E <strong>80% abandona o tratamento</strong> sem acompanhamento contínuo.</p>
     </div>
   </section>
 
-  <!-- PARA QUEM -->
-  <section class="paraquem section-pad gold-dots" id="paraquem">
-    <div class="container">
-      <p class="eyebrow eyebrow-center rv" style="color:var(--gold);">Para quem</p>
-      <h2 class="headline-serif headline-center rv" style="font-size:clamp(30px,4vw,48px);max-width:600px;margin:0 auto;">
-        Protocolos para quem quer <em>resultados reais</em>.
-      </h2>
-
-      <div class="paraquem-grid">
-        <a href="nefrologia-doenca-renal.html" class="paraquem-card rv" style="text-decoration:none;color:inherit;">
-          <img class="paraquem-card-img" src="pexels-shvets-production-8900023.jpg" alt="Hipertensão" loading="lazy">
-          <div class="paraquem-card-content">
-            <h4>Hipertensão</h4>
-            <p>Controle pressórico com monitoramento contínuo e ajustes em tempo real.</p>
-          </div>
-        </a>
-        <a href="nefrologia-doenca-renal.html" class="paraquem-card rv" style="transition-delay:0.08s;text-decoration:none;color:inherit;">
-          <img class="paraquem-card-img" src="pexels-artempodrez-6823395.jpg" alt="Diabetes Tipo 2" loading="lazy" style="object-position:center 75%">
-          <div class="paraquem-card-content">
-            <h4>Diabetes T2</h4>
-            <p>Protocolo integrado de dieta, medicação e hábitos com acompanhamento diário.</p>
-          </div>
-        </a>
-        <div class="paraquem-card rv" style="transition-delay:0.16s">
-          <img class="paraquem-card-img" src="pexels-annushka-ahuja-7991906.jpg" alt="Obesidade" loading="lazy">
-          <div class="paraquem-card-content">
-            <h4>Obesidade</h4>
-            <p>Composição corporal com bioimpedância seriada e acompanhamento nutricional.</p>
-          </div>
-        </div>
-        <a href="nefrologia-doenca-renal.html" class="paraquem-card rv" style="transition-delay:0.24s;text-decoration:none;color:inherit;">
-          <img class="paraquem-card-img" src="robina-weermeijer--szKjHyPq28-unsplash.jpg" alt="Doença Renal Crônica" loading="lazy">
-          <div class="paraquem-card-content">
-            <h4>Doença Renal Crônica</h4>
-            <p>Nefroproteção com controle pressórico e metabólico integrado.</p>
-          </div>
-        </a>
-        <div class="paraquem-card gold-accent rv" style="transition-delay:0.32s">
-          <img class="paraquem-card-img" src="boxed-water-is-better-6WrKKQcEnXk-unsplash.jpg" alt="Qualidade de Vida" loading="lazy">
-          <div class="paraquem-card-content">
-            <h4>Qualidade de Vida</h4>
-            <p>Para quem quer otimizar saúde, composição corporal e bem-estar com base em evidências.</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="ckm-block rv">
-        <p class="eyebrow eyebrow-center" style="color:var(--gold);margin-bottom:14px;">Síndrome CKM</p>
-        <h3 style="font-family:var(--font-sans);font-weight:800;font-size:clamp(20px,2.5vw,28px);color:#fff;margin-bottom:14px;line-height:1.2;text-align:center;max-width:640px;margin-left:auto;margin-right:auto;letter-spacing:-0.5px;">
-          Quando as condições se conectam, o protocolo precisa ser <em style="color:var(--gold);font-style:normal;">integrado</em>.
-        </h3>
-        <p style="font-size:14px;color:rgba(255,255,255,0.55);line-height:1.7;max-width:640px;text-align:center;margin:0 auto 16px;">
-          A maioria dos pacientes convive com duas ou mais dessas condições ao mesmo tempo. Tratar cada uma isoladamente não funciona. O protocolo Apex Health atua nos quatro pilares da Síndrome CKM desde o início.
-        </p>
-        <div style="text-align:center;">
-          <a href="sindrome-ckm.html" style="font-size:13px;color:var(--gold);text-decoration:none;font-weight:600;transition:color 0.25s;">Entenda a Síndrome CKM &rarr;</a>
-        </div>
-      </div>
-    </div>
-  </section>
-
-<!-- O MEDICO -->
-  <section class="medico section-pad" id="medico">
-    <div class="container">
-      <p class="eyebrow eyebrow-center rv">O médico</p>
-      <h2 class="headline-serif headline-center rv" style="font-size:clamp(30px,4vw,48px);max-width:600px;margin:0 auto 0;">
-        Quem está por trás do seu <em>protocolo</em>.
-      </h2>
-
-      <div class="medico-layout">
-        <div class="medico-photo-wrap rv">
-          <img src="dr-bruno.jpg" alt="Dr. Bruno Biluca" />
-          <div class="medico-photo-accent"></div>
-        </div>
-        <div class="medico-bio rv rv-delay-1">
-          <h3>Dr. Bruno Biluca</h3>
-          <div class="medico-spec">Clínica Médica &middot; Nefrologia &middot; Diretor Médico Fenix Nefrologia</div>
-          <div class="medico-crm" style="margin-top:8px;">CRM-SP 151.041 &middot; RQE 70145</div>
-          <p class="medico-text">Médico com formação em Clínica Médica e Nefrologia, Diretor Médico da Fenix Nefrologia em São Paulo. MBA em Gestão de Saúde pela FGV. Desenvolve protocolos integrados para hipertensão, diabetes, obesidade e doença renal crônica com acompanhamento contínuo por assessor virtual.</p>
-          <div class="medico-diffs">
-            <div class="medico-diff">
-              <div class="medico-diff-dot"></div>
-              <p>Testa os próprios protocolos — nos ciclos de preparação de maratona, vive a rotina que prescreve</p>
-            </div>
-            <div class="medico-diff">
-              <div class="medico-diff-dot"></div>
-              <p>Assessor virtual desenvolvido por ele — tecnologia a serviço da aderência</p>
-            </div>
-            <div class="medico-diff">
-              <div class="medico-diff-dot"></div>
-              <p>Conduta baseada em evidência — guidelines AHA, KDIGO e SBMFC</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-<!-- O METODO -->
+  <!-- O METODO -->
   <section class="metodo section-pad gold-dots" id="metodo">
     <div class="container">
       <p class="eyebrow eyebrow-center rv" style="color:var(--gold);">O método</p>
@@ -1356,7 +1190,7 @@
     </div>
   </section>
 
-<!-- A JORNADA -->
+  <!-- A JORNADA -->
   <section class="jornada section-pad" id="jornada">
     <div class="container">
       <p class="eyebrow eyebrow-center rv">Como funciona</p>
@@ -1438,7 +1272,7 @@
     </div>
   </section>
 
-<!-- O APP -->
+  <!-- O APP -->
   <section class="app-section section-pad" id="app">
     <div class="container">
       <div class="app-layout">
@@ -1502,7 +1336,105 @@
     </div>
   </section>
 
-<!-- RESULTADOS + INSIGHTS -->
+  <!-- PARA QUEM -->
+  <section class="paraquem section-pad gold-dots" id="paraquem">
+    <div class="container">
+      <p class="eyebrow eyebrow-center rv" style="color:var(--gold);">Para quem</p>
+      <h2 class="headline-serif headline-center rv" style="font-size:clamp(30px,4vw,48px);max-width:600px;margin:0 auto;">
+        Protocolos para quem quer <em>resultados reais</em>.
+      </h2>
+
+      <div class="paraquem-grid">
+        <div class="paraquem-card rv">
+          <img class="paraquem-card-img" src="pexels-shvets-production-8900023.jpg" alt="Hipertensão" loading="lazy">
+          <div class="paraquem-card-content">
+            <h4>Hipertensão</h4>
+            <p>Controle pressório com monitoramento contínuo e ajustes em tempo real.</p>
+          </div>
+        </div>
+        <div class="paraquem-card rv" style="transition-delay:0.08s">
+          <img class="paraquem-card-img" src="pexels-artempodrez-6823395.jpg" alt="Diabetes Tipo 2" loading="lazy" style="object-position:center 75%">
+          <div class="paraquem-card-content">
+            <h4>Diabetes T2</h4>
+            <p>Protocolo integrado de dieta, medicação e hábitos com acompanhamento diário.</p>
+          </div>
+        </div>
+        <div class="paraquem-card rv" style="transition-delay:0.16s">
+          <img class="paraquem-card-img" src="pexels-annushka-ahuja-7991906.jpg" alt="Obesidade" loading="lazy">
+          <div class="paraquem-card-content">
+            <h4>Obesidade</h4>
+            <p>Composição corporal com bioimpedância seriada e acompanhamento nutricional.</p>
+          </div>
+        </div>
+        <div class="paraquem-card rv" style="transition-delay:0.24s">
+          <img class="paraquem-card-img" src="robina-weermeijer--szKjHyPq28-unsplash.jpg" alt="Doença Renal Crônica" loading="lazy">
+          <div class="paraquem-card-content">
+            <h4>Doença Renal Crônica</h4>
+            <p>Nefroproteção com controle pressório e metabólico integrado.</p>
+          </div>
+        </div>
+        <div class="paraquem-card gold-accent rv" style="transition-delay:0.32s">
+          <img class="paraquem-card-img" src="boxed-water-is-better-6WrKKQcEnXk-unsplash.jpg" alt="Qualidade de Vida" loading="lazy">
+          <div class="paraquem-card-content">
+            <h4>Qualidade de Vida</h4>
+            <p>Para quem quer otimizar saúde, composição corporal e bem-estar com base em evidências.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="ckm-block rv">
+        <p class="eyebrow eyebrow-center" style="color:var(--gold);margin-bottom:14px;">Síndrome CKM</p>
+        <h3 style="font-family:var(--font-sans);font-weight:800;font-size:clamp(20px,2.5vw,28px);color:#fff;margin-bottom:14px;line-height:1.2;text-align:center;max-width:640px;margin-left:auto;margin-right:auto;letter-spacing:-0.5px;">
+          Coração, Rim e Metabolismo — quando as condições se conectam, o risco <em style="color:var(--gold);font-style:normal;">multiplica</em>.
+        </h3>
+        <p style="font-size:14px;color:rgba(255,255,255,0.55);line-height:1.7;max-width:640px;text-align:center;margin:0 auto 12px;">
+          A Síndrome Cardiovascular-Renal-Metabólica (CKM) é a interação entre obesidade, diabetes, doença renal e doenças cardiovasculares. Isoladas, cada condição já oferece risco. Juntas, elas se potencializam — e a maioria dos pacientes convive com duas ou mais ao mesmo tempo sem saber. O protocolo Apex Health trata todas de forma integrada desde o início.
+        </p>
+        <p style="font-size:11px;color:rgba(255,255,255,0.3);text-align:center;margin:0 auto;max-width:640px;">
+          Ndumele CE et al. <em>Circulation.</em> 2023;148(20):1606-1635. AHA Presidential Advisory — Cardiovascular-Kidney-Metabolic Syndrome.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- O MEDICO -->
+  <section class="medico section-pad" id="medico">
+    <div class="container">
+      <p class="eyebrow eyebrow-center rv">O médico</p>
+      <h2 class="headline-serif headline-center rv" style="font-size:clamp(30px,4vw,48px);max-width:600px;margin:0 auto 0;">
+        Quem está por trás do seu <em>protocolo</em>.
+      </h2>
+
+      <div class="medico-layout">
+        <div class="medico-photo-wrap rv">
+          <img src="dr-bruno.jpg" alt="Dr. Bruno Biluca" />
+          <div class="medico-photo-accent"></div>
+        </div>
+        <div class="medico-bio rv rv-delay-1">
+          <h3>Dr. Bruno Biluca</h3>
+          <div class="medico-spec">Clínica Médica &middot; Nefrologia &middot; Diretor Médico Fenix Nefrologia</div>
+          <div class="medico-crm" style="margin-top:8px;">CRM-SP 151.041 &middot; RQE 70145</div>
+          <p class="medico-text">Médico com formação em Clínica Médica e Nefrologia, Diretor Médico da Fenix Nefrologia em São Paulo. MBA em Gestão de Saúde pela FGV. Desenvolve protocolos integrados para hipertensão, diabetes, obesidade e doença renal crônica com acompanhamento contínuo por assessor virtual.</p>
+          <div class="medico-diffs">
+            <div class="medico-diff">
+              <div class="medico-diff-dot"></div>
+              <p>Testa os próprios protocolos — nos ciclos de preparação de maratona, vive a rotina que prescreve</p>
+            </div>
+            <div class="medico-diff">
+              <div class="medico-diff-dot"></div>
+              <p>Assessor virtual desenvolvido por ele — tecnologia a serviço da aderência</p>
+            </div>
+            <div class="medico-diff">
+              <div class="medico-diff-dot"></div>
+              <p>Conduta baseada em evidência — guidelines AHA, KDIGO e SBMFC</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- RESULTADOS + INSIGHTS -->
   <section class="resultados section-pad gold-dots" id="resultados">
     <div class="container">
       <p class="eyebrow eyebrow-center rv" style="color:var(--gold);">Resultados</p>
@@ -1566,49 +1498,7 @@
     </div>
   </section>
 
-<!-- CONTEÚDO -->
-  <section class="conteudo section-pad" id="conteudo">
-    <div class="container">
-      <p class="eyebrow eyebrow-center rv" style="color:var(--gold);">Conteúdo</p>
-      <h2 class="headline-serif rv">Conhecimento baseado em <em>evidências</em></h2>
-      <p class="subtitle rv">Hubs temáticos, artigos e dados clínicos para profissionais e pacientes.</p>
-
-      <div class="conteudo-grid">
-
-        <a href="nefrologia-doenca-renal.html" class="conteudo-card rv">
-          <div class="conteudo-card-icon" style="background:rgba(2,128,144,0.08); color:var(--teal);">&#9851;</div>
-          <h3>Doença Renal Crônica</h3>
-          <p>5 estágios, estadiamento, manejo conservador e quando iniciar diálise.</p>
-          <span class="card-arrow">Explorar &rarr;</span>
-        </a>
-
-        <a href="sindrome-ckm.html" class="conteudo-card rv" style="transition-delay:0.05s">
-          <div class="conteudo-card-icon" style="background:rgba(196,163,90,0.1); color:var(--gold);">&#9829;</div>
-          <h3>Síndrome CKM</h3>
-          <p>Conexão rim-coração-metabólico: 4 pilares e estadiamento 0 a 4.</p>
-          <span class="card-arrow">Explorar &rarr;</span>
-        </a>
-
-        <a href="wearables-saude-digital.html" class="conteudo-card rv" style="transition-delay:0.1s">
-          <div class="conteudo-card-icon" style="background:rgba(2,128,144,0.08); color:var(--teal);">&#9201;</div>
-          <h3>Wearables e Saúde Digital</h3>
-          <p>Monitoramento contínuo: métricas, dispositivos e fluxo clínico.</p>
-          <span class="card-arrow">Explorar &rarr;</span>
-        </a>
-
-        <a href="dados-apex.html" class="conteudo-card conteudo-full rv" style="transition-delay:0.15s">
-          <div>
-            <h3>Indicadores de Qualidade Clínica</h3>
-            <p>25+ indicadores em 6 domínios — desfechos, nutrição, adequação, qualidade de vida, cardiovascular e composição corporal.</p>
-          </div>
-          <span class="card-arrow">Ver indicadores &rarr;</span>
-        </a>
-
-      </div>
-    </div>
-  </section>
-
-<!-- FAQ -->
+  <!-- FAQ -->
   <section class="faq section-pad" id="faq">
     <div class="container">
       <p class="eyebrow eyebrow-center rv">Perguntas frequentes</p>
@@ -1691,7 +1581,7 @@
     </div>
   </section>
 
-<!-- CTA FINAL -->
+  <!-- CTA FINAL -->
   <section class="cta-final gold-dots" id="cta-final">
     <div class="container">
       <h2 class="rv">Pronto para ter um protocolo feito <em>para você</em>?</h2>
@@ -1703,190 +1593,71 @@
     </div>
   </section>
 
-<!-- CARD PRO -->
-  <section class="pro-banner section-pad" style="background:var(--bg-alt);">
+  <!-- CONTEÚDO -->
+  <section class="conteudo section-pad" id="conteudo">
     <div class="container">
-      <div class="pro-banner-inner rv">
-        <div class="pro-banner-text">
-          <p class="eyebrow" style="color:var(--gold);margin-bottom:12px;">Para profissionais</p>
-          <h3 style="font-family:var(--font-sans);font-weight:800;font-size:clamp(22px,2.8vw,30px);color:var(--navy);margin-bottom:12px;line-height:1.2;letter-spacing:-0.5px;">
-            Apex Health <em style="color:var(--gold);font-style:normal;">Pro</em>
-          </h3>
-          <p style="font-size:15px;color:rgba(30,45,80,0.6);line-height:1.7;max-width:480px;">
-            Painel médico para prescrição de protocolos, acompanhamento de metas e gestão de pacientes com assessor virtual.
-          </p>
-        </div>
-        <a href="preview_pro_completo.html" class="btn-pro">Acessar o Pro &rarr;</a>
-      </div>
-    </div>
-  </section>
+      <p class="eyebrow eyebrow-center rv" style="color:var(--gold);">Conteúdo</p>
+      <h2 class="headline-serif rv">Conhecimento baseado em <em>evidências</em></h2>
+      <p class="subtitle rv">Hubs temáticos, artigos e dados clínicos para profissionais e pacientes.</p>
 
-<!-- FOOTER -->
-  <footer class="footer gold-dots">
-    <div class="footer-logo"><img src="logo-apex-transparent.png" alt="Apex Health" /></div>
-    <div class="footer-links">
-      <a href="#metodo">O Método</a>
-      <a href="#paraquem">Para Quem</a>
-      <a href="#jornada">Como Funciona</a>
-      <a href="sobre-dr-bruno-biluca.html">O Médico</a>
-      <a href="#resultados">Resultados</a>
-      <a href="#faq">FAQ</a>
-      <a href="nefrologia-doenca-renal.html">DRC</a>
-      <a href="sindrome-ckm.html">CKM</a>
-      <a href="wearables-saude-digital.html">Wearables</a>
-      <a href="dados-apex.html">Indicadores</a>
-      <a href="imprensa.html">Imprensa</a>
-      <a href="preview_pro_completo.html">Pro</a>
-    </div>
-    <p class="footer-copy">&copy; 2026 Apex Health. Todos os direitos reservados.</p>
-  </footer>
+      <div class="conteudo-grid">
 
-  <script>
-    // ===== HEADER SCROLL =====
-    const header = document.getElementById('header');
-    window.addEventListener('scroll', () => {
-      header.classList.toggle('scrolled', window.scrollY > 60);
-    }, { passive: true });
+        <!-- Row 1 — condições clínicas -->
+        <a href="artigo_sindrome_ckm.html" class="conteudo-card rv">
+          <div class="conteudo-card-icon" style="background:rgba(196,163,90,0.1); color:var(--gold);">&#9829;</div>
+          <h3>Síndrome CKM</h3>
+          <p>Rim, coração e metabolismo: o que é a síndrome cardiovascular-renal-metabólica e seus 5 estágios.</p>
+          <span class="card-arrow">Ler artigo &rarr;</span>
+        </a>
 
-    // ===== HEADER DROPDOWN =====
-    const dropdown = document.getElementById('headerDropdown');
-    if (dropdown) {
-      const trigger = dropdown.querySelector('.header-dropdown-trigger');
-      trigger.addEventListener('click', (e) => {
-        e.stopPropagation();
-        const isOpen = dropdown.classList.toggle('open');
-        trigger.setAttribute('aria-expanded', isOpen);
-      });
-      document.addEventListener('click', (e) => {
-        if (!dropdown.contains(e.target)) {
-          dropdown.classList.remove('open');
-          trigger.setAttribute('aria-expanded', 'false');
-        }
-      });
-    }
+        <a href="artigo_hipertensao_rim.html" class="conteudo-card rv" style="transition-delay:0.05s">
+          <div class="conteudo-card-icon" style="background:rgba(231,76,60,0.08); color:#E74C3C;">&#9733;</div>
+          <h3>Hipertensão e Rim</h3>
+          <p>A pressão alta silenciosa que destrói os rins: como identificar e proteger a função renal.</p>
+          <span class="card-arrow">Ler artigo &rarr;</span>
+        </a>
 
-    // ===== HERO SLIDESHOW =====
-    const slides = document.querySelectorAll('.hero-slide');
-    const dots = document.querySelectorAll('.hero-dot');
-    let currentSlide = 0;
-    let slideInterval;
+        <a href="artigo_diabetes_rim.html" class="conteudo-card rv" style="transition-delay:0.1s">
+          <div class="conteudo-card-icon" style="background:rgba(230,126,34,0.08); color:#E67E22;">&#9880;</div>
+          <h3>Diabetes e Rim</h3>
+          <p>Nefropatia diabética: 1 em cada 3 diabéticos desenvolve doença renal. Sinais precoces e proteção.</p>
+          <span class="card-arrow">Ler artigo &rarr;</span>
+        </a>
 
-    function goToSlide(i) {
-      slides[currentSlide].classList.remove('active');
-      dots[currentSlide].classList.remove('active');
-      currentSlide = i;
-      slides[currentSlide].classList.add('active');
-      dots[currentSlide].classList.add('active');
-    }
+        <!-- Row 2 — condições + lifestyle -->
+        <a href="artigo_obesidade_rim.html" class="conteudo-card rv" style="transition-delay:0.15s">
+          <div class="conteudo-card-icon" style="background:rgba(142,68,173,0.08); color:#8E44AD;">&#9878;</div>
+          <h3>Obesidade e Rim</h3>
+          <p>Além do peso na balança: como a gordura visceral agride os glomérulos e o que fazer.</p>
+          <span class="card-arrow">Ler artigo &rarr;</span>
+        </a>
 
-    function nextSlide() {
-      goToSlide((currentSlide + 1) % slides.length);
-    }
+        <a href="artigo_antiinflamatorio_rim.html" class="conteudo-card rv" style="transition-delay:0.2s">
+          <div class="conteudo-card-icon" style="background:rgba(2,128,144,0.08); color:var(--teal);">&#9883;</div>
+          <h3>Anti-inflamatórios e Rim</h3>
+          <p>O risco invisível do ibuprofeno e diclofenaco para quem já tem fator de risco renal.</p>
+          <span class="card-arrow">Ler artigo &rarr;</span>
+        </a>
 
-    function startSlideshow() {
-      slideInterval = setInterval(nextSlide, 5000);
-    }
+        <a href="artigo_exercicio_drc.html" class="conteudo-card rv" style="transition-delay:0.25s">
+          <div class="conteudo-card-icon" style="background:rgba(2,128,144,0.08); color:var(--teal);">&#9917;</div>
+          <h3>Exercício e Doença Renal</h3>
+          <p>Por que o exercício físico é remédio para o rim — e como prescrever com segurança na DRC.</p>
+          <span class="card-arrow">Ler artigo &rarr;</span>
+        </a>
 
-    dots.forEach(dot => {
-      dot.addEventListener('click', () => {
-        clearInterval(slideInterval);
-        goToSlide(parseInt(dot.dataset.slide));
-        startSlideshow();
-      });
-    });
+        <!-- Row 3 — centrado -->
+        <a href="artigo_wearables.html" class="conteudo-card rv" style="transition-delay:0.3s; grid-column: 2;">
+          <div class="conteudo-card-icon" style="background:rgba(2,128,144,0.08); color:var(--teal);">&#9201;</div>
+          <h3>Wearables e Saúde Digital</h3>
+          <p>Monitoramento contínuo com Oura Ring e Apple Watch: métricas que importam na prática clínica.</p>
+          <span class="card-arrow">Ler artigo &rarr;</span>
+        </a>
 
-    startSlideshow();
-
-    // ===== PARTICLES =====
-    const particleContainer = document.getElementById('heroParticles');
-    const colors = ['var(--teal)', 'var(--teal-light)', 'var(--gold)', 'rgba(255,255,255,0.3)'];
-    for (let i = 0; i < 15; i++) {
-      const p = document.createElement('div');
-      p.className = 'hero-particle';
-      const size = 3 + Math.random() * 5;
-      p.style.cssText = `
-        width:${size}px; height:${size}px;
-        left:${Math.random()*100}%; top:${Math.random()*100}%;
-        background:${colors[Math.floor(Math.random()*colors.length)]};
-        animation-delay:${Math.random()*6}s;
-        animation-duration:${4+Math.random()*4}s;
-      `;
-      particleContainer.appendChild(p);
-    }
-
-    // ===== SCROLL REVEAL =====
-    const revealObserver = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-          entry.target.querySelectorAll('.count-up:not(.counted)').forEach(el => {
-            el.classList.add('counted');
-            countUp(el);
-          });
-        }
-      });
-    }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
-
-    document.querySelectorAll('.rv').forEach(el => revealObserver.observe(el));
-
-    // ===== COUNT UP =====
-    function easeOutCubic(t) { return 1 - Math.pow(1 - t, 3); }
-
-    function countUp(el) {
-      const target = parseInt(el.dataset.target);
-      const duration = 1800;
-      const start = performance.now();
-
-      function update(now) {
-        const elapsed = now - start;
-        const progress = Math.min(elapsed / duration, 1);
-        const value = Math.round(easeOutCubic(progress) * target);
-        el.textContent = value;
-        if (progress < 1) requestAnimationFrame(update);
-      }
-      requestAnimationFrame(update);
-    }
-
-    // ===== PROGRESS BAR =====
-    const progressFill = document.getElementById('progressFill');
-    const progressWrap = document.getElementById('progressWrap');
-    let progressFired = false;
-
-    const progressObserver = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting && !progressFired) {
-          progressFired = true;
-          progressFill.style.width = '68%';
-          progressFill.classList.add('animated');
-        }
-      });
-    }, { threshold: 0.3 });
-
-    progressObserver.observe(progressWrap);
-
-    // ===== FAQ ACCORDION =====
-    document.querySelectorAll('.faq-q').forEach(btn => {
-      btn.addEventListener('click', () => {
-        const item = btn.parentElement;
-        const wasOpen = item.classList.contains('open');
-        document.querySelectorAll('.faq-item.open').forEach(i => i.classList.remove('open'));
-        if (!wasOpen) item.classList.add('open');
-      });
-    });
-
-    // ===== SMOOTH SCROLL =====
-    document.querySelectorAll('a[href^="#"]').forEach(a => {
-      a.addEventListener('click', (e) => {
-        const target = document.querySelector(a.getAttribute('href'));
-        if (target) {
-          e.preventDefault();
-          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }
-      });
-    });
-
-    // ===== LUCIDE ICONS =====
-    lucide.createIcons();
-  </script>
-</body>
-</html>
+        <!-- Full-width — indicadores -->
+        <a href="dados-apex.html" class="conteudo-card conteudo-full rv" style="transition-delay:0.35s">
+          <div>
+            <h3>Indicadores de Qualidade Clínica</h3>
+            <p>25+ indicadores em 6 domínios — desfechos, nutrição, adequação, qualidade de vida, cardiovascular e composição corporal.</p>
+          </div>
+          <span 
