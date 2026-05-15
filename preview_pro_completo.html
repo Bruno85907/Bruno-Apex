@@ -94,7 +94,7 @@ body{font-family:var(--font-sans);background:var(--navy-deep);color:var(--text);
   border-right:1px solid rgba(196,163,90,0.15);
   overflow:hidden;transition:width .3s cubic-bezier(.4,0,.2,1);
 }
-.sb-logo{padding:24px 22px 20px;border-bottom:1px solid rgba(255,255,255,0.06);flex-shrink:0;}
+.sb-logo{padding:24px 22px 20px;border-bottom:1px solid rgba(196,163,90,0.12);flex-shrink:0;}
 .sb-logo-brand{font-family:var(--font-sans);font-size:16px;font-weight:700;color:#fff;letter-spacing:1.5px;}
 .sb-logo-brand span{color:var(--gold);}
 .sb-logo-context{font-size:10px;color:rgba(255,255,255,0.35);margin-top:4px;letter-spacing:0.5px;}
@@ -103,46 +103,49 @@ body{font-family:var(--font-sans);background:var(--navy-deep);color:var(--text);
 .sb-nav::-webkit-scrollbar{width:4px;}
 .sb-nav::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.1);border-radius:4px;}
 
-.sb-item{display:flex;align-items:center;gap:12px;padding:10px 22px;margin:1px 8px;border-radius:8px;
-  font-size:12px;font-weight:500;color:rgba(255,255,255,0.55);cursor:pointer;transition:all .2s;user-select:none;position:relative;}
-.sb-item:hover{color:rgba(255,255,255,0.85);background:rgba(255,255,255,0.04);}
-.sb-item.active{color:var(--gold);background:rgba(196,163,90,0.1);}
-.sb-item.active::before{content:'';position:absolute;left:0;top:50%;transform:translateY(-50%);width:3px;height:20px;border-radius:0 3px 3px 0;background:var(--gold);}
-.sb-item-icon{width:18px;height:18px;display:flex;align-items:center;justify-content:center;flex-shrink:0;opacity:0.7;}
+.sb-item{display:flex;align-items:center;gap:12px;padding:11px 22px;margin:2px 10px;border-radius:10px;
+  font-size:13px;font-weight:600;color:rgba(255,255,255,0.6);cursor:pointer;transition:all .25s cubic-bezier(.4,0,.2,1);user-select:none;position:relative;letter-spacing:0.2px;}
+.sb-item:hover{color:#fff;background:rgba(255,255,255,0.07);transform:translateX(2px);}
+.sb-item.active{color:var(--gold);background:linear-gradient(135deg,rgba(196,163,90,0.12),rgba(196,163,90,0.06));box-shadow:0 2px 8px rgba(196,163,90,0.08);}
+.sb-item.active::before{content:'';position:absolute;left:0;top:50%;transform:translateY(-50%);width:3px;height:22px;border-radius:0 3px 3px 0;background:linear-gradient(180deg,var(--gold),var(--gold-light));}
+.sb-item-icon{width:18px;height:18px;display:flex;align-items:center;justify-content:center;flex-shrink:0;opacity:0.65;}
+.sb-item:hover .sb-item-icon{opacity:1;}
 .sb-item.active .sb-item-icon{opacity:1;}
 
-.sb-module-label{display:flex;align-items:center;gap:12px;padding:10px 22px;margin:1px 8px;border-radius:8px;
-  font-size:12px;font-weight:500;color:rgba(255,255,255,0.55);cursor:pointer;transition:all .2s;user-select:none;}
-.sb-module-label:hover{color:rgba(255,255,255,0.85);background:rgba(255,255,255,0.04);}
-.sb-module-label.open{color:rgba(255,255,255,0.85);}
-.sb-module-icon{width:18px;height:18px;display:flex;align-items:center;justify-content:center;flex-shrink:0;opacity:0.7;}
+.sb-module-label{display:flex;align-items:center;gap:12px;padding:11px 22px;margin:2px 10px;border-radius:10px;
+  font-size:13px;font-weight:600;color:rgba(255,255,255,0.6);cursor:pointer;transition:all .25s cubic-bezier(.4,0,.2,1);user-select:none;letter-spacing:0.2px;}
+.sb-module-label:hover{color:#fff;background:rgba(255,255,255,0.07);transform:translateX(2px);}
+.sb-module-label.open{color:#fff;}
+.sb-module-icon{width:18px;height:18px;display:flex;align-items:center;justify-content:center;flex-shrink:0;opacity:0.65;}
+.sb-module-label:hover .sb-module-icon{opacity:1;}
 .sb-module-label.open .sb-module-icon{opacity:1;}
-.sb-chevron{margin-left:auto;font-size:10px;opacity:0.4;transition:transform .25s;}
-.sb-module-label.open .sb-chevron{transform:rotate(90deg);opacity:0.6;}
+.sb-chevron{margin-left:auto;font-size:10px;opacity:0.4;transition:transform .25s cubic-bezier(.4,0,.2,1);}
+.sb-module-label.open .sb-chevron{transform:rotate(90deg);opacity:0.7;color:var(--gold);}
 
 .sb-children{overflow:hidden;max-height:0;transition:max-height .3s ease;}
 .sb-children.open{max-height:500px;}
-.sb-child{display:flex;align-items:center;gap:10px;padding:8px 22px 8px 54px;margin:0 8px;border-radius:6px;
-  font-size:11px;font-weight:400;color:rgba(255,255,255,0.4);cursor:pointer;transition:all .2s;position:relative;}
-.sb-child:hover{color:rgba(255,255,255,0.75);background:rgba(255,255,255,0.03);}
+.sb-child{display:flex;align-items:center;gap:10px;padding:9px 22px 9px 54px;margin:1px 10px;border-radius:8px;
+  font-size:12px;font-weight:500;color:rgba(255,255,255,0.5);cursor:pointer;transition:all .25s cubic-bezier(.4,0,.2,1);position:relative;}
+.sb-child:hover{color:rgba(255,255,255,0.9);background:rgba(255,255,255,0.05);transform:translateX(2px);}
 .sb-child.active{color:var(--gold);font-weight:600;}
-.sb-child.active::before{content:'';position:absolute;left:40px;top:50%;transform:translateY(-50%);width:4px;height:4px;border-radius:50%;background:var(--gold);}
-.sb-child-dot{width:4px;height:4px;border-radius:50%;background:rgba(255,255,255,0.2);flex-shrink:0;transition:background .2s;}
-.sb-child.active .sb-child-dot{background:var(--gold);}
+.sb-child.active::before{content:'';position:absolute;left:40px;top:50%;transform:translateY(-50%);width:5px;height:5px;border-radius:50%;background:var(--gold);box-shadow:0 0 6px rgba(196,163,90,0.4);}
+.sb-child-dot{width:5px;height:5px;border-radius:50%;background:rgba(255,255,255,0.18);flex-shrink:0;transition:all .25s;}
+.sb-child:hover .sb-child-dot{background:rgba(255,255,255,0.5);}
+.sb-child.active .sb-child-dot{background:var(--gold);box-shadow:0 0 6px rgba(196,163,90,0.4);}
 
-.sb-divider{height:1px;background:rgba(255,255,255,0.06);margin:12px 22px;}
+.sb-divider{height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.06),rgba(196,163,90,0.08),rgba(255,255,255,0.06),transparent);margin:10px 18px;}
 
-.sb-footer{padding:16px 22px;border-top:1px solid rgba(255,255,255,0.06);flex-shrink:0;display:flex;flex-direction:column;gap:8px;}
-.sb-user{display:flex;align-items:center;gap:10px;}
-.sb-avatar{width:32px;height:32px;border-radius:50%;background:rgba(196,163,90,0.15);border:1px solid rgba(196,163,90,0.25);
+.sb-footer{padding:18px 22px;border-top:1px solid rgba(196,163,90,0.1);flex-shrink:0;display:flex;flex-direction:column;gap:10px;background:rgba(0,0,0,0.08);}
+.sb-user{display:flex;align-items:center;gap:12px;}
+.sb-avatar{width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,rgba(196,163,90,0.2),rgba(196,163,90,0.1));border:1.5px solid rgba(196,163,90,0.35);
   display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:var(--gold);}
 .sb-user-info{flex:1;min-width:0;}
-.sb-user-name{font-size:11px;font-weight:600;color:rgba(255,255,255,0.8);}
-.sb-user-role{font-size:9px;color:rgba(255,255,255,0.3);text-transform:uppercase;letter-spacing:0.5px;}
+.sb-user-name{font-size:12px;font-weight:600;color:rgba(255,255,255,0.9);}
+.sb-user-role{font-size:9px;color:rgba(255,255,255,0.4);text-transform:uppercase;letter-spacing:0.8px;margin-top:1px;}
 .sb-btn-sair{font-family:inherit;font-size:9px;font-weight:600;letter-spacing:1px;text-transform:uppercase;
-  color:rgba(255,255,255,0.35);background:transparent;border:1px solid rgba(255,255,255,0.1);
-  border-radius:6px;padding:7px 0;cursor:pointer;transition:all .2s;width:100%;text-align:center;}
-.sb-btn-sair:hover{color:rgba(255,200,200,0.7);border-color:rgba(255,200,200,0.2);}
+  color:rgba(255,255,255,0.4);background:transparent;border:1px solid rgba(255,255,255,0.1);
+  border-radius:8px;padding:8px 0;cursor:pointer;transition:all .25s;width:100%;text-align:center;}
+.sb-btn-sair:hover{color:rgba(255,200,200,0.8);border-color:rgba(255,200,200,0.25);background:rgba(255,200,200,0.04);}
 
 /* ============================================================
    MAIN CONTENT
@@ -774,7 +777,7 @@ body{font-family:var(--font-sans);background:var(--navy-deep);color:var(--text);
   <div class="login-form-side">
     <div class="login-form-wrap">
       <div class="login-logo-wrap">
-        <img src="landing-page/Logo.probranco-cropped.png" alt="APEX" style="height:54px;width:auto;">
+        <img src="landing-page/logo-apex-transparent.png" alt="Apex Health" style="height:48px;width:auto;">
       </div>
       <div class="login-welcome">Acesso <strong>profissional</strong></div>
       <div class="login-desc">Entre com suas credenciais para acessar indicadores, protocolos e gestão de pacientes.</div>
@@ -804,8 +807,7 @@ body{font-family:var(--font-sans);background:var(--navy-deep);color:var(--text);
   <!-- SIDEBAR -->
   <aside class="sidebar">
     <div class="sb-logo">
-      <img src="landing-page/Logo.probranco-cropped.png" alt="APEX" style="height:38px;width:auto;">
-      <div class="sb-logo-context">Fenix Nefrologia</div>
+      <img src="landing-page/logo-apex-transparent.png" alt="Apex Health" style="height:32px;width:auto;">
     </div>
     <nav class="sb-nav">
       <div class="sb-item active" data-page="dashboard" onclick="navTo('dashboard')">
@@ -1135,104 +1137,216 @@ body{font-family:var(--font-sans);background:var(--navy-deep);color:var(--text);
       <iframe id="ud-iframe" style="width:100%;border:none;min-height:calc(100vh - 80px);" src="about:blank"></iframe>
     </div>
 
-    <!-- PAGE: PAINEL EXECUTIVO (ex-Dashboards) -->
+    <!-- PAGE: PAINEL EXECUTIVO (Gestão) -->
     <div class="content-page" id="page-painel-executivo">
-      <p class="page-eyebrow rv">Qualidade Fenix</p>
+      <p class="page-eyebrow rv">Gestão</p>
       <h2 class="page-title rv">Painel <strong>Executivo</strong></h2>
-      <p class="page-desc rv">Visão integrada dos indicadores TRS Agudo e Crônico — Mont Serrat e rede de clínicas.</p>
+      <p class="page-desc rv">Visão consolidada de receita, ocupação, agenda e metas de crescimento.</p>
 
-      <!-- TRS AGUDO — RESUMO TRIMESTRAL -->
+      <!-- PERÍODO SELECTOR -->
+      <div class="pe-section rv" style="padding-bottom:0;">
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px;">
+          <span style="font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-3);">Período:</span>
+          <div style="display:flex;gap:6px;">
+            <button class="tpl-btn" onclick="pePeriodo(this,'mes')" style="font-size:11px;padding:6px 14px;border-radius:6px;border:1px solid var(--border);background:transparent;color:var(--text-2);cursor:pointer;font-family:inherit;font-weight:600;">Este mês</button>
+            <button class="tpl-btn active" onclick="pePeriodo(this,'tri')" style="font-size:11px;padding:6px 14px;border-radius:6px;border:1px solid var(--gold);background:rgba(196,163,90,0.08);color:var(--gold);cursor:pointer;font-family:inherit;font-weight:600;">Trimestre</button>
+            <button class="tpl-btn" onclick="pePeriodo(this,'ano')" style="font-size:11px;padding:6px 14px;border-radius:6px;border:1px solid var(--border);background:transparent;color:var(--text-2);cursor:pointer;font-family:inherit;font-weight:600;">Anual</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- RECEITA & FINANCEIRO -->
       <div class="pe-section rv">
-        <div class="pe-section-label">TRS Agudo — Mont Serrat (Fev–Abr/2026)</div>
+        <div class="pe-section-label">Receita e Financeiro</div>
         <div class="pe-kpi-grid" style="grid-template-columns:repeat(4,1fr);">
           <div class="pe-kpi-card">
-            <div class="pe-kpi-value" style="color:var(--teal);">37</div>
-            <div class="pe-kpi-label">Pacientes Atendidos</div>
-            <div class="pe-kpi-trend up">+375% <span>Fev→Abr</span></div>
+            <div style="font-size:10px;color:var(--text-3);font-weight:600;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;">Receita Bruta</div>
+            <div class="pe-kpi-value" style="color:var(--teal);font-size:28px;" id="pe-receita-bruta">—</div>
+            <div class="pe-kpi-label">Trimestre atual</div>
+            <div class="pe-kpi-trend neutral" id="pe-receita-trend">Aguardando dados</div>
           </div>
           <div class="pe-kpi-card">
-            <div class="pe-kpi-value" style="color:var(--navy);">159</div>
-            <div class="pe-kpi-label">Sessões Realizadas</div>
-            <div class="pe-kpi-trend up">+550% <span>Fev→Abr</span></div>
+            <div style="font-size:10px;color:var(--text-3);font-weight:600;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;">Receita Líquida</div>
+            <div class="pe-kpi-value" style="color:var(--navy);font-size:28px;" id="pe-receita-liq">—</div>
+            <div class="pe-kpi-label">Após impostos e glosas</div>
+            <div class="pe-kpi-trend neutral" id="pe-liq-trend">Aguardando dados</div>
           </div>
           <div class="pe-kpi-card">
-            <div class="pe-kpi-value" style="color:var(--gold);">46</div>
-            <div class="pe-kpi-label">Intercorrências</div>
-            <div class="pe-kpi-trend neutral">monitorar <span>crescimento</span></div>
+            <div style="font-size:10px;color:var(--text-3);font-weight:600;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;">Ticket Médio</div>
+            <div class="pe-kpi-value" style="color:var(--gold);font-size:28px;" id="pe-ticket">—</div>
+            <div class="pe-kpi-label">Por consulta/procedimento</div>
+            <div class="pe-kpi-trend neutral" id="pe-ticket-trend">Aguardando dados</div>
           </div>
           <div class="pe-kpi-card">
-            <div class="pe-kpi-value" style="color:var(--green);">91</div>
-            <div class="pe-kpi-label">Acessos Vasculares</div>
-            <div class="pe-kpi-trend stable">CDL 63% <span>predominante</span></div>
+            <div style="font-size:10px;color:var(--text-3);font-weight:600;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;">Inadimplência</div>
+            <div class="pe-kpi-value" style="color:var(--green);font-size:28px;" id="pe-inadimp">—</div>
+            <div class="pe-kpi-label">Taxa de glosas + atrasos</div>
+            <div class="pe-kpi-trend neutral" id="pe-inadimp-trend">Aguardando dados</div>
           </div>
         </div>
       </div>
 
-      <!-- COMPARATIVO MENSAL AGUDO -->
+      <!-- OCUPAÇÃO & AGENDA -->
       <div class="pe-section rv">
-        <div class="pe-section-label">Evolução Mensal — TRS Agudo</div>
-        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;">
-          <!-- FEV -->
-          <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:24px;box-shadow:var(--shadow-card);">
-            <div style="font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--text-3);margin-bottom:12px;">Fevereiro/2026</div>
-            <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
-              <div><div style="font-family:var(--font-serif);font-size:28px;color:var(--navy);">4</div><div style="font-size:10px;color:var(--text-3);">Pacientes</div></div>
-              <div><div style="font-family:var(--font-serif);font-size:28px;color:var(--teal);">14</div><div style="font-size:10px;color:var(--text-3);">Sessões</div></div>
-            </div>
-            <div style="margin-top:12px;font-size:11px;color:var(--text-2);line-height:1.7;">
-              <strong>Modalidades:</strong> HD 14<br>
-              <strong>ICs:</strong> 1
+        <div class="pe-section-label">Ocupação e Agenda</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+          <!-- Ocupação -->
+          <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:28px;box-shadow:var(--shadow-card);">
+            <div style="font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-3);margin-bottom:16px;">Taxa de Ocupação — Agenda</div>
+            <div style="display:flex;align-items:center;gap:24px;">
+              <div style="position:relative;width:100px;height:100px;">
+                <svg viewBox="0 0 36 36" style="width:100px;height:100px;transform:rotate(-90deg);">
+                  <circle cx="18" cy="18" r="15.9" fill="none" stroke="rgba(30,45,80,0.06)" stroke-width="3"/>
+                  <circle cx="18" cy="18" r="15.9" fill="none" stroke="var(--teal)" stroke-width="3" stroke-dasharray="0 100" stroke-linecap="round" id="pe-ocup-ring"/>
+                </svg>
+                <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:var(--font-serif);font-size:22px;font-weight:700;color:var(--navy);" id="pe-ocup-pct">—</div>
+              </div>
+              <div style="flex:1;">
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+                  <div>
+                    <div style="font-family:var(--font-serif);font-size:24px;color:var(--navy);" id="pe-slots-total">—</div>
+                    <div style="font-size:10px;color:var(--text-3);">Slots disponíveis/mês</div>
+                  </div>
+                  <div>
+                    <div style="font-family:var(--font-serif);font-size:24px;color:var(--teal);" id="pe-slots-preenchidos">—</div>
+                    <div style="font-size:10px;color:var(--text-3);">Slots preenchidos</div>
+                  </div>
+                  <div>
+                    <div style="font-family:var(--font-serif);font-size:24px;color:var(--gold);" id="pe-no-show">—</div>
+                    <div style="font-size:10px;color:var(--text-3);">No-shows</div>
+                  </div>
+                  <div>
+                    <div style="font-family:var(--font-serif);font-size:24px;color:var(--green);" id="pe-retornos">—</div>
+                    <div style="font-size:10px;color:var(--text-3);">Retornos agendados</div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
-          <!-- MAR -->
-          <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:24px;box-shadow:var(--shadow-card);">
-            <div style="font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--text-3);margin-bottom:12px;">Março/2026</div>
-            <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
-              <div><div style="font-family:var(--font-serif);font-size:28px;color:var(--navy);">14</div><div style="font-size:10px;color:var(--text-3);">Pacientes</div></div>
-              <div><div style="font-family:var(--font-serif);font-size:28px;color:var(--teal);">54</div><div style="font-size:10px;color:var(--text-3);">Sessões</div></div>
-            </div>
-            <div style="margin-top:12px;font-size:11px;color:var(--text-2);line-height:1.7;">
-              <strong>Modalidades:</strong> HD 52, SLED 2<br>
-              <strong>ICs:</strong> 7
-            </div>
-          </div>
-          <!-- ABR -->
-          <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:24px;box-shadow:var(--shadow-card);border-left:3px solid var(--gold);">
-            <div style="font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:12px;">Abril/2026 — Atual</div>
-            <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
-              <div><div style="font-family:var(--font-serif);font-size:28px;color:var(--navy);">19</div><div style="font-size:10px;color:var(--text-3);">Pacientes</div></div>
-              <div><div style="font-family:var(--font-serif);font-size:28px;color:var(--teal);">91</div><div style="font-size:10px;color:var(--text-3);">Sessões</div></div>
-            </div>
-            <div style="margin-top:12px;font-size:11px;color:var(--text-2);line-height:1.7;">
-              <strong>Modalidades:</strong> HD 80, SLED 6, Plasmaférese 5<br>
-              <strong>ICs:</strong> 38 (13 tipos)<br>
-              <strong>Acessos:</strong> CDL 57, FAV 22, Permcath 12
+          <!-- Mix de Atendimentos -->
+          <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:28px;box-shadow:var(--shadow-card);">
+            <div style="font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-3);margin-bottom:16px;">Mix de Atendimentos</div>
+            <div style="display:flex;flex-direction:column;gap:14px;" id="pe-mix-container">
+              <div class="pe-bar-row">
+                <span style="font-size:11px;font-weight:600;color:var(--text);min-width:120px;">Consulta APEX</span>
+                <div style="flex:1;height:24px;background:rgba(30,45,80,0.04);border-radius:6px;overflow:hidden;position:relative;">
+                  <div style="height:100%;background:linear-gradient(90deg,var(--teal),var(--teal-light));border-radius:6px;width:0%;transition:width 1s ease;" class="pe-bar" data-width="0"></div>
+                </div>
+                <span style="font-size:12px;font-weight:700;color:var(--navy);min-width:32px;text-align:right;" id="pe-mix-apex">—</span>
+              </div>
+              <div class="pe-bar-row">
+                <span style="font-size:11px;font-weight:600;color:var(--text);min-width:120px;">TRS Agudo</span>
+                <div style="flex:1;height:24px;background:rgba(30,45,80,0.04);border-radius:6px;overflow:hidden;position:relative;">
+                  <div style="height:100%;background:linear-gradient(90deg,var(--navy),var(--navy-mid));border-radius:6px;width:0%;transition:width 1s ease;" class="pe-bar" data-width="0"></div>
+                </div>
+                <span style="font-size:12px;font-weight:700;color:var(--navy);min-width:32px;text-align:right;" id="pe-mix-agudo">—</span>
+              </div>
+              <div class="pe-bar-row">
+                <span style="font-size:11px;font-weight:600;color:var(--text);min-width:120px;">TRS Crônico</span>
+                <div style="flex:1;height:24px;background:rgba(30,45,80,0.04);border-radius:6px;overflow:hidden;position:relative;">
+                  <div style="height:100%;background:linear-gradient(90deg,var(--gold),var(--gold-light));border-radius:6px;width:0%;transition:width 1s ease;" class="pe-bar" data-width="0"></div>
+                </div>
+                <span style="font-size:12px;font-weight:700;color:var(--navy);min-width:32px;text-align:right;" id="pe-mix-cronico">—</span>
+              </div>
+              <div class="pe-bar-row">
+                <span style="font-size:11px;font-weight:600;color:var(--text);min-width:120px;">Assinaturas</span>
+                <div style="flex:1;height:24px;background:rgba(30,45,80,0.04);border-radius:6px;overflow:hidden;position:relative;">
+                  <div style="height:100%;background:linear-gradient(90deg,var(--green),#6fbf65);border-radius:6px;width:0%;transition:width 1s ease;" class="pe-bar" data-width="0"></div>
+                </div>
+                <span style="font-size:12px;font-weight:700;color:var(--navy);min-width:32px;text-align:right;" id="pe-mix-assinaturas">—</span>
+              </div>
             </div>
           </div>
         </div>
       </div>
 
-      <!-- TRS CRÔNICO — REDE -->
+      <!-- CRESCIMENTO & FUNIL -->
       <div class="pe-section rv">
-        <div class="pe-section-label">TRS Crônico — Rede de Clínicas</div>
-        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;">
-          <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:24px;box-shadow:var(--shadow-card);text-align:center;">
+        <div class="pe-section-label">Crescimento e Funil</div>
+        <div class="pe-kpi-grid" style="grid-template-columns:repeat(4,1fr);">
+          <div class="pe-kpi-card" style="border-top:3px solid var(--teal);">
+            <div style="font-size:10px;color:var(--text-3);font-weight:600;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;">Leads (mês)</div>
+            <div class="pe-kpi-value" style="color:var(--teal);font-size:32px;" id="pe-leads">—</div>
+            <div class="pe-kpi-label">Via site + WhatsApp + IA</div>
+          </div>
+          <div class="pe-kpi-card" style="border-top:3px solid var(--navy);">
+            <div style="font-size:10px;color:var(--text-3);font-weight:600;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;">Agendamentos</div>
+            <div class="pe-kpi-value" style="color:var(--navy);font-size:32px;" id="pe-agendamentos">—</div>
+            <div class="pe-kpi-label">Primeiras consultas</div>
+          </div>
+          <div class="pe-kpi-card" style="border-top:3px solid var(--gold);">
+            <div style="font-size:10px;color:var(--text-3);font-weight:600;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;">Conversão</div>
+            <div class="pe-kpi-value" style="color:var(--gold);font-size:32px;" id="pe-conversao">—</div>
+            <div class="pe-kpi-label">Lead → Consulta</div>
+          </div>
+          <div class="pe-kpi-card" style="border-top:3px solid var(--green);">
+            <div style="font-size:10px;color:var(--text-3);font-weight:600;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;">Retenção</div>
+            <div class="pe-kpi-value" style="color:var(--green);font-size:32px;" id="pe-retencao">—</div>
+            <div class="pe-kpi-label">Pacientes recorrentes</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- OKRs ATIVOS -->
+      <div class="pe-section rv">
+        <div class="pe-section-label">OKRs — Objetivos do Trimestre</div>
+        <div style="display:flex;flex-direction:column;gap:12px;" id="pe-okrs-container">
+          <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:20px 24px;box-shadow:var(--shadow-card);">
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;">
+              <div style="font-size:13px;font-weight:700;color:var(--navy);">Expandir base APEX para 30 pacientes ativos</div>
+              <span style="font-size:11px;font-weight:700;color:var(--teal);" id="pe-okr1-pct">—</span>
+            </div>
+            <div style="height:6px;background:rgba(30,45,80,0.06);border-radius:3px;overflow:hidden;">
+              <div style="height:100%;background:linear-gradient(90deg,var(--teal),var(--teal-light));border-radius:3px;width:0%;transition:width 1.2s ease;" id="pe-okr1-bar"></div>
+            </div>
+            <div style="margin-top:8px;font-size:11px;color:var(--text-3);">KR: consultas agendadas, assinaturas ativas, NPS &gt; 9</div>
+          </div>
+          <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:20px 24px;box-shadow:var(--shadow-card);">
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;">
+              <div style="font-size:13px;font-weight:700;color:var(--navy);">Implantar TRS em 3 unidades crônicas</div>
+              <span style="font-size:11px;font-weight:700;color:var(--gold);" id="pe-okr2-pct">—</span>
+            </div>
+            <div style="height:6px;background:rgba(30,45,80,0.06);border-radius:3px;overflow:hidden;">
+              <div style="height:100%;background:linear-gradient(90deg,var(--gold),var(--gold-light));border-radius:3px;width:0%;transition:width 1.2s ease;" id="pe-okr2-bar"></div>
+            </div>
+            <div style="margin-top:8px;font-size:11px;color:var(--text-3);">KR: República do Líbano, Santos, Tatuapé — contratos assinados</div>
+          </div>
+          <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:20px 24px;box-shadow:var(--shadow-card);">
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;">
+              <div style="font-size:13px;font-weight:700;color:var(--navy);">Atingir ocupação de 80% na agenda</div>
+              <span style="font-size:11px;font-weight:700;color:var(--green);" id="pe-okr3-pct">—</span>
+            </div>
+            <div style="height:6px;background:rgba(30,45,80,0.06);border-radius:3px;overflow:hidden;">
+              <div style="height:100%;background:linear-gradient(90deg,var(--green),#6fbf65);border-radius:3px;width:0%;transition:width 1.2s ease;" id="pe-okr3-bar"></div>
+            </div>
+            <div style="margin-top:8px;font-size:11px;color:var(--text-3);">KR: slots preenchidos, no-show &lt; 10%, retornos &gt; 60%</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- UNIDADES -->
+      <div class="pe-section rv">
+        <div class="pe-section-label">Unidades — Rede Fenix</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:16px;">
+          <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:22px;box-shadow:var(--shadow-card);text-align:center;border-top:3px solid var(--teal);">
+            <div style="font-size:10px;font-weight:700;color:var(--text-3);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;">Mont Serrat</div>
+            <div style="font-size:10px;color:var(--text-3);margin-bottom:8px;">TRS Agudo</div>
+            <span style="font-size:9px;font-weight:600;padding:3px 10px;border-radius:6px;background:rgba(2,128,144,0.08);color:var(--teal);border:1px solid rgba(2,128,144,0.2);">Ativo</span>
+          </div>
+          <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:22px;box-shadow:var(--shadow-card);text-align:center;border-top:3px solid rgba(245,158,11,0.5);">
             <div style="font-size:10px;font-weight:700;color:var(--text-3);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;">República do Líbano</div>
-            <div style="font-family:var(--font-serif);font-size:32px;color:var(--navy);margin-bottom:4px;">—</div>
-            <div style="font-size:10px;color:var(--text-3);">Aguardando lançamento</div>
-            <div style="margin-top:12px;"><span style="font-size:9px;font-weight:600;padding:3px 10px;border-radius:6px;background:rgba(245,158,11,0.08);color:#F59E0B;border:1px solid rgba(245,158,11,0.2);">Pendente</span></div>
+            <div style="font-size:10px;color:var(--text-3);margin-bottom:8px;">TRS Crônico</div>
+            <span style="font-size:9px;font-weight:600;padding:3px 10px;border-radius:6px;background:rgba(245,158,11,0.08);color:#F59E0B;border:1px solid rgba(245,158,11,0.2);">Implantação</span>
           </div>
-          <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:24px;box-shadow:var(--shadow-card);text-align:center;">
+          <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:22px;box-shadow:var(--shadow-card);text-align:center;border-top:3px solid rgba(245,158,11,0.5);">
             <div style="font-size:10px;font-weight:700;color:var(--text-3);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;">Santos</div>
-            <div style="font-family:var(--font-serif);font-size:32px;color:var(--navy);margin-bottom:4px;">—</div>
-            <div style="font-size:10px;color:var(--text-3);">Aguardando lançamento</div>
-            <div style="margin-top:12px;"><span style="font-size:9px;font-weight:600;padding:3px 10px;border-radius:6px;background:rgba(245,158,11,0.08);color:#F59E0B;border:1px solid rgba(245,158,11,0.2);">Pendente</span></div>
+            <div style="font-size:10px;color:var(--text-3);margin-bottom:8px;">TRS Crônico</div>
+            <span style="font-size:9px;font-weight:600;padding:3px 10px;border-radius:6px;background:rgba(245,158,11,0.08);color:#F59E0B;border:1px solid rgba(245,158,11,0.2);">Implantação</span>
           </div>
-          <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:24px;box-shadow:var(--shadow-card);text-align:center;">
+          <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:22px;box-shadow:var(--shadow-card);text-align:center;border-top:3px solid rgba(245,158,11,0.5);">
             <div style="font-size:10px;font-weight:700;color:var(--text-3);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;">Tatuapé</div>
-            <div style="font-family:var(--font-serif);font-size:32px;color:var(--navy);margin-bottom:4px;">—</div>
-            <div style="font-size:10px;color:var(--text-3);">Aguardando lançamento</div>
-            <div style="margin-top:12px;"><span style="font-size:9px;font-weight:600;padding:3px 10px;border-radius:6px;background:rgba(245,158,11,0.08);color:#F59E0B;border:1px solid rgba(245,158,11,0.2);">Pendente</span></div>
+            <div style="font-size:10px;color:var(--text-3);margin-bottom:8px;">TRS Crônico</div>
+            <span style="font-size:9px;font-weight:600;padding:3px 10px;border-radius:6px;background:rgba(245,158,11,0.08);color:#F59E0B;border:1px solid rgba(245,158,11,0.2);">Implantação</span>
           </div>
         </div>
       </div>
@@ -2447,7 +2561,7 @@ body{font-family:var(--font-sans);background:var(--navy-deep);color:var(--text);
             <div class="f-group"><label>Hemoglobina (g/dL)</label><input type="number" id="ex-hb" step="0.1" placeholder="12.0"></div>
             <div class="f-group"><label>Hematócrito (%)</label><input type="number" id="ex-ht" step="0.1" placeholder="36"></div>
             <div class="f-group"><label>Leucócitos (/mm³)</label><input type="number" id="ex-leuco" placeholder="7500"></div>
-            <div class="f-group"><label>Plaquetas (x10³)</label><input type="number" id="ex-plaq" placeholder="250"></div>
+            <div class="f-group"><label>Plaquetas (x10³)</label><input type="number" id="ex-plaq" placeholder="250" oninput="autoCalcFIB4()"></div>
           </div>
         </div>
 
@@ -2499,6 +2613,10 @@ body{font-family:var(--font-sans);background:var(--navy-deep);color:var(--text);
               <label>TFGe (auto)</label>
               <input type="text" id="ex-tfge" readonly style="opacity:.7;background:rgba(2,128,144,0.04);font-weight:600;" placeholder="—">
             </div>
+            <div class="f-group">
+              <label>FIB-4 (auto)</label>
+              <input type="text" id="ex-fib4" readonly style="opacity:.7;background:rgba(131,56,149,0.04);font-weight:600;" placeholder="—">
+            </div>
           </div>
         </div>
 
@@ -2513,6 +2631,12 @@ body{font-family:var(--font-sans);background:var(--navy-deep);color:var(--text);
             <div class="f-group"><label>Vitamina D (ng/mL)</label><input type="number" id="ex-vitd" step="0.1" placeholder="30"></div>
             <div class="f-group"><label>Ferritina (ng/mL)</label><input type="number" id="ex-ferr" placeholder="100"></div>
             <div class="f-group"><label>PTH (pg/mL)</label><input type="number" id="ex-pth" placeholder="45"></div>
+          </div>
+          <div class="f-row">
+            <div class="f-group"><label>Cálcio sérico (mg/dL)</label><input type="number" id="ex-ca-serico" step="0.1" placeholder="9.5"></div>
+            <div class="f-group"><label>Fósforo (mg/dL)</label><input type="number" id="ex-fosforo" step="0.1" placeholder="3.5"></div>
+            <div class="f-group"><label>Ferro sérico (mcg/dL)</label><input type="number" id="ex-ferro" placeholder="80"></div>
+            <div class="f-group"><label>IST (%)</label><input type="number" id="ex-ist" step="0.1" placeholder="25"></div>
           </div>
         </div>
 
@@ -4431,7 +4555,21 @@ function autoCalcTFGe() {
   }
 }
 
-function autoCalcFIB4() {}
+function autoCalcFIB4() {
+  var idade = getIdade();
+  var ast = parseFloat(document.getElementById('ex-ast').value);
+  var alt_v = parseFloat(document.getElementById('ex-alt').value);
+  var plaq = parseFloat(document.getElementById('ex-plaq').value);
+  var fib4 = calcFIB4(idade, ast, alt_v, plaq);
+  var el = document.getElementById('ex-fib4');
+  if (el) {
+    if (!isNaN(fib4)) {
+      el.value = fib4.toFixed(2);
+    } else {
+      el.value = '';
+    }
+  }
+}
 
 function preencherTemplatesEF() {
   var templates = {
@@ -4730,6 +4868,37 @@ function runTratamento(){
   if(!isNaN(vitd)&&vitd<20){
     condutas.push({cat:'Hipovitaminose D',cor:'var(--ckm-amber)',drugs:[{d:'Colecalciferol 50.000 UI/sem x 8 sem, depois 1000-2000 UI/dia',e:'Manutenção'}]});
     prescricao.push('Colecalciferol 50.000 UI/sem x 8 sem');
+  }
+
+  // CKD-MBD (distúrbios minerais)
+  var fosforo=parseFloat(document.getElementById('ex-fosforo').value);
+  var ca_s=parseFloat(document.getElementById('ex-ca-serico').value);
+  var pth=parseFloat(document.getElementById('ex-pth').value);
+  if(!isNaN(fosforo)&&fosforo>4.5&&!isNaN(tfge)&&tfge<45){
+    condutas.push({cat:'Hiperfosfatemia',cor:'var(--ckm-orange)',drugs:[{d:'Sevelamer 800mg 3x/dia às refeições',e:'KDIGO 2024 — meta P < 4.5'},{d:'Dieta hipofosfatêmica (< 800mg/dia)',e:'Nutricional'}]});
+    prescricao.push('Sevelamer 800mg 3x/dia às refeições');
+  }
+  if(!isNaN(pth)&&pth>130&&!isNaN(tfge)&&tfge<45){
+    var drPTH=[{d:'Calcitriol 0.25mcg/dia (se Ca < 9.5)',e:'KDIGO 2024'}];
+    if(pth>585)drPTH.push({d:'Cinacalcete 30mg/dia (se Ca > 8.4)',e:'HPT2 grave'});
+    condutas.push({cat:'Hiperparatireoidismo secundário',cor:'var(--ckm-pink)',drugs:drPTH});
+    drPTH.forEach(function(d){prescricao.push(d.d);});
+  }
+
+  // Hiperuricemia com DRC
+  var au=parseFloat(document.getElementById('ex-au').value);
+  if(!isNaN(au)&&au>9&&!isNaN(tfge)&&tfge<60){
+    condutas.push({cat:'Hiperuricemia',cor:'var(--navy)',drugs:[{d:'Alopurinol 100-300mg/dia (ajustar para TFGe)',e:'Se sintomático ou gota'}]});
+    prescricao.push('Alopurinol 100-300mg/dia');
+  }
+
+  // Anemia — expandido com IST/Ferritina
+  var ist=parseFloat(document.getElementById('ex-ist').value);
+  var ferr=parseFloat(document.getElementById('ex-ferr').value);
+  if(!isNaN(hb)&&hb<10&&!isNaN(tfge)&&tfge<60){
+    if((!isNaN(ist)&&ist<20)||(!isNaN(ferr)&&ferr<100)){
+      alertas.push({t:'info',m:'Deficiência de ferro: IST < 20% ou Ferritina < 100 — repor ferro IV antes de ESA'});
+    }
   }
 
   // Render alertas
@@ -5089,14 +5258,40 @@ function calcCKM(imc, pas, gj, hba1c, tfge) {
     if (t === 'DRC') hasDRC = true;
   });
 
+  /* AHA 2023 (Ndumele) CKM Staging */
+  var sexo = getSexo();
+  var ca = parseFloat(document.getElementById('ef-ca').value);
+  var pad = parseFloat(document.getElementById('ef-pad').value);
+  var tg = parseFloat(document.getElementById('ex-tg').value);
+  var hdl = parseFloat(document.getElementById('ex-hdl').value);
+  var rac = parseFloat(document.getElementById('ex-rac').value);
+  var limCA = sexo === 'M' ? 94 : 80;
+  var limHDL = sexo === 'M' ? 40 : 50;
+
   var stage = 0;
-  if (!isNaN(imc) && imc >= 30) stage = 1;
-  if (hasHAS || hasDLP || (!isNaN(gj) && gj >= 100) || (!isNaN(hba1c) && hba1c >= 5.7)) stage = 2;
-  if (hasDM2 || hasDRC || (!isNaN(tfge) && tfge < 60)) stage = 3;
+
+  /* Stage 1: Excesso de adiposidade (IMC ≥ 25 ou CA elevada) */
+  if ((!isNaN(imc) && imc >= 25) || (!isNaN(ca) && ca >= limCA)) stage = 1;
+
+  /* Stage 2: Fatores de risco metabólicos OU DRC moderada+
+     HAS (checkbox ou PA ≥ 130/80), DLP (checkbox ou TG ≥ 150 ou HDL baixo),
+     pré-diabetes (GJ ≥ 100 ou HbA1c ≥ 5.7),
+     DRC moderada (TFGe < 60 ou RAC ≥ 30) */
+  if (hasHAS || hasDLP ||
+      (!isNaN(pas) && pas >= 130) || (!isNaN(pad) && pad >= 80) ||
+      (!isNaN(tg) && tg >= 150) || (!isNaN(hdl) && hdl < limHDL) ||
+      (!isNaN(gj) && gj >= 100) || (!isNaN(hba1c) && hba1c >= 5.7) ||
+      (!isNaN(tfge) && tfge < 60) || (!isNaN(rac) && rac >= 30)) stage = 2;
+
+  /* Stage 3: DM2 com DRC de alto risco OU risco CV predito muito alto */
+  if (hasDM2 || (hasDRC && (!isNaN(tfge) && tfge < 60)) ||
+      (hasDRC && (!isNaN(rac) && rac >= 300))) stage = 3;
+
+  /* Stage 4: DCV clínica (IC, IAM, AVC, DAP) */
   if (hasIC || hasIAM || hasAVC || hasDAP) stage = 4;
 
   document.getElementById('ckm-s' + stage).classList.add('active-stage');
-  var ckmCls = stage <= 1 ? 'b-gn' : stage === 2 ? 'b-yl' : stage === 3 ? 'b-pr' : 'b-rd';
+  var ckmCls = stage === 0 ? 'b-gn' : stage === 1 ? 'b-gn' : stage === 2 ? 'b-yl' : stage === 3 ? 'b-pr' : 'b-rd';
   setBadge('badge-ckm', 'CKM ' + stage, ckmCls);
 }
 
@@ -5186,10 +5381,12 @@ function collectProntuario() {
     calculos: {
       imc: getText('cl-imc-val'),
       tfge: getText('cl-tfge-val'),
-      ascvd: getText('cl-ascvd-val'),
-      kfre2: getText('cl-kfre2-val'),
-      kfre5: getText('cl-kfre5-val'),
-      fib4: getText('cl-fib4-val')
+      ascvd: getText('risk-ascvd-val'),
+      kfre: getText('risk-kfre-val'),
+      fib4: getText('cl-fib4-val'),
+      ckm_stage: getText('badge-ckm'),
+      kdigo_pos: getText('cl-kdigo-pos'),
+      sm_count: getText('sm-count')
     }
   };
 }
@@ -5806,6 +6003,321 @@ async function selecionarPaciente(patientId) {
     document.getElementById('calEvtProjeto').value='';
     document.querySelectorAll('.cal-dow-chip').forEach(function(c){ c.checked=false; });
     var tealRadio=document.querySelector('input[name="calColor"][value="#028090"]');
+    if(tealRadio) tealRadio.checked=true;
+    handleTipoChange();
+    document.getElementById('calModalBackdrop').classList.add('is-open');
+    setTimeout(function(){ document.getElementById('calEvtTitle').focus(); },80);
+  };
+  window.closeCalModal=function(e){
+    if(e && e.target!==document.getElementById('calModalBackdrop') && !e.target.classList.contains('cal-modal-close')) return;
+    document.getElementById('calModalBackdrop').classList.remove('is-open');
+  };
+  window.handleTipoChange=function(){
+    var tipo=document.getElementById('calEvtTipo').value;
+    var dowRow=document.getElementById('calEvtDowRow');
+    var dataRow=document.getElementById('calEvtDataRow');
+    if(tipo==='recorrente'){ dowRow.classList.add('visible'); dataRow.style.display='none'; }
+    else{ dowRow.classList.remove('visible'); dataRow.style.display='flex'; }
+  };
+  window.saveCalEvent=function(){
+    var title=document.getElementById('calEvtTitle').value.trim();
+    if(!title){ document.getElementById('calEvtTitle').focus(); document.getElementById('calEvtTitle').style.borderColor='#E53935'; setTimeout(function(){document.getElementById('calEvtTitle').style.borderColor='';},1500); return; }
+    var tipo=document.getElementById('calEvtTipo').value;
+    var startV=document.getElementById('calEvtStart').value;
+    var endV=document.getElementById('calEvtEnd').value;
+    var projeto=document.getElementById('calEvtProjeto').value;
+    var colorEl=document.querySelector('input[name="calColor"]:checked');
+    var color=colorEl?colorEl.value:'#028090';
+    var parts1=startV.split(':'); var parts2=endV.split(':');
+    var ev={id:nextId++,title:title,type:tipo,startH:parseInt(parts1[0]),startM:parseInt(parts1[1]),endH:parseInt(parts2[0]),endM:parseInt(parts2[1]),color:color,projeto:projeto};
+    if(tipo==='recorrente'){
+      ev.dows=[];
+      document.querySelectorAll('.cal-dow-chip:checked').forEach(function(c){ ev.dows.push(parseInt(c.value)); });
+      if(!ev.dows.length) ev.dows=[1];
+    } else {
+      ev.date=document.getElementById('calEvtData').value||isoDate(new Date());
+    }
+    calEvents.push(ev);
+    document.getElementById('calModalBackdrop').classList.remove('is-open');
+    renderCalendarWeek();
+  };
+})();
+
+</script>
+</body>
+</html>
+d);
+
+  /* Navegar para prontuário */
+  navTo('prontuario');
+}
+
+/* ═══════════════════════════════════════════════════════
+   MINHA AGENDA — Weekly Calendar Engine
+   ═══════════════════════════════════════════════════════ */
+(function(){
+  var CAL_START_HOUR = 7;
+  var CAL_END_HOUR   = 20;
+  var SLOT_H         = 60;
+  var DAY_LABELS     = ['Seg','Ter','Qua','Qui','Sex','Sáb','Dom'];
+  var MONTH_NAMES    = ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
+
+  var calWeekStart = null;
+  var nowLineTimer = null;
+
+  /* Event store — in-memory, will persist to Supabase later */
+  var calEvents = [
+    { id:1, title:'Consultório',              type:'recorrente', dows:[1,3],   startH:8,  startM:0, endH:12, endM:0,  color:'#028090', projeto:'fenix' },
+    { id:2, title:'Visita Hospitalar',        type:'recorrente', dows:[1],     startH:14, startM:0, endH:18, endM:0,  color:'#1E2D50', projeto:'fenix' },
+    { id:3, title:'Diálise — Unidade RL',     type:'recorrente', dows:[2],     startH:7,  startM:0, endH:12, endM:0,  color:'#534AB7', projeto:'dialise-rl' },
+    { id:4, title:'Reunião Clínica',          type:'recorrente', dows:[3],     startH:14, startM:0, endH:17, endM:0,  color:'#C4A35A', projeto:'apex' },
+    { id:5, title:'Diálise — Unidade Santos', type:'recorrente', dows:[4],     startH:7,  startM:0, endH:12, endM:0,  color:'#534AB7', projeto:'dialise-santos' },
+    { id:6, title:'Consultório',              type:'recorrente', dows:[5],     startH:8,  startM:0, endH:11, endM:0,  color:'#028090', projeto:'fenix' },
+    { id:7, title:'Pesquisa / IEP',           type:'recorrente', dows:[5],     startH:14, startM:0, endH:16, endM:0,  color:'#D85A30', projeto:'iep' }
+  ];
+  var nextId = 8;
+
+  function localMidnight(d){ var r=new Date(d); r.setHours(0,0,0,0); return r; }
+  function mondayOf(d){
+    var r=localMidnight(d); var day=r.getDay();
+    r.setDate(r.getDate() + (day===0 ? -6 : 1-day));
+    return r;
+  }
+  function addDays(d,n){ var r=new Date(d); r.setDate(r.getDate()+n); return r; }
+  function isoDate(d){
+    return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+  }
+  function isoWeekday(d){ var w=d.getDay(); return w===0?7:w; }
+
+  function formatWeekLabel(mon){
+    var sun=addDays(mon,6);
+    return 'Semana de '+mon.getDate()+' '+MONTH_NAMES[mon.getMonth()]+' – '+sun.getDate()+' '+MONTH_NAMES[sun.getMonth()]+' '+sun.getFullYear();
+  }
+
+  function getEventsForWeek(weekMon){
+    var result=[];
+    for(var col=0;col<7;col++){
+      var day=addDays(weekMon,col);
+      var iso=isoDate(day);
+      var dow=isoWeekday(day);
+      calEvents.forEach(function(ev){
+        if(ev.type==='recorrente' && ev.dows.indexOf(dow)>=0){
+          result.push(Object.assign({},ev,{colIndex:col,dayDate:day}));
+        } else if((ev.type==='unico'||ev.type==='tarefa') && ev.date===iso){
+          result.push(Object.assign({},ev,{colIndex:col,dayDate:day}));
+        }
+      });
+    }
+    return result;
+  }
+
+  function renderCalendarWeek(){
+    if(!calWeekStart) return;
+    var today=localMidnight(new Date());
+    document.getElementById('calWeekLabel').textContent=formatWeekLabel(calWeekStart);
+
+    /* Day headers */
+    var headRow=document.getElementById('calDayHeaders');
+    while(headRow.children.length>1) headRow.removeChild(headRow.lastChild);
+    for(var col=0;col<7;col++){
+      var day=addDays(calWeekStart,col);
+      var isToday=day.toDateString()===today.toDateString();
+      var cell=document.createElement('div');
+      cell.className='cal-day-head'+(isToday?' is-today':'');
+      cell.innerHTML='<div class="cal-day-name">'+DAY_LABELS[col]+'</div><div class="cal-day-num">'+day.getDate()+'</div>';
+      headRow.appendChild(cell);
+    }
+
+    /* Time grid */
+    var grid=document.getElementById('calTimeGrid');
+    grid.innerHTML='';
+    var totalHours=CAL_END_HOUR-CAL_START_HOUR;
+    for(var h=0;h<totalHours;h++){
+      var hour=CAL_START_HOUR+h;
+      var label=document.createElement('div');
+      label.className='cal-time-label';
+      label.textContent=String(hour).padStart(2,'0')+':00';
+      grid.appendChild(label);
+      for(var c=0;c<7;c++){
+        var d=addDays(calWeekStart,c);
+        var td=d.toDateString()===today.toDateString();
+        var we=c>=5;
+        var cell2=document.createElement('div');
+        cell2.className='cal-day-cell'+(td?' is-today':'')+(we?' is-weekend':'');
+        grid.appendChild(cell2);
+      }
+    }
+
+    /* Events overlay */
+    var layer=document.createElement('div');
+    layer.className='cal-events-layer';
+    layer.style.height=(totalHours*SLOT_H)+'px';
+    var cols=[];
+    for(var i=0;i<7;i++){
+      var colDiv=document.createElement('div');
+      colDiv.className='cal-col-events';
+      layer.appendChild(colDiv);
+      cols.push(colDiv);
+    }
+    getEventsForWeek(calWeekStart).forEach(function(ev){
+      var startMin=(ev.startH-CAL_START_HOUR)*60+ev.startM;
+      var endMin=(ev.endH-CAL_START_HOUR)*60+ev.endM;
+      var top=(startMin/60)*SLOT_H;
+      var height=Math.max(((endMin-startMin)/60)*SLOT_H-2,18);
+      var block=document.createElement('div');
+      block.className='cal-event';
+      block.style.cssText='top:'+top+'px;height:'+height+'px;background:'+ev.color+';';
+      block.innerHTML='<div class="cal-event-title">'+ev.title+'</div><div class="cal-event-time">'+String(ev.startH).padStart(2,'0')+':'+String(ev.startM).padStart(2,'0')+' – '+String(ev.endH).padStart(2,'0')+':'+String(ev.endM).padStart(2,'0')+'</div>';
+      cols[ev.colIndex].appendChild(block);
+    });
+    grid.style.position='relative';
+    layer.style.position='absolute';
+    layer.style.top='0';
+    layer.style.left='56px';
+    layer.style.right='0';
+    layer.style.bottom='0';
+    layer.style.pointerEvents='none';
+    grid.appendChild(layer);
+
+    renderNowLine(today);
+  }
+
+  function renderNowLine(today){
+    var existing=document.getElementById('calNowLine');
+    if(existing) existing.remove();
+    var now=new Date();
+    var nowDay=localMidnight(now);
+    var colIndex=-1;
+    for(var col=0;col<7;col++){
+      if(addDays(calWeekStart,col).toDateString()===nowDay.toDateString()){ colIndex=col; break; }
+    }
+    if(colIndex<0) return;
+    var nowMin=now.getHours()*60+now.getMinutes();
+    var startMin=CAL_START_HOUR*60;
+    var endMin=CAL_END_HOUR*60;
+    if(nowMin<startMin||nowMin>endMin) return;
+    var top=((nowMin-startMin)/60)*SLOT_H;
+    var layer=document.getElementById('calTimeGrid').querySelector('.cal-events-layer');
+    if(!layer) return;
+    var colW=layer.offsetWidth/7;
+    var lineEl=document.createElement('div');
+    lineEl.id='calNowLine';
+    lineEl.className='cal-now-line';
+    lineEl.style.cssText='top:'+top+'px;left:'+(colIndex*colW)+'px;width:'+colW+'px;';
+    lineEl.innerHTML='<div class="cal-now-dot"></div>';
+    layer.appendChild(lineEl);
+  }
+
+  function scrollToNineAM(){
+    var scroll=document.getElementById('calBodyScroll');
+    if(scroll) scroll.scrollTop=2*SLOT_H-10;
+  }
+
+  window.navigateWeek=function(delta){
+    calWeekStart=addDays(calWeekStart,delta*7);
+    renderCalendarWeek();
+  };
+  window.goToToday=function(){
+    calWeekStart=mondayOf(new Date());
+    renderCalendarWeek();
+    setTimeout(scrollToNineAM,80);
+  };
+  window.initCalendar=function(){
+    if(!calWeekStart) calWeekStart=mondayOf(new Date());
+    renderCalendarWeek();
+    setTimeout(scrollToNineAM,80);
+    if(nowLineTimer) clearInterval(nowLineTimer);
+    nowLineTimer=setInterval(function(){ renderNowLine(localMidnight(new Date())); },60000);
+  };
+
+  /* Modal */
+  window.openCalModal=function(){
+    document.getElementById('calEvtTitle').value='';
+    document.getElementById('calEvtTipo').value='recorrente';
+    document.getElementById('calEvtStart').value='08:00';
+    document.getElementById('calEvtEnd').value='09:00';
+    document.getElementById('calEvtProjeto').value='';
+    document.querySelectorAll('.cal-dow-chip').forEach(function(c){ c.checked=false; });
+    var tealRadio=document.querySelector('input[name="calColor"][value="#028090"]');
+    if(tealRadio) tealRadio.checked=true;
+    handleTipoChange();
+    document.getElementById('calModalBackdrop').classList.add('is-open');
+    setTimeout(function(){ document.getElementById('calEvtTitle').focus(); },80);
+  };
+  window.closeCalModal=function(e){
+    if(e && e.target!==document.getElementById('calModalBackdrop') && !e.target.classList.contains('cal-modal-close')) return;
+    document.getElementById('calModalBackdrop').classList.remove('is-open');
+  };
+  window.handleTipoChange=function(){
+    var tipo=document.getElementById('calEvtTipo').value;
+    var dowRow=document.getElementById('calEvtDowRow');
+    var dataRow=document.getElementById('calEvtDataRow');
+    if(tipo==='recorrente'){ dowRow.classList.add('visible'); dataRow.style.display='none'; }
+    else{ dowRow.classList.remove('visible'); dataRow.style.display='flex'; }
+  };
+  window.saveCalEvent=function(){
+    var title=document.getElementById('calEvtTitle').value.trim();
+    if(!title){ document.getElementById('calEvtTitle').focus(); document.getElementById('calEvtTitle').style.borderColor='#E53935'; setTimeout(function(){document.getElementById('calEvtTitle').style.borderColor='';},1500); return; }
+    var tipo=document.getElementById('calEvtTipo').value;
+    var startV=document.getElementById('calEvtStart').value;
+    var endV=document.getElementById('calEvtEnd').value;
+    var projeto=document.getElementById('calEvtProjeto').value;
+    var colorEl=document.querySelector('input[name="calColor"]:checked');
+    var color=colorEl?colorEl.value:'#028090';
+    var parts1=startV.split(':'); var parts2=endV.split(':');
+    var ev={id:nextId++,title:title,type:tipo,startH:parseInt(parts1[0]),startM:parseInt(parts1[1]),endH:parseInt(parts2[0]),endM:parseInt(parts2[1]),color:color,projeto:projeto};
+    if(tipo==='recorrente'){
+      ev.dows=[];
+      document.querySelectorAll('.cal-dow-chip:checked').forEach(function(c){ ev.dows.push(parseInt(c.value)); });
+      if(!ev.dows.length) ev.dows=[1];
+    } else {
+      ev.date=document.getElementById('calEvtData').value||isoDate(new Date());
+    }
+    calEvents.push(ev);
+    document.getElementById('calModalBackdrop').classList.remove('is-open');
+    renderCalendarWeek();
+  };
+})();
+
+</script>
+</body>
+</html>f(e && e.target!==document.getElementById('calModalBackdrop') && !e.target.classList.contains('cal-modal-close')) return;
+    document.getElementById('calModalBackdrop').classList.remove('is-open');
+  };
+  window.handleTipoChange=function(){
+    var tipo=document.getElementById('calEvtTipo').value;
+    var dowRow=document.getElementById('calEvtDowRow');
+    var dataRow=document.getElementById('calEvtDataRow');
+    if(tipo==='recorrente'){ dowRow.classList.add('visible'); dataRow.style.display='none'; }
+    else{ dowRow.classList.remove('visible'); dataRow.style.display='flex'; }
+  };
+  window.saveCalEvent=function(){
+    var title=document.getElementById('calEvtTitle').value.trim();
+    if(!title){ document.getElementById('calEvtTitle').focus(); document.getElementById('calEvtTitle').style.borderColor='#E53935'; setTimeout(function(){document.getElementById('calEvtTitle').style.borderColor='';},1500); return; }
+    var tipo=document.getElementById('calEvtTipo').value;
+    var startV=document.getElementById('calEvtStart').value;
+    var endV=document.getElementById('calEvtEnd').value;
+    var projeto=document.getElementById('calEvtProjeto').value;
+    var colorEl=document.querySelector('input[name="calColor"]:checked');
+    var color=colorEl?colorEl.value:'#028090';
+    var parts1=startV.split(':'); var parts2=endV.split(':');
+    var ev={id:nextId++,title:title,type:tipo,startH:parseInt(parts1[0]),startM:parseInt(parts1[1]),endH:parseInt(parts2[0]),endM:parseInt(parts2[1]),color:color,projeto:projeto};
+    if(tipo==='recorrente'){
+      ev.dows=[];
+      document.querySelectorAll('.cal-dow-chip:checked').forEach(function(c){ ev.dows.push(parseInt(c.value)); });
+      if(!ev.dows.length) ev.dows=[1];
+    } else {
+      ev.date=document.getElementById('calEvtData').value||isoDate(new Date());
+    }
+    calEvents.push(ev);
+    document.getElementById('calModalBackdrop').classList.remove('is-open');
+    renderCalendarWeek();
+  };
+})();
+
+</script>
+</body>
+</html>090"]');
     if(tealRadio) tealRadio.checked=true;
     handleTipoChange();
     document.getElementById('calModalBackdrop').classList.add('is-open');
