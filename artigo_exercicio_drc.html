@@ -49,239 +49,343 @@
         "@type": "MedicalCondition",
         "name": "Doença Renal Crônica"
       },
-      "lastReviewed": "2026-05-13"
+      "lastReviewed": "2026-05-15"
     }
   ]
 }
 </script>
 
-<link href="https://fonts.googleapis.com/css2?display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide@latest"></script>
 <style>
-:root{
-  --navy:#0D1B35;--navy-mid:#1B2A4A;--navy-light:#243357;
-  --gold:#D4A847;--gold-dark:#8B6914;--gold-pale:#E8D5A0;
-  --muted:rgba(232,213,160,0.78);--white:#FFFFFF;
+:root {
+  --font-sans: 'Inter', sans-serif;
+  --navy: #1E2D50; --navy-deep: #121D33; --dark-section: #0a1220;
+  --teal: #028090; --teal-light: #04b5c8;
+  --gold: #C4A35A; --gold-light: #d4b76a;
+  --bg: #FAF9F5; --bg-alt: #f0efeb; --footer-bg: #0a1220;
+  --border: #e0ddd6; --muted: #8a8a8a;
+  --green: #2D7A4F; --red-soft: #C0392B;
 }
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
-html{scroll-behavior:smooth;}
-body{font-family:'Space Grotesk',sans-serif;background:var(--navy);color:var(--white);min-height:100vh;}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { font-family: var(--font-sans); background: var(--bg); color: var(--navy); min-height: 100vh; }
 
-/* NAV */
-nav{background:#FFF;border-bottom:1px solid #e8e6e1;padding:0 32px;height:52px;display:flex;align-items:center;gap:16px;position:sticky;top:0;z-index:100;}
-.nav-logo{font-size:12px;font-weight:700;color:#B99454;letter-spacing:5px;text-transform:uppercase;text-decoration:none;flex-shrink:0;}
-.nav-sep{width:1px;height:16px;background:#e8e6e1;}
-.nav-section{font-size:11px;font-weight:500;color:#777;letter-spacing:1.5px;text-transform:uppercase;}
-.nav-back{margin-left:auto;font-size:11px;font-weight:500;color:#777;letter-spacing:1px;text-decoration:none;transition:color .2s;}
-.nav-back:hover{color:#B99454;}
+/* ===== HEADER (floating pill) ===== */
+.header {
+  position: fixed; top: 16px; left: 50%; transform: translateX(-50%);
+  width: calc(100% - 48px); max-width: 1120px; z-index: 1000;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 28px; height: 56px; border-radius: 60px;
+  background: rgba(30,45,80,0.85); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255,255,255,0.08);
+  transition: background 0.3s, box-shadow 0.3s;
+}
+.header.scrolled { background: rgba(18,29,51,0.95); box-shadow: 0 8px 32px rgba(0,0,0,0.25); }
+.header-logo img { height: 28px; display: block; }
+.header-nav { display: flex; align-items: center; gap: 24px; }
+.header-nav > a { color: rgba(255,255,255,0.75); text-decoration: none; font-size: 13px; font-weight: 500; letter-spacing: 0.3px; transition: color 0.25s; }
+.header-nav > a:hover { color: #fff; }
+.header-pro { background: rgba(196,163,90,0.15); border: 1px solid rgba(196,163,90,0.3); border-radius: 20px; padding: 4px 14px !important; color: var(--gold-light) !important; font-weight: 600 !important; }
+.header-cta { background: var(--teal); color: #fff !important; border-radius: 24px; padding: 8px 20px !important; font-weight: 600 !important; font-size: 12px !important; letter-spacing: 0.3px; }
+.header-cta:hover { background: var(--teal-light); }
 
-/* HERO DO ARTIGO */
-.artigo-hero{
-  padding:72px 0 0;position:relative;overflow:hidden;
-  border-bottom:1px solid rgba(212,168,71,0.08);
+/* Dropdown */
+.header-dropdown { position: relative; }
+.header-dropdown-trigger {
+  background: none; border: none; color: rgba(255,255,255,0.85);
+  font-family: var(--font-sans); font-size: 13px; font-weight: 500;
+  cursor: pointer; display: flex; align-items: center; gap: 4px;
+  letter-spacing: 0.3px; transition: color 0.25s;
 }
-.artigo-hero-bg{
-  position:absolute;inset:0;
-  background:radial-gradient(ellipse at 80% 30%,rgba(212,168,71,0.07) 0%,transparent 55%),
-              radial-gradient(ellipse at 10% 80%,rgba(36,51,87,0.5) 0%,transparent 50%);
+.header-dropdown-trigger:hover { color: #fff; }
+.header-dropdown-menu {
+  position: absolute; top: calc(100% + 12px); left: 50%;
+  transform: translateX(-50%); min-width: 240px;
+  background: rgba(18,29,51,0.97); backdrop-filter: blur(20px);
+  border: 1px solid rgba(255,255,255,0.1); border-radius: 14px;
+  padding: 8px; opacity: 0; visibility: hidden;
+  transition: opacity 0.2s, visibility 0.2s;
+  box-shadow: 0 12px 40px rgba(0,0,0,0.3);
 }
-.artigo-hero-inner{position:relative;z-index:1;max-width:800px;margin:0 auto;padding:0 40px 56px;}
-.artigo-cat-breadcrumb{display:flex;align-items:center;gap:10px;margin-bottom:24px;}
-.breadcrumb-link{font-family:'Space Grotesk',sans-serif;font-size:10px;letter-spacing:2px;color:rgba(212,168,71,0.5);text-decoration:none;transition:color .2s;}
-.breadcrumb-link:hover{color:var(--gold);}
-.breadcrumb-sep{color:rgba(212,168,71,0.3);font-size:12px;}
-.breadcrumb-current{font-family:'Space Grotesk',sans-serif;font-size:10px;letter-spacing:2px;color:var(--gold);}
-.artigo-cat-tag{display:inline-block;background:rgba(93,203,138,0.1);border:1px solid rgba(93,203,138,0.25);color:#5DCB8A;font-family:'Space Grotesk',sans-serif;font-size:9px;letter-spacing:2px;padding:4px 14px;border-radius:20px;margin-bottom:20px;}
-.artigo-titulo{font-family:'Space Grotesk',sans-serif;font-size:clamp(32px,5vw,54px);font-weight:300;color:var(--white);line-height:1.1;margin-bottom:16px;}
-.artigo-titulo em{color:var(--gold-pale);font-style:italic;}
-.artigo-subtitulo{font-family:'Space Grotesk',sans-serif;font-size:clamp(16px,2vw,22px);font-weight:300;font-style:italic;color:var(--muted);line-height:1.6;margin-bottom:32px;}
-.artigo-meta-bar{display:flex;align-items:center;gap:16px;flex-wrap:wrap;padding-top:24px;border-top:1px solid rgba(212,168,71,0.1);}
-.meta-autor{display:flex;align-items:center;gap:10px;}
-.meta-autor-avatar{width:38px;height:38px;border-radius:50%;background:var(--gold-dark);border:1.5px solid rgba(212,168,71,0.3);display:flex;align-items:center;justify-content:center;font-family:'Space Grotesk',sans-serif;font-size:12px;color:var(--white);font-weight:700;}
-.meta-autor-name{font-family:'Space Grotesk',sans-serif;font-size:13px;font-weight:500;color:var(--white);}
-.meta-autor-title{font-family:'Space Grotesk',sans-serif;font-size:11px;color:rgba(232,213,160,0.5);}
-.meta-sep{width:1px;height:32px;background:rgba(212,168,71,0.15);}
-.meta-info{font-family:'Space Grotesk',sans-serif;font-size:12px;color:rgba(232,213,160,0.5);}
-.meta-info strong{color:var(--gold-pale);}
+.header-dropdown.open .header-dropdown-menu { opacity: 1; visibility: visible; }
+.header-dropdown-menu a {
+  display: flex; align-items: center; gap: 10px;
+  padding: 10px 14px; border-radius: 8px; color: rgba(255,255,255,0.75);
+  font-size: 13px; font-weight: 500; text-decoration: none;
+  transition: background 0.15s, color 0.15s;
+}
+.header-dropdown-menu a:hover { background: rgba(255,255,255,0.06); color: #fff; }
+.dd-icon { display: flex; align-items: center; }
 
-/* CONTEÚDO */
-.artigo-body{max-width:800px;margin:0 auto;padding:64px 40px;}
+/* ===== ARTICLE HERO ===== */
+.artigo-hero { padding: 120px 24px 60px; background: #fff; border-bottom: 1px solid var(--border); }
+.artigo-hero-inner { max-width: 780px; margin: 0 auto; }
+.artigo-cat-tag {
+  display: inline-block; background: rgba(196,163,90,0.1); border: 1px solid rgba(196,163,90,0.25);
+  color: var(--gold); font-size: 10px; font-weight: 700; letter-spacing: 2.5px;
+  padding: 5px 16px; border-radius: 20px; text-transform: uppercase; margin-bottom: 24px;
+}
+.artigo-titulo {
+  font-family: var(--font-sans); font-size: clamp(32px, 5vw, 52px);
+  font-weight: 800; color: var(--navy); line-height: 1.08;
+  letter-spacing: -2px; margin-bottom: 20px;
+}
+.artigo-titulo em { color: var(--gold); font-style: normal; font-weight: 800; }
+.artigo-subtitulo {
+  font-size: clamp(16px, 2vw, 20px); font-weight: 400;
+  color: #5a6a7a; line-height: 1.7; margin-bottom: 36px; max-width: 680px;
+}
+.artigo-meta-bar {
+  display: flex; align-items: center; gap: 16px; flex-wrap: wrap;
+  padding-top: 24px; border-top: 1px solid var(--border);
+}
+.meta-autor { display: flex; align-items: center; gap: 10px; }
+.meta-autor-avatar {
+  width: 40px; height: 40px; border-radius: 50%;
+  background: rgba(196,163,90,0.12); border: 1.5px solid rgba(196,163,90,0.3);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 12px; color: var(--gold); font-weight: 800;
+}
+.meta-autor-name { font-size: 14px; font-weight: 600; color: var(--navy); }
+.meta-autor-title { font-size: 12px; color: var(--muted); }
+.meta-sep { width: 1px; height: 32px; background: var(--border); }
+.meta-info { font-size: 13px; color: var(--muted); }
+.meta-info strong { color: var(--navy); font-weight: 600; }
 
-/* Tipografia do artigo */
-.artigo-body p{
-  font-family:'Space Grotesk',sans-serif;
-  font-size:19px;font-weight:400;color:rgba(255,255,255,0.88);
-  line-height:1.85;margin-bottom:24px;
+/* ===== ARTICLE BODY ===== */
+.artigo-body { max-width: 780px; margin: 0 auto; padding: 60px 24px 40px; }
+.artigo-body p {
+  font-size: 18px; font-weight: 400; color: #3a4a5a;
+  line-height: 1.8; margin-bottom: 24px;
 }
-.artigo-body h2{
-  font-family:'Space Grotesk',sans-serif;font-size:13px;font-weight:600;
-  letter-spacing:3px;color:var(--gold);text-transform:uppercase;
-  margin:52px 0 20px;display:flex;align-items:center;gap:12px;
+.artigo-body h2 {
+  font-size: 11px; font-weight: 700; letter-spacing: 3px;
+  color: var(--gold); text-transform: uppercase;
+  margin: 56px 0 20px; display: flex; align-items: center; gap: 12px;
 }
-.artigo-body h2::after{content:'';flex:1;height:1px;background:rgba(212,168,71,0.15);}
-.artigo-body h3{
-  font-family:'Space Grotesk',sans-serif;font-size:24px;font-weight:400;
-  color:var(--white);margin:32px 0 16px;line-height:1.3;
-}
-.artigo-body strong{color:var(--gold-pale);font-weight:600;}
-.artigo-body em{color:var(--gold-pale);font-style:italic;}
+.artigo-body h2::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+.artigo-body strong { color: var(--navy); font-weight: 600; }
+.artigo-body em { color: var(--gold); font-style: italic; }
 
-/* Quote destacada */
-.artigo-quote{
-  border-left:3px solid var(--gold);
-  padding:20px 28px;margin:36px 0;
-  background:rgba(212,168,71,0.05);border-radius:0 10px 10px 0;
+/* Quote */
+.artigo-quote {
+  border-left: 3px solid var(--gold); padding: 24px 28px;
+  margin: 36px 0; background: rgba(196,163,90,0.06); border-radius: 0 10px 10px 0;
 }
-.artigo-quote p{
-  font-family:'Space Grotesk',sans-serif;font-size:22px;font-style:italic;
-  color:var(--gold-pale);line-height:1.6;margin-bottom:8px;
+.artigo-quote p {
+  font-size: 20px; font-style: italic; color: #5a6070;
+  line-height: 1.7; margin-bottom: 0;
 }
-.artigo-quote cite{font-family:'Space Grotesk',sans-serif;font-size:10px;letter-spacing:2px;color:rgba(212,168,71,0.5);}
 
-/* Caixa de destaque */
-.artigo-destaque-box{
-  background:var(--navy-mid);border:1px solid rgba(212,168,71,0.15);
-  border-radius:14px;padding:28px 32px;margin:36px 0;
+/* Highlight box */
+.artigo-destaque-box {
+  background: #fff; border: 1px solid var(--border);
+  border-left: 3px solid var(--teal); border-radius: 0 12px 12px 0;
+  padding: 28px 32px; margin: 36px 0;
 }
-.artigo-destaque-box h4{font-family:'Space Grotesk',sans-serif;font-size:11px;letter-spacing:3px;color:var(--gold);text-transform:uppercase;margin-bottom:16px;}
-.artigo-destaque-box ul{list-style:none;display:flex;flex-direction:column;gap:10px;}
-.artigo-destaque-box li{
-  font-family:'Space Grotesk',sans-serif;font-size:17px;color:var(--muted);
-  display:flex;align-items:flex-start;gap:12px;line-height:1.6;
+.artigo-destaque-box h4 {
+  font-size: 10px; letter-spacing: 3px; color: var(--teal);
+  text-transform: uppercase; font-weight: 700; margin-bottom: 16px;
 }
-.artigo-destaque-box li::before{content:'→';color:var(--gold);flex-shrink:0;margin-top:2px;}
+.artigo-destaque-box ul { list-style: none; display: flex; flex-direction: column; gap: 14px; }
+.artigo-destaque-box li {
+  font-size: 17px; color: #3a4a5a; display: flex;
+  align-items: flex-start; gap: 12px; line-height: 1.7;
+}
+.artigo-destaque-box li::before { content: '\2192'; color: var(--teal); flex-shrink: 0; margin-top: 2px; }
 
-/* Caixa alerta */
-.artigo-alerta{
-  background:rgba(240,112,112,0.06);border:1px solid rgba(240,112,112,0.2);
-  border-radius:14px;padding:28px 32px;margin:36px 0;
+/* Alert box */
+.artigo-alerta {
+  background: #fef5f5; border: 1px solid rgba(192,57,43,0.12);
+  border-left: 3px solid var(--red-soft); border-radius: 0 12px 12px 0;
+  padding: 28px 32px; margin: 36px 0;
 }
-.artigo-alerta h4{font-family:'Space Grotesk',sans-serif;font-size:11px;letter-spacing:3px;color:#F07070;text-transform:uppercase;margin-bottom:16px;display:flex;align-items:center;gap:8px;}
-.artigo-alerta ul{list-style:none;display:flex;flex-direction:column;gap:10px;}
-.artigo-alerta li{font-family:'Space Grotesk',sans-serif;font-size:17px;color:rgba(255,255,255,0.75);display:flex;align-items:flex-start;gap:12px;line-height:1.6;}
-.artigo-alerta li::before{content:'⚠';flex-shrink:0;}
+.artigo-alerta h4 {
+  font-size: 10px; letter-spacing: 3px; color: var(--red-soft);
+  text-transform: uppercase; font-weight: 700; margin-bottom: 16px;
+}
+.artigo-alerta ul { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+.artigo-alerta li {
+  font-size: 17px; color: #3a4a5a; display: flex;
+  align-items: flex-start; gap: 12px; line-height: 1.7;
+}
+.artigo-alerta li::before { content: '\26A0'; flex-shrink: 0; font-size: 14px; }
 
-/* Caixa resumo */
-.artigo-resumo{
-  background:linear-gradient(160deg,var(--navy-mid) 0%,#152640 100%);
-  border:1px solid rgba(212,168,71,0.15);border-radius:14px;
-  padding:32px 36px;margin:48px 0;
+/* Summary box */
+.artigo-resumo {
+  background: rgba(45,122,79,0.04); border: 1px solid rgba(45,122,79,0.15);
+  border-radius: 12px; padding: 32px 36px; margin: 48px 0;
 }
-.artigo-resumo h4{font-family:'Space Grotesk',sans-serif;font-size:11px;letter-spacing:3px;color:var(--gold);text-transform:uppercase;margin-bottom:20px;}
-.artigo-resumo ul{list-style:none;display:flex;flex-direction:column;gap:12px;}
-.artigo-resumo li{font-family:'Space Grotesk',sans-serif;font-size:17px;color:var(--muted);display:flex;align-items:flex-start;gap:12px;line-height:1.6;}
-.artigo-resumo li::before{content:'✓';color:#5DCB8A;font-size:14px;flex-shrink:0;margin-top:3px;}
+.artigo-resumo h4 {
+  font-size: 10px; letter-spacing: 3px; color: var(--green);
+  text-transform: uppercase; font-weight: 700; margin-bottom: 20px;
+}
+.artigo-resumo ul { list-style: none; display: flex; flex-direction: column; gap: 14px; }
+.artigo-resumo li {
+  font-size: 17px; color: #3a4a5a; display: flex;
+  align-items: flex-start; gap: 12px; line-height: 1.7;
+}
+.artigo-resumo li::before { content: '\2713'; color: var(--green); font-size: 14px; flex-shrink: 0; margin-top: 3px; font-weight: 700; }
 
-/* Referências */
-.artigo-refs{margin-top:52px;padding-top:32px;border-top:1px solid rgba(212,168,71,0.1);}
-.artigo-refs h4{font-family:'Space Grotesk',sans-serif;font-size:10px;letter-spacing:3px;color:rgba(212,168,71,0.45);text-transform:uppercase;margin-bottom:16px;}
-.artigo-refs ol{list-style:decimal;padding-left:20px;display:flex;flex-direction:column;gap:8px;}
-.artigo-refs li{font-family:'Space Grotesk',sans-serif;font-size:12px;color:rgba(232,213,160,0.4);line-height:1.6;}
+/* CTA box */
+.artigo-cta {
+  background: var(--navy-deep); border-radius: 16px;
+  padding: 44px 40px; margin: 48px 0; text-align: center;
+}
+.artigo-cta p {
+  font-size: 19px; color: rgba(255,255,255,0.75);
+  line-height: 1.75; margin-bottom: 24px;
+}
+.artigo-cta a {
+  display: inline-block; font-size: 12px; font-weight: 700;
+  letter-spacing: 2px; color: #fff; background: var(--teal);
+  padding: 14px 32px; border-radius: 30px; text-decoration: none;
+  text-transform: uppercase; transition: background 0.25s;
+}
+.artigo-cta a:hover { background: var(--teal-light); }
 
-/* Vídeo embed */
-.video-embed{
-  margin:40px 0;border-radius:14px;overflow:hidden;
-  border:1px solid rgba(212,168,71,0.15);
-  background:var(--navy-mid);
+/* Video embed */
+.video-embed {
+  margin: 40px 0; border-radius: 14px; overflow: hidden;
+  border: 1px solid var(--border); background: #fff;
 }
-.video-embed-label{
-  padding:14px 20px;display:flex;align-items:center;gap:10px;
-  border-bottom:1px solid rgba(212,168,71,0.1);
+.video-embed-label {
+  padding: 14px 20px; display: flex; align-items: center; gap: 10px;
+  border-bottom: 1px solid var(--border); background: var(--bg-alt);
 }
-.video-embed-label span{font-family:'Space Grotesk',sans-serif;font-size:10px;letter-spacing:2px;color:var(--gold);}
-.video-embed iframe{width:100%;aspect-ratio:16/9;display:block;border:none;}
+.video-embed-label span { font-size: 10px; font-weight: 700; letter-spacing: 2px; color: var(--gold); text-transform: uppercase; }
+.video-embed iframe { width: 100%; aspect-ratio: 16/9; display: block; border: none; }
 
-/* Compartilhar */
-.artigo-share{
-  display:flex;align-items:center;gap:12px;margin-top:48px;
-  padding-top:32px;border-top:1px solid rgba(212,168,71,0.1);flex-wrap:wrap;
+/* References */
+.artigo-refs { margin-top: 52px; padding-top: 32px; border-top: 1px solid var(--border); }
+.artigo-refs h4 {
+  font-size: 10px; letter-spacing: 3px; color: var(--muted);
+  text-transform: uppercase; font-weight: 600; margin-bottom: 16px;
 }
-.share-label{font-family:'Space Grotesk',sans-serif;font-size:10px;letter-spacing:3px;color:rgba(212,168,71,0.4);text-transform:uppercase;}
-.share-btn{font-family:'Space Grotesk',sans-serif;font-size:10px;letter-spacing:2px;color:var(--gold);border:1px solid rgba(212,168,71,0.25);padding:8px 16px;border-radius:20px;text-decoration:none;transition:all .3s;cursor:pointer;background:transparent;}
-.share-btn:hover{background:rgba(212,168,71,0.1);border-color:rgba(212,168,71,0.5);}
+.artigo-refs ol { list-style: decimal; padding-left: 20px; display: flex; flex-direction: column; gap: 8px; }
+.artigo-refs li { font-size: 12px; color: var(--muted); line-height: 1.7; }
 
-/* Navegação entre artigos */
-.artigo-nav{
-  max-width:800px;margin:0 auto;padding:0 40px 64px;
-  display:flex;justify-content:space-between;gap:16px;
-  border-top:1px solid rgba(212,168,71,0.08);
-  padding-top:40px;
+/* Share */
+.artigo-share {
+  display: flex; align-items: center; gap: 12px; margin-top: 48px;
+  padding-top: 32px; border-top: 1px solid var(--border); flex-wrap: wrap;
 }
-.artigo-nav-link{
-  font-family:'Space Grotesk',sans-serif;font-size:10px;letter-spacing:2px;
-  color:var(--gold);text-decoration:none;display:flex;align-items:center;gap:8px;
-  transition:gap .3s;
+.share-label { font-size: 10px; letter-spacing: 3px; color: var(--muted); text-transform: uppercase; font-weight: 600; }
+.share-btn {
+  font-family: var(--font-sans); font-size: 12px; font-weight: 500;
+  letter-spacing: 0.5px; color: var(--navy); border: 1px solid var(--border);
+  padding: 8px 18px; border-radius: 24px; text-decoration: none;
+  transition: all 0.2s; cursor: pointer; background: transparent;
 }
-.artigo-nav-link.prev:hover{gap:4px;}
-.artigo-nav-link.next:hover{gap:12px;}
-.artigo-nav-link span{font-family:'Space Grotesk',sans-serif;font-size:15px;font-style:italic;color:var(--muted);display:block;margin-top:4px;font-weight:400;}
+.share-btn:hover { background: rgba(2,128,144,0.06); border-color: var(--teal); color: var(--teal); }
 
-@media(max-width:700px){
-  nav{padding:0 20px;}
-  .artigo-hero-inner,.artigo-body,.artigo-nav{padding-left:24px;padding-right:24px;}
-  .artigo-body p{font-size:17px;}
-  .artigo-titulo{font-size:28px;}
+/* Article nav */
+.artigo-nav {
+  max-width: 780px; margin: 0 auto; padding: 40px 24px 64px;
+  display: flex; justify-content: space-between; gap: 16px;
+  border-top: 1px solid var(--border);
+}
+.artigo-nav-link {
+  font-size: 11px; letter-spacing: 2px; color: var(--teal);
+  text-decoration: none; display: flex; flex-direction: column;
+  gap: 6px; transition: opacity 0.2s; text-transform: uppercase; font-weight: 600;
+}
+.artigo-nav-link:hover { opacity: 0.7; }
+.artigo-nav-link span { font-size: 15px; color: #5a6a7a; font-weight: 400; text-transform: none; letter-spacing: 0; }
+
+/* ===== FOOTER ===== */
+.footer {
+  background: var(--footer-bg); text-align: center; padding: 56px 24px 32px;
+}
+.footer-logo img { height: 32px; margin-bottom: 24px; opacity: 0.7; }
+.footer-links { display: flex; justify-content: center; flex-wrap: wrap; gap: 20px; margin-bottom: 24px; }
+.footer-links a { color: rgba(255,255,255,0.45); text-decoration: none; font-size: 13px; font-weight: 400; transition: color 0.2s; }
+.footer-links a:hover { color: rgba(255,255,255,0.8); }
+.footer-copy { color: rgba(255,255,255,0.2); font-size: 12px; }
+
+/* ===== SCROLL REVEAL ===== */
+.rv { opacity: 0; transform: translateY(24px); transition: opacity 0.7s ease, transform 0.7s ease; }
+.rv.visible { opacity: 1; transform: translateY(0); }
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 700px) {
+  .header { width: calc(100% - 24px); padding: 0 16px; height: 50px; }
+  .header-nav { gap: 12px; }
+  .header-nav > a { font-size: 11px; }
+  .header-cta, .header-pro { display: none; }
+  .artigo-hero { padding-top: 90px; }
+  .artigo-titulo { font-size: 28px; letter-spacing: -1px; }
+  .artigo-body p { font-size: 16px; }
+  .artigo-cta { padding: 28px 24px; }
+  .artigo-destaque-box, .artigo-alerta, .artigo-resumo { padding: 20px 20px; }
 }
 </style>
 </head>
 <body>
 
-<nav>
-  <a href="index.html" class="nav-logo">APEX</a>
-  <div class="nav-sep"></div>
-  <span class="nav-section">Saúde & Performance</span>
-  <a href="javascript:history.back()" class="nav-back">← Voltar</a>
-</nav>
-
-<!-- HERO DO ARTIGO -->
-<div class="artigo-hero">
-  <div class="artigo-hero-bg"></div>
-  <div class="artigo-hero-inner">
-
-    <div class="artigo-cat-breadcrumb">
-      <a href="portal_saude_performance.html" class="breadcrumb-link">Saúde & Performance</a>
-      <span class="breadcrumb-sep">›</span>
-      <a href="portal_saude_performance.html" class="breadcrumb-link">Atividade Física</a>
-      <span class="breadcrumb-sep">›</span>
-      <span class="breadcrumb-current">Artigo</span>
+<!-- ===== HEADER ===== -->
+<header class="header" id="header">
+  <a href="index.html" class="header-logo"><img src="logo-apex-transparent.png" alt="Apex Health" /></a>
+  <nav class="header-nav">
+    <a href="index.html#metodo">O Método</a>
+    <a href="index.html#paraquem">Para Quem</a>
+    <a href="index.html#jornada">Como Funciona</a>
+    <a href="index.html#medico">O Médico</a>
+    <div class="header-dropdown" id="headerDropdown">
+      <button class="header-dropdown-trigger" aria-expanded="false" aria-haspopup="true">
+        Saúde <i data-lucide="chevron-down" style="width:14px;height:14px;stroke-width:2"></i>
+      </button>
+      <div class="header-dropdown-menu" role="menu">
+        <a href="nefrologia-doenca-renal.html" role="menuitem"><span class="dd-icon" style="color:var(--teal)"><i data-lucide="heart-pulse" style="width:16px;height:16px"></i></span> Doença Renal Crônica</a>
+        <a href="sindrome-ckm.html" role="menuitem"><span class="dd-icon" style="color:var(--gold)"><i data-lucide="activity" style="width:16px;height:16px"></i></span> Síndrome CKM</a>
+        <a href="wearables-saude-digital.html" role="menuitem"><span class="dd-icon" style="color:var(--teal)"><i data-lucide="watch" style="width:16px;height:16px"></i></span> Wearables e Saúde Digital</a>
+        <a href="dados-apex.html" role="menuitem"><span class="dd-icon" style="color:var(--gold)"><i data-lucide="bar-chart-3" style="width:16px;height:16px"></i></span> Indicadores de Qualidade</a>
+        <a href="imprensa.html" role="menuitem"><span class="dd-icon" style="color:var(--teal)"><i data-lucide="newspaper" style="width:16px;height:16px"></i></span> Imprensa</a>
+      </div>
     </div>
+    <a href="index.html#faq">FAQ</a>
+    <a href="preview_pro_completo.html" class="header-pro">Pro</a>
+    <a href="#cta-final" class="header-cta">Agendar Consulta</a>
+  </nav>
+</header>
 
+<!-- ===== ARTICLE HERO ===== -->
+<section class="artigo-hero">
+  <div class="artigo-hero-inner rv">
     <span class="artigo-cat-tag">Atividade Física · Doença Renal Crônica</span>
-
     <h1 class="artigo-titulo">
       Exercício na doença renal crônica:<br>
       <em>evidências e protocolo prático</em>
     </h1>
-
     <p class="artigo-subtitulo">
       André, 41 anos, em hemodiálise, completou a Maratona de São Paulo. Um relato clínico sobre exercício, monitoramento e protocolo prático na doença renal crônica.
     </p>
-
     <div class="artigo-meta-bar">
       <div class="meta-autor">
         <div class="meta-autor-avatar">BB</div>
         <div>
           <div class="meta-autor-name">Dr. Bruno Biluca</div>
-          <div class="meta-autor-title">Nefrologista — CRM ativo</div>
+          <div class="meta-autor-title">Nefrologista · CRM-SP 151.041 · RQE 70145</div>
         </div>
       </div>
       <div class="meta-sep"></div>
-      <div class="meta-info"><strong>Atividade Física & DRC</strong></div>
+      <div class="meta-info"><strong>Atividade Física &amp; DRC</strong></div>
       <div class="meta-sep"></div>
-      <div class="meta-info">⏱ 5 min de leitura</div>
+      <div class="meta-info"><i data-lucide="clock" style="width:13px;height:13px;stroke-width:2;vertical-align:-2px"></i> 5 min de leitura</div>
       <div class="meta-sep"></div>
-      <div class="meta-info">Maratona de São Paulo</div>
+      <div class="meta-info">Maio 2026</div>
     </div>
-
   </div>
-</div>
+</section>
 
-<!-- CORPO DO ARTIGO -->
+<!-- ===== ARTICLE BODY ===== -->
 <div class="artigo-body">
 
   <!-- DOCUMENTÁRIO -->
-  <div class="video-embed">
+  <div class="video-embed rv">
     <div class="video-embed-label">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><rect x="2" y="5" width="20" height="14" rx="3" stroke="#D4A847" stroke-width="1.5"/><path d="M10 9l5 3-5 3V9z" fill="#D4A847" opacity="0.8"/></svg>
+      <i data-lucide="play-circle" style="width:16px;height:16px;color:var(--gold)"></i>
       <span>Documentário · Sobre Correr</span>
     </div>
     <iframe
@@ -293,46 +397,46 @@ nav{background:#FFF;border-bottom:1px solid #e8e6e1;padding:0 32px;height:52px;d
   </div>
 
   <!-- INTRODUÇÃO -->
-  <h2>Sedentarismo na DRC</h2>
+  <h2 class="rv">Sedentarismo na DRC</h2>
 
-  <p>
+  <p class="rv">
     O sedentarismo em pacientes com doença renal crônica não é uma conduta <strong>aceitável</strong> — e por muito tempo foi tratado como tal. O acúmulo de evidências científicas da última década é claro: pacientes dialíticos que permanecem sedentários apresentam sarcopenia urêmica (perda progressiva de massa e força muscular causada pelo acúmulo de toxinas no sangue), piora do controle cardiovascular e maior mortalidade quando comparados àqueles que se mantêm fisicamente ativos.
   </p>
 
-  <p>
+  <p class="rv">
     As diretrizes KDIGO 2022 são explícitas: atividade física regular é recomendada para todos os pacientes com DRC, incluindo aqueles em programa de hemodiálise.
   </p>
 
   <!-- RELATO -->
-  <h2>Relato</h2>
+  <h2 class="rv">Relato</h2>
 
-  <p>
+  <p class="rv">
     André, 41 anos, em hemodiálise há dois anos, completou a Maratona de São Paulo — 42 quilômetros — após protocolo de treinamento progressivo de 22 meses sob acompanhamento médico. O processo foi documentado no curta-metragem <em>"Sobre Correr"</em>, disponível no YouTube.
   </p>
 
-  <p>
+  <p class="rv">
     Este não é um caso isolado de superação. É a demonstração prática de que, com protocolo adequado e monitoramento rigoroso, pacientes dialíticos podem atingir níveis expressivos de condicionamento físico.
   </p>
 
   <!-- POR QUE O EXERCÍCIO É IMPORTANTE -->
-  <h2>Por que o exercício é especialmente importante na DRC</h2>
+  <h2 class="rv">Por que o exercício é especialmente importante na DRC</h2>
 
-  <p>
+  <p class="rv">
     As toxinas urêmicas (substâncias que os rins doentes não conseguem eliminar adequadamente) inibem a síntese proteica muscular e promovem catabolismo (degradação do músculo). Somam-se a isso anemia, disfunção autonômica (alteração no sistema nervoso que regula a resposta cardíaca ao esforço) e o custo metabólico da própria diálise. O resultado é um paciente progressivamente descondicionado, com menor reserva funcional e maior risco cardiovascular.
   </p>
 
-  <p>
+  <p class="rv">
     O exercício aeróbico regular, quando bem prescrito, antagoniza diretamente esses mecanismos. Estudos com exercício intradialítico (realizado durante a própria sessão de diálise) demonstram ainda melhora na eficiência de depuração de ureia — o paciente que se exercita dialisa melhor.
   </p>
 
   <!-- ACOMPANHAMENTO -->
-  <h2>O acompanhamento durante o treinamento</h2>
+  <h2 class="rv">O acompanhamento durante o treinamento</h2>
 
-  <p>
+  <p class="rv">
     Além da evolução gradativa da carga de treino — respeitando a tolerância individual e sem aumentos abruptos de volume ou intensidade — alguns aspectos foram fundamentais nesse acompanhamento:
   </p>
 
-  <div class="artigo-destaque-box">
+  <div class="artigo-destaque-box rv">
     <h4>Pontos-chave do acompanhamento</h4>
     <ul>
       <li><strong>Controle do peso seco</strong> (peso corporal ideal sem excesso de líquido, referência central no paciente dialítico): monitorado sistematicamente para garantir que o treinamento não estava causando retenção ou depleção hídrica inadequada.</li>
@@ -343,9 +447,9 @@ nav{background:#FFF;border-bottom:1px solid #e8e6e1;padding:0 32px;height:52px;d
   </div>
 
   <!-- APLICAÇÃO PRÁTICA -->
-  <h2>Princípios para a prática clínica</h2>
+  <h2 class="rv">Princípios para a prática clínica</h2>
 
-  <div class="artigo-destaque-box">
+  <div class="artigo-destaque-box rv">
     <h4>O que avaliar e monitorar</h4>
     <ul>
       <li><strong>Avaliação prévia obrigatória:</strong> ergometria (teste de esforço) adaptada, bioimpedância (avaliação da composição corporal) e força de preensão manual.</li>
@@ -355,9 +459,9 @@ nav{background:#FFF;border-bottom:1px solid #e8e6e1;padding:0 32px;height:52px;d
     </ul>
   </div>
 
-  <!-- 8. ALERTA -->
-  <div class="artigo-alerta">
-    <h4>⚠ Quando interromper e procurar o médico</h4>
+  <!-- ALERTA -->
+  <div class="artigo-alerta rv">
+    <h4>Quando interromper e procurar o médico</h4>
     <ul>
       <li>Dor ou pressão no peito durante ou após o exercício</li>
       <li>Falta de ar desproporcional ao esforço realizado</li>
@@ -369,8 +473,8 @@ nav{background:#FFF;border-bottom:1px solid #e8e6e1;padding:0 32px;height:52px;d
     </ul>
   </div>
 
-  <!-- 9. RESUMO -->
-  <div class="artigo-resumo">
+  <!-- RESUMO -->
+  <div class="artigo-resumo rv">
     <h4>Pontos essenciais deste artigo</h4>
     <ul>
       <li>Sedentarismo não é uma conduta aceitável em pacientes com DRC — as diretrizes KDIGO 2022 recomendam atividade física regular inclusive para quem está em diálise.</li>
@@ -382,8 +486,14 @@ nav{background:#FFF;border-bottom:1px solid #e8e6e1;padding:0 32px;height:52px;d
     </ul>
   </div>
 
+  <!-- CTA -->
+  <div class="artigo-cta rv" id="cta-final">
+    <p>Se você tem doença renal crônica e quer incluir atividade física na sua rotina com segurança — ou precisa de acompanhamento médico durante o treinamento — essa conversa pode fazer a diferença.</p>
+    <a href="https://wa.me/5511999999999" target="_blank">Agendar consulta</a>
+  </div>
+
   <!-- REFERÊNCIAS -->
-  <div class="artigo-refs">
+  <div class="artigo-refs rv">
     <h4>Referências</h4>
     <ol>
       <li>Heiwe S, Jacobson SH. Exercise training for adults with chronic kidney disease. Cochrane Database Syst Rev. 2011.</li>
@@ -391,59 +501,98 @@ nav{background:#FFF;border-bottom:1px solid #e8e6e1;padding:0 32px;height:52px;d
       <li>Clarkson MJ, et al. Exercise for renal transplant recipients: a systematic review. Am J Transplant. 2019.</li>
       <li>Viana JL, et al. Evidence for anti-inflammatory effects of exercise in CKD. J Am Soc Nephrol. 2014.</li>
       <li>Johansen KL. Exercise in the end-stage renal disease population. J Am Soc Nephrol. 2007.</li>
-      <li>Documentário "Sobre Correr". YouTube, 2022. Disponível em: youtube.com/watch?v=SfyPJ4ez04U</li>
+      <li>Documentário "Sobre Correr". YouTube, 2022.</li>
     </ol>
   </div>
 
   <!-- COMPARTILHAR -->
-  <div class="artigo-share">
+  <div class="artigo-share rv">
     <span class="share-label">Compartilhar</span>
-    <a href="https://wa.me/?text=Exercício na doença renal crônica — artigo do Dr. Bruno Biluca: https://apex.med.br/artigo_exercicio_drc.html" target="_blank" class="share-btn">WhatsApp</a>
+    <a href="https://wa.me/?text=Exercício na doença renal crônica — Dr. Bruno Biluca: https://apex.med.br/artigo_exercicio_drc.html" target="_blank" class="share-btn">WhatsApp</a>
     <a href="https://www.linkedin.com/sharing/share-offsite/?url=https://apex.med.br/artigo_exercicio_drc.html" target="_blank" class="share-btn">LinkedIn</a>
     <button class="share-btn" onclick="navigator.clipboard.writeText(window.location.href);this.textContent='Copiado!';setTimeout(()=>this.textContent='Copiar link',2000)">Copiar link</button>
   </div>
 
 </div>
 
-<!-- NAVEGAÇÃO ENTRE ARTIGOS -->
+<!-- ===== ARTICLE NAV ===== -->
 <div class="artigo-nav">
-  <a href="portal_saude_performance.html" class="artigo-nav-link prev">
-    ← Voltar
-    <span>Todos os artigos</span>
+  <a href="artigo_antiinflamatorio_rim.html" class="artigo-nav-link prev">
+    &larr; Artigo anterior
+    <span>Anti-inflamatório e rim</span>
   </a>
-  <a href="portal_saude_performance.html" class="artigo-nav-link next">
-    Próximo artigo →
-    <span>Em breve</span>
+  <a href="artigo_wearables.html" class="artigo-nav-link next">
+    Próximo artigo &rarr;
+    <span>Wearables na prática clínica</span>
   </a>
 </div>
 
-
-<!-- Footer -->
-<footer style="background:#080e1a;text-align:center;padding:48px 24px 28px;margin-top:0;">
-  <div style="display:flex;justify-content:center;flex-wrap:wrap;gap:20px;margin-bottom:20px;">
-    <a href="index.html" style="color:rgba(255,255,255,.5);text-decoration:none;font-size:13px;font-family:'Space Grotesk',sans-serif;">Início</a>
-    <a href="sobre-dr-bruno-biluca.html" style="color:rgba(255,255,255,.5);text-decoration:none;font-size:13px;font-family:'Space Grotesk',sans-serif;">O Médico</a>
-    <a href="nefrologia-doenca-renal.html" style="color:rgba(255,255,255,.5);text-decoration:none;font-size:13px;font-family:'Space Grotesk',sans-serif;">Nefrologia</a>
-    <a href="sindrome-ckm.html" style="color:rgba(255,255,255,.5);text-decoration:none;font-size:13px;font-family:'Space Grotesk',sans-serif;">Síndrome CKM</a>
-    <a href="wearables-saude-digital.html" style="color:rgba(255,255,255,.5);text-decoration:none;font-size:13px;font-family:'Space Grotesk',sans-serif;">Wearables</a>
-    <a href="dados-apex.html" style="color:rgba(255,255,255,.5);text-decoration:none;font-size:13px;font-family:'Space Grotesk',sans-serif;">Dados e Qualidade</a>
-    <a href="imprensa.html" style="color:rgba(255,255,255,.5);text-decoration:none;font-size:13px;font-family:'Space Grotesk',sans-serif;">Imprensa</a>
+<!-- ===== FOOTER ===== -->
+<footer class="footer">
+  <div class="footer-logo"><img src="logo-apex-transparent.png" alt="Apex Health" /></div>
+  <div class="footer-links">
+    <a href="index.html">Início</a>
+    <a href="index.html#metodo">O Método</a>
+    <a href="index.html#paraquem">Para Quem</a>
+    <a href="index.html#jornada">Como Funciona</a>
+    <a href="sobre-dr-bruno-biluca.html">O Médico</a>
+    <a href="nefrologia-doenca-renal.html">DRC</a>
+    <a href="sindrome-ckm.html">CKM</a>
+    <a href="wearables-saude-digital.html">Wearables</a>
+    <a href="dados-apex.html">Indicadores</a>
+    <a href="imprensa.html">Imprensa</a>
+    <a href="preview_pro_completo.html">Pro</a>
   </div>
-  <p style="color:rgba(255,255,255,.2);font-size:12px;font-family:'Space Grotesk',sans-serif;">© 2026 Apex Health. Todos os direitos reservados.</p>
+  <p class="footer-copy">&copy; 2026 Apex Health. Todos os direitos reservados.</p>
 </footer>
 
-<!-- Embed: esconde nav quando carregado dentro do portal -->
+<!-- ===== SCRIPTS ===== -->
 <script>
+// Embed mode: hide header/footer
 (function(){
-  var ps=new URLSearchParams(window.location.search);
-  if(ps.get("embed")==="1"){
-    document.addEventListener("DOMContentLoaded",function(){
-      var navs=document.querySelectorAll(".apex-nav,nav,.portal-nav,.nav,footer");
-      navs.forEach(function(n){n.style.display="none";});
-      document.body.style.paddingTop="0";
+  var ps = new URLSearchParams(window.location.search);
+  if (ps.get('embed') === '1') {
+    document.addEventListener('DOMContentLoaded', function(){
+      var els = document.querySelectorAll('.header, header, footer, .artigo-nav');
+      els.forEach(function(n){ n.style.display = 'none'; });
+      document.body.style.paddingTop = '0';
+      document.querySelector('.artigo-hero').style.paddingTop = '40px';
     });
   }
 })();
+
+// Lucide icons
+lucide.createIcons();
+
+// Header scroll
+const header = document.getElementById('header');
+window.addEventListener('scroll', () => {
+  header.classList.toggle('scrolled', window.scrollY > 60);
+}, { passive: true });
+
+// Dropdown
+const dropdown = document.getElementById('headerDropdown');
+const trigger = dropdown.querySelector('.header-dropdown-trigger');
+trigger.addEventListener('click', (e) => {
+  e.stopPropagation();
+  const isOpen = dropdown.classList.toggle('open');
+  trigger.setAttribute('aria-expanded', isOpen);
+});
+document.addEventListener('click', () => {
+  dropdown.classList.remove('open');
+  trigger.setAttribute('aria-expanded', 'false');
+});
+
+// Scroll reveal
+const rvObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+      rvObserver.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+document.querySelectorAll('.rv').forEach(el => rvObserver.observe(el));
 </script>
 </body>
 </html>

@@ -55,120 +55,305 @@
 }
 </script>
 
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide@latest"></script>
 <style>
-:root{
-  --gold:#B99454;--gold-dim:#FDF8F0;--gold-bd:#EDD9A3;--gold-txt:#7A6030;
-  --dark:#111111;--dark2:#333333;--mid:#555555;--muted:#888888;
-  --border:#e8e6e1;--bg:#F5F5F5;--white:#FFFFFF;
-  --green:#2D7A4F;--red-soft:#C0392B;
+:root {
+  --font-sans: 'Inter', sans-serif;
+  --navy: #1E2D50; --navy-deep: #121D33; --dark-section: #0a1220;
+  --teal: #028090; --teal-light: #04b5c8;
+  --gold: #C4A35A; --gold-light: #d4b76a;
+  --bg: #FAF9F5; --bg-alt: #f0efeb; --footer-bg: #0a1220;
+  --border: #e0ddd6; --muted: #8a8a8a;
+  --green: #2D7A4F; --red-soft: #C0392B;
 }
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
-html{scroll-behavior:smooth;}
-body{font-family:'Space Grotesk',sans-serif;background:var(--white);color:var(--dark);min-height:100vh;}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { font-family: var(--font-sans); background: var(--bg); color: var(--navy); min-height: 100vh; }
 
-nav{background:#FFF;border-bottom:1px solid #e8e6e1;padding:0 32px;height:52px;display:flex;align-items:center;gap:16px;position:sticky;top:0;z-index:100;}
-.nav-logo{font-size:12px;font-weight:700;color:#B99454;letter-spacing:5px;text-transform:uppercase;text-decoration:none;flex-shrink:0;}
-.nav-sep{width:1px;height:16px;background:#e8e6e1;}
-.nav-section{font-size:11px;font-weight:500;color:#777;letter-spacing:1.5px;text-transform:uppercase;}
-.nav-back{margin-left:auto;font-size:11px;font-weight:500;color:#777;letter-spacing:1px;text-decoration:none;transition:color .2s;}
-.nav-back:hover{color:#B99454;}
+/* ===== HEADER (floating pill) ===== */
+.header {
+  position: fixed; top: 16px; left: 50%; transform: translateX(-50%);
+  width: calc(100% - 48px); max-width: 1120px; z-index: 1000;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 28px; height: 56px; border-radius: 60px;
+  background: rgba(30,45,80,0.85); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255,255,255,0.08);
+  transition: background 0.3s, box-shadow 0.3s;
+}
+.header.scrolled { background: rgba(18,29,51,0.95); box-shadow: 0 8px 32px rgba(0,0,0,0.25); }
+.header-logo img { height: 28px; display: block; }
+.header-nav { display: flex; align-items: center; gap: 24px; }
+.header-nav > a { color: rgba(255,255,255,0.75); text-decoration: none; font-size: 13px; font-weight: 500; letter-spacing: 0.3px; transition: color 0.25s; }
+.header-nav > a:hover { color: #fff; }
+.header-pro { background: rgba(196,163,90,0.15); border: 1px solid rgba(196,163,90,0.3); border-radius: 20px; padding: 4px 14px !important; color: var(--gold-light) !important; font-weight: 600 !important; }
+.header-cta { background: var(--teal); color: #fff !important; border-radius: 24px; padding: 8px 20px !important; font-weight: 600 !important; font-size: 12px !important; letter-spacing: 0.3px; }
+.header-cta:hover { background: var(--teal-light); }
 
-.artigo-hero{padding:64px 0 0;border-bottom:1px solid var(--border);background:var(--white);}
-.artigo-hero-inner{max-width:780px;margin:0 auto;padding:0 40px 52px;}
-.artigo-cat-breadcrumb{display:flex;align-items:center;gap:10px;margin-bottom:20px;}
-.breadcrumb-link{font-family:'Space Grotesk',sans-serif;font-size:10px;letter-spacing:2px;color:var(--muted);text-decoration:none;transition:color .2s;}
-.breadcrumb-link:hover{color:var(--gold);}
-.breadcrumb-sep{color:var(--border);font-size:12px;}
-.breadcrumb-current{font-family:'Space Grotesk',sans-serif;font-size:10px;letter-spacing:2px;color:var(--gold);}
-.artigo-cat-tag{display:inline-block;background:var(--gold-dim);border:1px solid var(--gold-bd);color:var(--gold-txt);font-family:'Space Grotesk',sans-serif;font-size:9px;letter-spacing:2px;padding:4px 14px;border-radius:20px;margin-bottom:20px;}
-.artigo-titulo{font-family:'Space Grotesk',sans-serif;font-size:clamp(30px,5vw,52px);font-weight:300;color:var(--dark);line-height:1.1;margin-bottom:16px;}
-.artigo-titulo em{color:var(--gold);font-style:italic;}
-.artigo-subtitulo{font-family:'Space Grotesk',sans-serif;font-size:clamp(16px,2vw,20px);font-weight:300;font-style:italic;color:var(--mid);line-height:1.65;margin-bottom:32px;}
-.artigo-meta-bar{display:flex;align-items:center;gap:16px;flex-wrap:wrap;padding-top:24px;border-top:1px solid var(--border);}
-.meta-autor{display:flex;align-items:center;gap:10px;}
-.meta-autor-avatar{width:38px;height:38px;border-radius:50%;background:var(--gold-dim);border:1.5px solid var(--gold-bd);display:flex;align-items:center;justify-content:center;font-family:'Space Grotesk',sans-serif;font-size:12px;color:var(--gold-txt);font-weight:700;}
-.meta-autor-name{font-family:'Space Grotesk',sans-serif;font-size:13px;font-weight:500;color:var(--dark);}
-.meta-autor-title{font-family:'Space Grotesk',sans-serif;font-size:11px;color:var(--muted);}
-.meta-sep{width:1px;height:32px;background:var(--border);}
-.meta-info{font-family:'Space Grotesk',sans-serif;font-size:12px;color:var(--muted);}
-.meta-info strong{color:var(--dark2);}
+/* Dropdown */
+.header-dropdown { position: relative; }
+.header-dropdown-trigger {
+  background: none; border: none; color: rgba(255,255,255,0.85);
+  font-family: var(--font-sans); font-size: 13px; font-weight: 500;
+  cursor: pointer; display: flex; align-items: center; gap: 4px;
+  letter-spacing: 0.3px; transition: color 0.25s;
+}
+.header-dropdown-trigger:hover { color: #fff; }
+.header-dropdown-menu {
+  position: absolute; top: calc(100% + 12px); left: 50%;
+  transform: translateX(-50%); min-width: 240px;
+  background: rgba(18,29,51,0.97); backdrop-filter: blur(20px);
+  border: 1px solid rgba(255,255,255,0.1); border-radius: 14px;
+  padding: 8px; opacity: 0; visibility: hidden;
+  transition: opacity 0.2s, visibility 0.2s;
+  box-shadow: 0 12px 40px rgba(0,0,0,0.3);
+}
+.header-dropdown.open .header-dropdown-menu { opacity: 1; visibility: visible; }
+.header-dropdown-menu a {
+  display: flex; align-items: center; gap: 10px;
+  padding: 10px 14px; border-radius: 8px; color: rgba(255,255,255,0.75);
+  font-size: 13px; font-weight: 500; text-decoration: none;
+  transition: background 0.15s, color 0.15s;
+}
+.header-dropdown-menu a:hover { background: rgba(255,255,255,0.06); color: #fff; }
+.dd-icon { display: flex; align-items: center; }
 
-.artigo-body{max-width:780px;margin:0 auto;padding:60px 40px;}
-.artigo-body p{font-family:'Space Grotesk',sans-serif;font-size:19px;font-weight:400;color:var(--dark2);line-height:1.85;margin-bottom:24px;}
-.artigo-body h2{font-family:'Space Grotesk',sans-serif;font-size:12px;font-weight:600;letter-spacing:3px;color:var(--gold);text-transform:uppercase;margin:52px 0 20px;display:flex;align-items:center;gap:12px;}
-.artigo-body h2::after{content:'';flex:1;height:1px;background:var(--border);}
-.artigo-body strong{color:var(--dark);font-weight:600;}
-.artigo-body em{color:var(--gold-txt);font-style:italic;}
+/* ===== ARTICLE HERO ===== */
+.artigo-hero { padding: 120px 24px 60px; background: #fff; border-bottom: 1px solid var(--border); }
+.artigo-hero-inner { max-width: 780px; margin: 0 auto; }
+.artigo-cat-tag {
+  display: inline-block; background: rgba(196,163,90,0.1); border: 1px solid rgba(196,163,90,0.25);
+  color: var(--gold); font-size: 10px; font-weight: 700; letter-spacing: 2.5px;
+  padding: 5px 16px; border-radius: 20px; text-transform: uppercase; margin-bottom: 24px;
+}
+.artigo-titulo {
+  font-family: var(--font-sans); font-size: clamp(32px, 5vw, 52px);
+  font-weight: 800; color: var(--navy); line-height: 1.08;
+  letter-spacing: -2px; margin-bottom: 20px;
+}
+.artigo-titulo em { color: var(--gold); font-style: normal; font-weight: 800; }
+.artigo-subtitulo {
+  font-size: clamp(16px, 2vw, 20px); font-weight: 400;
+  color: #5a6a7a; line-height: 1.7; margin-bottom: 36px; max-width: 680px;
+}
+.artigo-meta-bar {
+  display: flex; align-items: center; gap: 16px; flex-wrap: wrap;
+  padding-top: 24px; border-top: 1px solid var(--border);
+}
+.meta-autor { display: flex; align-items: center; gap: 10px; }
+.meta-autor-avatar {
+  width: 40px; height: 40px; border-radius: 50%;
+  background: rgba(196,163,90,0.12); border: 1.5px solid rgba(196,163,90,0.3);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 12px; color: var(--gold); font-weight: 800;
+}
+.meta-autor-name { font-size: 14px; font-weight: 600; color: var(--navy); }
+.meta-autor-title { font-size: 12px; color: var(--muted); }
+.meta-sep { width: 1px; height: 32px; background: var(--border); }
+.meta-info { font-size: 13px; color: var(--muted); }
+.meta-info strong { color: var(--navy); font-weight: 600; }
 
-.artigo-quote{border-left:3px solid var(--gold);padding:20px 28px;margin:36px 0;background:var(--gold-dim);border-radius:0 8px 8px 0;}
-.artigo-quote p{font-family:'Space Grotesk',sans-serif;font-size:21px;font-style:italic;color:var(--gold-txt);line-height:1.65;margin-bottom:0;}
+/* ===== ARTICLE BODY ===== */
+.artigo-body { max-width: 780px; margin: 0 auto; padding: 60px 24px 40px; }
+.artigo-body p {
+  font-size: 18px; font-weight: 400; color: #3a4a5a;
+  line-height: 1.8; margin-bottom: 24px;
+}
+.artigo-body h2 {
+  font-size: 11px; font-weight: 700; letter-spacing: 3px;
+  color: var(--gold); text-transform: uppercase;
+  margin: 56px 0 20px; display: flex; align-items: center; gap: 12px;
+}
+.artigo-body h2::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+.artigo-body strong { color: var(--navy); font-weight: 600; }
+.artigo-body em { color: var(--gold); font-style: italic; }
 
-.artigo-destaque-box{background:var(--bg);border:1px solid var(--border);border-left:3px solid var(--gold);border-radius:0 10px 10px 0;padding:28px 32px;margin:36px 0;}
-.artigo-destaque-box h4{font-family:'Space Grotesk',sans-serif;font-size:10px;letter-spacing:3px;color:var(--gold);text-transform:uppercase;margin-bottom:16px;}
-.artigo-destaque-box ul{list-style:none;display:flex;flex-direction:column;gap:12px;}
-.artigo-destaque-box li{font-family:'Space Grotesk',sans-serif;font-size:17px;color:var(--dark2);display:flex;align-items:flex-start;gap:12px;line-height:1.65;}
-.artigo-destaque-box li::before{content:'→';color:var(--gold);flex-shrink:0;margin-top:2px;}
+/* Quote */
+.artigo-quote {
+  border-left: 3px solid var(--gold); padding: 24px 28px;
+  margin: 36px 0; background: rgba(196,163,90,0.06); border-radius: 0 10px 10px 0;
+}
+.artigo-quote p {
+  font-size: 20px; font-style: italic; color: #5a6070;
+  line-height: 1.7; margin-bottom: 0;
+}
 
-.artigo-alerta{background:#FEF5F5;border:1px solid rgba(192,57,43,0.15);border-left:3px solid var(--red-soft);border-radius:0 10px 10px 0;padding:28px 32px;margin:36px 0;}
-.artigo-alerta h4{font-family:'Space Grotesk',sans-serif;font-size:10px;letter-spacing:3px;color:var(--red-soft);text-transform:uppercase;margin-bottom:16px;}
-.artigo-alerta ul{list-style:none;display:flex;flex-direction:column;gap:10px;}
-.artigo-alerta li{font-family:'Space Grotesk',sans-serif;font-size:17px;color:var(--dark2);display:flex;align-items:flex-start;gap:12px;line-height:1.65;}
-.artigo-alerta li::before{content:'⚠';flex-shrink:0;font-size:14px;}
+/* Highlight box */
+.artigo-destaque-box {
+  background: #fff; border: 1px solid var(--border);
+  border-left: 3px solid var(--teal); border-radius: 0 12px 12px 0;
+  padding: 28px 32px; margin: 36px 0;
+}
+.artigo-destaque-box h4 {
+  font-size: 10px; letter-spacing: 3px; color: var(--teal);
+  text-transform: uppercase; font-weight: 700; margin-bottom: 16px;
+}
+.artigo-destaque-box ul { list-style: none; display: flex; flex-direction: column; gap: 14px; }
+.artigo-destaque-box li {
+  font-size: 17px; color: #3a4a5a; display: flex;
+  align-items: flex-start; gap: 12px; line-height: 1.7;
+}
+.artigo-destaque-box li::before { content: '\2192'; color: var(--teal); flex-shrink: 0; margin-top: 2px; }
 
-.artigo-resumo{background:var(--gold-dim);border:1px solid var(--gold-bd);border-radius:10px;padding:32px 36px;margin:48px 0;}
-.artigo-resumo h4{font-family:'Space Grotesk',sans-serif;font-size:10px;letter-spacing:3px;color:var(--gold-txt);text-transform:uppercase;margin-bottom:20px;}
-.artigo-resumo ul{list-style:none;display:flex;flex-direction:column;gap:12px;}
-.artigo-resumo li{font-family:'Space Grotesk',sans-serif;font-size:17px;color:var(--dark2);display:flex;align-items:flex-start;gap:12px;line-height:1.65;}
-.artigo-resumo li::before{content:'✓';color:var(--green);font-size:14px;flex-shrink:0;margin-top:3px;}
+/* Alert box */
+.artigo-alerta {
+  background: #fef5f5; border: 1px solid rgba(192,57,43,0.12);
+  border-left: 3px solid var(--red-soft); border-radius: 0 12px 12px 0;
+  padding: 28px 32px; margin: 36px 0;
+}
+.artigo-alerta h4 {
+  font-size: 10px; letter-spacing: 3px; color: var(--red-soft);
+  text-transform: uppercase; font-weight: 700; margin-bottom: 16px;
+}
+.artigo-alerta ul { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+.artigo-alerta li {
+  font-size: 17px; color: #3a4a5a; display: flex;
+  align-items: flex-start; gap: 12px; line-height: 1.7;
+}
+.artigo-alerta li::before { content: '\26A0'; flex-shrink: 0; font-size: 14px; }
 
-.artigo-cta{background:var(--dark);border-radius:10px;padding:36px 40px;margin:48px 0;text-align:center;}
-.artigo-cta p{font-family:'Space Grotesk',sans-serif;font-size:20px;font-style:italic;color:rgba(255,255,255,0.80);line-height:1.7;margin-bottom:20px;}
-.artigo-cta a{display:inline-block;font-family:'Space Grotesk',sans-serif;font-size:10px;letter-spacing:3px;color:var(--dark);background:var(--gold);padding:12px 28px;border-radius:4px;text-decoration:none;text-transform:uppercase;transition:opacity .2s;}
-.artigo-cta a:hover{opacity:0.88;}
+/* Summary box */
+.artigo-resumo {
+  background: rgba(45,122,79,0.04); border: 1px solid rgba(45,122,79,0.15);
+  border-radius: 12px; padding: 32px 36px; margin: 48px 0;
+}
+.artigo-resumo h4 {
+  font-size: 10px; letter-spacing: 3px; color: var(--green);
+  text-transform: uppercase; font-weight: 700; margin-bottom: 20px;
+}
+.artigo-resumo ul { list-style: none; display: flex; flex-direction: column; gap: 14px; }
+.artigo-resumo li {
+  font-size: 17px; color: #3a4a5a; display: flex;
+  align-items: flex-start; gap: 12px; line-height: 1.7;
+}
+.artigo-resumo li::before { content: '\2713'; color: var(--green); font-size: 14px; flex-shrink: 0; margin-top: 3px; font-weight: 700; }
 
-.artigo-refs{margin-top:52px;padding-top:32px;border-top:1px solid var(--border);}
-.artigo-refs h4{font-family:'Space Grotesk',sans-serif;font-size:10px;letter-spacing:3px;color:var(--muted);text-transform:uppercase;margin-bottom:16px;}
-.artigo-refs ol{list-style:decimal;padding-left:20px;display:flex;flex-direction:column;gap:8px;}
-.artigo-refs li{font-family:'Space Grotesk',sans-serif;font-size:12px;color:var(--muted);line-height:1.6;}
+/* CTA box */
+.artigo-cta {
+  background: var(--navy-deep); border-radius: 16px;
+  padding: 44px 40px; margin: 48px 0; text-align: center;
+}
+.artigo-cta p {
+  font-size: 19px; color: rgba(255,255,255,0.75);
+  line-height: 1.75; margin-bottom: 24px;
+}
+.artigo-cta a {
+  display: inline-block; font-size: 12px; font-weight: 700;
+  letter-spacing: 2px; color: #fff; background: var(--teal);
+  padding: 14px 32px; border-radius: 30px; text-decoration: none;
+  text-transform: uppercase; transition: background 0.25s;
+}
+.artigo-cta a:hover { background: var(--teal-light); }
 
-.artigo-share{display:flex;align-items:center;gap:12px;margin-top:48px;padding-top:32px;border-top:1px solid var(--border);flex-wrap:wrap;}
-.share-label{font-family:'Space Grotesk',sans-serif;font-size:10px;letter-spacing:3px;color:var(--muted);text-transform:uppercase;}
-.share-btn{font-family:'Space Grotesk',sans-serif;font-size:10px;letter-spacing:2px;color:var(--gold-txt);border:1px solid var(--gold-bd);padding:8px 16px;border-radius:20px;text-decoration:none;transition:all .2s;cursor:pointer;background:transparent;}
-.share-btn:hover{background:var(--gold-dim);border-color:var(--gold);}
+/* References */
+.artigo-refs { margin-top: 52px; padding-top: 32px; border-top: 1px solid var(--border); }
+.artigo-refs h4 {
+  font-size: 10px; letter-spacing: 3px; color: var(--muted);
+  text-transform: uppercase; font-weight: 600; margin-bottom: 16px;
+}
+.artigo-refs ol { list-style: decimal; padding-left: 20px; display: flex; flex-direction: column; gap: 8px; }
+.artigo-refs li { font-size: 12px; color: var(--muted); line-height: 1.7; }
 
-.artigo-nav{max-width:780px;margin:0 auto;padding:40px 40px 64px;display:flex;justify-content:space-between;gap:16px;border-top:1px solid var(--border);}
-.artigo-nav-link{font-family:'Space Grotesk',sans-serif;font-size:10px;letter-spacing:2px;color:var(--gold);text-decoration:none;display:flex;flex-direction:column;gap:4px;transition:opacity .2s;}
-.artigo-nav-link:hover{opacity:0.75;}
-.artigo-nav-link span{font-family:'Space Grotesk',sans-serif;font-size:15px;font-style:italic;color:var(--mid);font-weight:400;}
+/* Share */
+.artigo-share {
+  display: flex; align-items: center; gap: 12px; margin-top: 48px;
+  padding-top: 32px; border-top: 1px solid var(--border); flex-wrap: wrap;
+}
+.share-label { font-size: 10px; letter-spacing: 3px; color: var(--muted); text-transform: uppercase; font-weight: 600; }
+.share-btn {
+  font-family: var(--font-sans); font-size: 12px; font-weight: 500;
+  letter-spacing: 0.5px; color: var(--navy); border: 1px solid var(--border);
+  padding: 8px 18px; border-radius: 24px; text-decoration: none;
+  transition: all 0.2s; cursor: pointer; background: transparent;
+}
+.share-btn:hover { background: rgba(2,128,144,0.06); border-color: var(--teal); color: var(--teal); }
 
-@media(max-width:700px){
-  nav{padding:0 20px;}
-  .artigo-hero-inner,.artigo-body,.artigo-nav{padding-left:24px;padding-right:24px;}
-  .artigo-body p{font-size:17px;}
-  .artigo-titulo{font-size:28px;}
-  .artigo-cta{padding:28px 24px;}
+/* Article nav */
+.artigo-nav {
+  max-width: 780px; margin: 0 auto; padding: 40px 24px 64px;
+  display: flex; justify-content: space-between; gap: 16px;
+  border-top: 1px solid var(--border);
+}
+.artigo-nav-link {
+  font-size: 11px; letter-spacing: 2px; color: var(--teal);
+  text-decoration: none; display: flex; flex-direction: column;
+  gap: 6px; transition: opacity 0.2s; text-transform: uppercase; font-weight: 600;
+}
+.artigo-nav-link:hover { opacity: 0.7; }
+.artigo-nav-link span { font-size: 15px; color: #5a6a7a; font-weight: 400; text-transform: none; letter-spacing: 0; }
+
+/* ===== FOOTER ===== */
+.footer {
+  background: var(--footer-bg); text-align: center; padding: 56px 24px 32px;
+}
+.footer-logo img { height: 32px; margin-bottom: 24px; opacity: 0.7; }
+.footer-links { display: flex; justify-content: center; flex-wrap: wrap; gap: 20px; margin-bottom: 24px; }
+.footer-links a { color: rgba(255,255,255,0.45); text-decoration: none; font-size: 13px; font-weight: 400; transition: color 0.2s; }
+.footer-links a:hover { color: rgba(255,255,255,0.8); }
+.footer-copy { color: rgba(255,255,255,0.2); font-size: 12px; }
+
+/* ===== SCROLL REVEAL ===== */
+.rv { opacity: 0; transform: translateY(24px); transition: opacity 0.7s ease, transform 0.7s ease; }
+.rv.visible { opacity: 1; transform: translateY(0); }
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 700px) {
+  .header { width: calc(100% - 24px); padding: 0 16px; height: 50px; }
+  .header-nav { gap: 12px; }
+  .header-nav > a { font-size: 11px; }
+  .header-cta, .header-pro { display: none; }
+  .artigo-hero { padding-top: 90px; }
+  .artigo-titulo { font-size: 28px; letter-spacing: -1px; }
+  .artigo-body p { font-size: 16px; }
+  .artigo-cta { padding: 28px 24px; }
+  .artigo-destaque-box, .artigo-alerta, .artigo-resumo { padding: 20px 20px; }
+}
+
+/* Article featured image */
+.artigo-img-featured {
+  margin: 32px 0; text-align: center;
+}
+.artigo-img-featured img {
+  max-width: 340px; width: 100%; border-radius: 14px;
+  border: 1px solid var(--border); box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+}
+.artigo-img-featured figcaption {
+  font-size: 12px; color: var(--muted); margin-top: 12px;
+  font-weight: 500; letter-spacing: 0.3px;
 }
 </style>
 </head>
 <body>
 
-<nav>
-  <a href="index.html" class="nav-logo">APEX</a>
-  <div class="nav-sep"></div>
-  <span class="nav-section">Saúde & Performance</span>
-  <a href="javascript:history.back()" class="nav-back">← Voltar</a>
-</nav>
-
-<div class="artigo-hero">
-  <div class="artigo-hero-inner">
-    <div class="artigo-cat-breadcrumb">
-      <a href="portal_saude_performance.html" class="breadcrumb-link">Saúde & Performance</a>
-      <span class="breadcrumb-sep">›</span>
-      <a href="portal_saude_performance.html" class="breadcrumb-link">Medicamentos & Rim</a>
-      <span class="breadcrumb-sep">›</span>
-      <span class="breadcrumb-current">Artigo</span>
+<!-- ===== HEADER ===== -->
+<header class="header" id="header">
+  <a href="index.html" class="header-logo"><img src="logo-apex-transparent.png" alt="Apex Health" /></a>
+  <nav class="header-nav">
+    <a href="index.html#metodo">O Método</a>
+    <a href="index.html#paraquem">Para Quem</a>
+    <a href="index.html#jornada">Como Funciona</a>
+    <a href="index.html#medico">O Médico</a>
+    <div class="header-dropdown" id="headerDropdown">
+      <button class="header-dropdown-trigger" aria-expanded="false" aria-haspopup="true">
+        Saúde <i data-lucide="chevron-down" style="width:14px;height:14px;stroke-width:2"></i>
+      </button>
+      <div class="header-dropdown-menu" role="menu">
+        <a href="nefrologia-doenca-renal.html" role="menuitem"><span class="dd-icon" style="color:var(--teal)"><i data-lucide="heart-pulse" style="width:16px;height:16px"></i></span> Doença Renal Crônica</a>
+        <a href="sindrome-ckm.html" role="menuitem"><span class="dd-icon" style="color:var(--gold)"><i data-lucide="activity" style="width:16px;height:16px"></i></span> Síndrome CKM</a>
+        <a href="wearables-saude-digital.html" role="menuitem"><span class="dd-icon" style="color:var(--teal)"><i data-lucide="watch" style="width:16px;height:16px"></i></span> Wearables e Saúde Digital</a>
+        <a href="dados-apex.html" role="menuitem"><span class="dd-icon" style="color:var(--gold)"><i data-lucide="bar-chart-3" style="width:16px;height:16px"></i></span> Indicadores de Qualidade</a>
+        <a href="imprensa.html" role="menuitem"><span class="dd-icon" style="color:var(--teal)"><i data-lucide="newspaper" style="width:16px;height:16px"></i></span> Imprensa</a>
+      </div>
     </div>
+    <a href="index.html#faq">FAQ</a>
+    <a href="preview_pro_completo.html" class="header-pro">Pro</a>
+    <a href="#cta-final" class="header-cta">Agendar Consulta</a>
+  </nav>
+</header>
+
+<!-- ===== ARTICLE HERO ===== -->
+<section class="artigo-hero">
+  <div class="artigo-hero-inner rv">
     <span class="artigo-cat-tag">Medicamentos · Doença Renal</span>
     <h1 class="artigo-titulo">
       O que acontece com seus rins<br>
@@ -186,37 +371,43 @@ nav{background:#FFF;border-bottom:1px solid #e8e6e1;padding:0 32px;height:52px;d
         </div>
       </div>
       <div class="meta-sep"></div>
-      <div class="meta-info"><strong>Medicamentos & Rim</strong></div>
+      <div class="meta-info"><strong>Medicamentos &amp; Rim</strong></div>
       <div class="meta-sep"></div>
-      <div class="meta-info">⏱ 5 min de leitura</div>
+      <div class="meta-info"><i data-lucide="clock" style="width:13px;height:13px;stroke-width:2;vertical-align:-2px"></i> 5 min de leitura</div>
       <div class="meta-sep"></div>
       <div class="meta-info">Abril 2026</div>
     </div>
   </div>
-</div>
+</section>
 
+<!-- ===== ARTICLE BODY ===== -->
 <div class="artigo-body">
 
-  <h2>Um frasco com mil comprimidos</h2>
-  <p>Existe, à venda em farmácias e sites de e-commerce, um frasco de ibuprofeno com mil comprimidos. Não é para uso hospitalar. É para o consumidor comum.</p>
-  <p>Esse detalhe diz mais sobre a nossa relação com o medicamento do que qualquer bula. Uma pesquisa do Conselho Federal de Farmácia mostrou que mais de 77% dos brasileiros já se automedicaram com anti-inflamatório sem orientação médica. O ibuprofeno é o mais consumido da classe — disponível sem receita, barato, e com uma reputação de inofensivo que a medicina levou décadas para questionar.</p>
-  <div class="artigo-quote">
+  <h2 class="rv">Um frasco com mil comprimidos</h2>
+  <figure class="artigo-img-featured rv">
+    <img src="data:image/jpeg;base64,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SoSko0rzfZI6Txb8LdB8OeEfEVxbXk8uo6XqjWKyXz+X5wR1Q+UqgqxOWJVjkADBPfy+0s57ydYbeOSaZjhURdxNdlpHgG71K4aXVLxmMjb3VGLyOT1JY8Z/OvefhT8C9Q166it9K01raJ8Zl27pZB+PP4nAr5TFcWYXLoSp06jr1H22Xz2PqcNwni8a1VxKVGn57v0W/wB55/8AB34JHXrqK91HEhBJjteyEfxP6/Sv0t+Bnw4k8I6Bb3N+hW7MQjhjYcxRnnJ9C3p2GBVH4N/s+6b8O7KGW8Rbm+T5lQ/MqH1J/ib9B29a9h6V+Y5hmOIzOt7avL0XRH2OGwtDA0vY4eNl1fV+oUUUV5puFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFIRmlooA4Dxx8EPCvjuKUXVgLW5cc3FqApJ9x0P5V8ufET9hHXIJ2u/C2qR3YU71ilPlsCDkcH/GvuKiocIt3aOiGIqwXKpaH5FeL/2ffG/hfVWm1bQpldZPMLtH8rnOSRxg1ga34LtirqdNEUueD5RQ/wBK/ZCWCO4QxyxrJGequAQfwrl9Y+FHhHXc/bNAs3J/ijTyz/47itliMXCSlRrSjbs2jajWw6jKFejGafdL/I/H608AwyzyxXVjcQlcOHUkAr+RpJPhpYvJuS6mRcjhiD/Sv1S1L9lr4f6lndpjx5/usDj/AL6U1gyfsZ+A3csq3KexCH/2Wu/+2s6hpTxT+ev5mUMJkcr+2wa+Wn6n5lXnwsjmtcWEkt3d5GI9yqMd+TVaH4f20AKvayTShsY8zcM+nHFfqFbfsceA7aTf5czH12R/1Wt/T/2ZPAtgQfsEsvqC4QH/AL5UVUs6zeceWWJl8rL8kZrC5RSnzU8JG3nd/qfl/oPw/mmkAtdELEdCsW4j8T0r1vwN+zT4u8W3IdNLkjjYgbgpIAHv0H4mv0V0b4ZeFfD5DWOhWcbjo7p5jfm2TXSqgRQqjao6AcAV50q1eq71qjk/Ns6KleFlGjTjBeSsfMnw0/Y6s9GWOfXGjEoOfLiId/zPA/DNfQ+geFdL8L2n2fTbRLZD95gMu/1Y8mtaislFLY5p1JT+JhRRRVGYUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFAH/2Q==" alt="Frasco de ibuprofeno com 1000 comprimidos — venda livre ao consumidor" loading="lazy"/>
+    <figcaption>Frasco de ibuprofeno com 1000 comprimidos — venda livre, sem receita</figcaption>
+  </figure>
+
+  <p class="rv">Existe, à venda em farmácias e sites de e-commerce, um frasco de ibuprofeno com mil comprimidos. Não é para uso hospitalar. É para o consumidor comum.</p>
+  <p class="rv">Esse detalhe diz mais sobre a nossa relação com o medicamento do que qualquer bula. Uma pesquisa do Conselho Federal de Farmácia mostrou que mais de 77% dos brasileiros já se automedicaram com anti-inflamatório sem orientação médica. O ibuprofeno é o mais consumido da classe — disponível sem receita, barato, e com uma reputação de inofensivo que a medicina levou décadas para questionar.</p>
+  <div class="artigo-quote rv">
     <p>"Doutor, tomei só um que fica em cima da geladeira." — Dita com leveza, quase como desculpa. Mas o que acontece nos seus rins nas horas seguintes a essa dose merece uma conversa honesta.</p>
   </div>
 
-  <h2>Os rins não são apenas um filtro</h2>
-  <p>Antes de falar sobre o medicamento, preciso explicar uma coisa sobre como os rins funcionam — e porque eles são mais vulneráveis do que parecem.</p>
-  <p>Seus dois rins filtram, juntos, cerca de 180 litros de sangue por dia. Para fazer isso com eficiência, eles precisam de uma pressão muito precisa dentro dos seus próprios vasos internos. Não a pressão do braço que se mede no consultório — uma pressão interna, microscópica, controlada por substâncias que o próprio rim produz.</p>
-  <p>Entre essas substâncias estão as <strong>prostaglandinas</strong>. Elas funcionam como reguladores locais de pressão: quando o fluxo de sangue para os rins cai — por desidratação, por uma pressão arterial baixa, por qualquer estresse circulatório — as prostaglandinas agem para dilatar os vasos renais e manter o filtro funcionando. É um mecanismo de proteção que trabalha em silêncio, o tempo todo.</p>
+  <h2 class="rv">Os rins não são apenas um filtro</h2>
+  <p class="rv">Antes de falar sobre o medicamento, preciso explicar uma coisa sobre como os rins funcionam — e porque eles são mais vulneráveis do que parecem.</p>
+  <p class="rv">Seus dois rins filtram, juntos, cerca de 180 litros de sangue por dia. Para fazer isso com eficiência, eles precisam de uma pressão muito precisa dentro dos seus próprios vasos internos. Não a pressão do braço que se mede no consultório — uma pressão interna, microscópica, controlada por substâncias que o próprio rim produz.</p>
+  <p class="rv">Entre essas substâncias estão as <strong>prostaglandinas</strong>. Elas funcionam como reguladores locais de pressão: quando o fluxo de sangue para os rins cai — por desidratação, por uma pressão arterial baixa, por qualquer estresse circulatório — as prostaglandinas agem para dilatar os vasos renais e manter o filtro funcionando. É um mecanismo de proteção que trabalha em silêncio, o tempo todo.</p>
 
-  <h2>O que o anti-inflamatório faz quando entra na corrente sanguínea</h2>
-  <p>Os anti-inflamatórios não esteroidais — ibuprofeno, naproxeno, diclofenaco, cetoprofeno, entre outros — funcionam bloqueando as enzimas responsáveis pela produção de prostaglandinas. É exatamente esse bloqueio que alivia a dor e a inflamação. O problema é que esse bloqueio não é seletivo: atinge as prostaglandinas do joelho inflamado <em>e</em> as prostaglandinas dos rins.</p>
-  <p>Quando isso acontece, os vasos renais perdem sua capacidade de autorregulação. O fluxo de sangue que chega ao filtro cai. A taxa de filtração diminui. Em pessoas com rins saudáveis e bem hidratadas, o organismo consegue compensar essa queda temporária sem deixar rastros.</p>
-  <p>Mas em quem já tem algum grau de vulnerabilidade renal, esse mecanismo de compensação pode não ser suficiente.</p>
+  <h2 class="rv">O que o anti-inflamatório faz quando entra na corrente sanguínea</h2>
+  <p class="rv">Os anti-inflamatórios não esteroidais — ibuprofeno, naproxeno, diclofenaco, cetoprofeno, entre outros — funcionam bloqueando as enzimas responsáveis pela produção de prostaglandinas. É exatamente esse bloqueio que alivia a dor e a inflamação. O problema é que esse bloqueio não é seletivo: atinge as prostaglandinas do joelho inflamado <em>e</em> as prostaglandinas dos rins.</p>
+  <p class="rv">Quando isso acontece, os vasos renais perdem sua capacidade de autorregulação. O fluxo de sangue que chega ao filtro cai. A taxa de filtração diminui. Em pessoas com rins saudáveis e bem hidratadas, o organismo consegue compensar essa queda temporária sem deixar rastros.</p>
+  <p class="rv">Mas em quem já tem algum grau de vulnerabilidade renal, esse mecanismo de compensação pode não ser suficiente.</p>
 
-  <h2>Quem corre mais risco — e por quê</h2>
-  <p>Não existe dose completamente segura de anti-inflamatório para determinados grupos.</p>
-  <div class="artigo-destaque-box">
+  <h2 class="rv">Quem corre mais risco — e por quê</h2>
+  <p class="rv">Não existe dose completamente segura de anti-inflamatório para determinados grupos.</p>
+  <div class="artigo-destaque-box rv">
     <h4>Grupos de maior risco</h4>
     <ul>
       <li><strong>Hipertensos</strong> usam com frequência medicamentos que já alteram o fluxo renal: inibidores da ECA (captopril, enalapril e etc.), bloqueadores do receptor da angiotensina, diuréticos. A combinação com um anti-inflamatório cria uma pressão tripla sobre os rins — e pode reduzir o efeito dos anti-hipertensivos.</li>
@@ -227,20 +418,20 @@ nav{background:#FFF;border-bottom:1px solid #e8e6e1;padding:0 32px;height:52px;d
     </ul>
   </div>
 
-  <h2>O que pode acontecer na prática</h2>
-  <p>O desfecho mais comum é uma <strong>insuficiência renal aguda</strong> — uma queda brusca na função dos rins que, na maioria das vezes, é reversível se o medicamento for suspenso a tempo. Os sinais costumam ser sutis: inchaço nos tornozelos, diminuição do volume de urina, cansaço fora do comum, pressão que sobe sem explicação.</p>
-  <p>Menos frequente, mas possível, é a <strong>nefrite intersticial</strong> — uma reação inflamatória dentro do tecido renal que pode persistir mesmo após suspender o medicamento.</p>
-  <p>Em uso crônico — aqueles casos em que o anti-inflamatório virou rotina para dor nas costas, artrose ou enxaqueca frequente — o risco é de <strong>nefropatia por analgésico</strong>: uma lesão progressiva e silenciosa que vai comprometendo a função renal ao longo de meses ou anos.</p>
+  <h2 class="rv">O que pode acontecer na prática</h2>
+  <p class="rv">O desfecho mais comum é uma <strong>insuficiência renal aguda</strong> — uma queda brusca na função dos rins que, na maioria das vezes, é reversível se o medicamento for suspenso a tempo. Os sinais costumam ser sutis: inchaço nos tornozelos, diminuição do volume de urina, cansaço fora do comum, pressão que sobe sem explicação.</p>
+  <p class="rv">Menos frequente, mas possível, é a <strong>nefrite intersticial</strong> — uma reação inflamatória dentro do tecido renal que pode persistir mesmo após suspender o medicamento.</p>
+  <p class="rv">Em uso crônico — aqueles casos em que o anti-inflamatório virou rotina para dor nas costas, artrose ou enxaqueca frequente — o risco é de <strong>nefropatia por analgésico</strong>: uma lesão progressiva e silenciosa que vai comprometendo a função renal ao longo de meses ou anos.</p>
 
-  <h2>O que você pode tomar no lugar</h2>
-  <p>A pergunta que invariavelmente vem depois dessa explicação é: <em>"Então o que eu tomo, doutor?"</em></p>
-  <p><strong>Paracetamol</strong> é a primeira escolha para dor e febre em quem tem risco renal — desde que usado nas doses corretas e sem frequência excessiva. Não é inofensivo em doses altas (tem seu próprio impacto hepático), mas não interfere nas prostaglandinas renais da mesma forma que os anti-inflamatórios.</p>
-  <p><strong>Dipirona</strong> tem perfil renal mais favorável para uso pontual, embora também não seja isenta de riscos em uso prolongado e em doses elevadas.</p>
-  <p>O que não tem substituto fácil é o controle da causa da dor. Artrose, tendinite, lombalgia crônica — tratar com anti-inflamatório repetido é tratar o sintoma enquanto o problema avança. Fisioterapia, controle de peso, atividade física adequada e, quando indicado, outras classes de medicamentos costumam oferecer mais resultado com menos custo renal.</p>
+  <h2 class="rv">O que você pode tomar no lugar</h2>
+  <p class="rv">A pergunta que invariavelmente vem depois dessa explicação é: <em>"Então o que eu tomo, doutor?"</em></p>
+  <p class="rv"><strong>Paracetamol</strong> é a primeira escolha para dor e febre em quem tem risco renal — desde que usado nas doses corretas e sem frequência excessiva. Não é inofensivo em doses altas (tem seu próprio impacto hepático), mas não interfere nas prostaglandinas renais da mesma forma que os anti-inflamatórios.</p>
+  <p class="rv"><strong>Dipirona</strong> tem perfil renal mais favorável para uso pontual, embora também não seja isenta de riscos em uso prolongado e em doses elevadas.</p>
+  <p class="rv">O que não tem substituto fácil é o controle da causa da dor. Artrose, tendinite, lombalgia crônica — tratar com anti-inflamatório repetido é tratar o sintoma enquanto o problema avança. Fisioterapia, controle de peso, atividade física adequada e, quando indicado, outras classes de medicamentos costumam oferecer mais resultado com menos custo renal.</p>
 
-  <h2>Três perguntas antes de abrir a cartela</h2>
-  <p>Antes de tomar o próximo anti-inflamatório, vale se fazer três perguntas simples:</p>
-  <div class="artigo-destaque-box">
+  <h2 class="rv">Três perguntas antes de abrir a cartela</h2>
+  <p class="rv">Antes de tomar o próximo anti-inflamatório, vale se fazer três perguntas simples:</p>
+  <div class="artigo-destaque-box rv">
     <h4>Verifique antes de tomar</h4>
     <ul>
       <li>Tenho pressão alta, diabetes ou alguma alteração no exame de rim?</li>
@@ -248,17 +439,17 @@ nav{background:#FFF;border-bottom:1px solid #e8e6e1;padding:0 32px;height:52px;d
       <li>Estou bem hidratado hoje?</li>
     </ul>
   </div>
-  <p>Se a resposta para qualquer uma dessas for sim — ou se você simplesmente não sabe — essa é uma conversa que vale ter com um médico antes de repetir o hábito.</p>
+  <p class="rv">Se a resposta para qualquer uma dessas for sim — ou se você simplesmente não sabe — essa é uma conversa que vale ter com um médico antes de repetir o hábito.</p>
 
-  <div class="artigo-alerta">
-    <h4>⚠ Atenção</h4>
+  <div class="artigo-alerta rv">
+    <h4>Atenção</h4>
     <ul>
       <li>Os rins não doem quando estão sendo lesados. Essa é a característica mais traiçoeira da doença renal: ela avança em silêncio, enquanto a vida continua normal.</li>
       <li>A maioria dos meus pacientes só descobre que algo estava errado quando o exame de rotina mostra uma creatinina que já não era nova.</li>
     </ul>
   </div>
 
-  <div class="artigo-resumo">
+  <div class="artigo-resumo rv">
     <h4>Pontos essenciais deste artigo</h4>
     <ul>
       <li>77% dos brasileiros já tomaram anti-inflamatório sem orientação — o ibuprofeno é o mais consumido, sem receita.</li>
@@ -270,12 +461,12 @@ nav{background:#FFF;border-bottom:1px solid #e8e6e1;padding:0 32px;height:52px;d
     </ul>
   </div>
 
-  <div class="artigo-cta">
+  <div class="artigo-cta rv" id="cta-final">
     <p>Se você tem dúvida sobre como os medicamentos que usa habitualmente afetam sua função renal — ou quer entender melhor o que seus exames significam — essa conversa pode fazer diferença antes que os números mudem.</p>
     <a href="https://wa.me/5511999999999" target="_blank">Agendar consulta</a>
   </div>
 
-  <div class="artigo-refs">
+  <div class="artigo-refs rv">
     <h4>Referências</h4>
     <ol>
       <li>Conselho Federal de Farmácia. Pesquisa sobre automedicação no Brasil. Brasília, 2023.</li>
@@ -286,7 +477,7 @@ nav{background:#FFF;border-bottom:1px solid #e8e6e1;padding:0 32px;height:52px;d
     </ol>
   </div>
 
-  <div class="artigo-share">
+  <div class="artigo-share rv">
     <span class="share-label">Compartilhar</span>
     <a href="https://wa.me/?text=O que acontece com seus rins cada vez que você toma anti-inflamatório — Dr. Bruno Biluca: https://apex.med.br/artigo_antiinflamatorio_rim.html" target="_blank" class="share-btn">WhatsApp</a>
     <a href="https://www.linkedin.com/sharing/share-offsite/?url=https://apex.med.br/artigo_antiinflamatorio_rim.html" target="_blank" class="share-btn">LinkedIn</a>
@@ -295,44 +486,84 @@ nav{background:#FFF;border-bottom:1px solid #e8e6e1;padding:0 32px;height:52px;d
 
 </div>
 
+<!-- ===== ARTICLE NAV ===== -->
 <div class="artigo-nav">
   <a href="portal_saude_performance.html" class="artigo-nav-link prev">
-    ← Voltar
+    &larr; Voltar
     <span>Todos os artigos</span>
   </a>
   <a href="artigo_exercicio_drc.html" class="artigo-nav-link next">
-    Próximo artigo →
+    Próximo artigo &rarr;
     <span>Exercício na doença renal crônica</span>
   </a>
 </div>
 
-
-<!-- Footer -->
-<footer style="background:#111;text-align:center;padding:48px 24px 28px;margin-top:0;">
-  <div style="display:flex;justify-content:center;flex-wrap:wrap;gap:20px;margin-bottom:20px;">
-    <a href="index.html" style="color:rgba(255,255,255,.5);text-decoration:none;font-size:13px;font-family:'Space Grotesk',sans-serif;">Início</a>
-    <a href="sobre-dr-bruno-biluca.html" style="color:rgba(255,255,255,.5);text-decoration:none;font-size:13px;font-family:'Space Grotesk',sans-serif;">O Médico</a>
-    <a href="nefrologia-doenca-renal.html" style="color:rgba(255,255,255,.5);text-decoration:none;font-size:13px;font-family:'Space Grotesk',sans-serif;">Nefrologia</a>
-    <a href="sindrome-ckm.html" style="color:rgba(255,255,255,.5);text-decoration:none;font-size:13px;font-family:'Space Grotesk',sans-serif;">Síndrome CKM</a>
-    <a href="wearables-saude-digital.html" style="color:rgba(255,255,255,.5);text-decoration:none;font-size:13px;font-family:'Space Grotesk',sans-serif;">Wearables</a>
-    <a href="dados-apex.html" style="color:rgba(255,255,255,.5);text-decoration:none;font-size:13px;font-family:'Space Grotesk',sans-serif;">Dados e Qualidade</a>
-    <a href="imprensa.html" style="color:rgba(255,255,255,.5);text-decoration:none;font-size:13px;font-family:'Space Grotesk',sans-serif;">Imprensa</a>
+<!-- ===== FOOTER ===== -->
+<footer class="footer">
+  <div class="footer-logo"><img src="logo-apex-transparent.png" alt="Apex Health" /></div>
+  <div class="footer-links">
+    <a href="index.html">Início</a>
+    <a href="index.html#metodo">O Método</a>
+    <a href="index.html#paraquem">Para Quem</a>
+    <a href="index.html#jornada">Como Funciona</a>
+    <a href="sobre-dr-bruno-biluca.html">O Médico</a>
+    <a href="nefrologia-doenca-renal.html">DRC</a>
+    <a href="sindrome-ckm.html">CKM</a>
+    <a href="wearables-saude-digital.html">Wearables</a>
+    <a href="dados-apex.html">Indicadores</a>
+    <a href="imprensa.html">Imprensa</a>
+    <a href="preview_pro_completo.html">Pro</a>
   </div>
-  <p style="color:rgba(255,255,255,.2);font-size:12px;font-family:'Space Grotesk',sans-serif;">© 2026 Apex Health. Todos os direitos reservados.</p>
+  <p class="footer-copy">&copy; 2026 Apex Health. Todos os direitos reservados.</p>
 </footer>
 
-<!-- Embed: esconde nav quando carregado dentro do portal -->
+<!-- ===== SCRIPTS ===== -->
 <script>
+// Embed mode: hide header/footer
 (function(){
-  var ps=new URLSearchParams(window.location.search);
-  if(ps.get("embed")==="1"){
-    document.addEventListener("DOMContentLoaded",function(){
-      var navs=document.querySelectorAll(".apex-nav,nav,.portal-nav,.nav,footer");
-      navs.forEach(function(n){n.style.display="none";});
-      document.body.style.paddingTop="0";
+  var ps = new URLSearchParams(window.location.search);
+  if (ps.get('embed') === '1') {
+    document.addEventListener('DOMContentLoaded', function(){
+      var els = document.querySelectorAll('.header, header, footer, .artigo-nav');
+      els.forEach(function(n){ n.style.display = 'none'; });
+      document.body.style.paddingTop = '0';
+      document.querySelector('.artigo-hero').style.paddingTop = '40px';
     });
   }
 })();
+
+// Lucide icons
+lucide.createIcons();
+
+// Header scroll
+const header = document.getElementById('header');
+window.addEventListener('scroll', () => {
+  header.classList.toggle('scrolled', window.scrollY > 60);
+}, { passive: true });
+
+// Dropdown
+const dropdown = document.getElementById('headerDropdown');
+const trigger = dropdown.querySelector('.header-dropdown-trigger');
+trigger.addEventListener('click', (e) => {
+  e.stopPropagation();
+  const isOpen = dropdown.classList.toggle('open');
+  trigger.setAttribute('aria-expanded', isOpen);
+});
+document.addEventListener('click', () => {
+  dropdown.classList.remove('open');
+  trigger.setAttribute('aria-expanded', 'false');
+});
+
+// Scroll reveal
+const rvObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+      rvObserver.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+document.querySelectorAll('.rv').forEach(el => rvObserver.observe(el));
 </script>
 </body>
 </html>
