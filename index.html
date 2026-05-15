@@ -1667,7 +1667,7 @@
     </div>
   </section>
 
-  <!-- CARD PRO -->
+<!-- CARD PRO -->
   <section class="pro-banner section-pad" style="background:var(--bg-alt);">
     <div class="container">
       <div class="pro-banner-inner rv">
@@ -1685,7 +1685,7 @@
     </div>
   </section>
 
-  <!-- FOOTER -->
+<!-- FOOTER -->
   <footer class="footer gold-dots">
     <div class="footer-logo"><img src="logo-apex-transparent.png" alt="Apex Health" /></div>
     <div class="footer-links">
@@ -1703,7 +1703,6 @@
       <a href="artigo_exercicio_drc.html">Exercício</a>
       <a href="artigo_wearables.html">Wearables</a>
       <a href="dados-apex.html">Indicadores</a>
-      <a href="imprensa.html">Imprensa</a>
       <a href="preview_pro_completo.html">Pro</a>
     </div>
     <p class="footer-copy">&copy; 2026 Apex Health. Todos os direitos reservados.</p>
@@ -1716,4 +1715,145 @@
       header.classList.toggle('scrolled', window.scrollY > 60);
     }, { passive: true });
 
-    // ==
+    // ===== HEADER DROPDOWN =====
+    const dropdown = document.getElementById('headerDropdown');
+    if (dropdown) {
+      const trigger = dropdown.querySelector('.header-dropdown-trigger');
+      trigger.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const isOpen = dropdown.classList.toggle('open');
+        trigger.setAttribute('aria-expanded', isOpen);
+      });
+      document.addEventListener('click', (e) => {
+        if (!dropdown.contains(e.target)) {
+          dropdown.classList.remove('open');
+          trigger.setAttribute('aria-expanded', 'false');
+        }
+      });
+    }
+
+    // ===== HERO SLIDESHOW =====
+    const slides = document.querySelectorAll('.hero-slide');
+    const dots = document.querySelectorAll('.hero-dot');
+    let currentSlide = 0;
+    let slideInterval;
+
+    function goToSlide(i) {
+      slides[currentSlide].classList.remove('active');
+      dots[currentSlide].classList.remove('active');
+      currentSlide = i;
+      slides[currentSlide].classList.add('active');
+      dots[currentSlide].classList.add('active');
+    }
+
+    function nextSlide() {
+      goToSlide((currentSlide + 1) % slides.length);
+    }
+
+    function startSlideshow() {
+      slideInterval = setInterval(nextSlide, 5000);
+    }
+
+    dots.forEach(dot => {
+      dot.addEventListener('click', () => {
+        clearInterval(slideInterval);
+        goToSlide(parseInt(dot.dataset.slide));
+        startSlideshow();
+      });
+    });
+
+    startSlideshow();
+
+    // ===== PARTICLES =====
+    const particleContainer = document.getElementById('heroParticles');
+    const colors = ['var(--teal)', 'var(--teal-light)', 'var(--gold)', 'rgba(255,255,255,0.3)'];
+    for (let i = 0; i < 15; i++) {
+      const p = document.createElement('div');
+      p.className = 'hero-particle';
+      const size = 3 + Math.random() * 5;
+      p.style.cssText = `
+        width:${size}px; height:${size}px;
+        left:${Math.random()*100}%; top:${Math.random()*100}%;
+        background:${colors[Math.floor(Math.random()*colors.length)]};
+        animation-delay:${Math.random()*6}s;
+        animation-duration:${4+Math.random()*4}s;
+      `;
+      particleContainer.appendChild(p);
+    }
+
+    // ===== SCROLL REVEAL =====
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          entry.target.querySelectorAll('.count-up:not(.counted)').forEach(el => {
+            el.classList.add('counted');
+            countUp(el);
+          });
+        }
+      });
+    }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+
+    document.querySelectorAll('.rv').forEach(el => revealObserver.observe(el));
+
+    // ===== COUNT UP =====
+    function easeOutCubic(t) { return 1 - Math.pow(1 - t, 3); }
+
+    function countUp(el) {
+      const target = parseInt(el.dataset.target);
+      const duration = 1800;
+      const start = performance.now();
+
+      function update(now) {
+        const elapsed = now - start;
+        const progress = Math.min(elapsed / duration, 1);
+        const value = Math.round(easeOutCubic(progress) * target);
+        el.textContent = value;
+        if (progress < 1) requestAnimationFrame(update);
+      }
+      requestAnimationFrame(update);
+    }
+
+    // ===== PROGRESS BAR =====
+    const progressFill = document.getElementById('progressFill');
+    const progressWrap = document.getElementById('progressWrap');
+    let progressFired = false;
+
+    const progressObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting && !progressFired) {
+          progressFired = true;
+          progressFill.style.width = '68%';
+          progressFill.classList.add('animated');
+        }
+      });
+    }, { threshold: 0.3 });
+
+    progressObserver.observe(progressWrap);
+
+    // ===== FAQ ACCORDION =====
+    document.querySelectorAll('.faq-q').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const item = btn.parentElement;
+        const wasOpen = item.classList.contains('open');
+        document.querySelectorAll('.faq-item.open').forEach(i => i.classList.remove('open'));
+        if (!wasOpen) item.classList.add('open');
+      });
+    });
+
+    // ===== SMOOTH SCROLL =====
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+      a.addEventListener('click', (e) => {
+        const target = document.querySelector(a.getAttribute('href'));
+        if (target) {
+          e.preventDefault();
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
+    });
+
+    // ===== LUCIDE ICONS =====
+    lucide.createIcons();
+  </script>
+</body>
+</html>
