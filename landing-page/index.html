@@ -1658,4 +1658,202 @@
         <a href="dados-apex.html" class="conteudo-card conteudo-full rv" style="transition-delay:0.35s">
           <div>
             <h3>Indicadores de Qualidade Clínica</h3>
-            <p>25+ indicadores em 6 domínios — desfechos, nutrição, adequação, qualidade de vida, cardiovascular e composição cor
+            <p>25+ indicadores em 6 domínios — desfechos, nutrição, adequação, qualidade de vida, cardiovascular e composição corporal.</p>
+          </div>
+          <span class="card-arrow">Ver indicadores &rarr;</span>
+        </a>
+
+      </div>
+    </div>
+  </section>
+
+<!-- CARD PRO -->
+  <section class="pro-banner section-pad" style="background:var(--bg-alt);">
+    <div class="container">
+      <div class="pro-banner-inner rv">
+        <div class="pro-banner-text">
+          <p class="eyebrow" style="color:var(--gold);margin-bottom:12px;">Para profissionais</p>
+          <h3 style="font-family:var(--font-sans);font-weight:800;font-size:clamp(22px,2.8vw,30px);color:var(--navy);margin-bottom:12px;line-height:1.2;letter-spacing:-0.5px;">
+            Apex Health <em style="color:var(--gold);font-style:normal;">Pro</em>
+          </h3>
+          <p style="font-size:15px;color:rgba(30,45,80,0.6);line-height:1.7;max-width:480px;">
+            Painel médico para prescrição de protocolos, acompanhamento de metas e gestão de pacientes com assessor virtual.
+          </p>
+        </div>
+        <a href="preview_pro_completo.html" class="btn-pro">Acessar o Pro &rarr;</a>
+      </div>
+    </div>
+  </section>
+
+<!-- FOOTER -->
+  <footer class="footer gold-dots">
+    <div class="footer-logo"><img src="logo-apex-transparent.png" alt="Apex Health" /></div>
+    <div class="footer-links">
+      <a href="#metodo">O Método</a>
+      <a href="#paraquem">Para Quem</a>
+      <a href="#jornada">Como Funciona</a>
+      <a href="sobre-dr-bruno-biluca.html">O Médico</a>
+      <a href="#resultados">Resultados</a>
+      <a href="#faq">FAQ</a>
+      <a href="artigo_sindrome_ckm.html">CKM</a>
+      <a href="artigo_hipertensao_rim.html">Hipertensão</a>
+      <a href="artigo_diabetes_rim.html">Diabetes</a>
+      <a href="artigo_obesidade_rim.html">Obesidade</a>
+      <a href="artigo_antiinflamatorio_rim.html">Anti-inflamatórios</a>
+      <a href="artigo_exercicio_drc.html">Exercício</a>
+      <a href="artigo_wearables.html">Wearables</a>
+      <a href="dados-apex.html">Indicadores</a>
+      <a href="preview_pro_completo.html">Pro</a>
+    </div>
+    <p class="footer-copy">&copy; 2026 Apex Health. Todos os direitos reservados.</p>
+  </footer>
+
+  <script>
+    // ===== HEADER SCROLL =====
+    const header = document.getElementById('header');
+    window.addEventListener('scroll', () => {
+      header.classList.toggle('scrolled', window.scrollY > 60);
+    }, { passive: true });
+
+    // ===== HEADER DROPDOWN =====
+    const dropdown = document.getElementById('headerDropdown');
+    if (dropdown) {
+      const trigger = dropdown.querySelector('.header-dropdown-trigger');
+      trigger.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const isOpen = dropdown.classList.toggle('open');
+        trigger.setAttribute('aria-expanded', isOpen);
+      });
+      document.addEventListener('click', (e) => {
+        if (!dropdown.contains(e.target)) {
+          dropdown.classList.remove('open');
+          trigger.setAttribute('aria-expanded', 'false');
+        }
+      });
+    }
+
+    // ===== HERO SLIDESHOW =====
+    const slides = document.querySelectorAll('.hero-slide');
+    const dots = document.querySelectorAll('.hero-dot');
+    let currentSlide = 0;
+    let slideInterval;
+
+    function goToSlide(i) {
+      slides[currentSlide].classList.remove('active');
+      dots[currentSlide].classList.remove('active');
+      currentSlide = i;
+      slides[currentSlide].classList.add('active');
+      dots[currentSlide].classList.add('active');
+    }
+
+    function nextSlide() {
+      goToSlide((currentSlide + 1) % slides.length);
+    }
+
+    function startSlideshow() {
+      slideInterval = setInterval(nextSlide, 5000);
+    }
+
+    dots.forEach(dot => {
+      dot.addEventListener('click', () => {
+        clearInterval(slideInterval);
+        goToSlide(parseInt(dot.dataset.slide));
+        startSlideshow();
+      });
+    });
+
+    startSlideshow();
+
+    // ===== PARTICLES =====
+    const particleContainer = document.getElementById('heroParticles');
+    const colors = ['var(--teal)', 'var(--teal-light)', 'var(--gold)', 'rgba(255,255,255,0.3)'];
+    for (let i = 0; i < 15; i++) {
+      const p = document.createElement('div');
+      p.className = 'hero-particle';
+      const size = 3 + Math.random() * 5;
+      p.style.cssText = `
+        width:${size}px; height:${size}px;
+        left:${Math.random()*100}%; top:${Math.random()*100}%;
+        background:${colors[Math.floor(Math.random()*colors.length)]};
+        animation-delay:${Math.random()*6}s;
+        animation-duration:${4+Math.random()*4}s;
+      `;
+      particleContainer.appendChild(p);
+    }
+
+    // ===== SCROLL REVEAL =====
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          entry.target.querySelectorAll('.count-up:not(.counted)').forEach(el => {
+            el.classList.add('counted');
+            countUp(el);
+          });
+        }
+      });
+    }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+
+    document.querySelectorAll('.rv').forEach(el => revealObserver.observe(el));
+
+    // ===== COUNT UP =====
+    function easeOutCubic(t) { return 1 - Math.pow(1 - t, 3); }
+
+    function countUp(el) {
+      const target = parseInt(el.dataset.target);
+      const duration = 1800;
+      const start = performance.now();
+
+      function update(now) {
+        const elapsed = now - start;
+        const progress = Math.min(elapsed / duration, 1);
+        const value = Math.round(easeOutCubic(progress) * target);
+        el.textContent = value;
+        if (progress < 1) requestAnimationFrame(update);
+      }
+      requestAnimationFrame(update);
+    }
+
+    // ===== PROGRESS BAR =====
+    const progressFill = document.getElementById('progressFill');
+    const progressWrap = document.getElementById('progressWrap');
+    let progressFired = false;
+
+    const progressObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting && !progressFired) {
+          progressFired = true;
+          progressFill.style.width = '68%';
+          progressFill.classList.add('animated');
+        }
+      });
+    }, { threshold: 0.3 });
+
+    progressObserver.observe(progressWrap);
+
+    // ===== FAQ ACCORDION =====
+    document.querySelectorAll('.faq-q').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const item = btn.parentElement;
+        const wasOpen = item.classList.contains('open');
+        document.querySelectorAll('.faq-item.open').forEach(i => i.classList.remove('open'));
+        if (!wasOpen) item.classList.add('open');
+      });
+    });
+
+    // ===== SMOOTH SCROLL =====
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+      a.addEventListener('click', (e) => {
+        const target = document.querySelector(a.getAttribute('href'));
+        if (target) {
+          e.preventDefault();
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
+    });
+
+    // ===== LUCIDE ICONS =====
+    lucide.createIcons();
+  </script>
+</body>
+</html>
