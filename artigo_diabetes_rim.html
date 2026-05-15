@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nefropatia diabética — o que o diabetes faz com seus rins | Dr. Bruno Biluca</title>
+<meta name="description" content="Um em cada três diabéticos desenvolve doença renal. Entenda como a nefropatia diabética acontece, quais os sinais precoces e como prevenir a progressão para diálise.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://www.apex.med.br/artigo_diabetes_rim.html">
+
+<!-- Open Graph -->
+<meta property="og:type" content="article">
+<meta property="og:title" content="Nefropatia diabética — o que o diabetes faz com seus rins">
+<meta property="og:description" content="Um em cada três diabéticos desenvolve doença renal. Sinais precoces, prevenção e os medicamentos que mudaram o prognóstico.">
+<meta property="og:url" content="https://www.apex.med.br/artigo_diabetes_rim.html">
+<meta property="og:site_name" content="Apex Health">
+<meta property="og:locale" content="pt_BR">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Nefropatia diabética — Dr. Bruno Biluca">
+<meta name="twitter:description" content="O que o diabetes faz com seus rins — e o que você pode fazer para impedir a progressão.">
+
+<!-- Schema.org -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "MedicalWebPage",
+      "@id": "https://www.apex.med.br/artigo_diabetes_rim.html#webpage",
+      "name": "Nefropatia diabética — o que o diabetes faz com seus rins",
+      "description": "Um em cada três diabéticos desenvolve doença renal. Sinais precoces, prevenção e os medicamentos que mudaram o prognóstico.",
+      "url": "https://www.apex.med.br/artigo_diabetes_rim.html",
+      "isPartOf": {
+        "@type": "WebSite",
+        "@id": "https://www.apex.med.br/#website",
+        "name": "Apex Health",
+        "url": "https://www.apex.med.br"
+      },
+      "author": {
+        "@type": "Person",
+        "@id": "https://www.apex.med.br/sobre-dr-bruno-biluca.html#person",
+        "name": "Dr. Bruno Piubelli Biluca",
+        "jobTitle": "Nefrologista",
+        "url": "https://www.apex.med.br/sobre-dr-bruno-biluca.html"
+      },
+      "about": {
+        "@type": "MedicalCondition",
+        "name": "Nefropatia diabética"
+      },
+      "lastReviewed": "2026-05-15"
+    }
+  ]
+}
+</script>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide@latest"></script>
+<style>
+:root {
+  --font-sans: 'Inter', sans-serif;
+  --navy: #1E2D50; --navy-deep: #121D33; --dark-section: #0a1220;
+  --teal: #028090; --teal-light: #04b5c8;
+  --gold: #C4A35A; --gold-light: #d4b76a;
+  --bg: #FAF9F5; --bg-alt: #f0efeb; --footer-bg: #0a1220;
+  --border: #e0ddd6; --muted: #8a8a8a;
+  --green: #2D7A4F; --red-soft: #C0392B;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { font-family: var(--font-sans); background: var(--bg); color: var(--navy); min-height: 100vh; }
+
+/* ===== HEADER (floating pill) ===== */
+.header {
+  position: fixed; top: 16px; left: 50%; transform: translateX(-50%);
+  width: calc(100% - 48px); max-width: 1120px; z-index: 1000;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 28px; height: 56px; border-radius: 60px;
+  background: rgba(30,45,80,0.85); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255,255,255,0.08);
+  transition: background 0.3s, box-shadow 0.3s;
+}
+.header.scrolled { background: rgba(18,29,51,0.95); box-shadow: 0 8px 32px rgba(0,0,0,0.25); }
+.header-logo img { height: 28px; display: block; }
+.header-nav { display: flex; align-items: center; gap: 24px; }
+.header-nav > a { color: rgba(255,255,255,0.75); text-decoration: none; font-size: 13px; font-weight: 500; letter-spacing: 0.3px; transition: color 0.25s; }
+.header-nav > a:hover { color: #fff; }
+.header-pro { background: rgba(196,163,90,0.15); border: 1px solid rgba(196,163,90,0.3); border-radius: 20px; padding: 4px 14px !important; color: var(--gold-light) !important; font-weight: 600 !important; }
+.header-cta { background: var(--teal); color: #fff !important; border-radius: 24px; padding: 8px 20px !important; font-weight: 600 !important; font-size: 12px !important; letter-spacing: 0.3px; }
+.header-cta:hover { background: var(--teal-light); }
+.header-dropdown { position: relative; }
+.header-dropdown-trigger {
+  background: none; border: none; color: rgba(255,255,255,0.85);
+  font-family: var(--font-sans); font-size: 13px; font-weight: 500;
+  cursor: pointer; display: flex; align-items: center; gap: 4px;
+  letter-spacing: 0.3px; transition: color 0.25s;
+}
+.header-dropdown-trigger:hover { color: #fff; }
+.header-dropdown-menu {
+  position: absolute; top: calc(100% + 12px); left: 50%;
+  transform: translateX(-50%); min-width: 240px;
+  background: rgba(18,29,51,0.97); backdrop-filter: blur(20px);
+  border: 1px solid rgba(255,255,255,0.1); border-radius: 14px;
+  padding: 8px; opacity: 0; visibility: hidden;
+  transition: opacity 0.2s, visibility 0.2s;
+  box-shadow: 0 12px 40px rgba(0,0,0,0.3);
+}
+.header-dropdown.open .header-dropdown-menu { opacity: 1; visibility: visible; }
+.header-dropdown-menu a {
+  display: flex; align-items: center; gap: 10px;
+  padding: 10px 14px; border-radius: 8px; color: rgba(255,255,255,0.75);
+  font-size: 13px; font-weight: 500; text-decoration: none;
+  transition: background 0.15s, color 0.15s;
+}
+.header-dropdown-menu a:hover { background: rgba(255,255,255,0.06); color: #fff; }
+.dd-icon { display: flex; align-items: center; }
+
+/* ===== ARTICLE HERO ===== */
+.artigo-hero { padding: 120px 24px 60px; background: #fff; border-bottom: 1px solid var(--border); }
+.artigo-hero-inner { max-width: 780px; margin: 0 auto; }
+.artigo-cat-tag {
+  display: inline-block; background: rgba(196,163,90,0.1); border: 1px solid rgba(196,163,90,0.25);
+  color: var(--gold); font-size: 10px; font-weight: 700; letter-spacing: 2.5px;
+  padding: 5px 16px; border-radius: 20px; text-transform: uppercase; margin-bottom: 24px;
+}
+.artigo-titulo {
+  font-family: var(--font-sans); font-size: clamp(32px, 5vw, 52px);
+  font-weight: 800; color: var(--navy); line-height: 1.08;
+  letter-spacing: -2px; margin-bottom: 20px;
+}
+.artigo-titulo em { color: var(--gold); font-style: normal; font-weight: 800; }
+.artigo-subtitulo {
+  font-size: clamp(16px, 2vw, 20px); font-weight: 400;
+  color: #5a6a7a; line-height: 1.7; margin-bottom: 36px; max-width: 680px;
+}
+.artigo-meta-bar {
+  display: flex; align-items: center; gap: 16px; flex-wrap: wrap;
+  padding-top: 24px; border-top: 1px solid var(--border);
+}
+.meta-autor { display: flex; align-items: center; gap: 10px; }
+.meta-autor-avatar {
+  width: 40px; height: 40px; border-radius: 50%;
+  background: rgba(196,163,90,0.12); border: 1.5px solid rgba(196,163,90,0.3);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 12px; color: var(--gold); font-weight: 800;
+}
+.meta-autor-name { font-size: 14px; font-weight: 600; color: var(--navy); }
+.meta-autor-title { font-size: 12px; color: var(--muted); }
+.meta-sep { width: 1px; height: 32px; background: var(--border); }
+.meta-info { font-size: 13px; color: var(--muted); }
+.meta-info strong { color: var(--navy); font-weight: 600; }
+
+/* ===== ARTICLE BODY ===== */
+.artigo-body { max-width: 780px; margin: 0 auto; padding: 60px 24px 40px; }
+.artigo-body p {
+  font-size: 18px; font-weight: 400; color: #3a4a5a;
+  line-height: 1.8; margin-bottom: 24px;
+}
+.artigo-body h2 {
+  font-size: 11px; font-weight: 700; letter-spacing: 3px;
+  color: var(--gold); text-transform: uppercase;
+  margin: 56px 0 20px; display: flex; align-items: center; gap: 12px;
+}
+.artigo-body h2::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+.artigo-body strong { color: var(--navy); font-weight: 600; }
+.artigo-body em { color: var(--gold); font-style: italic; }
+
+/* Quote */
+.artigo-quote {
+  border-left: 3px solid var(--gold); padding: 24px 28px;
+  margin: 36px 0; background: rgba(196,163,90,0.06); border-radius: 0 10px 10px 0;
+}
+.artigo-quote p {
+  font-size: 20px; font-style: italic; color: #5a6070;
+  line-height: 1.7; margin-bottom: 0;
+}
+
+/* Highlight box */
+.artigo-destaque-box {
+  background: #fff; border: 1px solid var(--border);
+  border-left: 3px solid var(--teal); border-radius: 0 12px 12px 0;
+  padding: 28px 32px; margin: 36px 0;
+}
+.artigo-destaque-box h4 {
+  font-size: 10px; letter-spacing: 3px; color: var(--teal);
+  text-transform: uppercase; font-weight: 700; margin-bottom: 16px;
+}
+.artigo-destaque-box ul { list-style: none; display: flex; flex-direction: column; gap: 14px; }
+.artigo-destaque-box li {
+  font-size: 17px; color: #3a4a5a; display: flex;
+  align-items: flex-start; gap: 12px; line-height: 1.7;
+}
+.artigo-destaque-box li::before { content: '\2192'; color: var(--teal); flex-shrink: 0; margin-top: 2px; }
+
+/* Alert box */
+.artigo-alerta {
+  background: #fef5f5; border: 1px solid rgba(192,57,43,0.12);
+  border-left: 3px solid var(--red-soft); border-radius: 0 12px 12px 0;
+  padding: 28px 32px; margin: 36px 0;
+}
+.artigo-alerta h4 {
+  font-size: 10px; letter-spacing: 3px; color: var(--red-soft);
+  text-transform: uppercase; font-weight: 700; margin-bottom: 16px;
+}
+.artigo-alerta ul { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+.artigo-alerta li {
+  font-size: 17px; color: #3a4a5a; display: flex;
+  align-items: flex-start; gap: 12px; line-height: 1.7;
+}
+.artigo-alerta li::before { content: '\26A0'; flex-shrink: 0; font-size: 14px; }
+
+/* Summary box */
+.artigo-resumo {
+  background: rgba(45,122,79,0.04); border: 1px solid rgba(45,122,79,0.15);
+  border-radius: 12px; padding: 32px 36px; margin: 48px 0;
+}
+.artigo-resumo h4 {
+  font-size: 10px; letter-spacing: 3px; color: var(--green);
+  text-transform: uppercase; font-weight: 700; margin-bottom: 20px;
+}
+.artigo-resumo ul { list-style: none; display: flex; flex-direction: column; gap: 14px; }
+.artigo-resumo li {
+  font-size: 17px; color: #3a4a5a; display: flex;
+  align-items: flex-start; gap: 12px; line-height: 1.7;
+}
+.artigo-resumo li::before { content: '\2713'; color: var(--green); font-size: 14px; flex-shrink: 0; margin-top: 3px; font-weight: 700; }
+
+/* CTA box */
+.artigo-cta {
+  background: var(--navy-deep); border-radius: 16px;
+  padding: 44px 40px; margin: 48px 0; text-align: center;
+}
+.artigo-cta p {
+  font-size: 19px; color: rgba(255,255,255,0.75);
+  line-height: 1.75; margin-bottom: 24px;
+}
+.artigo-cta a {
+  display: inline-block; font-size: 12px; font-weight: 700;
+  letter-spacing: 2px; color: #fff; background: var(--teal);
+  padding: 14px 32px; border-radius: 30px; text-decoration: none;
+  text-transform: uppercase; transition: background 0.25s;
+}
+.artigo-cta a:hover { background: var(--teal-light); }
+
+/* References */
+.artigo-refs { margin-top: 52px; padding-top: 32px; border-top: 1px solid var(--border); }
+.artigo-refs h4 {
+  font-size: 10px; letter-spacing: 3px; color: var(--muted);
+  text-transform: uppercase; font-weight: 600; margin-bottom: 16px;
+}
+.artigo-refs ol { list-style: decimal; padding-left: 20px; display: flex; flex-direction: column; gap: 8px; }
+.artigo-refs li { font-size: 12px; color: var(--muted); line-height: 1.7; }
+
+/* Share */
+.artigo-share {
+  display: flex; align-items: center; gap: 12px; margin-top: 48px;
+  padding-top: 32px; border-top: 1px solid var(--border); flex-wrap: wrap;
+}
+.share-label { font-size: 10px; letter-spacing: 3px; color: var(--muted); text-transform: uppercase; font-weight: 600; }
+.share-btn {
+  font-family: var(--font-sans); font-size: 12px; font-weight: 500;
+  letter-spacing: 0.5px; color: var(--navy); border: 1px solid var(--border);
+  padding: 8px 18px; border-radius: 24px; text-decoration: none;
+  transition: all 0.2s; cursor: pointer; background: transparent;
+}
+.share-btn:hover { background: rgba(2,128,144,0.06); border-color: var(--teal); color: var(--teal); }
+
+/* Article nav */
+.artigo-nav {
+  max-width: 780px; margin: 0 auto; padding: 40px 24px 64px;
+  display: flex; justify-content: space-between; gap: 16px;
+  border-top: 1px solid var(--border);
+}
+.artigo-nav-link {
+  font-size: 11px; letter-spacing: 2px; color: var(--teal);
+  text-decoration: none; display: flex; flex-direction: column;
+  gap: 6px; transition: opacity 0.2s; text-transform: uppercase; font-weight: 600;
+}
+.artigo-nav-link:hover { opacity: 0.7; }
+.artigo-nav-link span { font-size: 15px; color: #5a6a7a; font-weight: 400; text-transform: none; letter-spacing: 0; }
+
+/* ===== FOOTER ===== */
+.footer {
+  background: var(--footer-bg); text-align: center; padding: 56px 24px 32px;
+}
+.footer-logo img { height: 32px; margin-bottom: 24px; opacity: 0.7; }
+.footer-links { display: flex; justify-content: center; flex-wrap: wrap; gap: 20px; margin-bottom: 24px; }
+.footer-links a { color: rgba(255,255,255,0.45); text-decoration: none; font-size: 13px; font-weight: 400; transition: color 0.2s; }
+.footer-links a:hover { color: rgba(255,255,255,0.8); }
+.footer-copy { color: rgba(255,255,255,0.2); font-size: 12px; }
+
+/* ===== SCROLL REVEAL ===== */
+.rv { opacity: 0; transform: translateY(24px); transition: opacity 0.7s ease, transform 0.7s ease; }
+.rv.visible { opacity: 1; transform: translateY(0); }
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 700px) {
+  .header { width: calc(100% - 24px); padding: 0 16px; height: 50px; }
+  .header-nav { gap: 12px; }
+  .header-nav > a { font-size: 11px; }
+  .header-cta, .header-pro { display: none; }
+  .artigo-hero { padding-top: 90px; }
+  .artigo-titulo { font-size: 28px; letter-spacing: -1px; }
+  .artigo-body p { font-size: 16px; }
+  .artigo-cta { padding: 28px 24px; }
+  .artigo-destaque-box, .artigo-alerta, .artigo-resumo { padding: 20px 20px; }
+}
+</style>
+</head>
+<body>
+
+<!-- ===== HEADER ===== -->
+<header class="header" id="header">
+  <a href="index.html" class="header-logo"><img src="logo-apex-transparent.png" alt="Apex Health" /></a>
+  <nav class="header-nav">
+    <a href="index.html#metodo">O Método</a>
+    <a href="index.html#paraquem">Para Quem</a>
+    <a href="index.html#jornada">Como Funciona</a>
+    <a href="index.html#medico">O Médico</a>
+    <div class="header-dropdown" id="headerDropdown">
+      <button class="header-dropdown-trigger" aria-expanded="false" aria-haspopup="true">
+        Saúde <i data-lucide="chevron-down" style="width:14px;height:14px;stroke-width:2"></i>
+      </button>
+      <div class="header-dropdown-menu" role="menu">
+        <a href="nefrologia-doenca-renal.html" role="menuitem"><span class="dd-icon" style="color:var(--teal)"><i data-lucide="heart-pulse" style="width:16px;height:16px"></i></span> Doença Renal Crônica</a>
+        <a href="sindrome-ckm.html" role="menuitem"><span class="dd-icon" style="color:var(--gold)"><i data-lucide="activity" style="width:16px;height:16px"></i></span> Síndrome CKM</a>
+        <a href="wearables-saude-digital.html" role="menuitem"><span class="dd-icon" style="color:var(--teal)"><i data-lucide="watch" style="width:16px;height:16px"></i></span> Wearables e Saúde Digital</a>
+        <a href="dados-apex.html" role="menuitem"><span class="dd-icon" style="color:var(--gold)"><i data-lucide="bar-chart-3" style="width:16px;height:16px"></i></span> Indicadores de Qualidade</a>
+        <a href="imprensa.html" role="menuitem"><span class="dd-icon" style="color:var(--teal)"><i data-lucide="newspaper" style="width:16px;height:16px"></i></span> Imprensa</a>
+      </div>
+    </div>
+    <a href="index.html#faq">FAQ</a>
+    <a href="preview_pro_completo.html" class="header-pro">Pro</a>
+    <a href="#cta-final" class="header-cta">Agendar Consulta</a>
+  </nav>
+</header>
+
+<!-- ===== ARTICLE HERO ===== -->
+<section class="artigo-hero">
+  <div class="artigo-hero-inner rv">
+    <span class="artigo-cat-tag">Diabetes · Doença Renal</span>
+    <h1 class="artigo-titulo">
+      Nefropatia diabética:<br>
+      <em>o que o diabetes faz com seus rins</em>
+    </h1>
+    <p class="artigo-subtitulo">
+      Um em cada três diabéticos desenvolve doença renal. Na maioria dos casos, o diagnóstico chega tarde — quando a lesão já é irreversível. A detecção precoce pode ser a diferença entre manter a função renal e precisar de diálise.
+    </p>
+    <div class="artigo-meta-bar">
+      <div class="meta-autor">
+        <div class="meta-autor-avatar">BB</div>
+        <div>
+          <div class="meta-autor-name">Dr. Bruno Biluca</div>
+          <div class="meta-autor-title">Nefrologista · CRM-SP 151.041 · RQE 70145</div>
+        </div>
+      </div>
+      <div class="meta-sep"></div>
+      <div class="meta-info"><strong>Nefropatia Diabética</strong></div>
+      <div class="meta-sep"></div>
+      <div class="meta-info"><i data-lucide="clock" style="width:13px;height:13px;stroke-width:2;vertical-align:-2px"></i> 7 min de leitura</div>
+      <div class="meta-sep"></div>
+      <div class="meta-info">Maio 2026</div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== ARTICLE BODY ===== -->
+<div class="artigo-body">
+
+  <h2 class="rv">Um em cada três</h2>
+
+  <p class="rv">
+    O diabetes é a causa número um de doença renal terminal no mundo. Entre 30% e 40% dos pacientes com diabetes tipo 2 desenvolvem algum grau de nefropatia diabética ao longo da vida. No Brasil, aproximadamente um terço dos pacientes que iniciam diálise chegam a esse ponto por causa do diabetes — e a grande maioria não sabia que seus rins estavam em risco até que fosse tarde demais.
+  </p>
+
+  <p class="rv">
+    Essa proporção não deveria surpreender ninguém. O diabetes tipo 2 é uma doença silenciosa por natureza, e a doença renal que ele causa é ainda mais silenciosa. O paciente convive com glicemia elevada durante anos, faz acompanhamento esporádico, ajusta a medicação de vez em quando — e em nenhum momento alguém pede o exame que detectaria o início da lesão renal.
+  </p>
+
+  <div class="artigo-quote rv">
+    <p>A nefropatia diabética não começa quando a creatinina sobe. Começa anos antes — quando pequenas quantidades de proteína começam a vazar na urina, sem que o paciente sinta absolutamente nada.</p>
+  </div>
+
+  <h2 class="rv">O mecanismo da lesão</h2>
+
+  <p class="rv">
+    Para entender como o diabetes destrói os rins, é preciso olhar para o que acontece dentro dos glomérulos — as unidades microscópicas de filtração renal. Cada rim contém cerca de um milhão deles, e cada glomérulo é formado por uma rede de capilares extremamente finos, envolvidos por uma membrana que funciona como um filtro seletivo: deixa passar água e toxinas pequenas, mas retém proteínas e células sanguíneas.
+  </p>
+
+  <p class="rv">
+    Quando a glicemia permanece cronicamente elevada, três processos acontecem simultaneamente. Primeiro, a <strong>hiperfiltração glomerular</strong>: o excesso de glicose no sangue faz com que os glomérulos trabalhem sob pressão aumentada, filtrando mais sangue do que deveriam. Nos primeiros anos, a taxa de filtração pode até parecer normal ou levemente elevada — o que dá a falsa impressão de que os rins estão bem. Na realidade, eles estão sendo forçados além da capacidade.
+  </p>
+
+  <p class="rv">
+    Segundo, a formação de <strong>AGEs</strong> — produtos finais de glicação avançada. A glicose em excesso se liga a proteínas estruturais dos vasos e do tecido renal, alterando irreversivelmente sua estrutura. Esses compostos geram estresse oxidativo, inflamação crônica e ativação de vias fibróticas, especialmente a via do <strong>TGF-beta</strong> — o principal mediador de cicatrização patológica no rim.
+  </p>
+
+  <p class="rv">
+    Terceiro, a <strong>fibrose progressiva</strong>. O tecido renal funcional é gradualmente substituído por tecido cicatricial. A membrana de filtração se espessa, os glomérulos se fecham, e a capacidade dos rins de limpar o sangue diminui de forma lenta, contínua e — se nada for feito — irreversível. Quando a perda chega a 85% ou mais da função, o paciente precisa de diálise ou transplante.
+  </p>
+
+  <h2 class="rv">Os sinais precoces que passam despercebidos</h2>
+
+  <p class="rv">
+    O primeiro sinal detectável de nefropatia diabética não é um sintoma. É um resultado de laboratório que a maioria dos médicos não pede de rotina: a <strong>microalbuminúria</strong>.
+  </p>
+
+  <p class="rv">
+    A microalbuminúria é a presença de pequenas quantidades de albumina na urina — entre 30 e 300 mg/g de creatinina. Em condições normais, a membrana glomerular não permite que a albumina passe para a urina. Quando ela começa a vazar, mesmo em quantidades mínimas, significa que a barreira de filtração já está comprometida. É o primeiro sinal objetivo de que o diabetes está causando dano renal.
+  </p>
+
+  <p class="rv">
+    O problema é que esse exame — a relação albumina/creatinina em amostra isolada de urina — é simples, barato e amplamente disponível, mas continua sendo subutilizado. As diretrizes recomendam que todo paciente com diabetes faça esse exame anualmente. Na prática, a maioria nunca fez.
+  </p>
+
+  <p class="rv">
+    Outro marcador importante é a <strong>trajetória da taxa de filtração glomerular estimada (TFGe)</strong>. Uma queda sustentada de mais de 3 a 5 ml/min/ano é considerada declínio rápido e exige investigação imediata — mesmo que o valor absoluto ainda esteja dentro da faixa considerada normal.
+  </p>
+
+  <p class="rv">
+    Há também um sinal que o próprio paciente pode perceber: <strong>espuma persistente na urina</strong>. Urina espumosa que não desaparece após o jato e que se repete ao longo dos dias sugere proteinúria — e deve ser investigada com exames laboratoriais.
+  </p>
+
+  <h2 class="rv">Hemoglobina glicada e rim</h2>
+
+  <p class="rv">
+    O controle glicêmico é a pedra angular da prevenção da nefropatia diabética. Os estudos clássicos — UKPDS para diabetes tipo 2 e ADVANCE para pacientes com risco cardiovascular elevado — demonstraram de forma consistente que manter a <strong>hemoglobina glicada (HbA1c) abaixo de 7%</strong> reduz significativamente o risco de desenvolvimento e progressão de doença renal.
+  </p>
+
+  <p class="rv">
+    A cada ponto percentual de redução na HbA1c, o risco de complicações microvasculares — incluindo nefropatia — cai de forma substancial. Esse benefício é mais expressivo quando o controle é estabelecido precocemente, nos primeiros anos após o diagnóstico de diabetes. É o que a literatura chama de memória metabólica: o período de hiperglicemia inicial deixa marcas biológicas duradouras que influenciam o risco por décadas.
+  </p>
+
+  <p class="rv">
+    No entanto, é fundamental entender que o alvo de HbA1c precisa ser <strong>individualizado</strong> quando o paciente já apresenta doença renal avançada. Em pacientes com TFGe abaixo de 30 ml/min, o controle glicêmico muito agressivo aumenta o risco de hipoglicemia grave — uma complicação potencialmente fatal em quem já tem comprometimento renal significativo. Nesses casos, um alvo de HbA1c entre 7% e 8% pode ser mais seguro e igualmente eficaz. A decisão deve ser individualizada, com acompanhamento frequente.
+  </p>
+
+  <h2 class="rv">Os medicamentos que mudaram o jogo</h2>
+
+  <p class="rv">
+    Nos últimos cinco anos, três classes de medicamentos transformaram o prognóstico da nefropatia diabética. O impacto foi tão grande que as diretrizes internacionais foram reescritas para incorporá-los como primeira linha de tratamento — não apenas como antidiabéticos, mas como protetores renais e cardiovasculares.
+  </p>
+
+  <div class="artigo-destaque-box rv">
+    <h4>Medicamentos com proteção renal comprovada</h4>
+    <ul>
+      <li><strong>Inibidores de SGLT2</strong> (dapagliflozina, empagliflozina, canagliflozina): o estudo CREDENCE (2019) demonstrou que a canagliflozina reduziu em 30% o risco de progressão de doença renal em diabéticos. O DAPA-CKD (2020) confirmou que a dapagliflozina protege os rins mesmo em pacientes sem diabetes. Esses medicamentos agem reduzindo a hiperfiltração glomerular, a pressão intraglomerular e a inflamação — benefícios que vão muito além do controle da glicemia</li>
+      <li><strong>Agonistas de GLP-1</strong> (semaglutida, liraglutida): o estudo FLOW (2024) demonstrou que a semaglutida reduziu em 24% o risco de eventos renais graves em pacientes com diabetes tipo 2 e doença renal crônica. Além da proteção renal direta, promovem perda de peso significativa e redução de eventos cardiovasculares</li>
+      <li><strong>Finerenona</strong> (antagonista mineralocorticoide não esteroidal): o estudo FIDELIO-DKD (2020) mostrou redução significativa na progressão de doença renal e em eventos cardiovasculares em pacientes com diabetes tipo 2 e nefropatia. Age bloqueando a inflamação e a fibrose mediadas pela aldosterona, sem os efeitos colaterais dos antagonistas mineralocorticoides tradicionais</li>
+    </ul>
+  </div>
+
+  <p class="rv">
+    O ponto central é que esses medicamentos protegem os rins por mecanismos que vão além do controle da glicose. Eles reduzem inflamação, pressão intraglomerular e fibrose de forma direta. Por isso, as diretrizes atuais recomendam inibidores de SGLT2 para todo paciente com diabetes tipo 2 e qualquer grau de doença renal — independentemente do nível de HbA1c.
+  </p>
+
+  <h2 class="rv">O que você pode fazer hoje</h2>
+
+  <div class="artigo-destaque-box rv">
+    <h4>Checklist de proteção renal para diabéticos</h4>
+    <ul>
+      <li><strong>Teste a microalbuminúria anualmente</strong> — peça ao seu médico a relação albumina/creatinina em amostra isolada de urina. É o exame mais importante para detectar nefropatia precoce</li>
+      <li><strong>Mantenha a HbA1c abaixo de 7%</strong> — o controle glicêmico consistente nos primeiros anos após o diagnóstico tem impacto duradouro na proteção dos rins</li>
+      <li><strong>Controle a pressão arterial</strong> — o alvo para diabéticos com risco renal é abaixo de 130/80 mmHg. A hipertensão acelera exponencialmente a progressão da nefropatia</li>
+      <li><strong>Evite anti-inflamatórios</strong> — ibuprofeno, diclofenaco e outros AINEs reduzem o fluxo sanguíneo renal e podem acelerar a perda de função, especialmente em quem já tem doença renal</li>
+      <li><strong>Mantenha-se hidratado</strong> — a desidratação crônica aumenta a concentração de toxinas nos rins e agrava a hiperfiltração</li>
+      <li><strong>Pratique atividade física regular</strong> — exercício aeróbico melhora a sensibilidade à insulina, reduz a pressão arterial e tem efeito anti-inflamatório direto sobre o tecido renal</li>
+    </ul>
+  </div>
+
+  <h2 class="rv">Quando procurar um nefrologista</h2>
+
+  <div class="artigo-alerta rv">
+    <h4>Sinais que indicam necessidade de avaliação nefrológica</h4>
+    <ul>
+      <li>Microalbuminúria persistente (acima de 30 mg/g) em duas ou mais medições com intervalo de três meses</li>
+      <li>Taxa de filtração glomerular estimada (TFGe) abaixo de 60 ml/min/1,73m²</li>
+      <li>Declínio rápido da TFGe — queda de mais de 5 ml/min por ano, mesmo com valores ainda normais</li>
+      <li>Pressão arterial acima de 140/90 mmHg apesar de dois ou mais medicamentos anti-hipertensivos</li>
+      <li>Anemia inexplicada em paciente diabético — pode ser o primeiro sinal de insuficiência renal</li>
+      <li>Espuma persistente na urina ou edema (inchaço) em tornozelos e pernas</li>
+      <li>Potássio elevado em exames de sangue de rotina</li>
+    </ul>
+  </div>
+
+  <p class="rv">
+    A avaliação nefrológica precoce não é sobre tratar uma doença grave. É sobre impedir que ela se torne grave. Quando o paciente diabético chega ao nefrologista com creatinina de 4 ou 5, as opções terapêuticas são limitadas. Quando chega com microalbuminúria e TFGe de 70, as opções são amplas — e o prognóstico é radicalmente diferente.
+  </p>
+
+  <div class="artigo-resumo rv">
+    <h4>Pontos essenciais deste artigo</h4>
+    <ul>
+      <li>Entre 30% e 40% dos diabéticos desenvolvem nefropatia — é a principal causa de diálise no mundo</li>
+      <li>A microalbuminúria (30–300 mg/g) é o primeiro marcador detectável de lesão renal e deveria ser testada anualmente em todo diabético</li>
+      <li>A hiperglicemia crônica danifica os glomérulos por hiperfiltração, formação de AGEs e fibrose progressiva via TGF-beta</li>
+      <li>Manter a HbA1c abaixo de 7% reduz significativamente o risco de nefropatia, mas o alvo precisa ser individualizado na doença renal avançada</li>
+      <li>Inibidores de SGLT2, agonistas de GLP-1 e finerenona protegem os rins por mecanismos que vão além do controle da glicose</li>
+      <li>Pressão arterial abaixo de 130/80, evitar anti-inflamatórios e manter atividade física regular são medidas protetoras acessíveis</li>
+      <li>O encaminhamento precoce ao nefrologista — com microalbuminúria e TFGe ainda preservada — muda radicalmente o prognóstico</li>
+    </ul>
+  </div>
+
+  <!-- CTA -->
+  <div class="artigo-cta rv" id="cta-final">
+    <p>Se você tem diabetes e nunca investigou a saúde dos seus rins — ou já tem microalbuminúria e quer entender o que fazer a partir de agora — uma avaliação nefrológica integrada pode mudar a trajetória da sua saúde renal.</p>
+    <a href="https://wa.me/5511999999999" target="_blank">Agendar consulta</a>
+  </div>
+
+  <!-- REFERÊNCIAS -->
+  <div class="artigo-refs rv">
+    <h4>Referências</h4>
+    <ol>
+      <li>Kidney Disease: Improving Global Outcomes (KDIGO) Diabetes Work Group. KDIGO 2022 Clinical Practice Guideline for Diabetes Management in Chronic Kidney Disease. Kidney Int. 2022;102(5S):S1–S127.</li>
+      <li>Perkovic V, Jardine MJ, Neal B, et al. Canagliflozin and Renal Outcomes in Type 2 Diabetes and Nephropathy (CREDENCE). N Engl J Med. 2019;380(24):2295–2306.</li>
+      <li>Heerspink HJL, Stefánsson BV, Correa-Rotter R, et al. Dapagliflozin in Patients with Chronic Kidney Disease (DAPA-CKD). N Engl J Med. 2020;383(15):1436–1446.</li>
+      <li>Perkovic V, Tuttle KR, Lim TK, et al. Effects of Semaglutide on Chronic Kidney Disease in Patients with Type 2 Diabetes (FLOW). N Engl J Med. 2024;391(2):109–121.</li>
+      <li>Bakris GL, Agarwal R, Anker SD, et al. Effect of Finerenone on Chronic Kidney Disease Outcomes in Type 2 Diabetes (FIDELIO-DKD). N Engl J Med. 2020;383(23):2219–2229.</li>
+    </ol>
+  </div>
+
+  <!-- COMPARTILHAR -->
+  <div class="artigo-share rv">
+    <span class="share-label">Compartilhar</span>
+    <a href="https://wa.me/?text=Nefropatia diabética — o que o diabetes faz com seus rins. Dr. Bruno Biluca: https://apex.med.br/artigo_diabetes_rim.html" target="_blank" class="share-btn">WhatsApp</a>
+    <a href="https://www.linkedin.com/sharing/share-offsite/?url=https://apex.med.br/artigo_diabetes_rim.html" target="_blank" class="share-btn">LinkedIn</a>
+    <button class="share-btn" onclick="navigator.clipboard.writeText(window.location.href);this.textContent='Copiado!';setTimeout(()=>this.textContent='Copiar link',2000)">Copiar link</button>
+  </div>
+
+</div>
+
+<!-- ===== ARTICLE NAV ===== -->
+<div class="artigo-nav">
+  <a href="artigo_hipertensao_rim.html" class="artigo-nav-link prev">
+    &larr; Artigo anterior
+    <span>Hipertensão e rim</span>
+  </a>
+  <a href="artigo_obesidade_rim.html" class="artigo-nav-link next">
+    Próximo artigo &rarr;
+    <span>Obesidade e doença renal</span>
+  </a>
+</div>
+
+<!-- ===== FOOTER ===== -->
+<footer class="footer">
+  <div class="footer-logo"><img src="logo-apex-transparent.png" alt="Apex Health" /></div>
+  <div class="footer-links">
+    <a href="index.html">Início</a>
+    <a href="index.html#metodo">O Método</a>
+    <a href="index.html#paraquem">Para Quem</a>
+    <a href="index.html#jornada">Como Funciona</a>
+    <a href="sobre-dr-bruno-biluca.html">O Médico</a>
+    <a href="nefrologia-doenca-renal.html">DRC</a>
+    <a href="sindrome-ckm.html">CKM</a>
+    <a href="wearables-saude-digital.html">Wearables</a>
+    <a href="dados-apex.html">Indicadores</a>
+    <a href="imprensa.html">Imprensa</a>
+    <a href="preview_pro_completo.html">Pro</a>
+  </div>
+  <p class="footer-copy">&copy; 2026 Apex Health. Todos os direitos reservados.</p>
+</footer>
+
+<!-- ===== SCRIPTS ===== -->
+<script>
+// Embed mode
+(function(){
+  var ps = new URLSearchParams(window.location.search);
+  if (ps.get('embed') === '1') {
+    document.addEventListener('DOMContentLoaded', function(){
+      var els = document.querySelectorAll('.header, header, footer, .artigo-nav');
+      els.forEach(function(n){ n.style.display = 'none'; });
+      document.body.style.paddingTop = '0';
+      document.querySelector('.artigo-hero').style.paddingTop = '40px';
+    });
+  }
+})();
+
+// Lucide icons
+lucide.createIcons();
+
+// Header scroll
+const header = document.getElementById('header');
+window.addEventListener('scroll', () => {
+  header.classList.toggle('scrolled', window.scrollY > 60);
+}, { passive: true });
+
+// Dropdown
+const dropdown = document.getElementById('headerDropdown');
+const trigger = dropdown.querySelector('.header-dropdown-trigger');
+trigger.addEventListener('click', (e) => {
+  e.stopPropagation();
+  const isOpen = dropdown.classList.toggle('open');
+  trigger.setAttribute('aria-expanded', isOpen);
+});
+document.addEventListener('click', () => {
+  dropdown.classList.remove('open');
+  trigger.setAttribute('aria-expanded', 'false');
+});
+
+// Scroll reveal
+const rvObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+      rvObserver.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+document.querySelectorAll('.rv').forEach(el => rvObserver.observe(el));
+</script>
+</body>
+</html>

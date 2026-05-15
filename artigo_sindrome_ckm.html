@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Síndrome CKM — o que conecta coração, rim e metabolismo | Dr. Bruno Biluca</title>
+<meta name="description" content="A Síndrome Cardiovascular-Renal-Metabólica (CKM) é a principal causa de morte no mundo. Entenda os estágios, fatores de risco e como interromper a progressão.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://www.apex.med.br/artigo_sindrome_ckm.html">
+
+<!-- Open Graph -->
+<meta property="og:type" content="article">
+<meta property="og:title" content="Síndrome CKM — o que conecta coração, rim e metabolismo">
+<meta property="og:description" content="A Síndrome Cardiovascular-Renal-Metabólica é a principal causa de morte no mundo. Entenda os estágios e como interromper a progressão.">
+<meta property="og:url" content="https://www.apex.med.br/artigo_sindrome_ckm.html">
+<meta property="og:site_name" content="Apex Health">
+<meta property="og:locale" content="pt_BR">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Síndrome CKM — Dr. Bruno Biluca">
+<meta name="twitter:description" content="O que conecta coração, rim e metabolismo — e por que isso muda a forma de tratar doenças crônicas.">
+
+<!-- Schema.org -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "MedicalWebPage",
+      "@id": "https://www.apex.med.br/artigo_sindrome_ckm.html#webpage",
+      "name": "Síndrome CKM — o que conecta coração, rim e metabolismo",
+      "description": "A Síndrome Cardiovascular-Renal-Metabólica (CKM) é a principal causa de morte no mundo. Estágios, diagnóstico e tratamento.",
+      "url": "https://www.apex.med.br/artigo_sindrome_ckm.html",
+      "isPartOf": {
+        "@type": "WebSite",
+        "@id": "https://www.apex.med.br/#website",
+        "name": "Apex Health",
+        "url": "https://www.apex.med.br"
+      },
+      "author": {
+        "@type": "Person",
+        "@id": "https://www.apex.med.br/sobre-dr-bruno-biluca.html#person",
+        "name": "Dr. Bruno Piubelli Biluca",
+        "jobTitle": "Nefrologista",
+        "url": "https://www.apex.med.br/sobre-dr-bruno-biluca.html"
+      },
+      "about": {
+        "@type": "MedicalCondition",
+        "name": "Síndrome Cardiovascular-Renal-Metabólica"
+      },
+      "lastReviewed": "2026-05-15"
+    }
+  ]
+}
+</script>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide@latest"></script>
+<style>
+:root {
+  --font-sans: 'Inter', sans-serif;
+  --navy: #1E2D50; --navy-deep: #121D33; --dark-section: #0a1220;
+  --teal: #028090; --teal-light: #04b5c8;
+  --gold: #C4A35A; --gold-light: #d4b76a;
+  --bg: #FAF9F5; --bg-alt: #f0efeb; --footer-bg: #0a1220;
+  --border: #e0ddd6; --muted: #8a8a8a;
+  --green: #2D7A4F; --red-soft: #C0392B;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { font-family: var(--font-sans); background: var(--bg); color: var(--navy); min-height: 100vh; }
+
+/* ===== HEADER (floating pill) ===== */
+.header {
+  position: fixed; top: 16px; left: 50%; transform: translateX(-50%);
+  width: calc(100% - 48px); max-width: 1120px; z-index: 1000;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 28px; height: 56px; border-radius: 60px;
+  background: rgba(30,45,80,0.85); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255,255,255,0.08);
+  transition: background 0.3s, box-shadow 0.3s;
+}
+.header.scrolled { background: rgba(18,29,51,0.95); box-shadow: 0 8px 32px rgba(0,0,0,0.25); }
+.header-logo img { height: 28px; display: block; }
+.header-nav { display: flex; align-items: center; gap: 24px; }
+.header-nav > a { color: rgba(255,255,255,0.75); text-decoration: none; font-size: 13px; font-weight: 500; letter-spacing: 0.3px; transition: color 0.25s; }
+.header-nav > a:hover { color: #fff; }
+.header-pro { background: rgba(196,163,90,0.15); border: 1px solid rgba(196,163,90,0.3); border-radius: 20px; padding: 4px 14px !important; color: var(--gold-light) !important; font-weight: 600 !important; }
+.header-cta { background: var(--teal); color: #fff !important; border-radius: 24px; padding: 8px 20px !important; font-weight: 600 !important; font-size: 12px !important; letter-spacing: 0.3px; }
+.header-cta:hover { background: var(--teal-light); }
+.header-dropdown { position: relative; }
+.header-dropdown-trigger {
+  background: none; border: none; color: rgba(255,255,255,0.85);
+  font-family: var(--font-sans); font-size: 13px; font-weight: 500;
+  cursor: pointer; display: flex; align-items: center; gap: 4px;
+  letter-spacing: 0.3px; transition: color 0.25s;
+}
+.header-dropdown-trigger:hover { color: #fff; }
+.header-dropdown-menu {
+  position: absolute; top: calc(100% + 12px); left: 50%;
+  transform: translateX(-50%); min-width: 240px;
+  background: rgba(18,29,51,0.97); backdrop-filter: blur(20px);
+  border: 1px solid rgba(255,255,255,0.1); border-radius: 14px;
+  padding: 8px; opacity: 0; visibility: hidden;
+  transition: opacity 0.2s, visibility 0.2s;
+  box-shadow: 0 12px 40px rgba(0,0,0,0.3);
+}
+.header-dropdown.open .header-dropdown-menu { opacity: 1; visibility: visible; }
+.header-dropdown-menu a {
+  display: flex; align-items: center; gap: 10px;
+  padding: 10px 14px; border-radius: 8px; color: rgba(255,255,255,0.75);
+  font-size: 13px; font-weight: 500; text-decoration: none;
+  transition: background 0.15s, color 0.15s;
+}
+.header-dropdown-menu a:hover { background: rgba(255,255,255,0.06); color: #fff; }
+.dd-icon { display: flex; align-items: center; }
+
+/* ===== ARTICLE HERO ===== */
+.artigo-hero { padding: 120px 24px 60px; background: #fff; border-bottom: 1px solid var(--border); }
+.artigo-hero-inner { max-width: 780px; margin: 0 auto; }
+.artigo-cat-tag {
+  display: inline-block; background: rgba(196,163,90,0.1); border: 1px solid rgba(196,163,90,0.25);
+  color: var(--gold); font-size: 10px; font-weight: 700; letter-spacing: 2.5px;
+  padding: 5px 16px; border-radius: 20px; text-transform: uppercase; margin-bottom: 24px;
+}
+.artigo-titulo {
+  font-family: var(--font-sans); font-size: clamp(32px, 5vw, 52px);
+  font-weight: 800; color: var(--navy); line-height: 1.08;
+  letter-spacing: -2px; margin-bottom: 20px;
+}
+.artigo-titulo em { color: var(--gold); font-style: normal; font-weight: 800; }
+.artigo-subtitulo {
+  font-size: clamp(16px, 2vw, 20px); font-weight: 400;
+  color: #5a6a7a; line-height: 1.7; margin-bottom: 36px; max-width: 680px;
+}
+.artigo-meta-bar {
+  display: flex; align-items: center; gap: 16px; flex-wrap: wrap;
+  padding-top: 24px; border-top: 1px solid var(--border);
+}
+.meta-autor { display: flex; align-items: center; gap: 10px; }
+.meta-autor-avatar {
+  width: 40px; height: 40px; border-radius: 50%;
+  background: rgba(196,163,90,0.12); border: 1.5px solid rgba(196,163,90,0.3);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 12px; color: var(--gold); font-weight: 800;
+}
+.meta-autor-name { font-size: 14px; font-weight: 600; color: var(--navy); }
+.meta-autor-title { font-size: 12px; color: var(--muted); }
+.meta-sep { width: 1px; height: 32px; background: var(--border); }
+.meta-info { font-size: 13px; color: var(--muted); }
+.meta-info strong { color: var(--navy); font-weight: 600; }
+
+/* ===== ARTICLE BODY ===== */
+.artigo-body { max-width: 780px; margin: 0 auto; padding: 60px 24px 40px; }
+.artigo-body p {
+  font-size: 18px; font-weight: 400; color: #3a4a5a;
+  line-height: 1.8; margin-bottom: 24px;
+}
+.artigo-body h2 {
+  font-size: 11px; font-weight: 700; letter-spacing: 3px;
+  color: var(--gold); text-transform: uppercase;
+  margin: 56px 0 20px; display: flex; align-items: center; gap: 12px;
+}
+.artigo-body h2::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+.artigo-body strong { color: var(--navy); font-weight: 600; }
+.artigo-body em { color: var(--gold); font-style: italic; }
+
+/* Quote */
+.artigo-quote {
+  border-left: 3px solid var(--gold); padding: 24px 28px;
+  margin: 36px 0; background: rgba(196,163,90,0.06); border-radius: 0 10px 10px 0;
+}
+.artigo-quote p {
+  font-size: 20px; font-style: italic; color: #5a6070;
+  line-height: 1.7; margin-bottom: 0;
+}
+
+/* Highlight box */
+.artigo-destaque-box {
+  background: #fff; border: 1px solid var(--border);
+  border-left: 3px solid var(--teal); border-radius: 0 12px 12px 0;
+  padding: 28px 32px; margin: 36px 0;
+}
+.artigo-destaque-box h4 {
+  font-size: 10px; letter-spacing: 3px; color: var(--teal);
+  text-transform: uppercase; font-weight: 700; margin-bottom: 16px;
+}
+.artigo-destaque-box ul { list-style: none; display: flex; flex-direction: column; gap: 14px; }
+.artigo-destaque-box li {
+  font-size: 17px; color: #3a4a5a; display: flex;
+  align-items: flex-start; gap: 12px; line-height: 1.7;
+}
+.artigo-destaque-box li::before { content: '\2192'; color: var(--teal); flex-shrink: 0; margin-top: 2px; }
+
+/* Stages box */
+.stage-box {
+  background: #fff; border: 1px solid var(--border); border-radius: 14px;
+  padding: 28px 32px; margin: 24px 0;
+}
+.stage-header {
+  display: flex; align-items: center; gap: 14px; margin-bottom: 16px;
+}
+.stage-number {
+  width: 36px; height: 36px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 14px; font-weight: 800; color: #fff;
+}
+.stage-number.s0 { background: var(--teal); }
+.stage-number.s1 { background: var(--gold); }
+.stage-number.s2 { background: #E67E22; }
+.stage-number.s3 { background: #E74C3C; }
+.stage-number.s4 { background: #8E44AD; }
+.stage-title {
+  font-size: 16px; font-weight: 700; color: var(--navy);
+}
+.stage-subtitle { font-size: 13px; color: var(--muted); font-weight: 500; }
+.stage-box p {
+  font-size: 16px; color: #3a4a5a; line-height: 1.7; margin-bottom: 0;
+}
+
+/* Alert box */
+.artigo-alerta {
+  background: #fef5f5; border: 1px solid rgba(192,57,43,0.12);
+  border-left: 3px solid var(--red-soft); border-radius: 0 12px 12px 0;
+  padding: 28px 32px; margin: 36px 0;
+}
+.artigo-alerta h4 {
+  font-size: 10px; letter-spacing: 3px; color: var(--red-soft);
+  text-transform: uppercase; font-weight: 700; margin-bottom: 16px;
+}
+.artigo-alerta ul { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+.artigo-alerta li {
+  font-size: 17px; color: #3a4a5a; display: flex;
+  align-items: flex-start; gap: 12px; line-height: 1.7;
+}
+.artigo-alerta li::before { content: '\26A0'; flex-shrink: 0; font-size: 14px; }
+
+/* Summary box */
+.artigo-resumo {
+  background: rgba(45,122,79,0.04); border: 1px solid rgba(45,122,79,0.15);
+  border-radius: 12px; padding: 32px 36px; margin: 48px 0;
+}
+.artigo-resumo h4 {
+  font-size: 10px; letter-spacing: 3px; color: var(--green);
+  text-transform: uppercase; font-weight: 700; margin-bottom: 20px;
+}
+.artigo-resumo ul { list-style: none; display: flex; flex-direction: column; gap: 14px; }
+.artigo-resumo li {
+  font-size: 17px; color: #3a4a5a; display: flex;
+  align-items: flex-start; gap: 12px; line-height: 1.7;
+}
+.artigo-resumo li::before { content: '\2713'; color: var(--green); font-size: 14px; flex-shrink: 0; margin-top: 3px; font-weight: 700; }
+
+/* CTA box */
+.artigo-cta {
+  background: var(--navy-deep); border-radius: 16px;
+  padding: 44px 40px; margin: 48px 0; text-align: center;
+}
+.artigo-cta p {
+  font-size: 19px; color: rgba(255,255,255,0.75);
+  line-height: 1.75; margin-bottom: 24px;
+}
+.artigo-cta a {
+  display: inline-block; font-size: 12px; font-weight: 700;
+  letter-spacing: 2px; color: #fff; background: var(--teal);
+  padding: 14px 32px; border-radius: 30px; text-decoration: none;
+  text-transform: uppercase; transition: background 0.25s;
+}
+.artigo-cta a:hover { background: var(--teal-light); }
+
+/* References */
+.artigo-refs { margin-top: 52px; padding-top: 32px; border-top: 1px solid var(--border); }
+.artigo-refs h4 {
+  font-size: 10px; letter-spacing: 3px; color: var(--muted);
+  text-transform: uppercase; font-weight: 600; margin-bottom: 16px;
+}
+.artigo-refs ol { list-style: decimal; padding-left: 20px; display: flex; flex-direction: column; gap: 8px; }
+.artigo-refs li { font-size: 12px; color: var(--muted); line-height: 1.7; }
+
+/* Share */
+.artigo-share {
+  display: flex; align-items: center; gap: 12px; margin-top: 48px;
+  padding-top: 32px; border-top: 1px solid var(--border); flex-wrap: wrap;
+}
+.share-label { font-size: 10px; letter-spacing: 3px; color: var(--muted); text-transform: uppercase; font-weight: 600; }
+.share-btn {
+  font-family: var(--font-sans); font-size: 12px; font-weight: 500;
+  letter-spacing: 0.5px; color: var(--navy); border: 1px solid var(--border);
+  padding: 8px 18px; border-radius: 24px; text-decoration: none;
+  transition: all 0.2s; cursor: pointer; background: transparent;
+}
+.share-btn:hover { background: rgba(2,128,144,0.06); border-color: var(--teal); color: var(--teal); }
+
+/* Article nav */
+.artigo-nav {
+  max-width: 780px; margin: 0 auto; padding: 40px 24px 64px;
+  display: flex; justify-content: space-between; gap: 16px;
+  border-top: 1px solid var(--border);
+}
+.artigo-nav-link {
+  font-size: 11px; letter-spacing: 2px; color: var(--teal);
+  text-decoration: none; display: flex; flex-direction: column;
+  gap: 6px; transition: opacity 0.2s; text-transform: uppercase; font-weight: 600;
+}
+.artigo-nav-link:hover { opacity: 0.7; }
+.artigo-nav-link span { font-size: 15px; color: #5a6a7a; font-weight: 400; text-transform: none; letter-spacing: 0; }
+
+/* ===== FOOTER ===== */
+.footer {
+  background: var(--footer-bg); text-align: center; padding: 56px 24px 32px;
+}
+.footer-logo img { height: 32px; margin-bottom: 24px; opacity: 0.7; }
+.footer-links { display: flex; justify-content: center; flex-wrap: wrap; gap: 20px; margin-bottom: 24px; }
+.footer-links a { color: rgba(255,255,255,0.45); text-decoration: none; font-size: 13px; font-weight: 400; transition: color 0.2s; }
+.footer-links a:hover { color: rgba(255,255,255,0.8); }
+.footer-copy { color: rgba(255,255,255,0.2); font-size: 12px; }
+
+/* ===== SCROLL REVEAL ===== */
+.rv { opacity: 0; transform: translateY(24px); transition: opacity 0.7s ease, transform 0.7s ease; }
+.rv.visible { opacity: 1; transform: translateY(0); }
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 700px) {
+  .header { width: calc(100% - 24px); padding: 0 16px; height: 50px; }
+  .header-nav { gap: 12px; }
+  .header-nav > a { font-size: 11px; }
+  .header-cta, .header-pro { display: none; }
+  .artigo-hero { padding-top: 90px; }
+  .artigo-titulo { font-size: 28px; letter-spacing: -1px; }
+  .artigo-body p { font-size: 16px; }
+  .artigo-cta { padding: 28px 24px; }
+  .artigo-destaque-box, .artigo-alerta, .artigo-resumo { padding: 20px 20px; }
+  .stage-box { padding: 20px 20px; }
+}
+</style>
+</head>
+<body>
+
+<!-- ===== HEADER ===== -->
+<header class="header" id="header">
+  <a href="index.html" class="header-logo"><img src="logo-apex-transparent.png" alt="Apex Health" /></a>
+  <nav class="header-nav">
+    <a href="index.html#metodo">O Método</a>
+    <a href="index.html#paraquem">Para Quem</a>
+    <a href="index.html#jornada">Como Funciona</a>
+    <a href="index.html#medico">O Médico</a>
+    <div class="header-dropdown" id="headerDropdown">
+      <button class="header-dropdown-trigger" aria-expanded="false" aria-haspopup="true">
+        Saúde <i data-lucide="chevron-down" style="width:14px;height:14px;stroke-width:2"></i>
+      </button>
+      <div class="header-dropdown-menu" role="menu">
+        <a href="nefrologia-doenca-renal.html" role="menuitem"><span class="dd-icon" style="color:var(--teal)"><i data-lucide="heart-pulse" style="width:16px;height:16px"></i></span> Doença Renal Crônica</a>
+        <a href="sindrome-ckm.html" role="menuitem"><span class="dd-icon" style="color:var(--gold)"><i data-lucide="activity" style="width:16px;height:16px"></i></span> Síndrome CKM</a>
+        <a href="wearables-saude-digital.html" role="menuitem"><span class="dd-icon" style="color:var(--teal)"><i data-lucide="watch" style="width:16px;height:16px"></i></span> Wearables e Saúde Digital</a>
+        <a href="dados-apex.html" role="menuitem"><span class="dd-icon" style="color:var(--gold)"><i data-lucide="bar-chart-3" style="width:16px;height:16px"></i></span> Indicadores de Qualidade</a>
+        <a href="imprensa.html" role="menuitem"><span class="dd-icon" style="color:var(--teal)"><i data-lucide="newspaper" style="width:16px;height:16px"></i></span> Imprensa</a>
+      </div>
+    </div>
+    <a href="index.html#faq">FAQ</a>
+    <a href="preview_pro_completo.html" class="header-pro">Pro</a>
+    <a href="#cta-final" class="header-cta">Agendar Consulta</a>
+  </nav>
+</header>
+
+<!-- ===== ARTICLE HERO ===== -->
+<section class="artigo-hero">
+  <div class="artigo-hero-inner rv">
+    <span class="artigo-cat-tag">Síndrome CKM · Cardiorrenal</span>
+    <h1 class="artigo-titulo">
+      Síndrome CKM:<br>
+      <em>o que conecta coração, rim e metabolismo</em>
+    </h1>
+    <p class="artigo-subtitulo">
+      Em 2023, a American Heart Association definiu formalmente algo que a prática clínica já mostrava há anos: hipertensão, diabetes, obesidade e doença renal não são doenças isoladas. São estágios de uma mesma síndrome — e ela é a principal causa de morte no mundo.
+    </p>
+    <div class="artigo-meta-bar">
+      <div class="meta-autor">
+        <div class="meta-autor-avatar">BB</div>
+        <div>
+          <div class="meta-autor-name">Dr. Bruno Biluca</div>
+          <div class="meta-autor-title">Nefrologista · CRM-SP 151.041 · RQE 70145</div>
+        </div>
+      </div>
+      <div class="meta-sep"></div>
+      <div class="meta-info"><strong>Síndrome CKM</strong></div>
+      <div class="meta-sep"></div>
+      <div class="meta-info"><i data-lucide="clock" style="width:13px;height:13px;stroke-width:2;vertical-align:-2px"></i> 7 min de leitura</div>
+      <div class="meta-sep"></div>
+      <div class="meta-info">Maio 2026</div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== ARTICLE BODY ===== -->
+<div class="artigo-body">
+
+  <h2 class="rv">Uma síndrome, não uma coincidência</h2>
+
+  <p class="rv">
+    A maioria dos pacientes que atendo no consultório não tem <strong>uma</strong> doença crônica. Tem três. Às vezes quatro. Hipertensão, diabetes tipo 2, obesidade e algum grau de comprometimento renal — frequentemente todos presentes no mesmo paciente, diagnosticados por médicos diferentes, tratados com receitas separadas, sem que ninguém tenha parado para dizer: <em>essas doenças estão conectadas.</em>
+  </p>
+
+  <p class="rv">
+    Em outubro de 2023, a American Heart Association publicou no <em>Circulation</em> um consenso que mudou a forma como a cardiologia e a nefrologia entendem esse cenário. O documento, liderado por Chiadi Ndumele e colaboradores, definiu formalmente a <strong>Síndrome Cardiovascular-Renal-Metabólica</strong> — a síndrome CKM.
+  </p>
+
+  <p class="rv">
+    A tese central é direta: obesidade, resistência à insulina, doença renal crônica e doença cardiovascular não são comorbidades que coexistem por acaso. São manifestações progressivas de um mesmo processo fisiopatológico — e precisam ser tratadas como tal.
+  </p>
+
+  <h2 class="rv">Por que isso importa para você</h2>
+
+  <p class="rv">
+    Aproximadamente 90% da população adulta brasileira se encontra em algum estágio da síndrome CKM. Isso não é um dado alarmista — é a realidade epidemiológica de um país com 38 milhões de hipertensos, 20 milhões de diabéticos tipo 2, e mais da metade da população adulta acima do peso.
+  </p>
+
+  <p class="rv">
+    O problema é que a maioria dessas pessoas não sabe que está numa trajetória progressiva. A hipertensão parece controlada com dois comprimidos. A glicemia está "no limite". O peso subiu, mas "sempre foi assim". E ninguém pediu um exame de função renal nos últimos cinco anos.
+  </p>
+
+  <div class="artigo-quote rv">
+    <p>O paciente com hipertensão e diabetes tipo 2 tem risco cardiovascular 4 vezes maior do que a soma dos riscos isolados. É um efeito multiplicador — não aditivo.</p>
+  </div>
+
+  <h2 class="rv">Os cinco estágios da síndrome CKM</h2>
+
+  <p class="rv">
+    O consenso da AHA definiu cinco estágios, do 0 ao 4, que descrevem a progressão da síndrome. Entender onde você está nessa classificação muda completamente a abordagem terapêutica — porque o tratamento no estágio 1 é radicalmente diferente do tratamento no estágio 3.
+  </p>
+
+  <div class="stage-box rv">
+    <div class="stage-header">
+      <div class="stage-number s0">0</div>
+      <div>
+        <div class="stage-title">Sem fatores de risco</div>
+        <div class="stage-subtitle">IMC normal, sem alteração metabólica</div>
+      </div>
+    </div>
+    <p>Sem excesso de gordura corporal, sem alteração de glicemia, lipídios ou pressão. É o estágio de referência — e o objetivo terapêutico para quem já avançou.</p>
+  </div>
+
+  <div class="stage-box rv">
+    <div class="stage-header">
+      <div class="stage-number s1">1</div>
+      <div>
+        <div class="stage-title">Excesso de adiposidade</div>
+        <div class="stage-subtitle">Obesidade ou adiposidade abdominal</div>
+      </div>
+    </div>
+    <p>IMC acima de 25 (ou acima de 23 para asiáticos) ou circunferência abdominal elevada. Ainda sem alteração metabólica detectável nos exames de rotina — mas o processo inflamatório sistêmico já está em curso. A gordura visceral (a que se acumula ao redor dos órgãos internos) é metabolicamente ativa: produz citocinas inflamatórias que agridem os vasos, o coração e os rins simultaneamente.</p>
+  </div>
+
+  <div class="stage-box rv">
+    <div class="stage-header">
+      <div class="stage-number s2">2</div>
+      <div>
+        <div class="stage-title">Fatores de risco metabólicos e renais</div>
+        <div class="stage-subtitle">Hipertensão, pré-diabetes, DRC leve, triglicérides alto</div>
+      </div>
+    </div>
+    <p>Aqui os exames começam a mostrar alterações: hipertensão arterial, resistência à insulina (pré-diabetes ou diabetes tipo 2), dislipidemia, ou taxa de filtração glomerular entre 60 e 90 ml/min. É o estágio em que a maioria dos pacientes é diagnosticada — e em que a intervenção tem maior potencial de impacto. A progressão daqui para frente é silenciosa e exponencial.</p>
+  </div>
+
+  <div class="stage-box rv">
+    <div class="stage-header">
+      <div class="stage-number s3">3</div>
+      <div>
+        <div class="stage-title">Doença cardiovascular ou renal subclínica</div>
+        <div class="stage-subtitle">Lesão de órgão-alvo sem sintomas</div>
+      </div>
+    </div>
+    <p>Risco cardiovascular calculado elevado (ASCVD &ge; 7,5%), DRC estágios 3–4 (filtração abaixo de 60), albuminúria persistente ou insuficiência cardíaca assintomática. O paciente não sente nada — mas os órgãos já estão comprometidos. A diferença entre o estágio 2 e o 3 é a diferença entre risco e dano já instalado.</p>
+  </div>
+
+  <div class="stage-box rv">
+    <div class="stage-header">
+      <div class="stage-number s4">4</div>
+      <div>
+        <div class="stage-title">Doença cardiovascular clínica</div>
+        <div class="stage-subtitle">Infarto, AVC, insuficiência cardíaca ou DRC terminal</div>
+      </div>
+    </div>
+    <p>Evento cardiovascular manifesto (infarto, AVC, angina, insuficiência cardíaca sintomática) ou doença renal crônica terminal (estágio 5, necessidade de diálise). A partir deste ponto, o tratamento é de controle de danos e prevenção de recorrência — com mortalidade cardiovascular significativamente elevada.</p>
+  </div>
+
+  <h2 class="rv">O mecanismo por trás da progressão</h2>
+
+  <p class="rv">
+    A conexão entre esses sistemas não é abstrata. Existe um ciclo fisiopatológico concreto que explica por que hipertensão leva a doença renal, que leva a doença cardiovascular, que piora a função renal — e assim por diante.
+  </p>
+
+  <p class="rv">
+    O excesso de gordura visceral produz um estado de inflamação crônica de baixo grau. Essa inflamação danifica o endotélio (a camada interna dos vasos sanguíneos), promove resistência à insulina e ativa o sistema renina-angiotensina — o principal regulador da pressão arterial e do equilíbrio de sódio e água no corpo.
+  </p>
+
+  <p class="rv">
+    A hiperativação desse sistema eleva a pressão arterial, aumenta a pressão dentro dos glomérulos renais (as unidades de filtração dos rins), e promove fibrose (cicatrização) progressiva do tecido renal. À medida que os rins perdem função, retêm mais sódio e água, elevam ainda mais a pressão, sobrecarregam o coração — e o ciclo se perpetua.
+  </p>
+
+  <div class="artigo-destaque-box rv">
+    <h4>O ciclo CKM em resumo</h4>
+    <ul>
+      <li><strong>Adiposidade excessiva</strong> gera inflamação crônica e resistência à insulina</li>
+      <li><strong>Resistência à insulina</strong> leva a hipertensão, dislipidemia e pré-diabetes</li>
+      <li><strong>Hipertensão</strong> danifica os glomérulos renais e o endotélio vascular</li>
+      <li><strong>Lesão renal</strong> reduz a capacidade de regulação de sódio e pressão</li>
+      <li><strong>Sobrecarga cardiovascular</strong> acelera aterosclerose e insuficiência cardíaca</li>
+      <li>Cada etapa <strong>amplifica</strong> a anterior — o risco é multiplicativo, não aditivo</li>
+    </ul>
+  </div>
+
+  <h2 class="rv">O que muda na prática clínica</h2>
+
+  <p class="rv">
+    A formalização da síndrome CKM pela AHA não foi apenas acadêmica. Ela trouxe mudanças concretas na forma de avaliar e tratar pacientes. A principal delas: <strong>não tratar cada doença isoladamente.</strong>
+  </p>
+
+  <p class="rv">
+    O consenso recomenda que todo paciente a partir do estágio 2 seja avaliado com um painel integrado que inclua, no mínimo: função renal (creatinina, taxa de filtração estimada, relação albumina/creatinina na urina), perfil metabólico completo (glicemia de jejum, hemoglobina glicada, insulina, lipídios), e cálculo de risco cardiovascular adaptado para a presença de doença renal.
+  </p>
+
+  <p class="rv">
+    Além disso, o documento destaca três classes de medicamentos que demonstraram benefício em múltiplos eixos da síndrome simultaneamente:
+  </p>
+
+  <div class="artigo-destaque-box rv">
+    <h4>Medicamentos com benefício multiaxial comprovado</h4>
+    <ul>
+      <li><strong>Inibidores de SGLT2</strong> (dapagliflozina, empagliflozina): reduzem progressão de doença renal, hospitalização por insuficiência cardíaca e mortalidade cardiovascular — independentemente de o paciente ter diabetes</li>
+      <li><strong>Agonistas de GLP-1</strong> (semaglutida, liraglutida): reduzem peso, hemoglobina glicada, eventos cardiovasculares e, em estudos recentes, também a progressão de doença renal</li>
+      <li><strong>Finerenona</strong> (antagonista mineralocorticoide não esteroidal): reduz albuminúria, progressão de DRC e eventos cardiovasculares em pacientes com diabetes tipo 2 e doença renal</li>
+    </ul>
+  </div>
+
+  <p class="rv">
+    A lógica é tratar a síndrome, não a doença. Um paciente com diabetes tipo 2, hipertensão e albuminúria não precisa de três médicos com três abordagens — precisa de um plano terapêutico integrado que aborde os três eixos simultaneamente.
+  </p>
+
+  <h2 class="rv">Quando procurar avaliação</h2>
+
+  <div class="artigo-alerta rv">
+    <h4>Sinais que justificam investigação da síndrome CKM</h4>
+    <ul>
+      <li>Hipertensão que necessita de dois ou mais medicamentos para controle</li>
+      <li>Diabetes tipo 2 com hemoglobina glicada persistentemente acima de 7%</li>
+      <li>Circunferência abdominal acima de 94 cm (homens) ou 80 cm (mulheres)</li>
+      <li>Creatinina elevada ou taxa de filtração abaixo de 90 em exames de rotina</li>
+      <li>Proteína ou espuma na urina</li>
+      <li>Histórico familiar de infarto, AVC ou doença renal antes dos 60 anos</li>
+      <li>Uso crônico de anti-inflamatórios com qualquer um dos fatores acima</li>
+    </ul>
+  </div>
+
+  <h2 class="rv">O papel do nefrologista na síndrome CKM</h2>
+
+  <p class="rv">
+    Pode parecer contraintuitivo que um nefrologista esteja na linha de frente de uma síndrome que inclui coração e metabolismo. Mas faz sentido quando se entende que o rim é o primeiro órgão a mostrar sinais de dano — e o último a ser investigado na maioria dos check-ups.
+  </p>
+
+  <p class="rv">
+    Uma queda sutil na taxa de filtração glomerular ou o aparecimento de microalbuminúria são, com frequência, os primeiros marcadores detectáveis de doença cardiovascular futura. O rim é, ao mesmo tempo, vítima e sentinela do processo CKM. Por isso, a avaliação nefrológica deveria fazer parte da rotina de todo paciente com hipertensão, diabetes ou obesidade — não apenas de quem "já tem problema nos rins".
+  </p>
+
+  <div class="artigo-resumo rv">
+    <h4>Pontos essenciais deste artigo</h4>
+    <ul>
+      <li>A Síndrome CKM foi definida pela AHA em 2023 como a conexão fisiopatológica entre obesidade, diabetes, doença renal e doença cardiovascular</li>
+      <li>Aproximadamente 90% dos adultos brasileiros estão em algum estágio da síndrome</li>
+      <li>O risco cardiovascular em pacientes com fatores CKM combinados é multiplicativo — não a soma dos riscos isolados</li>
+      <li>A classificação em 5 estágios (0 a 4) permite intervenção proporcional e precoce</li>
+      <li>Inibidores de SGLT2, agonistas de GLP-1 e finerenona demonstraram benefício simultâneo em múltiplos eixos da síndrome</li>
+      <li>O rim é frequentemente o primeiro órgão a sinalizar dano — e o último a ser investigado na rotina</li>
+      <li>A abordagem correta é tratar a síndrome como um todo, não cada doença isoladamente</li>
+    </ul>
+  </div>
+
+  <!-- CTA -->
+  <div class="artigo-cta rv" id="cta-final">
+    <p>Se você convive com hipertensão, diabetes e alteração renal — ou quer entender em que estágio da síndrome CKM você está — essa avaliação integrada pode mudar a trajetória da sua saúde.</p>
+    <a href="https://wa.me/5511999999999" target="_blank">Agendar consulta</a>
+  </div>
+
+  <!-- REFERÊNCIAS -->
+  <div class="artigo-refs rv">
+    <h4>Referências</h4>
+    <ol>
+      <li>Ndumele CE, Rangaswami J, Chow SL, et al. Cardiovascular-Kidney-Metabolic Health: A Presidential Advisory From the American Heart Association. Circulation. 2023;148(20):1606–1635.</li>
+      <li>Ndumele CE, Neeland IJ, Tuttle KR, et al. A Synopsis of the Evidence for the Science and Clinical Management of Cardiovascular-Kidney-Metabolic (CKM) Syndrome: A Scientific Statement From the American Heart Association. Circulation. 2023;148(20):1636–1664.</li>
+      <li>Aggarwal R, Ostrominski JW, Vaduganathan M. Prevalence of Cardiovascular-Kidney-Metabolic Syndrome Stages in US Adults, 2011–2020. JAMA. 2024;331(21):1858–1860.</li>
+      <li>Heerspink HJL, Stefánsson BV, Correa-Rotter R, et al. Dapagliflozin in Patients with Chronic Kidney Disease. N Engl J Med. 2020;383(15):1436–1446.</li>
+      <li>Bakris GL, Agarwal R, Anker SD, et al. Effect of Finerenone on Chronic Kidney Disease Outcomes in Type 2 Diabetes. N Engl J Med. 2020;383(23):2219–2229.</li>
+      <li>Perkovic V, Tuttle KR, Gerdstein HC, et al. Effects of Semaglutide on Chronic Kidney Disease in Patients with Type 2 Diabetes. N Engl J Med. 2024;391(2):109–121.</li>
+    </ol>
+  </div>
+
+  <!-- COMPARTILHAR -->
+  <div class="artigo-share rv">
+    <span class="share-label">Compartilhar</span>
+    <a href="https://wa.me/?text=Síndrome CKM — o que conecta coração, rim e metabolismo. Dr. Bruno Biluca: https://apex.med.br/artigo_sindrome_ckm.html" target="_blank" class="share-btn">WhatsApp</a>
+    <a href="https://www.linkedin.com/sharing/share-offsite/?url=https://apex.med.br/artigo_sindrome_ckm.html" target="_blank" class="share-btn">LinkedIn</a>
+    <button class="share-btn" onclick="navigator.clipboard.writeText(window.location.href);this.textContent='Copiado!';setTimeout(()=>this.textContent='Copiar link',2000)">Copiar link</button>
+  </div>
+
+</div>
+
+<!-- ===== ARTICLE NAV ===== -->
+<div class="artigo-nav">
+  <a href="artigo_antiinflamatorio_rim.html" class="artigo-nav-link prev">
+    &larr; Artigo anterior
+    <span>Anti-inflamatório e rim</span>
+  </a>
+  <a href="artigo_hipertensao_rim.html" class="artigo-nav-link next">
+    Próximo artigo &rarr;
+    <span>Hipertensão e rim</span>
+  </a>
+</div>
+
+<!-- ===== FOOTER ===== -->
+<footer class="footer">
+  <div class="footer-logo"><img src="logo-apex-transparent.png" alt="Apex Health" /></div>
+  <div class="footer-links">
+    <a href="index.html">Início</a>
+    <a href="index.html#metodo">O Método</a>
+    <a href="index.html#paraquem">Para Quem</a>
+    <a href="index.html#jornada">Como Funciona</a>
+    <a href="sobre-dr-bruno-biluca.html">O Médico</a>
+    <a href="nefrologia-doenca-renal.html">DRC</a>
+    <a href="sindrome-ckm.html">CKM</a>
+    <a href="wearables-saude-digital.html">Wearables</a>
+    <a href="dados-apex.html">Indicadores</a>
+    <a href="imprensa.html">Imprensa</a>
+    <a href="preview_pro_completo.html">Pro</a>
+  </div>
+  <p class="footer-copy">&copy; 2026 Apex Health. Todos os direitos reservados.</p>
+</footer>
+
+<!-- ===== SCRIPTS ===== -->
+<script>
+// Embed mode
+(function(){
+  var ps = new URLSearchParams(window.location.search);
+  if (ps.get('embed') === '1') {
+    document.addEventListener('DOMContentLoaded', function(){
+      var els = document.querySelectorAll('.header, header, footer, .artigo-nav');
+      els.forEach(function(n){ n.style.display = 'none'; });
+      document.body.style.paddingTop = '0';
+      document.querySelector('.artigo-hero').style.paddingTop = '40px';
+    });
+  }
+})();
+
+// Lucide icons
+lucide.createIcons();
+
+// Header scroll
+const header = document.getElementById('header');
+window.addEventListener('scroll', () => {
+  header.classList.toggle('scrolled', window.scrollY > 60);
+}, { passive: true });
+
+// Dropdown
+const dropdown = document.getElementById('headerDropdown');
+const trigger = dropdown.querySelector('.header-dropdown-trigger');
+trigger.addEventListener('click', (e) => {
+  e.stopPropagation();
+  const isOpen = dropdown.classList.toggle('open');
+  trigger.setAttribute('aria-expanded', isOpen);
+});
+document.addEventListener('click', () => {
+  dropdown.classList.remove('open');
+  trigger.setAttribute('aria-expanded', 'false');
+});
+
+// Scroll reveal
+const rvObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+      rvObserver.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+document.querySelectorAll('.rv').forEach(el => rvObserver.observe(el));
+</script>
+</body>
+</html>
