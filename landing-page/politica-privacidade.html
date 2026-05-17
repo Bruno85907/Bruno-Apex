@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Política de Privacidade — Apex Health</title>
+  <meta name="description" content="Política de Privacidade da Apex Health. Saiba como coletamos, utilizamos e protegemos seus dados pessoais em conformidade com a LGPD (Lei nº 13.709/2018).">
+  <meta name="author" content="Dr. Bruno Piubelli Biluca">
+  <link rel="canonical" href="https://www.apex.med.br/politica-privacidade.html">
+
+  <!-- OpenGraph -->
+  <meta property="og:title" content="Política de Privacidade — Apex Health">
+  <meta property="og:description" content="Política de Privacidade da Apex Health em conformidade com a LGPD.">
+  <meta property="og:url" content="https://www.apex.med.br/politica-privacidade.html">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="pt_BR">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --navy: #1E2D50;
+      --navy-deep: #121D33;
+      --dark-section: #0a1220;
+      --teal: #028090;
+      --teal-light: #04b5c8;
+      --gold: #C4A35A;
+      --gold-light: #d4b76a;
+      --bg: #FAF9F5;
+      --bg-alt: #f0efeb;
+      --footer-bg: #0a1220;
+      --radius: 14px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      background: var(--bg);
+      color: #333;
+      line-height: 1.7;
+      font-size: 16px;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ===== HEADER ===== */
+    .page-header {
+      background: var(--navy-deep);
+      padding: 20px 0;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 20px rgba(0,0,0,0.3);
+    }
+    .header-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .header-logo img {
+      height: 38px;
+      width: auto;
+    }
+    .header-nav a {
+      color: rgba(255,255,255,0.7);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 500;
+      transition: color 0.3s;
+    }
+    .header-nav a:hover {
+      color: var(--gold);
+    }
+
+    /* ===== HERO BANNER ===== */
+    .policy-hero {
+      background: linear-gradient(135deg, var(--navy-deep) 0%, var(--navy) 100%);
+      padding: 80px 0 60px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .policy-hero::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: radial-gradient(circle at 20% 80%, rgba(196,163,90,0.08) 0%, transparent 50%),
+                  radial-gradient(circle at 80% 20%, rgba(2,128,144,0.06) 0%, transparent 50%);
+      pointer-events: none;
+    }
+    .policy-hero h1 {
+      font-family: 'Instrument Serif', Georgia, serif;
+      font-size: clamp(2rem, 5vw, 3rem);
+      color: #fff;
+      margin-bottom: 12px;
+      position: relative;
+    }
+    .policy-hero .subtitle {
+      color: rgba(255,255,255,0.6);
+      font-size: 15px;
+      font-weight: 400;
+      position: relative;
+    }
+    .policy-hero .gold-line {
+      display: block;
+      width: 60px;
+      height: 3px;
+      background: var(--gold);
+      margin: 20px auto 0;
+      border-radius: 2px;
+      position: relative;
+    }
+
+    /* ===== CONTENT ===== */
+    .policy-content {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 60px 24px 80px;
+    }
+
+    .policy-update {
+      background: var(--bg-alt);
+      border-left: 4px solid var(--gold);
+      padding: 16px 20px;
+      border-radius: 0 var(--radius) var(--radius) 0;
+      margin-bottom: 48px;
+      font-size: 14px;
+      color: #555;
+    }
+    .policy-update strong {
+      color: var(--navy);
+    }
+
+    .policy-section {
+      margin-bottom: 40px;
+    }
+    .policy-section h2 {
+      font-family: 'Inter', system-ui, sans-serif;
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 16px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid var(--gold);
+      display: inline-block;
+    }
+    .policy-section h3 {
+      font-size: 17px;
+      font-weight: 600;
+      color: var(--navy);
+      margin: 24px 0 10px;
+    }
+    .policy-section p {
+      margin-bottom: 14px;
+      color: #444;
+    }
+    .policy-section ul, .policy-section ol {
+      margin: 10px 0 16px 20px;
+      color: #444;
+    }
+    .policy-section li {
+      margin-bottom: 8px;
+    }
+    .policy-section li strong {
+      color: var(--navy);
+    }
+
+    .policy-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 16px 0 24px;
+      font-size: 15px;
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+    .policy-table thead th {
+      background: var(--navy);
+      color: #fff;
+      padding: 12px 16px;
+      text-align: left;
+      font-weight: 600;
+      font-size: 14px;
+    }
+    .policy-table tbody td {
+      padding: 12px 16px;
+      border-bottom: 1px solid #e8e7e3;
+      vertical-align: top;
+    }
+    .policy-table tbody tr:nth-child(even) {
+      background: var(--bg-alt);
+    }
+
+    .highlight-box {
+      background: linear-gradient(135deg, rgba(2,128,144,0.06), rgba(196,163,90,0.06));
+      border: 1px solid rgba(2,128,144,0.15);
+      border-radius: var(--radius);
+      padding: 20px 24px;
+      margin: 20px 0;
+    }
+    .highlight-box p {
+      margin-bottom: 8px;
+    }
+    .highlight-box p:last-child {
+      margin-bottom: 0;
+    }
+
+    a.policy-link {
+      color: var(--teal);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      transition: color 0.3s;
+    }
+    a.policy-link:hover {
+      color: var(--teal-light);
+    }
+
+    /* ===== FOOTER ===== */
+    .footer {
+      background: var(--footer-bg);
+      text-align: center;
+      padding: 48px 24px 32px;
+    }
+    .footer-logo img {
+      height: 36px;
+      margin-bottom: 20px;
+      opacity: 0.9;
+    }
+    .footer-links {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 8px 20px;
+      margin-bottom: 24px;
+    }
+    .footer-links a {
+      color: rgba(255,255,255,0.55);
+      text-decoration: none;
+      font-size: 13px;
+      transition: color 0.3s;
+    }
+    .footer-links a:hover {
+      color: var(--gold);
+    }
+    .footer-copy {
+      color: rgba(255,255,255,0.35);
+      font-size: 13px;
+    }
+    .footer-copy a {
+      color: rgba(255,255,255,0.5);
+      text-decoration: underline;
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 768px) {
+      .policy-hero { padding: 60px 0 40px; }
+      .policy-content { padding: 40px 20px 60px; }
+      .policy-table { font-size: 14px; }
+      .policy-table thead th,
+      .policy-table tbody td { padding: 10px 12px; }
+      .header-inner { flex-direction: column; gap: 10px; }
+    }
+    @media (max-width: 480px) {
+      .policy-table { display: block; overflow-x: auto; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="page-header">
+    <div class="header-inner">
+      <a href="index.html" class="header-logo">
+        <img src="logo-apex-transparent.png" alt="Apex Health">
+      </a>
+      <nav class="header-nav">
+        <a href="index.html">&larr; Voltar ao site</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section class="policy-hero">
+    <div>
+      <h1>Política de Privacidade</h1>
+      <p class="subtitle">Em conformidade com a Lei Geral de Proteção de Dados (LGPD — Lei nº 13.709/2018)</p>
+      <span class="gold-line"></span>
+    </div>
+  </section>
+
+  <!-- CONTENT -->
+  <main class="policy-content">
+
+    <div class="policy-update">
+      <strong>Última atualização:</strong> Maio de 2026
+    </div>
+
+    <!-- 1. INTRODUÇÃO -->
+    <section class="policy-section">
+      <h2>1. Introdução</h2>
+      <p>A Apex Health, sob responsabilidade do Dr. Bruno Piubelli Biluca, tem o compromisso de proteger a privacidade e os dados pessoais de todos os pacientes, usuários e visitantes do nosso site e plataforma digital.</p>
+      <p>Esta Política de Privacidade descreve como coletamos, utilizamos, armazenamos e protegemos suas informações pessoais, em conformidade com a Lei Geral de Proteção de Dados Pessoais (LGPD — Lei nº 13.709/2018) e demais normas aplicáveis, incluindo o Código de Ética Médica e resoluções do Conselho Federal de Medicina (CFM).</p>
+    </section>
+
+    <!-- 2. CONTROLADOR -->
+    <section class="policy-section">
+      <h2>2. Controlador dos Dados</h2>
+      <div class="highlight-box">
+        <p><strong>Controlador:</strong> Dr. Bruno Piubelli Biluca</p>
+        <p><strong>CRM-SP:</strong> 151.041 | <strong>RQE:</strong> 70145 (Nefrologia)</p>
+        <p><strong>Razão Social:</strong> Apex Health / Fenix Nefrologia</p>
+        <p><strong>E-mail de contato:</strong> <a href="mailto:bbiluca@gmail.com" class="policy-link">bbiluca@gmail.com</a></p>
+      </div>
+      <p>O controlador é a pessoa responsável pelas decisões referentes ao tratamento de dados pessoais, nos termos do Art. 5º, VI, da LGPD.</p>
+    </section>
+
+    <!-- 3. ENCARREGADO (DPO) -->
+    <section class="policy-section">
+      <h2>3. Encarregado de Proteção de Dados (DPO)</h2>
+      <p>O encarregado pelo tratamento de dados pessoais, conforme Art. 41 da LGPD, pode ser contatado pelo seguinte canal:</p>
+      <div class="highlight-box">
+        <p><strong>E-mail:</strong> <a href="mailto:bbiluca@gmail.com" class="policy-link">bbiluca@gmail.com</a></p>
+        <p><strong>Assunto:</strong> Proteção de Dados — LGPD</p>
+      </div>
+      <p>O encarregado é responsável por aceitar reclamações e comunicações dos titulares, prestar esclarecimentos e adotar providências, além de orientar funcionários e contratados sobre as práticas de proteção de dados.</p>
+    </section>
+
+    <!-- 4. DADOS COLETADOS -->
+    <section class="policy-section">
+      <h2>4. Dados Pessoais Coletados</h2>
+      <p>Coletamos diferentes categorias de dados pessoais conforme a natureza da interação:</p>
+
+      <table class="policy-table">
+        <thead>
+          <tr>
+            <th>Categoria</th>
+            <th>Dados</th>
+            <th>Momento da Coleta</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Dados de identificação</strong></td>
+            <td>Nome completo, CPF, data de nascimento, e-mail, telefone</td>
+            <td>Cadastro e agendamento de consulta</td>
+          </tr>
+          <tr>
+            <td><strong>Dados de saúde (sensíveis)</strong></td>
+            <td>Histórico clínico, resultados de exames, medicações, prontuário médico, dados de acompanhamento contínuo</td>
+            <td>Consulta médica e acompanhamento</td>
+          </tr>
+          <tr>
+            <td><strong>Dados de navegação</strong></td>
+            <td>Endereço IP, tipo de navegador, páginas visitadas, tempo de permanência</td>
+            <td>Acesso ao site</td>
+          </tr>
+          <tr>
+            <td><strong>Dados de comunicação</strong></td>
+            <td>Mensagens enviadas via assessor virtual, formulários de contato</td>
+            <td>Interação com a plataforma</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- 5. FINALIDADE -->
+    <section class="policy-section">
+      <h2>5. Finalidade do Tratamento</h2>
+      <p>Seus dados pessoais são tratados para as seguintes finalidades:</p>
+      <ul>
+        <li><strong>Prestação de serviços médicos:</strong> agendamento, consultas, elaboração de prontuário e acompanhamento clínico;</li>
+        <li><strong>Acompanhamento contínuo:</strong> monitoramento de indicadores de saúde, protocolos personalizados e comunicação entre consultas;</li>
+        <li><strong>Assessor virtual:</strong> envio de orientações, lembretes e suporte ao paciente via canais digitais;</li>
+        <li><strong>Melhoria da plataforma:</strong> análise de navegação para aprimorar a experiência do usuário;</li>
+        <li><strong>Comunicação institucional:</strong> envio de informações relevantes sobre saúde e atualizações da plataforma;</li>
+        <li><strong>Cumprimento de obrigações legais:</strong> atendimento a exigências regulatórias e fiscais.</li>
+      </ul>
+    </section>
+
+    <!-- 6. BASE LEGAL -->
+    <section class="policy-section">
+      <h2>6. Base Legal para o Tratamento</h2>
+      <p>O tratamento dos seus dados pessoais é realizado com fundamento nas seguintes bases legais previstas na LGPD:</p>
+      <table class="policy-table">
+        <thead>
+          <tr>
+            <th>Base Legal</th>
+            <th>Dispositivo</th>
+            <th>Aplicação</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Consentimento</strong></td>
+            <td>Art. 7º, I</td>
+            <td>Coleta de dados para comunicação, cookies analíticos e assessor virtual</td>
+          </tr>
+          <tr>
+            <td><strong>Execução de contrato</strong></td>
+            <td>Art. 7º, V</td>
+            <td>Prestação dos serviços médicos contratados</td>
+          </tr>
+          <tr>
+            <td><strong>Proteção da vida</strong></td>
+            <td>Art. 7º, VII</td>
+            <td>Situações de urgência ou emergência médica</td>
+          </tr>
+          <tr>
+            <td><strong>Tutela da saúde</strong></td>
+            <td>Art. 7º, VIII</td>
+            <td>Procedimentos realizados por profissional de saúde para acompanhamento clínico</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- 7. DADOS SENSÍVEIS -->
+    <section class="policy-section">
+      <h2>7. Tratamento de Dados Sensíveis de Saúde</h2>
+      <p>Os dados de saúde são classificados como dados pessoais sensíveis nos termos do Art. 5º, II, da LGPD e recebem proteção reforçada conforme o Art. 11 da mesma lei.</p>
+      <p>O tratamento desses dados ocorre mediante:</p>
+      <ul>
+        <li><strong>Consentimento específico e destacado</strong> do titular (Art. 11, I), obtido de forma clara e inequívoca;</li>
+        <li><strong>Tutela da saúde</strong> (Art. 11, II, "f"), exclusivamente em procedimento realizado por profissional de saúde, serviço de saúde ou autoridade sanitária;</li>
+        <li>Cumprimento de <strong>obrigação legal ou regulatória</strong> (Art. 11, II, "a"), incluindo normas do CFM e da ANVISA.</li>
+      </ul>
+      <div class="highlight-box">
+        <p>Os dados de saúde são tratados exclusivamente para fins de assistência médica, acompanhamento clínico e tutela da saúde do paciente, nunca para fins comerciais, publicitários ou de seleção de risco.</p>
+      </div>
+    </section>
+
+    <!-- 8. COMPARTILHAMENTO -->
+    <section class="policy-section">
+      <h2>8. Compartilhamento de Dados</h2>
+      <p><strong>Não compartilhamos seus dados pessoais com terceiros para fins comerciais, publicitários ou de marketing.</strong></p>
+      <p>O compartilhamento ocorre apenas nas seguintes situações, estritamente necessárias à prestação do serviço:</p>
+      <ul>
+        <li><strong>Equipe médica:</strong> profissionais de saúde diretamente envolvidos no seu atendimento e acompanhamento;</li>
+        <li><strong>Laboratórios e clínicas parceiras:</strong> para realização de exames e procedimentos solicitados;</li>
+        <li><strong>Fornecedores de tecnologia:</strong> plataformas utilizadas para armazenamento seguro e operação do sistema, com contratos que garantem a proteção dos dados;</li>
+        <li><strong>Determinação legal ou judicial:</strong> quando exigido por ordem judicial, requisição de autoridade competente ou obrigação legal.</li>
+      </ul>
+      <p>Todos os terceiros com acesso a dados pessoais estão sujeitos a obrigações contratuais de sigilo e segurança.</p>
+    </section>
+
+    <!-- 9. COOKIES -->
+    <section class="policy-section">
+      <h2>9. Cookies e Tecnologias de Rastreamento</h2>
+      <p>Nosso site utiliza cookies para garantir o funcionamento adequado e melhorar a sua experiência de navegação:</p>
+
+      <h3>Cookies Essenciais</h3>
+      <p>Necessários para o funcionamento básico do site, como manutenção de sessão e preferências de navegação. Não podem ser desativados, pois são indispensáveis à operação do site.</p>
+
+      <h3>Cookies Analíticos</h3>
+      <p>Utilizados para compreender como os visitantes interagem com o site, coletando informações de forma agregada e anônima para melhoria contínua da experiência do usuário.</p>
+
+      <div class="highlight-box">
+        <p>Ao acessar nosso site pela primeira vez, você será informado sobre o uso de cookies por meio de um banner de consentimento. Você pode gerenciar suas preferências de cookies a qualquer momento, exceto para os cookies estritamente essenciais.</p>
+      </div>
+    </section>
+
+    <!-- 10. SEGURANÇA -->
+    <section class="policy-section">
+      <h2>10. Armazenamento e Segurança dos Dados</h2>
+      <p>Adotamos medidas técnicas e administrativas aptas a proteger os dados pessoais contra acessos não autorizados e situações acidentais ou ilícitas de destruição, perda, alteração, comunicação ou difusão, conforme Art. 46 da LGPD.</p>
+      <p>Entre as medidas adotadas, destacamos:</p>
+      <ul>
+        <li><strong>Criptografia:</strong> dados sensíveis são armazenados e transmitidos com criptografia;</li>
+        <li><strong>Controle de acesso:</strong> acesso restrito apenas a profissionais autorizados, com autenticação e registro de acessos;</li>
+        <li><strong>Infraestrutura segura:</strong> utilização de plataformas com certificações de segurança e políticas de proteção de dados;</li>
+        <li><strong>Backup e recuperação:</strong> procedimentos regulares de cópia de segurança para proteção contra perda de dados;</li>
+        <li><strong>Treinamento:</strong> capacitação da equipe sobre práticas de proteção de dados e sigilo médico.</li>
+      </ul>
+    </section>
+
+    <!-- 11. DIREITOS DO TITULAR -->
+    <section class="policy-section">
+      <h2>11. Direitos do Titular dos Dados</h2>
+      <p>Nos termos do Art. 18 da LGPD, você tem os seguintes direitos em relação aos seus dados pessoais:</p>
+      <ol>
+        <li><strong>Confirmação</strong> da existência de tratamento de dados;</li>
+        <li><strong>Acesso</strong> aos dados pessoais tratados;</li>
+        <li><strong>Correção</strong> de dados incompletos, inexatos ou desatualizados;</li>
+        <li><strong>Anonimização, bloqueio ou eliminação</strong> de dados desnecessários, excessivos ou tratados em desconformidade;</li>
+        <li><strong>Portabilidade</strong> dos dados a outro fornecedor de serviço;</li>
+        <li><strong>Eliminação</strong> dos dados pessoais tratados com base no consentimento;</li>
+        <li><strong>Informação</strong> sobre as entidades com as quais seus dados foram compartilhados;</li>
+        <li><strong>Informação</strong> sobre a possibilidade de não fornecer consentimento e suas consequências;</li>
+        <li><strong>Revogação do consentimento</strong> a qualquer momento, mediante manifestação expressa.</li>
+      </ol>
+      <div class="highlight-box">
+        <p><strong>Como exercer seus direitos:</strong> envie um e-mail para <a href="mailto:bbiluca@gmail.com" class="policy-link">bbiluca@gmail.com</a> com o assunto "Direitos LGPD", identificando-se e descrevendo sua solicitação. Responderemos no prazo de 15 (quinze) dias úteis, conforme previsto na legislação.</p>
+      </div>
+      <p><strong>Observação:</strong> o exercício de certos direitos, como a eliminação de dados, pode estar sujeito a limitações legais. Dados contidos em prontuários médicos, por exemplo, possuem prazo de guarda obrigatório e não podem ser eliminados a pedido do titular antes do término desse prazo.</p>
+    </section>
+
+    <!-- 12. RETENÇÃO -->
+    <section class="policy-section">
+      <h2>12. Prazo de Retenção dos Dados</h2>
+      <p>Os dados pessoais são retidos pelos seguintes prazos:</p>
+      <ul>
+        <li><strong>Prontuários médicos:</strong> mínimo de 20 (vinte) anos a partir do último registro, conforme Resolução CFM nº 1.821/2007;</li>
+        <li><strong>Dados cadastrais:</strong> mantidos enquanto durar a relação contratual e pelo prazo prescricional aplicável após o término;</li>
+        <li><strong>Dados de navegação e cookies:</strong> conforme a validade do cookie ou até a revogação do consentimento;</li>
+        <li><strong>Dados tratados com base no consentimento:</strong> até a revogação pelo titular ou cumprimento da finalidade.</li>
+      </ul>
+      <p>Após o término do prazo de retenção, os dados são eliminados ou anonimizados de forma segura, salvo quando houver obrigação legal de conservação.</p>
+    </section>
+
+    <!-- 13. TRANSFERÊNCIA INTERNACIONAL -->
+    <section class="policy-section">
+      <h2>13. Transferência Internacional de Dados</h2>
+      <p>A Apex Health <strong>não realiza transferência internacional de dados pessoais</strong>. Todos os dados são armazenados e processados em território nacional, em conformidade com a legislação brasileira.</p>
+      <p>Caso venha a ser necessária qualquer transferência internacional no futuro, esta será realizada em estrita conformidade com o Capítulo V da LGPD (Arts. 33 a 36), mediante garantias adequadas de proteção e com comunicação prévia aos titulares.</p>
+    </section>
+
+    <!-- 14. MENORES -->
+    <section class="policy-section">
+      <h2>14. Dados de Crianças e Adolescentes</h2>
+      <p>O tratamento de dados pessoais de crianças e adolescentes é realizado em conformidade com o Art. 14 da LGPD, mediante consentimento específico e em destaque dado por pelo menos um dos pais ou pelo responsável legal.</p>
+      <p>Os dados de menores são tratados exclusivamente para fins de assistência médica e no melhor interesse da criança ou adolescente.</p>
+    </section>
+
+    <!-- 15. ALTERAÇÕES -->
+    <section class="policy-section">
+      <h2>15. Alterações nesta Política</h2>
+      <p>Esta Política de Privacidade pode ser atualizada periodicamente para refletir mudanças em nossas práticas, na legislação ou em requisitos regulatórios.</p>
+      <p>Recomendamos que você consulte esta página regularmente. A data da última atualização está sempre indicada no início do documento. Alterações significativas serão comunicadas por meio dos canais de contato disponíveis.</p>
+    </section>
+
+    <!-- 16. CONTATO -->
+    <section class="policy-section">
+      <h2>16. Canal de Contato</h2>
+      <p>Para dúvidas, solicitações ou exercício de direitos relacionados à proteção de dados pessoais, entre em contato:</p>
+      <div class="highlight-box">
+        <p><strong>E-mail:</strong> <a href="mailto:bbiluca@gmail.com" class="policy-link">bbiluca@gmail.com</a></p>
+        <p><strong>Assunto:</strong> Proteção de Dados — LGPD</p>
+        <p><strong>Responsável:</strong> Dr. Bruno Piubelli Biluca — CRM-SP 151.041</p>
+      </div>
+      <p>Caso entenda que o tratamento de seus dados pessoais viola a legislação, você tem o direito de apresentar reclamação à Autoridade Nacional de Proteção de Dados (ANPD), conforme Art. 18, §1º, da LGPD.</p>
+      <div class="highlight-box">
+        <p><strong>ANPD — Autoridade Nacional de Proteção de Dados</strong></p>
+        <p>Site: <a href="https://www.gov.br/anpd" class="policy-link" target="_blank" rel="noopener">www.gov.br/anpd</a></p>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-logo"><img src="logo-apex-transparent.png" alt="Apex Health" /></div>
+    <div class="footer-links">
+      <a href="index.html#metodo">O Método</a>
+      <a href="index.html#paraquem">Para Quem</a>
+      <a href="index.html#jornada">Como Funciona</a>
+      <a href="sobre-dr-bruno-biluca.html">O Médico</a>
+      <a href="index.html#resultados">Resultados</a>
+      <a href="index.html#faq">FAQ</a>
+      <a href="politica-privacidade.html">Privacidade</a>
+      <a href="termos-uso.html">Termos</a>
+    </div>
+    <p class="footer-copy">&copy; 2026 Apex Health. Todos os direitos reservados. | <a href="politica-privacidade.html" style="color:rgba(255,255,255,0.5);text-decoration:underline;">Política de Privacidade</a></p>
+  </footer>
+
+</body>
+</html>

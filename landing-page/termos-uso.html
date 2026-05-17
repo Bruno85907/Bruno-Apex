@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Termos de Uso | Apex Health</title>
+  <meta name="description" content="Termos de Uso do site Apex Health — condições gerais de utilização dos serviços e conteúdos disponibilizados pelo Dr. Bruno Piubelli Biluca.">
+  <meta name="author" content="Dr. Bruno Piubelli Biluca">
+  <link rel="canonical" href="https://www.apex.med.br/termos-uso.html">
+
+  <meta property="og:title" content="Termos de Uso | Apex Health">
+  <meta property="og:description" content="Condições gerais de utilização dos serviços e conteúdos do site Apex Health.">
+  <meta property="og:url" content="https://www.apex.med.br/termos-uso.html">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="pt_BR">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --navy: #1E2D50;
+      --navy-deep: #121D33;
+      --dark-section: #0a1220;
+      --teal: #028090;
+      --teal-light: #04b5c8;
+      --gold: #C4A35A;
+      --gold-light: #d4b76a;
+      --bg: #FAF9F5;
+      --bg-alt: #f0efeb;
+      --footer-bg: #0a1220;
+      --radius: 14px;
+      --font-serif: 'Instrument Serif', Georgia, serif;
+      --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--font-sans);
+      color: var(--navy);
+      background: var(--bg);
+      overflow-x: hidden;
+    }
+
+    .container { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+
+    /* ===== HEADER ===== */
+    .header {
+      position: fixed; top: 16px; left: 50%; transform: translateX(-50%);
+      width: calc(100% - 48px); max-width: 1100px; z-index: 1000;
+      padding: 14px 28px; border-radius: 60px;
+      background: rgba(18,29,51,0.55); backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
+      border: 1px solid rgba(255,255,255,0.12);
+      display: flex; align-items: center; justify-content: space-between;
+      transition: background 0.4s, border-color 0.4s, box-shadow 0.4s;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+    }
+    .header.scrolled {
+      background: rgba(18,29,51,0.95); border-color: rgba(255,255,255,0.08);
+      box-shadow: 0 8px 40px rgba(0,0,0,0.3);
+    }
+    .header-logo { display: flex; align-items: center; text-decoration: none; }
+    .header-logo img { height: 80px; width: auto; margin: -20px 0; }
+    .header-nav { display: flex; align-items: center; gap: 28px; }
+    .header-nav a {
+      color: rgba(255,255,255,0.85); text-decoration: none; font-size: 13px;
+      font-weight: 500; transition: color 0.25s; letter-spacing: 0.3px;
+    }
+    .header-nav a:hover { color: #fff; }
+    .header-cta {
+      background: var(--gold); color: var(--navy) !important; font-weight: 700 !important;
+      padding: 10px 24px; border-radius: 50px; font-size: 13px !important;
+      letter-spacing: 0.5px; transition: all 0.3s;
+    }
+    .header-cta:hover { background: var(--gold-light); transform: translateY(-1px); }
+
+    /* ===== HERO ===== */
+    .page-hero {
+      background: linear-gradient(135deg, var(--navy-deep) 0%, var(--navy) 100%);
+      padding: 160px 0 80px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .page-hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background-image: radial-gradient(circle, rgba(196,163,90,0.06) 1px, transparent 1px);
+      background-size: 20px 20px;
+    }
+    .page-hero .eyebrow {
+      font-size: 11px; font-weight: 600; color: var(--gold);
+      letter-spacing: 3.5px; text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+    .page-hero h1 {
+      font-family: var(--font-serif); font-weight: 400;
+      font-size: clamp(32px, 5vw, 48px);
+      color: #fff; line-height: 1.25;
+      letter-spacing: -0.5px;
+    }
+    .page-hero h1 em { color: var(--gold); font-style: italic; }
+    .page-hero .subtitle {
+      color: rgba(255,255,255,0.5); font-size: 15px;
+      margin-top: 16px; font-weight: 400;
+    }
+
+    /* ===== CONTENT ===== */
+    .terms-content {
+      padding: 80px 0;
+    }
+    .terms-inner {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    .terms-section {
+      margin-bottom: 48px;
+    }
+    .terms-section h2 {
+      font-family: var(--font-sans);
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 16px;
+      padding-left: 16px;
+      border-left: 3px solid var(--gold);
+      line-height: 1.4;
+    }
+    .terms-section p,
+    .terms-section ul {
+      font-size: 15px;
+      line-height: 1.8;
+      color: rgba(30,45,80,0.75);
+      margin-bottom: 12px;
+    }
+    .terms-section ul {
+      padding-left: 24px;
+    }
+    .terms-section ul li {
+      margin-bottom: 8px;
+    }
+    .terms-section a {
+      color: var(--teal);
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.25s;
+    }
+    .terms-section a:hover {
+      color: var(--teal-light);
+    }
+    .terms-date {
+      text-align: center;
+      font-size: 13px;
+      color: rgba(30,45,80,0.4);
+      margin-top: 64px;
+      padding-top: 32px;
+      border-top: 1px solid rgba(30,45,80,0.08);
+    }
+
+    /* ===== FOOTER ===== */
+    .footer {
+      background-color: var(--footer-bg); padding: 48px 24px 32px; text-align: center;
+      background-image: radial-gradient(circle, rgba(196,163,90,0.06) 1px, transparent 1px);
+      background-size: 20px 20px;
+    }
+    .footer-logo { display: flex; justify-content: center; margin-bottom: 20px; }
+    .footer-logo img { height: 48px; width: auto; }
+    .footer-links { display: flex; justify-content: center; gap: 24px; flex-wrap: wrap; margin-bottom: 24px; }
+    .footer-links a {
+      font-size: 13px; color: rgba(255,255,255,0.4); text-decoration: none;
+      transition: color 0.25s;
+    }
+    .footer-links a:hover { color: rgba(255,255,255,0.7); }
+    .footer-copy { font-size: 12px; color: rgba(255,255,255,0.2); }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 768px) {
+      .header { padding: 12px 20px; width: calc(100% - 32px); top: 12px; }
+      .header-logo img { height: 50px; margin: -10px 0; }
+      .header-nav a:not(.header-cta) { display: none; }
+      .header-nav { gap: 8px; }
+      .header-cta { padding: 8px 18px; font-size: 12px !important; }
+
+      .page-hero { padding: 130px 0 60px; }
+      .terms-content { padding: 48px 0; }
+      .terms-section { margin-bottom: 36px; }
+      .terms-section h2 { font-size: 18px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="header" id="header">
+    <a href="index.html" class="header-logo">
+      <img src="logo-apex-transparent.png" alt="Apex Health" />
+    </a>
+    <nav class="header-nav">
+      <a href="index.html">Voltar ao site</a>
+      <a href="index.html#contato" class="header-cta">Agendar Consulta</a>
+    </nav>
+  </header>
+
+  <!-- HERO -->
+  <section class="page-hero">
+    <div class="container">
+      <p class="eyebrow">Documento Legal</p>
+      <h1>Termos de <em>Uso</em></h1>
+      <p class="subtitle">Condições gerais de utilização do site e dos serviços Apex Health</p>
+    </div>
+  </section>
+
+  <!-- CONTENT -->
+  <section class="terms-content">
+    <div class="container">
+      <div class="terms-inner">
+
+        <div class="terms-section">
+          <h2>1. Aceitação dos Termos</h2>
+          <p>Ao acessar e utilizar o site <strong>apex.med.br</strong> ("Site"), você declara que leu, compreendeu e concorda integralmente com os presentes Termos de Uso. Caso não concorde com qualquer disposição aqui estabelecida, solicitamos que interrompa imediatamente o uso do Site.</p>
+          <p>O uso continuado do Site, após eventuais atualizações destes Termos, implica na aceitação automática das modificações realizadas.</p>
+        </div>
+
+        <div class="terms-section">
+          <h2>2. Descrição do Serviço</h2>
+          <p>O Site é mantido pelo <strong>Dr. Bruno Piubelli Biluca</strong> (CRM-SP 151.041 | RQE 70145), médico nefrologista e fundador da <strong>Apex Health</strong>, e tem caráter exclusivamente informativo sobre:</p>
+          <ul>
+            <li>Serviços médicos de Nefrologia e Clínica Médica;</li>
+            <li>Protocolos de saúde integrados (Cardiorrenal-Metabólico, DRC Conservador, entre outros);</li>
+            <li>Assessor virtual de acompanhamento de saúde;</li>
+            <li>Conteúdo educativo sobre condições crônicas, qualidade de vida e prevenção.</li>
+          </ul>
+          <p><strong>O conteúdo disponibilizado no Site não substitui, em nenhuma hipótese, a consulta médica presencial, o diagnóstico clínico ou a prescrição de tratamentos.</strong></p>
+        </div>
+
+        <div class="terms-section">
+          <h2>3. Uso Adequado</h2>
+          <p>Ao utilizar o Site, o usuário compromete-se a:</p>
+          <ul>
+            <li><strong>Não utilizar as informações para autodiagnóstico ou automedicação.</strong> Todo conteúdo disponível possui finalidade educativa e não constitui prescrição médica;</li>
+            <li>Em situações de <strong>emergência médica</strong>, ligar imediatamente para o <strong>SAMU (192)</strong> ou dirigir-se ao pronto-socorro mais próximo;</li>
+            <li>Não reproduzir, distribuir ou utilizar o conteúdo do Site para fins comerciais sem autorização prévia e expressa;</li>
+            <li>Fornecer dados verdadeiros e atualizados quando solicitado em formulários de contato ou agendamento.</li>
+          </ul>
+        </div>
+
+        <div class="terms-section">
+          <h2>4. Propriedade Intelectual</h2>
+          <p>Todo o conteúdo presente no Site, incluindo, mas não se limitando a textos, imagens, fotografias, vídeos, protocolos clínicos, materiais educativos, design, logotipos e a marca <strong>Apex Health</strong>, é de propriedade exclusiva do <strong>Dr. Bruno Piubelli Biluca</strong> e/ou da <strong>Apex Health</strong>, estando protegido pela legislação brasileira de direitos autorais e propriedade intelectual.</p>
+          <p>A reprodução, distribuição, modificação ou utilização de qualquer conteúdo do Site, total ou parcial, sem autorização prévia e expressa por escrito, é expressamente proibida e sujeita às sanções legais cabíveis.</p>
+        </div>
+
+        <div class="terms-section">
+          <h2>5. Assessor Virtual</h2>
+          <p>O assessor virtual disponibilizado pela Apex Health é uma <strong>ferramenta de acompanhamento e suporte</strong>, desenvolvida para auxiliar o paciente no monitoramento de indicadores de saúde e na adesão aos protocolos prescritos.</p>
+          <ul>
+            <li>O assessor virtual <strong>não substitui a consulta médica</strong> e não realiza diagnósticos, prescrições ou orientações terapêuticas individualizadas;</li>
+            <li>As informações fornecidas pelo assessor virtual têm caráter orientativo e devem ser interpretadas em conjunto com o acompanhamento médico;</li>
+            <li>Os dados pessoais e de saúde processados pelo assessor virtual são tratados em conformidade com a <strong>Lei Geral de Proteção de Dados (LGPD — Lei n.º 13.709/2018)</strong> e com a nossa Política de Privacidade.</li>
+          </ul>
+        </div>
+
+        <div class="terms-section">
+          <h2>6. Agendamento e Consultas</h2>
+          <p>O agendamento de consultas realizado por meio do Site constitui uma <strong>solicitação</strong>, e não uma confirmação automática. O agendamento efetivo está sujeito à disponibilidade da agenda médica e será confirmado pela equipe Apex Health por meio dos canais de comunicação informados pelo paciente.</p>
+          <p>Os valores das consultas e dos planos de acompanhamento seguem a <strong>tabela vigente</strong>, que pode ser atualizada periodicamente. Informações sobre precificação estão disponíveis no Site e são fornecidas durante o processo de agendamento.</p>
+          <p>O não comparecimento à consulta agendada, sem aviso prévio de pelo menos 24 horas, poderá acarretar a cobrança de taxa conforme política vigente.</p>
+        </div>
+
+        <div class="terms-section">
+          <h2>7. Limitação de Responsabilidade</h2>
+          <p>As informações contidas no Site possuem <strong>caráter exclusivamente educativo e informativo</strong>. A Apex Health e o Dr. Bruno Piubelli Biluca não se responsabilizam por:</p>
+          <ul>
+            <li>Decisões médicas tomadas pelo usuário com base exclusivamente nas informações do Site, sem o devido acompanhamento profissional;</li>
+            <li>Interrupções, falhas técnicas ou indisponibilidade temporária do Site;</li>
+            <li>Danos diretos ou indiretos decorrentes do uso inadequado do conteúdo disponibilizado;</li>
+            <li>Conteúdo de sites de terceiros eventualmente acessados por meio de links disponibilizados no Site.</li>
+          </ul>
+          <p>Decisões relacionadas à saúde devem ser sempre tomadas em conjunto com um profissional de saúde habilitado.</p>
+        </div>
+
+        <div class="terms-section">
+          <h2>8. Privacidade e Proteção de Dados</h2>
+          <p>A coleta, o armazenamento e o tratamento de dados pessoais realizados por meio do Site são regidos pela nossa <a href="politica-privacidade.html"><strong>Política de Privacidade</strong></a>, que constitui parte integrante destes Termos de Uso.</p>
+          <p>Ao utilizar o Site, o usuário declara estar ciente e de acordo com as práticas de privacidade descritas na referida Política, elaborada em conformidade com a Lei Geral de Proteção de Dados (LGPD).</p>
+        </div>
+
+        <div class="terms-section">
+          <h2>9. Alterações nos Termos</h2>
+          <p>A Apex Health reserva-se o direito de modificar, atualizar ou revisar estes Termos de Uso a qualquer momento, sem necessidade de aviso prévio. As alterações entram em vigor a partir da data de publicação no Site.</p>
+          <p>Recomendamos que o usuário consulte esta página periodicamente para manter-se informado sobre eventuais atualizações.</p>
+        </div>
+
+        <div class="terms-section">
+          <h2>10. Lei Aplicável e Foro</h2>
+          <p>Estes Termos de Uso são regidos e interpretados de acordo com a <strong>legislação da República Federativa do Brasil</strong>.</p>
+          <p>Fica eleito o <strong>Foro da Comarca de São Paulo, Estado de São Paulo</strong>, como competente para dirimir quaisquer questões decorrentes da utilização do Site, com renúncia expressa a qualquer outro, por mais privilegiado que seja.</p>
+        </div>
+
+        <div class="terms-section">
+          <h2>11. Contato</h2>
+          <p>Para dúvidas, sugestões ou solicitações relacionadas a estes Termos de Uso, entre em contato conosco:</p>
+          <ul>
+            <li><strong>E-mail:</strong> <a href="mailto:bbiluca@gmail.com">bbiluca@gmail.com</a></li>
+            <li><strong>Site:</strong> <a href="https://www.apex.med.br">www.apex.med.br</a></li>
+          </ul>
+        </div>
+
+        <p class="terms-date">Última atualização: Maio de 2026</p>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-logo"><img src="logo-apex-transparent.png" alt="Apex Health" /></div>
+    <div class="footer-links">
+      <a href="index.html#metodo">O Método</a>
+      <a href="index.html#paraquem">Para Quem</a>
+      <a href="index.html#jornada">Como Funciona</a>
+      <a href="sobre-dr-bruno-biluca.html">O Médico</a>
+      <a href="index.html#resultados">Resultados</a>
+      <a href="index.html#faq">FAQ</a>
+      <a href="politica-privacidade.html">Privacidade</a>
+      <a href="termos-uso.html">Termos de Uso</a>
+    </div>
+    <p class="footer-copy">&copy; 2026 Apex Health. Todos os direitos reservados.</p>
+  </footer>
+
+  <script>
+    // Header scroll
+    const header = document.getElementById('header');
+    window.addEventListener('scroll', () => {
+      header.classList.toggle('scrolled', window.scrollY > 60);
+    }, { passive: true });
+  </script>
+
+</body>
+</html>
