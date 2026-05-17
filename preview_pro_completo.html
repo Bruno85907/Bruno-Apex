@@ -863,6 +863,16 @@ body{font-family:var(--font-sans);background:var(--navy-deep);color:var(--text);
         <div class="sb-child" data-page="lista-pacientes" onclick="navTo('lista-pacientes')"><span class="sb-child-dot"></span>Lista de Pacientes</div>
         <div class="sb-child" data-page="prontuario" onclick="navTo('prontuario')"><span class="sb-child-dot"></span>Prontuário CKM</div>
       </div>
+      <div class="sb-divider"></div>
+      <div class="sb-module-label" onclick="toggleModule(this)">
+        <span class="sb-module-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 22h16a2 2 0 002-2V4a2 2 0 00-2-2H8a2 2 0 00-2 2v16a2 2 0 01-2 2zm0 0a2 2 0 01-2-2v-9c0-1.1.9-2 2-2h2"/><line x1="10" y1="10" x2="18" y2="10"/><line x1="10" y1="14" x2="18" y2="14"/><line x1="10" y1="18" x2="14" y2="18"/></svg></span>
+        <span>Atualizações</span>
+        <span class="sb-chevron">›</span>
+      </div>
+      <div class="sb-children">
+        <div class="sb-child" data-page="boletim-semanal" onclick="navTo('boletim-semanal')"><span class="sb-child-dot"></span>Boletim Semanal</div>
+        <div class="sb-child" data-page="evidencias" onclick="navTo('evidencias')"><span class="sb-child-dot"></span>Base de Evidências</div>
+      </div>
     </nav>
     <div class="sb-footer">
       <div class="sb-user">
@@ -3211,6 +3221,196 @@ body{font-family:var(--font-sans);background:var(--navy-deep);color:var(--text);
       </div>
     </div>
 
+    <!-- PAGE: BOLETIM SEMANAL -->
+    <div class="content-page" id="page-boletim-semanal">
+      <p class="page-eyebrow rv">Atualizações</p>
+      <h2 class="page-title rv">Boletim Semanal <strong>CKM</strong></h2>
+      <p class="page-subtitle rv" style="font-size:13px;color:var(--text-2);margin-bottom:24px;">Atualização científica semanal — Síndrome Cardiorrenal Metabólica</p>
+
+      <div style="display:grid;grid-template-columns:2fr 1fr;gap:20px;" class="rv">
+        <!-- Main content -->
+        <div>
+          <!-- Current week -->
+          <div class="card" style="margin-bottom:20px;">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
+              <div>
+                <div style="font-size:16px;font-weight:700;color:var(--navy);">Semana de 12 a 17 de maio de 2026</div>
+                <div style="font-size:12px;color:#6B7A8D;margin-top:2px;">Edição #3 — Publicado em 12/05/2026</div>
+              </div>
+              <span style="padding:4px 12px;border-radius:12px;font-size:11px;font-weight:600;background:#028090;color:#fff;">Mais recente</span>
+            </div>
+
+            <!-- Eixos -->
+            <div id="boletimContent">
+              <div style="margin-bottom:20px;">
+                <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;">
+                  <div style="width:4px;height:20px;border-radius:2px;background:#C62828;"></div>
+                  <div style="font-size:14px;font-weight:700;color:var(--navy);">Cardiovascular</div>
+                </div>
+                <div style="padding:12px 16px;background:#F8F8F5;border-radius:8px;margin-bottom:8px;">
+                  <div style="font-size:13px;font-weight:600;color:var(--navy);">Finerenona reduz eventos CV em pacientes com DRC e IC</div>
+                  <div style="font-size:11px;color:#4A5E6F;margin-top:4px;line-height:1.6;">Análise post-hoc do FINEARTS-HF demonstrou benefício consistente da finerenona na redução de hospitalização por IC em pacientes com TFGe 25-60 mL/min.</div>
+                  <div style="font-size:10px;color:#028090;margin-top:6px;font-weight:500;">Implicação: Considerar finerenona em pacientes CKM estágio 3-4 com IC.</div>
+                  <div style="font-size:9px;color:#999;margin-top:4px;">JACC 2026;87(19):1823-1835</div>
+                </div>
+              </div>
+
+              <div style="margin-bottom:20px;">
+                <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;">
+                  <div style="width:4px;height:20px;border-radius:2px;background:#028090;"></div>
+                  <div style="font-size:14px;font-weight:700;color:var(--navy);">Renal</div>
+                </div>
+                <div style="padding:12px 16px;background:#F8F8F5;border-radius:8px;margin-bottom:8px;">
+                  <div style="font-size:13px;font-weight:600;color:var(--navy);">SGLT2i e nefroproteção: meta-análise atualizada</div>
+                  <div style="font-size:11px;color:#4A5E6F;margin-top:4px;line-height:1.6;">Meta-análise com 15 RCTs confirma redução de 37% na progressão de DRC com SGLT2i, independente da etiologia ou TFGe basal (até 20 mL/min).</div>
+                  <div style="font-size:10px;color:#028090;margin-top:6px;font-weight:500;">Implicação: Reforça uso de SGLT2i como pilar terapêutico em todos os estágios CKM.</div>
+                  <div style="font-size:9px;color:#999;margin-top:4px;">Kidney Int 2026;109(5):1012-1024</div>
+                </div>
+              </div>
+
+              <div style="margin-bottom:20px;">
+                <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;">
+                  <div style="width:4px;height:20px;border-radius:2px;background:#F5A623;"></div>
+                  <div style="font-size:14px;font-weight:700;color:var(--navy);">Metabólico</div>
+                </div>
+                <div style="padding:12px 16px;background:#F8F8F5;border-radius:8px;margin-bottom:8px;">
+                  <div style="font-size:13px;font-weight:600;color:var(--navy);">Tirzepatida e desfechos renais: dados do SURMOUNT-MMO</div>
+                  <div style="font-size:11px;color:#4A5E6F;margin-top:4px;line-height:1.6;">Primeiros dados de desfecho renal com tirzepatida mostram redução de 42% na progressão de albuminúria em obesos com DRC G2-G3a.</div>
+                  <div style="font-size:10px;color:#028090;margin-top:6px;font-weight:500;">Implicação: GLP-1/GIP dual agonista pode ter benefício renal direto além da perda ponderal.</div>
+                  <div style="font-size:9px;color:#999;margin-top:4px;">NEJM 2026;394(18):1678-1690</div>
+                </div>
+              </div>
+
+              <div style="margin-bottom:20px;">
+                <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;">
+                  <div style="width:4px;height:20px;border-radius:2px;background:#7B1FA2;"></div>
+                  <div style="font-size:14px;font-weight:700;color:var(--navy);">Tratamento</div>
+                </div>
+                <div style="padding:12px 16px;background:#F8F8F5;border-radius:8px;margin-bottom:8px;">
+                  <div style="font-size:13px;font-weight:600;color:var(--navy);">Combinação SGLT2i + finerenona: dados de segurança renal</div>
+                  <div style="font-size:11px;color:#4A5E6F;margin-top:4px;line-height:1.6;">Estudo de coorte real-world com 12.000 pacientes confirma segurança da combinação, sem aumento de hipercalemia severa (K > 6.0) quando monitorizado adequadamente.</div>
+                  <div style="font-size:10px;color:#028090;margin-top:6px;font-weight:500;">Implicação: Combinação é segura com monitoramento — considerar nos protocolos CKM 2-3.</div>
+                  <div style="font-size:9px;color:#999;margin-top:4px;">Circulation 2026;153(19):1456-1468</div>
+                </div>
+              </div>
+
+              <div style="margin-bottom:20px;">
+                <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;">
+                  <div style="width:4px;height:20px;border-radius:2px;background:#2E7D32;"></div>
+                  <div style="font-size:14px;font-weight:700;color:var(--navy);">Guidelines</div>
+                </div>
+                <div style="padding:12px 16px;background:#F8F8F5;border-radius:8px;">
+                  <div style="font-size:13px;font-weight:600;color:var(--navy);">KDIGO 2026: atualização no manejo de lipídeos em DRC</div>
+                  <div style="font-size:11px;color:#4A5E6F;margin-top:4px;line-height:1.6;">Nova diretriz recomenda meta de LDL < 55 mg/dL para DRC G3-G5 com risco CV muito alto, equiparando ao manejo pós-IAM.</div>
+                  <div style="font-size:10px;color:#028090;margin-top:6px;font-weight:500;">Implicação: Atualizar metas de LDL nos protocolos APEX para pacientes CKM estágio 3-4.</div>
+                  <div style="font-size:9px;color:#999;margin-top:4px;">Kidney Int 2026;109(S1):S1-S78</div>
+                </div>
+              </div>
+            </div>
+
+            <div style="margin-top:16px;padding:14px;background:#FDF8ED;border-radius:8px;border-left:4px solid #C4A35A;">
+              <div style="font-size:12px;font-weight:700;color:var(--navy);margin-bottom:6px;">Destaques da Semana</div>
+              <ol style="font-size:11px;color:#4A5E6F;line-height:1.7;padding-left:16px;margin:0;">
+                <li>Finerenona com benefício comprovado em DRC + IC — considerar nos protocolos CKM 3-4</li>
+                <li>Meta-análise reforça SGLT2i como pilar universal em nefroproteção</li>
+                <li>Tirzepatida com provável benefício renal direto — acompanhar estudos de fase IV</li>
+                <li>KDIGO atualiza meta de LDL para < 55 em DRC de alto risco CV</li>
+              </ol>
+            </div>
+          </div>
+
+          <!-- Archive -->
+          <div class="card">
+            <div style="font-size:14px;font-weight:700;color:var(--navy);margin-bottom:12px;">Edições Anteriores</div>
+            <div style="display:flex;flex-direction:column;gap:8px;">
+              <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 14px;background:#F8F8F5;border-radius:8px;cursor:pointer;">
+                <div>
+                  <div style="font-size:12px;font-weight:600;color:var(--navy);">Semana de 05 a 10 de maio de 2026</div>
+                  <div style="font-size:10px;color:#6B7A8D;">Edição #2 — DAPA-CKD subanálise, ADA posicionamento GLP-1</div>
+                </div>
+                <span style="font-size:11px;color:#028090;font-weight:600;">Ver →</span>
+              </div>
+              <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 14px;background:#F8F8F5;border-radius:8px;cursor:pointer;">
+                <div>
+                  <div style="font-size:12px;font-weight:600;color:var(--navy);">Semana de 28 de abril a 03 de maio de 2026</div>
+                  <div style="font-size:10px;color:#6B7A8D;">Edição #1 — Inauguração do boletim, panorama CKM 2026</div>
+                </div>
+                <span style="font-size:11px;color:#028090;font-weight:600;">Ver →</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right column -->
+        <div>
+          <div class="card" style="margin-bottom:16px;">
+            <div style="font-size:14px;font-weight:700;color:var(--navy);margin-bottom:12px;">Impacto nos Protocolos</div>
+            <p style="font-size:11px;color:#6B7A8D;margin-bottom:10px;">Atualizações que geraram mudanças nos protocolos APEX</p>
+            <div style="display:flex;flex-direction:column;gap:8px;">
+              <div style="padding:10px 12px;border-radius:8px;border-left:3px solid #028090;background:#F0FAF8;">
+                <div style="font-size:11px;font-weight:600;color:var(--navy);">Meta LDL atualizada</div>
+                <div style="font-size:10px;color:#4A5E6F;margin-top:2px;">< 55 mg/dL para DRC + alto risco CV</div>
+                <div style="font-size:9px;color:#028090;margin-top:4px;">Protocolo CKM → atualizado</div>
+              </div>
+              <div style="padding:10px 12px;border-radius:8px;border-left:3px solid #C4A35A;background:#FDF8ED;">
+                <div style="font-size:11px;font-weight:600;color:var(--navy);">Finerenona + SGLT2i</div>
+                <div style="font-size:10px;color:#4A5E6F;margin-top:2px;">Combinação aprovada nos protocolos CKM 2-3</div>
+                <div style="font-size:9px;color:#C4A35A;margin-top:4px;">Protocolo DRC → em revisão</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card" style="margin-bottom:16px;">
+            <div style="font-size:14px;font-weight:700;color:var(--navy);margin-bottom:12px;">Eixos Monitorados</div>
+            <div style="display:flex;flex-direction:column;gap:6px;">
+              <div style="display:flex;align-items:center;gap:8px;">
+                <div style="width:10px;height:10px;border-radius:50%;background:#C62828;"></div>
+                <span style="font-size:11px;color:#4A5E6F;">Cardiovascular</span>
+              </div>
+              <div style="display:flex;align-items:center;gap:8px;">
+                <div style="width:10px;height:10px;border-radius:50%;background:#028090;"></div>
+                <span style="font-size:11px;color:#4A5E6F;">Renal (DRC, albuminúria)</span>
+              </div>
+              <div style="display:flex;align-items:center;gap:8px;">
+                <div style="width:10px;height:10px;border-radius:50%;background:#F5A623;"></div>
+                <span style="font-size:11px;color:#4A5E6F;">Metabólico (DM2, obesidade)</span>
+              </div>
+              <div style="display:flex;align-items:center;gap:8px;">
+                <div style="width:10px;height:10px;border-radius:50%;background:#7B1FA2;"></div>
+                <span style="font-size:11px;color:#4A5E6F;">Tratamento (SGLT2i, GLP-1, ARM)</span>
+              </div>
+              <div style="display:flex;align-items:center;gap:8px;">
+                <div style="width:10px;height:10px;border-radius:50%;background:#2E7D32;"></div>
+                <span style="font-size:11px;color:#4A5E6F;">Guidelines e consensos</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div style="font-size:14px;font-weight:700;color:var(--navy);margin-bottom:12px;">Fontes</div>
+            <div style="font-size:10px;color:#6B7A8D;line-height:1.8;">
+              NEJM · Lancet · JAMA · Circulation · JACC · Kidney International · JASN · CJASN · Diabetes Care · Nature Medicine · European Heart Journal
+            </div>
+            <div style="font-size:9px;color:#999;margin-top:8px;">Atualização automática toda segunda-feira às 08h via Cowork</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PAGE: BASE DE EVIDÊNCIAS -->
+    <div class="content-page" id="page-evidencias">
+      <p class="page-eyebrow rv">Atualizações</p>
+      <h2 class="page-title rv">Base de <strong>Evidências</strong></h2>
+      <p class="page-subtitle rv" style="font-size:13px;color:var(--text-2);margin-bottom:24px;">Knowledge base consolidada — Síndrome CKM e protocolos APEX</p>
+      <div class="card rv">
+        <div style="text-align:center;padding:60px 20px;">
+          <div style="font-size:48px;margin-bottom:16px;">📚</div>
+          <div style="font-size:16px;font-weight:700;color:var(--navy);margin-bottom:8px;">Em construção</div>
+          <div style="font-size:12px;color:#6B7A8D;max-width:400px;margin:0 auto;">A base de evidências consolida todas as atualizações semanais, guidelines e artigos relevantes para os protocolos APEX. Recompilação mensal automática.</div>
+        </div>
+      </div>
+    </div>
+
     <!-- Modal: Novo Paciente -->
     <!-- MODAL: NOVO PROJETO -->
     <div class="modal-overlay" id="modal-novo-proj">
@@ -3537,7 +3737,9 @@ var NAV = {
   'agenda':              { label:'Minha Agenda',       parent:'dashboard',     sidebar:'agenda',             bc:['Dashboard','Minha Agenda'] },
   'planejamento':        { label:'Plan. Estratégico',  parent:'dashboard',     sidebar:'planejamento',       bc:['Dashboard','Gestão','Plan. Estratégico'] },
   'prontuario':          { label:'Prontuário CKM',     parent:'dashboard',     sidebar:'prontuario',         bc:['Dashboard','Pacientes','Prontuário CKM'] },
-  'lista-pacientes':     { label:'Lista de Pacientes', parent:'dashboard',     sidebar:'lista-pacientes',    bc:['Dashboard','Pacientes','Lista de Pacientes'] }
+  'lista-pacientes':     { label:'Lista de Pacientes', parent:'dashboard',     sidebar:'lista-pacientes',    bc:['Dashboard','Pacientes','Lista de Pacientes'] },
+  'boletim-semanal':     { label:'Boletim Semanal',   parent:null,            sidebar:'boletim-semanal',    bc:['Atualizações','Boletim Semanal'] },
+  'evidencias':          { label:'Base de Evidências', parent:null,            sidebar:'evidencias',         bc:['Atualizações','Base de Evidências'] }
 };
 
 var BC_MAP = {
@@ -3548,7 +3750,8 @@ var BC_MAP = {
   'Clínica APEX':null,'Visão Geral':'clinica-visao','Protocolos':'clinica-protocolos',
   'Aderência':'clinica-aderencia','Relatórios Clínica':'clinica-relatorios',
   'Plan. Estratégico':'planejamento',
-  'Pacientes':null,'Prontuário CKM':'prontuario','Lista de Pacientes':'lista-pacientes'
+  'Pacientes':null,'Prontuário CKM':'prontuario','Lista de Pacientes':'lista-pacientes',
+  'Atualizações':null,'Boletim Semanal':'boletim-semanal','Base de Evidências':'evidencias'
 };
 
 function navTo(pageId) {
