@@ -7,6 +7,12 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <style>
+/* Embed mode: hide topbar, reduce padding when inside iframe */
+html.embed-mode .topbar { display: none; }
+html.embed-mode .tabs-bar { top: 0; }
+html.embed-mode .tab-content { padding-top: 8px; }
+html.embed-mode body { padding-top: 0; }
+
 :root {
   --navy: #1E2D50;
   --navy-deep: #0D223F;
@@ -648,6 +654,30 @@ body {
 </style>
 </head>
 <body>
+
+<script>
+/* ===== EMBED MODE ===== */
+(function(){
+  var params = new URLSearchParams(window.location.search);
+  if (params.get('embed') === '1') {
+    document.documentElement.classList.add('embed-mode');
+  }
+  /* Listen for patient data from parent (Pro) */
+  window.addEventListener('message', function(e) {
+    if (!e.data || e.data.type !== 'apex-patient') return;
+    var d = e.data;
+    var sexEl = document.getElementById('patientSex');
+    var ageEl = document.getElementById('patientAge');
+    var numEl = document.getElementById('consultaNum');
+    if (sexEl && d.sex) sexEl.textContent = d.sex === 'M' ? 'Masculino' : d.sex === 'F' ? 'Feminino' : d.sex;
+    if (ageEl && d.age) ageEl.textContent = d.age;
+    if (numEl && d.consultaNum) numEl.textContent = d.consultaNum;
+    /* Store patient ID for future Supabase integration */
+    if (d.patientId) window._apexPatientId = d.patientId;
+    if (d.patientName) window._apexPatientName = d.patientName;
+  });
+})();
+</script>
 
 <!-- TOP BAR -->
 <div class="topbar">
