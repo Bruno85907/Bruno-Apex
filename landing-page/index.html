@@ -1862,9 +1862,10 @@
             el.classList.add('counted');
             countUp(el);
           });
+          revealObserver.unobserve(entry.target);
         }
       });
-    }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+    }, { threshold: 0.1 });
 
     document.querySelectorAll('.rv').forEach(el => revealObserver.observe(el));
 
@@ -1881,10 +1882,25 @@
         const progress = Math.min(elapsed / duration, 1);
         const value = Math.round(easeOutCubic(progress) * target);
         el.textContent = value;
-        if (progress < 1) requestAnimationFrame(update);
+        if (progress < 1) {
+          requestAnimationFrame(update);
+        } else {
+          el.textContent = target;
+        }
       }
       requestAnimationFrame(update);
     }
+
+    // Dispara count-up para elementos já visíveis no carregamento
+    window.addEventListener('load', () => {
+      document.querySelectorAll('.count-up:not(.counted)').forEach(el => {
+        const rect = el.getBoundingClientRect();
+        if (rect.top < window.innerHeight && rect.bottom > 0) {
+          el.classList.add('counted');
+          countUp(el);
+        }
+      });
+    });
 
     // ===== PROGRESS BAR =====
     const progressFill = document.getElementById('progressFill');
