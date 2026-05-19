@@ -1081,6 +1081,25 @@
       display: flex; align-items: center; justify-content: center;
       flex-shrink: 0;
     }
+
+  /* ===== TRUST BAR (NOVO) ===== */
+  .trust-bar {
+    background: rgba(30,45,80,0.95);
+    border-bottom: 1px solid rgba(196,163,90,0.15);
+    padding: 11px 24px;
+    text-align: center;
+    font-size: 12px;
+    font-weight: 500;
+    color: rgba(255,255,255,0.55);
+    letter-spacing: 0.5px;
+    position: relative;
+    z-index: 10;
+  }
+  .trust-bar span { color: var(--gold); font-weight: 600; }
+  @media (max-width: 768px) {
+    .trust-bar { font-size: 10px; padding: 9px 16px; line-height: 1.6; }
+  }
+
   </style>
 </head>
 <body>
@@ -1137,8 +1156,8 @@
     </div>
     <div class="hero-particles" id="heroParticles"></div>
     <div class="hero-content">
-      <h1>Metas claras.<br>Acompanhamento diário.<br><span class="highlight">Resultados que você mede.</span></h1>
-      <p class="hero-sub">Protocolo médico personalizado + assessor virtual que te acompanha entre consultas.<br>Hipertensão, diabetes, obesidade, DRC e qualidade de vida.</p>
+      <h1>Coração, rim e metabolismo.<br>Tratados juntos.<br><span class="highlight">Resultados que você mede.</span></h1>
+      <p class="hero-sub">O protocolo da Síndrome CKM — a conexão entre hipertensão, diabetes, obesidade e doença renal tratada de forma integrada, com assessor virtual que te acompanha todos os dias.</p>
       <div class="hero-ctas">
         <a href="https://wa.me/5511992959950?text=Ol%C3%A1%2C%20gostaria%20de%20agendar%20uma%20consulta%20na%20APEX%20Health." class="btn-teal" target="_blank" rel="noopener">Agendar Consulta</a>
         <a href="#metodo" class="hero-secondary">Conheça o método &#8595;</a>
@@ -1153,6 +1172,48 @@
     <div class="hero-scroll">
       <span>Scroll</span>
       <div class="hero-scroll-line"></div>
+    </div>
+  </section>
+
+  <!-- TRUST BAR (NOVO) -->
+  <div class="trust-bar">
+    <span>Dr. Bruno Biluca</span> &nbsp;·&nbsp; CRM-SP 151.041 · RQE 70145 &nbsp;·&nbsp; Nefrologia &amp; Clínica Médica &nbsp;·&nbsp; <span>Diretor Médico Fenix Nefrologia SP</span> &nbsp;·&nbsp; MBA Gestão em Saúde — FGV &nbsp;·&nbsp; Guidelines AHA &amp; KDIGO
+  </div>
+
+  <!-- O MEDICO (MOVIDO PARA CÁ — antes do Cenário) -->
+  <section class="medico section-pad" id="medico">
+    <div class="container">
+      <p class="eyebrow eyebrow-center rv">O médico</p>
+      <h2 class="headline-serif headline-center rv" style="font-size:clamp(30px,4vw,48px);max-width:600px;margin:0 auto 0;">
+        O especialista por trás do seu <em>protocolo</em>.
+      </h2>
+
+      <div class="medico-layout">
+        <div class="medico-photo-wrap rv">
+          <img src="dr-bruno.jpg" alt="Dr. Bruno Biluca" />
+          <div class="medico-photo-accent"></div>
+        </div>
+        <div class="medico-bio rv rv-delay-1">
+          <h3>Dr. Bruno Biluca</h3>
+          <div class="medico-spec">Especialista em Síndrome CKM &middot; Nefrologia &middot; Clínica Médica</div>
+          <div class="medico-crm" style="margin-top:8px;">CRM-SP 151.041 &middot; RQE 70145 &middot; Diretor Médico Fenix Nefrologia</div>
+          <p class="medico-text">Nefrologista e clínico, com foco na Síndrome Cardiovascular-Renal-Metabólica (CKM) — a interação entre hipertensão, diabetes, obesidade e doença renal. MBA em Gestão de Saúde pela FGV. Desenvolveu o protocolo APEX Health para tratar essas condições de forma integrada, com acompanhamento contínuo por assessor virtual.</p>
+          <div class="medico-diffs">
+            <div class="medico-diff">
+              <div class="medico-diff-dot"></div>
+              <p>Testa os próprios protocolos — nos ciclos de preparação de maratona, vive a rotina que prescreve</p>
+            </div>
+            <div class="medico-diff">
+              <div class="medico-diff-dot"></div>
+              <p>Assessor virtual desenvolvido por ele — tecnologia a serviço da aderência ao protocolo</p>
+            </div>
+            <div class="medico-diff">
+              <div class="medico-diff-dot"></div>
+              <p>Conduta baseada em evidência — guidelines AHA, KDIGO e SBMFC</p>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -1256,43 +1317,6 @@
         </p>
         <div style="text-align:center;">
           <a href="sindrome-ckm.html" style="font-size:13px;color:var(--gold);text-decoration:none;font-weight:600;transition:color 0.25s;">Entenda a Síndrome CKM &rarr;</a>
-        </div>
-      </div>
-    </div>
-  </section>
-
-<!-- O MEDICO -->
-  <section class="medico section-pad" id="medico">
-    <div class="container">
-      <p class="eyebrow eyebrow-center rv">O médico</p>
-      <h2 class="headline-serif headline-center rv" style="font-size:clamp(30px,4vw,48px);max-width:600px;margin:0 auto 0;">
-        Quem está por trás do seu <em>protocolo</em>.
-      </h2>
-
-      <div class="medico-layout">
-        <div class="medico-photo-wrap rv">
-          <img src="dr-bruno.jpg" alt="Dr. Bruno Biluca" />
-          <div class="medico-photo-accent"></div>
-        </div>
-        <div class="medico-bio rv rv-delay-1">
-          <h3>Dr. Bruno Biluca</h3>
-          <div class="medico-spec">Clínica Médica &middot; Nefrologia &middot; Diretor Médico Fenix Nefrologia</div>
-          <div class="medico-crm" style="margin-top:8px;">CRM-SP 151.041 &middot; RQE 70145</div>
-          <p class="medico-text">Médico com formação em Clínica Médica e Nefrologia, Diretor Médico da Fenix Nefrologia em São Paulo. MBA em Gestão de Saúde pela FGV. Desenvolve protocolos integrados para hipertensão, diabetes, obesidade e doença renal crônica com acompanhamento contínuo por assessor virtual.</p>
-          <div class="medico-diffs">
-            <div class="medico-diff">
-              <div class="medico-diff-dot"></div>
-              <p>Testa os próprios protocolos — nos ciclos de preparação de maratona, vive a rotina que prescreve</p>
-            </div>
-            <div class="medico-diff">
-              <div class="medico-diff-dot"></div>
-              <p>Assessor virtual desenvolvido por ele — tecnologia a serviço da aderência</p>
-            </div>
-            <div class="medico-diff">
-              <div class="medico-diff-dot"></div>
-              <p>Conduta baseada em evidência — guidelines AHA, KDIGO e SBMFC</p>
-            </div>
-          </div>
         </div>
       </div>
     </div>
@@ -1891,6 +1915,7 @@
       requestAnimationFrame(update);
     }
 
+    // Dispara count-up para elementos já visíveis no carregamento
     window.addEventListener('load', () => {
       document.querySelectorAll('.count-up:not(.counted)').forEach(el => {
         const rect = el.getBoundingClientRect();
