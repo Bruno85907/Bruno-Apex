@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>APEX Pro · Prontuário CKM funcional — arquitetura Elation (v3)</title>
+<script src="https://cdn.jsdelivr.net/npm/lucide@latest/dist/umd/lucide.min.js"></script>
+<style>
+  :root{
+    --navy:#1E2D50; --navy2:#16223F; --teal:#028090; --teal-l:#04B5C8; --gold:#C4A35A;
+    --bg:#EEF1F6; --rail:#FAF9F5; --card:#fff; --ink:#1B2436; --muted:#5C6B82; --line:#E4E8F0; --line2:#EDF0F5;
+    --green:#2E8B6F; --green-bg:#E4F3ED; --amber:#B8860B; --amber-bg:#FBF3DD; --red:#C0473B; --red-bg:#FBEAE8;
+    --blue:#2F6FB0; --blue-bg:#E8F0F9;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{background:var(--bg);color:var(--ink);font-family:-apple-system,"Segoe UI",Inter,Arial,sans-serif;font-size:13px;line-height:1.45;}
+  .concept-bar{background:var(--gold);color:var(--navy2);text-align:center;font-size:10.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;padding:5px;}
+  .ic-s{width:15px;height:15px;flex:none;} .ic-xs{width:13px;height:13px;flex:none;}
+
+  /* APP BAR */
+  .appbar{background:linear-gradient(120deg,var(--navy),var(--navy2));color:#fff;display:flex;align-items:center;gap:18px;padding:9px 18px;}
+  .brand{font-weight:800;letter-spacing:.5px;font-size:15px;display:flex;align-items:center;gap:8px;}
+  .brand .dot{width:9px;height:9px;border-radius:50%;background:var(--gold);}
+  .nav{display:flex;gap:3px;margin-left:6px;}
+  .nav a{color:#C7D2E4;text-decoration:none;font-size:12px;padding:6px 11px;border-radius:8px;display:flex;align-items:center;gap:6px;cursor:pointer;}
+  .nav a.active{background:rgba(255,255,255,.12);color:#fff;font-weight:600;}
+  .appbar .right{margin-left:auto;display:flex;align-items:center;gap:14px;color:#C7D2E4;font-size:12px;}
+  .appbar .right .me{display:flex;align-items:center;gap:8px;color:#fff;}
+  .avatar{width:30px;height:30px;border-radius:50%;background:var(--teal);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:12px;color:#fff;}
+
+  /* ===== TOOLBAR (Elation top actions = vias impressas) ===== */
+  .toolbar{background:#fff;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:7px;padding:9px 16px;overflow-x:auto;}
+  .tb-start{background:var(--teal);color:#fff;border:none;border-radius:9px;padding:9px 15px;font-size:12.5px;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:7px;white-space:nowrap;flex:none;}
+  .tb-start:hover{background:#026b78;}
+  .tb-sep{width:1px;height:30px;background:var(--line);margin:0 3px;flex:none;}
+  .tb{display:flex;flex-direction:column;align-items:center;gap:3px;background:#F7F9FC;border:1px solid var(--line);border-radius:9px;padding:6px 11px;cursor:pointer;min-width:74px;flex:none;}
+  .tb:hover{border-color:var(--teal);background:#F0F8F9;}
+  .tb i{color:var(--navy);} .tb span{font-size:10px;font-weight:600;color:var(--muted);white-space:nowrap;}
+
+  /* 3-ZONE GRID */
+  .shell{display:grid;grid-template-columns:300px 1fr 320px;gap:0;height:calc(100vh - 64px - 58px);}
+  .rail{background:var(--rail);border-right:1px solid var(--line);overflow-y:auto;}
+  .center{overflow-y:auto;padding:14px 16px 80px;}
+  .detail{background:#F6F8FB;border-left:1px solid var(--line);overflow-y:auto;padding:14px 13px 80px;}
+  ::-webkit-scrollbar{width:9px;} ::-webkit-scrollbar-thumb{background:#CFD7E3;border-radius:6px;}
+
+  /* LEFT RAIL */
+  .pcard{padding:14px 14px 12px;border-bottom:1px solid var(--line);}
+  .pc-top{display:flex;gap:11px;align-items:center;}
+  .p-avatar{width:46px;height:46px;border-radius:13px;background:linear-gradient(135deg,var(--teal),var(--teal-l));color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:16px;flex:none;}
+  .p-name{font-size:16px;font-weight:800;color:var(--navy);line-height:1.1;}
+  .p-sub{color:var(--muted);font-size:11.5px;margin-top:2px;}
+  .p-rows{margin-top:10px;display:flex;flex-direction:column;gap:3px;}
+  .p-row{display:flex;gap:7px;align-items:center;font-size:11.5px;color:var(--muted);}
+  .p-row b{color:var(--ink);font-weight:600;}
+  .p-pills{display:flex;gap:6px;flex-wrap:wrap;margin-top:11px;}
+  .p-pill{font-size:10.5px;font-weight:700;padding:4px 10px;border-radius:20px;display:inline-flex;align-items:center;gap:5px;}
+  .p-pill.stage{background:var(--amber-bg);color:#9C7B2E;} .p-pill.risk{background:var(--red-bg);color:var(--red);} .p-pill.alergia{background:var(--red-bg);color:var(--red);}
+  .acc{border-bottom:1px solid var(--line);}
+  .acc-h{display:flex;align-items:center;gap:8px;padding:10px 14px;cursor:pointer;user-select:none;}
+  .acc-h .ttl{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.05em;color:var(--navy);}
+  .acc-h .cnt{background:var(--line);color:var(--muted);font-size:10px;font-weight:700;padding:1px 8px;border-radius:20px;}
+  .acc-h .act{margin-left:auto;color:var(--teal);font-size:11px;font-weight:700;display:flex;align-items:center;gap:3px;}
+  .acc-h .chev{transition:transform .15s;color:var(--muted);}
+  .acc.closed .chev{transform:rotate(-90deg);} .acc.closed .acc-b{display:none;}
+  .acc-b{padding:0 14px 12px;}
+  .litem{display:flex;align-items:flex-start;gap:8px;padding:6px 0;border-bottom:1px dashed var(--line2);}
+  .litem:last-child{border-bottom:none;}
+  .litem .dotc{width:8px;height:8px;border-radius:50%;margin-top:5px;flex:none;}
+  .litem .nm{font-weight:600;color:var(--ink);font-size:12.5px;} .litem .meta{color:var(--muted);font-size:11px;}
+  .litem .tag{margin-left:auto;font-size:9.5px;font-weight:700;padding:1px 7px;border-radius:6px;}
+  .t-bad{background:var(--red-bg);color:var(--red);} .t-warn{background:var(--amber-bg);color:var(--amber);} .t-ok{background:var(--green-bg);color:var(--green);} .t-new{background:var(--green-bg);color:var(--green);}
+  .med-r{display:flex;align-items:baseline;gap:7px;padding:5px 0;border-bottom:1px dashed var(--line2);font-size:12.5px;}
+  .med-r:last-child{border-bottom:none;}
+  .med-r .nm{font-weight:700;color:var(--ink);} .med-r .dose{color:var(--muted);font-size:11.5px;}
+  .med-r .pil{margin-left:auto;font-size:9px;font-weight:800;color:#fff;background:var(--teal);border-radius:5px;padding:1px 6px;}
+  .alergia-r{color:var(--red);font-weight:600;font-size:12.5px;padding:4px 0;}
+
+  /* CENTER MODE TABS */
+  .modetabs{display:flex;gap:6px;margin-bottom:14px;}
+  .modetab{flex:1;text-align:center;padding:9px;border-radius:10px;font-size:12.5px;font-weight:700;cursor:pointer;border:1px solid var(--line);background:#fff;color:var(--muted);display:flex;align-items:center;justify-content:center;gap:7px;}
+  .modetab.on{background:var(--navy);color:#fff;border-color:var(--navy);}
+  .panel{display:none;} .panel.on{display:block;}
+
+  .blockttl{display:flex;align-items:center;gap:8px;font-size:11.5px;font-weight:800;text-transform:uppercase;letter-spacing:.06em;color:var(--navy);margin:4px 2px 8px;}
+  .blockttl .hint{margin-left:auto;font-size:10.5px;font-weight:600;color:var(--muted);text-transform:none;letter-spacing:0;font-style:italic;}
+
+  /* flowsheet */
+  .flow{background:#fff;border:1px solid var(--line);border-radius:12px;overflow:hidden;box-shadow:0 1px 2px rgba(20,34,63,.04);}
+  table.fs{width:100%;border-collapse:collapse;font-size:12px;}
+  table.fs th,table.fs td{padding:6px 9px;text-align:right;border-bottom:1px solid var(--line2);white-space:nowrap;}
+  table.fs thead th{background:#F7F9FC;color:var(--muted);font-size:10.5px;font-weight:700;border-bottom:1px solid var(--line);}
+  table.fs thead th.lab,table.fs td.lab{text-align:left;}
+  table.fs td.lab{font-weight:700;color:var(--ink);} table.fs td.lab small{display:block;font-weight:500;color:var(--muted);font-size:10px;}
+  table.fs tbody tr:hover{background:#FBFCFE;}
+  table.fs th.now{color:var(--navy);background:#EEF6F7;} table.fs td.now{background:#F4FAFB;font-weight:700;}
+  .cell{display:inline-block;min-width:36px;padding:1px 7px;border-radius:6px;font-weight:600;cursor:pointer;}
+  .cell.bad{background:var(--red-bg);color:var(--red);} .cell.warn{background:var(--amber-bg);color:var(--amber);} .cell.ok{background:var(--green-bg);color:var(--green);} .cell.flat{color:var(--ink);}
+  .cell.sel{outline:2px solid var(--teal);}
+
+  /* chronological record */
+  .chrono{background:#fff;border:1px solid var(--line);border-radius:12px;padding:6px 14px;margin-top:16px;}
+  .ev{display:flex;gap:11px;padding:9px 0;border-bottom:1px solid var(--line2);cursor:pointer;}
+  .ev:last-child{border-bottom:none;} .ev:hover{background:#FBFCFE;}
+  .ev .ed{font-size:11px;color:var(--muted);font-weight:700;min-width:64px;}
+  .ev .ec{font-size:9px;font-weight:800;padding:1px 7px;border-radius:6px;background:var(--blue-bg);color:var(--blue);height:fit-content;}
+  .ev .et{font-size:12.5px;color:#3A4658;}
+  .ev .et b{color:var(--navy);}
+
+  /* ===== CONSULTA composer ===== */
+  .compose{background:#fff;border:1px solid var(--line);border-radius:12px;padding:0;overflow:hidden;}
+  .cstep{border-bottom:1px solid var(--line2);padding:13px 16px;}
+  .cstep:last-of-type{border-bottom:none;}
+  .cstep h4{font-size:10.5px;text-transform:uppercase;letter-spacing:.06em;color:var(--teal);font-weight:800;margin-bottom:9px;display:flex;align-items:center;gap:7px;}
+  .cstep h4 .n{width:18px;height:18px;border-radius:50%;background:var(--teal);color:#fff;font-size:10px;display:flex;align-items:center;justify-content:center;}
+  .fg{margin-bottom:9px;} .fg label{display:block;font-size:11px;color:var(--muted);font-weight:600;margin-bottom:3px;}
+  .fg input,.fg textarea,.fg select{width:100%;border:1px solid var(--line);border-radius:8px;padding:8px 10px;font-size:12.5px;font-family:inherit;color:var(--ink);background:#FCFDFE;}
+  .fg textarea{resize:vertical;min-height:54px;}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:9px;} .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;} .grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;}
+  .vital label{font-size:10px;} .vital input{padding:6px 8px;font-size:12px;}
+  .chips{display:flex;flex-wrap:wrap;gap:6px;}
+  .chk{font-size:11.5px;border:1px solid var(--line);border-radius:18px;padding:5px 11px;cursor:pointer;color:var(--muted);}
+  .chk.on{background:var(--teal);color:#fff;border-color:var(--teal);}
+  .genbtn{background:var(--gold);color:var(--navy2);border:none;border-radius:9px;padding:9px 14px;font-size:12px;font-weight:800;cursor:pointer;display:inline-flex;align-items:center;gap:7px;}
+  .prob-item{border-left:3px solid var(--teal);padding:7px 0 7px 11px;margin-bottom:9px;}
+  .prob-item .ph{display:flex;align-items:center;gap:8px;font-weight:700;color:var(--navy);font-size:13px;}
+  .prob-item .ph .n{width:18px;height:18px;border-radius:50%;background:var(--navy);color:#fff;font-size:10px;display:flex;align-items:center;justify-content:center;flex:none;}
+  .prob-item .ph .badge{margin-left:auto;font-size:9.5px;font-weight:700;padding:1px 8px;border-radius:20px;}
+  .prob-item ul{margin:5px 0 0 26px;} .prob-item li{font-size:12px;color:#3A4658;margin:2px 0;}
+  .prob-item .base{font-size:10.5px;color:var(--teal);font-weight:700;margin:5px 0 0 26px;display:flex;align-items:center;gap:5px;}
+  .csave{display:flex;align-items:center;gap:9px;padding:12px 16px;background:#F7F9FC;border-top:1px solid var(--line);}
+  .csave .save{background:var(--teal);color:#fff;border:none;border-radius:9px;padding:10px 18px;font-size:12.5px;font-weight:800;cursor:pointer;display:flex;align-items:center;gap:7px;}
+  .csave .ghost{background:#fff;color:var(--navy);border:1px solid var(--line);border-radius:9px;padding:10px 14px;font-size:12px;font-weight:700;cursor:pointer;}
+
+  /* RIGHT */
+  .dttl{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.06em;color:var(--navy);margin:2px 2px 9px;display:flex;align-items:center;gap:7px;}
+  .reminder{background:#fff;border:1px solid var(--line);border-left:3px solid var(--amber);border-radius:9px;padding:9px 11px;margin-bottom:8px;}
+  .reminder .rt{font-size:12px;font-weight:700;color:var(--navy);} .reminder .ra{display:flex;gap:12px;margin-top:5px;}
+  .reminder .ra a{font-size:11px;font-weight:700;color:var(--teal);cursor:pointer;} .reminder .ra a.dismiss{color:var(--muted);}
+  .score{background:#fff;border:1px solid var(--line);border-radius:11px;padding:9px 11px;margin-bottom:8px;}
+  .score .sh{display:flex;align-items:center;justify-content:space-between;}
+  .score .nm{font-size:11.5px;font-weight:700;color:var(--ink);} .score .vl{font-size:16px;font-weight:800;}
+  .score .ds{font-size:10px;color:var(--muted);margin-top:1px;}
+  .vl.bad{color:var(--red);} .vl.warn{color:var(--amber);} .vl.ok{color:var(--green);}
+
+  /* scribe */
+  .scribe{position:fixed;left:0;right:0;bottom:0;background:linear-gradient(120deg,var(--navy2),var(--navy));color:#fff;padding:9px 18px;display:flex;align-items:center;gap:13px;box-shadow:0 -4px 18px rgba(20,34,63,.18);z-index:20;}
+  .scribe .rec{width:30px;height:30px;border-radius:50%;background:var(--red);display:flex;align-items:center;justify-content:center;animation:pulse 2s infinite;flex:none;}
+  @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(192,71,59,.5);}70%{box-shadow:0 0 0 9px rgba(192,71,59,0);}100%{box-shadow:0 0 0 0 rgba(192,71,59,0);}}
+  .scribe .txt b{font-size:12.5px;} .scribe .txt div{font-size:11px;color:#C7D2E4;}
+  .scribe .out{margin-left:auto;display:flex;gap:8px;}
+  .btn{border:none;border-radius:9px;padding:8px 14px;font-size:11.5px;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:7px;}
+  .btn.tech{background:#fff;color:var(--navy);} .btn.pat{background:var(--gold);color:var(--navy2);}
+</style>
+</head>
+<body>
+<div class="concept-bar">Conceito v3 funcional — Prontuário CKM (arquitetura Elation) · clique em RESUMO / CONSULTA e nos botões · paciente fictício</div>
+
+<!-- APP BAR -->
+<div class="appbar">
+  <div class="brand"><span class="dot"></span>APEX <span style="font-weight:400;opacity:.7;">Pro</span></div>
+  <nav class="nav">
+    <a class="active"><i data-lucide="clipboard-list" class="ic-s"></i> Prontuário</a>
+    <a><i data-lucide="users" class="ic-s"></i> Pacientes</a>
+    <a><i data-lucide="calendar" class="ic-s"></i> Agenda</a>
+  </nav>
+  <div class="right"><i data-lucide="search" class="ic-s"></i><i data-lucide="bell" class="ic-s"></i>
+    <div class="me"><span>Dr. Bruno Biluca</span><div class="avatar">BB</div></div>
+  </div>
+</div>
+
+<!-- TOOLBAR — ações / vias impressas (responde Q2) -->
+<div class="toolbar">
+  <button class="tb-start" onclick="setMode('consulta')"><i data-lucide="stethoscope" class="ic-s"></i> Iniciar atendimento</button>
+  <div class="tb-sep"></div>
+  <div class="tb"><i data-lucide="pill" class="ic-s"></i><span>Receituário</span></div>
+  <div class="tb"><i data-lucide="flask-conical" class="ic-s"></i><span>Pedido exames</span></div>
+  <div class="tb"><i data-lucide="share-2" class="ic-s"></i><span>Encaminhar</span></div>
+  <div class="tb"><i data-lucide="heart-pulse" class="ic-s"></i><span>Recomendações</span></div>
+  <div class="tb"><i data-lucide="leaf" class="ic-s"></i><span>Suplementos</span></div>
+  <div class="tb"><i data-lucide="file-check-2" class="ic-s"></i><span>Atestado</span></div>
+  <div class="tb"><i data-lucide="smartphone" class="ic-s"></i><span>Resumo paciente</span></div>
+  <div class="tb"><i data-lucide="printer" class="ic-s"></i><span>Imprimir vias</span></div>
+</div>
+
+<div class="shell">
+
+  <!-- LEFT RAIL -->
+  <aside class="rail">
+    <div class="pcard">
+      <div class="pc-top">
+        <div class="p-avatar">JA</div>
+        <div><div class="p-name">João Andrade</div><div class="p-sub">Masculino · 64 anos · DN 12/03/1962</div></div>
+      </div>
+      <div class="p-rows">
+        <div class="p-row"><i data-lucide="shield-check" class="ic-xs"></i> Convênio: <b>Particular</b></div>
+        <div class="p-row"><i data-lucide="stethoscope" class="ic-xs"></i> <b>Dr. Bruno Biluca</b></div>
+        <div class="p-row"><i data-lucide="clock" class="ic-xs"></i> Última visita: <b>10/02/2026</b></div>
+        <div class="p-row"><i data-lucide="calendar-clock" class="ic-xs"></i> Próx. labs: <b>em 3 meses (G3b)</b></div>
+      </div>
+      <div class="p-pills">
+        <span class="p-pill stage"><i data-lucide="layers" class="ic-xs"></i> CKM Estágio 3</span>
+        <span class="p-pill risk"><i data-lucide="alert-triangle" class="ic-xs"></i> Risco CV alto</span>
+        <span class="p-pill alergia"><i data-lucide="ban" class="ic-xs"></i> 1 alergia</span>
+      </div>
+    </div>
+
+    <div class="acc"><div class="acc-h" onclick="this.parentElement.classList.toggle('closed')"><i data-lucide="chevron-down" class="ic-xs chev"></i><span class="ttl">Alergias</span><span class="cnt">1</span></div>
+      <div class="acc-b"><div class="alergia-r">⚠ AINEs — broncoespasmo</div></div></div>
+
+    <div class="acc"><div class="acc-h" onclick="this.parentElement.classList.toggle('closed')"><i data-lucide="chevron-down" class="ic-xs chev"></i><span class="ttl">Lista de Problemas</span><span class="cnt">4</span><span class="act">Ações <i data-lucide="chevron-down" class="ic-xs"></i></span></div>
+      <div class="acc-b">
+        <div class="litem"><span class="dotc" style="background:var(--red)"></span><div><div class="nm">Doença Renal Crônica</div><div class="meta">Nefrop. diabética · 2022</div></div><span class="tag t-bad">G3b A2</span></div>
+        <div class="litem"><span class="dotc" style="background:var(--amber)"></span><div><div class="nm">Diabetes tipo 2</div><div class="meta">Há 11 anos</div></div><span class="tag t-warn">A1c 7,8</span></div>
+        <div class="litem"><span class="dotc" style="background:var(--amber)"></span><div><div class="nm">Hipertensão</div><div class="meta">PA 138/84</div></div><span class="tag t-warn">acima</span></div>
+        <div class="litem"><span class="dotc" style="background:var(--green)"></span><div><div class="nm">Dislipidemia</div><div class="meta">LDL 92</div></div><span class="tag t-warn">otimizar</span></div>
+      </div></div>
+
+    <div class="acc"><div class="acc-h" onclick="this.parentElement.classList.toggle('closed')"><i data-lucide="chevron-down" class="ic-xs chev"></i><span class="ttl">Medicações em uso</span><span class="cnt">6</span><span class="act">Ações <i data-lucide="chevron-down" class="ic-xs"></i></span></div>
+      <div class="acc-b">
+        <div class="med-r"><span class="nm">Losartana</span><span class="dose">100 mg/dia</span><span class="pil">Pilar 1</span></div>
+        <div class="med-r"><span class="nm">Dapagliflozina</span><span class="dose">10 mg/dia</span><span class="pil">Pilar 2</span></div>
+        <div class="med-r"><span class="nm">Finerenona</span><span class="dose">10 mg/dia</span><span class="pil">Pilar 3</span></div>
+        <div class="med-r"><span class="nm">Atorvastatina</span><span class="dose">40 mg/dia</span></div>
+        <div class="med-r"><span class="nm">Anlodipino</span><span class="dose">5 mg/dia</span></div>
+        <div class="med-r"><span class="nm">AAS</span><span class="dose">100 mg/dia</span></div>
+      </div></div>
+
+    <div class="acc closed"><div class="acc-h" onclick="this.parentElement.classList.toggle('closed')"><i data-lucide="chevron-down" class="ic-xs chev"></i><span class="ttl">História (PMH/PSH/FH)</span><span class="act">Ações <i data-lucide="chevron-down" class="ic-xs"></i></span></div>
+      <div class="acc-b">
+        <div class="litem"><div><div class="nm">Familiar</div><div class="meta">Pai DRC dialítico · mãe HAS</div></div></div>
+        <div class="litem"><div><div class="nm">Hábitos</div><div class="meta">Ex-tabagista (2018) · sedentário</div></div></div>
+      </div></div>
+  </aside>
+
+  <!-- CENTER -->
+  <main class="center">
+    <div class="modetabs">
+      <div class="modetab on" id="mt-resumo" onclick="setMode('resumo')"><i data-lucide="layout-dashboard" class="ic-s"></i> Resumo (ver paciente)</div>
+      <div class="modetab" id="mt-consulta" onclick="setMode('consulta')"><i data-lucide="pencil-line" class="ic-s"></i> Consulta (atender)</div>
+    </div>
+
+    <!-- ===== PANEL RESUMO ===== -->
+    <div class="panel on" id="panel-resumo">
+      <div class="blockttl"><i data-lucide="table-2" class="ic-s"></i> Evolução laboratorial <span class="hint">clique num valor para ver o exame →</span></div>
+      <div class="flow">
+        <table class="fs">
+          <thead><tr><th class="lab">Exame</th><th>08/24</th><th>11/24</th><th>05/25</th><th>02/26</th><th class="now">Hoje</th></tr></thead>
+          <tbody>
+            <tr><td class="lab">Creatinina <small>mg/dL</small></td><td><span class="cell warn">1,4</span></td><td><span class="cell warn">1,5</span></td><td><span class="cell warn">1,6</span></td><td><span class="cell bad">1,8</span></td><td class="now"><span class="cell bad sel" onclick="selCell(this)">1,9</span></td></tr>
+            <tr><td class="lab">TFGe <small>mL/min</small></td><td><span class="cell warn">52</span></td><td><span class="cell warn">49</span></td><td><span class="cell warn">46</span></td><td><span class="cell bad">42</span></td><td class="now"><span class="cell bad">38</span></td></tr>
+            <tr><td class="lab">RAC <small>mg/g</small></td><td><span class="cell warn">90</span></td><td><span class="cell warn">120</span></td><td><span class="cell warn">150</span></td><td><span class="cell warn">190</span></td><td class="now"><span class="cell warn">180</span></td></tr>
+            <tr><td class="lab">Potássio <small>mEq/L</small></td><td><span class="cell ok">4,4</span></td><td><span class="cell ok">4,6</span></td><td><span class="cell ok">4,7</span></td><td><span class="cell warn">5,1</span></td><td class="now"><span class="cell ok">4,9</span></td></tr>
+            <tr><td class="lab">HbA1c <small>%</small></td><td><span class="cell bad">8,2</span></td><td><span class="cell bad">8,0</span></td><td><span class="cell warn">7,9</span></td><td><span class="cell warn">7,8</span></td><td class="now"><span class="cell warn">7,8</span></td></tr>
+            <tr><td class="lab">LDL <small>mg/dL</small></td><td><span class="cell warn">110</span></td><td><span class="cell ok">100</span></td><td><span class="cell ok">95</span></td><td><span class="cell ok">90</span></td><td class="now"><span class="cell ok">92</span></td></tr>
+            <tr><td class="lab">Hemoglobina <small>g/dL</small></td><td><span class="cell ok">13,2</span></td><td><span class="cell ok">12,9</span></td><td><span class="cell warn">12,4</span></td><td><span class="cell warn">11,8</span></td><td class="now"><span class="cell bad">11,4</span></td></tr>
+            <tr><td class="lab">PTH <small>pg/mL</small></td><td><span class="cell ok">48</span></td><td><span class="cell ok">55</span></td><td><span class="cell warn">72</span></td><td><span class="cell warn">96</span></td><td class="now"><span class="cell bad">112</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="blockttl" style="margin-top:16px;"><i data-lucide="history" class="ic-s"></i> Registro cronológico</div>
+      <div class="chrono">
+        <div class="ev"><span class="ed">10/02/26</span><span class="ec">RETORNO</span><span class="et"><b>Consulta #6</b> — iniciada finerenona 10 mg. TFG 42.</span></div>
+        <div class="ev"><span class="ed">05/11/25</span><span class="ec">RETORNO</span><span class="et"><b>Consulta #5</b> — dapagliflozina mantida. TFG 46.</span></div>
+        <div class="ev"><span class="ed">20/08/25</span><span class="ec">LAB</span><span class="et">Exames — RAC 200, K 5,0, Hb 12,0.</span></div>
+        <div class="ev"><span class="ed">12/03/25</span><span class="ec">IMAGEM</span><span class="et">USG renal — rins de tamanho reduzido, sem obstrução.</span></div>
+      </div>
+    </div>
+
+    <!-- ===== PANEL CONSULTA (composer — responde Q1 e Q3) ===== -->
+    <div class="panel" id="panel-consulta">
+      <div class="compose">
+        <div class="cstep">
+          <h4><span class="n">1</span> Queixa principal &amp; Subjetivo</h4>
+          <div class="fg"><label>Motivo da consulta (CC)</label><input value="Retorno — acompanhamento de DRC"></div>
+          <div class="fg"><label>História da doença atual (anamnese)</label><textarea>Assintomático. Boa adesão. Nega edema/dispneia. Cansaço leve ao esforço.</textarea></div>
+        </div>
+
+        <div class="cstep">
+          <h4><span class="n">2</span> Objetivo — sinais vitais &amp; antropometria</h4>
+          <div class="grid4 vital">
+            <div class="fg"><label>PA</label><input value="138/84"></div>
+            <div class="fg"><label>FC</label><input value="72"></div>
+            <div class="fg"><label>Peso (kg)</label><input value="88"></div>
+            <div class="fg"><label>Altura (cm)</label><input value="173"></div>
+          </div>
+        </div>
+
+        <div class="cstep">
+          <h4><span class="n">3</span> Exames laboratoriais (input)</h4>
+          <div class="grid4 vital">
+            <div class="fg"><label>Creatinina</label><input value="1,9"></div>
+            <div class="fg"><label>RAC</label><input value="180"></div>
+            <div class="fg"><label>HbA1c</label><input value="7,8"></div>
+            <div class="fg"><label>LDL</label><input value="92"></div>
+            <div class="fg"><label>Potássio</label><input value="4,9"></div>
+            <div class="fg"><label>Hemoglobina</label><input value="11,4"></div>
+            <div class="fg"><label>PTH</label><input value="112"></div>
+            <div class="fg"><label>Fósforo</label><input value="4,7"></div>
+          </div>
+        </div>
+
+        <div class="cstep">
+          <h4><span class="n">4</span> Avaliação &amp; Plano <span style="margin-left:auto"></span></h4>
+          <button class="genbtn" onclick="document.getElementById('planoGerado').style.display='block';this.style.display='none';"><i data-lucide="sparkles" class="ic-s"></i> Gerar protocolo da base CKM</button>
+          <div id="planoGerado" style="display:none;margin-top:12px;">
+            <div class="prob-item"><div class="ph"><span class="n">1</span> DRC G3b A2 <span class="badge t-bad">progressão</span></div>
+              <ul><li>4 pilares ativos · <b>iniciar 4º pilar GLP1-RA</b> (FLOW)</li><li>Anemia DRC (Hb 11,4): investigar ferro · DMO-DRC (PTH 112): quelante + vit. D</li></ul>
+              <div class="base"><i data-lucide="book-open" class="ic-xs"></i> Base CKM · módulo 4 + cronograma 12m (cadência G3b: labs 3/3m)</div></div>
+            <div class="prob-item"><div class="ph"><span class="n">2</span> HAS — acima da meta <span class="badge t-warn">ajustar</span></div>
+              <ul><li>Titular anlodipino → 10 mg/dia</li></ul><div class="base"><i data-lucide="book-open" class="ic-xs"></i> Base CKM · módulo 1</div></div>
+            <div class="prob-item"><div class="ph"><span class="n">3</span> DM2 + <span class="n">4</span> Dislipidemia <span class="badge t-warn">otimizar</span></div>
+              <ul><li>GLP1-RA cobre glicemia · associar ezetimiba (alvo LDL &lt;55)</li></ul><div class="base"><i data-lucide="book-open" class="ic-xs"></i> Base CKM · módulos 2 e 5</div></div>
+          </div>
+        </div>
+
+        <div class="csave">
+          <button class="save"><i data-lucide="check" class="ic-s"></i> Salvar nota</button>
+          <button class="ghost"><i data-lucide="printer" class="ic-xs"></i> Salvar + gerar vias</button>
+          <button class="ghost"><i data-lucide="smartphone" class="ic-xs"></i> Enviar resumo ao app</button>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- RIGHT -->
+  <aside class="detail">
+    <div class="dttl"><i data-lucide="bell-ring" class="ic-s"></i> Lembretes clínicos <span style="background:var(--amber);color:#fff;border-radius:20px;padding:0 7px;font-size:10px;">3</span></div>
+    <div class="reminder"><div class="rt">PA acima da meta (&lt;130/80)</div><div class="ra"><a>Resolver</a><a class="dismiss">Dispensar</a></div></div>
+    <div class="reminder"><div class="rt">A1c 7,8% — intensificar (4º pilar)</div><div class="ra"><a>Resolver</a><a class="dismiss">Dispensar</a></div></div>
+    <div class="reminder"><div class="rt">Anemia da DRC — investigar ferro</div><div class="ra"><a>Resolver</a><a class="dismiss">Dispensar</a></div></div>
+
+    <div class="dttl" style="margin-top:16px;"><i data-lucide="gauge" class="ic-s"></i> Escores &amp; risco</div>
+    <div class="score"><div class="sh"><span class="nm">Estágio CKM</span><span class="vl bad">3</span></div><div class="ds">Fatores metabólicos + DRC moderada</div></div>
+    <div class="score"><div class="sh"><span class="nm">Risco CV 10a (PREVENT)</span><span class="vl bad">24%</span></div><div class="ds">Alto · ASCVD 22% (secundária)</div></div>
+    <div class="score"><div class="sh"><span class="nm">Diálise 5a (KFRE)</span><span class="vl warn">8,4%</span></div><div class="ds">Moderado — acompanhar de perto</div></div>
+    <div class="score"><div class="sh"><span class="nm">Fibrose hepática (FIB-4)</span><span class="vl ok">1,1</span></div><div class="ds">Baixo risco</div></div>
+
+    <div class="dttl" style="margin-top:16px;"><i data-lucide="flask-conical" class="ic-s"></i> Detalhe do exame</div>
+    <div class="score">
+      <div class="sh" style="margin-bottom:6px;"><span class="nm">Função renal · hoje</span></div>
+      <div style="font-size:12px;color:var(--muted);display:flex;justify-content:space-between;padding:2px 0;"><span>Creatinina</span><b style="color:var(--red)">1,9</b></div>
+      <div style="font-size:12px;color:var(--muted);display:flex;justify-content:space-between;padding:2px 0;"><span>TFGe</span><b style="color:var(--red)">38</b></div>
+      <div style="font-size:12px;color:var(--muted);display:flex;justify-content:space-between;padding:2px 0;"><span>Bicarbonato</span><b style="color:var(--amber)">21</b></div>
+    </div>
+  </aside>
+</div>
+
+<!-- SCRIBE -->
+<div class="scribe">
+  <div class="rec"><i data-lucide="mic" class="ic-s"></i></div>
+  <div class="txt"><b>Assessor de consulta — ouvindo</b><div>A consulta vira nota estruturada · você revisa e aprova</div></div>
+  <div class="out">
+    <button class="btn tech"><i data-lucide="file-text" class="ic-s"></i> Nota técnica</button>
+    <button class="btn pat"><i data-lucide="smartphone" class="ic-s"></i> Resumo do paciente</button>
+  </div>
+</div>
+
+<script>
+  lucide.createIcons();
+  function selCell(el){ document.querySelectorAll('.cell.sel').forEach(c=>c.classList.remove('sel')); el.classList.add('sel'); }
+  function setMode(m){
+    document.getElementById('panel-resumo').classList.toggle('on', m==='resumo');
+    document.getElementById('panel-consulta').classList.toggle('on', m==='consulta');
+    document.getElementById('mt-resumo').classList.toggle('on', m==='resumo');
+    document.getElementById('mt-consulta').classList.toggle('on', m==='consulta');
+    document.querySelector('.center').scrollTop = 0;
+  }
+</script>
+</body>
+</html>

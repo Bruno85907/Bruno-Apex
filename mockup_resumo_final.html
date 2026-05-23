@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>APEX Pro · Tela inicial definitiva (B+C · todo o Painel Clínico no centro)</title>
+<script src="https://cdn.jsdelivr.net/npm/lucide@latest/dist/umd/lucide.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style>
+  :root{
+    --navy:#1E2D50; --navy2:#16223F; --teal:#028090; --teal-l:#04B5C8; --gold:#C4A35A;
+    --bg:#EEF1F6; --rail:#FAF9F5; --card:#fff; --ink:#1B2436; --muted:#5C6B82; --line:#E4E8F0; --line2:#EDF0F5;
+    --green:#2E8B6F; --green-bg:#E4F3ED; --amber:#B8860B; --amber-bg:#FBF3DD; --red:#C0473B; --red-bg:#FBEAE8;
+    --blue:#2F6FB0; --blue-bg:#E8F0F9; --orange:#D2691E; --orange-bg:#FBEEDF; --darkred:#8B2E26;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{background:var(--bg);color:var(--ink);font-family:-apple-system,"Segoe UI",Inter,Arial,sans-serif;font-size:13px;line-height:1.45;}
+  .ic-s{width:15px;height:15px;flex:none;} .ic-xs{width:13px;height:13px;flex:none;}
+  .concept-bar{background:var(--gold);color:var(--navy2);text-align:center;font-size:10.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;padding:5px;}
+
+  .appbar{background:linear-gradient(120deg,var(--navy),var(--navy2));color:#fff;display:flex;align-items:center;gap:18px;padding:8px 18px;}
+  .brand{font-weight:800;font-size:15px;display:flex;align-items:center;gap:8px;} .brand .dot{width:9px;height:9px;border-radius:50%;background:var(--gold);}
+  .nav{display:flex;gap:3px;margin-left:6px;} .nav a{color:#C7D2E4;font-size:12px;padding:6px 11px;border-radius:8px;display:flex;align-items:center;gap:6px;cursor:pointer;} .nav a.active{background:rgba(255,255,255,.12);color:#fff;font-weight:600;}
+  .appbar .right{margin-left:auto;display:flex;align-items:center;gap:12px;color:#C7D2E4;font-size:12px;} .avatar{width:28px;height:28px;border-radius:50%;background:var(--teal);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:11px;color:#fff;}
+
+  .toolbar{background:#fff;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:7px;padding:8px 16px;overflow-x:auto;}
+  .tb-start{background:var(--teal);color:#fff;border:none;border-radius:9px;padding:8px 14px;font-size:12px;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:7px;white-space:nowrap;flex:none;}
+  .tb-sep{width:1px;height:28px;background:var(--line);margin:0 3px;flex:none;}
+  .tb{display:flex;flex-direction:column;align-items:center;gap:3px;background:#F7F9FC;border:1px solid var(--line);border-radius:9px;padding:6px 10px;cursor:pointer;min-width:70px;flex:none;}
+  .tb i{color:var(--navy);} .tb span{font-size:9.5px;font-weight:600;color:var(--muted);white-space:nowrap;}
+
+  .shell{display:grid;grid-template-columns:286px 1fr 308px;gap:0;height:calc(100vh - 64px - 54px);}
+  .rail{background:var(--rail);border-right:1px solid var(--line);overflow-y:auto;}
+  .center{overflow-y:auto;padding:14px 16px 60px;}
+  .detail{background:#F6F8FB;border-left:1px solid var(--line);overflow-y:auto;padding:14px 12px 60px;}
+  ::-webkit-scrollbar{width:9px;} ::-webkit-scrollbar-thumb{background:#CFD7E3;border-radius:6px;}
+
+  /* left rail */
+  .pcard{padding:13px 14px;border-bottom:1px solid var(--line);}
+  .pc-top{display:flex;gap:10px;align-items:center;}
+  .p-avatar{width:44px;height:44px;border-radius:12px;background:linear-gradient(135deg,var(--teal),var(--teal-l));color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:15px;flex:none;}
+  .p-name{font-size:15px;font-weight:800;color:var(--navy);} .p-sub{color:var(--muted);font-size:11px;margin-top:1px;}
+  .p-pills{display:flex;gap:5px;flex-wrap:wrap;margin-top:10px;}
+  .p-pill{font-size:10px;font-weight:700;padding:4px 9px;border-radius:20px;display:inline-flex;align-items:center;gap:4px;}
+  .p-pill.stage{background:var(--amber-bg);color:#9C7B2E;} .p-pill.risk{background:var(--red-bg);color:var(--red);} .p-pill.alergia{background:var(--red-bg);color:var(--red);}
+  .acc{border-bottom:1px solid var(--line);}
+  .acc-h{display:flex;align-items:center;gap:8px;padding:9px 14px;cursor:pointer;}
+  .acc-h .ttl{font-size:10.5px;font-weight:800;text-transform:uppercase;letter-spacing:.05em;color:var(--navy);}
+  .acc-h .cnt{background:var(--line);color:var(--muted);font-size:10px;font-weight:700;padding:1px 7px;border-radius:20px;}
+  .acc-h .chev{transition:transform .15s;color:var(--muted);} .acc.closed .chev{transform:rotate(-90deg);} .acc.closed .acc-b{display:none;}
+  .acc-b{padding:0 14px 11px;}
+  .litem{display:flex;align-items:flex-start;gap:8px;padding:5px 0;border-bottom:1px dashed var(--line2);} .litem:last-child{border-bottom:none;}
+  .litem .dotc{width:7px;height:7px;border-radius:50%;margin-top:5px;flex:none;} .litem .nm{font-weight:600;color:var(--ink);font-size:12px;} .litem .meta{color:var(--muted);font-size:10.5px;}
+  .litem .tag{margin-left:auto;font-size:9px;font-weight:700;padding:1px 6px;border-radius:6px;}
+  .t-bad{background:var(--red-bg);color:var(--red);} .t-warn{background:var(--amber-bg);color:var(--amber);} .t-ok{background:var(--green-bg);color:var(--green);}
+  .med-r{display:flex;align-items:baseline;gap:6px;padding:4px 0;font-size:12px;border-bottom:1px dashed var(--line2);} .med-r:last-child{border-bottom:none;}
+  .med-r .nm{font-weight:700;} .med-r .dose{color:var(--muted);font-size:11px;} .med-r .pil{margin-left:auto;font-size:8.5px;font-weight:800;color:#fff;background:var(--teal);border-radius:5px;padding:1px 5px;}
+
+  /* section headers + cards */
+  .sect{display:flex;align-items:center;gap:8px;font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.06em;color:var(--navy);margin:18px 2px 9px;padding-bottom:5px;border-bottom:2px solid var(--line);}
+  .sect:first-child{margin-top:2px;}
+  .sect .hint{margin-left:auto;font-size:10px;font-weight:600;color:var(--muted);text-transform:none;letter-spacing:0;font-style:italic;}
+  .sect .ic{width:22px;height:22px;border-radius:7px;background:var(--navy);color:#fff;display:flex;align-items:center;justify-content:center;}
+  .card{background:#fff;border:1px solid var(--line);border-radius:12px;box-shadow:0 1px 2px rgba(20,34,63,.04);}
+
+  /* cockpit */
+  .cockpit{display:grid;grid-template-columns:300px 1fr;gap:12px;}
+  .radarwrap{padding:10px;display:flex;align-items:center;justify-content:center;}
+  .ckm-bar{display:flex;gap:5px;margin-top:8px;}
+  .ckm-st{flex:1;text-align:center;padding:7px 4px;border-radius:8px;background:#F1F4F8;font-size:9.5px;font-weight:700;color:var(--muted);line-height:1.25;}
+  .ckm-st b{font-size:11px;color:var(--ink);display:block;}
+  .ckm-st.on{background:var(--red);color:#fff;} .ckm-st.on b{color:#fff;}
+  .bigscores{display:grid;grid-template-columns:1fr 1fr;gap:9px;}
+  .bscore{border:1px solid var(--line);border-radius:11px;padding:10px 12px;background:#FBFCFE;}
+  .bscore .nm{font-size:11px;font-weight:700;color:var(--ink);} .bscore .vl{font-size:21px;font-weight:800;margin-top:2px;} .bscore .ds{font-size:10px;color:var(--muted);}
+  .vl.bad{color:var(--red);} .vl.warn{color:var(--amber);} .vl.ok{color:var(--green);}
+
+  /* classification cards */
+  .clsgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;}
+  .cls{border:1px solid var(--line);border-radius:11px;padding:10px 12px;background:#fff;position:relative;}
+  .cls.bad{border-left:4px solid var(--red);} .cls.warn{border-left:4px solid var(--amber);} .cls.ok{border-left:4px solid var(--green);}
+  .cls .lab{font-size:10px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);font-weight:700;}
+  .cls .val{font-size:18px;font-weight:800;margin-top:2px;line-height:1.05;} .cls .val small{font-size:10px;color:var(--muted);font-weight:600;}
+  .cls.bad .val{color:var(--red);} .cls.warn .val{color:var(--amber);} .cls.ok .val{color:var(--green);}
+  .cls .cl{font-size:10.5px;font-weight:700;margin-top:3px;} .cls .evo{position:absolute;top:9px;right:10px;font-size:10px;font-weight:800;}
+  .evo.up-bad{color:var(--red);} .evo.down-good{color:var(--green);} .evo.flat{color:var(--muted);}
+
+  /* calculator cards */
+  .calcgrid{display:grid;grid-template-columns:1fr 1fr;gap:11px;}
+  .calc{border:1px solid var(--line);border-radius:12px;padding:12px 14px;background:#fff;}
+  .calc .ch{display:flex;align-items:center;justify-content:space-between;}
+  .calc .cn{font-size:12.5px;font-weight:800;color:var(--navy);} .calc .cv{font-size:22px;font-weight:800;}
+  .calc.bad .cv{color:var(--red);} .calc.warn .cv{color:var(--amber);} .calc.ok .cv{color:var(--green);}
+  .calc .cd{font-size:11px;color:#3A4658;font-weight:600;margin-top:2px;} .calc .cm{font-size:10px;color:var(--muted);margin-top:5px;border-top:1px dashed var(--line2);padding-top:5px;}
+  .calc .prim{font-size:8.5px;font-weight:800;color:#fff;background:var(--teal);border-radius:5px;padding:1px 6px;margin-left:6px;vertical-align:middle;}
+  .calc .sec{font-size:8.5px;font-weight:800;color:var(--muted);background:var(--line);border-radius:5px;padding:1px 6px;margin-left:6px;vertical-align:middle;}
+
+  /* KDIGO */
+  .kdigo{width:100%;border-collapse:collapse;font-size:10.5px;}
+  .kdigo th,.kdigo td{border:1px solid #fff;padding:6px 5px;text-align:center;color:#fff;font-weight:700;}
+  .kdigo thead th{background:var(--navy);font-size:9.5px;}
+  .kdigo .sl{background:#F1F4F8;color:var(--ink);text-align:left;font-weight:700;font-size:9.5px;}
+  .kg{background:#4Fא;background:#5AA86F;} .kg{background:#5AA86F;} .ky{background:#E0B23C;} .ko{background:#D2691E;} .kr{background:#C0473B;} .kdr{background:#8B2E26;}
+  .kdigo td.hl{outline:3px solid var(--navy);outline-offset:-3px;box-shadow:0 0 0 2px #fff inset;}
+
+  /* metabolic syndrome */
+  .ms{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;}
+  .msi{border:1px solid var(--line);border-radius:10px;padding:9px 8px;text-align:center;}
+  .msi .ms-t{font-size:10px;font-weight:700;color:var(--ink);} .msi .ms-l{font-size:9px;color:var(--muted);} .msi .ms-v{font-size:13px;font-weight:800;margin-top:3px;}
+  .msi.met{background:var(--red-bg);border-color:transparent;} .msi.met .ms-v{color:var(--red);}
+  .msi.okk{background:var(--green-bg);border-color:transparent;} .msi.okk .ms-v{color:var(--green);}
+  .msres{text-align:center;margin-top:10px;font-size:13px;font-weight:800;}
+
+  /* goals */
+  .goals{width:100%;border-collapse:collapse;font-size:11.5px;}
+  .goals th{background:#F7F9FC;color:var(--muted);font-size:10px;font-weight:700;padding:6px 8px;text-align:center;border-bottom:1px solid var(--line);}
+  .goals th:first-child{text-align:left;}
+  .goals td{padding:7px 8px;text-align:center;border-bottom:1px solid var(--line2);}
+  .goals td:first-child{text-align:left;font-weight:700;color:var(--ink);}
+  .goals .now{font-weight:800;color:var(--navy);} .goals .tgt{color:var(--teal);font-weight:700;}
+
+  /* problem cards (C) */
+  .pcardx{border:1px solid var(--line);border-left:4px solid var(--teal);border-radius:12px;padding:11px 14px;margin-bottom:10px;background:#fff;}
+  .pcardx .t{display:flex;align-items:center;gap:8px;font-weight:700;color:var(--navy);font-size:13.5px;}
+  .pcardx .t .badge{margin-left:auto;font-size:10px;font-weight:700;padding:2px 9px;border-radius:20px;}
+  .pcardx .mets{display:flex;gap:18px;margin-top:8px;align-items:center;}
+  .pcardx .met .k{font-size:9.5px;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;font-weight:700;} .pcardx .met .v{font-size:15px;font-weight:800;color:var(--navy);}
+  .pcardx .spark{height:30px;width:90px;margin-left:auto;}
+  .pcardx .plan{font-size:11.5px;color:var(--teal);font-weight:700;margin-top:8px;display:flex;align-items:center;gap:6px;}
+
+  /* right rail */
+  .dttl{font-size:10.5px;font-weight:800;text-transform:uppercase;letter-spacing:.06em;color:var(--navy);margin:2px 2px 8px;display:flex;align-items:center;gap:7px;}
+  .reminder{background:#fff;border:1px solid var(--line);border-left:3px solid var(--amber);border-radius:9px;padding:8px 10px;margin-bottom:7px;}
+  .reminder .rt{font-size:11.5px;font-weight:700;color:var(--navy);} .reminder .ra{display:flex;gap:10px;margin-top:4px;} .reminder .ra a{font-size:10.5px;font-weight:700;color:var(--teal);cursor:pointer;} .reminder .ra a.d{color:var(--muted);}
+  table.fs{width:100%;border-collapse:collapse;font-size:11.5px;}
+  table.fs th,table.fs td{padding:5px 7px;text-align:right;border-bottom:1px solid var(--line2);white-space:nowrap;}
+  table.fs thead th{background:#F7F9FC;color:var(--muted);font-size:9.5px;font-weight:700;} table.fs thead th.lab,table.fs td.lab{text-align:left;} table.fs td.lab{font-weight:700;}
+  table.fs th.now,table.fs td.now{background:#EEF6F7;color:var(--navy);}
+  .cell{display:inline-block;min-width:30px;padding:1px 5px;border-radius:5px;font-weight:600;}
+  .cell.bad{background:var(--red-bg);color:var(--red);} .cell.warn{background:var(--amber-bg);color:var(--amber);} .cell.ok{background:var(--green-bg);color:var(--green);}
+  .ev{display:flex;gap:9px;padding:6px 0;border-bottom:1px solid var(--line2);} .ev:last-child{border-bottom:none;}
+  .ev .ed{font-size:10px;color:var(--muted);font-weight:700;min-width:52px;} .ev .ec{font-size:8px;font-weight:800;padding:1px 5px;border-radius:5px;background:var(--blue-bg);color:var(--blue);height:fit-content;} .ev .et{font-size:11px;color:#3A4658;} .ev .et b{color:var(--navy);}
+</style>
+</head>
+<body>
+<div class="concept-bar">Conceito definitivo — média B+C · todo o Painel Clínico no centro · paciente fictício</div>
+
+<div class="appbar">
+  <div class="brand"><span class="dot"></span>APEX <span style="font-weight:400;opacity:.7;">Pro</span></div>
+  <nav class="nav"><a class="active"><i data-lucide="clipboard-list" class="ic-s"></i> Prontuário</a><a><i data-lucide="users" class="ic-s"></i> Pacientes</a><a><i data-lucide="calendar" class="ic-s"></i> Agenda</a></nav>
+  <div class="right"><i data-lucide="search" class="ic-s"></i><i data-lucide="bell" class="ic-s"></i><span>Dr. Bruno Biluca</span><div class="avatar">BB</div></div>
+</div>
+
+<div class="toolbar">
+  <button class="tb-start"><i data-lucide="stethoscope" class="ic-s"></i> Iniciar atendimento</button>
+  <div class="tb-sep"></div>
+  <div class="tb"><i data-lucide="pill" class="ic-s"></i><span>Receituário</span></div>
+  <div class="tb"><i data-lucide="flask-conical" class="ic-s"></i><span>Pedido exames</span></div>
+  <div class="tb"><i data-lucide="share-2" class="ic-s"></i><span>Encaminhar</span></div>
+  <div class="tb"><i data-lucide="heart-pulse" class="ic-s"></i><span>Recomendações</span></div>
+  <div class="tb"><i data-lucide="leaf" class="ic-s"></i><span>Suplementos</span></div>
+  <div class="tb"><i data-lucide="smartphone" class="ic-s"></i><span>Resumo paciente</span></div>
+</div>
+
+<div class="shell">
+  <!-- LEFT RAIL -->
+  <aside class="rail">
+    <div class="pcard">
+      <div class="pc-top"><div class="p-avatar">JA</div><div><div class="p-name">João Andrade</div><div class="p-sub">Masculino · 64 anos · DN 12/03/1962</div></div></div>
+      <div class="p-pills"><span class="p-pill stage"><i data-lucide="layers" class="ic-xs"></i> CKM 3</span><span class="p-pill risk"><i data-lucide="alert-triangle" class="ic-xs"></i> Risco CV alto</span><span class="p-pill alergia"><i data-lucide="ban" class="ic-xs"></i> 1 alergia</span></div>
+    </div>
+    <div class="acc"><div class="acc-h" onclick="this.parentElement.classList.toggle('closed')"><i data-lucide="chevron-down" class="ic-xs chev"></i><span class="ttl">Lista de Problemas</span><span class="cnt">4</span></div>
+      <div class="acc-b">
+        <div class="litem"><span class="dotc" style="background:var(--red)"></span><div><div class="nm">Doença Renal Crônica</div><div class="meta">Nefrop. diabética</div></div><span class="tag t-bad">G3b A2</span></div>
+        <div class="litem"><span class="dotc" style="background:var(--amber)"></span><div><div class="nm">Diabetes tipo 2</div></div><span class="tag t-warn">A1c 7,8</span></div>
+        <div class="litem"><span class="dotc" style="background:var(--amber)"></span><div><div class="nm">Hipertensão</div></div><span class="tag t-warn">acima</span></div>
+        <div class="litem"><span class="dotc" style="background:var(--green)"></span><div><div class="nm">Dislipidemia</div></div><span class="tag t-warn">otimizar</span></div>
+      </div></div>
+    <div class="acc"><div class="acc-h" onclick="this.parentElement.classList.toggle('closed')"><i data-lucide="chevron-down" class="ic-xs chev"></i><span class="ttl">Medicações</span><span class="cnt">6</span></div>
+      <div class="acc-b">
+        <div class="med-r"><span class="nm">Losartana</span><span class="dose">100mg</span><span class="pil">P1</span></div>
+        <div class="med-r"><span class="nm">Dapagliflozina</span><span class="dose">10mg</span><span class="pil">P2</span></div>
+        <div class="med-r"><span class="nm">Finerenona</span><span class="dose">10mg</span><span class="pil">P3</span></div>
+        <div class="med-r"><span class="nm">Atorvastatina</span><span class="dose">40mg</span></div>
+        <div class="med-r"><span class="nm">Anlodipino</span><span class="dose">5mg</span></div>
+      </div></div>
+    <div class="acc closed"><div class="acc-h" onclick="this.parentElement.classList.toggle('closed')"><i data-lucide="chevron-down" class="ic-xs chev"></i><span class="ttl">Alergias / História</span></div>
+      <div class="acc-b"><div class="litem"><div><div class="nm">AINEs</div><div class="meta">broncoespasmo</div></div></div><div class="litem"><div><div class="nm">Pai DRC dialítico</div></div></div></div></div>
+  </aside>
+
+  <!-- CENTER — tudo do Painel Clínico -->
+  <main class="center">
+
+    <!-- 1. COCKPIT -->
+    <div class="sect"><span class="ic"><i data-lucide="gauge" class="ic-xs"></i></span> Visão geral</div>
+    <div class="cockpit">
+      <div class="card radarwrap"><canvas id="radar" width="280" height="250"></canvas></div>
+      <div>
+        <div class="bigscores">
+          <div class="bscore"><div class="nm">Estágio CKM</div><div class="vl bad">3</div><div class="ds">DRC moderada + metabólico</div></div>
+          <div class="bscore"><div class="nm">Risco CV 10a</div><div class="vl bad">24%</div><div class="ds">PREVENT (primária)</div></div>
+          <div class="bscore"><div class="nm">Diálise 5a (KFRE)</div><div class="vl warn">8,4%</div><div class="ds">Moderado</div></div>
+          <div class="bscore"><div class="nm">Fibrose (FIB-4)</div><div class="vl ok">1,1</div><div class="ds">Baixo risco</div></div>
+        </div>
+        <div class="ckm-bar">
+          <div class="ckm-st"><b>0</b>Sem fatores</div>
+          <div class="ckm-st"><b>1</b>Adiposidade</div>
+          <div class="ckm-st"><b>2</b>Metabólico+DRC</div>
+          <div class="ckm-st on"><b>3</b>DCV subclínica</div>
+          <div class="ckm-st"><b>4</b>DCV clínica</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2. PROBLEMAS ATIVOS (C) -->
+    <div class="sect"><span class="ic"><i data-lucide="list-checks" class="ic-xs"></i></span> Problemas ativos <span class="hint">métrica · tendência · próximo passo da base</span></div>
+    <div class="pcardx"><div class="t"><i data-lucide="droplet" class="ic-s" style="color:var(--teal)"></i> Doença Renal Crônica <span class="badge t-bad">G3b A2 · progressão</span></div>
+      <div class="mets"><div class="met"><div class="k">TFGe</div><div class="v">38</div></div><div class="met"><div class="k">RAC</div><div class="v">180</div></div><div class="met"><div class="k">K⁺</div><div class="v">4,9</div></div>
+        <svg class="spark" viewBox="0 0 90 30"><polyline fill="none" stroke="#C0473B" stroke-width="2" points="2,7 24,11 46,15 68,19 88,23"/></svg></div>
+      <div class="plan"><i data-lucide="sparkles" class="ic-xs"></i> Iniciar 4º pilar (GLP1-RA) · investigar anemia · módulo 4</div></div>
+    <div class="pcardx"><div class="t"><i data-lucide="syringe" class="ic-s" style="color:var(--teal)"></i> Diabetes tipo 2 <span class="badge t-warn">subótimo</span></div>
+      <div class="mets"><div class="met"><div class="k">HbA1c</div><div class="v">7,8%</div></div><div class="met"><div class="k">meta</div><div class="v">&lt;7%</div></div>
+        <svg class="spark" viewBox="0 0 90 30"><polyline fill="none" stroke="#B8860B" stroke-width="2" points="2,9 24,12 46,14 68,15 88,15"/></svg></div>
+      <div class="plan"><i data-lucide="sparkles" class="ic-xs"></i> GLP1-RA cobre meta + nefroproteção · módulo 2</div></div>
+    <div class="pcardx"><div class="t"><i data-lucide="heart-pulse" class="ic-s" style="color:var(--teal)"></i> Hipertensão <span class="badge t-warn">acima da meta</span></div>
+      <div class="mets"><div class="met"><div class="k">PA</div><div class="v">138/84</div></div><div class="met"><div class="k">meta</div><div class="v">&lt;130/80</div></div>
+        <svg class="spark" viewBox="0 0 90 30"><polyline fill="none" stroke="#2E8B6F" stroke-width="2" points="2,6 24,10 46,13 68,14 88,14"/></svg></div>
+      <div class="plan"><i data-lucide="sparkles" class="ic-xs"></i> Titular anlodipino → 10 mg · módulo 1</div></div>
+    <div class="pcardx"><div class="t"><i data-lucide="dna" class="ic-s" style="color:var(--teal)"></i> Dislipidemia <span class="badge t-warn">otimizar</span></div>
+      <div class="mets"><div class="met"><div class="k">LDL</div><div class="v">92</div></div><div class="met"><div class="k">alvo</div><div class="v">&lt;55</div></div>
+        <svg class="spark" viewBox="0 0 90 30"><polyline fill="none" stroke="#2E8B6F" stroke-width="2" points="2,8 24,12 46,16 68,18 88,17"/></svg></div>
+      <div class="plan"><i data-lucide="sparkles" class="ic-xs"></i> Associar ezetimiba (muito alto risco) · módulo 5</div></div>
+
+    <!-- 3. CLASSIFICAÇÕES CLÍNICAS -->
+    <div class="sect"><span class="ic"><i data-lucide="ruler" class="ic-xs"></i></span> Classificações clínicas</div>
+    <div class="clsgrid">
+      <div class="cls bad"><div class="lab">TFGe</div><div class="val">38 <small>mL/min</small></div><div class="cl" style="color:var(--red)">G3b — Mod-Grave</div><div class="evo up-bad">↓ 10%</div></div>
+      <div class="cls warn"><div class="lab">RAC</div><div class="val">180 <small>mg/g</small></div><div class="cl" style="color:var(--amber)">A2 — Moderada</div><div class="evo down-good">↓ 5%</div></div>
+      <div class="cls warn"><div class="lab">PA</div><div class="val">138/84</div><div class="cl" style="color:var(--amber)">HAS Estágio 1</div><div class="evo flat">↔</div></div>
+      <div class="cls warn"><div class="lab">IMC</div><div class="val">29,4 <small>kg/m²</small></div><div class="cl" style="color:var(--amber)">Sobrepeso</div><div class="evo down-good">↓ 2%</div></div>
+      <div class="cls warn"><div class="lab">HbA1c</div><div class="val">7,8 <small>%</small></div><div class="cl" style="color:var(--amber)">DM descompensado</div><div class="evo flat">↔</div></div>
+      <div class="cls ok"><div class="lab">LDL</div><div class="val">92 <small>mg/dL</small></div><div class="cl" style="color:var(--green)">Desejável</div><div class="evo down-good">↓ 16%</div></div>
+      <div class="cls ok"><div class="lab">FIB-4</div><div class="val">1,1</div><div class="cl" style="color:var(--green)">Baixo risco fibrose</div><div class="evo flat">↔</div></div>
+      <div class="cls warn"><div class="lab">Ácido Úrico</div><div class="val">7,2 <small>mg/dL</small></div><div class="cl" style="color:var(--amber)">Elevado</div><div class="evo up-bad">↑ 4%</div></div>
+    </div>
+
+    <!-- 4. CALCULADORAS DE RISCO -->
+    <div class="sect"><span class="ic"><i data-lucide="calculator" class="ic-xs"></i></span> Calculadoras de risco</div>
+    <div class="calcgrid">
+      <div class="calc bad"><div class="ch"><span class="cn">PREVENT 10a <span class="prim">primária</span></span><span class="cv">24%</span></div><div class="cd">Risco cardiovascular alto</div><div class="cm">AHA 2023 — integra renal e metabólico (substitui ASCVD como primária)</div></div>
+      <div class="calc bad"><div class="ch"><span class="cn">ASCVD 10a <span class="sec">secundária</span></span><span class="cv">22%</span></div><div class="cd">Risco alto</div><div class="cm">Pooled Cohort Equations (ACC/AHA) — infarto/AVC em 10 anos</div></div>
+      <div class="calc warn"><div class="ch"><span class="cn">KFRE 5a</span><span class="cv">8,4%</span></div><div class="cd">Risco moderado de diálise</div><div class="cm">Kidney Failure Risk Equation (idade, sexo, TFGe, RAC)</div></div>
+      <div class="calc ok"><div class="ch"><span class="cn">FIB-4</span><span class="cv">1,1</span></div><div class="cd">Baixo risco de fibrose</div><div class="cm">Idade, AST, ALT, plaquetas — rastreio de NASH/esteatose</div></div>
+    </div>
+
+    <!-- 5. KDIGO + SÍNDROME METABÓLICA -->
+    <div class="sect"><span class="ic"><i data-lucide="grid-3x3" class="ic-xs"></i></span> KDIGO CGA &amp; Síndrome Metabólica</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;align-items:start;">
+      <div class="card" style="padding:12px;">
+        <div style="font-size:11px;font-weight:800;color:var(--navy);margin-bottom:7px;">Prognóstico DRC (TFGe × RAC) · paciente em G3b/A2</div>
+        <table class="kdigo">
+          <thead><tr><th>TFGe</th><th>A1 &lt;30</th><th>A2 30-300</th><th>A3 &gt;300</th></tr></thead>
+          <tbody>
+            <tr><td class="sl">G1 ≥90</td><td class="kg">Baixo</td><td class="ky">Mod</td><td class="ko">Alto</td></tr>
+            <tr><td class="sl">G2 60-89</td><td class="kg">Baixo</td><td class="ky">Mod</td><td class="ko">Alto</td></tr>
+            <tr><td class="sl">G3a 45-59</td><td class="ky">Mod</td><td class="ko">Alto</td><td class="kr">M.alto</td></tr>
+            <tr><td class="sl">G3b 30-44</td><td class="ko">Alto</td><td class="kr hl">M.alto</td><td class="kdr">M.alto</td></tr>
+            <tr><td class="sl">G4 15-29</td><td class="kr">M.alto</td><td class="kdr">M.alto</td><td class="kdr">M.alto</td></tr>
+            <tr><td class="sl">G5 &lt;15</td><td class="kdr">M.alto</td><td class="kdr">M.alto</td><td class="kdr">M.alto</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="card" style="padding:12px;">
+        <div style="font-size:11px;font-weight:800;color:var(--navy);margin-bottom:7px;">Síndrome Metabólica (≥3 critérios)</div>
+        <div class="ms">
+          <div class="msi met"><div class="ms-t">Circ. Abd.</div><div class="ms-l">H&gt;90</div><div class="ms-v">102</div></div>
+          <div class="msi met"><div class="ms-t">TG</div><div class="ms-l">≥150</div><div class="ms-v">178</div></div>
+          <div class="msi okk"><div class="ms-t">HDL</div><div class="ms-l">&lt;40</div><div class="ms-v">44</div></div>
+          <div class="msi met"><div class="ms-t">PA</div><div class="ms-l">≥130/85</div><div class="ms-v">138/84</div></div>
+          <div class="msi met"><div class="ms-t">Glicemia</div><div class="ms-l">≥100</div><div class="ms-v">126</div></div>
+        </div>
+        <div class="msres" style="color:var(--red)">⚠ Síndrome Metabólica PRESENTE (4/5 critérios)</div>
+      </div>
+    </div>
+
+    <!-- 6. METAS PROGRESSIVAS -->
+    <div class="sect"><span class="ic"><i data-lucide="target" class="ic-xs"></i></span> Metas progressivas</div>
+    <div class="card" style="padding:6px 14px 12px;">
+      <table class="goals">
+        <thead><tr><th>Parâmetro</th><th>Atual</th><th>3 meses</th><th>6 meses</th><th>12 meses</th></tr></thead>
+        <tbody>
+          <tr><td>PA sistólica</td><td class="now">138</td><td class="tgt">135</td><td class="tgt">132</td><td class="tgt">&lt;130</td></tr>
+          <tr><td>HbA1c</td><td class="now">7,8%</td><td class="tgt">7,4</td><td class="tgt">7,1</td><td class="tgt">&lt;7,0</td></tr>
+          <tr><td>LDL</td><td class="now">92</td><td class="tgt">75</td><td class="tgt">62</td><td class="tgt">&lt;55</td></tr>
+          <tr><td>IMC</td><td class="now">29,4</td><td class="tgt">28,5</td><td class="tgt">27,5</td><td class="tgt">&lt;25</td></tr>
+          <tr><td>RAC</td><td class="now">180</td><td class="tgt">140</td><td class="tgt">100</td><td class="tgt">&lt;30</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </main>
+
+  <!-- RIGHT — lembretes + flowsheet + cronológico -->
+  <aside class="detail">
+    <div class="dttl"><i data-lucide="bell-ring" class="ic-s"></i> Lembretes clínicos</div>
+    <div class="reminder"><div class="rt">PA acima da meta (&lt;130/80)</div><div class="ra"><a>Resolver</a><a class="d">Dispensar</a></div></div>
+    <div class="reminder"><div class="rt">A1c 7,8% — intensificar (4º pilar)</div><div class="ra"><a>Resolver</a><a class="d">Dispensar</a></div></div>
+    <div class="reminder"><div class="rt">Anemia da DRC — investigar ferro</div><div class="ra"><a>Resolver</a><a class="d">Dispensar</a></div></div>
+
+    <div class="dttl" style="margin-top:15px;"><i data-lucide="table-2" class="ic-s"></i> Evolução laboratorial</div>
+    <div class="card" style="padding:2px 8px;"><table class="fs">
+      <thead><tr><th class="lab">Exame</th><th>05/25</th><th>02/26</th><th class="now">Hoje</th></tr></thead>
+      <tbody>
+        <tr><td class="lab">TFGe</td><td><span class="cell warn">46</span></td><td><span class="cell bad">42</span></td><td class="now"><span class="cell bad">38</span></td></tr>
+        <tr><td class="lab">RAC</td><td><span class="cell warn">150</span></td><td><span class="cell warn">190</span></td><td class="now"><span class="cell warn">180</span></td></tr>
+        <tr><td class="lab">HbA1c</td><td><span class="cell warn">7,9</span></td><td><span class="cell warn">7,8</span></td><td class="now"><span class="cell warn">7,8</span></td></tr>
+        <tr><td class="lab">Hb</td><td><span class="cell warn">12,4</span></td><td><span class="cell warn">11,8</span></td><td class="now"><span class="cell bad">11,4</span></td></tr>
+        <tr><td class="lab">PTH</td><td><span class="cell warn">72</span></td><td><span class="cell warn">96</span></td><td class="now"><span class="cell bad">112</span></td></tr>
+      </tbody></table></div>
+
+    <div class="dttl" style="margin-top:15px;"><i data-lucide="history" class="ic-s"></i> Registro cronológico</div>
+    <div class="card" style="padding:6px 12px;">
+      <div class="ev"><span class="ed">10/02/26</span><span class="ec">RET</span><span class="et"><b>#6</b> — finerenona iniciada</span></div>
+      <div class="ev"><span class="ed">05/11/25</span><span class="ec">RET</span><span class="et"><b>#5</b> — dapa mantida, TFG 46</span></div>
+      <div class="ev"><span class="ed">20/08/25</span><span class="ec">LAB</span><span class="et">RAC 200, K 5,0</span></div>
+      <div class="ev"><span class="ed">12/03/25</span><span class="ec">IMG</span><span class="et">USG renal</span></div>
+    </div>
+  </aside>
+</div>
+
+<script>
+  lucide.createIcons();
+  new Chart(document.getElementById('radar'), {type:'radar',
+    data:{labels:['Renal','Cardiovascular','Metabólico','Pressórico','Lipídico','Hepático'],
+      datasets:[
+        {label:'Atual', data:[38,50,55,62,80,92], backgroundColor:'rgba(192,71,59,.16)', borderColor:'#C0473B', borderWidth:2, pointRadius:2},
+        {label:'Meta', data:[80,80,80,80,90,92], backgroundColor:'rgba(2,128,144,.10)', borderColor:'#028090', borderWidth:2, borderDash:[4,3], pointRadius:0}
+      ]},
+    options:{responsive:false, plugins:{legend:{labels:{font:{size:10},boxWidth:10}}},
+      scales:{r:{min:0,max:100,ticks:{display:false,stepSize:25},pointLabels:{font:{size:10},color:'#5C6B82'},grid:{color:'#E4E8F0'},angleLines:{color:'#E4E8F0'}}}}});
+</script>
+</body>
+</html>

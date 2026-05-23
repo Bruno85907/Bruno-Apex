@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>APEX Pro · Tela inicial — 3 modelos de divisão</title>
+<script src="https://cdn.jsdelivr.net/npm/lucide@latest/dist/umd/lucide.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style>
+  :root{
+    --navy:#1E2D50; --navy2:#16223F; --teal:#028090; --teal-l:#04B5C8; --gold:#C4A35A;
+    --bg:#EEF1F6; --rail:#FAF9F5; --card:#fff; --ink:#1B2436; --muted:#5C6B82; --line:#E4E8F0; --line2:#EDF0F5;
+    --green:#2E8B6F; --green-bg:#E4F3ED; --amber:#B8860B; --amber-bg:#FBF3DD; --red:#C0473B; --red-bg:#FBEAE8;
+    --blue:#2F6FB0; --blue-bg:#E8F0F9;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{background:var(--bg);color:var(--ink);font-family:-apple-system,"Segoe UI",Inter,Arial,sans-serif;font-size:13px;line-height:1.45;}
+  .ic-s{width:15px;height:15px;flex:none;} .ic-xs{width:13px;height:13px;flex:none;}
+
+  /* model switcher */
+  .switcher{background:var(--navy2);color:#fff;display:flex;align-items:center;gap:10px;padding:9px 18px;}
+  .switcher .lbl{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);font-weight:700;}
+  .switcher .mbtn{background:rgba(255,255,255,.08);color:#C7D2E4;border:1px solid rgba(255,255,255,.12);border-radius:8px;padding:7px 14px;font-size:12px;font-weight:700;cursor:pointer;}
+  .switcher .mbtn.on{background:var(--gold);color:var(--navy2);border-color:var(--gold);}
+  .switcher .desc{margin-left:auto;font-size:11.5px;color:#9FB0C8;}
+
+  .appbar{background:linear-gradient(120deg,var(--navy),var(--navy2));color:#fff;display:flex;align-items:center;gap:18px;padding:8px 18px;}
+  .brand{font-weight:800;font-size:15px;display:flex;align-items:center;gap:8px;} .brand .dot{width:9px;height:9px;border-radius:50%;background:var(--gold);}
+  .nav{display:flex;gap:3px;margin-left:6px;} .nav a{color:#C7D2E4;font-size:12px;padding:6px 11px;border-radius:8px;display:flex;align-items:center;gap:6px;cursor:pointer;} .nav a.active{background:rgba(255,255,255,.12);color:#fff;font-weight:600;}
+  .appbar .right{margin-left:auto;display:flex;align-items:center;gap:12px;color:#C7D2E4;font-size:12px;} .avatar{width:28px;height:28px;border-radius:50%;background:var(--teal);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:11px;color:#fff;}
+
+  .toolbar{background:#fff;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:7px;padding:8px 16px;overflow-x:auto;}
+  .tb-start{background:var(--teal);color:#fff;border:none;border-radius:9px;padding:8px 14px;font-size:12px;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:7px;white-space:nowrap;flex:none;}
+  .tb-sep{width:1px;height:28px;background:var(--line);margin:0 3px;flex:none;}
+  .tb{display:flex;flex-direction:column;align-items:center;gap:3px;background:#F7F9FC;border:1px solid var(--line);border-radius:9px;padding:6px 10px;cursor:pointer;min-width:70px;flex:none;}
+  .tb i{color:var(--navy);} .tb span{font-size:9.5px;font-weight:600;color:var(--muted);white-space:nowrap;}
+
+  .shell{display:grid;grid-template-columns:288px 1fr 312px;gap:0;height:calc(100vh - 64px - 54px - 50px);}
+  .rail{background:var(--rail);border-right:1px solid var(--line);overflow-y:auto;}
+  .center{overflow-y:auto;padding:14px 16px 40px;}
+  .detail{background:#F6F8FB;border-left:1px solid var(--line);overflow-y:auto;padding:14px 13px 40px;}
+  ::-webkit-scrollbar{width:9px;} ::-webkit-scrollbar-thumb{background:#CFD7E3;border-radius:6px;}
+
+  /* left rail */
+  .pcard{padding:13px 14px;border-bottom:1px solid var(--line);}
+  .pc-top{display:flex;gap:10px;align-items:center;}
+  .p-avatar{width:44px;height:44px;border-radius:12px;background:linear-gradient(135deg,var(--teal),var(--teal-l));color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:15px;flex:none;}
+  .p-name{font-size:15px;font-weight:800;color:var(--navy);} .p-sub{color:var(--muted);font-size:11px;margin-top:1px;}
+  .p-pills{display:flex;gap:5px;flex-wrap:wrap;margin-top:10px;}
+  .p-pill{font-size:10px;font-weight:700;padding:4px 9px;border-radius:20px;display:inline-flex;align-items:center;gap:4px;}
+  .p-pill.stage{background:var(--amber-bg);color:#9C7B2E;} .p-pill.risk{background:var(--red-bg);color:var(--red);} .p-pill.alergia{background:var(--red-bg);color:var(--red);}
+  .acc{border-bottom:1px solid var(--line);}
+  .acc-h{display:flex;align-items:center;gap:8px;padding:9px 14px;cursor:pointer;}
+  .acc-h .ttl{font-size:10.5px;font-weight:800;text-transform:uppercase;letter-spacing:.05em;color:var(--navy);}
+  .acc-h .cnt{background:var(--line);color:var(--muted);font-size:10px;font-weight:700;padding:1px 7px;border-radius:20px;}
+  .acc-h .chev{transition:transform .15s;color:var(--muted);} .acc.closed .chev{transform:rotate(-90deg);} .acc.closed .acc-b{display:none;}
+  .acc-b{padding:0 14px 11px;}
+  .litem{display:flex;align-items:flex-start;gap:8px;padding:5px 0;border-bottom:1px dashed var(--line2);} .litem:last-child{border-bottom:none;}
+  .litem .dotc{width:7px;height:7px;border-radius:50%;margin-top:5px;flex:none;} .litem .nm{font-weight:600;color:var(--ink);font-size:12px;} .litem .meta{color:var(--muted);font-size:10.5px;}
+  .litem .tag{margin-left:auto;font-size:9px;font-weight:700;padding:1px 6px;border-radius:6px;}
+  .t-bad{background:var(--red-bg);color:var(--red);} .t-warn{background:var(--amber-bg);color:var(--amber);} .t-ok{background:var(--green-bg);color:var(--green);}
+  .med-r{display:flex;align-items:baseline;gap:6px;padding:4px 0;font-size:12px;border-bottom:1px dashed var(--line2);} .med-r:last-child{border-bottom:none;}
+  .med-r .nm{font-weight:700;} .med-r .dose{color:var(--muted);font-size:11px;} .med-r .pil{margin-left:auto;font-size:8.5px;font-weight:800;color:#fff;background:var(--teal);border-radius:5px;padding:1px 5px;}
+
+  .blockttl{display:flex;align-items:center;gap:8px;font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.06em;color:var(--navy);margin:4px 2px 8px;}
+  .blockttl .hint{margin-left:auto;font-size:10px;font-weight:600;color:var(--muted);text-transform:none;letter-spacing:0;font-style:italic;}
+
+  .card{background:#fff;border:1px solid var(--line);border-radius:12px;box-shadow:0 1px 2px rgba(20,34,63,.04);}
+  /* flowsheet */
+  table.fs{width:100%;border-collapse:collapse;font-size:12px;}
+  table.fs th,table.fs td{padding:6px 9px;text-align:right;border-bottom:1px solid var(--line2);white-space:nowrap;}
+  table.fs thead th{background:#F7F9FC;color:var(--muted);font-size:10px;font-weight:700;}
+  table.fs thead th.lab,table.fs td.lab{text-align:left;} table.fs td.lab{font-weight:700;color:var(--ink);} table.fs td.lab small{display:block;font-weight:500;color:var(--muted);font-size:9.5px;}
+  table.fs th.now{color:var(--navy);background:#EEF6F7;} table.fs td.now{background:#F4FAFB;font-weight:700;}
+  .cell{display:inline-block;min-width:34px;padding:1px 6px;border-radius:6px;font-weight:600;}
+  .cell.bad{background:var(--red-bg);color:var(--red);} .cell.warn{background:var(--amber-bg);color:var(--amber);} .cell.ok{background:var(--green-bg);color:var(--green);}
+
+  /* storyboard chips */
+  .story{display:grid;grid-template-columns:repeat(6,1fr);gap:9px;}
+  .chip{border:1px solid var(--line);border-radius:11px;padding:8px 10px;background:#FBFCFE;}
+  .chip .lab{font-size:9.5px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);font-weight:700;}
+  .chip .val{font-size:17px;font-weight:800;color:var(--navy);margin-top:2px;line-height:1.05;} .chip .val small{font-size:10px;font-weight:600;color:var(--muted);}
+  .chip .mt{font-size:9.5px;font-weight:700;margin-top:2px;color:var(--muted);}
+  .chip.warn{background:var(--amber-bg);border-color:transparent;} .chip.warn .val{color:var(--amber);}
+  .chip.bad{background:var(--red-bg);border-color:transparent;} .chip.bad .val{color:var(--red);}
+  .chip.ok{background:var(--green-bg);border-color:transparent;} .chip.ok .val{color:var(--green);}
+
+  /* scores */
+  .scores-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px;}
+  .score{background:#fff;border:1px solid var(--line);border-radius:11px;padding:9px 11px;}
+  .score .nm{font-size:11px;font-weight:700;color:var(--ink);} .score .vl{font-size:18px;font-weight:800;} .score .ds{font-size:10px;color:var(--muted);margin-top:1px;}
+  .vl.bad{color:var(--red);} .vl.warn{color:var(--amber);} .vl.ok{color:var(--green);}
+
+  .radarwrap{padding:12px;display:flex;align-items:center;justify-content:center;}
+
+  /* problem cards (model C) */
+  .pcardx{border-left:4px solid var(--teal);padding:11px 14px;margin-bottom:11px;}
+  .pcardx .t{display:flex;align-items:center;gap:8px;font-weight:700;color:var(--navy);font-size:14px;}
+  .pcardx .t .badge{margin-left:auto;font-size:10px;font-weight:700;padding:2px 9px;border-radius:20px;}
+  .pcardx .mets{display:flex;gap:18px;margin-top:8px;}
+  .pcardx .met .k{font-size:9.5px;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;font-weight:700;}
+  .pcardx .met .v{font-size:15px;font-weight:800;color:var(--navy);}
+  .pcardx .spark{height:30px;width:90px;margin-left:auto;}
+  .pcardx .plan{font-size:11.5px;color:var(--teal);font-weight:700;margin-top:8px;display:flex;align-items:center;gap:6px;}
+
+  .chrono{padding:4px 14px;} .ev{display:flex;gap:10px;padding:7px 0;border-bottom:1px solid var(--line2);} .ev:last-child{border-bottom:none;}
+  .ev .ed{font-size:10.5px;color:var(--muted);font-weight:700;min-width:58px;} .ev .ec{font-size:8.5px;font-weight:800;padding:1px 6px;border-radius:6px;background:var(--blue-bg);color:var(--blue);height:fit-content;} .ev .et{font-size:12px;color:#3A4658;} .ev .et b{color:var(--navy);}
+
+  .reminder{background:#fff;border:1px solid var(--line);border-left:3px solid var(--amber);border-radius:9px;padding:8px 10px;margin-bottom:7px;}
+  .reminder .rt{font-size:11.5px;font-weight:700;color:var(--navy);} .reminder .ra{display:flex;gap:10px;margin-top:4px;} .reminder .ra a{font-size:10.5px;font-weight:700;color:var(--teal);cursor:pointer;} .reminder .ra a.d{color:var(--muted);}
+
+  .trend{display:flex;align-items:center;justify-content:space-between;padding:5px 0;border-bottom:1px dashed var(--line2);font-size:11.5px;} .trend:last-child{border-bottom:none;} .spark{height:22px;width:78px;}
+
+  .modelview{display:none;} .modelview.on{display:block;}
+  .gap{height:16px;}
+</style>
+</head>
+<body>
+
+<!-- MODEL SWITCHER -->
+<div class="switcher">
+  <span class="lbl">Tela inicial · escolha o modelo</span>
+  <button class="mbtn on" id="b-a" onclick="setModel('a')">A · Tempo (Elation)</button>
+  <button class="mbtn" id="b-b" onclick="setModel('b')">B · Cockpit clínico</button>
+  <button class="mbtn" id="b-c" onclick="setModel('c')">C · Por problema</button>
+  <span class="desc" id="mdesc">Flowsheet longitudinal é o herói · radar + escores na lateral</span>
+</div>
+
+<!-- APP BAR -->
+<div class="appbar">
+  <div class="brand"><span class="dot"></span>APEX <span style="font-weight:400;opacity:.7;">Pro</span></div>
+  <nav class="nav"><a class="active"><i data-lucide="clipboard-list" class="ic-s"></i> Prontuário</a><a><i data-lucide="users" class="ic-s"></i> Pacientes</a><a><i data-lucide="calendar" class="ic-s"></i> Agenda</a></nav>
+  <div class="right"><i data-lucide="search" class="ic-s"></i><i data-lucide="bell" class="ic-s"></i><span>Dr. Bruno Biluca</span><div class="avatar">BB</div></div>
+</div>
+
+<!-- TOOLBAR -->
+<div class="toolbar">
+  <button class="tb-start"><i data-lucide="stethoscope" class="ic-s"></i> Iniciar atendimento</button>
+  <div class="tb-sep"></div>
+  <div class="tb"><i data-lucide="pill" class="ic-s"></i><span>Receituário</span></div>
+  <div class="tb"><i data-lucide="flask-conical" class="ic-s"></i><span>Pedido exames</span></div>
+  <div class="tb"><i data-lucide="share-2" class="ic-s"></i><span>Encaminhar</span></div>
+  <div class="tb"><i data-lucide="heart-pulse" class="ic-s"></i><span>Recomendações</span></div>
+  <div class="tb"><i data-lucide="leaf" class="ic-s"></i><span>Suplementos</span></div>
+  <div class="tb"><i data-lucide="smartphone" class="ic-s"></i><span>Resumo paciente</span></div>
+</div>
+
+<div class="shell">
+  <!-- LEFT RAIL (constante) -->
+  <aside class="rail">
+    <div class="pcard">
+      <div class="pc-top"><div class="p-avatar">JA</div><div><div class="p-name">João Andrade</div><div class="p-sub">Masculino · 64 anos</div></div></div>
+      <div class="p-pills"><span class="p-pill stage"><i data-lucide="layers" class="ic-xs"></i> CKM 3</span><span class="p-pill risk"><i data-lucide="alert-triangle" class="ic-xs"></i> Risco CV alto</span><span class="p-pill alergia"><i data-lucide="ban" class="ic-xs"></i> 1 alergia</span></div>
+    </div>
+    <div class="acc"><div class="acc-h" onclick="this.parentElement.classList.toggle('closed')"><i data-lucide="chevron-down" class="ic-xs chev"></i><span class="ttl">Lista de Problemas</span><span class="cnt">4</span></div>
+      <div class="acc-b">
+        <div class="litem"><span class="dotc" style="background:var(--red)"></span><div><div class="nm">Doença Renal Crônica</div><div class="meta">Nefrop. diabética</div></div><span class="tag t-bad">G3b A2</span></div>
+        <div class="litem"><span class="dotc" style="background:var(--amber)"></span><div><div class="nm">Diabetes tipo 2</div></div><span class="tag t-warn">A1c 7,8</span></div>
+        <div class="litem"><span class="dotc" style="background:var(--amber)"></span><div><div class="nm">Hipertensão</div></div><span class="tag t-warn">acima</span></div>
+        <div class="litem"><span class="dotc" style="background:var(--green)"></span><div><div class="nm">Dislipidemia</div></div><span class="tag t-warn">otimizar</span></div>
+      </div></div>
+    <div class="acc"><div class="acc-h" onclick="this.parentElement.classList.toggle('closed')"><i data-lucide="chevron-down" class="ic-xs chev"></i><span class="ttl">Medicações</span><span class="cnt">6</span></div>
+      <div class="acc-b">
+        <div class="med-r"><span class="nm">Losartana</span><span class="dose">100mg</span><span class="pil">P1</span></div>
+        <div class="med-r"><span class="nm">Dapagliflozina</span><span class="dose">10mg</span><span class="pil">P2</span></div>
+        <div class="med-r"><span class="nm">Finerenona</span><span class="dose">10mg</span><span class="pil">P3</span></div>
+        <div class="med-r"><span class="nm">Atorvastatina</span><span class="dose">40mg</span></div>
+        <div class="med-r"><span class="nm">Anlodipino</span><span class="dose">5mg</span></div>
+      </div></div>
+    <div class="acc closed"><div class="acc-h" onclick="this.parentElement.classList.toggle('closed')"><i data-lucide="chevron-down" class="ic-xs chev"></i><span class="ttl">Alergias / História</span></div>
+      <div class="acc-b"><div class="litem"><div><div class="nm">AINEs</div><div class="meta">broncoespasmo</div></div></div><div class="litem"><div><div class="nm">Pai DRC dialítico</div></div></div></div></div>
+  </aside>
+
+  <!-- CENTER (varia por modelo) -->
+  <main class="center">
+
+    <!-- ===== MODELO A — TEMPO ===== -->
+    <div class="modelview on" id="m-a">
+      <div class="blockttl"><i data-lucide="table-2" class="ic-s"></i> Evolução laboratorial <span class="hint">clique num valor para ver o exame →</span></div>
+      <div class="card"><table class="fs">
+        <thead><tr><th class="lab">Exame</th><th>08/24</th><th>11/24</th><th>05/25</th><th>02/26</th><th class="now">Hoje</th></tr></thead>
+        <tbody>
+          <tr><td class="lab">Creatinina <small>mg/dL</small></td><td><span class="cell warn">1,4</span></td><td><span class="cell warn">1,5</span></td><td><span class="cell warn">1,6</span></td><td><span class="cell bad">1,8</span></td><td class="now"><span class="cell bad">1,9</span></td></tr>
+          <tr><td class="lab">TFGe <small>mL/min</small></td><td><span class="cell warn">52</span></td><td><span class="cell warn">49</span></td><td><span class="cell warn">46</span></td><td><span class="cell bad">42</span></td><td class="now"><span class="cell bad">38</span></td></tr>
+          <tr><td class="lab">RAC <small>mg/g</small></td><td><span class="cell warn">90</span></td><td><span class="cell warn">120</span></td><td><span class="cell warn">150</span></td><td><span class="cell warn">190</span></td><td class="now"><span class="cell warn">180</span></td></tr>
+          <tr><td class="lab">Potássio <small>mEq/L</small></td><td><span class="cell ok">4,4</span></td><td><span class="cell ok">4,6</span></td><td><span class="cell ok">4,7</span></td><td><span class="cell warn">5,1</span></td><td class="now"><span class="cell ok">4,9</span></td></tr>
+          <tr><td class="lab">HbA1c <small>%</small></td><td><span class="cell bad">8,2</span></td><td><span class="cell bad">8,0</span></td><td><span class="cell warn">7,9</span></td><td><span class="cell warn">7,8</span></td><td class="now"><span class="cell warn">7,8</span></td></tr>
+          <tr><td class="lab">LDL <small>mg/dL</small></td><td><span class="cell warn">110</span></td><td><span class="cell ok">100</span></td><td><span class="cell ok">95</span></td><td><span class="cell ok">90</span></td><td class="now"><span class="cell ok">92</span></td></tr>
+          <tr><td class="lab">Hemoglobina <small>g/dL</small></td><td><span class="cell ok">13,2</span></td><td><span class="cell ok">12,9</span></td><td><span class="cell warn">12,4</span></td><td><span class="cell warn">11,8</span></td><td class="now"><span class="cell bad">11,4</span></td></tr>
+          <tr><td class="lab">PTH <small>pg/mL</small></td><td><span class="cell ok">48</span></td><td><span class="cell ok">55</span></td><td><span class="cell warn">72</span></td><td><span class="cell warn">96</span></td><td class="now"><span class="cell bad">112</span></td></tr>
+        </tbody></table></div>
+      <div class="gap"></div>
+      <div class="blockttl"><i data-lucide="history" class="ic-s"></i> Registro cronológico</div>
+      <div class="card chrono">
+        <div class="ev"><span class="ed">10/02/26</span><span class="ec">RETORNO</span><span class="et"><b>Consulta #6</b> — iniciada finerenona. TFG 42.</span></div>
+        <div class="ev"><span class="ed">05/11/25</span><span class="ec">RETORNO</span><span class="et"><b>Consulta #5</b> — dapagliflozina mantida. TFG 46.</span></div>
+        <div class="ev"><span class="ed">20/08/25</span><span class="ec">LAB</span><span class="et">Exames — RAC 200, K 5,0, Hb 12,0.</span></div>
+      </div>
+    </div>
+
+    <!-- ===== MODELO B — COCKPIT ===== -->
+    <div class="modelview" id="m-b">
+      <div class="blockttl"><i data-lucide="gauge" class="ic-s"></i> Visão geral do paciente</div>
+      <div style="display:grid;grid-template-columns:1fr 1.15fr;gap:12px;">
+        <div class="card radarwrap"><canvas id="radarB" width="260" height="240"></canvas></div>
+        <div class="scores-grid">
+          <div class="score"><div class="nm">Estágio CKM</div><div class="vl bad">3</div><div class="ds">DRC + metabólico</div></div>
+          <div class="score"><div class="nm">PREVENT 10a</div><div class="vl bad">24%</div><div class="ds">Risco CV alto</div></div>
+          <div class="score"><div class="nm">KFRE 5a</div><div class="vl warn">8,4%</div><div class="ds">Diálise — moderado</div></div>
+          <div class="score"><div class="nm">FIB-4</div><div class="vl ok">1,1</div><div class="ds">Fígado — baixo</div></div>
+        </div>
+      </div>
+      <div class="gap"></div>
+      <div class="blockttl"><i data-lucide="activity" class="ic-s"></i> Indicadores CKM hoje</div>
+      <div class="story">
+        <div class="chip bad"><div class="lab">TFGe</div><div class="val">38<small> mL</small></div><div class="mt">G3b</div></div>
+        <div class="chip warn"><div class="lab">RAC</div><div class="val">180</div><div class="mt">A2</div></div>
+        <div class="chip warn"><div class="lab">PA</div><div class="val">138/84</div><div class="mt">meta &lt;130</div></div>
+        <div class="chip warn"><div class="lab">HbA1c</div><div class="val">7,8<small>%</small></div><div class="mt">meta &lt;7</div></div>
+        <div class="chip ok"><div class="lab">LDL</div><div class="val">92</div><div class="mt">otimizar</div></div>
+        <div class="chip bad"><div class="lab">Hb</div><div class="val">11,4</div><div class="mt">anemia</div></div>
+      </div>
+      <div class="gap"></div>
+      <div class="blockttl"><i data-lucide="table-2" class="ic-s"></i> Evolução laboratorial <span class="hint">compacta</span></div>
+      <div class="card"><table class="fs">
+        <thead><tr><th class="lab">Exame</th><th>05/25</th><th>02/26</th><th class="now">Hoje</th></tr></thead>
+        <tbody>
+          <tr><td class="lab">TFGe</td><td><span class="cell warn">46</span></td><td><span class="cell bad">42</span></td><td class="now"><span class="cell bad">38</span></td></tr>
+          <tr><td class="lab">RAC</td><td><span class="cell warn">150</span></td><td><span class="cell warn">190</span></td><td class="now"><span class="cell warn">180</span></td></tr>
+          <tr><td class="lab">HbA1c</td><td><span class="cell warn">7,9</span></td><td><span class="cell warn">7,8</span></td><td class="now"><span class="cell warn">7,8</span></td></tr>
+          <tr><td class="lab">Hemoglobina</td><td><span class="cell warn">12,4</span></td><td><span class="cell warn">11,8</span></td><td class="now"><span class="cell bad">11,4</span></td></tr>
+        </tbody></table></div>
+    </div>
+
+    <!-- ===== MODELO C — POR PROBLEMA ===== -->
+    <div class="modelview" id="m-c">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;align-items:stretch;">
+        <div class="card radarwrap"><canvas id="radarC" width="240" height="220"></canvas></div>
+        <div class="scores-grid">
+          <div class="score"><div class="nm">Estágio CKM</div><div class="vl bad">3</div></div>
+          <div class="score"><div class="nm">PREVENT</div><div class="vl bad">24%</div></div>
+          <div class="score"><div class="nm">KFRE</div><div class="vl warn">8,4%</div></div>
+          <div class="score"><div class="nm">FIB-4</div><div class="vl ok">1,1</div></div>
+        </div>
+      </div>
+      <div class="gap"></div>
+      <div class="blockttl"><i data-lucide="list-checks" class="ic-s"></i> Problemas ativos <span class="hint">cada condição com métrica + tendência + próximo passo</span></div>
+
+      <div class="card pcardx"><div class="t"><i data-lucide="droplet" class="ic-s" style="color:var(--teal)"></i> Doença Renal Crônica <span class="badge t-bad">G3b A2 · progressão</span></div>
+        <div class="mets"><div class="met"><div class="k">TFGe</div><div class="v">38</div></div><div class="met"><div class="k">RAC</div><div class="v">180</div></div><div class="met"><div class="k">K⁺</div><div class="v">4,9</div></div>
+          <svg class="spark" viewBox="0 0 90 30"><polyline fill="none" stroke="#C0473B" stroke-width="2" points="2,7 24,11 46,15 68,19 88,23"/></svg></div>
+        <div class="plan"><i data-lucide="sparkles" class="ic-xs"></i> Iniciar 4º pilar (GLP1-RA) · investigar anemia · módulo 4</div></div>
+
+      <div class="card pcardx"><div class="t"><i data-lucide="syringe" class="ic-s" style="color:var(--teal)"></i> Diabetes tipo 2 <span class="badge t-warn">subótimo</span></div>
+        <div class="mets"><div class="met"><div class="k">HbA1c</div><div class="v">7,8%</div></div><div class="met"><div class="k">meta</div><div class="v">&lt;7%</div></div>
+          <svg class="spark" viewBox="0 0 90 30"><polyline fill="none" stroke="#B8860B" stroke-width="2" points="2,9 24,12 46,14 68,15 88,15"/></svg></div>
+        <div class="plan"><i data-lucide="sparkles" class="ic-xs"></i> GLP1-RA cobre meta + nefroproteção · módulo 2</div></div>
+
+      <div class="card pcardx"><div class="t"><i data-lucide="heart-pulse" class="ic-s" style="color:var(--teal)"></i> Hipertensão <span class="badge t-warn">acima da meta</span></div>
+        <div class="mets"><div class="met"><div class="k">PA</div><div class="v">138/84</div></div><div class="met"><div class="k">meta</div><div class="v">&lt;130/80</div></div>
+          <svg class="spark" viewBox="0 0 90 30"><polyline fill="none" stroke="#2E8B6F" stroke-width="2" points="2,6 24,10 46,13 68,14 88,14"/></svg></div>
+        <div class="plan"><i data-lucide="sparkles" class="ic-xs"></i> Titular anlodipino → 10 mg · módulo 1</div></div>
+
+      <div class="card pcardx"><div class="t"><i data-lucide="dna" class="ic-s" style="color:var(--teal)"></i> Dislipidemia <span class="badge t-warn">otimizar</span></div>
+        <div class="mets"><div class="met"><div class="k">LDL</div><div class="v">92</div></div><div class="met"><div class="k">alvo</div><div class="v">&lt;55</div></div>
+          <svg class="spark" viewBox="0 0 90 30"><polyline fill="none" stroke="#2E8B6F" stroke-width="2" points="2,8 24,12 46,16 68,18 88,17"/></svg></div>
+        <div class="plan"><i data-lucide="sparkles" class="ic-xs"></i> Associar ezetimiba (muito alto risco) · módulo 5</div></div>
+    </div>
+  </main>
+
+  <!-- RIGHT (varia levemente por modelo) -->
+  <aside class="detail">
+    <!-- Radar fica na lateral só no modelo A -->
+    <div id="side-radar">
+      <div class="dttl" style="font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.06em;color:var(--navy);margin:2px 2px 9px;display:flex;align-items:center;gap:7px;"><i data-lucide="radar" class="ic-s"></i> Radar de saúde</div>
+      <div class="card radarwrap"><canvas id="radarA" width="250" height="230"></canvas></div>
+      <div class="gap"></div>
+      <div class="dttl" style="font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.06em;color:var(--navy);margin:2px 2px 9px;display:flex;align-items:center;gap:7px;"><i data-lucide="gauge" class="ic-s"></i> Escores &amp; risco</div>
+      <div class="scores-grid">
+        <div class="score"><div class="nm">CKM</div><div class="vl bad">3</div></div>
+        <div class="score"><div class="nm">PREVENT</div><div class="vl bad">24%</div></div>
+        <div class="score"><div class="nm">KFRE</div><div class="vl warn">8,4%</div></div>
+        <div class="score"><div class="nm">FIB-4</div><div class="vl ok">1,1</div></div>
+      </div>
+      <div class="gap"></div>
+    </div>
+    <div class="dttl" style="font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.06em;color:var(--navy);margin:2px 2px 9px;display:flex;align-items:center;gap:7px;"><i data-lucide="bell-ring" class="ic-s"></i> Lembretes clínicos</div>
+    <div class="reminder"><div class="rt">PA acima da meta</div><div class="ra"><a>Resolver</a><a class="d">Dispensar</a></div></div>
+    <div class="reminder"><div class="rt">A1c 7,8% — intensificar</div><div class="ra"><a>Resolver</a><a class="d">Dispensar</a></div></div>
+    <div class="reminder"><div class="rt">Anemia da DRC — ferro</div><div class="ra"><a>Resolver</a><a class="d">Dispensar</a></div></div>
+  </aside>
+</div>
+
+<script>
+  lucide.createIcons();
+  const labels = ['Renal','Cardiovascular','Metabólico','Pressórico','Lipídico','Hepático'];
+  const atual = [38, 50, 55, 62, 80, 92];
+  const meta  = [80, 80, 80, 80, 90, 92];
+  const charts = {};
+  function radar(id){
+    const el = document.getElementById(id); if(!el || charts[id]) return;
+    charts[id] = new Chart(el, {type:'radar', data:{labels, datasets:[
+      {label:'Atual', data:atual, backgroundColor:'rgba(192,71,59,.16)', borderColor:'#C0473B', borderWidth:2, pointRadius:2},
+      {label:'Meta', data:meta, backgroundColor:'rgba(2,128,144,.10)', borderColor:'#028090', borderWidth:2, borderDash:[4,3], pointRadius:0}
+    ]}, options:{responsive:false, plugins:{legend:{labels:{font:{size:10},boxWidth:10}}},
+      scales:{r:{min:0,max:100,ticks:{display:false,stepSize:25},pointLabels:{font:{size:10},color:'#5C6B82'},grid:{color:'#E4E8F0'},angleLines:{color:'#E4E8F0'}}}}});
+  }
+  function setModel(m){
+    ['a','b','c'].forEach(x=>{ document.getElementById('m-'+x).classList.toggle('on', x===m); document.getElementById('b-'+x).classList.toggle('on', x===m); });
+    document.getElementById('mdesc').textContent = {
+      a:'Flowsheet longitudinal é o herói · radar + escores na lateral',
+      b:'Radar + escores grandes no topo (como está o paciente) · flowsheet compacto',
+      c:'Um card por condição com métrica, tendência e próximo passo'
+    }[m];
+    // radar fica na lateral só no A; em B e C ele está no centro
+    document.getElementById('side-radar').style.display = (m==='a') ? 'block' : 'none';
+    setTimeout(()=>{ if(m==='a') radar('radarA'); if(m==='b') radar('radarB'); if(m==='c') radar('radarC'); }, 30);
+  }
+  setModel('a');
+</script>
+</body>
+</html>

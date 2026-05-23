@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>APEX Pro · Prontuário CKM — arquitetura Elation (v2 conceito)</title>
+<script src="https://cdn.jsdelivr.net/npm/lucide@latest/dist/umd/lucide.min.js"></script>
+<style>
+  :root{
+    --navy:#1E2D50; --navy2:#16223F; --teal:#028090; --teal-l:#04B5C8; --gold:#C4A35A;
+    --bg:#EEF1F6; --rail:#FAF9F5; --card:#fff; --ink:#1B2436; --muted:#5C6B82; --line:#E4E8F0; --line2:#EDF0F5;
+    --green:#2E8B6F; --green-bg:#E4F3ED; --amber:#B8860B; --amber-bg:#FBF3DD; --red:#C0473B; --red-bg:#FBEAE8;
+    --blue:#2F6FB0; --blue-bg:#E8F0F9;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{background:var(--bg);color:var(--ink);font-family:-apple-system,"Segoe UI",Inter,Arial,sans-serif;font-size:13px;line-height:1.45;}
+  .concept-bar{background:var(--gold);color:var(--navy2);text-align:center;font-size:10.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;padding:5px;}
+  .ic-s{width:15px;height:15px;flex:none;} .ic-xs{width:13px;height:13px;flex:none;}
+
+  /* ===== TOP APP BAR ===== */
+  .appbar{background:linear-gradient(120deg,var(--navy),var(--navy2));color:#fff;display:flex;align-items:center;gap:18px;padding:9px 18px;}
+  .brand{font-weight:800;letter-spacing:.5px;font-size:15px;display:flex;align-items:center;gap:8px;}
+  .brand .dot{width:9px;height:9px;border-radius:50%;background:var(--gold);}
+  .nav{display:flex;gap:3px;margin-left:6px;}
+  .nav a{color:#C7D2E4;text-decoration:none;font-size:12px;padding:6px 11px;border-radius:8px;display:flex;align-items:center;gap:6px;cursor:pointer;}
+  .nav a.active{background:rgba(255,255,255,.12);color:#fff;font-weight:600;}
+  .appbar .right{margin-left:auto;display:flex;align-items:center;gap:14px;color:#C7D2E4;font-size:12px;}
+  .appbar .right .me{display:flex;align-items:center;gap:8px;color:#fff;}
+  .avatar{width:30px;height:30px;border-radius:50%;background:var(--teal);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:12px;color:#fff;}
+
+  /* ===== 3-ZONE GRID ===== */
+  .shell{display:grid;grid-template-columns:308px 1fr 332px;gap:0;height:calc(100vh - 64px);}
+  .rail{background:var(--rail);border-right:1px solid var(--line);overflow-y:auto;}
+  .center{overflow-y:auto;padding:14px 16px 40px;}
+  .detail{background:#F6F8FB;border-left:1px solid var(--line);overflow-y:auto;padding:14px 14px 40px;}
+  ::-webkit-scrollbar{width:9px;} ::-webkit-scrollbar-thumb{background:#CFD7E3;border-radius:6px;}
+
+  /* ===== LEFT RAIL — clinical profile ===== */
+  .pcard{padding:14px 14px 12px;border-bottom:1px solid var(--line);}
+  .pcard .pc-top{display:flex;gap:11px;align-items:center;}
+  .p-avatar{width:48px;height:48px;border-radius:13px;background:linear-gradient(135deg,var(--teal),var(--teal-l));color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:17px;flex:none;}
+  .p-name{font-size:16px;font-weight:800;color:var(--navy);line-height:1.1;}
+  .p-sub{color:var(--muted);font-size:11.5px;margin-top:2px;}
+  .p-rows{margin-top:10px;display:flex;flex-direction:column;gap:3px;}
+  .p-row{display:flex;gap:7px;align-items:center;font-size:11.5px;color:var(--muted);}
+  .p-row b{color:var(--ink);font-weight:600;}
+  .p-pills{display:flex;gap:6px;flex-wrap:wrap;margin-top:11px;}
+  .p-pill{font-size:10.5px;font-weight:700;padding:4px 10px;border-radius:20px;display:inline-flex;align-items:center;gap:5px;}
+  .p-pill.stage{background:var(--amber-bg);color:#9C7B2E;} .p-pill.risk{background:var(--red-bg);color:var(--red);} .p-pill.alergia{background:var(--red-bg);color:var(--red);}
+
+  .acc{border-bottom:1px solid var(--line);}
+  .acc-h{display:flex;align-items:center;gap:8px;padding:10px 14px;cursor:pointer;user-select:none;}
+  .acc-h .ttl{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.05em;color:var(--navy);}
+  .acc-h .cnt{background:var(--line);color:var(--muted);font-size:10px;font-weight:700;padding:1px 8px;border-radius:20px;}
+  .acc-h .act{margin-left:auto;color:var(--teal);font-size:11px;font-weight:700;display:flex;align-items:center;gap:3px;}
+  .acc-h .chev{transition:transform .15s;color:var(--muted);}
+  .acc.closed .chev{transform:rotate(-90deg);} .acc.closed .acc-b{display:none;}
+  .acc-b{padding:0 14px 12px;}
+  .litem{display:flex;align-items:flex-start;gap:8px;padding:6px 0;border-bottom:1px dashed var(--line2);}
+  .litem:last-child{border-bottom:none;}
+  .litem .dotc{width:8px;height:8px;border-radius:50%;margin-top:5px;flex:none;}
+  .litem .nm{font-weight:600;color:var(--ink);font-size:12.5px;}
+  .litem .meta{color:var(--muted);font-size:11px;}
+  .litem .tag{margin-left:auto;font-size:9.5px;font-weight:700;padding:1px 7px;border-radius:6px;}
+  .t-bad{background:var(--red-bg);color:var(--red);} .t-warn{background:var(--amber-bg);color:var(--amber);} .t-ok{background:var(--green-bg);color:var(--green);} .t-new{background:var(--green-bg);color:var(--green);}
+  .med-r{display:flex;align-items:baseline;gap:7px;padding:5px 0;border-bottom:1px dashed var(--line2);font-size:12.5px;}
+  .med-r:last-child{border-bottom:none;}
+  .med-r .nm{font-weight:700;color:var(--ink);} .med-r .dose{color:var(--muted);font-size:11.5px;}
+  .med-r .pil{margin-left:auto;font-size:9px;font-weight:800;color:#fff;background:var(--teal);border-radius:5px;padding:1px 6px;}
+  .alergia-r{color:var(--red);font-weight:600;font-size:12.5px;padding:4px 0;}
+
+  /* ===== CENTER — search + flowsheet + note ===== */
+  .csearch{display:flex;align-items:center;gap:9px;background:#fff;border:1px solid var(--line);border-radius:10px;padding:8px 12px;color:var(--muted);font-size:12.5px;}
+  .timeline{display:flex;align-items:center;gap:0;margin:8px 2px 14px;font-size:10.5px;color:var(--muted);}
+  .timeline .tk{flex:1;text-align:center;position:relative;padding-top:14px;}
+  .timeline .tk::before{content:"";position:absolute;top:4px;left:50%;width:7px;height:7px;border-radius:50%;background:#CFD7E3;transform:translateX(-50%);}
+  .timeline .tk.on::before{background:var(--teal);box-shadow:0 0 0 3px rgba(2,128,144,.18);}
+  .timeline .tk.on{color:var(--navy);font-weight:700;}
+  .timeline-line{position:relative;}
+
+  .blockttl{display:flex;align-items:center;gap:8px;font-size:11.5px;font-weight:800;text-transform:uppercase;letter-spacing:.06em;color:var(--navy);margin:4px 2px 8px;}
+  .blockttl .hint{margin-left:auto;font-size:10.5px;font-weight:600;color:var(--muted);text-transform:none;letter-spacing:0;font-style:italic;}
+
+  .flow{background:#fff;border:1px solid var(--line);border-radius:12px;overflow:hidden;box-shadow:0 1px 2px rgba(20,34,63,.04);}
+  table.fs{width:100%;border-collapse:collapse;font-size:12px;}
+  table.fs th,table.fs td{padding:6px 9px;text-align:right;border-bottom:1px solid var(--line2);white-space:nowrap;}
+  table.fs thead th{background:#F7F9FC;color:var(--muted);font-size:10.5px;font-weight:700;text-align:right;border-bottom:1px solid var(--line);}
+  table.fs thead th.lab,table.fs td.lab{text-align:left;}
+  table.fs td.lab{font-weight:700;color:var(--ink);}
+  table.fs td.lab small{display:block;font-weight:500;color:var(--muted);font-size:10px;}
+  table.fs tbody tr:hover{background:#FBFCFE;}
+  table.fs th.now{color:var(--navy);background:#EEF6F7;}
+  table.fs td.now{background:#F4FAFB;font-weight:700;}
+  .cell{display:inline-block;min-width:38px;padding:1px 7px;border-radius:6px;font-weight:600;cursor:pointer;}
+  .cell.bad{background:var(--red-bg);color:var(--red);} .cell.warn{background:var(--amber-bg);color:var(--amber);} .cell.ok{background:var(--green-bg);color:var(--green);} .cell.flat{color:var(--ink);}
+  .cell.sel{outline:2px solid var(--teal);}
+
+  /* SOAP note */
+  .note{background:#fff;border:1px solid var(--line);border-radius:12px;padding:14px 16px;margin-top:16px;box-shadow:0 1px 2px rgba(20,34,63,.04);}
+  .note .nh{display:flex;align-items:center;gap:9px;border-bottom:1px solid var(--line);padding-bottom:9px;margin-bottom:11px;}
+  .note .nh .dt{font-weight:800;color:var(--navy);font-size:13.5px;} .note .nh .ty{color:var(--muted);font-size:11.5px;}
+  .soap{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+  .soap .sec h4{font-size:10.5px;text-transform:uppercase;letter-spacing:.06em;color:var(--teal);font-weight:800;margin-bottom:5px;}
+  .soap .sec p{font-size:12.5px;color:#3A4658;margin-bottom:7px;}
+  .ap{grid-column:1/-1;border-top:1px dashed var(--line);padding-top:11px;}
+  .ap h4{font-size:10.5px;text-transform:uppercase;letter-spacing:.06em;color:var(--teal);font-weight:800;margin-bottom:8px;}
+  .prob-item{border-left:3px solid var(--teal);padding:7px 0 7px 11px;margin-bottom:9px;}
+  .prob-item .ph{display:flex;align-items:center;gap:8px;font-weight:700;color:var(--navy);font-size:13px;}
+  .prob-item .ph .n{width:18px;height:18px;border-radius:50%;background:var(--navy);color:#fff;font-size:10px;display:flex;align-items:center;justify-content:center;flex:none;}
+  .prob-item .ph .badge{margin-left:auto;font-size:9.5px;font-weight:700;padding:1px 8px;border-radius:20px;}
+  .prob-item ul{margin:5px 0 0 26px;} .prob-item li{font-size:12px;color:#3A4658;margin:2px 0;}
+  .prob-item .base{font-size:10.5px;color:var(--teal);font-weight:700;margin:5px 0 0 26px;display:flex;align-items:center;gap:5px;}
+
+  /* ===== RIGHT — scores + detail ===== */
+  .dttl{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.06em;color:var(--navy);margin:2px 2px 9px;display:flex;align-items:center;gap:7px;}
+  .score{background:#fff;border:1px solid var(--line);border-radius:11px;padding:10px 12px;margin-bottom:9px;}
+  .score .sh{display:flex;align-items:center;justify-content:space-between;}
+  .score .nm{font-size:11.5px;font-weight:700;color:var(--ink);} .score .vl{font-size:17px;font-weight:800;}
+  .score .ds{font-size:10.5px;color:var(--muted);margin-top:2px;}
+  .vl.bad{color:var(--red);} .vl.warn{color:var(--amber);} .vl.ok{color:var(--green);}
+  .trend{display:flex;align-items:center;justify-content:space-between;padding:6px 0;border-bottom:1px dashed var(--line2);font-size:12px;}
+  .trend:last-child{border-bottom:none;}
+  .spark{height:24px;width:84px;}
+  .detail-card{background:#fff;border:1px solid var(--line);border-radius:11px;padding:11px 12px;margin-top:6px;}
+  .detail-card .dc-h{font-size:12px;font-weight:800;color:var(--navy);display:flex;align-items:center;gap:7px;margin-bottom:7px;}
+  .dtabs{display:flex;gap:3px;margin-bottom:9px;flex-wrap:wrap;}
+  .dtab{font-size:10.5px;font-weight:700;padding:4px 9px;border-radius:7px;background:#EAEFF6;color:var(--muted);cursor:pointer;}
+  .dtab.on{background:var(--navy);color:#fff;}
+  .lr{display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px dashed var(--line2);font-size:12px;}
+  .lr:last-child{border-bottom:none;} .lr .v.bad{color:var(--red);font-weight:700;} .lr .v.warn{color:var(--amber);font-weight:700;} .lr .v.ok{color:var(--green);font-weight:600;}
+
+  /* ===== bottom scribe ===== */
+  .scribe{position:fixed;left:0;right:0;bottom:0;background:linear-gradient(120deg,var(--navy2),var(--navy));color:#fff;padding:9px 18px;display:flex;align-items:center;gap:13px;box-shadow:0 -4px 18px rgba(20,34,63,.18);z-index:20;}
+  .scribe .rec{width:30px;height:30px;border-radius:50%;background:var(--red);display:flex;align-items:center;justify-content:center;animation:pulse 2s infinite;flex:none;}
+  @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(192,71,59,.5);}70%{box-shadow:0 0 0 9px rgba(192,71,59,0);}100%{box-shadow:0 0 0 0 rgba(192,71,59,0);}}
+  .scribe .txt b{font-size:12.5px;} .scribe .txt div{font-size:11px;color:#C7D2E4;}
+  .scribe .out{margin-left:auto;display:flex;gap:8px;}
+  .btn{border:none;border-radius:9px;padding:8px 14px;font-size:11.5px;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:7px;}
+  .btn.tech{background:#fff;color:var(--navy);} .btn.pat{background:var(--gold);color:var(--navy2);}
+  .shell{padding-bottom:0;}
+</style>
+</head>
+<body>
+<div class="concept-bar">Conceito v2 — Prontuário CKM na arquitetura Elation (3 zonas) · paciente fictício · não é a versão atual</div>
+
+<!-- APP BAR -->
+<div class="appbar">
+  <div class="brand"><span class="dot"></span>APEX <span style="font-weight:400;opacity:.7;">Pro</span></div>
+  <nav class="nav">
+    <a class="active"><i data-lucide="clipboard-list" class="ic-s"></i> Prontuário</a>
+    <a><i data-lucide="users" class="ic-s"></i> Pacientes</a>
+    <a><i data-lucide="calendar" class="ic-s"></i> Agenda</a>
+    <a><i data-lucide="activity" class="ic-s"></i> Painel clínico</a>
+  </nav>
+  <div class="right">
+    <i data-lucide="search" class="ic-s"></i>
+    <i data-lucide="bell" class="ic-s"></i>
+    <div class="me"><span>Dr. Bruno Biluca</span><div class="avatar">BB</div></div>
+  </div>
+</div>
+
+<div class="shell">
+
+  <!-- ============ LEFT RAIL — CLINICAL PROFILE ============ -->
+  <aside class="rail">
+    <div class="pcard">
+      <div class="pc-top">
+        <div class="p-avatar">JA</div>
+        <div>
+          <div class="p-name">João Andrade</div>
+          <div class="p-sub">Masculino · 64 anos · DN 12/03/1962</div>
+        </div>
+      </div>
+      <div class="p-rows">
+        <div class="p-row"><i data-lucide="shield-check" class="ic-xs"></i> Convênio: <b>Particular</b></div>
+        <div class="p-row"><i data-lucide="phone" class="ic-xs"></i> <b>(11) 98888-7777</b></div>
+        <div class="p-row"><i data-lucide="stethoscope" class="ic-xs"></i> Médico: <b>Dr. Bruno Biluca</b></div>
+        <div class="p-row"><i data-lucide="clock" class="ic-xs"></i> Última visita: <b>10/02/2026</b></div>
+      </div>
+      <div class="p-pills">
+        <span class="p-pill stage"><i data-lucide="layers" class="ic-xs"></i> CKM Estágio 3</span>
+        <span class="p-pill risk"><i data-lucide="alert-triangle" class="ic-xs"></i> Risco CV alto</span>
+        <span class="p-pill alergia"><i data-lucide="ban" class="ic-xs"></i> Alergias 1</span>
+      </div>
+    </div>
+
+    <!-- Alergias -->
+    <div class="acc">
+      <div class="acc-h" onclick="this.parentElement.classList.toggle('closed')">
+        <i data-lucide="chevron-down" class="ic-xs chev"></i><span class="ttl">Alergias / Intolerâncias</span><span class="cnt">1</span>
+      </div>
+      <div class="acc-b">
+        <div class="alergia-r">⚠ AINEs — broncoespasmo</div>
+      </div>
+    </div>
+
+    <!-- Lista de Problemas -->
+    <div class="acc">
+      <div class="acc-h" onclick="this.parentElement.classList.toggle('closed')">
+        <i data-lucide="chevron-down" class="ic-xs chev"></i><span class="ttl">Lista de Problemas</span><span class="cnt">4</span><span class="act">Ações <i data-lucide="chevron-down" class="ic-xs"></i></span>
+      </div>
+      <div class="acc-b">
+        <div class="litem"><span class="dotc" style="background:var(--red)"></span><div><div class="nm">Doença Renal Crônica</div><div class="meta">Nefrop. diabética · desde 2022</div></div><span class="tag t-bad">G3b A2</span></div>
+        <div class="litem"><span class="dotc" style="background:var(--amber)"></span><div><div class="nm">Diabetes tipo 2</div><div class="meta">Há 11 anos · sem retinopatia</div></div><span class="tag t-warn">A1c 7,8</span></div>
+        <div class="litem"><span class="dotc" style="background:var(--amber)"></span><div><div class="nm">Hipertensão arterial</div><div class="meta">PA 138/84 · meta &lt;130/80</div></div><span class="tag t-warn">acima</span></div>
+        <div class="litem"><span class="dotc" style="background:var(--green)"></span><div><div class="nm">Dislipidemia</div><div class="meta">LDL 92 · alvo &lt;70</div></div><span class="tag t-warn">otimizar</span></div>
+      </div>
+    </div>
+
+    <!-- Medicações em uso -->
+    <div class="acc">
+      <div class="acc-h" onclick="this.parentElement.classList.toggle('closed')">
+        <i data-lucide="chevron-down" class="ic-xs chev"></i><span class="ttl">Medicações em uso</span><span class="cnt">6</span><span class="act">Ações <i data-lucide="chevron-down" class="ic-xs"></i></span>
+      </div>
+      <div class="acc-b">
+        <div class="med-r"><span class="nm">Losartana</span><span class="dose">100 mg/dia</span><span class="pil">Pilar 1</span></div>
+        <div class="med-r"><span class="nm">Dapagliflozina</span><span class="dose">10 mg/dia</span><span class="pil">Pilar 2</span></div>
+        <div class="med-r"><span class="nm">Finerenona</span><span class="dose">10 mg/dia</span><span class="pil">Pilar 3</span></div>
+        <div class="med-r"><span class="nm">Atorvastatina</span><span class="dose">40 mg/dia</span></div>
+        <div class="med-r"><span class="nm">Anlodipino</span><span class="dose">5 mg/dia</span></div>
+        <div class="med-r"><span class="nm">AAS</span><span class="dose">100 mg/dia</span></div>
+      </div>
+    </div>
+
+    <!-- Suplementos -->
+    <div class="acc closed">
+      <div class="acc-h" onclick="this.parentElement.classList.toggle('closed')">
+        <i data-lucide="chevron-down" class="ic-xs chev"></i><span class="ttl">Suplementos</span><span class="cnt">2</span><span class="act">Ações <i data-lucide="chevron-down" class="ic-xs"></i></span>
+      </div>
+      <div class="acc-b">
+        <div class="med-r"><span class="nm">Vitamina D</span><span class="dose">2.000 UI/dia</span></div>
+        <div class="med-r"><span class="nm">CoQ10</span><span class="dose">100 mg/dia</span></div>
+      </div>
+    </div>
+
+    <!-- Antecedentes / História -->
+    <div class="acc closed">
+      <div class="acc-h" onclick="this.parentElement.classList.toggle('closed')">
+        <i data-lucide="chevron-down" class="ic-xs chev"></i><span class="ttl">Antecedentes / História</span><span class="act">Ações <i data-lucide="chevron-down" class="ic-xs"></i></span>
+      </div>
+      <div class="acc-b">
+        <div class="litem"><div><div class="nm">Familiar</div><div class="meta">Pai DRC dialítico · mãe HAS</div></div></div>
+        <div class="litem"><div><div class="nm">Hábitos</div><div class="meta">Ex-tabagista (parou 2018) · sedentário</div></div></div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ============ CENTER — WORK AREA ============ -->
+  <main class="center">
+    <div class="csearch"><i data-lucide="search" class="ic-s"></i> Buscar no prontuário — exame, medicação, problema…</div>
+    <div class="timeline-line">
+      <div class="timeline">
+        <div class="tk">08/24</div><div class="tk">11/24</div><div class="tk">05/25</div><div class="tk">08/25</div><div class="tk">02/26</div><div class="tk on">Hoje</div>
+      </div>
+    </div>
+
+    <!-- FLOWSHEET -->
+    <div class="blockttl"><i data-lucide="table-2" class="ic-s"></i> Evolução laboratorial <span class="hint">clique num valor para ver o exame →</span></div>
+    <div class="flow">
+      <table class="fs">
+        <thead>
+          <tr><th class="lab">Exame</th><th>08/24</th><th>11/24</th><th>05/25</th><th>08/25</th><th>02/26</th><th class="now">Hoje</th></tr>
+        </thead>
+        <tbody>
+          <tr><td class="lab">Creatinina <small>mg/dL</small></td><td><span class="cell warn">1,4</span></td><td><span class="cell warn">1,5</span></td><td><span class="cell warn">1,6</span></td><td><span class="cell bad">1,7</span></td><td><span class="cell bad">1,8</span></td><td class="now"><span class="cell bad sel" onclick="selCell(this)">1,9</span></td></tr>
+          <tr><td class="lab">TFGe <small>mL/min/1,73</small></td><td><span class="cell warn">52</span></td><td><span class="cell warn">49</span></td><td><span class="cell warn">46</span></td><td><span class="cell warn">44</span></td><td><span class="cell bad">42</span></td><td class="now"><span class="cell bad">38</span></td></tr>
+          <tr><td class="lab">RAC urinária <small>mg/g</small></td><td><span class="cell warn">90</span></td><td><span class="cell warn">120</span></td><td><span class="cell warn">150</span></td><td><span class="cell warn">200</span></td><td><span class="cell warn">190</span></td><td class="now"><span class="cell warn">180</span></td></tr>
+          <tr><td class="lab">Potássio <small>mEq/L</small></td><td><span class="cell ok">4,4</span></td><td><span class="cell ok">4,6</span></td><td><span class="cell ok">4,7</span></td><td><span class="cell ok">4,8</span></td><td><span class="cell warn">5,1</span></td><td class="now"><span class="cell ok">4,9</span></td></tr>
+          <tr><td class="lab">HbA1c <small>%</small></td><td><span class="cell bad">8,2</span></td><td><span class="cell bad">8,0</span></td><td><span class="cell warn">7,9</span></td><td><span class="cell warn">7,8</span></td><td><span class="cell warn">7,8</span></td><td class="now"><span class="cell warn">7,8</span></td></tr>
+          <tr><td class="lab">LDL <small>mg/dL</small></td><td><span class="cell warn">110</span></td><td><span class="cell ok">100</span></td><td><span class="cell ok">95</span></td><td><span class="cell ok">92</span></td><td><span class="cell ok">90</span></td><td class="now"><span class="cell ok">92</span></td></tr>
+          <tr><td class="lab">PA sistólica <small>mmHg</small></td><td><span class="cell bad">145</span></td><td><span class="cell warn">142</span></td><td><span class="cell warn">140</span></td><td><span class="cell warn">138</span></td><td><span class="cell warn">138</span></td><td class="now"><span class="cell warn">138</span></td></tr>
+          <tr><td class="lab">Hemoglobina <small>g/dL</small></td><td><span class="cell ok">13,2</span></td><td><span class="cell ok">12,9</span></td><td><span class="cell warn">12,4</span></td><td><span class="cell warn">12,0</span></td><td><span class="cell warn">11,8</span></td><td class="now"><span class="cell bad">11,4</span></td></tr>
+          <tr><td class="lab">Fósforo <small>mg/dL</small></td><td><span class="cell ok">3,6</span></td><td><span class="cell ok">3,8</span></td><td><span class="cell ok">4,0</span></td><td><span class="cell ok">4,2</span></td><td><span class="cell warn">4,6</span></td><td class="now"><span class="cell warn">4,7</span></td></tr>
+          <tr><td class="lab">PTH <small>pg/mL</small></td><td><span class="cell ok">48</span></td><td><span class="cell ok">55</span></td><td><span class="cell warn">72</span></td><td><span class="cell warn">88</span></td><td><span class="cell warn">96</span></td><td class="now"><span class="cell bad">112</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- SOAP NOTE -->
+    <div class="note">
+      <div class="nh"><i data-lucide="file-text" class="ic-s" style="color:var(--teal)"></i><span class="dt">Nota — 22/05/2026</span><span class="ty">· Retorno (Consulta #7)</span></div>
+      <div class="soap">
+        <div class="sec">
+          <h4>Subjetivo</h4>
+          <p>Assintomático. Refere boa adesão à medicação e à dieta hipossódica. Nega edema, dispneia ou alterações urinárias. Cansaço leve ao esforço nas últimas semanas.</p>
+        </div>
+        <div class="sec">
+          <h4>Objetivo</h4>
+          <p>PA 138/84 mmHg · FC 72 · Peso 88 kg · IMC 29,4. Sem edema de MMII. Ausculta cardiopulmonar normal. Labs de hoje na tabela acima — TFGe em queda (38), Hb 11,4 (anemia), PTH 112.</p>
+        </div>
+        <div class="ap">
+          <h4>Avaliação &amp; Plano</h4>
+
+          <div class="prob-item">
+            <div class="ph"><span class="n">1</span> Doença Renal Crônica G3b A2 <span class="badge t-bad">progressão</span></div>
+            <ul>
+              <li>4 pilares de nefroproteção ativos (iECA/BRA + iSGLT2 + ARM).</li>
+              <li><b>Iniciar 4º pilar:</b> GLP1-RA (semaglutida) — DM2 + DRC (estudo FLOW).</li>
+              <li><b>Anemia da DRC (Hb 11,4):</b> investigar ferro/ferritina; avaliar reposição.</li>
+              <li><b>DMO-DRC (PTH 112, P 4,7):</b> restrição de fósforo; reavaliar vit. D e quelante.</li>
+            </ul>
+            <div class="base"><i data-lucide="book-open" class="ic-xs"></i> Protocolo CKM da base · módulo 4 (DRC G3-5)</div>
+          </div>
+
+          <div class="prob-item">
+            <div class="ph"><span class="n">2</span> Hipertensão — acima da meta <span class="badge t-warn">ajustar</span></div>
+            <ul><li>PA 138/84 (meta &lt;130/80): titular anlodipino para 10 mg/dia.</li></ul>
+            <div class="base"><i data-lucide="book-open" class="ic-xs"></i> Protocolo CKM da base · módulo 1 (HAS)</div>
+          </div>
+
+          <div class="prob-item">
+            <div class="ph"><span class="n">3</span> Diabetes tipo 2 — subótimo <span class="badge t-warn">A1c 7,8</span></div>
+            <ul><li>GLP1-RA cobre meta glicêmica + nefroproteção; manter rastreio anual de fundo de olho.</li></ul>
+            <div class="base"><i data-lucide="book-open" class="ic-xs"></i> Protocolo CKM da base · módulo 2 (DM2)</div>
+          </div>
+
+          <div class="prob-item">
+            <div class="ph"><span class="n">4</span> Dislipidemia — otimizar <span class="badge t-warn">LDL 92</span></div>
+            <ul><li>Muito alto risco → alvo LDL &lt;55: associar ezetimiba 10 mg.</li></ul>
+            <div class="base"><i data-lucide="book-open" class="ic-xs"></i> Protocolo CKM da base · módulo 5 (Dislipidemia)</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- ============ RIGHT — SCORES + DETAIL ============ -->
+  <aside class="detail">
+    <div class="dttl"><i data-lucide="gauge" class="ic-s"></i> Escores &amp; risco</div>
+    <div class="score"><div class="sh"><span class="nm">Estágio CKM (AHA 2023)</span><span class="vl bad">3</span></div><div class="ds">Fatores metabólicos + DRC moderada</div></div>
+    <div class="score"><div class="sh"><span class="nm">Risco CV 10a (PREVENT)</span><span class="vl bad">24%</span></div><div class="ds">Alto — primária (ASCVD 22% secundária)</div></div>
+    <div class="score"><div class="sh"><span class="nm">Diálise 5a (KFRE)</span><span class="vl warn">8,4%</span></div><div class="ds">Risco moderado — acompanhar de perto</div></div>
+    <div class="score"><div class="sh"><span class="nm">Fibrose hepática (FIB-4)</span><span class="vl ok">1,1</span></div><div class="ds">Baixo risco</div></div>
+
+    <div class="dttl" style="margin-top:16px;"><i data-lucide="trending-up" class="ic-s"></i> Tendências (12 meses)</div>
+    <div class="detail-card">
+      <div class="trend"><span>TFGe</span><svg class="spark" viewBox="0 0 84 24"><polyline fill="none" stroke="#C0473B" stroke-width="2" points="2,5 18,8 36,12 54,15 82,19"/></svg><b style="color:var(--red)">↓ 38</b></div>
+      <div class="trend"><span>HbA1c</span><svg class="spark" viewBox="0 0 84 24"><polyline fill="none" stroke="#B8860B" stroke-width="2" points="2,6 22,9 44,11 64,12 82,12"/></svg><b style="color:var(--amber)">7,8%</b></div>
+      <div class="trend"><span>Hemoglobina</span><svg class="spark" viewBox="0 0 84 24"><polyline fill="none" stroke="#C0473B" stroke-width="2" points="2,5 22,8 44,12 64,16 82,20"/></svg><b style="color:var(--red)">↓ 11,4</b></div>
+      <div class="trend"><span>PTH</span><svg class="spark" viewBox="0 0 84 24"><polyline fill="none" stroke="#C0473B" stroke-width="2" points="2,20 22,16 44,12 64,8 82,4"/></svg><b style="color:var(--red)">↑ 112</b></div>
+    </div>
+
+    <div class="dttl" style="margin-top:16px;"><i data-lucide="flask-conical" class="ic-s"></i> Detalhe do exame</div>
+    <div class="dtabs">
+      <span class="dtab on">Lab</span><span class="dtab">Imagem</span><span class="dtab">Cardíaco</span><span class="dtab">Consulta</span>
+    </div>
+    <div class="detail-card">
+      <div class="dc-h"><i data-lucide="droplet" class="ic-xs" style="color:var(--teal)"></i> Função renal · 22/05/2026</div>
+      <div class="lr"><span>Creatinina</span><span class="v bad">1,9 mg/dL</span></div>
+      <div class="lr"><span>TFGe (CKD-EPI 2021)</span><span class="v bad">38 mL/min</span></div>
+      <div class="lr"><span>Ureia</span><span class="v warn">68 mg/dL</span></div>
+      <div class="lr"><span>RAC urinária</span><span class="v warn">180 mg/g</span></div>
+      <div class="lr"><span>Potássio</span><span class="v ok">4,9 mEq/L</span></div>
+      <div class="lr"><span>Bicarbonato</span><span class="v warn">21 mEq/L</span></div>
+      <div style="font-size:10.5px;color:var(--muted);margin-top:8px;">Coletado 20/05 · Lab Fenix · clique em outro valor da tabela para trocar.</div>
+    </div>
+  </aside>
+</div>
+
+<!-- AMBIENT SCRIBE / DUAL OUTPUT -->
+<div class="scribe">
+  <div class="rec"><i data-lucide="mic" class="ic-s"></i></div>
+  <div class="txt"><b>Assessor de consulta — ouvindo</b><div>A consulta vira nota estruturada · você revisa e aprova</div></div>
+  <div class="out">
+    <button class="btn tech"><i data-lucide="file-text" class="ic-s"></i> Nota técnica (prontuário)</button>
+    <button class="btn pat"><i data-lucide="smartphone" class="ic-s"></i> Resumo do paciente (app)</button>
+  </div>
+</div>
+
+<script>
+  lucide.createIcons();
+  function selCell(el){ document.querySelectorAll('.cell.sel').forEach(c=>c.classList.remove('sel')); el.classList.add('sel'); }
+</script>
+</body>
+</html>

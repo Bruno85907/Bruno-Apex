@@ -6,6 +6,7 @@
 <title>Prontuário CKM v2 — APEX Health</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="protocolos_ckm.js"></script>
 <style>
 /* Embed mode: hide topbar, reduce padding when inside iframe */
 html.embed-mode .topbar { display: none; }
@@ -57,6 +58,12 @@ body {
 }
 .topbar h1 { font-size: 18px; font-weight: 700; letter-spacing: -0.3px; }
 .topbar h1 span { color: var(--gold); }
+.topbar .tb-brand { display: flex; align-items: center; gap: 11px; }
+.topbar .tb-logo { height: 30px; width: auto; object-fit: contain; flex: none; }
+.topbar .tb-name { font-size: 17px; font-weight: 800; letter-spacing: -0.3px; }
+.topbar .tb-name b { color: var(--gold); }
+.topbar .tb-divider { width: 1px; height: 20px; background: rgba(255,255,255,0.25); }
+.topbar .tb-sub { font-size: 13px; color: #C7D2E4; font-weight: 600; }
 .topbar .patient-tag {
   background: rgba(255,255,255,0.1);
   padding: 6px 16px;
@@ -497,9 +504,9 @@ body {
   text-align: center;
   font-size: 9px;
   color: #999;
-  border-top: 1px solid var(--border);
-  padding-top: 8px;
-  margin-top: 40px;
+  border-top: 2px solid var(--gold);
+  padding-top: 6px;
+  margin-top: 12px;
   page-break-inside: avoid;
 }
 .doc-signature {
@@ -651,6 +658,207 @@ body {
 .protocol-month .month-label { font-size: 9px; color: #6B7A8D; margin-top: 2px; line-height: 1.3; }
 .protocol-month .month-badges { display: flex; flex-wrap: wrap; gap: 3px; justify-content: center; margin-top: 6px; }
 .protocol-month .month-badges span { font-size: 8px; padding: 1px 5px; border-radius: 6px; font-weight: 600; }
+
+/* ===== RESUMO (modelo Elation · layout B+C) ===== */
+#tab-resumo { padding-top: 16px; }
+.resumo-patient { display: flex; align-items: center; gap: 14px; margin-bottom: 8px; }
+.resumo-patient .p-name { font-size: 20px; font-weight: 800; color: var(--navy); line-height: 1.1; }
+.resumo-patient .p-meta { color: #6B7A8D; font-size: 13px; margin-top: 2px; }
+.resumo-patient .p-tags { margin-left: auto; display: flex; gap: 8px; flex-wrap: wrap; }
+.resumo-patient .p-pill { font-size: 11.5px; font-weight: 700; padding: 5px 12px; border-radius: 20px; border: 1px solid var(--border); display: inline-flex; align-items: center; gap: 5px; }
+.resumo-patient .p-pill.stage { background: var(--light-gold); color: #9C7B2E; border-color: transparent; }
+.resumo-patient .p-pill.risk { background: #FBEAE8; color: var(--danger); border-color: transparent; }
+.resumo-patient .p-pill.risk-mod { background: #FEF6E0; color: #B8860B; border-color: transparent; }
+.resumo-patient .p-pill.risk-low { background: #E4F3ED; color: var(--success); border-color: transparent; }
+.rz-sect { display: flex; align-items: center; gap: 8px; font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: .06em; color: var(--navy); margin: 22px 2px 10px; padding-bottom: 5px; border-bottom: 2px solid var(--border); }
+.rz-sect .hint { margin-left: auto; font-size: 10px; font-weight: 600; color: #8A97A8; text-transform: none; letter-spacing: 0; font-style: italic; }
+.rz-card { background: #fff; border: 1px solid var(--border); border-radius: 12px; box-shadow: var(--shadow); }
+/* cockpit */
+.rz-cockpit { display: grid; grid-template-columns: 300px 1fr; gap: 12px; }
+.rz-radarwrap { padding: 10px; display: flex; align-items: center; justify-content: center; min-height: 250px; }
+.rz-bigscores { display: grid; grid-template-columns: 1fr 1fr; gap: 9px; }
+.rz-bscore { border: 1px solid var(--border); border-radius: 11px; padding: 10px 12px; background: #FBFCFE; }
+.rz-bscore .nm { font-size: 11px; font-weight: 700; color: var(--text); }
+.rz-bscore .vl { font-size: 21px; font-weight: 800; margin-top: 2px; line-height: 1.1; }
+.rz-bscore .ds { font-size: 10px; color: #6B7A8D; }
+.rz-bscore .vl.bad { color: var(--danger); } .rz-bscore .vl.warn { color: var(--warning); } .rz-bscore .vl.ok { color: var(--success); } .rz-bscore .vl.na { color: #B6BFCB; }
+/* CKM didático */
+.rz-ckm-head { display: flex; align-items: center; gap: 14px; border: 1px solid var(--border); border-radius: 12px; padding: 12px 14px; background: #FBFCFE; }
+.rz-ckm-head.ok { border-left: 5px solid var(--success); } .rz-ckm-head.warn { border-left: 5px solid var(--warning); } .rz-ckm-head.bad { border-left: 5px solid var(--danger); }
+.rz-ckm-badge { display: flex; flex-direction: column; align-items: center; justify-content: center; min-width: 66px; height: 66px; border-radius: 14px; background: var(--navy); color: #fff; flex: none; }
+.rz-ckm-head.ok .rz-ckm-badge { background: var(--success); } .rz-ckm-head.warn .rz-ckm-badge { background: var(--warning); } .rz-ckm-head.bad .rz-ckm-badge { background: var(--danger); }
+.rz-ckm-badge span { font-size: 9px; text-transform: uppercase; letter-spacing: .06em; opacity: .9; } .rz-ckm-badge b { font-size: 30px; line-height: 1; font-weight: 800; }
+.rz-ckm-title { font-size: 14.5px; font-weight: 800; color: var(--navy); }
+.rz-ckm-desc { font-size: 11.5px; color: var(--muted); margin-top: 3px; line-height: 1.4; }
+.rz-ckm-steps { display: flex; gap: 0; margin-top: 12px; }
+.rz-ckm-step { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 4px; position: relative; }
+.rz-ckm-step::before { content: ''; position: absolute; top: 12px; left: -50%; width: 100%; height: 2px; background: var(--border); z-index: 0; }
+.rz-ckm-step:first-child::before { display: none; }
+.rz-ckm-step.past::before, .rz-ckm-step.cur::before { background: var(--teal); }
+.rz-ckm-step .num { position: relative; z-index: 1; width: 25px; height: 25px; border-radius: 50%; background: #fff; border: 2px solid var(--border); color: var(--muted); font-size: 12px; font-weight: 800; display: flex; align-items: center; justify-content: center; }
+.rz-ckm-step.past .num { background: var(--teal); border-color: var(--teal); color: #fff; }
+.rz-ckm-step.cur .num { background: var(--navy); border-color: var(--navy); color: #fff; box-shadow: 0 0 0 4px rgba(30,45,80,.12); }
+.rz-ckm-step .lbl { font-size: 9px; color: var(--muted); text-align: center; line-height: 1.2; font-weight: 600; }
+.rz-ckm-step.cur .lbl { color: var(--navy); font-weight: 800; }
+/* Risco síndrome metabólica */
+.rz-ms-risk { border-radius: 10px; padding: 9px 12px; margin-top: 4px; }
+.rz-ms-risk.ok { background: var(--green-bg); } .rz-ms-risk.warn { background: var(--amber-bg); } .rz-ms-risk.bad { background: var(--red-bg); }
+.rz-ms-risk .rr { display: flex; align-items: center; justify-content: space-between; gap: 8px; font-size: 12.5px; }
+.rz-ms-risk.ok .rr b { color: var(--success); } .rz-ms-risk.warn .rr b { color: #B8860B; } .rz-ms-risk.bad .rr b { color: var(--danger); }
+.rz-ms-risk .rb { font-size: 10.5px; font-weight: 800; padding: 2px 9px; border-radius: 20px; background: rgba(255,255,255,.7); }
+.rz-ms-risk .re { font-size: 11px; color: var(--muted); margin-top: 4px; line-height: 1.4; }
+.rz-ckmbar { display: flex; gap: 5px; margin-top: 9px; }
+.rz-ckmst { flex: 1; text-align: center; padding: 7px 4px; border-radius: 8px; background: #F1F4F8; font-size: 9.5px; font-weight: 700; color: #6B7A8D; line-height: 1.25; }
+.rz-ckmst b { font-size: 11px; color: var(--text); display: block; }
+.rz-ckmst.on { background: var(--danger); color: #fff; } .rz-ckmst.on b { color: #fff; }
+/* classification cards */
+.rz-cls-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+.rz-cls { border: 1px solid var(--border); border-radius: 11px; padding: 10px 12px; background: #fff; position: relative; }
+.rz-cls.bad { border-left: 4px solid var(--danger); } .rz-cls.warn { border-left: 4px solid var(--warning); } .rz-cls.ok { border-left: 4px solid var(--success); } .rz-cls.na { border-left: 4px solid var(--border); }
+.rz-cls .lab { font-size: 10px; text-transform: uppercase; letter-spacing: .05em; color: #6B7A8D; font-weight: 700; }
+.rz-cls .val { font-size: 18px; font-weight: 800; margin-top: 2px; line-height: 1.05; color: var(--navy); } .rz-cls .val small { font-size: 10px; color: #6B7A8D; font-weight: 600; }
+.rz-cls .cl { font-size: 10.5px; font-weight: 700; margin-top: 3px; }
+.rz-cls .evo { position: absolute; top: 9px; right: 10px; font-size: 10px; font-weight: 800; }
+/* calculators */
+.rz-calc-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 11px; }
+.rz-calc { border: 1px solid var(--border); border-radius: 12px; padding: 12px 14px; background: #fff; }
+.rz-calc .ch { display: flex; align-items: center; justify-content: space-between; }
+.rz-calc .cn { font-size: 12.5px; font-weight: 800; color: var(--navy); }
+.rz-calc .cv { font-size: 22px; font-weight: 800; }
+.rz-calc.bad .cv { color: var(--danger); } .rz-calc.warn .cv { color: var(--warning); } .rz-calc.ok .cv { color: var(--success); } .rz-calc.na .cv { color: #B6BFCB; font-size: 15px; }
+.rz-calc .cd { font-size: 11px; color: #3A4658; font-weight: 600; margin-top: 2px; }
+.rz-calc .cm { font-size: 10px; color: #6B7A8D; margin-top: 5px; border-top: 1px dashed var(--border); padding-top: 5px; }
+.rz-tag { font-size: 8.5px; font-weight: 800; color: #fff; background: var(--teal); border-radius: 5px; padding: 1px 6px; margin-left: 6px; vertical-align: middle; }
+.rz-tag.sec { color: #6B7A8D; background: #E8E5DD; } .rz-tag.pend { color: #fff; background: var(--gold); }
+/* problem cards */
+.rz-prob { border: 1px solid var(--border); border-left: 4px solid var(--teal); border-radius: 12px; padding: 11px 14px; margin-bottom: 10px; background: #fff; }
+.rz-prob .t { display: flex; align-items: center; gap: 8px; font-weight: 700; color: var(--navy); font-size: 13.5px; }
+.rz-prob .t .badge { margin-left: auto; font-size: 10px; font-weight: 700; padding: 2px 9px; border-radius: 20px; }
+.rz-prob .mets { display: flex; gap: 20px; margin-top: 8px; }
+.rz-prob .met .k { font-size: 9.5px; color: #6B7A8D; text-transform: uppercase; letter-spacing: .04em; font-weight: 700; }
+.rz-prob .met .v { font-size: 15px; font-weight: 800; color: var(--navy); }
+.rz-prob .lk { font-size: 11px; color: var(--teal); font-weight: 700; margin-top: 8px; cursor: pointer; display: inline-flex; align-items: center; gap: 5px; }
+.b-ok { background: #E4F3ED; color: var(--success); } .b-warn { background: #FEF6E0; color: #B8860B; } .b-bad { background: #FBEAE8; color: var(--danger); }
+/* KDIGO + MS */
+.rz-kdigo { width: 100%; border-collapse: collapse; font-size: 10.5px; }
+.rz-kdigo th, .rz-kdigo td { border: 1px solid #fff; padding: 6px 5px; text-align: center; color: #fff; font-weight: 700; }
+.rz-kdigo thead th { background: var(--navy); font-size: 9.5px; }
+.rz-kdigo .sl { background: #F1F4F8; color: var(--text); text-align: left; font-weight: 700; font-size: 9.5px; }
+.kc-g { background: #5AA86F; } .kc-y { background: #E0B23C; } .kc-o { background: #D2691E; } .kc-r { background: #C0473B; } .kc-dr { background: #8B2E26; }
+.rz-kdigo td.hl { outline: 3px solid var(--navy); outline-offset: -3px; }
+.rz-ms { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; }
+.rz-msi { border: 1px solid var(--border); border-radius: 10px; padding: 9px 6px; text-align: center; }
+.rz-msi .mt { font-size: 10px; font-weight: 700; color: var(--text); } .rz-msi .ml { font-size: 9px; color: #6B7A8D; } .rz-msi .mv { font-size: 13px; font-weight: 800; margin-top: 3px; color: #6B7A8D; }
+.rz-msi.met { background: #FBEAE8; border-color: transparent; } .rz-msi.met .mv { color: var(--danger); }
+.rz-msi.okk { background: #E4F3ED; border-color: transparent; } .rz-msi.okk .mv { color: var(--success); }
+.rz-msres { text-align: center; margin-top: 10px; font-size: 13px; font-weight: 800; }
+@media (max-width: 1000px) { .rz-cockpit { grid-template-columns: 1fr; } .rz-cls-grid { grid-template-columns: repeat(2, 1fr); } }
+/* barra de ações (vias impressas) */
+.rz-toolbar { display: flex; align-items: center; gap: 7px; background: #fff; border: 1px solid var(--border); border-radius: 12px; padding: 9px 12px; margin-bottom: 12px; overflow-x: auto; box-shadow: var(--shadow); }
+.rz-tb-start { background: var(--teal); color: #fff; border: none; border-radius: 9px; padding: 9px 15px; font-size: 12.5px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 7px; white-space: nowrap; flex: none; }
+.rz-tb-start:hover { background: #015560; }
+.rz-tb-sep { width: 1px; height: 30px; background: var(--border); margin: 0 3px; flex: none; }
+.rz-tb { display: flex; flex-direction: column; align-items: center; gap: 3px; background: #F7F9FC; border: 1px solid var(--border); border-radius: 9px; padding: 6px 11px; cursor: pointer; min-width: 72px; flex: none; }
+.rz-tb:hover { border-color: var(--teal); background: #F0F8F9; }
+.rz-tb .ico { font-size: 15px; } .rz-tb span:last-child { font-size: 10px; font-weight: 600; color: #6B7A8D; white-space: nowrap; }
+/* 3 zonas (rail esquerdo · centro · detalhe direito) */
+#tab-resumo { max-width: 1560px; }
+.rz-shell { display: grid; grid-template-columns: 264px 1fr 296px; gap: 14px; align-items: start; }
+.rz-rail, .rz-detail { display: flex; flex-direction: column; gap: 12px; }
+.rz-center { min-width: 0; }
+.rz-railcard { background:#fff; border:1px solid var(--border); border-radius:12px; box-shadow:var(--shadow); overflow:hidden; }
+.rz-railh { font-size:10.5px; font-weight:800; text-transform:uppercase; letter-spacing:.05em; color:var(--navy); padding:9px 13px; border-bottom:1px solid var(--border); display:flex; align-items:center; gap:7px; }
+.rz-railh .cnt { margin-left:auto; background:#F1F4F8; color:#6B7A8D; font-size:10px; font-weight:700; padding:1px 8px; border-radius:20px; }
+.rz-railb { padding:8px 13px 11px; }
+.rz-li { display:flex; align-items:flex-start; gap:8px; padding:6px 0; border-bottom:1px dashed var(--line2); font-size:12.5px; }
+.rz-li:last-child { border-bottom:none; }
+.rz-li .dotc { width:8px; height:8px; border-radius:50%; margin-top:5px; flex:none; }
+.rz-li .nm { font-weight:600; color:var(--text); } .rz-li .mt { color:#6B7A8D; font-size:11px; }
+.rz-med { display:flex; align-items:baseline; gap:6px; padding:5px 0; font-size:12.5px; border-bottom:1px dashed var(--line2); }
+.rz-med:last-child { border-bottom:none; }
+.rz-med .nm { font-weight:700; color:var(--text); } .rz-med .ds { color:#6B7A8D; font-size:11px; }
+.rz-med .pil { margin-left:auto; font-size:8.5px; font-weight:800; color:#fff; background:var(--teal); border-radius:5px; padding:1px 5px; }
+.rz-alerg { color:var(--danger); font-weight:600; font-size:12.5px; padding:3px 0; }
+.rz-empty { color:#8A97A8; font-size:11.5px; font-style:italic; padding:3px 0; }
+.rz-rem { background:#fff; border:1px solid var(--border); border-left:3px solid var(--warning); border-radius:9px; padding:8px 11px; }
+.rz-rem .rt { font-size:11.5px; font-weight:700; color:var(--navy); }
+.rz-fs { width:100%; border-collapse:collapse; font-size:11.5px; }
+.rz-fs th, .rz-fs td { padding:5px 6px; text-align:right; border-bottom:1px solid var(--line2); white-space:nowrap; }
+.rz-fs thead th { background:#F7F9FC; color:#6B7A8D; font-size:9.5px; font-weight:700; } .rz-fs th.lab, .rz-fs td.lab { text-align:left; } .rz-fs td.lab { font-weight:700; }
+.rz-fs th.now, .rz-fs td.now { background:#EEF6F7; color:var(--navy); }
+.rz-fscell { display:inline-block; min-width:28px; padding:1px 5px; border-radius:5px; font-weight:600; }
+.rz-fscell.bad{background:#FBEAE8;color:var(--danger);} .rz-fscell.warn{background:#FEF6E0;color:#B8860B;} .rz-fscell.ok{background:#E4F3ED;color:var(--success);}
+.rz-ev { display:flex; gap:9px; padding:6px 0; border-bottom:1px solid var(--line2); } .rz-ev:last-child{border-bottom:none;}
+.rz-ev .ed { font-size:10px; color:#6B7A8D; font-weight:700; min-width:54px; } .rz-ev .et { font-size:11.5px; color:#3A4658; } .rz-ev .et b{color:var(--navy);}
+.rz-mon { display:flex; justify-content:space-between; gap:8px; padding:5px 0; border-bottom:1px dashed var(--line2); font-size:11.5px; } .rz-mon:last-child{border-bottom:none;}
+.rz-mon .k { color:#6B7A8D; font-weight:700; } .rz-mon .v { font-weight:600; color:var(--text); text-align:right; }
+.rz-cons { display:flex; align-items:center; justify-content:space-between; gap:8px; padding:7px 8px; border:1px solid var(--border); border-radius:8px; margin-bottom:6px; cursor:pointer; }
+.rz-cons:hover { border-color:var(--teal); background:#F0F8F9; }
+.rz-cons.sel { border-color:var(--teal); background:#E0F2F1; }
+.rz-cons .nm { font-weight:700; font-size:12px; color:var(--navy); } .rz-cons .mt { font-size:10.5px; color:#6B7A8D; }
+.rz-cons .rz-cons-go { color:var(--teal); font-weight:800; font-size:15px; }
+.rz-cons-clear { font-size:10.5px; color:#6B7A8D; cursor:pointer; text-align:center; padding:4px; } .rz-cons-clear:hover { color:var(--danger); }
+.rz-cmp-banner { background:#E0F2F1; border:1px solid var(--teal); color:#015560; border-radius:9px; padding:8px 12px; font-size:12px; margin-bottom:10px; }
+.rz-cmp-banner span { color:var(--danger); font-weight:700; cursor:pointer; margin-left:6px; }
+@media (max-width: 1280px) { .rz-shell { grid-template-columns: 1fr; } }
+/* modal de vias (documentos dentro da casca nova) */
+.rz-modal { position: fixed; inset: 0; background: rgba(20,34,63,.45); display: none; align-items: flex-start; justify-content: center; z-index: 1000; padding: 28px 16px; overflow-y: auto; }
+.rz-modal.open { display: flex; }
+.rz-modal-card { background: #F4F6F9; border-radius: 14px; width: 100%; max-width: 860px; box-shadow: 0 20px 60px rgba(20,34,63,.3); overflow: hidden; }
+.rz-modal-head { display: flex; align-items: center; gap: 8px; background: #fff; border-bottom: 1px solid var(--border); padding: 10px 14px; flex-wrap: wrap; }
+.rz-modal-title { font-size: 13px; font-weight: 800; color: var(--navy); }
+.rz-modal-tabs { display: flex; gap: 4px; flex-wrap: wrap; margin-left: 6px; }
+.rz-vtab { font-size: 10.5px; font-weight: 700; border: 1px solid var(--border); background: #F7F9FC; color: #6B7A8D; border-radius: 7px; padding: 4px 9px; cursor: pointer; }
+.rz-vtab.on { background: var(--navy); color: #fff; border-color: var(--navy); }
+.rz-modal-save { margin-left: auto; background: var(--gold); color: var(--navy2); border: none; border-radius: 8px; padding: 7px 13px; font-size: 12px; font-weight: 700; cursor: pointer; }
+.rz-modal-print { background: var(--teal); color: #fff; border: none; border-radius: 8px; padding: 7px 13px; font-size: 12px; font-weight: 700; cursor: pointer; }
+.rz-modal-x { background: none; border: none; font-size: 18px; color: #6B7A8D; cursor: pointer; padding: 2px 8px; }
+.rz-modal-hint { background: #FBF3DD; color: #9C7B2E; font-size: 11px; padding: 6px 16px; border-bottom: 1px solid var(--border); }
+.rz-modal-body { padding: 18px; max-height: calc(100vh - 200px); overflow-y: auto; }
+.rz-modal-body .doc-section { display: block !important; }
+.rz-modal-body [contenteditable="true"]:focus { outline: 2px solid rgba(2,128,144,.35); border-radius: 4px; }
+/* barra de workflow do atendimento (Port 3) */
+.cw-bar { display: none; align-items: center; gap: 9px; background: linear-gradient(120deg, var(--navy), var(--navy-deep)); color: #fff; padding: 9px 16px; position: sticky; top: 0; z-index: 50; flex-wrap: wrap; }
+.cw-back { background: rgba(255,255,255,.12); color: #fff; border: none; border-radius: 8px; padding: 7px 12px; font-size: 12px; font-weight: 700; cursor: pointer; }
+.cw-back:hover { background: rgba(255,255,255,.22); }
+.cw-patient { font-weight: 800; font-size: 13px; color: #fff; }
+.cw-steps { display: flex; gap: 4px; margin-left: 6px; flex-wrap: wrap; }
+.cw-step { background: transparent; color: #C7D2E4; border: 1px solid rgba(255,255,255,.15); border-radius: 8px; padding: 7px 12px; font-size: 12px; font-weight: 600; cursor: pointer; }
+.cw-step:hover { background: rgba(255,255,255,.1); }
+.cw-step.on { background: rgba(255,255,255,.16); color: #fff; }
+.cw-gen { margin-left: auto; background: var(--gold); color: var(--navy-deep); border: none; border-radius: 8px; padding: 7px 13px; font-size: 12px; font-weight: 800; cursor: pointer; }
+.cw-save { background: var(--teal); color: #fff; border: none; border-radius: 8px; padding: 7px 13px; font-size: 12px; font-weight: 800; cursor: pointer; }
+/* Painel de protocolos (Avaliação & Plano) */
+.pp-row { border: 1px solid var(--border); border-radius: 10px; margin-bottom: 8px; overflow: hidden; }
+.pp-head { display: flex; align-items: center; gap: 12px; padding: 10px 14px; background: #F8F8F5; }
+.pp-chk { display: flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 600; color: var(--navy); cursor: pointer; white-space: nowrap; }
+.pp-chk input { width: 15px; height: 15px; accent-color: var(--teal); cursor: pointer; }
+.pp-name { flex: 1; font-size: 13.5px; font-weight: 700; color: var(--navy); }
+.pp-toggle { background: none; border: none; color: var(--teal); font-size: 12px; font-weight: 700; cursor: pointer; white-space: nowrap; }
+.pp-detail { padding: 12px 14px; border-top: 1px solid var(--border); }
+.pp-sub { font-size: 10.5px; font-weight: 800; text-transform: uppercase; letter-spacing: .4px; color: var(--gold); margin: 10px 0 5px; }
+.pp-sub:first-child { margin-top: 0; }
+.pp-item { font-size: 12px; color: #3A4658; padding: 6px 10px; background: #fff; border-radius: 6px; margin-bottom: 4px; border-left: 3px solid var(--teal); }
+.pp-cls { display: inline-block; font-size: 9.5px; font-weight: 700; color: #6B7A8D; background: #E8E5DD; border-radius: 5px; padding: 1px 6px; vertical-align: middle; }
+.pp-obs { font-size: 11px; color: #6B7A8D; margin-top: 3px; }
+/* Bioimpedância (Modelo A — analítico) no Resumo */
+.bz-row { display: grid; grid-template-columns: repeat(3,1fr); gap: 10px; margin-bottom: 14px; }
+.bz-ind { border: 1px solid var(--border); border-radius: 12px; padding: 11px 13px; }
+.bz-ind.ok { border-left: 4px solid var(--success); } .bz-ind.warn { border-left: 4px solid var(--warning); } .bz-ind.bad { border-left: 4px solid var(--danger); } .bz-ind.na { border-left: 4px solid #B6BFCB; }
+.bz-lab { font-size: 10px; text-transform: uppercase; letter-spacing: .04em; color: #6B7A8D; font-weight: 700; }
+.bz-val { font-size: 23px; font-weight: 800; color: var(--navy); margin-top: 3px; line-height: 1; } .bz-val small { font-size: 12px; color: #6B7A8D; font-weight: 600; }
+.bz-cl { font-size: 11px; font-weight: 700; margin-top: 4px; }
+.bz-evo { font-size: 10.5px; font-weight: 700; margin-top: 2px; color: #8A97A8; }
+.bz-sub { font-size: 11px; font-weight: 700; color: var(--navy); margin-bottom: 4px; }
+.bz-bar { display: flex; height: 32px; border-radius: 9px; overflow: hidden; margin: 6px 0 8px; }
+.bz-seg { display: flex; align-items: center; justify-content: center; color: #fff; font-size: 11px; font-weight: 700; white-space: nowrap; }
+.bz-seg.magra { background: var(--teal); } .bz-seg.gord { background: var(--gold); } .bz-seg.osso { background: #7E8AA0; }
+.bz-leg { display: flex; gap: 16px; flex-wrap: wrap; font-size: 11px; color: #6B7A8D; }
+.bz-leg b { color: var(--navy); } .bz-dot { width: 9px; height: 9px; border-radius: 3px; display: inline-block; margin-right: 5px; vertical-align: middle; }
+.bz-pa { position: relative; height: 14px; border-radius: 8px; background: linear-gradient(90deg, var(--danger) 0%, var(--warning) 40%, var(--success) 70%); margin: 8px 0 4px; }
+.bz-marker { position: absolute; top: -5px; width: 3px; height: 24px; background: var(--navy); border-radius: 2px; transform: translateX(-50%); }
+.bz-ticks { display: flex; justify-content: space-between; font-size: 9.5px; color: #6B7A8D; }
+.bz-chart { height: 190px; margin-top: 8px; }
 </style>
 </head>
 <body>
@@ -674,30 +882,150 @@ body {
     if (numEl && d.consultaNum) numEl.textContent = d.consultaNum;
     /* Store patient ID for future Supabase integration */
     if (d.patientId) window._apexPatientId = d.patientId;
-    if (d.patientName) window._apexPatientName = d.patientName;
+    if (d.patientName) {
+      window._apexPatientName = d.patientName;
+      var nameEl = document.getElementById('patientName');
+      if (nameEl) nameEl.textContent = d.patientName;
+      var avEl = document.getElementById('patientAvatar');
+      if (avEl) avEl.textContent = d.patientName.split(' ').filter(Boolean).map(function(w){ return w.charAt(0); }).slice(0, 2).join('').toUpperCase();
+      document.querySelectorAll('[id$="-patient"]').forEach(function(el){ el.textContent = d.patientName; });
+    }
+    /* Restaurar rascunho salvo deste paciente (anti-perda de dados) */
+    if (typeof restoreDraft === 'function') setTimeout(restoreDraft, 50);
+    /* Carregar memória de consultas anteriores deste paciente */
+    if (typeof loadConsultaHistory === 'function') setTimeout(loadConsultaHistory, 80);
   });
 })();
 </script>
 
 <!-- TOP BAR -->
 <div class="topbar">
-  <h1>Prontuário <span>CKM</span></h1>
+  <div class="tb-brand">
+    <img src="landing-page/Apex-pro-transparent.png" alt="APEX Pro" class="tb-logo">
+    <span class="tb-divider"></span>
+    <span class="tb-sub">Prontuário CKM</span>
+  </div>
   <div class="patient-tag" id="patientTag">
     <span id="patientSex">Masculino</span> · <span id="patientAge">58</span> anos · Consulta #<span id="consultaNum">1</span>
   </div>
 </div>
 
 <!-- TABS BAR -->
-<div class="tabs-bar">
-  <button class="tab-btn active" onclick="switchTab('consulta', this)">&#x1F4CB; Consulta</button>
-  <button class="tab-btn" onclick="switchTab('painel', this)">&#x1F4CA; Painel Clínico</button>
+<div class="tabs-bar" id="tabsBar">
+  <button class="tab-btn active" onclick="switchTab('resumo', this)">&#x1F4D1; Resumo</button>
+  <button class="tab-btn" onclick="switchTab('consulta', this)">&#x1F4CB; Consulta</button>
   <button class="tab-btn" onclick="switchTab('protocolo', this)">&#x1F3AF; Protocolo</button>
   <button class="tab-btn" onclick="switchTab('documentos', this)">&#x1F4C4; Documentos</button>
   <button class="tab-btn" onclick="switchTab('assessor', this)">&#x1F916; Assessor Virtual</button>
 </div>
 
+<!-- Barra de workflow do atendimento (aparece fora da home) -->
+<div class="cw-bar" id="consultaWorkflow">
+  <button class="cw-back" onclick="cwGo('resumo')">&#x2190; Resumo</button>
+  <span class="cw-patient" id="cwPatient">Paciente</span>
+  <div class="cw-steps">
+    <button class="cw-step" data-tab="consulta" onclick="cwGo('consulta')">&#x2460; Anamnese &amp; Exame</button>
+    <button class="cw-step" data-tab="protocolo" onclick="cwGo('protocolo')">&#x2461; Avaliação &amp; Plano</button>
+  </div>
+  <button class="cw-gen" onclick="cwGerarProtocolo()">&#x1F9EC; Gerar protocolo da base</button>
+  <button class="cw-save" onclick="saveConsulta()">&#x1F4BE; Salvar consulta</button>
+</div>
+
+<!-- TAB 0: RESUMO (modelo Elation · layout B+C) -->
+<div id="tab-resumo" class="tab-content active">
+  <!-- Barra de ações (vias impressas — religa ao printDoc/Documentos) -->
+  <div class="rz-toolbar">
+    <button class="rz-tb-start" onclick="document.querySelector('.tab-btn[onclick*=&quot;consulta&quot;]').click()">&#x1FA7A; Iniciar atendimento</button>
+    <div class="rz-tb-sep"></div>
+    <div class="rz-tb" onclick="abrirVia('receituario')"><span class="ico">&#x1F4DD;</span><span>Receituário</span></div>
+    <div class="rz-tb" onclick="abrirVia('exames_sangue')"><span class="ico">&#x1FA78;</span><span>Pedido exames</span></div>
+    <div class="rz-tb" onclick="abrirVia('encaminhamento')"><span class="ico">&#x1F4E8;</span><span>Encaminhar</span></div>
+    <div class="rz-tb" onclick="abrirVia('recomendacao_doc')"><span class="ico">&#x1F4C3;</span><span>Recomendações</span></div>
+    <div class="rz-tb" onclick="abrirVia('suplementos_doc')"><span class="ico">&#x1F48A;</span><span>Suplementos</span></div>
+    <div class="rz-tb" onclick="abrirVia('atestado')"><span class="ico">&#x1F4C4;</span><span>Atestado</span></div>
+    <div class="rz-tb" onclick="abrirVia('resumo')"><span class="ico">&#x2B50;</span><span>Resumo paciente</span></div>
+    <div class="rz-tb" onclick="cwGo('assessor')"><span class="ico">&#x1F916;</span><span>Assessor</span></div>
+  </div>
+
+  <div class="rz-shell">
+  <aside class="rz-rail" id="resumoRail"></aside>
+  <main class="rz-center">
+
+  <div class="resumo-patient">
+    <div class="patient-avatar" id="resumoAvatar">JS</div>
+    <div>
+      <div class="p-name" id="resumoName">João Silva</div>
+      <div class="p-meta" id="resumoMeta">—</div>
+    </div>
+    <div class="p-tags" id="resumoTags"></div>
+  </div>
+
+  <!-- 1. COCKPIT -->
+  <div class="rz-sect"><span>&#x1F4CA; Visão geral</span></div>
+  <div class="rz-cockpit">
+    <div class="rz-card rz-radarwrap"><canvas id="resumoRadar" width="280" height="250"></canvas></div>
+    <div>
+      <div class="rz-bigscores" id="resumoScores"></div>
+      <div class="rz-ckmbar" id="resumoCkmBar"></div>
+    </div>
+  </div>
+
+  <!-- 2. PROBLEMAS ATIVOS -->
+  <div class="rz-sect"><span>&#x1F4CB; Problemas ativos</span><span class="hint">derivados dos antecedentes · métrica + classificação</span></div>
+  <div id="resumoProblemas"></div>
+
+  <!-- 3. CLASSIFICAÇÕES -->
+  <div class="rz-sect"><span>&#x1F4CF; Classificações clínicas</span></div>
+  <div id="resumoCompareBanner"></div>
+  <div class="rz-cls-grid" id="resumoClassif"></div>
+
+  <!-- 4. CALCULADORAS -->
+  <div class="rz-sect"><span>&#x1F9EE; Calculadoras de risco</span></div>
+  <div class="rz-calc-grid" id="resumoCalc"></div>
+
+  <!-- 4b. BIOIMPEDÂNCIA (Modelo A — analítico) -->
+  <div id="resumoBioSect" style="display:none;">
+    <div class="rz-sect"><span>&#x26A1; Composição corporal (bioimpedância)</span></div>
+    <div class="rz-card" id="resumoBio" style="padding:14px;"></div>
+  </div>
+
+  <!-- 5. KDIGO + SÍNDROME METABÓLICA -->
+  <div class="rz-sect"><span>&#x1F9EC; KDIGO CGA &amp; Síndrome Metabólica</span></div>
+  <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px; align-items:start;">
+    <div class="rz-card" style="padding:12px;">
+      <div style="font-size:11px; font-weight:800; color:var(--navy); margin-bottom:7px;">Prognóstico DRC (TFGe × RAC)</div>
+      <table class="rz-kdigo">
+        <thead><tr><th>TFGe</th><th>A1 &lt;30</th><th>A2 30-300</th><th>A3 &gt;300</th></tr></thead>
+        <tbody>
+          <tr><td class="sl">G1 ≥90</td><td class="kc-g" id="rk-g1a1">Baixo</td><td class="kc-y" id="rk-g1a2">Mod</td><td class="kc-o" id="rk-g1a3">Alto</td></tr>
+          <tr><td class="sl">G2 60-89</td><td class="kc-g" id="rk-g2a1">Baixo</td><td class="kc-y" id="rk-g2a2">Mod</td><td class="kc-o" id="rk-g2a3">Alto</td></tr>
+          <tr><td class="sl">G3a 45-59</td><td class="kc-y" id="rk-g3aa1">Mod</td><td class="kc-o" id="rk-g3aa2">Alto</td><td class="kc-r" id="rk-g3aa3">M.alto</td></tr>
+          <tr><td class="sl">G3b 30-44</td><td class="kc-o" id="rk-g3ba1">Alto</td><td class="kc-r" id="rk-g3ba2">M.alto</td><td class="kc-dr" id="rk-g3ba3">M.alto</td></tr>
+          <tr><td class="sl">G4 15-29</td><td class="kc-r" id="rk-g4a1">M.alto</td><td class="kc-dr" id="rk-g4a2">M.alto</td><td class="kc-dr" id="rk-g4a3">M.alto</td></tr>
+          <tr><td class="sl">G5 &lt;15</td><td class="kc-dr" id="rk-g5a1">M.alto</td><td class="kc-dr" id="rk-g5a2">M.alto</td><td class="kc-dr" id="rk-g5a3">M.alto</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="rz-card" style="padding:12px;">
+      <div style="font-size:11px; font-weight:800; color:var(--navy); margin-bottom:7px;">Síndrome Metabólica (≥3 critérios)</div>
+      <div class="rz-ms" id="resumoMS"></div>
+      <div class="rz-msres" id="resumoMSres"></div>
+    </div>
+  </div>
+
+  <!-- 6. METAS -->
+  <div class="rz-sect"><span>&#x1F3AF; Metas progressivas</span></div>
+  <div class="rz-card" style="padding:6px 14px 10px;">
+    <div id="resumoGoals"></div>
+  </div>
+
+  </main>
+  <aside class="rz-detail" id="resumoDetail"></aside>
+  </div><!-- end rz-shell -->
+</div>
+
 <!-- TAB 1: CONSULTA -->
-<div id="tab-consulta" class="tab-content active">
+<div id="tab-consulta" class="tab-content">
 
   <!-- Patient Header -->
   <div class="patient-header">
@@ -752,6 +1080,7 @@ body {
       <div id="consultaHistory" style="max-height:400px; overflow-y:auto;">
         <p style="color:#999; font-size:12px; text-align:center; margin:20px 0;">Clique em "Carregar Histórico" para ver consultas anteriores salvas</p>
       </div>
+      <div id="consultaDetail" style="display:none; margin-top:12px; padding:14px; background:#F8F8F5; border-radius:var(--radius-sm); border-left:4px solid var(--gold);"></div>
     </div>
   </div>
 
@@ -861,6 +1190,9 @@ body {
       <label class="checkbox-item"><input type="checkbox" id="hpp_nash"> Esteatose/NASH</label>
       <label class="checkbox-item"><input type="checkbox" id="hpp_apneia"> Apneia do sono</label>
       <label class="checkbox-item"><input type="checkbox" id="hpp_litiase"> Litíase renal</label>
+      <label class="checkbox-item"><input type="checkbox" id="hpp_cistos"> Cistos renais / DRPA</label>
+      <label class="checkbox-item"><input type="checkbox" id="hpp_gn"> Glomerulonefrite</label>
+      <label class="checkbox-item"><input type="checkbox" id="hpp_itu"> ITU de repetição</label>
       <label class="checkbox-item"><input type="checkbox" id="hpp_transplante"> Transplante renal</label>
     </div>
     <div class="form-group" style="margin-top:10px;">
@@ -1206,6 +1538,17 @@ body {
     <p style="font-size:12px; color:#6B7A8D; margin-top:8px;">Puxa dados da consulta e exames para montar o protocolo personalizado</p>
   </div>
 
+  <!-- Painel unificado de protocolos CKM -->
+  <div class="section-header">Protocolos por condição (base CKM)</div>
+  <div class="card">
+    <div class="card-title"><span class="icon">&#x1F9EC;</span> Painel de Protocolos</div>
+    <p style="font-size:12px; color:#6B7A8D; margin-bottom:12px;">Condições ativas do paciente (antecedentes marcados na anamnese). Marque as que entram no protocolo desta consulta; expanda para ver medicações de 1ª linha, exames e metas da base. Glomerulonefrite traz o seletor do subtipo histológico.</p>
+    <div id="painelProtocolos"><p style="color:#999;font-size:12px;">Marque os antecedentes na etapa Anamnese & Exame para listar as condições aqui.</p></div>
+    <div id="painelProtocolosFooter" style="display:none; margin-top:14px; text-align:right;">
+      <button class="btn btn-primary btn-sm" onclick="aplicarPainelProtocolos()">Aplicar protocolo das selecionadas &#x2192; prescrição + exames</button>
+    </div>
+  </div>
+
   <!-- Lifestyle: diet, exercise, hydration, sleep, supplements -->
   <div class="section-header">Estilo de Vida</div>
   <div class="card">
@@ -1294,7 +1637,7 @@ body {
   <div class="section-header">Protocolo de Acompanhamento — 12 Meses</div>
   <div class="card">
     <div class="card-title"><span class="icon">&#x1F4C5;</span> Cronograma APEX
-      <button class="btn btn-outline btn-sm" style="margin-left:auto;" onclick="loadProtocol12M()">&#x1F504; Carregar Protocolo Padr&#227;o</button>
+      <button class="btn btn-primary btn-sm" style="margin-left:auto;background:linear-gradient(135deg,var(--teal),#015560);" onclick="gerarCronogramaDaBase()">&#x1F9EC; Gerar cronograma da base CKM</button>
     </div>
     <p style="font-size:12px; color:#6B7A8D; margin-bottom:14px;">Distribui&#231;&#227;o de exames, consultas e teleconsultas ao longo do protocolo de 12 meses.</p>
 
@@ -1307,6 +1650,13 @@ body {
     <div id="protocolMonthDetail" style="display:none; padding:16px; background:#F8F8F5; border-radius:var(--radius-sm); border-left:4px solid var(--teal);">
       <!-- Filled dynamically -->
     </div>
+  </div>
+
+  <!-- Rastreio e vacinas (gerados da base CKM) -->
+  <div class="card">
+    <div class="card-title"><span class="icon">&#x1F6E1;</span> Rastreio e Vacinas (da base CKM)</div>
+    <p style="font-size:12px; color:#6B7A8D; margin-bottom:10px;">Gerado por idade, sexo, história familiar e condições — junto com o cronograma.</p>
+    <div id="baseRastreioVacinas"><p style="color:#999;font-size:12px;">Clique em "Gerar cronograma da base CKM" para preencher.</p></div>
   </div>
 
   <!-- Ad-hoc exam additions -->
@@ -1355,30 +1705,6 @@ body {
     </div>
     <div id="examReqList" style="margin-top:12px;"></div>
   </div>
-
-  <!-- Glomerulonephritis Protocol -->
-  <div class="section-header">Protocolos Específicos</div>
-  <div class="card">
-    <div class="card-title"><span class="icon">&#x1F9EC;</span> Protocolo Glomerulonefrites (KDIGO 2021)</div>
-    <p style="font-size:12px; color:#6B7A8D; margin-bottom:12px;">Selecione o tipo de GN para gerar o protocolo terapêutico baseado nas diretrizes KDIGO 2021.</p>
-    <div style="display:grid; grid-template-columns:1fr auto; gap:10px; align-items:end;">
-      <div class="form-group" style="margin:0;">
-        <select id="gnProtocol" style="width:100%; padding:10px; border-radius:var(--radius-sm); border:1px solid var(--border);">
-          <option value="">— Selecionar tipo de GN —</option>
-          <option value="nefrotica_membranosa">Nefropatia Membranosa (Anti-PLA2R+)</option>
-          <option value="nefrite_lupica">Nefrite Lúpica (classe III/IV)</option>
-          <option value="iga">Nefropatia por IgA</option>
-          <option value="anca">Vasculite ANCA (indução)</option>
-          <option value="gesf">GESF (corticossensível)</option>
-          <option value="membranoproliferativa">GN Membranoproliferativa</option>
-          <option value="lm">Lesão Mínima (adulto)</option>
-        </select>
-      </div>
-      <button class="btn btn-primary btn-sm" onclick="applyGNProtocol()">Aplicar Protocolo</button>
-    </div>
-    <div id="gnProtocolDetail" style="display:none; margin-top:14px; padding:16px; background:#F8F8F5; border-radius:var(--radius-sm); border-left:4px solid var(--teal);"></div>
-  </div>
-
 
 
 </div>
@@ -2242,9 +2568,464 @@ function switchTab(name, btn) {
   document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
   document.getElementById('tab-'+name).classList.add('active');
   btn.classList.add('active');
+  // Barra antiga fica oculta; o workflow de atendimento aparece fora da home
+  const cw = document.getElementById('consultaWorkflow');
+  if (cw) cw.style.display = (name === 'resumo') ? 'none' : 'flex';
+  document.querySelectorAll('.cw-step').forEach(s => s.classList.toggle('on', s.dataset.tab === name));
+  const cwp = document.getElementById('cwPatient');
+  if (cwp) cwp.textContent = document.getElementById('patientName')?.textContent || 'Paciente';
+  if (name === 'resumo') renderResumo();
+  if (name === 'protocolo' && typeof renderPainelProtocolos === 'function') renderPainelProtocolos();
   if (name === 'painel') { recalcAll(); setTimeout(drawRadar, 100); }
   if (name === 'documentos') updateAllDocs();
 }
+
+// ============================================================
+// RESUMO (modelo Elation) — Storyboard CKM com dados reais
+// ============================================================
+function renderResumo() {
+  const age = getAge(), male = isMale();
+  const dash = '<span style="color:#B6BFCB">—</span>';
+  const sev = c => { const b = c?.badge; if (b==='badge-green') return 'ok'; if (b==='badge-yellow'||b==='badge-orange') return 'warn'; if (b==='badge-red') return 'bad'; return 'na'; };
+  const isRet = consultaMode === 'retorno';
+  const evo = (cur, prev, lowerBetter) => {
+    if (!cur || !prev) return '';
+    const d = cur - prev;
+    if (Math.abs(d) < 0.01) return '<span class="evo" style="color:#8A97A8">&#x2194;</span>';
+    const good = lowerBetter ? d < 0 : d > 0;
+    const arrow = d > 0 ? '&#x2191;' : '&#x2193;';
+    const pct = Math.abs(Math.round((d / prev) * 100));
+    return `<span class="evo" style="color:${good?'var(--success)':'var(--danger)'}">${arrow} ${pct}%</span>`;
+  };
+
+  // ── Cabeçalho ──
+  const nm = document.getElementById('patientName')?.textContent || 'Paciente';
+  document.getElementById('resumoName').textContent = nm;
+  document.getElementById('resumoAvatar').textContent =
+    nm.split(' ').filter(Boolean).map(w => w[0]).slice(0,2).join('').toUpperCase();
+  const consultaNum = document.getElementById('consultaNum')?.textContent || '1';
+  document.getElementById('resumoMeta').textContent =
+    (male ? 'Masculino' : 'Feminino') + ' · ' + age + ' anos · Consulta #' + consultaNum +
+    ' (' + (isRet ? 'retorno' : 'primeira') + ')';
+
+  // ── Valores reais ──
+  const cr = labVal('cr'), rac = labVal('rac'), pas = labVal('pas'), pad = getV('pad');
+  const hba1c = labVal('hba1c'), ldl = labVal('ldl'), au = labVal('au');
+  const ast = labVal('ast_v'), alt = labVal('alt_v'), plaq = labVal('plaq');
+  const tfge = calcTFGe(cr, age, !male);
+  const imc = calcIMC(getV('peso'), getV('altura'));
+  const fib4 = calcFIB4(age, ast, plaq, alt);
+  const ckmStage = calcCKM(), ascvd = calcASCVD(), kfre = calcKFRE(), prevent = calcPREVENT();
+  const cTfge = classifyTFGe(tfge), cRac = classifyRAC(rac), cPa = classifyPA(pas, pad),
+        cImc = classifyIMC(imc || 0), cA1c = classifyHbA1c(hba1c), cLdl = classifyLDL(ldl), cFib4 = classifyFIB4(fib4);
+
+  // Prévios (retorno)
+  const pTfge = isRet ? calcTFGe(getV('cr_first'), age, !male) : null;
+  const pRac = isRet ? (getV('rac_first')||null) : null, pPas = isRet ? (getV('pas_first')||null) : null;
+  const pImc = isRet ? calcIMC(getV('peso_first'), getV('altura_first')) : null;
+  const pA1c = isRet ? (getV('hba1c_first')||null) : null, pLdl = isRet ? (getV('ldl_first')||null) : null;
+  const pAu = isRet ? (getV('au_first')||null) : null;
+
+  // Baseline de comparação: consulta anterior selecionada no rail (sobrepõe o _first do retorno)
+  const cmp = window._resumoCompare || null;
+  const _num = x => { const n = parseFloat(String(x == null ? '' : x).replace(',', '.')); return isNaN(n) ? null : n; };
+  const bTfge = cmp ? _num(cmp.tfge) : pTfge;
+  const bPas  = cmp ? _num((cmp.pa || '').split('/')[0]) : pPas;
+  const bImc  = cmp ? _num(cmp.imc) : pImc;
+  const bA1c  = cmp ? _num(cmp.hba1c) : pA1c;
+  const bLdl  = cmp ? _num(cmp.ldl) : pLdl;
+  const bRac  = cmp ? null : pRac;
+  const bAu   = cmp ? null : pAu;
+
+  // ── Tags topo ──
+  const tags = [`<span class="p-pill stage">&#x1F9EC; CKM Estágio ${ckmStage}</span>`];
+  if (ascvd !== null) {
+    const rk = ascvd >= 20 ? 'risk' : ascvd >= 7.5 ? 'risk-mod' : 'risk-low';
+    const lbl = ascvd >= 20 ? 'Risco CV alto' : ascvd >= 7.5 ? 'Risco CV intermediário' : 'Risco CV baixo';
+    tags.push(`<span class="p-pill ${rk}">&#x2764; ${lbl} · ${ascvd}%</span>`);
+  }
+  document.getElementById('resumoTags').innerHTML = tags.join('');
+
+  // ── 1. Cockpit: escores grandes ──
+  const ascvdCls = ascvd === null ? 'na' : ascvd >= 20 ? 'bad' : ascvd >= 5 ? 'warn' : 'ok';
+  const preventCls = !prevent ? 'na' : prevent.totalCVD >= 20 ? 'bad' : prevent.totalCVD >= 7.5 ? 'warn' : 'ok';
+  const kfreCls = kfre === null ? 'na' : kfre >= 10 ? 'bad' : kfre >= 3 ? 'warn' : 'ok';
+  const fib4Cls = fib4 === null ? 'na' : fib4 > 2.67 ? 'bad' : fib4 >= 1.3 ? 'warn' : 'ok';
+  const ckmCls = ckmStage <= 1 ? 'ok' : ckmStage <= 2 ? 'warn' : 'bad';
+  // Painel CKM didático (os escores de risco aparecem só nas Calculadoras — sem repetição)
+  const ckmTitles = ['Sem fatores de risco','Excesso de adiposidade','Metabólico + DRC moderada','DCV subclínica / risco alto','DCV clínica estabelecida'];
+  const ckmDescs = [
+    'Sem sobrepeso nem disfunção metabólica. Foco em prevenção primária e estilo de vida.',
+    'Excesso de adiposidade ou pré-diabetes/pré-hipertensão. Amplamente reversível com estilo de vida.',
+    'Fatores metabólicos (DM, HAS, dislipidemia) e/ou DRC moderada. Tratar cada fator de risco.',
+    'Doença cardiovascular subclínica ou risco alto. Janela para prevenção intensiva (4 pilares).',
+    'Evento cardiovascular já estabelecido (IAM, AVC, IC). Foco em prevenção secundária.'
+  ];
+  document.getElementById('resumoScores').innerHTML =
+    `<div class="rz-ckm-head ${ckmCls}">
+       <div class="rz-ckm-badge"><span>Estágio</span><b>${ckmStage}</b></div>
+       <div class="rz-ckm-info"><div class="rz-ckm-title">${ckmTitles[ckmStage]}</div><div class="rz-ckm-desc">${ckmDescs[ckmStage]}</div></div>
+     </div>`;
+  const ckmShort = ['Sem fatores','Excesso adiposidade','Fatores metab. + DRC','DCV subclínica / alto risco','DCV clínica'];
+  document.getElementById('resumoCkmBar').innerHTML =
+    '<div class="ckm-bar">' + ckmShort.map((l,i) =>
+      `<div class="ckm-stage ckm-${i}${i===ckmStage?' active':''}">Estágio ${i}<br><span style="font-size:10px;font-weight:400;">${l}</span></div>`).join('') + '</div>';
+
+  // ── 2. Problemas ativos (derivados dos antecedentes) ──
+  const sb = c => { const s = sev(c); return s==='ok'?'b-ok':s==='warn'?'b-warn':s==='bad'?'b-bad':'b-warn'; };
+  const probDefs = [
+    { id:'hpp_drc', icon:'&#x1FA78;', label:'Doença Renal Crônica', badge: cTfge.stage&&cRac.stage?`${cTfge.stage} ${cRac.stage}`:(cTfge.stage||'ativo'), bcls: sb(cTfge),
+      mets:[['TFGe', tfge||'—'],['RAC', rac||'—'],['K⁺', labVal('k')||'—']] },
+    { id:'hpp_dm2', icon:'&#x1F489;', label:'Diabetes tipo 2', badge: hba1c?cA1c.label:'ativo', bcls: hba1c?sb(cA1c):'b-warn',
+      mets:[['HbA1c', hba1c?hba1c+'%':'—'],['meta','<7%']] },
+    { id:'hpp_has', icon:'&#x2764;', label:'Hipertensão', badge: pas?cPa.label:'ativo', bcls: pas?sb(cPa):'b-warn',
+      mets:[['PA', pas?pas+'/'+(pad||'–'):'—'],['meta','<130/80']] },
+    { id:'hpp_dlp', icon:'&#x1F9EC;', label:'Dislipidemia', badge: ldl?cLdl.label:'ativo', bcls: ldl?sb(cLdl):'b-warn',
+      mets:[['LDL', ldl||'—'],['alvo','conf. risco']] },
+    { id:'hpp_obes', icon:'&#x2696;', label:'Obesidade', badge: imc?cImc.label:'ativo', bcls: imc?sb(cImc):'b-warn',
+      mets:[['IMC', imc||'—']] }
+  ];
+  const simples = { hpp_gota:'Gota', hpp_nash:'Esteatose/NASH', hpp_litiase:'Litíase renal', hpp_cistos:'Cistos renais / DRPA',
+    hpp_gn:'Glomerulonefrite', hpp_itu:'ITU de repetição', hpp_transplante:'Transplante renal', hpp_ic:'Insuf. cardíaca',
+    hpp_dac:'Doença arterial coronariana', hpp_avc:'AVC', hpp_apneia:'Apneia do sono', hpp_hipot:'Hipotireoidismo' };
+  let probHtml = '';
+  probDefs.forEach(p => {
+    if (!document.getElementById(p.id)?.checked) return;
+    probHtml += `<div class="rz-prob"><div class="t">${p.icon} ${p.label}<span class="badge ${p.bcls}">${p.badge}</span></div>
+      <div class="mets">${p.mets.map(m=>`<div class="met"><div class="k">${m[0]}</div><div class="v">${m[1]}</div></div>`).join('')}</div>
+      <div class="lk" onclick="document.querySelector('.tab-btn[onclick*=protocolo]')?.click()">&#x1F4D6; Ver protocolo da base</div></div>`;
+  });
+  Object.keys(simples).forEach(id => {
+    if (!document.getElementById(id)?.checked) return;
+    probHtml += `<div class="rz-prob"><div class="t">&#x1F539; ${simples[id]}<span class="badge b-warn">ativo</span></div>
+      <div class="lk" onclick="document.querySelector('.tab-btn[onclick*=protocolo]')?.click()">&#x1F4D6; Ver protocolo da base</div></div>`;
+  });
+  document.getElementById('resumoProblemas').innerHTML = probHtml ||
+    '<div style="color:#8A97A8;font-size:12.5px;font-style:italic;padding:4px 2px;">Nenhum antecedente marcado na consulta ainda.</div>';
+
+  // ── 3. Classificações (8) ──
+  const auCls = !au ? {label:'—',badge:'badge-blue'} : (au > (male?7:6) ? {label:'Elevado',badge:'badge-red'} : {label:'Normal',badge:'badge-green'});
+  const clsCards = [
+    { lab:'TFGe', v: tfge?`${tfge} <small>mL/min</small>`:dash, c:cTfge, e:evo(tfge,bTfge,false) },
+    { lab:'RAC', v: rac?`${rac} <small>mg/g</small>`:dash, c:cRac, e:evo(rac,bRac,true) },
+    { lab:'PA', v: pas?`${pas}/${pad||'–'}`:dash, c: pas?cPa:{label:'—',badge:'badge-blue'}, e:evo(pas,bPas,true) },
+    { lab:'IMC', v: imc?`${imc} <small>kg/m²</small>`:dash, c: imc?cImc:{label:'—',badge:'badge-blue'}, e:evo(imc,bImc,true) },
+    { lab:'HbA1c', v: hba1c?`${hba1c} <small>%</small>`:dash, c:cA1c, e:evo(hba1c,bA1c,true) },
+    { lab:'LDL', v: ldl?`${ldl} <small>mg/dL</small>`:dash, c:cLdl, e:evo(ldl,bLdl,true) },
+    { lab:'FIB-4', v: fib4?`${fib4}`:dash, c:cFib4, e:'' },
+    { lab:'Ác. Úrico', v: au?`${au} <small>mg/dL</small>`:dash, c:auCls, e:evo(au,bAu,true) }
+  ];
+  const banner = document.getElementById('resumoCompareBanner');
+  if (banner) banner.innerHTML = cmp
+    ? `<div class="rz-cmp-banner">&#x21C4; Comparando com a consulta de <b>${cmp.date||'—'}</b> — as setas mostram a evolução desde então. <span onclick="limparComparacao()">&#x2715; limpar</span></div>`
+    : '';
+  document.getElementById('resumoClassif').innerHTML = clsCards.map(x => {
+    const s = sev(x.c);
+    const color = s==='ok'?'var(--success)':s==='warn'?'var(--warning)':s==='bad'?'var(--danger)':'#8A97A8';
+    return `<div class="rz-cls ${s}"><div class="evo">${x.e||''}</div><div class="lab">${x.lab}</div><div class="val">${x.v}</div><div class="cl" style="color:${color}">${x.c.label}</div></div>`;
+  }).join('');
+
+  // ── 4. Calculadoras ──
+  document.getElementById('resumoCalc').innerHTML = [
+    `<div class="rz-calc ${preventCls}"><div class="ch"><span class="cn">PREVENT 10a <span class="rz-tag prim">primária</span></span><span class="cv">${prevent?prevent.totalCVD+'%':'—'}</span></div><div class="cd">${prevent?'Risco CV total (ASCVD + IC) · ASCVD '+prevent.ascvd+'% · IC '+prevent.hf+'%':'Dados insuficientes (requer PA, CT, HDL, IMC, TFGe)'}</div><div class="cm">AHA PREVENT — modelo base, coeficientes oficiais (Circulation 2024)</div></div>`,
+    `<div class="rz-calc ${ascvdCls}"><div class="ch"><span class="cn">ASCVD 10a <span class="rz-tag sec">secundária</span></span><span class="cv">${ascvd!==null?ascvd+'%':'—'}</span></div><div class="cd">${ascvd!==null?(ascvd>=20?'Risco alto':ascvd>=7.5?'Intermediário':'Baixo'):'Dados insuficientes'}</div><div class="cm">Pooled Cohort Equations (ACC/AHA) — infarto/AVC em 10 anos</div></div>`,
+    `<div class="rz-calc ${kfreCls}"><div class="ch"><span class="cn">KFRE 5a</span><span class="cv">${kfre!==null?kfre+'%':'—'}</span></div><div class="cd">${kfre!==null?(kfre>=10?'Alto risco de diálise':kfre>=3?'Risco moderado':'Baixo risco'):'Dados insuficientes'}</div><div class="cm">Kidney Failure Risk Equation (idade, sexo, TFGe, RAC)</div></div>`,
+    `<div class="rz-calc ${fib4Cls}"><div class="ch"><span class="cn">FIB-4</span><span class="cv">${fib4!==null?fib4:'—'}</span></div><div class="cd">${fib4!==null?cFib4.label:'Dados insuficientes'}</div><div class="cm">Idade, AST, ALT, plaquetas — rastreio de NASH/esteatose</div></div>`
+  ].join('');
+
+  // ── 4b. Bioimpedância (Modelo A) ──
+  if (typeof renderResumoBio === 'function') renderResumoBio();
+
+  // ── 5. KDIGO highlight + Síndrome Metabólica ──
+  document.querySelectorAll('.rz-kdigo td.hl').forEach(td => td.classList.remove('hl'));
+  if (cTfge.stage && cRac.stage) {
+    const cell = document.getElementById('rk-' + cTfge.stage.toLowerCase() + cRac.stage.toLowerCase());
+    if (cell) cell.classList.add('hl');
+  }
+  const ms = calcMS();
+  const ca = getV('ca'), tg = labVal('tg'), hdl = labVal('hdl'), glic = labVal('glic');
+  const msItems = [
+    ['Circ. Abd.', male?'H>90':'M>80', ca?ca+' cm':'—', ms.criteria.ca],
+    ['TG', '≥150', tg?tg:'—', ms.criteria.tg],
+    ['HDL', male?'<40':'<50', hdl?hdl:'—', ms.criteria.hdl],
+    ['PA', '≥130/85', pas?pas+'/'+(pad||'–'):'—', ms.criteria.pa],
+    ['Glicemia', '≥100', glic?glic:'—', ms.criteria.glic]
+  ];
+  document.getElementById('resumoMS').innerHTML = msItems.map(m =>
+    `<div class="rz-msi ${m[3]?'met':(m[2]!=='—'?'okk':'')}"><div class="mt">${m[0]}</div><div class="ml">${m[1]}</div><div class="mv">${m[2]}</div></div>`).join('');
+  const msRisk = ms.count >= 4 ? { lbl:'Risco CV alto', cls:'bad', exp:'≥4 critérios — risco cardiovascular e de diabetes substancialmente elevado.' }
+    : ms.count === 3 ? { lbl:'Risco CV aumentado', cls:'warn', exp:'3 critérios — síndrome presente; risco CV ~2× e maior risco de evoluir para DM2.' }
+    : ms.count === 2 ? { lbl:'Pré-síndrome', cls:'warn', exp:'2 critérios — sinal de alerta; intervir no estilo de vida para não progredir.' }
+    : { lbl:'Baixo risco metabólico', cls:'ok', exp:'Sem síndrome metabólica no momento.' };
+  document.getElementById('resumoMSres').innerHTML =
+    `<div class="rz-ms-risk ${msRisk.cls}">
+       <div class="rr"><b>${ms.present ? '&#x26A0; Síndrome Metabólica PRESENTE' : '&#x2705; Síndrome Metabólica ausente'}</b><span class="rb">${msRisk.lbl} · ${ms.count}/5</span></div>
+       <div class="re">${msRisk.exp}</div>
+     </div>`;
+
+  // ── 6. Metas progressivas ──
+  const goalRow = (param, atual, meta12, unit) => {
+    if (!atual) return '';
+    const m3 = Math.round((atual + (meta12 - atual) * 0.3) * 10) / 10;
+    const m6 = Math.round((atual + (meta12 - atual) * 0.6) * 10) / 10;
+    return `<tr><td>${param}</td><td class="now">${Math.round(atual*10)/10} ${unit}</td><td class="tgt">${m3}</td><td class="tgt">${m6}</td><td class="tgt">&lt; ${meta12} ${unit}</td></tr>`;
+  };
+  let goalsBody = '';
+  goalsBody += goalRow('PA Sistólica', pas, 130, 'mmHg');
+  goalsBody += goalRow('HbA1c', hba1c, hba1c>7?7:hba1c, '%');
+  goalsBody += goalRow('LDL', ldl, ldl>100?(ascvd&&ascvd>20?55:70):ldl, 'mg/dL');
+  goalsBody += goalRow('IMC', imc, imc>25?25:imc, 'kg/m²');
+  if (rac && rac > 30) goalsBody += goalRow('RAC', rac, 30, 'mg/g');
+  document.getElementById('resumoGoals').innerHTML = goalsBody
+    ? `<table class="goals" style="width:100%;border-collapse:collapse;font-size:11.5px;"><thead><tr><th style="text-align:left;padding:6px 8px;color:#6B7A8D;font-size:10px;border-bottom:1px solid var(--border);">Parâmetro</th><th style="padding:6px 8px;color:#6B7A8D;font-size:10px;border-bottom:1px solid var(--border);">Atual</th><th style="padding:6px 8px;color:#6B7A8D;font-size:10px;border-bottom:1px solid var(--border);">3 meses</th><th style="padding:6px 8px;color:#6B7A8D;font-size:10px;border-bottom:1px solid var(--border);">6 meses</th><th style="padding:6px 8px;color:#6B7A8D;font-size:10px;border-bottom:1px solid var(--border);">12 meses</th></tr></thead><tbody>${goalsBody}</tbody></table>`
+    : '<div style="color:#8A97A8;font-size:12.5px;font-style:italic;padding:8px 2px;">Preencha os exames na Consulta para gerar as metas.</div>';
+
+  // ── Rails laterais (Port 4) ──
+  renderResumoRail();
+  renderResumoDetail({ tfge, pas, pad, hba1c, ldl, rac, k: labVal('k'), ascvd });
+
+  // ── Radar (8 eixos, dados reais normalizados) ──
+  renderResumoRadar(tfge, pas, hba1c, ldl, imc, rac, fib4, au);
+}
+
+// ── Rail esquerdo: perfil clínico persistente ──
+function renderResumoRail() {
+  const rail = document.getElementById('resumoRail'); if (!rail) return;
+  const card = (title, count, body) =>
+    `<div class="rz-railcard"><div class="rz-railh">${title}${count!=null?`<span class="cnt">${count}</span>`:''}</div><div class="rz-railb">${body}</div></div>`;
+
+  // Problemas
+  const probMap = { hpp_drc:['Doença Renal Crônica','var(--danger)'], hpp_dm2:['Diabetes tipo 2','var(--warning)'],
+    hpp_has:['Hipertensão','var(--warning)'], hpp_dlp:['Dislipidemia','var(--warning)'], hpp_obes:['Obesidade','var(--warning)'],
+    hpp_ic:['Insuf. cardíaca','var(--danger)'], hpp_dac:['Doença coronariana','var(--danger)'], hpp_avc:['AVC','var(--danger)'],
+    hpp_gota:['Gota','#6B7A8D'], hpp_nash:['Esteatose/NASH','#6B7A8D'], hpp_litiase:['Litíase renal','#6B7A8D'],
+    hpp_cistos:['Cistos renais / DRPA','#6B7A8D'], hpp_gn:['Glomerulonefrite','#6B7A8D'], hpp_itu:['ITU de repetição','#6B7A8D'],
+    hpp_transplante:['Transplante renal','#6B7A8D'], hpp_apneia:['Apneia do sono','#6B7A8D'], hpp_hipot:['Hipotireoidismo','#6B7A8D'] };
+  let probs = '', pn = 0;
+  Object.keys(probMap).forEach(id => { if (document.getElementById(id)?.checked) { pn++;
+    probs += `<div class="rz-li"><span class="dotc" style="background:${probMap[id][1]}"></span><div class="nm">${probMap[id][0]}</div></div>`; } });
+  if (!pn) probs = '<div class="rz-empty">Nenhum antecedente marcado.</div>';
+
+  // Medicações
+  let meds = '', mn = 0;
+  (typeof prescriptionList !== 'undefined' ? prescriptionList : []).forEach(rx => { mn++;
+    meds += `<div class="rz-med"><span class="nm">${rx.name}</span><span class="ds">${rx.concentration||''}</span></div>`; });
+  if (!mn) meds = '<div class="rz-empty">Sem medicações na prescrição.</div>';
+
+  // Suplementos
+  let supps = '', sn = 0;
+  (typeof supplementList !== 'undefined' ? supplementList : []).forEach(s => { sn++;
+    supps += `<div class="rz-med"><span class="nm">${s.name}</span><span class="ds">${s.dose||''}</span></div>`; });
+
+  // Alergias
+  const alg = (document.getElementById('alergias')?.value || '').trim();
+  const algBody = alg ? alg.split(/[\n;,]+/).filter(Boolean).map(a => `<div class="rz-alerg">&#x26A0; ${a.trim()}</div>`).join('')
+    : '<div class="rz-empty">Nenhuma alergia registrada.</div>';
+
+  // História familiar + hábitos
+  const famMap = { hf_has:'HAS', hf_dm:'DM', hf_drc:'DRC', hf_avc:'AVC', hf_policistico:'Rins policísticos', hf_lupus:'Lúpus/autoimune' };
+  const fam = Object.keys(famMap).filter(id => document.getElementById(id)?.checked).map(id => famMap[id]);
+  const famDet = (document.getElementById('hf_detalhes')?.value || '').trim();
+  const tab = getS('tabagismo'), ativ = getS('atividade');
+  let hist = '';
+  if (fam.length) hist += `<div class="rz-li"><div><div class="nm">Familiar</div><div class="mt">${fam.join(' · ')}${famDet?' · '+famDet:''}</div></div></div>`;
+  if (tab) hist += `<div class="rz-li"><div><div class="nm">Tabagismo</div><div class="mt">${tab}</div></div></div>`;
+  if (ativ) hist += `<div class="rz-li"><div><div class="nm">Atividade física</div><div class="mt">${ativ}</div></div></div>`;
+  if (!hist) hist = '<div class="rz-empty">Sem história relevante registrada.</div>';
+
+  // Consultas anteriores (clicáveis → resumo + comparativo)
+  const chist = (typeof _consKey === 'function') ? JSON.parse(localStorage.getItem(_consKey()) || '[]') : [];
+  const cmpDate = (window._resumoCompare && window._resumoCompare.date) || null;
+  let consBody;
+  if (chist.length) {
+    consBody = chist.map((h, i) =>
+      `<div class="rz-cons${h.date===cmpDate?' sel':''}" onclick="verConsulta(${i})">
+        <div><div class="nm">${h.date||'—'}</div><div class="mt">${h.type||'Consulta'}${h.tfge?' · TFGe '+h.tfge:''}</div></div>
+        <span class="rz-cons-go">&#x203A;</span></div>`).join('');
+    if (cmpDate) consBody += `<div class="rz-cons-clear" onclick="limparComparacao()">&#x2715; limpar comparação</div>`;
+  } else {
+    consBody = '<div class="rz-empty">Nenhuma consulta salva ainda. Salve uma consulta para acompanhar a evolução.</div>';
+  }
+
+  rail.innerHTML =
+    card('&#x1F4C5; Consultas anteriores', chist.length || 0, consBody) +
+    card('&#x1F4CB; Lista de Problemas', pn, probs) +
+    card('&#x1F48A; Medicações', mn, meds) +
+    (sn ? card('&#x1F33F; Suplementos', sn, supps) : '') +
+    card('&#x26A0; Alergias', alg ? null : 0, algBody) +
+    card('&#x1F4D6; História', null, hist);
+}
+
+// ── Detalhe direito: lembretes + flowsheet + cronológico ──
+function renderResumoDetail(v) {
+  const det = document.getElementById('resumoDetail'); if (!det) return;
+  const card = (title, body) =>
+    `<div class="rz-railcard"><div class="rz-railh">${title}</div><div class="rz-railb">${body}</div></div>`;
+
+  // Lembretes clínicos (derivados dos valores reais)
+  const rem = [];
+  if (v.pas && (v.pas >= 130 || v.pad >= 80)) rem.push('PA acima da meta (&lt;130/80)');
+  if (v.hba1c && v.hba1c > 7) rem.push('HbA1c acima da meta — intensificar');
+  const ldlTarget = (v.ascvd && v.ascvd > 20) ? 55 : 70;
+  if (v.ldl && v.ldl > ldlTarget) rem.push(`LDL acima do alvo (&lt;${ldlTarget})`);
+  if (v.k && v.k > 5.5) rem.push('Hipercalemia — atenção'); else if (v.k && v.k > 5.0) rem.push('Potássio limítrofe');
+  if (v.rac && v.rac >= 30) rem.push('Albuminúria presente (A' + (v.rac > 300 ? '3' : '2') + ')');
+  if (v.tfge && v.tfge < 60) rem.push('TFGe reduzida — intensificar cadência de labs');
+  const remBody = rem.length ? rem.map(r => `<div class="rz-rem"><div class="rt">${r}</div></div>`).join('')
+    : '<div class="rz-empty">Sem pendências no momento.</div>';
+
+  // Flowsheet a partir do histórico salvo
+  const hist = (typeof _consKey === 'function') ? JSON.parse(localStorage.getItem(_consKey()) || '[]') : [];
+  const cols = hist.slice(0, 4).reverse(); // antigos → recentes
+  const paStr = v.pas ? v.pas + '/' + (v.pad || '–') : null;
+  const fcell = (val, sev) => val == null || val === '' ? '<span style="color:#B6BFCB">—</span>' : `<span class="rz-fscell ${sev||''}">${val}</span>`;
+  const sevTfge = t => !t ? '' : t < 30 ? 'bad' : t < 60 ? 'warn' : 'ok';
+  const sevA1c = a => !a ? '' : a >= 8 ? 'bad' : a >= 7 ? 'warn' : 'ok';
+  const sevLdl = l => !l ? '' : l >= 130 ? 'bad' : l >= 100 ? 'warn' : 'ok';
+  const sevPas = p => !p ? '' : p >= 140 ? 'bad' : p >= 130 ? 'warn' : 'ok';
+  let headCols = cols.map(c => `<th>${(c.date||'').slice(0,5)}</th>`).join('') + '<th class="now">Hoje</th>';
+  const rowHtml = (lab, getter, sevFn, nowVal, nowSev) =>
+    `<tr><td class="lab">${lab}</td>${cols.map(c => `<td>${fcell(getter(c), sevFn(parseFloat(getter(c))))}</td>`).join('')}<td class="now">${fcell(nowVal, nowSev)}</td></tr>`;
+  const fsBody =
+    `<table class="rz-fs"><thead><tr><th class="lab">Exame</th>${headCols}</tr></thead><tbody>` +
+    rowHtml('TFGe', c => c.tfge, sevTfge, v.tfge || null, sevTfge(v.tfge)) +
+    rowHtml('PA', c => c.pa, sevPas, paStr, sevPas(v.pas)) +
+    rowHtml('HbA1c', c => c.hba1c, sevA1c, v.hba1c || null, sevA1c(v.hba1c)) +
+    rowHtml('LDL', c => c.ldl, sevLdl, v.ldl || null, sevLdl(v.ldl)) +
+    '</tbody></table>' +
+    (cols.length ? '' : '<div class="rz-empty" style="margin-top:6px;">Salve consultas para acumular a evolução.</div>');
+
+  // Registro cronológico
+  const chrono = hist.length ? hist.slice(0, 6).map(h =>
+    `<div class="rz-ev"><span class="ed">${h.date||''}</span><span class="et"><b>${h.type||''}</b> ${h.notes ? h.notes.slice(0,70) : (h.diagnoses||'')}</span></div>`).join('')
+    : '<div class="rz-empty">Nenhuma consulta salva ainda.</div>';
+
+  // Monitoramento enviado pelo paciente via app (Supabase health_logs — populado quando conectado)
+  const mon = window._apexPatientMonitor || null;
+  const monRows = [
+    ['PA domiciliar', mon && mon.pa], ['Peso', mon && mon.peso], ['Glicemia capilar', mon && mon.glicemia],
+    ['Sintomas relatados', mon && mon.sintomas], ['Adesão medicação', mon && mon.adesao]
+  ];
+  const aguard = '<span style="color:#B6BFCB">aguardando app</span>';
+  const monBody = '<div style="font-size:10px;color:#8A97A8;margin-bottom:6px;">Dados compilados enviados pelo paciente pelo app</div>' +
+    monRows.map(r => `<div class="rz-mon"><span class="k">${r[0]}</span><span class="v">${r[1] || aguard}</span></div>`).join('');
+
+  det.innerHTML =
+    card('&#x1F514; Lembretes clínicos', remBody) +
+    card('&#x1F4F2; Monitoramento (app)', monBody) +
+    card('&#x1F4C8; Evolução laboratorial', fsBody) +
+    card('&#x1F4C5; Registro cronológico', chrono);
+}
+
+function renderResumoRadar(tfge, pas, hba1c, ldl, imc, rac, fib4, au) {
+  const el = document.getElementById('resumoRadar');
+  if (!el || typeof Chart === 'undefined') return;
+  const norm = (val, min, max, invert) => {
+    if (!val) return 50;
+    const pct = Math.max(0, Math.min(100, ((val - min) / (max - min)) * 100));
+    return Math.round(invert ? 100 - pct : pct);
+  };
+  const scores = [
+    norm(tfge,0,120,false), norm(pas,80,200,true), norm(hba1c,4,12,true), norm(ldl,0,200,true),
+    norm(imc,15,45,true), norm(rac,0,500,true), norm(fib4,0,4,true), norm(au,0,12,true)
+  ];
+  if (window._resumoRadar) window._resumoRadar.destroy();
+  window._resumoRadar = new Chart(el, { type:'radar',
+    data:{ labels:['Renal','Pressórico','Glicêmico','Lipídico','IMC','Albuminúria','Hepático','Ác.Úrico'],
+      datasets:[
+        { label:'Atual', data:scores, backgroundColor:'rgba(2,128,144,.15)', borderColor:'#028090', borderWidth:2, pointRadius:2 },
+        { label:'Meta', data:[75,75,75,70,65,75,80,75], backgroundColor:'rgba(196,163,90,.10)', borderColor:'#C4A35A', borderWidth:2, borderDash:[4,3], pointRadius:0 }
+      ]},
+    options:{ responsive:false, plugins:{legend:{labels:{font:{size:10},boxWidth:10}}},
+      scales:{r:{min:0,max:100,ticks:{display:false,stepSize:25},pointLabels:{font:{size:9.5},color:'#5C6B82'},grid:{color:'#E2E0DB'},angleLines:{color:'#E2E0DB'}}}}});
+}
+
+// Vias dentro da casca nova (modal) — reusa o conteúdo/printDoc da aba Documentos
+const VIAS = [
+  ['receituario','Receituário'], ['receituario_livre','Receita Livre'], ['exames_sangue','Exames — Sangue'],
+  ['exames_urina','Exames — Urina'], ['exames_imagem','Exames — Imagem'], ['recomendacao_doc','Recomendação'],
+  ['suplementos_doc','Suplementos'], ['encaminhamento','Encaminhamento'], ['atestado','Atestado'],
+  ['receituario_especial','Receita Especial'], ['resumo','Resumo']
+];
+function _viaLabel(type) { const f = VIAS.find(v => v[0] === type); return f ? f[1] : 'Documento'; }
+function _viaKey(type) { return 'apex_via_' + (window._apexPatientId || 'default') + '_' + type; }
+function abrirVia(type) {
+  window._viaAtual = type;
+  const body = document.getElementById('viaModalBody');
+  const saved = localStorage.getItem(_viaKey(type));
+  if (saved) {
+    body.innerHTML = saved; // versão editada/salva deste paciente
+  } else {
+    if (typeof updateAllDocs === 'function') updateAllDocs();
+    const src = document.getElementById('doc-' + type);
+    body.innerHTML = '';
+    if (src) {
+      const clone = src.cloneNode(true);
+      clone.classList.add('active');
+      clone.style.display = 'block';
+      clone.id = 'via-print-target';
+      body.appendChild(clone);
+    } else {
+      body.innerHTML = '<div style="padding:30px;text-align:center;color:#999;">Via indisponível.</div>';
+    }
+  }
+  // Editável, mas cabeçalho/rodapé permanecem fixos (congelados)
+  const target = document.getElementById('via-print-target') || body;
+  target.setAttribute('contenteditable', 'true');
+  target.querySelectorAll('.doc-header, .doc-footer').forEach(el => el.setAttribute('contenteditable', 'false'));
+  document.getElementById('viaModalTitle').innerHTML = '&#x1F4C4; ' + _viaLabel(type);
+  document.getElementById('viaModal').classList.add('open');
+}
+function salvarVia() {
+  const target = document.getElementById('via-print-target');
+  if (window._viaAtual && target) {
+    localStorage.setItem(_viaKey(window._viaAtual), target.outerHTML);
+    if (typeof showToast === 'function') showToast('Via salva no retorno deste paciente &#x2713;');
+  }
+}
+function fecharVia() { document.getElementById('viaModal').classList.remove('open'); }
+function imprimirVia() { if (typeof printDoc === 'function') printDoc('via-print-target'); }
+
+// Workflow do atendimento (Port 3) — reusa as abas/engine existentes
+function cwGo(name) {
+  let tb = null;
+  document.querySelectorAll('.tab-btn').forEach(b => {
+    if ((b.getAttribute('onclick') || '').includes("'" + name + "'")) tb = b;
+  });
+  switchTab(name, tb);
+}
+function cwGerarProtocolo() {
+  if (typeof generatePlan === 'function') generatePlan();
+  if (typeof gerarCronogramaDaBase === 'function') gerarCronogramaDaBase();
+  cwGo('protocolo');
+  if (typeof showToast === 'function') showToast('Protocolo gerado da base CKM &#x2713;');
+}
+
+// #4 — Consultas anteriores: resumo clicável + comparativo
+function verConsulta(idx) {
+  const hist = JSON.parse(localStorage.getItem(_consKey()) || '[]');
+  const h = hist[idx]; if (!h) return;
+  window._consultaModalIdx = idx;
+  const row = (k, v) => v ? `<div class="rz-mon"><span class="k">${k}</span><span class="v">${v}</span></div>` : '';
+  document.getElementById('consultaModalTitle').innerHTML = '&#x1F4C5; Consulta — ' + (h.date || '');
+  document.getElementById('consultaModalBody').innerHTML =
+    `<div style="font-size:11px;color:#8A97A8;margin-bottom:8px;">${h.type || 'Consulta'}</div>` +
+    (h.diagnoses ? `<div style="margin-bottom:10px;font-size:12.5px;"><b>Diagnósticos:</b> ${h.diagnoses}</div>` : '') +
+    row('TFGe', h.tfge ? h.tfge + ' mL/min' : '') + row('PA', h.pa) + row('HbA1c', h.hba1c ? h.hba1c + '%' : '') +
+    row('LDL', h.ldl ? h.ldl + ' mg/dL' : '') + row('IMC', h.imc) + row('Estágio CKM', h.ckm != null ? h.ckm : '') +
+    (h.meds && h.meds.length ? `<div style="margin-top:10px;font-size:12px;"><b>Medicações:</b> ${h.meds.join(', ')}</div>` : '') +
+    (h.notes ? `<div style="margin-top:10px;font-size:12px;color:#3A4658;"><b>Notas:</b> ${h.notes}</div>` : '');
+  document.getElementById('consultaModal').classList.add('open');
+}
+function compararConsulta() {
+  const hist = JSON.parse(localStorage.getItem(_consKey()) || '[]');
+  window._resumoCompare = hist[window._consultaModalIdx] || null;
+  document.getElementById('consultaModal').classList.remove('open');
+  renderResumo();
+  if (typeof showToast === 'function') showToast('Comparando com a consulta selecionada &#x2713;');
+}
+function limparComparacao() { window._resumoCompare = null; renderResumo(); }
+function fecharConsultaModal() { document.getElementById('consultaModal').classList.remove('open'); }
 
 function setConsultaMode(mode, btn) {
   consultaMode = mode;
@@ -2431,6 +3212,131 @@ function calcASCVD() {
     mean=-29.18; s0=0.9665;
   }
   return Math.round(Math.max(0, Math.min(1, 1 - Math.pow(s0, Math.exp(sum - mean)))) * 1000) / 10;
+}
+
+// PREVENT (AHA 2023/2024, Khan SS et al. Circulation 2024;149:430-449)
+// Coeficientes OFICIAIS do modelo base 10 anos (extraídos do pacote preventr / sysdata.rda).
+// Ordem dos termos: age, non_hdl_c, hdl_c, sbp<110, sbp>=110, dm, smoking, bmi<30, bmi>=30,
+// egfr<60, egfr>=60, bp_tx, statin, bp_tx*sbp>=110, statin*non_hdl_c, age*non_hdl_c, age*hdl_c,
+// age*sbp>=110, age*dm, age*smoking, age*bmi>=30, age*egfr<60, constante.
+const PREVENT_COEF = {
+  female_total_cvd:[0.7939329,0.0305239,-0.1606857,-0.2394003,0.3600781,0.8667604,0.5360739,0,0,0.6045917,0.0433769,0.3151672,-0.1477655,-0.0663612,0.1197879,-0.0819715,0.0306769,-0.0946348,-0.27057,-0.078715,0,-0.1637806,-3.307728],
+  male_total_cvd:[0.7688528,0.0736174,-0.0954431,-0.4347345,0.3362658,0.7692857,0.4386871,0,0,0.5378979,0.0164827,0.288879,-0.1337349,-0.0475924,0.150273,-0.0517874,0.0191169,-0.1049477,-0.2251948,-0.0895067,0,-0.1543702,-3.031168],
+  female_ascvd:[0.719883,0.1176967,-0.151185,-0.0835358,0.3592852,0.8348585,0.4831078,0,0,0.4864619,0.0397779,0.2265309,-0.0592374,-0.0395762,0.0844423,-0.0567839,0.0325692,-0.1035985,-0.2417542,-0.0791142,0,-0.1671492,-3.819975],
+  male_ascvd:[0.7099847,0.1658663,-0.1144285,-0.2837212,0.3239977,0.7189597,0.3956973,0,0,0.3690075,0.0203619,0.2036522,-0.0865581,-0.0322916,0.114563,-0.0300005,0.0232747,-0.0927024,-0.2018525,-0.0970527,0,-0.1217081,-3.500655],
+  female_heart_failure:[0.8998235,0,0,-0.4559771,0.3576505,1.038346,0.583916,-0.0072294,0.2997706,0.7451638,0.0557087,0.3534442,0,-0.0981511,0,0,0,-0.0946663,-0.3581041,-0.1159453,-0.003878,-0.1884289,-4.310409],
+  male_heart_failure:[0.8972642,0,0,-0.6811466,0.3634461,0.923776,0.5023736,-0.0485841,0.3726929,0.6926917,0.0251827,0.2980922,0,-0.0497731,0,0,0,-0.1289201,-0.3040924,-0.1401688,0.0068126,-0.1797778,-3.946391]
+};
+// Retorna {totalCVD, ascvd, hf} em % (10 anos), ou null se faltarem dados essenciais.
+function calcPREVENT() {
+  const age = getAge();
+  if (!age || age < 30 || age > 79) return null;
+  const male = isMale();
+  const sbp = labVal('pas');
+  const ct = labVal('ct');
+  const hdl = labVal('hdl');
+  const imc = calcIMC(getV('peso'), getV('altura'));
+  const tfge = calcTFGe(labVal('cr'), age, !male);
+  if (!sbp || !ct || !hdl || ct === 0 || hdl === 0 || !imc || !tfge) return null;
+  const dm = document.getElementById('hpp_dm2')?.checked ? 1 : 0;
+  const smoking = getS('tabagismo') === 'Ativo' ? 1 : 0;
+  const bpTx = document.getElementById('hpp_has')?.checked ? 1 : 0;
+  const statin = /(estatina|rosuvastatin|atorvastatin|sinvastatin|pravastatin|pitavastatin|lovastatin|fluvastatin)/i
+    .test(document.getElementById('meds_em_uso')?.value || '') ? 1 : 0;
+  const toMmol = c => c * 0.02586;
+  const a = (age - 55) / 10;
+  const nonHdl = toMmol(ct - hdl) - 3.5;
+  const hdlT = (toMmol(hdl) - 1.3) / 0.3;
+  const sbpLt = (Math.min(sbp, 110) - 110) / 20;
+  const sbpGte = (Math.max(sbp, 110) - 130) / 20;
+  const bmiLt = (Math.min(imc, 30) - 25) / 5;
+  const bmiGte = (Math.max(imc, 30) - 30) / 5;
+  const egfrLt = (Math.min(tfge, 60) - 60) / -15;
+  const egfrGte = (Math.max(tfge, 60) - 90) / -15;
+  const terms = [a, nonHdl, hdlT, sbpLt, sbpGte, dm, smoking, bmiLt, bmiGte,
+    egfrLt, egfrGte, bpTx, statin, bpTx * sbpGte, statin * nonHdl,
+    a * nonHdl, a * hdlT, a * sbpGte, a * dm, a * smoking, a * bmiGte, a * egfrLt, 1];
+  const risk = key => {
+    const c = PREVENT_COEF[`${male ? 'male' : 'female'}_${key}`];
+    let s = 0; for (let i = 0; i < c.length; i++) s += c[i] * terms[i];
+    return Math.round((Math.exp(s) / (1 + Math.exp(s))) * 1000) / 10;
+  };
+  return { totalCVD: risk('total_cvd'), ascvd: risk('ascvd'), hf: risk('heart_failure') };
+}
+
+// Bioimpedância — Modelo A (analítico): ângulo de fase, IMLG/sarcopenia, % gordura,
+// barra de composição e escala do ângulo de fase. Dados reais dos campos da Consulta.
+function renderResumoBio() {
+  const sect = document.getElementById('resumoBioSect');
+  const cont = document.getElementById('resumoBio');
+  if (!sect || !cont) return;
+  const raw = id => { const el = document.getElementById(id); const v = el ? parseFloat(String(el.value).replace(',', '.')) : NaN; return isNaN(v) ? null : v; };
+  const gordura = raw('bio_gordura');     // %
+  const magra = raw('bio_magra');         // kg
+  const agua = raw('bio_agua');           // %
+  const angulo = raw('bio_angulo');       // °
+  const visceral = raw('bio_visceral');
+  const idadeMet = raw('bio_idade_met');
+  // Sem nenhum dado núcleo → ocultar a seção (não inventar)
+  if (gordura == null && magra == null && angulo == null && agua == null) { sect.style.display = 'none'; return; }
+  sect.style.display = 'block';
+  const male = isMale();
+  const peso = getV('peso');
+  const alturaCm = getV('altura');
+  const alturaM = alturaCm ? alturaCm / 100 : null;
+
+  const cards = [];
+  // Ângulo de fase — menor = pior prognóstico (DRC). Referência geral.
+  if (angulo != null) {
+    const cls = angulo >= 5 ? 'ok' : angulo >= 4 ? 'warn' : 'bad';
+    const lbl = angulo >= 5 ? 'Adequado' : angulo >= 4 ? 'Limítrofe' : 'Baixo (atenção)';
+    cards.push(`<div class="bz-ind ${cls}"><div class="bz-lab">&#x26A1; Ângulo de fase</div><div class="bz-val">${angulo.toLocaleString('pt-BR')}<small>°</small></div><div class="bz-cl">${lbl}</div><div class="bz-evo">Marcador prognóstico (DRC); referência varia por idade/sexo</div></div>`);
+  }
+  // IMLG (índice de massa livre de gordura) = massa magra / altura² — sarcopenia: H<17, M<15 kg/m²
+  if (magra != null && alturaM) {
+    const imlg = magra / (alturaM * alturaM);
+    const thr = male ? 17 : 15;
+    const ok = imlg >= thr;
+    cards.push(`<div class="bz-ind ${ok ? 'ok' : 'warn'}"><div class="bz-lab">IMLG (massa magra)</div><div class="bz-val">${imlg.toFixed(1).replace('.', ',')}</div><div class="bz-cl">${ok ? 'Sem sarcopenia' : 'Possível sarcopenia'} (≥${thr} ${male ? 'H' : 'M'})</div><div class="bz-evo">kg/m² — massa livre de gordura / altura²</div></div>`);
+  }
+  // % Gordura — referência geral por sexo
+  if (gordura != null) {
+    const lim = male ? 25 : 32;
+    const cls = gordura <= lim ? 'ok' : gordura <= lim + 7 ? 'warn' : 'bad';
+    cards.push(`<div class="bz-ind ${cls}"><div class="bz-lab">% Gordura</div><div class="bz-val">${gordura.toLocaleString('pt-BR')}<small>%</small></div><div class="bz-cl">${gordura <= lim ? 'Dentro do ideal' : 'Acima do ideal'} (&lt;${lim}% ${male ? 'H' : 'M'})</div><div class="bz-evo">${visceral != null ? 'Gordura visceral nível ' + visceral : (idadeMet != null ? 'Idade metabólica ' + idadeMet + ' anos' : 'referência geral')}</div></div>`);
+  }
+
+  let html = `<div class="bz-row">${cards.join('')}</div>`;
+
+  // Barra de composição (massa magra / gordura / óssea-mineral) — precisa peso
+  if (peso && gordura != null) {
+    const gordKg = peso * gordura / 100;
+    const magraPct = magra != null ? Math.max(0, Math.min(100, magra / peso * 100)) : Math.max(0, 100 - gordura - 10);
+    const gordPct = Math.max(0, Math.min(100, gordura));
+    const ossoPct = Math.max(0, 100 - magraPct - gordPct);
+    html += `<div class="bz-sub">Composição corporal atual (${peso.toLocaleString('pt-BR')} kg)</div>`
+      + `<div class="bz-bar">`
+      + `<div class="bz-seg magra" style="width:${magraPct.toFixed(0)}%">${magraPct >= 12 ? 'Massa magra ' + magraPct.toFixed(0) + '%' : ''}</div>`
+      + `<div class="bz-seg gord" style="width:${gordPct.toFixed(0)}%">${gordPct >= 12 ? 'Gordura ' + gordPct.toFixed(0) + '%' : ''}</div>`
+      + `<div class="bz-seg osso" style="width:${ossoPct.toFixed(0)}%">${ossoPct >= 12 ? 'Óssea/min. ' + ossoPct.toFixed(0) + '%' : ''}</div>`
+      + `</div>`
+      + `<div class="bz-leg">`
+      + (magra != null ? `<span><span class="bz-dot" style="background:var(--teal)"></span>Massa magra <b>${magra.toLocaleString('pt-BR')} kg</b></span>` : '')
+      + `<span><span class="bz-dot" style="background:var(--gold)"></span>Gordura <b>${gordKg.toFixed(1).replace('.', ',')} kg</b></span>`
+      + (agua != null ? `<span><span class="bz-dot" style="background:#7E8AA0"></span>Água corporal <b>${agua.toLocaleString('pt-BR')}%</b></span>` : '')
+      + `</div>`;
+  }
+
+  // Escala do ângulo de fase (3°–8°)
+  if (angulo != null) {
+    const pos = Math.max(0, Math.min(100, (angulo - 3) / (8 - 3) * 100));
+    html += `<div style="margin-top:12px;"></div>`
+      + `<div class="bz-sub">Escala do ângulo de fase</div>`
+      + `<div class="bz-pa"><div class="bz-marker" style="left:${pos.toFixed(0)}%"></div></div>`
+      + `<div class="bz-ticks"><span>3° (ruim)</span><span>4,5°</span><span>6°</span><span>8° (ótimo)</span></div>`;
+  }
+
+  cont.innerHTML = html;
 }
 
 function calcKFRE() {
@@ -3257,12 +4163,17 @@ function generatePlan() {
   // Auto-fill lifestyle
   if (peso) document.getElementById('proto_hidratacao').value = Math.round(peso * 35) + ' mL/dia (35 mL/kg)';
   if (!document.getElementById('proto_dieta').value) {
-    let dieta = 'Dieta hipossódica (< 5g sal/dia)';
-    if (imc && imc >= 25) dieta += ', hipocalórica com déficit de 500 kcal/dia';
-    if (hba1c && hba1c >= 6.5) dieta += ', baixo índice glicêmico';
-    if (tfge && tfge < 30) dieta += ', com restrição proteica (0,6-0,8g/kg/dia)';
-    else if (tfge && tfge < 60) dieta += ', com controle proteico (0,8g/kg/dia)';
-    document.getElementById('proto_dieta').value = dieta;
+    const _has = document.getElementById('hpp_has')?.checked;
+    const _drc = document.getElementById('hpp_drc')?.checked;
+    const partes = [];
+    if (_has || _drc) partes.push('hipossódica (< 5 g de sal/dia)');
+    if (imc && imc >= 25) partes.push('hipocalórica com déficit de ~500 kcal/dia');
+    if (hba1c && hba1c >= 6.5) partes.push('baixo índice glicêmico');
+    if (tfge && tfge < 30) partes.push('restrição proteica (0,6–0,8 g/kg/dia)');
+    else if (tfge && tfge < 60) partes.push('controle proteico (~0,8 g/kg/dia)');
+    document.getElementById('proto_dieta').value = partes.length
+      ? ('Dieta ' + partes.join(', ') + '.')
+      : 'Alimentação equilibrada padrão mediterrâneo/DASH, rica em vegetais, fibras e gorduras boas.';
   }
   if (!document.getElementById('proto_atividade').value) {
     document.getElementById('proto_atividade').value = 'Atividade aeróbica 150 min/semana (caminhada, natação, bicicleta) + resistido 2-3x/semana. Progresso gradual.';
@@ -3277,6 +4188,135 @@ function generatePlan() {
   showToast('Plano terapêutico atualizado com base nos dados da consulta!');
 }
 
+// ============================================================
+// MOTOR DE PROTOCOLO — lê a base única (window.PROTOCOLOS_CKM)
+// Monta o protocolo do paciente pela união das condições marcadas,
+// com cadência de labs modulada pela DRC e rastreio/vacinas por idade/sexo.
+// ============================================================
+// Condições ativas da base = antecedentes marcados (hpp_*) + derivadas (Sd. metabólica, DMO da DRC).
+// Fonte única usada tanto pelo motor de protocolo quanto pelo painel de protocolos.
+function condicoesAtivasCKM() {
+  const PB = window.PROTOCOLOS_CKM;
+  if (!PB || !PB.conditions) return [];
+  const age = getAge(), male = isMale();
+  const tfge = calcTFGe(labVal('cr'), age, !male);
+  const stage = classifyTFGe(tfge).stage;
+  const temDRC = !!document.getElementById('hpp_drc')?.checked;
+  return Object.entries(PB.conditions).filter(([k, c]) => {
+    const dx = c.diagnostico;
+    if (dx && dx.indexOf('hpp_') === 0) return !!document.getElementById(dx)?.checked;
+    if (k === 'sindrome_metabolica') return (typeof calcMS === 'function') && calcMS().present;
+    if (k === 'dmo_drc_anemia') return temDRC && /G3|G4|G5/.test(stage || '');
+    return false;
+  });
+}
+
+function montarProtocoloDaBase() {
+  const PB = window.PROTOCOLOS_CKM;
+  if (!PB || !PB.conditions) { console.warn('PROTOCOLOS_CKM não carregado'); return null; }
+  const age = getAge(), male = isMale();
+  const tfge = calcTFGe(labVal('cr'), age, !male);
+  const stage = classifyTFGe(tfge).stage; // '', G1..G5, G3a, G3b
+  const temDRC = !!document.getElementById('hpp_drc')?.checked;
+
+  // Painel de protocolos pode excluir condições (médico desmarca) via window._protocolExcluded
+  const excl = window._protocolExcluded instanceof Set ? window._protocolExcluded : new Set();
+  const ativas = condicoesAtivasCKM().filter(([k]) => !excl.has(k));
+
+  const meds = [], labs = [], imagem = [], monit = [], metas = [];
+  ativas.forEach(([k, c]) => {
+    (c.medicacoes_1a_linha || c.medicacoes_base || []).forEach(m => meds.push(Object.assign({ condicao: c.label }, m)));
+    (c.labs || []).forEach(l => labs.push(Object.assign({ condicao: c.label }, l)));
+    (c.imagem || []).forEach(i => imagem.push(Object.assign({ condicao: c.label }, i)));
+    (c.monitoramento || []).forEach(x => { if (monit.indexOf(x) < 0) monit.push(x); });
+    if (c.metas) metas.push({ condicao: c.label, metas: c.metas });
+    // Subtipo histológico de GN selecionado no painel → injeta medicações/labs específicos
+    if (k === 'glomerulonefrite' && window._gnSubtipo && c.subtipos_histologicos && c.subtipos_histologicos[window._gnSubtipo]) {
+      const sub = c.subtipos_histologicos[window._gnSubtipo];
+      const lbl = c.label + ' — ' + sub.label;
+      (sub.medicacoes || []).forEach(m => meds.push(Object.assign({ condicao: lbl }, m)));
+      if (sub.monitoramento) { const t = 'GN (' + sub.label + '): ' + sub.monitoramento; if (monit.indexOf(t) < 0) monit.push(t); }
+    }
+  });
+
+  // Cadência de coleta: a DRC sobrepõe (intensifica) — só em G3-G5
+  let cadenciaLabs = 'Padrão por condição (basal e periódico)';
+  if (temDRC && PB.conditions.drc) {
+    const m = PB.conditions.drc.cadencia_por_estagio;
+    cadenciaLabs = (stage === 'G1' || stage === 'G2' || !stage) ? m.G1_G2
+      : stage === 'G3a' ? m.G3a : stage === 'G3b' ? m.G3b
+      : (stage === 'G4' || stage === 'G5') ? m.G4_G5 : m.G1_G2;
+  }
+
+  // Rastreio de câncer por idade/sexo
+  const rastreio = (PB.modificadores.rastreio_cancer.itens || []).filter(r => {
+    const alvo = (r.alvo || '').toLowerCase();
+    if (alvo.indexOf('mulher') >= 0 && male) return false;
+    if (alvo.indexOf('homens') >= 0 && !male) return false;
+    const faixa = alvo.match(/(\d{2})\s*-\s*(\d{2})/);
+    if (faixa && (age < parseInt(faixa[1]) - 1 || age > parseInt(faixa[2]) + 1)) return false;
+    return true;
+  });
+
+  return {
+    condicoes: ativas.map(([k, c]) => c.label),
+    medicacoes: meds, labs: labs, imagem: imagem, monitoramento: monit, metas: metas,
+    cadencia_labs: cadenciaLabs, drc_estagio: stage || null,
+    rastreio_cancer: rastreio, vacinas: PB.modificadores.vacinacao.itens,
+    risco_cv: PB.modificadores.risco_cv, fonte: PB.fonte
+  };
+}
+
+// Converte cadência textual em meses do cronograma (1 coleta por visita; nunca meses seguidos)
+function cadenciaParaMeses(txt) {
+  txt = (txt || '').toLowerCase();
+  if (/1-3 meses|a cada 1-3/.test(txt)) return [0,3,6,9,12];
+  if (/trimestral|3-4 meses|3 meses/.test(txt)) return [0,3,6,9,12];
+  if (/8-12 semanas|2-4 semanas/.test(txt)) return [0,3];
+  if (/semestral|6 meses|6-12 meses/.test(txt)) return [0,6,12];
+  if (/anual|12 meses/.test(txt)) return [0,12];
+  if (/basal/.test(txt)) return [0];
+  return [0,12];
+}
+
+// Gera o cronograma de exames a partir da base (cadência modulada pela DRC; sem repetição absurda)
+function gerarCronogramaDaBase() {
+  var P = montarProtocoloDaBase();
+  if (!P) { showToast('Base de protocolos não carregada'); return; }
+  examPrescriptionList = [];
+  function add(nome, tipo, mes, cat) {
+    if (!nome) return;
+    if (!examPrescriptionList.find(function(e){ return e.name === nome && e.consultaNum === mes; }))
+      examPrescriptionList.push({ name: nome, type: tipo, category: cat || '', consultaNum: mes });
+  }
+  var labCad = P.cadencia_labs || '';
+  P.labs.forEach(function(l) {
+    // se há DRC, os labs renais/eletrólitos seguem a cadência do estágio
+    var ehRenal = /função renal|creatinina|rac|k\b|potássio|ca\/p|pth|hb|bicarbonato|eletról/.test((l.nome||'').toLowerCase());
+    var cad = (P.drc_estagio && ehRenal) ? labCad : l.cadencia;
+    cadenciaParaMeses(cad).forEach(function(m){ add(l.nome, 'sangue', m, l.condicao); });
+  });
+  P.imagem.forEach(function(i) {
+    cadenciaParaMeses(i.cadencia).forEach(function(m){ add(i.nome, 'imagem', m, i.condicao); });
+  });
+  if (typeof renderExams === 'function') renderExams();
+  // Renderizar rastreio de câncer + vacinas
+  var rv = document.getElementById('baseRastreioVacinas');
+  if (rv) {
+    var html = '';
+    if (P.rastreio_cancer && P.rastreio_cancer.length) {
+      html += '<div style="font-size:12px;font-weight:700;color:var(--navy);margin-bottom:4px;">Rastreamento de câncer</div>';
+      html += P.rastreio_cancer.map(function(r){ return '<div style="font-size:12px;color:#555;margin-bottom:2px;">• <strong>'+r.exame+'</strong> — '+(r.alvo||'')+'</div>'; }).join('');
+    }
+    if (P.vacinas && P.vacinas.length) {
+      html += '<div style="font-size:12px;font-weight:700;color:var(--navy);margin:10px 0 4px;">Vacinas</div>';
+      html += P.vacinas.filter(function(v){return v.vacina;}).map(function(v){ return '<div style="font-size:12px;color:#555;margin-bottom:2px;">• <strong>'+v.vacina+'</strong> — '+(v.alvo||'')+'</div>'; }).join('');
+    }
+    rv.innerHTML = html || '<p style="color:#999;font-size:12px;">Sem itens (verifique idade/sexo/condições).</p>';
+  }
+  showToast('Cronograma gerado da base CKM (' + examPrescriptionList.length + ' itens, cadência por condição/estágio)');
+}
+
 // AUTO-PRESCRIBE based on diagnoses and labs
 function autoPrescribe() {
   const tfge = calcTFGe(labVal('cr'), getAge(), !isMale());
@@ -3287,20 +4327,48 @@ function autoPrescribe() {
   const au = labVal('au');
   const imc = calcIMC(getV('peso'), getV('altura'));
   const ascvd = calcASCVD();
-  const hasHAS = document.getElementById('hpp_has')?.checked;
-  const hasDM = document.getElementById('hpp_dm2')?.checked;
-  const hasDRC = document.getElementById('hpp_drc')?.checked;
-  const hasDLP = document.getElementById('hpp_dlp')?.checked;
+  const _excl = window._protocolExcluded instanceof Set ? window._protocolExcluded : new Set();
+  const hasHAS = !_excl.has('has') && document.getElementById('hpp_has')?.checked;
+  const hasDM = !_excl.has('dm2') && document.getElementById('hpp_dm2')?.checked;
+  const hasDRC = !_excl.has('drc') && document.getElementById('hpp_drc')?.checked;
+  const hasDLP = !_excl.has('dislipidemia') && document.getElementById('hpp_dlp')?.checked;
   const hasIC = document.getElementById('hpp_ic')?.checked;
-  const hasObes = document.getElementById('hpp_obes')?.checked;
+  const hasObes = !_excl.has('obesidade') && document.getElementById('hpp_obes')?.checked;
 
   const suggestions = [];
+  // Classe terapêutica "única" — só uma droga por classe deve ser prescrita.
+  // Cobre classes redundantes (SRAA, iSGLT2, GLP1/incretina, estatina) e perigosas em dose dupla (ARM).
+  // Classes combináveis (BCC, diurético, betabloqueador) NÃO entram aqui (terapia anti-hipertensiva combinada é intencional).
+  function _uniqueClass(name, classe) {
+    const t = ((name || '') + ' ' + (classe || '')).toLowerCase();
+    if (/losartan|valsartan|candesartan|olmesartan|irbesartan|telmisartan|enalapril|ramipril|lisinopril|captopril|perindopril|\bbra\b|ieca|ara ii|\barb\b|inibidor da eca/.test(t)) return 'raas';
+    if (/gliflozin|isglt2|sglt2/.test(t)) return 'isglt2';
+    if (/semaglutid|liraglutid|dulaglutid|tirzepatid|exenatid|glp.?1|gip/.test(t)) return 'glp1';
+    if (/estatina|statin|rosuvastat|atorvastat|sinvastat|pravastat|pitavastat|lovastat|fluvastat/.test(t)) return 'estatina';
+    if (/finerenon|espironolacton|eplerenon|\barm\b|mineralocorticoid/.test(t)) return 'mra';
+    return null;
+  }
+  function _classTaken(uc) {
+    if (!uc) return false;
+    return suggestions.some(s => _uniqueClass(s.name, s.category) === uc)
+      || prescriptionList.some(p => _uniqueClass(p.name, p.category) === uc);
+  }
   function add(name, conc, pos, reason) {
-    if (prescriptionList.find(p => p.name === name)) return; // no duplicates
+    if (prescriptionList.find(p => p.name === name)) return; // no duplicates (nome exato)
     const med = MEDS_DB.find(m => m.name === name);
     if (!med) return;
+    if (_classTaken(_uniqueClass(name, med.category))) return; // dedup por classe única
     suggestions.push({ name, concentration: conc || med.concentrations[med.concentrations.length>1?1:0], form: med.forms[0], posology: pos || med.defaultPosology, qty:'', obs: reason, category: med.category });
   }
+
+  // FONTE ÚNICA: medicações vindas da base (window.PROTOCOLOS_CKM) conforme condições marcadas
+  const _pb = (typeof montarProtocoloDaBase === 'function') ? montarProtocoloDaBase() : null;
+  if (_pb && _pb.medicacoes) _pb.medicacoes.forEach(function(m){
+    if (suggestions.find(s => s.name.toLowerCase() === m.nome.toLowerCase())) return;
+    if (_classTaken(_uniqueClass(m.nome, m.classe))) return; // dedup por classe única (base entra primeiro → vence)
+    const med = MEDS_DB.find(x => x.name.toLowerCase() === m.nome.toLowerCase());
+    suggestions.push({ name: m.nome, concentration: med ? med.concentrations[0] : '', form: med ? med.forms[0] : '', posology: m.dose || (med ? med.defaultPosology : ''), qty:'', obs: (m.condicao || '') + (m.obs ? (' — ' + m.obs) : ''), category: m.classe || (med ? med.category : 'Base CKM') });
+  });
 
   // IECA/BRA — HAS, DRC com albuminúria, DM com albuminúria
   if (hasHAS || (hasDRC && rac > 30) || (hasDM && rac > 30)) add('Losartana','100mg','1x/dia','HAS + nefroproteção (RAC>30)');
@@ -3308,8 +4376,11 @@ function autoPrescribe() {
   if (hasDRC || hasDM || hasIC) add('Dapagliflozina','10mg','1x/dia','Nefroproteção + cardioproteção');
   // ARM seletivo — DRC + DM2 + albuminúria residual
   if (hasDRC && hasDM && rac > 30) add('Finerenona','20mg','1x/dia','ARM seletivo — DRC + DM2 + albuminúria');
-  // Estatina — DLP ou risco CV alto
-  if (hasDLP || (ascvd && ascvd > 7.5)) add('Rosuvastatina', ascvd > 20 ? '20mg' : '10mg', '1x/dia', 'Risco CV ' + (ascvd > 20 ? 'alto' : 'intermediário'));
+  // Estatina — dislipidemia (LDL elevado) OU risco CV (não depende só do checkbox)
+  if (hasDLP || (ldl && ldl >= 100) || (ascvd && ascvd > 7.5)) {
+    const altoRisco = (ascvd && ascvd > 20) || (ldl && ldl >= 190) || hasDRC || hasDM;
+    add('Rosuvastatina', altoRisco ? '20mg' : '10mg', '1x/dia', 'Dislipidemia / risco CV — meta de LDL conforme estratificação (Diretriz SBC de Dislipidemias)');
+  }
   // Antidiabético — DM2
   if (hasDM && hba1c > 6.5) {
     add('Metformina XR','1000mg','1x/dia (jantar)','DM2 — 1ª linha');
@@ -3334,9 +4405,12 @@ function autoPrescribe() {
     add('Tirzepatida','5mg','1x/semana',classifyIMC(imc).label+' — perda ponderal + controle metabólico');
   }
 
-  // Merge without duplicates
+  // Merge sem duplicatas (nome exato E classe única)
   suggestions.forEach(rx => {
-    if (!prescriptionList.find(p => p.name === rx.name)) prescriptionList.push(rx);
+    if (prescriptionList.find(p => p.name === rx.name)) return;
+    const uc = _uniqueClass(rx.name, rx.category);
+    if (uc && prescriptionList.some(p => _uniqueClass(p.name, p.category) === uc)) return;
+    prescriptionList.push(rx);
   });
 
   // DESPRESCRIÇÃO: sugerir retirada de medicamentos que podem não ser mais necessários
@@ -3364,6 +4438,13 @@ function autoPrescribe() {
     const prescSection = document.getElementById('prescriptionList')?.parentElement;
     if (prescSection) prescSection.insertBefore(alertDiv, prescSection.firstChild);
   }
+  // Continuidade do cuidado: importar as medicações em uso (texto livre) para a prescrição
+  (document.getElementById('meds_em_uso')?.value || '').split(/[\n,;]+/).map(s => s.trim()).filter(Boolean).forEach(function(item) {
+    const med = MEDS_DB.find(m => item.toLowerCase().includes(m.name.toLowerCase().split(' ')[0]));
+    const nome = med ? med.name : item.replace(/\s+/g, ' ');
+    if (prescriptionList.find(p => p.name.toLowerCase() === nome.toLowerCase())) return;
+    prescriptionList.push({ name: nome, concentration: med ? med.concentrations[0] : '', form: med ? med.forms[0] : '', posology: 'Manter uso atual', qty: '', obs: 'Medicação em uso', category: med ? med.category : 'Em uso' });
+  });
   renderPrescription();
   showToast(`${suggestions.length} medicamentos sugeridos com base nas comorbidades`);
 }
@@ -3377,6 +4458,10 @@ function suggestSupplements(vitd, ferr, hb, imc, hba1c, tfge) {
   supplementList.push({name:'Magnésio quelato', dose:'260 mg/dia à noite', reason:'Relaxamento muscular, qualidade do sono, metabolismo'});
   if (hba1c && hba1c >= 6.5) supplementList.push({name:'Probiótico multi-cepas', dose:'1 cápsula/dia em jejum', reason:'Modulação microbiota — perfil metabólico'});
   if (tfge && tfge < 60) supplementList.push({name:'Bicarbonato de sódio', dose:'500-650mg 2-3x/dia (se bicarbonato < 22)', reason:'Alcalinização — nefroproteção'});
+  // CoQ10 quando em uso de estatina (prescrita agora ou já em uso)
+  const onStatin = (typeof prescriptionList !== 'undefined' && prescriptionList.some(p => p.category === 'Estatina'))
+    || /(estatina|rosuvastatin|atorvastatin|sinvastatin|pravastatin)/i.test(document.getElementById('meds_em_uso')?.value || '');
+  if (onStatin && !supplementList.find(s => /Q10/i.test(s.name))) supplementList.push({name:'Coenzima Q10', dose:'100–200 mg/dia', reason:'Suporte ao uso de estatina'});
 
   renderSupplements();
 }
@@ -3394,117 +4479,83 @@ function renderSupplements() {
   ).join('');
 }
 
-function applyGNProtocol() {
-  const type = document.getElementById('gnProtocol').value;
-  if (!type) return;
-  const detail = document.getElementById('gnProtocolDetail');
-  detail.style.display = 'block';
+// ============================================================
+// PAINEL DE PROTOCOLOS — lista as condições ativas (base CKM) como
+// checklist incluível/excluível; GN traz o subtipo histológico da base
+// (fonte única: window.PROTOCOLOS_CKM). Etapa Avaliação & Plano.
+// ============================================================
+function _ppEsc(s) { return String(s == null ? '' : s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c])); }
 
-  const protocols = {
-    nefrotica_membranosa: {
-      title: 'Nefropatia Membranosa',
-      desc: 'KDIGO 2021: Imunossupressão se proteinúria > 3,5g/dia persistente após 6 meses.',
-      meds: [{name:'Rituximabe',conc:'1g IV',pos:'D1 e D15, repetir 6m se necessário',reason:'1a linha KDIGO'}],
-      support: ['IECA/BRA dose maxima','Controle PA < 130/80','Anticoagulacao se albumina < 2,5','Estatina'],
-      exams: ['Anti-PLA2R','Proteinuria 24h','Albumina','Creatinina serica','Complemento C3 e C4','Hemograma completo']
-    },
-    nefrite_lupica: {
-      title: 'Nefrite Lupica - Classe III/IV',
-      desc: 'KDIGO 2021: Inducao com Micofenolato ou Ciclofosfamida + Corticoide.',
-      meds: [{name:'Prednisona',conc:'1mg/kg/dia',pos:'4-6 semanas com desmame',reason:'Inducao'},{name:'Micofenolato de mofetila',conc:'1g 2x/dia',pos:'Manutencao min 3 anos',reason:'KDIGO'}],
-      support: ['Hidroxicloroquina 400mg/dia','IECA/BRA dose maxima','Protecao gastrica','Calcio + Vit D'],
-      exams: ['FAN','Anti-DNA dupla helice','Complemento C3 e C4','Hemograma completo','Creatinina serica','Proteinuria 24h']
-    },
-    iga: {
-      title: 'Nefropatia por IgA',
-      desc: 'KDIGO 2021: Suporte otimizado por 90 dias.',
-      meds: [{name:'Losartana',conc:'100mg',pos:'1x/dia dose maxima',reason:'1a linha IgA'},{name:'Dapagliflozina',conc:'10mg',pos:'1x/dia',reason:'Nefroproteção'}],
-      support: ['PA < 125/75','Restricao sodio < 2g/dia','Considerar Sparsentan'],
-      exams: ['Creatinina serica','Proteinuria 24h','Complemento C3 e C4','Imunoglobulinas (IgG, IgA, IgM)','Hemograma completo']
-    },
-    anca: {
-      title: 'Vasculite ANCA - Inducao',
-      desc: 'KDIGO 2021: Rituximabe ou Ciclofosfamida + Corticoide.',
-      meds: [{name:'Prednisona',conc:'1mg/kg/dia',pos:'Pulsoterapia + desmame',reason:'Inducao ANCA'},{name:'Rituximabe',conc:'375mg/m2 IV',pos:'Semanal x 4',reason:'Preferencia KDIGO'}],
-      support: ['Profilaxia Pneumocystis','Protecao gastrica','Calcio + Vit D'],
-      exams: ['ANCA (p e c)','Creatinina serica','Hemograma completo','PCR ultrassensivel','EAS (Urina tipo I)','Proteinuria 24h']
-    },
-    gesf: {
-      title: 'GESF',
-      desc: 'KDIGO 2021: Prednisona alta dose.',
-      meds: [{name:'Prednisona',conc:'1mg/kg/dia (max 80mg)',pos:'Min 4 sem, max 16 sem',reason:'1a linha GESF'}],
-      support: ['IECA/BRA dose maxima','Se corticorresistente: Tacrolimus','Restricao sodio'],
-      exams: ['Proteinuria 24h','Albumina','Creatinina serica','Hemograma completo','Glicemia de jejum']
-    },
-    membranoproliferativa: {
-      title: 'GN Membranoproliferativa',
-      desc: 'KDIGO 2021: Tratar causa base.',
-      meds: [{name:'Micofenolato de mofetila',conc:'1g 2x/dia',pos:'Mín. 12 meses',reason:'GNMP idiopatica'}],
-      support: ['Investigar causa secundaria','IECA/BRA dose maxima','Estatina'],
-      exams: ['Complemento C3 e C4','Crioglobulinas','Anti-HCV','Proteinuria 24h']
-    },
-    lm: {
-      title: 'Lesao Minima - Adulto',
-      desc: 'KDIGO 2021: Prednisona alta dose.',
-      meds: [{name:'Prednisona',conc:'1mg/kg/dia (max 80mg)',pos:'Min 4 sem apos remissao',reason:'1a linha LM'}],
-      support: ['Protecao gastrica','Calcio + Vit D','Restricao sodio'],
-      exams: ['Proteinuria 24h','Albumina','Creatinina serica','Hemograma completo']
+function renderPainelProtocolos() {
+  const cont = document.getElementById('painelProtocolos');
+  const footer = document.getElementById('painelProtocolosFooter');
+  if (!cont) return;
+  const ativas = (typeof condicoesAtivasCKM === 'function') ? condicoesAtivasCKM() : [];
+  if (!ativas.length) {
+    cont.innerHTML = '<p style="color:#999;font-size:12px;">Nenhuma condição ativa. Marque os antecedentes na etapa Anamnese & Exame.</p>';
+    if (footer) footer.style.display = 'none';
+    return;
+  }
+  const excl = window._protocolExcluded instanceof Set ? window._protocolExcluded : new Set();
+  cont.innerHTML = ativas.map(([k, c]) => {
+    const meds = (c.medicacoes_1a_linha || c.medicacoes_base || []);
+    const labs = (c.labs || []);
+    const metasTxt = c.metas ? Object.values(c.metas).map(_ppEsc).join(' · ') : '';
+    let detail = '';
+    if (meds.length) detail += '<div class="pp-sub">Medicações de 1ª linha</div>' + meds.map(m => '<div class="pp-item"><strong>' + _ppEsc(m.nome) + '</strong>' + (m.classe ? ' <span class="pp-cls">' + _ppEsc(m.classe) + '</span>' : '') + (m.dose ? ' — ' + _ppEsc(m.dose) : '') + (m.obs ? '<div class="pp-obs">' + _ppEsc(m.obs) + '</div>' : '') + '</div>').join('');
+    if (labs.length) detail += '<div class="pp-sub">Exames / cadência</div>' + labs.map(l => '<div class="pp-item">' + _ppEsc(l.nome) + (l.cadencia ? '<div class="pp-obs">' + _ppEsc(l.cadencia) + '</div>' : '') + '</div>').join('');
+    if (metasTxt) detail += '<div class="pp-sub">Metas</div><div class="pp-item">' + metasTxt + '</div>';
+    if (k === 'glomerulonefrite' && c.subtipos_histologicos) {
+      const opts = Object.entries(c.subtipos_histologicos).map(([sk, sv]) => '<option value="' + sk + '"' + (window._gnSubtipo === sk ? ' selected' : '') + '>' + _ppEsc(sv.label) + '</option>').join('');
+      detail += '<div class="pp-sub">Subtipo histológico (biópsia) — KDIGO 2021</div>'
+        + '<select id="ppGnSubtipo" onchange="onGnSubtipoChange()" style="width:100%;padding:8px;border-radius:6px;border:1px solid var(--border);margin-bottom:8px;"><option value="">— Selecionar subtipo —</option>' + opts + '</select>'
+        + '<div id="ppGnDetail"></div>';
     }
-  };
-
-  const p = protocols[type];
-  if (!p) return;
-  detail.innerHTML = '<div style="font-weight:800;color:var(--navy);font-size:14px;margin-bottom:6px;">'+p.title+'</div>'
-    +'<div style="font-size:12px;color:#555;margin-bottom:12px;">'+p.desc+'</div>'
-    +'<div style="font-weight:700;font-size:12px;color:var(--teal);margin-bottom:6px;">Medicamentos:</div>'
-    +'<div style="margin-bottom:12px;">'+p.meds.map(m=>'<div style="font-size:12px;padding:6px 10px;background:#fff;border-radius:4px;margin-bottom:4px;border-left:3px solid var(--teal);"><strong>'+m.name+'</strong> '+m.conc+' - '+m.pos+'</div>').join('')+'</div>'
-    +'<div style="font-weight:700;font-size:12px;color:var(--gold);margin-bottom:6px;">Suporte:</div>'
-    +'<div style="font-size:12px;color:#555;margin-bottom:12px;">'+p.support.map(s=>'&#8226; '+s).join('<br>')+'</div>'
-    +'<div style="display:flex;gap:8px;margin-top:12px;">'
-    +'<button class="btn btn-primary btn-sm" onclick="applyGNMeds(\''+type+'\')">Adicionar prescrição</button>'
-    +'<button class="btn btn-outline btn-sm" onclick="applyGNExams(\''+type+'\')">Solicitar exames</button></div>';
+    return '<div class="pp-row" data-k="' + k + '">'
+      + '<div class="pp-head">'
+      + '<label class="pp-chk"><input type="checkbox" class="pp-include" data-k="' + k + '" ' + (excl.has(k) ? '' : 'checked') + '> Incluir</label>'
+      + '<span class="pp-name">' + _ppEsc(c.label) + '</span>'
+      + '<button type="button" class="pp-toggle" onclick="togglePP(this)">ver protocolo &#x25BE;</button>'
+      + '</div>'
+      + '<div class="pp-detail" style="display:none;">' + (detail || '<div class="pp-obs">Sem itens estruturados na base.</div>') + '</div>'
+      + '</div>';
+  }).join('');
+  if (footer) footer.style.display = 'block';
+  if (window._gnSubtipo) onGnSubtipoChange();
 }
 
-function applyGNMeds(type) {
-  const protocols = {
-    nefrotica_membranosa:[{n:'Rituximabe',c:'1g IV',p:'D1 e D15'}],
-    nefrite_lupica:[{n:'Prednisona',c:'20mg',p:'Desmame conforme protocolo'},{n:'Micofenolato de mofetila',c:'1g 2x/dia',p:'Mín. 3 anos'}],
-    iga:[{n:'Losartana',c:'100mg',p:'1x/dia'},{n:'Dapagliflozina',c:'10mg',p:'1x/dia'}],
-    anca:[{n:'Prednisona',c:'20mg',p:'Desmame'},{n:'Rituximabe',c:'375mg/m2 IV',p:'Semanal x 4'}],
-    gesf:[{n:'Prednisona',c:'20mg',p:'1mg/kg/dia'}],
-    membranoproliferativa:[{n:'Micofenolato de mofetila',c:'1g 2x/dia',p:'Mín. 12 meses'}],
-    lm:[{n:'Prednisona',c:'20mg',p:'1mg/kg/dia até remissão'}]
-  };
-  const meds = protocols[type] || [];
-  meds.forEach(m => {
-    if (prescriptionList.find(p => p.name === m.n)) return;
-    const dbMed = MEDS_DB.find(d => d.name === m.n);
-    prescriptionList.push({name:m.n, concentration:m.c, form:dbMed?.forms[0]||'Conforme protocolo', posology:m.p, qty:'', obs:'Protocolo GN KDIGO', category:dbMed?.category||'Imunossupressor'});
-  });
-  renderPrescription();
-  showToast('Medicamentos do protocolo adicionados!');
+function togglePP(btn) {
+  const row = btn.closest('.pp-row');
+  const d = row.querySelector('.pp-detail');
+  const open = d.style.display !== 'none';
+  d.style.display = open ? 'none' : 'block';
+  btn.innerHTML = open ? 'ver protocolo &#x25BE;' : 'ocultar &#x25B4;';
 }
 
-function applyGNExams(type) {
-  const panels = {
-    nefrotica_membranosa:['Anti-PLA2R','Proteinuria 24h','Albumina','Creatinina serica','Complemento C3 e C4','Hemograma completo'],
-    nefrite_lupica:['FAN','Anti-DNA dupla helice','Complemento C3 e C4','Hemograma completo','Creatinina serica','Proteinuria 24h','EAS (Urina tipo I)'],
-    iga:['Creatinina serica','Proteinuria 24h','Complemento C3 e C4','Imunoglobulinas (IgG, IgA, IgM)','Hemograma completo'],
-    anca:['ANCA (p e c)','Creatinina serica','Hemograma completo','PCR ultrassensivel','EAS (Urina tipo I)','Proteinuria 24h'],
-    gesf:['Proteinuria 24h','Albumina','Creatinina serica','Hemograma completo','Glicemia de jejum'],
-    membranoproliferativa:['Complemento C3 e C4','Crioglobulinas','Anti-HCV','Proteinuria 24h'],
-    lm:['Proteinuria 24h','Albumina','Creatinina serica','Hemograma completo']
-  };
-  const exams = panels[type] || [];
-  const consultaNum = parseInt(document.getElementById('examConsultaNum').value) || 1;
-  exams.forEach(name => {
-    if (!examPrescriptionList.find(e => e.name === name && e.consultaNum === consultaNum)) {
-      const examData = EXAMS_DB.find(e => e.name === name);
-      examPrescriptionList.push({name, type:examData?.type||'sangue', category:examData?.category||'', consultaNum});
-    }
-  });
-  renderExams();
-  showToast('Exames do protocolo adicionados!');
+function onGnSubtipoChange() {
+  const sel = document.getElementById('ppGnSubtipo');
+  const det = document.getElementById('ppGnDetail');
+  if (!sel || !det) return;
+  window._gnSubtipo = sel.value || null;
+  const PB = window.PROTOCOLOS_CKM;
+  const sub = window._gnSubtipo && PB && PB.conditions && PB.conditions.glomerulonefrite && PB.conditions.glomerulonefrite.subtipos_histologicos[window._gnSubtipo];
+  if (!sub) { det.innerHTML = ''; return; }
+  let h = '';
+  if (sub.medicacoes && sub.medicacoes.length) h += '<div class="pp-sub">Esquema (KDIGO)</div>' + sub.medicacoes.map(m => '<div class="pp-item"><strong>' + _ppEsc(m.nome) + '</strong>' + (m.dose ? ' — ' + _ppEsc(m.dose) : '') + (m.obs ? '<div class="pp-obs">' + _ppEsc(m.obs) + '</div>' : '') + '</div>').join('');
+  if (sub.conduta && sub.conduta.length) h += '<div class="pp-sub">Conduta</div>' + sub.conduta.map(x => '<div class="pp-item">&#8226; ' + _ppEsc(x) + '</div>').join('');
+  if (sub.monitoramento) h += '<div class="pp-sub">Monitoramento</div><div class="pp-item">' + _ppEsc(sub.monitoramento) + '</div>';
+  det.innerHTML = h;
+}
+
+function aplicarPainelProtocolos() {
+  const excl = new Set();
+  document.querySelectorAll('.pp-include').forEach(cb => { if (!cb.checked) excl.add(cb.dataset.k); });
+  window._protocolExcluded = excl;
+  const selGn = document.getElementById('ppGnSubtipo');
+  if (selGn) window._gnSubtipo = selGn.value || null;
+  if (typeof autoPrescribe === 'function') autoPrescribe();
+  if (typeof gerarCronogramaDaBase === 'function') gerarCronogramaDaBase();
+  if (typeof showToast === 'function') showToast('Protocolo aplicado: prescrição + cronograma das condições selecionadas &#x2713;');
 }
 
 function autoRecomendacao() {
@@ -3659,6 +4710,25 @@ function addCustomSupplement() {
 // ============================================================
 // AI ASSESSOR JSON
 // ============================================================
+function kdigoRiskLabel(g, a) {
+  if (!g || !a) return null;
+  const m = {
+    G1:{A1:'Baixo',A2:'Moderado',A3:'Alto'},
+    G2:{A1:'Baixo',A2:'Moderado',A3:'Alto'},
+    G3a:{A1:'Moderado',A2:'Alto',A3:'Muito alto'},
+    G3b:{A1:'Alto',A2:'Muito alto',A3:'Muito alto'},
+    G4:{A1:'Muito alto',A2:'Muito alto',A3:'Muito alto'},
+    G5:{A1:'Muito alto',A2:'Muito alto',A3:'Muito alto'}
+  };
+  return (m[g] && m[g][a]) || null;
+}
+function ckmStageLabel(s) {
+  return ['Estágio 0 — sem fatores de risco',
+          'Estágio 1 — excesso/disfunção de adiposidade',
+          'Estágio 2 — fatores de risco metabólicos / DRC',
+          'Estágio 3 — DCV subclínica ou alto risco',
+          'Estágio 4 — DCV clínica estabelecida'][s] || ('Estágio ' + s);
+}
 function generateAssessorCode() {
   const patientName = document.getElementById('patientName')?.textContent || 'Paciente';
   const age = getAge(); const male = isMale();
@@ -3681,27 +4751,90 @@ function generateAssessorCode() {
   if (hasObes || hasIC) monitoring_tasks.push({task:'Aferir peso em jejum',frequency:hasIC?'diariamente':'1x/semana (mesmo dia e hora)',alert_if:hasIC?'ganho > 1kg em 24h':'ganho > 2kg em 1 semana'});
   monitoring_tasks.push({task:'Relatar sintomas ou efeitos colaterais',frequency:'quando ocorrerem',alert_if:'qualquer sintoma novo ou preocupante'});
 
+  // ── Classificações de risco (auto-derivadas) ──
+  const tfgeClass = classifyTFGe(tfge);
+  const racVal = labVal('rac');
+  const racClass = classifyRAC(racVal);
+  const ckmStage = calcCKM();
+  const ascvd = calcASCVD();
+  const kfre = calcKFRE();
+  const ms = calcMS();
+  const ldl = labVal('ldl');
+  const kdigoCat = (tfgeClass.stage && racClass.stage) ? (tfgeClass.stage + racClass.stage) : null;
+
+  const risks_classifications = {
+    kdigo: kdigoCat ? {
+      category: kdigoCat, g_stage: tfgeClass.stage, a_stage: racClass.stage,
+      tfge: tfge, rac: racVal || null,
+      risk_label: kdigoRiskLabel(tfgeClass.stage, racClass.stage),
+      status: 'atual'
+    } : null,
+    ckm: { stage: ckmStage, label: ckmStageLabel(ckmStage), status: 'atual' },
+    ascvd: (ascvd != null) ? { risk_pct: ascvd, horizon: '10 anos', category: ascvd>=20?'alto':ascvd>=7.5?'intermediário':'baixo', status: 'atual' } : null,
+    kfre: (kfre != null) ? { risk_pct: kfre, horizon: '5 anos', outcome: 'falência renal (TRS)', status: 'atual' } : null,
+    metabolic_syndrome: { present: ms.present, criteria_count: ms.count, status: 'atual' }
+  };
+
+  // ── Métricas monitoradas por paciente (auto pelos diagnósticos; override manual via UI) ──
+  const monitored_metrics = [];
+  function addMetric(o){ o.auto = true; o.enabled = true; monitored_metrics.push(o); }
+  if (hasHAS) addMetric({key:'pa',label:'Pressão arterial',unit:'mmHg',target:'< 130/80',alert:'≥ 180/110',source:'paciente',frequency:'2x/dia (7 dias antes da consulta)',reason:'Hipertensão arterial'});
+  if (hasDM) {
+    addMetric({key:'glicemia_jejum',label:'Glicemia de jejum',unit:'mg/dL',target:'70–130',alert:'< 50 ou > 400',source:'paciente',frequency:'3x/semana',reason:'Diabetes'});
+    addMetric({key:'hba1c',label:'Hemoglobina glicada (HbA1c)',unit:'%',target:hba1c>7?'< 7':'manter < 6,5',source:'laboratório',frequency:'trimestral',reason:'Diabetes'});
+  }
+  if (hasDRC) {
+    addMetric({key:'tfge',label:'Função renal (TFGe)',unit:'mL/min/1,73m²',target:'estabilizar / evitar queda',source:'laboratório',frequency:'trimestral',reason:'Doença renal crônica'});
+    addMetric({key:'rac',label:'Albuminúria (RAC)',unit:'mg/g',target:'< 30',source:'laboratório',frequency:'trimestral',reason:'Doença renal crônica'});
+  }
+  if (hasObes || hasIC) addMetric({key:'peso',label:'Peso corporal',unit:'kg',target:hasObes?'perda 5–10% em 6 meses':'estável',alert:hasIC?'ganho > 1 kg em 24h':'ganho > 2 kg/semana',source:'paciente',frequency:hasIC?'diário':'semanal',reason:hasIC?'Insuficiência cardíaca':'Obesidade'});
+  if (document.getElementById('hpp_dislip')?.checked || (ascvd && ascvd>=7.5)) addMetric({key:'ldl',label:'LDL-colesterol',unit:'mg/dL',target:(ascvd&&ascvd>20)?'< 55':'< 70',source:'laboratório',frequency:'semestral',reason:'Risco cardiovascular'});
+
+  // ── Calendário de exames (timeline por consulta) ──
+  const examsByConsulta = {};
+  examPrescriptionList.forEach(function(e){ (examsByConsulta[e.consultaNum] = examsByConsulta[e.consultaNum] || []).push({name:e.name, type:e.type, category:e.category||null}); });
+  const exam_calendar = Object.keys(examsByConsulta).sort(function(a,b){return a-b;}).map(function(n){ return {consultation_number:Number(n), exams:examsByConsulta[n]}; });
+
+  const consultaNum = parseInt(document.getElementById('consultaNum')?.textContent) || 1;
+  const today = new Date().toISOString().slice(0,10);
+
   const json = {
-    patient:{name:patientName,age,sex:male?'M':'F',weight:peso},
-    clinical:{tfge,hba1c,imc,ckm_stage:calcCKM(),ascvd_risk:calcASCVD(),kfre_risk:calcKFRE(),metabolic_syndrome:calcMS().present,
-      diagnoses:Array.from(document.querySelectorAll('[id^="hpp_"]:checked')).map(el=>el.nextSibling?.textContent?.trim()||el.id.replace('hpp_',''))},
-    medications:prescriptionList.map(rx=>({name:rx.name,concentration:rx.concentration,posology:rx.posology,form:rx.form})),
-    supplements:supplementList.map(s=>({name:s.name,dose:s.dose})),
-    lifestyle:{hydration_goal:peso?Math.round(peso*35)+' mL/dia':null,diet:document.getElementById('proto_dieta')?.value||null,exercise:document.getElementById('proto_atividade')?.value||null,sleep:document.getElementById('proto_sono')?.value||null},
-    monitoring_tasks:monitoring_tasks,
-    reminders:[
+    schema_version: '1.0',
+    generated_at: new Date().toISOString(),
+    consultation: {
+      id: (window.crypto && crypto.randomUUID) ? crypto.randomUUID() : ('c-' + Date.now()),
+      patient_id: window._apexPatientId || null,
+      number: consultaNum,
+      date: today,
+      model: 'consultation-driven'
+    },
+    patient: { name: patientName, age, sex: male?'M':'F', weight: peso, height: getV('altura') || null },
+    clinical: {
+      tfge, hba1c, imc, ldl: ldl || null,
+      pa: (labVal('pas') && getV('pad')) ? (labVal('pas') + '/' + getV('pad')) : null,
+      diagnoses: Array.from(document.querySelectorAll('[id^="hpp_"]:checked')).map(el=>el.nextSibling?.textContent?.trim()||el.id.replace('hpp_',''))
+    },
+    risks_classifications,
+    monitored_metrics,
+    medications: prescriptionList.map(rx=>({name:rx.name,concentration:rx.concentration,posology:rx.posology,form:rx.form})),
+    supplements: supplementList.map(s=>({name:s.name,dose:s.dose})),
+    goals: { pa:'< 130/80 mmHg', hba1c:hba1c>7?'< 7%':'manter < 6,5%', ldl:(ascvd&&ascvd>20)?'< 55 mg/dL':'< 70 mg/dL', peso:hasObes?'Perder 5-10% em 6 meses':null, imc:imc>25?'< 25 kg/m²':null },
+    lifestyle: { hydration_goal: peso?Math.round(peso*35)+' mL/dia':null, diet_orientation: document.getElementById('proto_dieta')?.value||null, activity_orientation: document.getElementById('proto_atividade')?.value||null, sleep_orientation: document.getElementById('proto_sono')?.value||null },
+    exam_calendar,
+    monitoring_tasks,
+    reminders: [
       {type:'medication',message:'Lembre-se de tomar seus medicamentos conforme prescrito.',frequency:'diario'},
       {type:'hydration',message:'Meta de hidratação: '+(peso?Math.round(peso*35)+'mL':'ver prescrição'),frequency:'diario'},
       hasHAS?{type:'pa',message:'Hora de aferir sua pressão arterial. Registre os valores.',frequency:'2x/dia'}:null,
-      hasDM?{type:'glicemia',message:'Hora de verificar a glicemia. Registre o valor e se esta em jejum ou pós-prandial.',frequency:'conforme protocolo'}:null,
-      (hasObes||hasIC)?{type:'peso',message:'Hora de se pesar. Faca em jejum, na mesma balanca.',frequency:hasIC?'diario':'semanal'}:null
+      hasDM?{type:'glicemia',message:'Hora de verificar a glicemia. Registre o valor.',frequency:'conforme protocolo'}:null,
+      (hasObes||hasIC)?{type:'peso',message:'Hora de se pesar. Faça em jejum, na mesma balança.',frequency:hasIC?'diario':'semanal'}:null
     ].filter(Boolean),
-    goals:{pa:'< 130/80 mmHg',hba1c:hba1c>7?'< 7%':'manter < 6,5%',ldl:calcASCVD()>20?'< 55 mg/dL':'< 70 mg/dL',peso:hasObes?'Perder 5-10% em 6 meses':null,imc:imc>25?'< 25 kg/m²':null},
-    alerts:{emergencia:['PA > 180/110 com sintomas','Dor toracica','Confusao mental','Glicemia < 50 ou > 400'],atencao:['PA > 160/100 persistente','Glicemia jejum > 200 por 3 dias','Edema novo','Ganho peso > 2kg/semana']},
-    next_consultation:{recommended_interval:'30 dias',exams_before:examPrescriptionList.filter(e=>e.consultaNum===2).map(e=>e.name)}
+    alerts: { emergencia:['PA > 180/110 com sintomas','Dor torácica','Confusão mental','Glicemia < 50 ou > 400'], atencao:['PA > 160/100 persistente','Glicemia jejum > 200 por 3 dias','Edema novo','Ganho peso > 2kg/semana'] },
+    next_consultation: { recommended_interval:'30 dias', exams_before: examPrescriptionList.filter(e=>e.consultaNum===(consultaNum+1)).map(e=>e.name) }
   };
   document.getElementById('assessorJSON').textContent = JSON.stringify(json, null, 2);
-  showToast('JSON do assessor gerado!');
+  window._apexLastContract = json;
+  showToast('Contrato JSON v1 gerado!');
 }
 
 function copyJSON() {
@@ -3752,7 +4885,7 @@ function updateAllDocs() {
         const verb=via==='SC'?'Aplicar':via==='IV'?'Administrar':'Tomar';
         const isContinuo=posText.includes('contínuo')||posText.includes('semana')||posText.includes('quinzenal')||posText.includes('mensal')||posText.includes('esquema')||posText.includes('protocolo')||posText.includes('SN')||posText.includes('s/n');
         const display=verb+' '+rx.concentration+(formTxt?' '+formTxt:'')+' '+via+' '+posText+(isContinuo?'':' — uso contínuo');
-        rxHtml+='<div style="padding:10px 0;"><div style="font-weight:700;font-size:13px;color:#1E2D50;">'+counter+') '+rx.name+' '+rx.concentration+'</div><div style="font-size:12px;color:#555;margin-top:3px;padding-left:20px;">'+display+(rx.qty?' — Qtd: '+rx.qty:'')+'</div>'+(rx.obs?'<div style="font-size:10px;color:#999;margin-top:2px;padding-left:20px;font-style:italic;">Indicação: '+rx.obs+'</div>':'')+'</div>';counter++;});
+        rxHtml+='<div style="padding:10px 0;"><div style="font-weight:700;font-size:13px;color:#1E2D50;">'+counter+') '+rx.name+' '+rx.concentration+'</div><div style="font-size:12px;color:#555;margin-top:3px;padding-left:20px;">'+display+(rx.qty?' — Qtd: '+rx.qty:'')+'</div>'+'</div>';counter++;});
     }
     rxHtml+='</div>';
     document.getElementById('doc-rx-body').innerHTML=rxHtml;
@@ -3768,7 +4901,7 @@ function updateAllDocs() {
   const rec=document.getElementById('recomendacao')?.value;
   if(rec) document.getElementById('doc-rec-body').innerHTML='<div style="margin-top:20px;font-size:13px;line-height:1.8;white-space:pre-wrap;">'+rec+'</div>';
 
-  if(supplementList.length) document.getElementById('doc-supp-body').innerHTML='<div style="margin-top:20px;">'+supplementList.map((s,i)=>{const isIV=s.dose.toLowerCase().includes(' iv ')||s.dose.toLowerCase().includes('iv ');const isSC=s.dose.toLowerCase().includes('sc ')||s.dose.toLowerCase().includes('subcutâneo');const via=isIV?'IV':isSC?'SC':'VO';const verb=isIV?'Administrar':isSC?'Aplicar':'Tomar';return '<div class="doc-rx-item"><div class="med-name">'+(i+1)+') '+s.name+'</div><div class="med-detail">'+verb+' '+s.dose+' '+via+' — uso contínuo</div><div style="font-size:10px;color:#999;font-style:italic;margin-top:2px;">Indicação: '+s.reason+'</div></div>';}).join('')+'</div>';
+  if(supplementList.length) document.getElementById('doc-supp-body').innerHTML='<div style="margin-top:20px;">'+supplementList.map((s,i)=>{const isIV=s.dose.toLowerCase().includes(' iv ')||s.dose.toLowerCase().includes('iv ');const isSC=s.dose.toLowerCase().includes('sc ')||s.dose.toLowerCase().includes('subcutâneo');const via=isIV?'IV':isSC?'SC':'VO';const verb=isIV?'Administrar':isSC?'Aplicar':'Tomar';return '<div class="doc-rx-item"><div class="med-name">'+(i+1)+') '+s.name+'</div><div class="med-detail">'+verb+' '+s.dose+' '+via+' — uso contínuo</div></div>';}).join('')+'</div>';
 
   // Receita Especial (controlados)
   const controlados = prescriptionList.filter(rx => {
@@ -3850,7 +4983,7 @@ function printDoc(id) {
     text-align: center;
     font-size: 9px;
     color: #999;
-    border-top: 1px solid #E2E0DB;
+    border-top: 2px solid #C4A35A;
     padding-top: 6px;
     padding-bottom: 2px;
     background: #fff;
@@ -3911,7 +5044,7 @@ function generateResumo() {
   const fib4 = calcFIB4(age, labVal('ast_v'), labVal('plaq'), labVal('alt_v'));
   const au = labVal('au');
   const ca = getV('ca');
-  const ckmStage = calcCKM(); const ascvd = calcASCVD(); const kfre = calcKFRE(); const ms = calcMS();
+  const ckmStage = calcCKM(); const ascvd = calcASCVD(); const kfre = calcKFRE(); const ms = calcMS(); const prevent = calcPREVENT();
   const isRetorno = consultaMode === 'retorno';
 
   // Previous values for evolution (retorno mode)
@@ -4077,7 +5210,7 @@ function generateResumo() {
 
   // ── 1. HEADER ──
   html += '<div style="text-align:center;margin-bottom:20px;padding-bottom:14px;border-bottom:2px solid #C4A35A;">'
-    +'<div style="font-size:18px;font-weight:800;color:#1E2D3D;letter-spacing:0.5px;text-transform:uppercase;">Resumo Executivo da Consulta</div>'
+    +'<div style="font-size:18px;font-weight:800;color:#1E2D3D;letter-spacing:0.5px;text-transform:uppercase;">Resumo da Consulta</div>'
     +'<div style="font-size:11px;color:#6B7A8D;margin-top:4px;">'+today+' — '+(isRetorno?'Retorno':'Primeira Consulta')+'</div>'
     +'</div>';
 
@@ -4122,7 +5255,13 @@ function generateResumo() {
 
   // ── 5. ESCORES DE RISCO ──
   html += sectionHeader('Escores de Risco');
-  html += '<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:20px;">';
+  html += '<div style="display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-bottom:20px;">';
+  // PREVENT (primária)
+  const prevColor = prevent?(prevent.totalCVD<7.5?'#2E7D32':prevent.totalCVD<20?'#F5A623':'#C62828'):'#999';
+  html += '<div style="text-align:center;padding:14px 8px;background:#F8F8F5;border-radius:10px;border-bottom:3px solid '+prevColor+';">'
+    +'<div style="font-size:9px;font-weight:600;color:#6B7A8D;text-transform:uppercase;letter-spacing:0.5px;">PREVENT 10 anos</div>'
+    +'<div style="font-size:24px;font-weight:800;color:'+prevColor+';margin-top:4px;">'+(prevent?prevent.totalCVD+'%':'—')+'</div>'
+    +'<div style="font-size:9px;color:#6B7A8D;margin-top:2px;">'+(prevent?'CV total · ASCVD '+prevent.ascvd+'% · IC '+prevent.hf+'%':'—')+'</div></div>';
   // ASCVD
   const ascvdColor = ascvd!==null?(ascvd<7.5?'#2E7D32':ascvd<20?'#F5A623':'#C62828'):'#999';
   html += '<div style="text-align:center;padding:14px 8px;background:#F8F8F5;border-radius:10px;border-bottom:3px solid '+ascvdColor+';">'
@@ -4307,8 +5446,8 @@ function goalSummaryRow(label, atual, unit, target, achieved) {
 // ============================================================
 // SAVE / LOAD
 // ============================================================
+function _consKey() { return 'apex_consultas_' + (window._apexPatientId || 'default'); }
 function saveConsulta() {
-  // Save to history
   const historyEntry = {
     date: new Date().toLocaleDateString('pt-BR'),
     type: consultaMode === 'primeira' ? 'Primeira Consulta' : 'Retorno '+(document.getElementById('tipoRetorno')?.value||'mensal'),
@@ -4316,15 +5455,67 @@ function saveConsulta() {
     tfge: calcTFGe(labVal('cr'), getAge(), !isMale()),
     pa: labVal('pas') ? labVal('pas')+'/'+getV('pad') : null,
     hba1c: labVal('hba1c'),
+    ldl: labVal('ldl') || null,
     imc: calcIMC(getV('peso'), getV('altura')),
+    ckm: (typeof calcCKM === 'function') ? calcCKM() : null,
+    meds: (typeof prescriptionList !== 'undefined') ? prescriptionList.map(p => p.name) : [],
     notes: document.getElementById('exames_outros')?.value || document.getElementById('exames_outros_first')?.value || ''
   };
-  const history = JSON.parse(localStorage.getItem('apex_consultas') || '[]');
+  const history = JSON.parse(localStorage.getItem(_consKey()) || '[]');
   history.unshift(historyEntry);
-  if (history.length > 20) history.pop();
-  localStorage.setItem('apex_consultas', JSON.stringify(history));
- showToast('Consulta salva com sucesso!'); }
-function loadConsulta(idx) { showToast('Carregando dados da consulta anterior...'); }
+  if (history.length > 30) history.pop();
+  localStorage.setItem(_consKey(), JSON.stringify(history));
+  if (typeof loadConsultaHistory === 'function') loadConsultaHistory();
+  showToast('Consulta salva na memória do paciente ✓');
+}
+function loadConsulta(idx) {
+  const history = JSON.parse(localStorage.getItem(_consKey()) || '[]');
+  const c = history[idx]; if (!c) return;
+  const el = document.getElementById('consultaDetail'); if (!el) return;
+  el.style.display = 'block';
+  el.innerHTML = '<div style="font-weight:700;color:var(--navy);margin-bottom:6px;">&#x1F4CB; '+(c.date||'')+' — '+(c.type||'Consulta')+'</div>'
+    + (c.diagnoses ? '<div style="font-size:12px;margin-bottom:3px;"><strong>Diagnósticos:</strong> '+c.diagnoses+'</div>' : '')
+    + '<div style="font-size:12px;margin-bottom:3px;"><strong>TFGe:</strong> '+(c.tfge||'—')+' · <strong>PA:</strong> '+(c.pa||'—')+' · <strong>HbA1c:</strong> '+(c.hba1c||'—')+' · <strong>LDL:</strong> '+(c.ldl||'—')+' · <strong>IMC:</strong> '+(c.imc||'—')+' · <strong>CKM:</strong> '+(c.ckm!=null?('Estágio '+c.ckm):'—')+'</div>'
+    + (c.meds && c.meds.length ? '<div style="font-size:12px;margin-bottom:3px;"><strong>Prescrição:</strong> '+c.meds.join(', ')+'</div>' : '')
+    + (c.notes ? '<div style="font-size:12px;font-style:italic;color:#555;">'+c.notes+'</div>' : '');
+  el.scrollIntoView({ behavior:'smooth', block:'nearest' });
+}
+
+// ============================================================
+// AUTOSAVE — rascunho da consulta por paciente (anti-perda de dados)
+// ============================================================
+function _draftKey() { return 'apex_draft_' + (window._apexPatientId || 'default'); }
+function autosaveConsulta() {
+  try {
+    var data = {};
+    document.querySelectorAll('input[id], textarea[id], select[id]').forEach(function(el) {
+      if (el.type === 'checkbox' || el.type === 'radio') data[el.id] = el.checked;
+      else if (el.value !== '') data[el.id] = el.value;
+    });
+    localStorage.setItem(_draftKey(), JSON.stringify({ t: Date.now(), data: data }));
+  } catch (e) {}
+}
+function restoreDraft() {
+  try {
+    var raw = localStorage.getItem(_draftKey());
+    if (!raw) return;
+    var saved = JSON.parse(raw);
+    if (!saved || !saved.data) return;
+    Object.keys(saved.data).forEach(function(id) {
+      var el = document.getElementById(id);
+      if (!el) return;
+      if (el.type === 'checkbox' || el.type === 'radio') el.checked = saved.data[id];
+      else el.value = saved.data[id];
+    });
+    if (typeof autoCalcAntro === 'function') autoCalcAntro();
+    if (typeof recalcAll === 'function') recalcAll();
+    showToast('Rascunho da consulta restaurado');
+  } catch (e) {}
+}
+var _autosaveTimer = null;
+function _scheduleAutosave() { clearTimeout(_autosaveTimer); _autosaveTimer = setTimeout(autosaveConsulta, 700); }
+document.addEventListener('input', _scheduleAutosave);
+document.addEventListener('change', _scheduleAutosave);
 
 function showToast(msg) {
   const t = document.getElementById('saveToast');
@@ -4422,18 +5613,18 @@ function renderAssessorCharts() {
 // HISTÓRICO DE CONSULTAS
 // ============================================================
 function loadConsultaHistory() {
-  const history = JSON.parse(localStorage.getItem('apex_consultas') || '[]');
+  const history = JSON.parse(localStorage.getItem(_consKey()) || '[]');
   const el = document.getElementById('consultaHistory');
-  if (!history.length) { el.innerHTML = '<p style="color:#999;font-size:12px;text-align:center;margin:20px 0;">Nenhuma consulta anterior salva</p>'; return; }
+  if (!el) return;
+  if (!history.length) { el.innerHTML = '<p style="color:#999;font-size:12px;text-align:center;margin:20px 0;">Nenhuma consulta anterior salva para este paciente</p>'; return; }
   el.innerHTML = history.map((c, i) => `
-    <div style="padding:12px;margin-bottom:8px;background:#f8f8f5;border-radius:var(--radius-sm);border-left:3px solid var(--teal);">
+    <div onclick="loadConsulta(${i})" title="Clique para abrir o resumo" style="cursor:pointer;padding:12px;margin-bottom:8px;background:#f8f8f5;border-radius:var(--radius-sm);border-left:3px solid var(--teal);transition:background .15s;" onmouseover="this.style.background='#eef3f2'" onmouseout="this.style.background='#f8f8f5'">
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
-        <strong style="font-size:13px;color:var(--navy);">${c.date || 'Data não registrada'}</strong>
+        <strong style="font-size:13px;color:var(--navy);">${c.date || 'Data não registrada'} &#x203A;</strong>
         <span style="font-size:10px;background:var(--navy);color:#fff;padding:2px 8px;border-radius:10px;">${c.type || 'Consulta'}</span>
       </div>
       ${c.diagnoses ? '<div style="font-size:11px;color:#6B7A8D;margin-bottom:4px;"><strong>Diagnósticos:</strong> '+c.diagnoses+'</div>' : ''}
       ${c.tfge ? '<div style="font-size:11px;color:#6B7A8D;"><strong>TFGe:</strong> '+c.tfge+' | <strong>PA:</strong> '+(c.pa||'---')+' | <strong>HbA1c:</strong> '+(c.hba1c||'---')+' | <strong>IMC:</strong> '+(c.imc||'---')+'</div>' : ''}
-      ${c.notes ? '<div style="font-size:11px;color:#555;margin-top:4px;font-style:italic;">'+c.notes+'</div>' : ''}
     </div>
   `).join('');
 }
@@ -4469,7 +5660,35 @@ document.addEventListener('DOMContentLoaded', function() {
   renderProtocol12M();
   renderExams();
   renderSupplements();
+  if (typeof renderResumo === 'function') renderResumo();
+  const tb = document.getElementById('tabsBar'); if (tb) tb.style.display = 'none';
 });
 </script>
+
+<!-- Modal de vias (documentos dentro da casca nova) -->
+<div id="viaModal" class="rz-modal" onclick="if(event.target===this)fecharVia()">
+  <div class="rz-modal-card">
+    <div class="rz-modal-head">
+      <span class="rz-modal-title" id="viaModalTitle">&#x1F4C4; Documento</span>
+      <button class="rz-modal-save" onclick="salvarVia()">&#x1F4BE; Salvar</button>
+      <button class="rz-modal-print" onclick="imprimirVia()">&#x1F5A8; Imprimir</button>
+      <button class="rz-modal-x" onclick="fecharVia()">&#x2715;</button>
+    </div>
+    <div class="rz-modal-hint">&#x270E; Edite o texto direto no documento antes de salvar ou imprimir. O cabeçalho/rodapé são fixos.</div>
+    <div class="rz-modal-body" id="viaModalBody"></div>
+  </div>
+</div>
+
+<!-- Modal de resumo de consulta anterior (#4) -->
+<div id="consultaModal" class="rz-modal" onclick="if(event.target===this)fecharConsultaModal()">
+  <div class="rz-modal-card" style="max-width:560px;">
+    <div class="rz-modal-head">
+      <span class="rz-modal-title" id="consultaModalTitle">&#x1F4C5; Consulta</span>
+      <button class="rz-modal-save" onclick="compararConsulta()">&#x21C4; Comparar no Resumo</button>
+      <button class="rz-modal-x" onclick="fecharConsultaModal()">&#x2715;</button>
+    </div>
+    <div class="rz-modal-body" id="consultaModalBody"></div>
+  </div>
+</div>
 </body>
 </html>

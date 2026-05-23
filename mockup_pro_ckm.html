@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>APEX Pro · Conceito — Prontuário CKM (modelo Elation)</title>
+<script src="https://cdn.jsdelivr.net/npm/lucide@latest/dist/umd/lucide.min.js"></script>
+<style>
+  :root{
+    --navy:#1E2D50;--navy2:#16223F;--teal:#028090;--teal-l:#04B5C8;--gold:#C4A35A;
+    --bg:#EEF1F6;--card:#fff;--ink:#1B2436;--muted:#5C6B82;--line:#E4E8F0;
+    --green:#2E8B6F;--green-bg:#E4F3ED;--amber:#B8860B;--amber-bg:#FBF3DD;
+    --red:#C0473B;--red-bg:#FBEAE8;--blue:#2F6FB0;--blue-bg:#E8F0F9;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{background:var(--bg);color:var(--ink);font-family:-apple-system,"Segoe UI",Inter,Arial,sans-serif;font-size:13.5px;line-height:1.45;}
+  .concept-bar{background:var(--gold);color:var(--navy2);text-align:center;font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;padding:5px;}
+  /* ===== TOP APP BAR ===== */
+  .appbar{background:linear-gradient(120deg,var(--navy),var(--navy2));color:#fff;display:flex;align-items:center;gap:18px;padding:10px 20px;}
+  .brand{font-weight:800;letter-spacing:.5px;font-size:16px;display:flex;align-items:center;gap:8px;}
+  .brand .dot{width:9px;height:9px;border-radius:50%;background:var(--gold);}
+  .nav{display:flex;gap:4px;margin-left:8px;}
+  .nav a{color:#C7D2E4;text-decoration:none;font-size:12.5px;padding:6px 11px;border-radius:8px;display:flex;align-items:center;gap:6px;}
+  .nav a.active{background:rgba(255,255,255,.12);color:#fff;font-weight:600;}
+  .appbar .right{margin-left:auto;display:flex;align-items:center;gap:14px;color:#C7D2E4;font-size:12px;}
+  .appbar .right .me{display:flex;align-items:center;gap:8px;color:#fff;}
+  .avatar{width:30px;height:30px;border-radius:50%;background:var(--teal);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:12px;color:#fff;}
+  /* ===== PATIENT HEADER + STORYBOARD ===== */
+  .ph{background:#fff;border-bottom:1px solid var(--line);padding:12px 20px;}
+  .ph-top{display:flex;align-items:center;gap:14px;margin-bottom:11px;}
+  .p-avatar{width:46px;height:46px;border-radius:12px;background:linear-gradient(135deg,var(--teal),var(--teal-l));color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:16px;}
+  .p-name{font-size:18px;font-weight:800;color:var(--navy);}
+  .p-meta{color:var(--muted);font-size:12.5px;}
+  .p-tags{margin-left:auto;display:flex;gap:7px;}
+  .pill{font-size:11px;font-weight:700;padding:4px 11px;border-radius:20px;border:1px solid var(--line);display:flex;align-items:center;gap:5px;}
+  .pill.stage{background:var(--amber-bg);color:var(--amber);border-color:transparent;}
+  .pill.risk{background:var(--red-bg);color:var(--red);border-color:transparent;}
+  /* storyboard chips */
+  .story{display:grid;grid-template-columns:repeat(7,1fr);gap:9px;}
+  .chip{border:1px solid var(--line);border-radius:11px;padding:8px 11px;background:#FBFCFE;position:relative;overflow:hidden;}
+  .chip .lab{font-size:10px;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);font-weight:700;display:flex;align-items:center;gap:5px;}
+  .chip .val{font-size:18px;font-weight:800;color:var(--navy);margin-top:3px;line-height:1.1;}
+  .chip .val small{font-size:11px;font-weight:600;color:var(--muted);}
+  .chip .trend{font-size:10.5px;font-weight:700;margin-top:2px;display:flex;align-items:center;gap:3px;}
+  .chip.warn{background:var(--amber-bg);border-color:transparent;} .chip.warn .val{color:var(--amber);}
+  .chip.bad{background:var(--red-bg);border-color:transparent;} .chip.bad .val{color:var(--red);}
+  .chip.ok{background:var(--green-bg);border-color:transparent;} .chip.ok .val{color:var(--green);}
+  .down{color:var(--red);} .up{color:var(--green);} .flat{color:var(--muted);}
+  /* ===== 3-COLUMN BODY ===== */
+  .cols{display:grid;grid-template-columns:1.05fr 1.1fr 1fr;gap:14px;padding:14px 20px 90px;align-items:start;}
+  .col{display:flex;flex-direction:column;gap:12px;}
+  .colhead{display:flex;align-items:center;gap:8px;font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:var(--navy);padding:0 2px;}
+  .colhead .ic{width:26px;height:26px;border-radius:8px;background:var(--navy);color:#fff;display:flex;align-items:center;justify-content:center;}
+  .colhead .count{margin-left:auto;background:var(--line);color:var(--muted);font-size:11px;padding:1px 9px;border-radius:20px;}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:13px;padding:13px 14px;box-shadow:0 1px 2px rgba(20,34,63,.04);}
+  /* problem card */
+  .prob{border-left:4px solid var(--teal);}
+  .prob .t{display:flex;align-items:center;gap:8px;font-weight:700;color:var(--navy);font-size:14px;}
+  .prob .t .badge{margin-left:auto;font-size:10.5px;font-weight:700;padding:2px 9px;border-radius:20px;}
+  .b-ok{background:var(--green-bg);color:var(--green);} .b-warn{background:var(--amber-bg);color:var(--amber);} .b-bad{background:var(--red-bg);color:var(--red);}
+  .prob .sub{color:var(--muted);font-size:12px;margin-top:5px;}
+  .prob .line{display:flex;gap:6px;align-items:center;margin-top:7px;font-size:12px;}
+  .prob .line .k{color:var(--muted);min-width:64px;} .prob .line .v{font-weight:600;}
+  .mini{font-size:11px;color:var(--teal);font-weight:700;margin-top:8px;display:flex;align-items:center;gap:5px;cursor:pointer;}
+  /* med rows */
+  .medgrp{font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin:2px 0 4px;}
+  .med{display:flex;align-items:center;gap:9px;padding:7px 0;border-bottom:1px dashed var(--line);}
+  .med:last-child{border-bottom:none;}
+  .med .name{font-weight:700;color:var(--ink);} .med .dose{color:var(--muted);font-size:12px;}
+  .med .pillar{margin-left:auto;font-size:9.5px;font-weight:800;color:#fff;background:var(--teal);border-radius:6px;padding:2px 7px;}
+  .med .tag-new{margin-left:auto;font-size:9.5px;font-weight:800;color:var(--green);background:var(--green-bg);border-radius:6px;padding:2px 7px;}
+  .planbox{background:#FBFCFE;border:1px dashed var(--teal);border-radius:10px;padding:10px 12px;margin-top:4px;}
+  .planbox .h{font-weight:800;color:var(--teal);font-size:11.5px;text-transform:uppercase;letter-spacing:.05em;display:flex;align-items:center;gap:6px;margin-bottom:6px;}
+  .planbox ul{margin-left:16px;} .planbox li{margin:3px 0;font-size:12.5px;}
+  /* timeline */
+  .tl{position:relative;padding-left:18px;}
+  .tl::before{content:"";position:absolute;left:5px;top:4px;bottom:4px;width:2px;background:var(--line);}
+  .tl .ev{position:relative;margin-bottom:13px;}
+  .tl .ev::before{content:"";position:absolute;left:-16px;top:3px;width:9px;height:9px;border-radius:50%;background:var(--teal);border:2px solid #fff;box-shadow:0 0 0 1px var(--teal);}
+  .tl .d{font-size:11px;color:var(--muted);font-weight:700;}
+  .tl .x{font-size:12.5px;margin-top:1px;}
+  .trendrow{display:flex;align-items:center;justify-content:space-between;padding:6px 0;border-bottom:1px dashed var(--line);font-size:12.5px;}
+  .trendrow:last-child{border-bottom:none;}
+  .spark{height:26px;width:90px;}
+  /* ambient scribe bar */
+  .scribe{position:fixed;left:0;right:0;bottom:0;background:linear-gradient(120deg,var(--navy2),var(--navy));color:#fff;padding:11px 20px;display:flex;align-items:center;gap:14px;box-shadow:0 -4px 18px rgba(20,34,63,.18);}
+  .scribe .rec{width:34px;height:34px;border-radius:50%;background:var(--red);display:flex;align-items:center;justify-content:center;animation:pulse 2s infinite;}
+  @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(192,71,59,.5);}70%{box-shadow:0 0 0 10px rgba(192,71,59,0);}100%{box-shadow:0 0 0 0 rgba(192,71,59,0);}}
+  .scribe .txt b{font-size:13px;} .scribe .txt div{font-size:11.5px;color:#C7D2E4;}
+  .scribe .out{margin-left:auto;display:flex;gap:9px;}
+  .btn{border:none;border-radius:9px;padding:9px 15px;font-size:12px;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:7px;}
+  .btn.tech{background:#fff;color:var(--navy);} .btn.pat{background:var(--gold);color:var(--navy2);}
+  .ic-s{width:15px;height:15px;}
+</style>
+</head>
+<body>
+<div class="concept-bar">Conceito visual — APEX Pro reimaginado (modelo Elation · problema-orientado) · não é a versão atual</div>
+
+<!-- APP BAR -->
+<div class="appbar">
+  <div class="brand"><span class="dot"></span>APEX <span style="font-weight:400;opacity:.7;">Pro</span></div>
+  <nav class="nav">
+    <a class="active"><i data-lucide="clipboard-list" class="ic-s"></i> Prontuário</a>
+    <a><i data-lucide="users" class="ic-s"></i> Pacientes</a>
+    <a><i data-lucide="calendar" class="ic-s"></i> Agenda</a>
+    <a><i data-lucide="activity" class="ic-s"></i> Painel clínico</a>
+  </nav>
+  <div class="right">
+    <i data-lucide="search" class="ic-s"></i>
+    <i data-lucide="bell" class="ic-s"></i>
+    <div class="me"><span>Dr. Bruno Biluca</span><div class="avatar">BB</div></div>
+  </div>
+</div>
+
+<!-- PATIENT HEADER + STORYBOARD -->
+<div class="ph">
+  <div class="ph-top">
+    <div class="p-avatar">JA</div>
+    <div>
+      <div class="p-name">João Andrade</div>
+      <div class="p-meta">Masculino · 64 anos · Consulta #7 (retorno) · Convênio Particular</div>
+    </div>
+    <div class="p-tags">
+      <span class="pill stage"><i data-lucide="layers" class="ic-s"></i> CKM Estágio 3</span>
+      <span class="pill risk"><i data-lucide="alert-triangle" class="ic-s"></i> Risco CV alto</span>
+    </div>
+  </div>
+  <!-- CKM STORYBOARD -->
+  <div class="story">
+    <div class="chip bad"><div class="lab"><i data-lucide="droplet" class="ic-s"></i> TFG</div><div class="val">38 <small>mL/min</small></div><div class="trend down"><i data-lucide="trending-down" class="ic-s"></i> G3b · −4/ano</div></div>
+    <div class="chip warn"><div class="lab">Albuminúria</div><div class="val">180 <small>RAC</small></div><div class="trend flat"><i data-lucide="minus" class="ic-s"></i> A2</div></div>
+    <div class="chip warn"><div class="lab">PA</div><div class="val">138/84</div><div class="trend down"><i data-lucide="trending-down" class="ic-s"></i> meta &lt;130/80</div></div>
+    <div class="chip warn"><div class="lab">HbA1c</div><div class="val">7,8<small>%</small></div><div class="trend down"><i data-lucide="trending-down" class="ic-s"></i> meta &lt;7</div></div>
+    <div class="chip ok"><div class="lab">LDL</div><div class="val">92 <small>mg/dL</small></div><div class="trend down"><i data-lucide="trending-down" class="ic-s"></i> alvo &lt;70</div></div>
+    <div class="chip ok"><div class="lab">K⁺</div><div class="val">4,9</div><div class="trend flat"><i data-lucide="minus" class="ic-s"></i> ok p/ iECA</div></div>
+    <div class="chip"><div class="lab">Próx. labs</div><div class="val" style="font-size:14px;">em 3 meses</div><div class="trend flat">cadência G3b</div></div>
+  </div>
+</div>
+
+<!-- 3 COLUMNS -->
+<div class="cols">
+  <!-- COL 1: PROBLEMAS -->
+  <div class="col">
+    <div class="colhead"><span class="ic"><i data-lucide="list-checks" class="ic-s"></i></span> Problemas <span class="count">4 ativos</span></div>
+
+    <div class="card prob">
+      <div class="t"><i data-lucide="droplet" class="ic-s" style="color:var(--teal)"></i> Doença Renal Crônica <span class="badge b-bad">G3b A2</span></div>
+      <div class="sub">Etiologia: nefpropatia diabética + nefroesclerose. Desde 2022.</div>
+      <div class="line"><span class="k">TFG</span><span class="v">38 mL/min (↓ de 46 em 12m)</span></div>
+      <div class="line"><span class="k">Conduta</span><span class="v">4 pilares de nefroproteção ativos</span></div>
+      <div class="mini"><i data-lucide="book-open" class="ic-s"></i> Protocolo CKM da base · ver módulo 4</div>
+    </div>
+
+    <div class="card prob">
+      <div class="t"><i data-lucide="syringe" class="ic-s" style="color:var(--teal)"></i> Diabetes tipo 2 <span class="badge b-warn">subótimo</span></div>
+      <div class="sub">Há 11 anos. Sem retinopatia (fundo de olho 03/2026).</div>
+      <div class="line"><span class="k">HbA1c</span><span class="v">7,8% · meta &lt;7%</span></div>
+      <div class="line"><span class="k">Rastreio</span><span class="v">Pés ok · Fundo de olho anual</span></div>
+      <div class="mini"><i data-lucide="book-open" class="ic-s"></i> Protocolo CKM da base · ver módulo 2</div>
+    </div>
+
+    <div class="card prob">
+      <div class="t"><i data-lucide="heart-pulse" class="ic-s" style="color:var(--teal)"></i> Hipertensão <span class="badge b-warn">acima da meta</span></div>
+      <div class="sub">PA 138/84 · meta &lt;130/80 (universal).</div>
+      <div class="mini"><i data-lucide="book-open" class="ic-s"></i> Protocolo CKM da base · ver módulo 1</div>
+    </div>
+
+    <div class="card prob">
+      <div class="t"><i data-lucide="dna" class="ic-s" style="color:var(--teal)"></i> Dislipidemia <span class="badge b-ok">na meta</span></div>
+      <div class="sub">LDL 92 (alvo &lt;70 — muito alto risco). Otimizar.</div>
+      <div class="mini"><i data-lucide="book-open" class="ic-s"></i> Protocolo CKM da base · ver módulo 5</div>
+    </div>
+  </div>
+
+  <!-- COL 2: MEDICAÇÕES & PLANO -->
+  <div class="col">
+    <div class="colhead"><span class="ic"><i data-lucide="pill" class="ic-s"></i></span> Medicações & Plano <span class="count">6 em uso</span></div>
+
+    <div class="card">
+      <div class="medgrp">Nefroproteção (4 pilares)</div>
+      <div class="med"><div><div class="name">Losartana</div><div class="dose">100 mg/dia</div></div><span class="pillar">Pilar 1 · iECA/BRA</span></div>
+      <div class="med"><div><div class="name">Dapagliflozina</div><div class="dose">10 mg/dia</div></div><span class="pillar">Pilar 2 · iSGLT2</span></div>
+      <div class="med"><div><div class="name">Finerenona</div><div class="dose">10 mg/dia</div></div><span class="pillar">Pilar 3 · ARM</span></div>
+      <div class="med"><div><div class="name">Semaglutida</div><div class="dose">1,0 mg/sem SC</div></div><span class="tag-new">Pilar 4 · sugerir</span></div>
+    </div>
+
+    <div class="card">
+      <div class="medgrp">Demais</div>
+      <div class="med"><div><div class="name">Atorvastatina</div><div class="dose">40 mg/dia</div></div></div>
+      <div class="med"><div><div class="name">Anlodipino</div><div class="dose">5 mg/dia</div></div></div>
+    </div>
+
+    <div class="card">
+      <div class="planbox">
+        <div class="h"><i data-lucide="sparkles" class="ic-s"></i> Plano sugerido pela base CKM</div>
+        <ul>
+          <li><b>Intensificar HAS:</b> PA acima da meta → titular anlodipino.</li>
+          <li><b>LDL ao alvo &lt;70:</b> associar ezetimiba (muito alto risco).</li>
+          <li><b>4º pilar:</b> iniciar GLP1-RA (DM2 + DRC — FLOW).</li>
+          <li><b>K⁺ 4,9:</b> ok p/ manter finerenona — reavaliar em 4 sem.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- COL 3: HISTÓRICO & EVOLUÇÃO -->
+  <div class="col">
+    <div class="colhead"><span class="ic"><i data-lucide="line-chart" class="ic-s"></i></span> Histórico & Evolução <span class="count">tendências</span></div>
+
+    <div class="card">
+      <div class="medgrp">Tendências (12 meses)</div>
+      <div class="trendrow"><span>TFG</span><svg class="spark" viewBox="0 0 90 26"><polyline fill="none" stroke="#C0473B" stroke-width="2" points="2,6 20,9 40,13 60,17 88,20"/></svg><b style="color:var(--red)">↓ 38</b></div>
+      <div class="trendrow"><span>HbA1c</span><svg class="spark" viewBox="0 0 90 26"><polyline fill="none" stroke="#B8860B" stroke-width="2" points="2,8 25,10 45,12 65,12 88,14"/></svg><b style="color:var(--amber)">7,8%</b></div>
+      <div class="trendrow"><span>PA sistólica</span><svg class="spark" viewBox="0 0 90 26"><polyline fill="none" stroke="#2E8B6F" stroke-width="2" points="2,4 25,8 45,10 65,12 88,13"/></svg><b style="color:var(--green)">138</b></div>
+    </div>
+
+    <div class="card">
+      <div class="medgrp">Linha do tempo</div>
+      <div class="tl">
+        <div class="ev"><div class="d">12/05/2026 · hoje</div><div class="x">Retorno — TFG 38, ajuste de plano.</div></div>
+        <div class="ev"><div class="d">10/02/2026</div><div class="x">Retorno — iniciada finerenona 10 mg.</div></div>
+        <div class="ev"><div class="d">05/11/2025</div><div class="x">Retorno — TFG 42, dapagliflozina mantida.</div></div>
+        <div class="ev"><div class="d">20/08/2025</div><div class="x">Labs — RAC 210, K 5,0.</div></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="medgrp">Resumo da última consulta</div>
+      <div style="font-size:12.5px;color:var(--muted);">"Paciente assintomático. TFG em queda lenta. Reforçada adesão e dieta hipossódica. Mantida nefroproteção; planejado 4º pilar."</div>
+    </div>
+  </div>
+</div>
+
+<!-- AMBIENT SCRIBE / DUAL OUTPUT -->
+<div class="scribe">
+  <div class="rec"><i data-lucide="mic" class="ic-s"></i></div>
+  <div class="txt"><b>Assessor de consulta — ouvindo</b><div>A consulta vira nota estruturada automaticamente · você revisa e aprova</div></div>
+  <div class="out">
+    <button class="btn tech"><i data-lucide="file-text" class="ic-s"></i> Gerar nota técnica (prontuário)</button>
+    <button class="btn pat"><i data-lucide="smartphone" class="ic-s"></i> Gerar resumo do paciente (app)</button>
+  </div>
+</div>
+
+<script>lucide.createIcons();</script>
+</body>
+</html>

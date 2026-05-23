@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>APEX Pro · Bioimpedância — modelos visuais</title>
+<script src="https://cdn.jsdelivr.net/npm/lucide@latest/dist/umd/lucide.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style>
+  :root{ --navy:#1E2D50; --navy2:#16223F; --teal:#028090; --teal-l:#04B5C8; --gold:#C4A35A;
+    --bg:#EEF1F6; --card:#fff; --ink:#1B2436; --muted:#5C6B82; --line:#E4E8F0; --line2:#EDF0F5;
+    --green:#2E8B6F; --green-bg:#E4F3ED; --amber:#B8860B; --amber-bg:#FBF3DD; --red:#C0473B; --red-bg:#FBEAE8; }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{background:var(--bg);color:var(--ink);font-family:-apple-system,"Segoe UI",Inter,Arial,sans-serif;font-size:13px;line-height:1.45;padding-bottom:60px;}
+  .ic-s{width:15px;height:15px;flex:none;}
+  .switcher{background:var(--navy2);color:#fff;display:flex;align-items:center;gap:10px;padding:10px 20px;position:sticky;top:0;z-index:10;}
+  .switcher .lbl{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);font-weight:700;}
+  .switcher .mbtn{background:rgba(255,255,255,.08);color:#C7D2E4;border:1px solid rgba(255,255,255,.12);border-radius:8px;padding:7px 14px;font-size:12px;font-weight:700;cursor:pointer;}
+  .switcher .mbtn.on{background:var(--gold);color:var(--navy2);border-color:var(--gold);}
+  .switcher .desc{margin-left:auto;font-size:11.5px;color:#9FB0C8;}
+  .wrap{max-width:880px;margin:22px auto;padding:0 20px;}
+  .sect{display:flex;align-items:center;gap:8px;font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.06em;color:var(--navy);margin:0 2px 12px;}
+  .sect .tag{margin-left:auto;font-size:10px;font-weight:700;color:var(--muted);text-transform:none;letter-spacing:0;font-style:italic;}
+  .card{background:#fff;border:1px solid var(--line);border-radius:14px;box-shadow:0 1px 3px rgba(20,34,63,.05);padding:16px 18px;}
+  .modelview{display:none;} .modelview.on{display:block;}
+
+  /* indicators */
+  .ind-row{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:14px;}
+  .ind{border:1px solid var(--line);border-radius:12px;padding:12px 14px;}
+  .ind .lab{font-size:10.5px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);font-weight:700;}
+  .ind .val{font-size:24px;font-weight:800;color:var(--navy);margin-top:3px;line-height:1;} .ind .val small{font-size:12px;color:var(--muted);font-weight:600;}
+  .ind .cl{font-size:11px;font-weight:700;margin-top:4px;}
+  .ind .evo{font-size:10.5px;font-weight:700;margin-top:2px;}
+  .ind.ok{border-left:4px solid var(--green);} .ind.warn{border-left:4px solid var(--amber);} .ind.bad{border-left:4px solid var(--red);}
+  .up{color:var(--green);} .down{color:var(--green);} .worse{color:var(--red);}
+
+  /* stacked composition bar */
+  .comp-bar{display:flex;height:34px;border-radius:9px;overflow:hidden;margin:6px 0 8px;}
+  .comp-seg{display:flex;align-items:center;justify-content:center;color:#fff;font-size:11px;font-weight:700;}
+  .seg-magra{background:var(--teal);} .seg-gord{background:var(--gold);} .seg-osso{background:#7E8AA0;}
+  .comp-leg{display:flex;gap:16px;font-size:11px;color:var(--muted);}
+  .comp-leg b{color:var(--ink);} .dotc{width:9px;height:9px;border-radius:3px;display:inline-block;margin-right:5px;}
+
+  /* phase angle gauge bar */
+  .pa-scale{position:relative;height:14px;border-radius:8px;background:linear-gradient(90deg,var(--red) 0%,var(--amber) 40%,var(--green) 70%);margin:8px 0 4px;}
+  .pa-marker{position:absolute;top:-5px;width:3px;height:24px;background:var(--navy);border-radius:2px;}
+  .pa-ticks{display:flex;justify-content:space-between;font-size:9.5px;color:var(--muted);}
+
+  .chart-box{height:200px;margin-top:8px;}
+  .gap{height:18px;}
+
+  /* Modelo B — silhueta */
+  .body-layout{display:grid;grid-template-columns:200px 1fr;gap:22px;align-items:center;}
+  .body-fig{display:flex;flex-direction:column;align-items:center;justify-content:center;background:linear-gradient(180deg,#F7F9FC,#EEF3F8);border-radius:16px;padding:18px;position:relative;}
+  .body-fig svg{width:120px;height:200px;color:var(--teal);}
+  .body-fig .bf-cap{font-size:11px;color:var(--muted);margin-top:6px;}
+  .body-metrics{display:flex;flex-direction:column;gap:10px;}
+  .bm{display:flex;align-items:center;gap:10px;border-bottom:1px dashed var(--line2);padding-bottom:9px;}
+  .bm:last-child{border-bottom:none;}
+  .bm .bm-ic{width:34px;height:34px;border-radius:9px;display:flex;align-items:center;justify-content:center;color:#fff;flex:none;}
+  .bm .bm-l{font-size:11px;color:var(--muted);font-weight:600;} .bm .bm-v{font-size:18px;font-weight:800;color:var(--navy);}
+  .bm .bm-e{margin-left:auto;font-size:11.5px;font-weight:700;}
+
+  /* Modelo C — donuts */
+  .donut-row{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;}
+  .donut-card{border:1px solid var(--line);border-radius:12px;padding:12px;text-align:center;}
+  .donut-card .dc-cap{font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;margin-bottom:6px;}
+  .spark-row{display:flex;align-items:center;justify-content:space-between;padding:7px 0;border-bottom:1px dashed var(--line2);font-size:12px;}
+  .spark-row:last-child{border-bottom:none;} .spark{height:26px;width:120px;}
+</style>
+</head>
+<body>
+<div class="switcher">
+  <span class="lbl">Bioimpedância · escolha o modelo</span>
+  <button class="mbtn on" id="b-a" onclick="setM('a')">A · Analítico</button>
+  <button class="mbtn" id="b-b" onclick="setM('b')">B · Silhueta corporal</button>
+  <button class="mbtn" id="b-c" onclick="setM('c')">C · Indicadores circulares</button>
+  <span class="desc" id="mdesc">Barras de composição + ângulo de fase + evolução (Chart.js)</span>
+</div>
+
+<div class="wrap">
+  <div class="sect"><span>&#x26A1; Composição corporal (bioimpedância)</span><span class="tag">paciente fictício · evolução de 3 medidas</span></div>
+
+  <!-- ===== MODELO A — ANALÍTICO ===== -->
+  <div class="modelview on" id="m-a">
+    <div class="card">
+      <div class="ind-row">
+        <div class="ind ok"><div class="lab">&#x26A1; Ângulo de fase</div><div class="val">5,2<small>°</small></div><div class="cl" style="color:var(--green)">Adequado (homem 60+a)</div><div class="evo up">&#x2191; de 4,8° (melhora)</div></div>
+        <div class="ind ok"><div class="lab">IMLG (massa magra)</div><div class="val">20,7</div><div class="cl" style="color:var(--green)">Sem sarcopenia (&ge;17)</div><div class="evo up">&#x2191; de 20,1</div></div>
+        <div class="ind warn"><div class="lab">% Gordura</div><div class="val">28<small>%</small></div><div class="cl" style="color:var(--amber)">Acima do ideal (&lt;25%)</div><div class="evo down">&#x2193; de 31% (melhora)</div></div>
+      </div>
+      <div style="font-size:11px;font-weight:700;color:var(--navy);margin-bottom:4px;">Composição corporal atual (88 kg)</div>
+      <div class="comp-bar">
+        <div class="comp-seg seg-magra" style="width:62%">Massa magra 62%</div>
+        <div class="comp-seg seg-gord" style="width:28%">Gordura 28%</div>
+        <div class="comp-seg seg-osso" style="width:10%">Óssea/min. 10%</div>
+      </div>
+      <div class="comp-leg"><span><span class="dotc seg-magra"></span>Massa magra <b>54,6 kg</b></span><span><span class="dotc seg-gord"></span>Gordura <b>24,6 kg</b></span><span><span class="dotc seg-osso"></span>Água corporal <b>54%</b></span></div>
+
+      <div class="gap"></div>
+      <div style="font-size:11px;font-weight:700;color:var(--navy);margin-bottom:2px;">Escala do ângulo de fase</div>
+      <div class="pa-scale"><div class="pa-marker" style="left:62%"></div></div>
+      <div class="pa-ticks"><span>3° (ruim)</span><span>4,5°</span><span>6°</span><span>8° (ótimo)</span></div>
+
+      <div class="gap"></div>
+      <div style="font-size:11px;font-weight:700;color:var(--navy);">Evolução (3 medidas)</div>
+      <div class="chart-box"><canvas id="chartA"></canvas></div>
+    </div>
+  </div>
+
+  <!-- ===== MODELO B — SILHUETA ===== -->
+  <div class="modelview" id="m-b">
+    <div class="card">
+      <div class="body-layout">
+        <div class="body-fig">
+          <i data-lucide="person-standing"></i>
+          <div class="bf-cap">88 kg · IMC 29,4</div>
+        </div>
+        <div class="body-metrics">
+          <div class="bm"><div class="bm-ic" style="background:var(--teal)"><i data-lucide="dumbbell" class="ic-s"></i></div><div><div class="bm-l">Massa magra</div><div class="bm-v">54,6 kg <small style="font-size:11px;color:var(--muted)">(62%)</small></div></div><div class="bm-e up">&#x2191; +2,1 kg</div></div>
+          <div class="bm"><div class="bm-ic" style="background:var(--gold)"><i data-lucide="droplets" class="ic-s"></i></div><div><div class="bm-l">Gordura corporal</div><div class="bm-v">24,6 kg <small style="font-size:11px;color:var(--muted)">(28%)</small></div></div><div class="bm-e down">&#x2193; −3% (melhora)</div></div>
+          <div class="bm"><div class="bm-ic" style="background:var(--teal-l)"><i data-lucide="waves" class="ic-s"></i></div><div><div class="bm-l">Água corporal</div><div class="bm-v">54%</div></div><div class="bm-e" style="color:var(--muted)">&#x2194; estável</div></div>
+          <div class="bm"><div class="bm-ic" style="background:var(--green)"><i data-lucide="zap" class="ic-s"></i></div><div><div class="bm-l">Ângulo de fase</div><div class="bm-v">5,2° <small style="font-size:11px;color:var(--green)">adequado</small></div></div><div class="bm-e up">&#x2191; de 4,8°</div></div>
+        </div>
+      </div>
+      <div class="gap"></div>
+      <div style="font-size:11px;font-weight:700;color:var(--navy);">Evolução do ângulo de fase e % gordura</div>
+      <div class="chart-box"><canvas id="chartB"></canvas></div>
+    </div>
+  </div>
+
+  <!-- ===== MODELO C — CIRCULARES ===== -->
+  <div class="modelview" id="m-c">
+    <div class="card">
+      <div class="donut-row">
+        <div class="donut-card"><div class="dc-cap">% Gordura</div><canvas id="donut1" width="130" height="130"></canvas></div>
+        <div class="donut-card"><div class="dc-cap">Massa magra</div><canvas id="donut2" width="130" height="130"></canvas></div>
+        <div class="donut-card"><div class="dc-cap">Água corporal</div><canvas id="donut3" width="130" height="130"></canvas></div>
+      </div>
+      <div class="gap"></div>
+      <div class="ind-row" style="grid-template-columns:1fr 1fr;">
+        <div class="ind ok"><div class="lab">&#x26A1; Ângulo de fase</div><div class="val">5,2<small>°</small></div><div class="cl" style="color:var(--green)">Adequado · prognóstico favorável</div></div>
+        <div class="ind ok"><div class="lab">IMLG (sarcopenia)</div><div class="val">20,7</div><div class="cl" style="color:var(--green)">Massa muscular preservada</div></div>
+      </div>
+      <div class="gap"></div>
+      <div style="font-size:11px;font-weight:700;color:var(--navy);margin-bottom:6px;">Tendências (3 medidas)</div>
+      <div class="spark-row"><span>Ângulo de fase</span><svg class="spark" viewBox="0 0 120 26"><polyline fill="none" stroke="#2E8B6F" stroke-width="2" points="2,20 60,14 118,8"/></svg><b style="color:var(--green)">5,2°</b></div>
+      <div class="spark-row"><span>% Gordura</span><svg class="spark" viewBox="0 0 120 26"><polyline fill="none" stroke="#B8860B" stroke-width="2" points="2,6 60,12 118,16"/></svg><b style="color:var(--green)">28%</b></div>
+      <div class="spark-row"><span>Massa magra</span><svg class="spark" viewBox="0 0 120 26"><polyline fill="none" stroke="#028090" stroke-width="2" points="2,18 60,13 118,9"/></svg><b style="color:var(--teal)">54,6 kg</b></div>
+    </div>
+  </div>
+</div>
+
+<script>
+  lucide.createIcons();
+  const labels = ['1ª medida','2ª medida','Atual'];
+  function lineChart(id, sets){ const el=document.getElementById(id); if(!el) return;
+    new Chart(el,{type:'line',data:{labels,datasets:sets},
+      options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{labels:{font:{size:11},boxWidth:12}}},
+        scales:{y:{grid:{color:'#EDF0F5'}},x:{grid:{display:false}}}}}); }
+  function donut(id,val,max,color,label){ const el=document.getElementById(id); if(!el) return;
+    new Chart(el,{type:'doughnut',data:{datasets:[{data:[val,max-val],backgroundColor:[color,'#EDF0F5'],borderWidth:0}]},
+      options:{cutout:'72%',plugins:{legend:{display:false},tooltip:{enabled:false}}}});
+  }
+  const charts={};
+  function build(m){
+    if(charts[m]) return;
+    charts[m]=true;
+    if(m==='a') lineChart('chartA',[
+      {label:'Ângulo de fase (°)',data:[4.8,5.0,5.2],borderColor:'#2E8B6F',backgroundColor:'rgba(46,139,111,.12)',tension:.3,yAxisID:'y'},
+      {label:'% Gordura',data:[31,29,28],borderColor:'#B8860B',backgroundColor:'rgba(184,134,11,.12)',tension:.3,yAxisID:'y'}
+    ]);
+    if(m==='b') lineChart('chartB',[
+      {label:'Ângulo de fase (°)',data:[4.8,5.0,5.2],borderColor:'#2E8B6F',backgroundColor:'rgba(46,139,111,.12)',tension:.3},
+      {label:'% Gordura',data:[31,29,28],borderColor:'#B8860B',backgroundColor:'rgba(184,134,11,.12)',tension:.3}
+    ]);
+    if(m==='c'){ donut('donut1',28,100,'#C4A35A'); donut('donut2',62,100,'#028090'); donut('donut3',54,100,'#04B5C8'); }
+  }
+  function setM(m){
+    ['a','b','c'].forEach(x=>{ document.getElementById('m-'+x).classList.toggle('on',x===m); document.getElementById('b-'+x).classList.toggle('on',x===m); });
+    document.getElementById('mdesc').textContent={a:'Barras de composição + ângulo de fase + evolução (Chart.js)',b:'Silhueta corporal (ícone) + métricas + evolução',c:'Indicadores circulares (donuts) + tendências'}[m];
+    setTimeout(()=>build(m),30);
+  }
+  build('a');
+</script>
+</body>
+</html>
