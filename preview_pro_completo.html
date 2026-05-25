@@ -244,6 +244,33 @@ body.pront-focus .pac-ctx-swap:hover{background:rgba(255,255,255,.12);color:#fff
 .qc-plan .qc-bg{background-image:url('https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&q=75');}
 .qc-plan .qc-overlay{background:linear-gradient(135deg,rgba(55,75,55,0.85),rgba(18,29,51,0.92));}
 
+/* Dashboard — widgets de dados reais (estatísticas, agenda do dia, pacientes recentes) */
+.dash-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;max-width:960px;margin-bottom:30px;}
+.dash-stat{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:18px 20px;box-shadow:var(--shadow-card);transition:all .25s;}
+.dash-stat:hover{border-color:var(--navy);box-shadow:var(--shadow-card-hover);transform:translateY(-2px);}
+.dash-stat .ds-num{font-family:var(--font-serif);font-size:30px;font-weight:700;color:var(--navy);line-height:1;}
+.dash-stat .ds-lab{font-size:11px;color:var(--text-2);margin-top:7px;}
+.dash-two{display:grid;grid-template-columns:1fr 1fr;gap:16px;max-width:960px;}
+@media(max-width:780px){.dash-stats,.dash-two,.quick-grid{grid-template-columns:1fr;}}
+.dash-panel{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow-card);overflow:hidden;display:flex;flex-direction:column;}
+.dash-panel-head{display:flex;align-items:center;justify-content:space-between;padding:14px 18px;border-bottom:1px solid var(--border);}
+.dash-panel-head .dp-title{font-family:var(--font-serif);font-size:16px;font-weight:400;color:var(--navy);}
+.dash-panel-head .dp-link{font-size:11px;font-weight:600;color:var(--teal);cursor:pointer;background:none;border:none;font-family:inherit;}
+.dash-panel-head .dp-link:hover{text-decoration:underline;}
+.dash-panel-body{padding:8px 10px;flex:1;}
+.dash-evt{display:flex;align-items:center;gap:12px;padding:9px 8px;border-radius:8px;transition:background .15s;}
+.dash-evt:hover{background:#F7F8FA;}
+.dash-evt .de-bar{width:4px;align-self:stretch;border-radius:3px;flex-shrink:0;min-height:30px;}
+.dash-evt .de-time{font-size:11px;font-weight:700;color:var(--text-2);min-width:96px;}
+.dash-evt .de-title{font-size:13px;font-weight:600;color:var(--text);}
+.dash-pac{display:flex;align-items:center;gap:11px;padding:8px;border-radius:8px;cursor:pointer;transition:background .15s;}
+.dash-pac:hover{background:#F7F8FA;}
+.dash-pac .dp-info{flex:1;min-width:0;}
+.dash-pac .dp-name{font-size:13px;font-weight:600;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.dash-pac .dp-meta{font-size:10.5px;color:var(--text-3);margin-top:1px;}
+.dash-pac .dp-grav{font-size:9px;font-weight:700;padding:3px 9px;border-radius:999px;white-space:nowrap;}
+.dash-empty{padding:26px 12px;text-align:center;color:var(--text-3);font-size:12px;}
+
 /* ============================================================
    TRS CARDS
    ============================================================ */
@@ -969,6 +996,25 @@ body.is-admin .ws-switch{display:flex;}
             <div class="qc-title">Minha agenda</div>
             <div class="qc-desc">Consultas da semana e marcos de acompanhamento</div>
           </div>
+        </div>
+      </div>
+
+      <div class="dash-section-label rv" style="margin-top:34px;">Visão do dia</div>
+      <div class="dash-stats rv" id="dash-stats"></div>
+      <div class="dash-two rv">
+        <div class="dash-panel">
+          <div class="dash-panel-head">
+            <span class="dp-title">Agenda de hoje</span>
+            <button class="dp-link" onclick="navTo('agenda')">Ver agenda &#8250;</button>
+          </div>
+          <div class="dash-panel-body" id="dash-agenda"></div>
+        </div>
+        <div class="dash-panel">
+          <div class="dash-panel-head">
+            <span class="dp-title">Pacientes recentes</span>
+            <button class="dp-link" onclick="navTo('lista-pacientes')">Ver todos &#8250;</button>
+          </div>
+          <div class="dash-panel-body" id="dash-recentes"></div>
         </div>
       </div>
     </div>
@@ -2428,10 +2474,69 @@ function initApp() {
   var meses = ['janeiro','fevereiro','março','abril','maio','junho','julho','agosto','setembro','outubro','novembro','dezembro'];
   document.getElementById('dash-date').textContent = dias[now.getDay()] + ', ' + now.getDate() + ' de ' + meses[now.getMonth()] + ' de ' + now.getFullYear();
 
+  /* Widgets de dados reais (estatísticas, agenda do dia, pacientes recentes) */
+  renderDashboardWidgets();
+
   /* Trigger reveal animations */
   setTimeout(function(){
     document.querySelectorAll('#page-dashboard .rv').forEach(function(el){ observer.observe(el); });
   }, 100);
+}
+
+/* Popula os widgets do dashboard com dados reais do médico logado */
+async function renderDashboardWidgets() {
+  if ((!allPacientes || !allPacientes.length) && currentDoctor) {
+    try { await carregarListaPacientes(); } catch (e) {}
+  }
+  var pacs = allPacientes || [];
+  var now = new Date();
+  var d30 = new Date(now.getTime() - 30 * 864e5);
+  var hojeEvts = (typeof window.getEventsForDay === 'function') ? window.getEventsForDay(now) : [];
+
+  /* Estatísticas */
+  var atendidos30 = pacs.filter(function(p){ return p.last_visit && new Date(p.last_visit) >= d30; }).length;
+  var statsEl = document.getElementById('dash-stats');
+  if (statsEl) {
+    function stat(n, l){ return '<div class="dash-stat"><div class="ds-num">' + n + '</div><div class="ds-lab">' + l + '</div></div>'; }
+    statsEl.innerHTML = stat(pacs.length, 'Pacientes ativos') + stat(atendidos30, 'Atendidos (30 dias)') + stat(hojeEvts.length, 'Compromissos hoje');
+  }
+
+  /* Agenda de hoje */
+  var agEl = document.getElementById('dash-agenda');
+  if (agEl) {
+    if (!hojeEvts.length) {
+      agEl.innerHTML = '<div class="dash-empty">Sem compromissos hoje.</div>';
+    } else {
+      agEl.innerHTML = hojeEvts.map(function(ev){
+        var t = String(ev.startH).padStart(2,'0') + ':' + String(ev.startM).padStart(2,'0') + '–' + String(ev.endH).padStart(2,'0') + ':' + String(ev.endM).padStart(2,'0');
+        return '<div class="dash-evt"><div class="de-bar" style="background:' + ev.color + '"></div><div class="de-time">' + t + '</div><div class="de-title">' + ev.title + '</div></div>';
+      }).join('');
+    }
+  }
+
+  /* Pacientes recentes (por última consulta) */
+  var recEl = document.getElementById('dash-recentes');
+  if (recEl) {
+    var rec = pacs.filter(function(p){ return p.last_visit; })
+                  .sort(function(a,b){ return new Date(b.last_visit) - new Date(a.last_visit); })
+                  .slice(0, 5);
+    if (!rec.length) {
+      recEl.innerHTML = '<div class="dash-empty">Nenhum atendimento registrado ainda.</div>';
+    } else {
+      recEl.innerHTML = rec.map(function(p){
+        var gm = { estavel:['Estável','#E6F4EA','#1E7E34'], atencao:['Atenção','#FFF4E0','#B26A00'], grave:['Grave','#FDE7E7','#C62828'] }[p.gravidade];
+        var grav = gm ? '<span class="dp-grav" style="background:' + gm[1] + ';color:' + gm[2] + '">' + gm[0] + '</span>' : '';
+        var lv = new Date(p.last_visit).toLocaleDateString('pt-BR');
+        var idade = calcIdade(p.date_of_birth);
+        return '<div class="dash-pac" onclick="selecionarPaciente(\'' + p.id + '\')">' +
+          '<div class="pac-row-avatar">' + getIniciais(p.name) + '</div>' +
+          '<div class="dp-info"><div class="dp-name">' + p.name + '</div>' +
+          '<div class="dp-meta">Última consulta ' + lv + (idade ? ' · ' + idade + ' anos' : '') + '</div></div>' + grav + '</div>';
+      }).join('');
+    }
+  }
+
+  setTimeout(function(){ document.querySelectorAll('#page-dashboard .rv').forEach(function(el){ observer.observe(el); }); }, 60);
 }
 
 /* ============================================================
@@ -5111,6 +5216,17 @@ async function selecionarPaciente(patientId) {
     }
     return result;
   }
+
+  /* Eventos de um dia específico (usado pelo dashboard) — ordenado por hora */
+  window.getEventsForDay=function(date){
+    var iso=isoDate(date), dow=isoWeekday(date), out=[];
+    calEvents.forEach(function(ev){
+      if(ev.type==='recorrente' && ev.dows.indexOf(dow)>=0) out.push(ev);
+      else if((ev.type==='unico'||ev.type==='tarefa') && ev.date===iso) out.push(ev);
+    });
+    out.sort(function(a,b){return (a.startH*60+a.startM)-(b.startH*60+b.startM);});
+    return out;
+  };
 
   function renderCalendarWeek(){
     if(!calWeekStart) return;
