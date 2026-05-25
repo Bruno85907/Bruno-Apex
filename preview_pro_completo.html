@@ -151,6 +151,24 @@ body{font-family:var(--font-sans);background:var(--navy-deep);color:var(--text);
    MAIN CONTENT
    ============================================================ */
 .main{margin-left:var(--sidebar-w);flex:1;height:100vh;overflow-y:auto;position:relative;background:var(--bg);}
+/* Foco no prontuário: recolhe a sidebar do Pro (evita 2 sidebars) */
+body.pront-focus .sidebar{width:0;border-right:none;}
+body.pront-focus .main{margin-left:0;}
+/* ...e cabeçalho navy com logo, estética do mockup */
+.pro-logo{display:none;height:30px;width:auto;object-fit:contain;}
+body.pront-focus .topbar{background:var(--navy-deep);border-bottom-color:rgba(255,255,255,.10);height:74px;padding:0 32px;}
+body.pront-focus #page-prontuario{padding:0;}
+body.pront-focus .pro-logo{display:block;}
+body.pront-focus .topbar-breadcrumb{display:none;}
+body.pront-focus .topbar-back{border-color:rgba(255,255,255,.25);background:transparent;color:#fff;}
+body.pront-focus .topbar-back:hover{background:rgba(255,255,255,.12);}
+/* chip do paciente translúcido e maior — estética do mockup */
+body.pront-focus .pac-ctx{background:rgba(255,255,255,.07);border-color:rgba(255,255,255,.16);padding:6px 10px 6px 6px;gap:12px;}
+body.pront-focus .pac-ctx-av{width:42px;height:42px;font-size:14px;}
+body.pront-focus .pac-ctx-name{color:#fff;font-size:16px;max-width:300px;}
+body.pront-focus .pac-ctx-meta{color:#B9C2D6;font-size:12px;}
+body.pront-focus .pac-ctx-swap{color:#9FB0C9;}
+body.pront-focus .pac-ctx-swap:hover{background:rgba(255,255,255,.12);color:#fff;}
 .main::before{content:'';position:fixed;top:0;right:0;bottom:0;left:var(--sidebar-w);z-index:0;pointer-events:none;
   background-image:radial-gradient(circle 1.2px, rgba(196,163,90,0.12) 98%, transparent 100%);
   background-size:28px 28px;
@@ -172,7 +190,8 @@ body{font-family:var(--font-sans);background:var(--navy-deep);color:var(--text);
 .topbar-ext:hover{background:var(--gold-dim);border-color:var(--gold);color:var(--navy);}
 .pac-ctx{display:none;align-items:center;gap:10px;margin-left:24px;padding:5px 6px 5px 5px;border:1px solid var(--gold-border);border-radius:999px;background:var(--bg-card);}
 .pac-ctx.active{display:flex;}
-.pac-ctx-av{width:26px;height:26px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;background:var(--navy);color:#fff;font-size:11px;font-weight:700;letter-spacing:.3px;}
+.pac-ctx-av{width:30px;height:30px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;background:var(--navy);color:#fff;font-size:11px;font-weight:700;letter-spacing:.3px;border:2px solid var(--gold);overflow:hidden;}
+.pac-ctx-sev{font-size:9.5px;font-weight:800;text-transform:uppercase;letter-spacing:.4px;padding:3px 9px;border-radius:999px;}
 .pac-ctx-info{display:flex;flex-direction:column;line-height:1.15;}
 .pac-ctx-name{font-size:12.5px;font-weight:700;color:var(--navy);max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
 .pac-ctx-meta{font-size:10.5px;color:var(--text-3);}
@@ -492,7 +511,9 @@ body{font-family:var(--font-sans);background:var(--navy-deep);color:var(--text);
 /* Modal Novo Paciente */
 .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:9999;display:none;align-items:center;justify-content:center;backdrop-filter:blur(4px);}
 .modal-overlay.active{display:flex;}
-.modal-box{background:var(--card);border-radius:16px;padding:32px;width:100%;max-width:480px;box-shadow:0 16px 48px rgba(0,0,0,0.15);position:relative;}
+.modal-box{background:var(--card);border-radius:16px;padding:32px;width:100%;max-width:480px;max-height:90vh;overflow-y:auto;box-shadow:0 16px 48px rgba(0,0,0,0.15);position:relative;}
+.modal-overlay{padding:20px;}
+.modal-close{position:sticky;top:-8px;float:right;background:var(--card);z-index:2;}
 .modal-title{font-family:var(--font-serif);font-size:22px;color:var(--text);margin-bottom:4px;}
 .modal-desc{font-size:12px;color:var(--text-3);margin-bottom:24px;}
 .modal-field{margin-bottom:16px;}
@@ -908,10 +929,12 @@ body.is-admin .ws-switch{display:flex;}
   <div class="main">
     <div class="topbar">
       <button class="topbar-back" id="topbar-back" onclick="navBack()" title="Voltar">&#8249;</button>
+      <img class="pro-logo" src="landing-page/Apex-pro-transparent.png" alt="APEX Pro">
       <nav class="topbar-breadcrumb" id="topbar-bc"><span class="topbar-bc-active">Dashboard</span></nav>
       <div class="pac-ctx" id="pac-ctx">
         <div class="pac-ctx-av" id="pac-ctx-av"></div>
         <div class="pac-ctx-info"><span class="pac-ctx-name" id="pac-ctx-name"></span><span class="pac-ctx-meta" id="pac-ctx-meta"></span></div>
+        <span class="pac-ctx-sev" id="pac-ctx-sev" style="display:none;"></span>
         <button class="pac-ctx-swap" onclick="navTo('lista-pacientes')" title="Trocar de paciente">Trocar</button>
       </div>
     </div>
@@ -2018,12 +2041,8 @@ body.is-admin .ws-switch{display:flex;}
 
     <!-- PAGE: PRONTUÁRIO CKM (v2 via iframe) -->
     <div class="content-page" id="page-prontuario">
-      <div style="display:flex;align-items:center;gap:14px;padding:8px 4px 12px;flex-wrap:wrap;">
-        <button onclick="salvarContratoApp()" style="background:linear-gradient(135deg,var(--gold),var(--gold-light,#E0C078));color:var(--navy-deep,#121D33);border:none;border-radius:8px;padding:10px 18px;font-size:13px;font-weight:700;letter-spacing:.3px;cursor:pointer;box-shadow:0 4px 14px rgba(212,168,83,.25);">↗ Salvar no app do paciente</button>
-        <button onclick="abrirRelatorioConsultas()" style="background:var(--bg-card,#fff);color:var(--navy);border:1px solid var(--border);border-radius:8px;padding:10px 16px;font-size:13px;font-weight:600;cursor:pointer;">&#x1F4C5; Consultas anteriores</button>
-        <span id="contrato-status" style="font-size:12px;color:var(--text-2,#8A93A6);"></span>
-      </div>
-      <iframe id="prontuario-iframe" style="width:100%;border:none;min-height:calc(100vh - 110px);border-radius:8px;" src="about:blank"></iframe>
+      <span id="contrato-status" style="display:none;"></span>
+      <iframe id="prontuario-iframe" style="width:100%;border:none;min-height:calc(100vh - 74px);display:block;" src="about:blank"></iframe>
     </div>
 
     <!-- MODAL: Relatório de consultas anteriores (Supabase) -->
@@ -2491,6 +2510,7 @@ function navTo(pageId) {
 
   document.querySelectorAll('.content-page').forEach(function(p){ p.classList.remove('active'); });
   document.getElementById('page-' + pageId).classList.add('active');
+  document.body.classList.toggle('pront-focus', pageId === 'prontuario');
 
   /* Sidebar active */
   document.querySelectorAll('.sb-item, .sb-child').forEach(function(el){ el.classList.remove('active'); });
@@ -4375,9 +4395,17 @@ function setPatientContext(pac) {
   if (!box || !pac) return;
   var idade = calcIdade(pac.date_of_birth);
   var sexLabel = pac.sex === 'M' ? 'Masculino' : pac.sex === 'F' ? 'Feminino' : '';
-  document.getElementById('pac-ctx-av').textContent = getIniciais(pac.name);
+  var av = document.getElementById('pac-ctx-av');
+  if (pac.foto) { av.style.backgroundImage = 'url(' + pac.foto + ')'; av.style.backgroundSize = 'cover'; av.style.backgroundPosition = 'center'; av.textContent = ''; }
+  else { av.style.backgroundImage = ''; av.textContent = getIniciais(pac.name); }
   document.getElementById('pac-ctx-name').textContent = pac.name;
   document.getElementById('pac-ctx-meta').textContent = [idade ? idade + ' anos' : '', sexLabel].filter(Boolean).join(' · ');
+  var sevEl = document.getElementById('pac-ctx-sev');
+  if (sevEl) {
+    var gm = { estavel: ['Estável', '#E6F4EA', '#1E7E34'], atencao: ['Atenção', '#FFF4E0', '#B26A00'], grave: ['Grave', '#FDE7E7', '#C62828'] }[pac.gravidade];
+    if (gm) { sevEl.textContent = gm[0]; sevEl.style.background = gm[1]; sevEl.style.color = gm[2]; sevEl.style.display = 'inline-block'; }
+    else sevEl.style.display = 'none';
+  }
   box.classList.add('active');
 }
 function clearPatientContext() {
@@ -4946,6 +4974,11 @@ async function atualizarPaciente(patientId) {
     resetModalPaciente();
     fecharModalNovoPaciente();
     await carregarListaPacientes();
+    /* Se o paciente editado está aberto no prontuário, atualiza chip + sidebar na hora */
+    if (patientId === currentPatientId) {
+      var pacAtual = allPacientes.find(function(p){ return p.id === patientId; });
+      if (pacAtual) { setPatientContext(pacAtual); if (typeof sendPatientToIframe === 'function') sendPatientToIframe(); }
+    }
   } catch(e) {
     errEl.textContent = 'Erro: ' + e.message;
   } finally {

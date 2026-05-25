@@ -11,7 +11,9 @@
 /* Embed mode: hide topbar, reduce padding when inside iframe */
 html.embed-mode .topbar { display: none; }
 html.embed-mode .tabs-bar { top: 0; }
-html.embed-mode .tab-content { padding-top: 8px; }
+html.embed-mode .tab-content { padding-top: 4px; }
+html.embed-mode #tab-resumo .rz-center > .rz-sect:first-child,
+html.embed-mode #tab-resumo .resumo-patient { margin-top: 4px; }
 html.embed-mode body { padding-top: 0; }
 
 :root {
@@ -74,29 +76,28 @@ body {
 /* TABS */
 .tabs-bar {
   display: flex;
-  gap: 0;
-  background: var(--navy);
-  padding: 0 24px;
+  gap: 4px;
+  background: #fff;
+  padding: 0 28px;
+  border-bottom: 1px solid var(--border);
   position: sticky;
-  top: 48px;
+  top: 0;
   z-index: 99;
 }
 .tab-btn {
-  padding: 14px 28px;
-  color: rgba(255,255,255,0.6);
+  padding: 15px 22px;
+  color: var(--text-3, #8A93A6);
   font-weight: 600;
-  font-size: 13px;
+  font-size: 14px;
   cursor: pointer;
   border: none;
   background: none;
   transition: all 0.2s;
   position: relative;
-  letter-spacing: 0.3px;
-  text-transform: uppercase;
   font-family: 'Inter', sans-serif;
 }
-.tab-btn:hover { color: rgba(255,255,255,0.85); }
-.tab-btn.active { color: #fff; }
+.tab-btn:hover { color: var(--navy); }
+.tab-btn.active { color: var(--navy); }
 .tab-btn.active::after {
   content: '';
   position: absolute;
@@ -313,16 +314,16 @@ body {
 .ckm-bar { display: flex; gap: 4px; margin: 16px 0; }
 .ckm-stage {
   flex: 1;
-  padding: 16px 12px;
-  border-radius: var(--radius-sm);
+  padding: 12px 8px;
+  border-radius: 10px;
   text-align: center;
   font-weight: 700;
-  font-size: 13px;
-  opacity: 0.4;
-  transition: all 0.3s;
+  font-size: 12px;
+  opacity: 0.5;
+  transition: all 0.2s;
   position: relative;
 }
-.ckm-stage.active { opacity: 1; transform: scale(1.05); box-shadow: 0 4px 16px rgba(0,0,0,0.2); }
+.ckm-stage.active { opacity: 1; box-shadow: 0 0 0 2px var(--navy) inset, 0 4px 14px rgba(30,45,80,0.14); }
 .ckm-0 { background: #C8E6C9; color: #1B5E20; }
 .ckm-1 { background: #FFF9C4; color: #F57F17; }
 .ckm-2 { background: #FFE0B2; color: #E65100; }
@@ -667,18 +668,24 @@ body {
 .resumo-patient { display: flex; align-items: center; gap: 14px; margin-bottom: 8px; }
 .resumo-patient .p-name { font-size: 20px; font-weight: 800; color: var(--navy); line-height: 1.1; }
 .resumo-patient .p-meta { color: #6B7A8D; font-size: 13px; margin-top: 2px; }
-.resumo-patient .p-tags { margin-left: auto; display: flex; gap: 8px; flex-wrap: wrap; }
-.resumo-patient .p-pill { font-size: 11.5px; font-weight: 700; padding: 5px 12px; border-radius: 20px; border: 1px solid var(--border); display: inline-flex; align-items: center; gap: 5px; }
-.resumo-patient .p-pill.stage { background: var(--light-gold); color: #9C7B2E; border-color: transparent; }
-.resumo-patient .p-pill.risk { background: #FBEAE8; color: var(--danger); border-color: transparent; }
-.resumo-patient .p-pill.risk-mod { background: #FEF6E0; color: #B8860B; border-color: transparent; }
-.resumo-patient .p-pill.risk-low { background: #E4F3ED; color: var(--success); border-color: transparent; }
+.resumo-patient .p-tags { margin-left: 0; display: flex; gap: 10px; flex-wrap: wrap; }
+.resumo-patient .p-pill { font-size: 13px; font-weight: 700; padding: 8px 16px; border-radius: 999px; border: none; display: inline-flex; align-items: center; gap: 6px; }
+.resumo-patient .p-pill.stage { background: var(--navy); color: #fff; }
+.resumo-patient .p-pill.risk { background: #FDE7E7; color: var(--danger); }
+.resumo-patient .p-pill.risk-mod { background: #FFE9C7; color: #7A4E00; }
+.resumo-patient .p-pill.risk-low { background: #E6F4EA; color: var(--success); }
 .rz-sect { display: flex; align-items: center; gap: 8px; font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: .06em; color: var(--navy); margin: 22px 2px 10px; padding-bottom: 5px; border-bottom: 2px solid var(--border); }
 .rz-sect .hint { margin-left: auto; font-size: 10px; font-weight: 600; color: #8A97A8; text-transform: none; letter-spacing: 0; font-style: italic; }
 .rz-card { background: #fff; border: 1px solid var(--border); border-radius: 12px; box-shadow: var(--shadow); }
 /* cockpit */
 .rz-cockpit { display: grid; grid-template-columns: 300px 1fr; gap: 12px; }
-.rz-radarwrap { padding: 10px; display: flex; align-items: center; justify-content: center; min-height: 250px; }
+.rz-radarwrap { padding: 14px 10px 12px; display: flex; flex-direction: column; align-items: center; justify-content: flex-start; }
+.rz-radar-title { font-size: 12px; font-weight: 800; color: var(--navy); align-self: flex-start; margin-bottom: 4px; }
+.rz-radar-cap { width: 100%; margin-top: 8px; text-align: center; border-top: 1px solid var(--border); padding-top: 10px; }
+.rz-radar-cap .gscore { font-size: 30px; font-weight: 800; line-height: 1; }
+.rz-radar-cap .glabel { font-size: 10.5px; color: var(--text-3, #8A93A6); margin-top: 2px; }
+.rz-radar-cap .gevo { font-size: 11px; font-weight: 700; margin-top: 4px; }
+.rz-ckm-panel { display: flex; flex-direction: column; gap: 9px; }
 .rz-bigscores { display: grid; grid-template-columns: 1fr 1fr; gap: 9px; }
 .rz-bscore { border: 1px solid var(--border); border-radius: 11px; padding: 10px 12px; background: #FBFCFE; }
 .rz-bscore .nm { font-size: 11px; font-weight: 700; color: var(--text); }
@@ -757,7 +764,8 @@ body {
 .rz-msres { text-align: center; margin-top: 10px; font-size: 13px; font-weight: 800; }
 @media (max-width: 1000px) { .rz-cockpit { grid-template-columns: 1fr; } .rz-cls-grid { grid-template-columns: repeat(2, 1fr); } }
 /* barra de ações (vias impressas) */
-.rz-toolbar { display: flex; align-items: center; gap: 7px; background: #fff; border: 1px solid var(--border); border-radius: 12px; padding: 9px 12px; margin-bottom: 12px; overflow-x: auto; box-shadow: var(--shadow); }
+.rz-toolbar { display: none; } /* removido do Resumo (estética Elation) — impressos ficam na aba Documentos */
+.rz-toolbar.legacy { display: flex; align-items: center; gap: 7px; background: #fff; border: 1px solid var(--border); border-radius: 12px; padding: 9px 12px; margin-bottom: 12px; overflow-x: auto; box-shadow: var(--shadow); }
 .rz-tb-start { background: var(--teal); color: #fff; border: none; border-radius: 9px; padding: 9px 15px; font-size: 12.5px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 7px; white-space: nowrap; flex: none; }
 .rz-tb-start:hover { background: #015560; }
 .rz-tb-sep { width: 1px; height: 30px; background: var(--border); margin: 0 3px; flex: none; }
@@ -766,7 +774,24 @@ body {
 .rz-tb .ico { font-size: 15px; } .rz-tb span:last-child { font-size: 10px; font-weight: 600; color: #6B7A8D; white-space: nowrap; }
 /* 3 zonas (rail esquerdo · centro · detalhe direito) */
 #tab-resumo { max-width: 1560px; }
-.rz-shell { display: grid; grid-template-columns: 264px 1fr 296px; gap: 14px; align-items: start; }
+.rz-shell { display: grid; grid-template-columns: 248px 1fr 288px; gap: 0; align-items: stretch; }
+/* sidebar do paciente (área ①) — estilo mockup: sem cards, separada só por linha */
+.rz-rail { border-right: 1px solid var(--border); padding: 4px 20px 20px 4px; }
+.rz-detail { border-left: 1px solid var(--border); padding: 4px 4px 20px 20px; }
+.rz-center { padding: 4px 22px; }
+.rl-head { text-align: center; padding: 8px 0 16px; border-bottom: 1px solid var(--border); margin-bottom: 14px; }
+.rl-foto { width: 92px; height: 92px; border-radius: 50%; object-fit: cover; border: 3px solid var(--gold); display: block; margin: 0 auto; }
+.rl-foto.rl-ini { display: flex; align-items: center; justify-content: center; background: var(--navy); color: #fff; font-size: 30px; font-weight: 800; }
+.rl-name { font-weight: 800; color: var(--navy); font-size: 16px; margin-top: 11px; line-height: 1.2; }
+.rl-id { font-size: 11px; color: var(--text-3, #8A93A6); margin-top: 3px; }
+.rl-sev { display: inline-block; margin-top: 9px; font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: .4px; padding: 4px 12px; border-radius: 999px; }
+.rl-sec { margin-bottom: 15px; }
+.rl-sec h4 { font-size: 10px; font-weight: 800; letter-spacing: .6px; text-transform: uppercase; color: var(--text-3, #8A93A6); margin-bottom: 8px; }
+.rl-pill { display: inline-block; font-size: 11.5px; font-weight: 600; padding: 4px 11px; border-radius: 999px; margin: 0 5px 6px 0; background: var(--gold-dim, #F5EFE0); color: #7A5E1A; }
+.rl-pill.proto { background: #E8EEF6; color: var(--navy); }
+.rl-pill.alerg { background: #FDE7E7; color: var(--danger, #C62828); }
+.rl-kv { font-size: 12.5px; color: var(--text-2, #5A6678); padding: 2px 0; }
+.rl-empty { font-size: 12px; color: var(--text-3, #8A93A6); font-style: italic; }
 .rz-rail, .rz-detail { display: flex; flex-direction: column; gap: 12px; }
 .rz-center { min-width: 0; }
 .rz-railcard { background:#fff; border:1px solid var(--border); border-radius:12px; box-shadow:var(--shadow); overflow:hidden; }
@@ -803,7 +828,7 @@ body {
 .rz-cons-clear { font-size:10.5px; color:#6B7A8D; cursor:pointer; text-align:center; padding:4px; } .rz-cons-clear:hover { color:var(--danger); }
 .rz-cmp-banner { background:#E0F2F1; border:1px solid var(--teal); color:#015560; border-radius:9px; padding:8px 12px; font-size:12px; margin-bottom:10px; }
 .rz-cmp-banner span { color:var(--danger); font-weight:700; cursor:pointer; margin-left:6px; }
-@media (max-width: 1280px) { .rz-shell { grid-template-columns: 1fr; } }
+@media (max-width: 1080px) { .rz-shell { grid-template-columns: 1fr; } .rz-rail, .rz-detail { border: none; border-bottom: 1px solid var(--border); } }
 /* modal de vias (documentos dentro da casca nova) */
 .rz-modal { position: fixed; inset: 0; background: rgba(20,34,63,.45); display: none; align-items: flex-start; justify-content: center; z-index: 1000; padding: 28px 16px; overflow-y: auto; }
 .rz-modal.open { display: flex; }
@@ -821,7 +846,7 @@ body {
 .rz-modal-body .doc-section { display: block !important; }
 .rz-modal-body [contenteditable="true"]:focus { outline: 2px solid rgba(2,128,144,.35); border-radius: 4px; }
 /* barra de workflow do atendimento (Port 3) */
-.cw-bar { display: none; align-items: center; gap: 9px; background: linear-gradient(120deg, var(--navy), var(--navy-deep)); color: #fff; padding: 9px 16px; position: sticky; top: 0; z-index: 50; flex-wrap: wrap; }
+.cw-bar { display: none !important; } /* barra de workflow desativada — navegação pelas abas */
 .cw-back { background: rgba(255,255,255,.12); color: #fff; border: none; border-radius: 8px; padding: 7px 12px; font-size: 12px; font-weight: 700; cursor: pointer; }
 .cw-back:hover { background: rgba(255,255,255,.22); }
 .cw-patient { font-weight: 800; font-size: 13px; color: #fff; }
@@ -912,6 +937,7 @@ body {
     if (typeof renderPatientFoto === 'function') renderPatientFoto(d.foto || '');
     if (typeof renderGravidadeBadge === 'function') renderGravidadeBadge(d.gravidade || '');
     if (typeof renderIdentificacao === 'function') renderIdentificacao();
+    if (typeof renderResumo === 'function') setTimeout(renderResumo, 30);
     /* Restaurar rascunho salvo deste paciente (anti-perda de dados) */
     if (typeof restoreDraft === 'function') setTimeout(restoreDraft, 50);
     /* Carregar memória de consultas anteriores deste paciente */
@@ -936,12 +962,11 @@ body {
 
 <!-- TABS BAR -->
 <div class="tabs-bar" id="tabsBar">
-  <button class="tab-btn active" onclick="switchTab('resumo', this)">&#x1F4D1; Resumo</button>
-  <button class="tab-btn" onclick="switchTab('identificacao', this)">&#x1F464; Identificação</button>
-  <button class="tab-btn" onclick="switchTab('consulta', this)">&#x1F4CB; Consulta</button>
-  <button class="tab-btn" onclick="switchTab('protocolo', this)">&#x1F3AF; Protocolo</button>
-  <button class="tab-btn" onclick="switchTab('documentos', this)">&#x1F4C4; Documentos</button>
-  <button class="tab-btn" onclick="switchTab('assessor', this)">&#x1F916; Assessor Virtual</button>
+  <button class="tab-btn active" onclick="switchTab('resumo', this)">Resumo</button>
+  <button class="tab-btn" onclick="switchTab('identificacao', this)">Identificação</button>
+  <button class="tab-btn" onclick="switchTab('consulta', this)">Consulta</button>
+  <button class="tab-btn" onclick="switchTab('protocolo', this)">Plano &amp; protocolo</button>
+  <button class="tab-btn" onclick="switchTab('documentos', this)">Documentos</button>
 </div>
 
 <!-- Barra de workflow do atendimento (aparece fora da home) -->
@@ -953,7 +978,6 @@ body {
     <button class="cw-step" data-tab="protocolo" onclick="cwGo('protocolo')">&#x2461; Avaliação &amp; Plano</button>
   </div>
   <button class="cw-gen" onclick="cwGerarProtocolo()">&#x1F9EC; Gerar protocolo da base</button>
-  <button class="cw-save" onclick="saveConsulta()">&#x1F4BE; Salvar consulta</button>
 </div>
 
 <!-- TAB 0: RESUMO (modelo Elation · layout B+C) -->
@@ -970,27 +994,27 @@ body {
     <div class="rz-tb" onclick="abrirVia('atestado')"><span class="ico">&#x1F4C4;</span><span>Atestado</span></div>
     <div class="rz-tb" onclick="abrirVia('resumo')"><span class="ico">&#x2B50;</span><span>Resumo paciente</span></div>
     <div class="rz-tb" onclick="cwGo('assessor')"><span class="ico">&#x1F916;</span><span>Assessor</span></div>
-    <div class="rz-tb" style="background:#25D366;color:#fff;" onclick="enviarResumoWhatsApp()"><span class="ico">&#x1F4F2;</span><span>Enviar WhatsApp</span></div>
   </div>
 
   <div class="rz-shell">
   <aside class="rz-rail" id="resumoRail"></aside>
   <main class="rz-center">
 
-  <div class="resumo-patient">
-    <div class="patient-avatar" id="resumoAvatar"></div>
-    <div>
-      <div class="p-name" id="resumoName">Paciente</div>
-      <div class="p-meta" id="resumoMeta">—</div>
-    </div>
+  <div class="resumo-patient" style="border:none;padding:0;margin-bottom:6px;">
+    <div style="display:none;"><span id="resumoAvatar"></span><span id="resumoName"></span><span id="resumoMeta"></span></div>
     <div class="p-tags" id="resumoTags"></div>
   </div>
 
   <!-- 1. COCKPIT -->
   <div class="rz-sect"><span>&#x1F4CA; Visão geral</span></div>
   <div class="rz-cockpit">
-    <div class="rz-card rz-radarwrap"><canvas id="resumoRadar" width="280" height="250"></canvas></div>
-    <div>
+    <div class="rz-card rz-radarwrap">
+      <div class="rz-radar-title">&#x1F4E1; Radar de saúde</div>
+      <canvas id="resumoRadar" width="230" height="230"></canvas>
+      <div id="resumoRadarCap" class="rz-radar-cap"></div>
+    </div>
+    <div class="rz-ckm-panel">
+      <div class="rz-radar-title">&#x1F9EC; Classificação CKM</div>
       <div class="rz-bigscores" id="resumoScores"></div>
       <div class="rz-ckmbar" id="resumoCkmBar"></div>
     </div>
@@ -1073,9 +1097,6 @@ body {
     <div class="patient-info">
       <h3 id="patientName">Paciente</h3>
       <p id="patientHeaderMeta"></p>
-    </div>
-    <div style="margin-left:auto; display:flex; gap:8px;">
-      <button class="btn btn-gold btn-sm" onclick="saveConsulta()">&#x1F4BE; SALVAR</button>
     </div>
   </div>
 
@@ -2878,13 +2899,23 @@ function renderResumo() {
   const goalRow = (param, atual, meta12, unit) => {
     if (!atual) return '';
     const lb = isLowerBetterParam(param);
-    const t = progressiveTargets(atual, meta12, lb);
     const r = x => Math.round(x * 10) / 10;
     const op = lb ? '&lt;' : '≥';
-    const c3 = t.achieved ? r(atual) : r(t.m3);
-    const c6 = t.achieved ? r(atual) : r(t.m6);
-    const last = t.achieved ? ('manter ' + op + ' ' + meta12 + ' ' + unit) : (op + ' ' + meta12 + ' ' + unit);
-    return `<tr><td>${param}</td><td class="now">${r(atual)} ${unit}</td><td class="tgt">${c3}</td><td class="tgt">${c6}</td><td class="tgt">${last}</td></tr>`;
+    const pct = lb ? (atual <= meta12 ? 100 : Math.max(0, Math.min(100, Math.round(meta12 / atual * 100))))
+                   : (atual >= meta12 ? 100 : Math.max(0, Math.min(100, Math.round(atual / meta12 * 100))));
+    const col = pct >= 100 ? 'linear-gradient(90deg,#2E9E4B,#5BC274)' : pct >= 70 ? 'linear-gradient(90deg,var(--teal),#3AA6B5)' : 'linear-gradient(90deg,#E0A93B,#F0C46A)';
+    return `<div style="margin-bottom:13px;">
+      <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px;">
+        <span style="font-weight:700;color:var(--navy);">${param}</span>
+        <span style="color:#5A6678;"><b>${r(atual)} ${unit}</b> · alvo ${op} ${meta12}</span>
+      </div>
+      <div style="position:relative;height:13px;background:#EEF1F5;border-radius:7px;">
+        <div style="position:absolute;left:0;top:0;bottom:0;border-radius:7px;width:${pct}%;background:${col};"></div>
+        <span style="position:absolute;top:-3px;left:33%;width:2px;height:19px;background:#C3CAD6;"></span>
+        <span style="position:absolute;top:-3px;left:66%;width:2px;height:19px;background:#C3CAD6;"></span>
+        <span style="position:absolute;top:-3px;left:99%;width:2px;height:19px;background:#C3CAD6;"></span>
+      </div>
+    </div>`;
   };
   let goalsBody = '';
   goalsBody += goalRow('PA Sistólica', pas, 130, 'mmHg');
@@ -2900,7 +2931,7 @@ function renderResumo() {
     if (ang!=null && ang<5) goalsBody += goalRow('Ângulo de fase', ang, 5, '°');
   })();
   document.getElementById('resumoGoals').innerHTML = goalsBody
-    ? `<table class="goals" style="width:100%;border-collapse:collapse;font-size:11.5px;"><thead><tr><th style="text-align:left;padding:6px 8px;color:#6B7A8D;font-size:10px;border-bottom:1px solid var(--border);">Parâmetro</th><th style="padding:6px 8px;color:#6B7A8D;font-size:10px;border-bottom:1px solid var(--border);">Atual</th><th style="padding:6px 8px;color:#6B7A8D;font-size:10px;border-bottom:1px solid var(--border);">3 meses</th><th style="padding:6px 8px;color:#6B7A8D;font-size:10px;border-bottom:1px solid var(--border);">6 meses</th><th style="padding:6px 8px;color:#6B7A8D;font-size:10px;border-bottom:1px solid var(--border);">12 meses</th></tr></thead><tbody>${goalsBody}</tbody></table>`
+    ? ('<div style="padding:4px 2px;">' + goalsBody + '<div style="font-size:10px;color:#8A97A8;margin-top:2px;">As barras preenchem conforme o atingimento da meta · marcadores 3 / 6 / 12 meses do protocolo.</div></div>')
     : '<div style="color:#8A97A8;font-size:12.5px;font-style:italic;padding:8px 2px;">Preencha os exames na Consulta para gerar as metas.</div>';
 
   // ── Rails laterais (Port 4) ──
@@ -2908,7 +2939,12 @@ function renderResumo() {
   renderResumoRail();
   renderResumoDetail({ tfge, pas, pad, hba1c, ldl, rac, k: labVal('k'), ascvd });
 
-  // ── Radar (8 eixos, dados reais normalizados) ──
+  // ── Radar (8 eixos, dados reais normalizados) ── nota global anterior p/ evolução (retorno) ──
+  if (isRet) {
+    const scP = (v, b, w) => { if (v == null || v === 0 || isNaN(v)) return null; return Math.round(Math.max(0, Math.min(1, (v - w) / (b - w))) * 100); };
+    const pv = [scP(calcTFGe(getV('cr_first'), age, !male),90,15), scP(getV('pas_first'),110,180), scP(getV('hba1c_first'),5.5,10), scP(getV('ldl_first'),55,190), scP(calcIMC(getV('peso_first'),getV('altura_first')),22,40), scP(getV('rac_first'),10,300), null, scP(getV('au_first'),5,10)].filter(s => s != null);
+    window._radarGlobalPrev = pv.length ? Math.round(pv.reduce((a,b)=>a+b,0)/pv.length) : undefined;
+  } else { window._radarGlobalPrev = undefined; }
   renderResumoRadar(tfge, pas, hba1c, ldl, imc, rac, fib4, au);
 }
 
@@ -2953,69 +2989,38 @@ function renderResumoPlano() {
 
 function renderResumoRail() {
   const rail = document.getElementById('resumoRail'); if (!rail) return;
-  const card = (title, count, body) =>
-    `<div class="rz-railcard"><div class="rz-railh">${title}${count!=null?`<span class="cnt">${count}</span>`:''}</div><div class="rz-railb">${body}</div></div>`;
+  const info = window._apexPatientInfo || {};
+  const foto = window._apexPatientFoto;
+  const nm = info.name || (document.getElementById('patientName')?.textContent) || 'Paciente';
+  const ini = nm.split(' ').filter(Boolean).map(w => w[0]).slice(0, 2).join('').toUpperCase();
+  const gmap = { estavel: ['Estável', '#E6F4EA', '#1E7E34'], atencao: ['Atenção', '#FFF4E0', '#B26A00'], grave: ['Grave', '#FDE7E7', '#C62828'] };
+  const gm = gmap[window._apexGravidade];
+  const dob2br = s => { if (!s) return ''; const p = String(s).slice(0, 10).split('-'); return p.length === 3 ? (p[2] + '/' + p[1] + '/' + p[0]) : s; };
+  const idLine = [info.dob ? ('DN ' + dob2br(info.dob)) : '', info.documento ? ('CPF ' + info.documento) : ''].filter(Boolean).join(' · ');
 
-  // Problemas
-  const probMap = { hpp_drc:['Doença Renal Crônica','var(--danger)'], hpp_dm2:['Diabetes tipo 2','var(--warning)'],
-    hpp_has:['Hipertensão','var(--warning)'], hpp_dlp:['Dislipidemia','var(--warning)'], hpp_obes:['Obesidade','var(--warning)'],
-    hpp_ic:['Insuf. cardíaca','var(--danger)'], hpp_dac:['Doença coronariana','var(--danger)'], hpp_avc:['AVC','var(--danger)'],
-    hpp_gota:['Gota','#6B7A8D'], hpp_nash:['Esteatose/NASH','#6B7A8D'], hpp_litiase:['Litíase renal','#6B7A8D'],
-    hpp_cistos:['Cistos renais / DRPA','#6B7A8D'], hpp_gn:['Glomerulonefrite','#6B7A8D'], hpp_itu:['ITU de repetição','#6B7A8D'],
-    hpp_transplante:['Transplante renal','#6B7A8D'], hpp_apneia:['Apneia do sono','#6B7A8D'], hpp_hipot:['Hipotireoidismo','#6B7A8D'] };
-  let probs = '', pn = 0;
-  Object.keys(probMap).forEach(id => { if (document.getElementById(id)?.checked) { pn++;
-    probs += `<div class="rz-li"><span class="dotc" style="background:${probMap[id][1]}"></span><div class="nm">${probMap[id][0]}</div></div>`; } });
-  if (!pn) probs = '<div class="rz-empty">Nenhum antecedente marcado.</div>';
-
-  // Medicações
-  let meds = '', mn = 0;
-  (typeof prescriptionList !== 'undefined' ? prescriptionList : []).forEach(rx => { mn++;
-    meds += `<div class="rz-med"><span class="nm">${rx.name}</span><span class="ds">${rx.concentration||''}</span></div>`; });
-  if (!mn) meds = '<div class="rz-empty">Sem medicações na prescrição.</div>';
-
-  // Suplementos
-  let supps = '', sn = 0;
-  (typeof supplementList !== 'undefined' ? supplementList : []).forEach(s => { sn++;
-    supps += `<div class="rz-med"><span class="nm">${s.name}</span><span class="ds">${s.dose||''}</span></div>`; });
-
-  // Alergias
+  const probMap = { hpp_drc: 'DRC', hpp_dm2: 'DM2', hpp_has: 'HAS', hpp_dlp: 'Dislipidemia', hpp_obes: 'Obesidade', hpp_ic: 'IC', hpp_dac: 'DAC', hpp_avc: 'AVC', hpp_gota: 'Gota', hpp_nash: 'NASH', hpp_litiase: 'Litíase', hpp_cistos: 'Cistos renais', hpp_gn: 'GN', hpp_itu: 'ITU', hpp_transplante: 'Transplante', hpp_apneia: 'Apneia', hpp_hipot: 'Hipotireoidismo' };
+  const probs = Object.keys(probMap).filter(id => document.getElementById(id)?.checked).map(id => '<span class="rl-pill">' + probMap[id] + '</span>').join('');
+  const ativas = (typeof condicoesAtivasCKM === 'function') ? condicoesAtivasCKM() : [];
+  const protos = ativas.map(a => '<span class="rl-pill proto">' + (a[1].label || a[0]) + '</span>').join('');
   const alg = (document.getElementById('alergias')?.value || '').trim();
-  const algBody = alg ? alg.split(/[\n;,]+/).filter(Boolean).map(a => `<div class="rz-alerg">&#x26A0; ${a.trim()}</div>`).join('')
-    : '<div class="rz-empty">Nenhuma alergia registrada.</div>';
-
-  // História familiar + hábitos
-  const famMap = { hf_has:'HAS', hf_dm:'DM', hf_drc:'DRC', hf_avc:'AVC', hf_policistico:'Rins policísticos', hf_lupus:'Lúpus/autoimune' };
-  const fam = Object.keys(famMap).filter(id => document.getElementById(id)?.checked).map(id => famMap[id]);
-  const famDet = (document.getElementById('hf_detalhes')?.value || '').trim();
-  const tab = getS('tabagismo'), ativ = getS('atividade');
-  let hist = '';
-  if (fam.length) hist += `<div class="rz-li"><div><div class="nm">Familiar</div><div class="mt">${fam.join(' · ')}${famDet?' · '+famDet:''}</div></div></div>`;
-  if (tab) hist += `<div class="rz-li"><div><div class="nm">Tabagismo</div><div class="mt">${tab}</div></div></div>`;
-  if (ativ) hist += `<div class="rz-li"><div><div class="nm">Atividade física</div><div class="mt">${ativ}</div></div></div>`;
-  if (!hist) hist = '<div class="rz-empty">Sem história relevante registrada.</div>';
-
-  // Consultas anteriores (clicáveis → resumo + comparativo)
+  const algH = alg ? alg.split(/[\n;,]+/).filter(Boolean).map(a => '<span class="rl-pill alerg">' + a.trim() + '</span>').join('') : '<span class="rl-empty">Nenhuma</span>';
+  const contato = [info.phone ? ('&#x1F4DE; ' + info.phone) : '', info.city ? ('&#x1F4CD; ' + info.city) : '', info.acompanhante_nome ? ('&#x1F465; ' + info.acompanhante_nome) : ''].filter(Boolean);
   const chist = (typeof _consKey === 'function') ? JSON.parse(localStorage.getItem(_consKey()) || '[]') : [];
-  const cmpDate = (window._resumoCompare && window._resumoCompare.date) || null;
-  let consBody;
-  if (chist.length) {
-    consBody = chist.map((h, i) =>
-      `<div class="rz-cons${h.date===cmpDate?' sel':''}" onclick="verConsulta(${i})">
-        <div><div class="nm">${h.date||'—'}</div><div class="mt">${h.type||'Consulta'}${h.tfge?' · TFGe '+h.tfge:''}</div></div>
-        <span class="rz-cons-go">&#x203A;</span></div>`).join('');
-    if (cmpDate) consBody += `<div class="rz-cons-clear" onclick="limparComparacao()">&#x2715; limpar comparação</div>`;
-  } else {
-    consBody = '<div class="rz-empty">Nenhuma consulta salva ainda. Salve uma consulta para acompanhar a evolução.</div>';
-  }
+  const ult = chist.length ? ((chist[0].date || '') + ' · ' + (chist[0].type || '')) : '—';
 
+  const sec = (t, b) => '<div class="rl-sec"><h4>' + t + '</h4>' + b + '</div>';
   rail.innerHTML =
-    card('&#x1F4C5; Consultas anteriores', chist.length || 0, consBody) +
-    card('&#x1F4CB; Lista de Problemas', pn, probs) +
-    card('&#x1F48A; Medicações', mn, meds) +
-    (sn ? card('&#x1F33F; Suplementos', sn, supps) : '') +
-    card('&#x26A0; Alergias', alg ? null : 0, algBody) +
-    card('&#x1F4D6; História', null, hist);
+    '<div class="rl-head">'
+    + (foto ? ('<img class="rl-foto" src="' + foto + '" alt="">') : ('<div class="rl-foto rl-ini">' + ini + '</div>'))
+    + '<div class="rl-name">' + nm + '</div>'
+    + (idLine ? ('<div class="rl-id">' + idLine + '</div>') : '')
+    + (gm ? ('<div><span class="rl-sev" style="background:' + gm[1] + ';color:' + gm[2] + ';">' + gm[0] + '</span></div>') : '')
+    + '</div>'
+    + sec('Problemas ativos', probs || '<span class="rl-empty">Nenhum</span>')
+    + sec('Alergias', algH)
+    + sec('Protocolos', protos || '<span class="rl-empty">—</span>')
+    + (contato.length ? sec('Contato', contato.map(c => '<div class="rl-kv">' + c + '</div>').join('')) : '')
+    + sec('Última consulta', '<div class="rl-kv">' + ult + '</div>');
 }
 
 // ── Detalhe direito: lembretes + flowsheet + cronológico ──
@@ -3073,8 +3078,9 @@ function renderResumoDetail(v) {
     monRows.map(r => `<div class="rz-mon"><span class="k">${r[0]}</span><span class="v">${r[1] || aguard}</span></div>`).join('');
 
   det.innerHTML =
-    card('&#x1F514; Lembretes clínicos', remBody) +
-    card('&#x1F4F2; Monitoramento (app)', monBody) +
+    '<div style="font-family:\'Instrument Serif\',serif;font-size:17px;color:var(--navy);margin:2px 2px 10px;">&#x1F916; Assessor virtual</div>' +
+    card('&#x1F4F2; Aferições do paciente (app)', monBody) +
+    card('&#x26A0; Alertas clínicos', remBody) +
     card('&#x1F4C8; Evolução laboratorial', fsBody) +
     card('&#x1F4C5; Registro cronológico', chrono);
 }
@@ -3082,15 +3088,38 @@ function renderResumoDetail(v) {
 function renderResumoRadar(tfge, pas, hba1c, ldl, imc, rac, fib4, au) {
   const el = document.getElementById('resumoRadar');
   if (!el || typeof Chart === 'undefined') return;
-  const norm = (val, min, max, invert) => {
-    if (!val) return 50;
-    const pct = Math.max(0, Math.min(100, ((val - min) / (max - min)) * 100));
-    return Math.round(invert ? 100 - pct : pct);
+  // Matriz calibrada por âncoras clínicas (igual ao radar principal); 50 neutro só p/ desenho quando não medido.
+  const sc = (val, best, worst) => {
+    if (val == null || val === 0 || isNaN(val)) return 50;
+    const s = (val - worst) / (best - worst);
+    return Math.round(Math.max(0, Math.min(1, s)) * 100);
   };
-  const scores = [
-    norm(tfge,0,120,false), norm(pas,80,200,true), norm(hba1c,4,12,true), norm(ldl,0,200,true),
-    norm(imc,15,45,true), norm(rac,0,500,true), norm(fib4,0,4,true), norm(au,0,12,true)
-  ];
+  // raw (null = não medido) para a NOTA; scores (50 neutro) para o desenho
+  const scR = (val, best, worst) => { if (val == null || val === 0 || isNaN(val)) return null; const s = (val - worst) / (best - worst); return Math.round(Math.max(0, Math.min(1, s)) * 100); };
+  const raw = [scR(tfge,90,15), scR(pas,110,180), scR(hba1c,5.5,10), scR(ldl,55,190), scR(imc,22,40), scR(rac,10,300), scR(fib4,1.0,3.25), scR(au,5,10)];
+  const scores = raw.map(s => s == null ? 50 : s);
+  const _present = raw.filter(s => s != null);
+  const global = _present.length ? Math.round(_present.reduce((a,b)=>a+b,0)/_present.length) : null;
+  // Legenda: nota global + banda + evolução vs. anterior (window._radarGlobalPrev)
+  const cap = document.getElementById('resumoRadarCap');
+  if (cap) {
+    if (global == null) {
+      cap.innerHTML = '<div class="glabel">Preencha exames para a nota</div>';
+    } else {
+      const col = global >= 70 ? 'var(--success)' : global >= 50 ? 'var(--warning)' : 'var(--danger)';
+      const band = global >= 70 ? 'Bom controle' : global >= 50 ? 'Atenção' : 'Crítico';
+      const prev = window._radarGlobalPrev;
+      let evo = '';
+      if (typeof prev === 'number') {
+        const d = global - prev;
+        if (Math.abs(d) >= 1) evo = '<div class="gevo" style="color:' + (d > 0 ? 'var(--success)' : 'var(--danger)') + ';">' + (d > 0 ? '&#x2191;' : '&#x2193;') + ' ' + (d > 0 ? '+' : '') + d + ' vs. consulta anterior</div>';
+        else evo = '<div class="gevo" style="color:var(--text-3,#8A93A6);">&#x2194; estável vs. anterior</div>';
+      }
+      cap.innerHTML = '<div class="gscore" style="color:' + col + ';">' + global + '<span style="font-size:13px;color:var(--text-3,#8A93A6);">/100</span></div>'
+        + '<div class="glabel">Nota global · ' + band + ' · ' + _present.length + '/8 medidos</div>' + evo;
+    }
+    window._radarGlobalCur = global;
+  }
   if (window._resumoRadar) window._resumoRadar.destroy();
   window._resumoRadar = new Chart(el, { type:'radar',
     data:{ labels:['Renal','Pressórico','Glicêmico','Lipídico','IMC','Albuminúria','Hepático','Ác.Úrico'],
@@ -6113,7 +6142,6 @@ document.addEventListener('DOMContentLoaded', function() {
   renderExams();
   renderSupplements();
   if (typeof renderResumo === 'function') renderResumo();
-  const tb = document.getElementById('tabsBar'); if (tb) tb.style.display = 'none';
 });
 </script>
 
