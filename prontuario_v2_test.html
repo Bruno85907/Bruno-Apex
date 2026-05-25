@@ -12,8 +12,10 @@
 html.embed-mode .topbar { display: none; }
 html.embed-mode .tabs-bar { top: 0; }
 html.embed-mode .tab-content { padding-top: 4px; }
+/* Resumo: shell encosta na linha das abas (sem gap no topo) e sidebar/detalhe pegam toda a lateral */
+html.embed-mode #tab-resumo { padding: 0 0 24px; }
 html.embed-mode #tab-resumo .rz-center > .rz-sect:first-child,
-html.embed-mode #tab-resumo .resumo-patient { margin-top: 4px; }
+html.embed-mode #tab-resumo .resumo-patient { margin-top: 12px; }
 html.embed-mode body { padding-top: 0; }
 
 :root {
@@ -686,14 +688,14 @@ body {
 .rz-radar-cap .glabel { font-size: 10.5px; color: var(--text-3, #8A93A6); margin-top: 2px; }
 .rz-radar-cap .gevo { font-size: 11px; font-weight: 700; margin-top: 4px; }
 .rz-ckm-panel { display: flex; flex-direction: column; gap: 9px; }
-.rz-bigscores { display: grid; grid-template-columns: 1fr 1fr; gap: 9px; }
+.rz-bigscores { display: grid; grid-template-columns: 1fr; gap: 9px; flex: 1; }
 .rz-bscore { border: 1px solid var(--border); border-radius: 11px; padding: 10px 12px; background: #FBFCFE; }
 .rz-bscore .nm { font-size: 11px; font-weight: 700; color: var(--text); }
 .rz-bscore .vl { font-size: 21px; font-weight: 800; margin-top: 2px; line-height: 1.1; }
 .rz-bscore .ds { font-size: 10px; color: #6B7A8D; }
 .rz-bscore .vl.bad { color: var(--danger); } .rz-bscore .vl.warn { color: var(--warning); } .rz-bscore .vl.ok { color: var(--success); } .rz-bscore .vl.na { color: #B6BFCB; }
 /* CKM didático */
-.rz-ckm-head { display: flex; align-items: center; gap: 14px; border: 1px solid var(--border); border-radius: 12px; padding: 14px 16px; background: #FBFCFE; }
+.rz-ckm-head { display: flex; align-items: center; gap: 14px; border: 1px solid var(--border); border-radius: 12px; padding: 16px 18px; background: #FBFCFE; height: 100%; box-sizing: border-box; }
 .rz-ckm-info { flex: 1; min-width: 0; }
 .rz-ckm-desc { font-size: 12px; line-height: 1.5; }
 .rz-ckm-head.ok { border-left: 5px solid var(--success); } .rz-ckm-head.warn { border-left: 5px solid var(--warning); } .rz-ckm-head.bad { border-left: 5px solid var(--danger); }
@@ -720,6 +722,9 @@ body {
 .rz-ms-risk .rb { font-size: 10.5px; font-weight: 800; padding: 2px 9px; border-radius: 20px; background: rgba(255,255,255,.7); }
 .rz-ms-risk .re { font-size: 11px; color: var(--muted); margin-top: 4px; line-height: 1.4; }
 .rz-ckmbar { display: flex; gap: 5px; margin-top: 9px; }
+/* Régua de estágios dentro do Resumo: mais compacta (Bruno: "tags muito soltas") */
+.rz-ckmbar .ckm-bar { margin: 4px 0 0; gap: 6px; }
+.rz-ckmbar .ckm-stage { padding: 8px 5px; font-size: 10.5px; line-height: 1.25; }
 .rz-ckmst { flex: 1; text-align: center; padding: 7px 4px; border-radius: 8px; background: #F1F4F8; font-size: 9.5px; font-weight: 700; color: #6B7A8D; line-height: 1.25; }
 .rz-ckmst b { font-size: 11px; color: var(--text); display: block; }
 .rz-ckmst.on { background: var(--danger); color: #fff; } .rz-ckmst.on b { color: #fff; }
