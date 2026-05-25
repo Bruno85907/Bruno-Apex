@@ -2657,9 +2657,9 @@ function navTo(pageId) {
   if (pageId === 'lista-pacientes' && currentDoctor) carregarListaPacientes();
   if (pageId === 'agenda') initCalendar();
   if (pageId === 'trs-cronico') carregarTrsCronico();
-  if (pageId === 'relatorio-cronico') { sessionStorage.setItem('apex_gestor_logado','1'); document.getElementById('cronico-iframe').src = 'dashboard_fenix_C-Espacoso.html?embed=1'; }
-  if (pageId === 'trs-agudo-servico') document.getElementById('agudo-iframe').src = 'painel_lancamento_mensal.html?embed=1';
-  if (pageId === 'indicadores-qualidade') document.getElementById('indicadores-qualidade-iframe').src = 'fenix_qualidade.html?embed=1';
+  if (pageId === 'relatorio-cronico') { sessionStorage.setItem('apex_gestor_logado','1'); document.getElementById('cronico-iframe').src = 'dashboard_fenix_C-Espacoso.html?embed=1&t=' + Date.now(); }
+  if (pageId === 'trs-agudo-servico') document.getElementById('agudo-iframe').src = 'painel_lancamento_mensal.html?embed=1&t=' + Date.now();
+  if (pageId === 'indicadores-qualidade') document.getElementById('indicadores-qualidade-iframe').src = 'fenix_qualidade.html?embed=1&t=' + Date.now();
   if (pageId === 'prontuario') {
     /* Breadcrumb com o nome do paciente em contexto */
     var pacCtx = allPacientes.find(function(p) { return p.id === currentPatientId; });
@@ -3026,7 +3026,7 @@ function abrirUnidade(key) {
   NAV['unidade-detalhe'].bc = ['Dashboard','Qualidade Fenix','TRS Crônico','Unidades', info.nome];
   BC_MAP[info.nome] = null;
   /* Setar iframe com template de lançamento da unidade */
-  document.getElementById('ud-iframe').src = 'fenix_lanc.html?unidade=' + key + '&embed=1';
+  document.getElementById('ud-iframe').src = 'fenix_lanc.html?unidade=' + key + '&embed=1&t=' + Date.now();
   navTo('unidade-detalhe');
 }
 
