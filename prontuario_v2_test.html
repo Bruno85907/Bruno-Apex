@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Prontuário CKM v2 — APEX Health</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="protocolos_ckm.js"></script>
 <style>
@@ -674,8 +674,8 @@ body {
 .resumo-patient .p-pill.risk { background: #FDE7E7; color: var(--danger); }
 .resumo-patient .p-pill.risk-mod { background: #FFE9C7; color: #7A4E00; }
 .resumo-patient .p-pill.risk-low { background: #E6F4EA; color: var(--success); }
-.rz-sect { display: flex; align-items: center; gap: 8px; font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: .06em; color: var(--navy); margin: 22px 2px 10px; padding-bottom: 5px; border-bottom: 2px solid var(--border); }
-.rz-sect .hint { margin-left: auto; font-size: 10px; font-weight: 600; color: #8A97A8; text-transform: none; letter-spacing: 0; font-style: italic; }
+.rz-sect { display: flex; align-items: baseline; gap: 10px; font-family: 'Instrument Serif', Georgia, serif; font-size: 21px; font-weight: 400; text-transform: none; letter-spacing: 0; color: var(--navy); margin: 22px 2px 12px; padding-bottom: 0; border-bottom: none; }
+.rz-sect .hint { margin-left: auto; font-size: 10.5px; font-weight: 600; color: #8A97A8; text-transform: none; letter-spacing: 0; font-style: italic; font-family: 'Inter', sans-serif; align-self: center; }
 .rz-card { background: #fff; border: 1px solid var(--border); border-radius: 12px; box-shadow: var(--shadow); }
 /* cockpit */
 .rz-cockpit { display: grid; grid-template-columns: 300px 1fr; gap: 12px; }
@@ -693,7 +693,9 @@ body {
 .rz-bscore .ds { font-size: 10px; color: #6B7A8D; }
 .rz-bscore .vl.bad { color: var(--danger); } .rz-bscore .vl.warn { color: var(--warning); } .rz-bscore .vl.ok { color: var(--success); } .rz-bscore .vl.na { color: #B6BFCB; }
 /* CKM didático */
-.rz-ckm-head { display: flex; align-items: center; gap: 14px; border: 1px solid var(--border); border-radius: 12px; padding: 12px 14px; background: #FBFCFE; }
+.rz-ckm-head { display: flex; align-items: center; gap: 14px; border: 1px solid var(--border); border-radius: 12px; padding: 14px 16px; background: #FBFCFE; }
+.rz-ckm-info { flex: 1; min-width: 0; }
+.rz-ckm-desc { font-size: 12px; line-height: 1.5; }
 .rz-ckm-head.ok { border-left: 5px solid var(--success); } .rz-ckm-head.warn { border-left: 5px solid var(--warning); } .rz-ckm-head.bad { border-left: 5px solid var(--danger); }
 .rz-ckm-badge { display: flex; flex-direction: column; align-items: center; justify-content: center; min-width: 66px; height: 66px; border-radius: 14px; background: var(--navy); color: #fff; flex: none; }
 .rz-ckm-head.ok .rz-ckm-badge { background: var(--success); } .rz-ckm-head.warn .rz-ckm-badge { background: var(--warning); } .rz-ckm-head.bad .rz-ckm-badge { background: var(--danger); }
@@ -776,8 +778,8 @@ body {
 #tab-resumo { max-width: 1560px; }
 .rz-shell { display: grid; grid-template-columns: 248px 1fr 288px; gap: 0; align-items: stretch; }
 /* sidebar do paciente (área ①) — estilo mockup: sem cards, separada só por linha */
-.rz-rail { border-right: 1px solid var(--border); padding: 4px 20px 20px 4px; }
-.rz-detail { border-left: 1px solid var(--border); padding: 4px 4px 20px 20px; }
+.rz-rail { border-right: 1px solid var(--border); padding: 16px 18px 20px; background: #F7F8FA; }
+.rz-detail { border-left: 1px solid var(--border); padding: 16px 18px 20px; background: #F7F8FA; }
 .rz-center { padding: 4px 22px; }
 .rl-head { text-align: center; padding: 8px 0 16px; border-bottom: 1px solid var(--border); margin-bottom: 14px; }
 .rl-foto { width: 92px; height: 92px; border-radius: 50%; object-fit: cover; border: 3px solid var(--gold); display: block; margin: 0 auto; }
@@ -5414,7 +5416,7 @@ function printDoc(id) {
 
   const w = window.open('','_blank');
   w.document.write(`<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Imprimir</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
 <style>
   @page {
     size: A4;
