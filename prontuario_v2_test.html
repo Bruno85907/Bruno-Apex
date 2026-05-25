@@ -463,6 +463,9 @@ body {
 .retorno-only { display: none; }
 .mode-retorno .retorno-only { display: block; }
 .mode-retorno .primeira-only { display: none; }
+.proto-chip { border: 1.5px solid var(--border); background: #fff; color: var(--navy); border-radius: 999px; padding: 7px 14px; font-size: 12.5px; font-weight: 600; cursor: pointer; font-family: inherit; transition: all .15s; }
+.proto-chip:hover { border-color: var(--teal); }
+.proto-chip.on { background: var(--teal); color: #fff; border-color: var(--teal); }
 /* PRINT */
 @media print {
   body { background: #fff; font-size: 11px; }
@@ -882,14 +885,33 @@ body {
     if (numEl && d.consultaNum) numEl.textContent = d.consultaNum;
     /* Store patient ID for future Supabase integration */
     if (d.patientId) window._apexPatientId = d.patientId;
+    if (d.phone != null) window._apexPatientPhone = d.phone;
     if (d.patientName) {
       window._apexPatientName = d.patientName;
-      var nameEl = document.getElementById('patientName');
-      if (nameEl) nameEl.textContent = d.patientName;
-      var avEl = document.getElementById('patientAvatar');
-      if (avEl) avEl.textContent = d.patientName.split(' ').filter(Boolean).map(function(w){ return w.charAt(0); }).slice(0, 2).join('').toUpperCase();
+      var _ini = d.patientName.split(' ').filter(Boolean).map(function(w){ return w.charAt(0); }).slice(0, 2).join('').toUpperCase();
+      ['patientName','resumoName'].forEach(function(id){ var el=document.getElementById(id); if(el) el.textContent = d.patientName; });
+      ['patientAvatar','resumoAvatar'].forEach(function(id){ var el=document.getElementById(id); if(el) el.textContent = _ini; });
       document.querySelectorAll('[id$="-patient"]').forEach(function(el){ el.textContent = d.patientName; });
     }
+    /* Cabeçalho: CPF / data de nascimento reais (sem placeholders) */
+    var _meta = [];
+    if (d.documento) _meta.push('CPF: ' + d.documento);
+    if (d.dob) { var p = String(d.dob).slice(0,10).split('-'); _meta.push('DN: ' + (p.length===3 ? (p[2]+'/'+p[1]+'/'+p[0]) : d.dob)); }
+    if (d.sex) _meta.push(d.sex === 'M' ? 'Masculino' : d.sex === 'F' ? 'Feminino' : d.sex);
+    var _mEl = document.getElementById('patientHeaderMeta');
+    if (_mEl) _mEl.textContent = _meta.join(' · ');
+    /* Foto, gravidade e dados de identificação */
+    window._apexPatientInfo = {
+      name: d.patientName || '', sex: d.sex || '', age: d.age || '', dob: d.dob || '',
+      documento: d.documento || '', phone: d.phone || '', email: d.email || '', city: d.city || '',
+      endereco: d.endereco || '', acompanhante_nome: d.acompanhante_nome || '',
+      acompanhante_telefone: d.acompanhante_telefone || '', conditions: d.conditions || []
+    };
+    if (d.foto) window._apexPatientFoto = d.foto;
+    if (d.gravidade) window._apexGravidade = d.gravidade;
+    if (typeof renderPatientFoto === 'function') renderPatientFoto(d.foto || '');
+    if (typeof renderGravidadeBadge === 'function') renderGravidadeBadge(d.gravidade || '');
+    if (typeof renderIdentificacao === 'function') renderIdentificacao();
     /* Restaurar rascunho salvo deste paciente (anti-perda de dados) */
     if (typeof restoreDraft === 'function') setTimeout(restoreDraft, 50);
     /* Carregar memória de consultas anteriores deste paciente */
@@ -905,14 +927,17 @@ body {
     <span class="tb-divider"></span>
     <span class="tb-sub">Prontuário CKM</span>
   </div>
+  <img id="topbarFoto" alt="" style="display:none;width:38px;height:38px;border-radius:50%;object-fit:cover;border:2px solid var(--gold,#C4A35A);margin-left:auto;">
+  <span id="gravidadeBadge" style="display:none;font-size:11px;font-weight:700;padding:4px 12px;border-radius:999px;"></span>
   <div class="patient-tag" id="patientTag">
-    <span id="patientSex">Masculino</span> · <span id="patientAge">58</span> anos · Consulta #<span id="consultaNum">1</span>
+    <span id="patientSex">—</span> · <span id="patientAge">—</span> anos · Consulta #<span id="consultaNum">1</span>
   </div>
 </div>
 
 <!-- TABS BAR -->
 <div class="tabs-bar" id="tabsBar">
   <button class="tab-btn active" onclick="switchTab('resumo', this)">&#x1F4D1; Resumo</button>
+  <button class="tab-btn" onclick="switchTab('identificacao', this)">&#x1F464; Identificação</button>
   <button class="tab-btn" onclick="switchTab('consulta', this)">&#x1F4CB; Consulta</button>
   <button class="tab-btn" onclick="switchTab('protocolo', this)">&#x1F3AF; Protocolo</button>
   <button class="tab-btn" onclick="switchTab('documentos', this)">&#x1F4C4; Documentos</button>
@@ -945,6 +970,7 @@ body {
     <div class="rz-tb" onclick="abrirVia('atestado')"><span class="ico">&#x1F4C4;</span><span>Atestado</span></div>
     <div class="rz-tb" onclick="abrirVia('resumo')"><span class="ico">&#x2B50;</span><span>Resumo paciente</span></div>
     <div class="rz-tb" onclick="cwGo('assessor')"><span class="ico">&#x1F916;</span><span>Assessor</span></div>
+    <div class="rz-tb" style="background:#25D366;color:#fff;" onclick="enviarResumoWhatsApp()"><span class="ico">&#x1F4F2;</span><span>Enviar WhatsApp</span></div>
   </div>
 
   <div class="rz-shell">
@@ -952,9 +978,9 @@ body {
   <main class="rz-center">
 
   <div class="resumo-patient">
-    <div class="patient-avatar" id="resumoAvatar">JS</div>
+    <div class="patient-avatar" id="resumoAvatar"></div>
     <div>
-      <div class="p-name" id="resumoName">João Silva</div>
+      <div class="p-name" id="resumoName">Paciente</div>
       <div class="p-meta" id="resumoMeta">—</div>
     </div>
     <div class="p-tags" id="resumoTags"></div>
@@ -1019,9 +1045,23 @@ body {
     <div id="resumoGoals"></div>
   </div>
 
+  <!-- 7. CONDUTA & PROTOCOLO DESTA CONSULTA -->
+  <div class="rz-sect"><span>&#x1F48A; Conduta &amp; protocolo desta consulta</span><span class="hint">prescrição, exames e protocolos ativos</span></div>
+  <div class="rz-card" style="padding:14px;" id="resumoPlano"></div>
+
   </main>
   <aside class="rz-detail" id="resumoDetail"></aside>
   </div><!-- end rz-shell -->
+</div>
+
+<!-- TAB: IDENTIFICAÇÃO -->
+<div id="tab-identificacao" class="tab-content">
+  <div class="section-header">Identificação do paciente</div>
+  <div class="card">
+    <div id="identificacaoBody" style="display:flex;gap:24px;flex-wrap:wrap;align-items:flex-start;">
+      <p style="color:#999;font-size:13px;">Os dados de identificação aparecem ao abrir o paciente pelo APEX Pro.</p>
+    </div>
+  </div>
 </div>
 
 <!-- TAB 1: CONSULTA -->
@@ -1029,10 +1069,10 @@ body {
 
   <!-- Patient Header -->
   <div class="patient-header">
-    <div class="patient-avatar" id="patientAvatar">JS</div>
+    <div class="patient-avatar" id="patientAvatar"></div>
     <div class="patient-info">
-      <h3 id="patientName">João Silva</h3>
-      <p>CPF: 123.456.789-00 · DN: 15/03/1968 · Convênio: Particular</p>
+      <h3 id="patientName">Paciente</h3>
+      <p id="patientHeaderMeta"></p>
     </div>
     <div style="margin-left:auto; display:flex; gap:8px;">
       <button class="btn btn-gold btn-sm" onclick="saveConsulta()">&#x1F4BE; SALVAR</button>
@@ -1084,14 +1124,27 @@ body {
     </div>
   </div>
 
-  <!-- RETORNO: Resultado de Exames -->
-  <div class="retorno-only">
-    <div class="section-header">Resultado de Exames</div>
+  <!-- Linha de cuidado / Protocolos do paciente -->
+  <div id="protocoloSelectorWrap">
+    <div class="section-header">Linha de cuidado · Protocolos</div>
     <div class="card">
-      <p style="font-size:12px; color:#6B7A8D; margin-bottom:12px;">Preencha os resultados dos exames solicitados na consulta anterior</p>
-      <div style="margin-bottom:16px;">
-        <div class="card-title" style="margin-bottom:10px;"><span class="icon">&#x1F4CF;</span> Dados da Consulta Anterior</div>
-        <p style="font-size:11px; color:#6B7A8D; margin-bottom:8px;">Peso, altura e PA da última consulta (para comparação no Radar de Saúde)</p>
+      <p style="font-size:12px; color:#6B7A8D; margin-bottom:10px;">Selecione o(s) protocolo(s) em que o paciente será incluído. Isso individualiza a conduta, as metas e a <b>solicitação de exames com a periodicidade correta</b>.</p>
+      <div id="protocoloSelector" style="display:flex;flex-wrap:wrap;gap:8px;"></div>
+      <div style="margin-top:16px;">
+        <div class="card-title" style="margin-bottom:6px;"><span class="icon">&#x1F4C5;</span> Solicitação de exames por protocolo (periodicidade)</div>
+        <div id="periodizacaoExames" style="margin-top:6px;"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Exames laboratoriais (consulta ATUAL) — reposicionado após a Anamnese via CSS (order) -->
+  <div id="examBlockWrap">
+    <div class="section-header">Exames Laboratoriais</div>
+    <div class="card">
+      <p style="font-size:12px; color:#6B7A8D; margin-bottom:12px;">Resultados da consulta atual. Dica: use "Importar exames via JSON" (abaixo) para preencher rápido.</p>
+      <div class="retorno-only" style="margin-bottom:16px;">
+        <div class="card-title" style="margin-bottom:10px;"><span class="icon">&#x1F4CF;</span> Consulta anterior (comparação)</div>
+        <p style="font-size:11px; color:#6B7A8D; margin-bottom:8px;">Valores da última consulta — preenchidos automaticamente para a evolução/Radar.</p>
         <div class="form-grid cols-5">
           <div class="form-group"><label>Peso anterior (kg)</label><input type="number" step="0.1" id="peso_first" placeholder="kg"></div>
           <div class="form-group"><label>Altura anterior (cm)</label><input type="number" step="0.1" id="altura_first" placeholder="cm"></div>
@@ -1127,11 +1180,40 @@ body {
         <div class="form-group"><label>PCR ultrassensível</label><input type="number" step="0.01" id="pcr" placeholder="mg/L"></div>
         <div class="form-group"><label>RAC (albumina/creatinina)</label><input type="number" step="0.1" id="rac" placeholder="mg/g"></div>
         <div class="form-group"><label>Albumina</label><input type="number" step="0.1" id="alb" placeholder="g/dL"></div>
+        <div class="form-group"><label>TSH</label><input type="number" step="0.01" id="tsh" placeholder="µUI/mL"></div>
+        <div class="form-group"><label>T4 livre</label><input type="number" step="0.01" id="t4l" placeholder="ng/dL"></div>
+        <div class="form-group"><label>GGT</label><input type="number" step="1" id="ggt" placeholder="U/L"></div>
+        <div class="form-group"><label>Fosfatase alcalina</label><input type="number" step="1" id="fa_lab" placeholder="U/L"></div>
+        <div class="form-group"><label>Bilirrubina total</label><input type="number" step="0.1" id="bt_lab" placeholder="mg/dL"></div>
+        <div class="form-group"><label>Magnésio</label><input type="number" step="0.1" id="mg_lab" placeholder="mg/dL"></div>
+        <div class="form-group"><label>Ferro sérico</label><input type="number" step="1" id="fe_lab" placeholder="µg/dL"></div>
+        <div class="form-group"><label>Sat. transferrina</label><input type="number" step="1" id="tsat" placeholder="%"></div>
+        <div class="form-group"><label>Insulina basal</label><input type="number" step="0.1" id="insulina" placeholder="µUI/mL"></div>
+        <div class="form-group"><label>Vitamina B12</label><input type="number" step="1" id="b12" placeholder="pg/mL"></div>
+        <div class="form-group"><label>Ácido fólico</label><input type="number" step="0.1" id="folato" placeholder="ng/mL"></div>
+        <div class="form-group"><label>Lipoproteína(a)</label><input type="number" step="1" id="lpa" placeholder="mg/dL"></div>
+        <div class="form-group"><label>Proteínas totais</label><input type="number" step="0.1" id="prot_tot" placeholder="g/dL"></div>
+        <div class="form-group"><label>Proteinúria 24h</label><input type="number" step="1" id="proteinuria24" placeholder="mg/24h"></div>
+        <div class="form-group"><label>PSA total</label><input type="number" step="0.01" id="psa" placeholder="ng/mL"></div>
+        <div class="form-group"><label>VHS</label><input type="number" step="1" id="vhs" placeholder="mm/h"></div>
+        <div class="form-group"><label>Hematócrito</label><input type="number" step="0.1" id="ht" placeholder="%"></div>
+        <div class="form-group"><label>Leucócitos</label><input type="number" step="100" id="leuco" placeholder="/mm³"></div>
       </div>
       <div class="form-group" style="margin-top:12px; grid-column:1/-1;">
         <label>Exames adicionais (campo livre)</label>
         <textarea id="exames_outros" rows="3" placeholder="Cole aqui resultados de exames que não possuem campo específico..." style="width:100%;"></textarea>
       </div>
+      <details style="margin-top:12px;">
+        <summary style="cursor:pointer;font-size:12.5px;font-weight:600;color:var(--teal);">&#x1F4E5; Importar exames via JSON (auto-preencher campos)</summary>
+        <div style="margin-top:8px;">
+          <p style="font-size:11px;color:#6B7A8D;margin-bottom:6px;">Cole um JSON com chaves = nome do exame (ex.: <code>{"creatinina":1.1,"tsh":2.4,"t4 livre":1.2,"ldl":90}</code>). Aceita acentos, maiúsculas e vários sinônimos.</p>
+          <textarea id="exames_json" rows="4" placeholder='{ "creatinina": 1.1, "ureia": 38, "tsh": 2.4, "t4 livre": 1.2, "hba1c": 5.6 }' style="width:100%;font-family:monospace;font-size:12px;"></textarea>
+          <div style="display:flex;align-items:center;gap:10px;margin-top:6px;">
+            <button class="btn btn-primary btn-sm" onclick="importExamesJSON()">&#x2B07; Preencher campos</button>
+            <span id="exames_json_status" style="font-size:11.5px;"></span>
+          </div>
+        </div>
+      </details>
       <div style="margin-top:12px;">
         <button class="btn btn-primary btn-sm" onclick="recalcAll()">&#x1F504; Recalcular Painel</button>
       </div>
@@ -1293,10 +1375,10 @@ body {
   </div>
 
   <!-- EXAMES LABORATORIAIS (MOVED ABOVE Exame Físico per Bruno's request) -->
-  <div class="section-header primeira-only">Exames Laboratoriais</div>
-  <div class="card primeira-only">
-    <div class="card-title"><span class="icon">&#x1F9EA;</span> Resultados Laboratoriais</div>
-    <p style="font-size:12px; color:#6B7A8D; margin-bottom:12px;">Insira os resultados dos exames para cálculos automáticos de TFGe, FIB-4, ASCVD, KFRE e classificações</p>
+  <div class="section-header retorno-only">Exames da consulta anterior (comparação)</div>
+  <div class="card retorno-only">
+    <div class="card-title"><span class="icon">&#x1F9EA;</span> Resultados da consulta anterior</div>
+    <p style="font-size:12px; color:#6B7A8D; margin-bottom:12px;">Preenchidos automaticamente a partir da última consulta no Supabase (para comparar a evolução). Você pode ajustar se necessário.</p>
     <div class="form-grid cols-4">
       <div class="form-group"><label>Creatinina</label><input type="number" step="0.01" id="cr_first" placeholder="mg/dL" onchange="autoCalc()"></div>
       <div class="form-group"><label>Ureia</label><input type="number" step="1" id="ureia_first" placeholder="mg/dL"></div>
@@ -1729,6 +1811,13 @@ body {
     <button class="doc-tab-btn" onclick="showDoc('resumo', this)">&#x2B50; Resumo</button>
   </div>
 
+  <div style="margin:10px 0 2px;display:flex;justify-content:flex-end;">
+    <button onclick="enviarDocAtivoWhatsApp()" title="Enviar o documento aberto ao WhatsApp do paciente" style="display:inline-flex;align-items:center;gap:7px;background:#25D366;color:#fff;border:none;border-radius:8px;padding:9px 16px;font-size:13px;font-weight:700;cursor:pointer;box-shadow:0 3px 12px rgba(37,211,102,.35);">
+      <svg viewBox="0 0 32 32" width="16" height="16" fill="#fff" aria-hidden="true"><path d="M16.002 4C9.42 4 4.06 9.36 4.057 15.943c0 2.105.55 4.16 1.595 5.97L3.96 28l6.255-1.64a11.94 11.94 0 0 0 5.683 1.448h.005c6.58 0 11.94-5.36 11.944-11.945a11.88 11.88 0 0 0-3.49-8.42A11.86 11.86 0 0 0 16.002 4zm0 21.79h-.004a9.87 9.87 0 0 1-5.027-1.376l-.36-.214-3.74.98 1-3.65-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.002-5.45 4.437-9.884 9.889-9.884a9.82 9.82 0 0 1 6.988 2.898 9.825 9.825 0 0 1 2.892 6.994c-.003 5.45-4.438 9.885-9.886 9.885zm5.42-7.404c-.297-.149-1.758-.868-2.03-.967-.272-.099-.47-.148-.67.15-.197.296-.767.966-.94 1.164-.173.198-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.76-1.653-2.058-.173-.297-.019-.458.13-.606.134-.133.297-.347.446-.52.149-.174.198-.298.297-.496.099-.198.05-.372-.025-.521-.074-.149-.669-1.612-.916-2.206-.242-.58-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479s1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.71.306 1.263.489 1.694.625.712.227 1.36.195 1.872.118.571-.085 1.758-.719 2.006-1.413.247-.694.247-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/></svg>
+      Enviar por WhatsApp
+    </button>
+  </div>
+
   <!-- RECEITUÁRIO -->
   <div class="doc-section active" id="doc-receituario">
     <div class="doc-preview" id="docReceituário">
@@ -1744,7 +1833,7 @@ body {
       </div>
       <div class="doc-title">Receituário</div>
       <div class="doc-patient-info">
-        <div>Paciente: <span id="doc-rx-patient">João Silva</span></div>
+        <div>Paciente: <span id="doc-rx-patient">Paciente</span></div>
         <div>Data: <span id="doc-rx-date"></span></div>
       </div>
       <div id="doc-rx-body" contenteditable="true" style="min-height:500px; outline:none;">
@@ -1779,7 +1868,7 @@ body {
       </div>
       <div class="doc-title">Pedido de Exames — Sangue</div>
       <div class="doc-patient-info">
-        <div>Paciente: <span id="doc-blood-patient">João Silva</span></div>
+        <div>Paciente: <span id="doc-blood-patient">Paciente</span></div>
         <div>Data: <span id="doc-blood-date"></span></div>
       </div>
       <div id="doc-blood-body" style="min-height:500px;">
@@ -1814,7 +1903,7 @@ body {
       </div>
       <div class="doc-title">Pedido de Exames — Urina</div>
       <div class="doc-patient-info">
-        <div>Paciente: <span id="doc-urine-patient">João Silva</span></div>
+        <div>Paciente: <span id="doc-urine-patient">Paciente</span></div>
         <div>Data: <span id="doc-urine-date"></span></div>
       </div>
       <div id="doc-urine-body" style="min-height:500px;">
@@ -1849,7 +1938,7 @@ body {
       </div>
       <div class="doc-title">Pedido de Exames — Imagem</div>
       <div class="doc-patient-info">
-        <div>Paciente: <span id="doc-img-patient">João Silva</span></div>
+        <div>Paciente: <span id="doc-img-patient">Paciente</span></div>
         <div>Data: <span id="doc-img-date"></span></div>
       </div>
       <div id="doc-img-body" style="min-height:500px;">
@@ -1884,7 +1973,7 @@ body {
       </div>
       <div class="doc-title">Recomendação Médica</div>
       <div class="doc-patient-info">
-        <div>Paciente: <span id="doc-rec-patient">João Silva</span></div>
+        <div>Paciente: <span id="doc-rec-patient">Paciente</span></div>
         <div>Data: <span id="doc-rec-date"></span></div>
       </div>
       <div id="doc-rec-body" style="min-height:500px;">
@@ -1919,7 +2008,7 @@ body {
       </div>
       <div class="doc-title">Prescrição de Suplementos</div>
       <div class="doc-patient-info">
-        <div>Paciente: <span id="doc-supp-patient">João Silva</span></div>
+        <div>Paciente: <span id="doc-supp-patient">Paciente</span></div>
         <div>Data: <span id="doc-supp-date"></span></div>
       </div>
       <div id="doc-supp-body" style="min-height:500px;">
@@ -1955,7 +2044,7 @@ body {
       </div>
       <div class="doc-title">Receituário</div>
       <div class="doc-patient-info">
-        <div>Paciente: <span id="doc-rxl-patient">João Silva</span></div>
+        <div>Paciente: <span id="doc-rxl-patient">Paciente</span></div>
         <div>Data: <span id="doc-rxl-date"></span></div>
       </div>
       <div style="min-height:500px; margin-top:20px;">
@@ -1991,7 +2080,7 @@ body {
       </div>
       <div class="doc-title">Encaminhamento Médico</div>
       <div class="doc-patient-info">
-        <div>Paciente: <span id="doc-enc-patient">João Silva</span></div>
+        <div>Paciente: <span id="doc-enc-patient">Paciente</span></div>
         <div>Data: <span id="doc-enc-date"></span></div>
       </div>
       <div style="min-height:500px; margin-top:20px;">
@@ -2040,7 +2129,7 @@ body {
       <div style="min-height:500px; margin-top:30px; font-size:13px; line-height:2;">
         <p style="text-indent:40px;">
           Atesto para os devidos fins que o(a) paciente
-          <strong><span id="doc-atst-patient">João Silva</span></strong>,
+          <strong><span id="doc-atst-patient">Paciente</span></strong>,
           foi atendido(a) nesta data (<span id="doc-atst-date"></span>),
           necessitando de afastamento de suas atividades por
           <input type="text" id="atstDias" placeholder="___" style="width:50px; border:none; border-bottom:1px solid #333; text-align:center; font-size:13px; font-weight:700;"> dia(s),
@@ -2384,6 +2473,28 @@ const MEDS_DB = [
   {name:'Curcumina',concentrations:['500mg'],forms:['Cápsula'],defaultPosology:'1-2x/dia',category:'Suplemento'},
   {name:'Zinco quelato',concentrations:['15mg','30mg'],forms:['Cápsula'],defaultPosology:'1x/dia',category:'Suplemento'},
   {name:'Selênio',concentrations:['55mcg','100mcg'],forms:['Cápsula'],defaultPosology:'1x/dia',category:'Suplemento'},
+  // Suplementos — proteínas e composição muscular (ref. linhas Essential Nutrition)
+  {name:'Whey protein isolado',concentrations:['20g','30g'],forms:['Pó'],defaultPosology:'1 dose/dia',category:'Suplemento'},
+  {name:'Peptídeos de colágeno (proteína do colágeno)',concentrations:['10g'],forms:['Pó','Sachê'],defaultPosology:'1 dose/dia',category:'Suplemento'},
+  {name:'Colágeno bioativo (pele/articular)',concentrations:['2,5g','5g'],forms:['Pó','Sachê'],defaultPosology:'1x/dia',category:'Suplemento'},
+  {name:'Creatina monohidratada',concentrations:['3g','5g'],forms:['Pó'],defaultPosology:'1x/dia',category:'Suplemento'},
+  {name:'L-Glutamina',concentrations:['5g','10g'],forms:['Pó'],defaultPosology:'1-2x/dia',category:'Suplemento'},
+  {name:'Super Ômega-3 concentrado (TG)',concentrations:['1g','2g'],forms:['Cápsula'],defaultPosology:'1-2x/dia',category:'Suplemento'},
+  // Vitaminas e minerais
+  {name:'Vitamina D3 (colecalciferol)',concentrations:['1000UI','2000UI','7000UI','50000UI'],forms:['Cápsula','Gotas'],defaultPosology:'1x/dia ou semanal',category:'Suplemento'},
+  {name:'Vitamina K2 (MK-7)',concentrations:['100mcg','200mcg'],forms:['Cápsula'],defaultPosology:'1x/dia',category:'Suplemento'},
+  {name:'Vitamina C',concentrations:['500mg','1000mg'],forms:['Comprimido','Cápsula'],defaultPosology:'1x/dia',category:'Suplemento'},
+  {name:'Complexo B',concentrations:['—'],forms:['Cápsula','Comprimido'],defaultPosology:'1x/dia',category:'Suplemento'},
+  {name:'Multivitamínico',concentrations:['—'],forms:['Cápsula','Comprimido'],defaultPosology:'1x/dia',category:'Suplemento'},
+  {name:'Magnésio dimalato',concentrations:['300mg','600mg'],forms:['Cápsula'],defaultPosology:'1x/dia',category:'Suplemento'},
+  {name:'Magnésio bisglicinato',concentrations:['200mg','400mg'],forms:['Cápsula'],defaultPosology:'1x/dia',category:'Suplemento'},
+  {name:'Ferro bisglicinato',concentrations:['30mg','60mg'],forms:['Cápsula'],defaultPosology:'1x/dia',category:'Suplemento'},
+  {name:'Ácido fólico (folato)',concentrations:['400mcg','5mg'],forms:['Comprimido'],defaultPosology:'1x/dia',category:'Suplemento'},
+  // Metabólicos / fibras
+  {name:'Psyllium (fibra solúvel)',concentrations:['5g'],forms:['Pó','Sachê'],defaultPosology:'1-2x/dia',category:'Suplemento'},
+  {name:'Inositol (myo-inositol)',concentrations:['2g','4g'],forms:['Pó','Cápsula'],defaultPosology:'1-2x/dia',category:'Suplemento'},
+  {name:'Berberina',concentrations:['500mg'],forms:['Cápsula'],defaultPosology:'2-3x/dia',category:'Suplemento'},
+  {name:'Vitamina B6 (piridoxina)',concentrations:['50mg','100mg'],forms:['Comprimido'],defaultPosology:'1x/dia',category:'Suplemento'},
   {name:'Amoxicilina',concentrations:['500mg','875mg'],forms:['Comprimido'],defaultPosology:'8/8h',category:'Antibiótico'},
   {name:'Ciprofloxacino',concentrations:['250mg','500mg'],forms:['Comprimido'],defaultPosology:'12/12h',category:'Antibiótico'},
   {name:'Paracetamol',concentrations:['500mg','750mg'],forms:['Comprimido'],defaultPosology:'6/6h SN',category:'Analgésico'},
@@ -2766,9 +2877,14 @@ function renderResumo() {
   // ── 6. Metas progressivas ──
   const goalRow = (param, atual, meta12, unit) => {
     if (!atual) return '';
-    const m3 = Math.round((atual + (meta12 - atual) * 0.3) * 10) / 10;
-    const m6 = Math.round((atual + (meta12 - atual) * 0.6) * 10) / 10;
-    return `<tr><td>${param}</td><td class="now">${Math.round(atual*10)/10} ${unit}</td><td class="tgt">${m3}</td><td class="tgt">${m6}</td><td class="tgt">&lt; ${meta12} ${unit}</td></tr>`;
+    const lb = isLowerBetterParam(param);
+    const t = progressiveTargets(atual, meta12, lb);
+    const r = x => Math.round(x * 10) / 10;
+    const op = lb ? '&lt;' : '≥';
+    const c3 = t.achieved ? r(atual) : r(t.m3);
+    const c6 = t.achieved ? r(atual) : r(t.m6);
+    const last = t.achieved ? ('manter ' + op + ' ' + meta12 + ' ' + unit) : (op + ' ' + meta12 + ' ' + unit);
+    return `<tr><td>${param}</td><td class="now">${r(atual)} ${unit}</td><td class="tgt">${c3}</td><td class="tgt">${c6}</td><td class="tgt">${last}</td></tr>`;
   };
   let goalsBody = '';
   goalsBody += goalRow('PA Sistólica', pas, 130, 'mmHg');
@@ -2776,11 +2892,19 @@ function renderResumo() {
   goalsBody += goalRow('LDL', ldl, ldl>100?(ascvd&&ascvd>20?55:70):ldl, 'mg/dL');
   goalsBody += goalRow('IMC', imc, imc>25?25:imc, 'kg/m²');
   if (rac && rac > 30) goalsBody += goalRow('RAC', rac, 30, 'mg/g');
+  // Composição corporal — meta de melhora só quando há déficit
+  (function(){
+    const bcr = id => { const el=document.getElementById(id); const v=el?parseFloat(String(el.value).replace(',','.')):NaN; return isNaN(v)?null:v; };
+    const mg=bcr('bio_magra'), ang=bcr('bio_angulo'), altM=getV('altura')?getV('altura')/100:null;
+    if (mg!=null && altM){ const imlg=mg/(altM*altM), thr=isMale()?17:15; if(imlg<thr) goalsBody += goalRow('IMLG (massa magra)', Math.round(imlg*10)/10, thr, 'kg/m²'); }
+    if (ang!=null && ang<5) goalsBody += goalRow('Ângulo de fase', ang, 5, '°');
+  })();
   document.getElementById('resumoGoals').innerHTML = goalsBody
     ? `<table class="goals" style="width:100%;border-collapse:collapse;font-size:11.5px;"><thead><tr><th style="text-align:left;padding:6px 8px;color:#6B7A8D;font-size:10px;border-bottom:1px solid var(--border);">Parâmetro</th><th style="padding:6px 8px;color:#6B7A8D;font-size:10px;border-bottom:1px solid var(--border);">Atual</th><th style="padding:6px 8px;color:#6B7A8D;font-size:10px;border-bottom:1px solid var(--border);">3 meses</th><th style="padding:6px 8px;color:#6B7A8D;font-size:10px;border-bottom:1px solid var(--border);">6 meses</th><th style="padding:6px 8px;color:#6B7A8D;font-size:10px;border-bottom:1px solid var(--border);">12 meses</th></tr></thead><tbody>${goalsBody}</tbody></table>`
     : '<div style="color:#8A97A8;font-size:12.5px;font-style:italic;padding:8px 2px;">Preencha os exames na Consulta para gerar as metas.</div>';
 
   // ── Rails laterais (Port 4) ──
+  renderResumoPlano();
   renderResumoRail();
   renderResumoDetail({ tfge, pas, pad, hba1c, ldl, rac, k: labVal('k'), ascvd });
 
@@ -2789,6 +2913,44 @@ function renderResumo() {
 }
 
 // ── Rail esquerdo: perfil clínico persistente ──
+// Conduta & protocolo desta consulta no Resumo — reflete prescrição, protocolos ativos e exames.
+function renderResumoPlano() {
+  var el = document.getElementById('resumoPlano'); if (!el) return;
+  var H = '';
+  var ativas = (typeof condicoesAtivasCKM === 'function') ? condicoesAtivasCKM() : [];
+  if (ativas.length) {
+    H += '<div style="margin-bottom:12px;"><div style="font-size:11px;font-weight:800;color:var(--navy);margin-bottom:6px;">PROTOCOLOS ATIVOS</div>'
+      + ativas.map(function(a){ return '<span class="p-pill stage" style="margin:2px 4px 2px 0;display:inline-block;">' + (a[1].label || a[0]) + '</span>'; }).join('') + '</div>';
+  }
+  // Prescrição (curada pelo médico) ou recomendação da base se ainda vazia
+  var rx = (typeof prescriptionList !== 'undefined') ? prescriptionList : [];
+  H += '<div style="margin-bottom:12px;"><div style="font-size:11px;font-weight:800;color:var(--navy);margin-bottom:6px;">PRESCRIÇÃO (' + rx.length + ')</div>';
+  if (rx.length) {
+    H += rx.map(function(p){ return '<div style="font-size:12.5px;padding:3px 0;">• <b>' + p.name + '</b>' + (p.concentration ? ' ' + p.concentration : '') + (p.posology ? ' — ' + p.posology : '') + (p.obs ? ' <span style="color:#6B7A8D;">(' + p.obs + ')</span>' : '') + '</div>'; }).join('');
+  } else {
+    var pb = (typeof montarProtocoloDaBase === 'function') ? montarProtocoloDaBase() : null;
+    if (pb && pb.medicacoes && pb.medicacoes.length) {
+      H += '<div style="font-size:11px;color:#6B7A8D;margin-bottom:4px;">Sugestão da base (clique "Atualizar Plano Terapêutico" para prescrever):</div>'
+        + pb.medicacoes.map(function(m){ return '<div style="font-size:12.5px;padding:2px 0;color:#4A5E6F;">• ' + (m.nome || '') + (m.dose ? ' — ' + m.dose : '') + (m.condicao ? ' <span style="color:#8A97A8;">[' + m.condicao + ']</span>' : '') + '</div>'; }).join('');
+    } else {
+      H += '<div style="font-size:12px;color:#8A97A8;font-style:italic;">Selecione protocolos/antecedentes para gerar a conduta.</div>';
+    }
+  }
+  H += '</div>';
+  // Exames solicitados
+  var ex = (typeof examPrescriptionList !== 'undefined') ? examPrescriptionList : [];
+  H += '<div style="margin-bottom:6px;"><div style="font-size:11px;font-weight:800;color:var(--navy);margin-bottom:6px;">EXAMES SOLICITADOS (' + ex.length + ')</div>';
+  if (ex.length) H += '<div style="font-size:12.5px;line-height:1.7;">' + ex.map(function(e){ return e.name; }).join(' · ') + '</div>';
+  else H += '<div style="font-size:12px;color:#8A97A8;font-style:italic;">Nenhum exame no pedido. Em Consulta → Protocolos, use "Adicionar exames ao pedido".</div>';
+  H += '</div>';
+  // Conduta / recomendação livre
+  var recEl = document.getElementById('recomendacao');
+  if (recEl && recEl.value && recEl.value.trim()) {
+    H += '<div style="margin-top:10px;"><div style="font-size:11px;font-weight:800;color:var(--navy);margin-bottom:4px;">CONDUTA</div><div style="font-size:12.5px;white-space:pre-wrap;">' + recEl.value + '</div></div>';
+  }
+  el.innerHTML = H;
+}
+
 function renderResumoRail() {
   const rail = document.getElementById('resumoRail'); if (!rail) return;
   const card = (title, count, body) =>
@@ -3035,6 +3197,70 @@ function setConsultaMode(mode, btn) {
   if (mode === 'retorno') { body.classList.add('mode-retorno'); } else { body.classList.remove('mode-retorno'); }
 }
 
+// Foto, gravidade e identificação (dados vindos do Pro via postMessage)
+function renderPatientFoto(foto) {
+  var tb = document.getElementById('topbarFoto');
+  if (foto) {
+    if (tb) { tb.src = foto; tb.style.display = 'block'; }
+    ['patientAvatar', 'resumoAvatar'].forEach(function(id) {
+      var el = document.getElementById(id);
+      if (el) el.innerHTML = '<img src="' + foto + '" style="width:100%;height:100%;border-radius:50%;object-fit:cover;">';
+    });
+    var idf = document.getElementById('idfFoto'); if (idf) { idf.src = foto; idf.style.display = 'block'; }
+  } else if (tb) { tb.style.display = 'none'; }
+}
+function renderGravidadeBadge(g) {
+  var el = document.getElementById('gravidadeBadge'); if (!el) return;
+  var map = { estavel: { t: 'Estável', bg: '#E6F4EA', c: '#1E7E34' }, atencao: { t: 'Atenção', bg: '#FFF4E0', c: '#B26A00' }, grave: { t: 'Grave', bg: '#FDE7E7', c: '#C62828' } };
+  var m = map[g];
+  if (m) { el.textContent = m.t; el.style.background = m.bg; el.style.color = m.c; el.style.display = 'inline-block'; }
+  else el.style.display = 'none';
+}
+function renderIdentificacao() {
+  var info = window._apexPatientInfo, body = document.getElementById('identificacaoBody');
+  if (!body) return;
+  if (!info || !info.name) { body.innerHTML = '<p style="color:#999;font-size:13px;">Os dados de identificação aparecem ao abrir o paciente pelo APEX Pro.</p>'; return; }
+  function dob2br(s) { if (!s) return '—'; var p = String(s).slice(0, 10).split('-'); return p.length === 3 ? (p[2] + '/' + p[1] + '/' + p[0]) : s; }
+  var sexL = info.sex === 'M' ? 'Masculino' : info.sex === 'F' ? 'Feminino' : (info.sex || '—');
+  var foto = window._apexPatientFoto;
+  var rows = [
+    ['Nome', info.name], ['Sexo', sexL], ['Idade', info.age ? info.age + ' anos' : '—'],
+    ['Data de nascimento', dob2br(info.dob)], ['CPF / Documento', info.documento || '—'],
+    ['Telefone', info.phone || '—'], ['E-mail', info.email || '—'],
+    ['Cidade', info.city || '—'], ['Endereço', info.endereco || '—'],
+    ['Acompanhante', info.acompanhante_nome ? (info.acompanhante_nome + (info.acompanhante_telefone ? (' · ' + info.acompanhante_telefone) : '')) : '—'],
+    ['Condições', (info.conditions && info.conditions.length) ? info.conditions.join(', ') : '—']
+  ];
+  var fotoHtml = '<div style="flex-shrink:0;"><img id="idfFoto" alt="Foto" style="width:120px;height:120px;border-radius:12px;object-fit:cover;border:1px solid var(--border);' + (foto ? '' : 'display:none;') + '" ' + (foto ? ('src="' + foto + '"') : '') + '></div>';
+  var rowsHtml = '<div style="flex:1;min-width:280px;display:grid;grid-template-columns:150px 1fr;gap:7px 14px;font-size:13px;">'
+    + rows.map(function(r) { return '<div style="color:#6B7A8D;font-weight:600;">' + r[0] + '</div><div style="color:var(--navy);">' + r[1] + '</div>'; }).join('')
+    + '</div>';
+  body.innerHTML = fotoHtml + rowsHtml;
+}
+
+// Reordena a Consulta para Anamnese vir primeiro, depois Exames Lab, depois Exame Físico.
+// Usa flexbox order (não move o HTML) — robusto a recálculos.
+function reorderConsultaBody() {
+  var body = document.getElementById('consulta-body');
+  if (!body) return;
+  body.style.display = 'flex';
+  body.style.flexDirection = 'column';
+  var hitFisico = false;
+  Array.prototype.forEach.call(body.children, function(el) {
+    if (el.classList.contains('section-header') && /Exame F[ií]sico/.test(el.textContent || '')) hitFisico = true;
+    if (el.id === 'protocoloSelectorWrap') el.style.order = 3;
+    else if (el.id === 'examBlockWrap') el.style.order = 5;
+    else if (hitFisico) el.style.order = 10;
+    else el.style.order = 1;
+  });
+}
+function _initConsultaUI() {
+  reorderConsultaBody();
+  if (typeof renderProtocoloSelector === 'function') renderProtocoloSelector();
+}
+document.addEventListener('DOMContentLoaded', _initConsultaUI);
+if (document.readyState !== 'loading') _initConsultaUI();
+
 // ============================================================
 // COLLAPSIBLE
 // ============================================================
@@ -3204,8 +3430,8 @@ function calcASCVD() {
     // White Female coefficients — treated vs untreated SBP
     const sbpCoef = hasHAS ? 2.019 : 1.957;
     sum = (-29.799)*lnA + 4.884*lnA*lnA
-        + 13.540*lnC + 3.114*lnA*lnC
-        + (-13.578)*lnH
+        + 13.540*lnC + (-3.114)*lnA*lnC
+        + (-13.578)*lnH + 3.149*lnA*lnH
         + sbpCoef*lnP
         + 7.574*(smoker?1:0) + (-1.665)*lnA*(smoker?1:0)
         + 0.661*(dm?1:0);
@@ -3623,6 +3849,78 @@ function recalcAll() {
 // ============================================================
 // GOALS
 // ============================================================
+// Metas progressivas — NUNCA cria alvo que piora um parâmetro já na meta.
+// Para "quanto menor melhor" (PA, IMC, LDL...), se já está ≤ alvo, mantém o valor atual.
+function isLowerBetterParam(param) {
+  return param.includes('PA') || param.includes('IMC') || param.includes('HbA1c')
+    || param.includes('LDL') || param.includes('Circ') || param.includes('RAC');
+}
+function progressiveTargets(atual, meta12, lowerBetter) {
+  const achieved = lowerBetter ? (atual <= meta12) : (atual >= meta12);
+  if (achieved) return { m3: atual, m6: atual, m12: atual, achieved: true };
+  return { m3: atual + (meta12 - atual) * 0.3, m6: atual + (meta12 - atual) * 0.6, m12: meta12, achieved: false };
+}
+
+// Import de exames via JSON colado → auto-preenche os campos de resultados laboratoriais.
+const EXAM_ALIASES = (function(){
+  const map = {
+    cr:['creatinina','cr','creat','creatinina serica'], ureia:['ureia','ure','uréia'],
+    k:['potassio','k','potassio serico'], na:['sodio','na','sodio serico'],
+    bic:['bicarbonato','hco3','co2','co2 total','bic'], hb:['hemoglobina','hb'],
+    glic:['glicemia','glicemia jejum','glicemia de jejum','glicose','glic','glicemia em jejum'],
+    hba1c:['hba1c','hemoglobina glicada','a1c','hb glicada'],
+    ct:['colesterol total','ct','colesterol'], ldl:['ldl','ldl colesterol','ldl c','ldl colesterol'],
+    hdl:['hdl','hdl colesterol','hdl c'], tg:['triglicerides','triglicerideos','tg','triglicerides'],
+    alt_v:['alt','tgp','alt tgp'], ast_v:['ast','tgo','ast tgo'], plaq:['plaquetas','plaq'],
+    au:['acido urico','urato','au'], ca_lab:['calcio','ca','calcio total'],
+    p_lab:['fosforo','p','fosfato','fosforo serico'], pth:['pth','paratormonio','pth intacto'],
+    vitd:['vitamina d','vit d','25 oh vitamina d','25 oh','vitd','vitamina d 25 oh'],
+    ferr:['ferritina','ferr'], pcr:['pcr','pcr ultrassensivel','proteina c reativa','pcr us'],
+    rac:['rac','relacao albumina creatinina','albumina creatinina','uacr','racr'],
+    alb:['albumina','alb'], tsh:['tsh'], t4l:['t4 livre','t4l','t4 l','tiroxina livre','ft4'],
+    ggt:['ggt','gama gt','gamma gt'], fa_lab:['fosfatase alcalina','fa','fal'],
+    bt_lab:['bilirrubina total','bilirrubina','bt'], mg_lab:['magnesio','mg','magnesio serico'],
+    fe_lab:['ferro','ferro serico'], tsat:['saturacao de transferrina','sat transferrina','tsat','ist'],
+    insulina:['insulina','insulina basal'], b12:['vitamina b12','b12','cobalamina'],
+    folato:['acido folico','folato','folato serico'], lpa:['lipoproteina a','lp a','lpa'],
+    prot_tot:['proteinas totais','proteina total','ptn totais'],
+    proteinuria24:['proteinuria 24h','proteinuria 24 horas','proteinuria 24','ptu24'],
+    psa:['psa','psa total','antigeno prostatico'], vhs:['vhs','velocidade de hemossedimentacao'],
+    ht:['hematocrito','ht','hct'], leuco:['leucocitos','leuco','global de leucocitos'],
+    pas:['pas','pa sistolica','pressao sistolica','sistolica'],
+    pad:['pad','pa diastolica','pressao diastolica','diastolica'],
+    peso:['peso','peso atual'], altura:['altura','estatura']
+  };
+  const flat = {};
+  Object.keys(map).forEach(id => map[id].forEach(a => { flat[a] = id; }));
+  return flat;
+})();
+function importExamesJSON() {
+  const ta = document.getElementById('exames_json');
+  const status = document.getElementById('exames_json_status');
+  const setStatus = (t, c) => { if (status) { status.textContent = t; status.style.color = c || '#6B7A8D'; } };
+  const raw = (ta && ta.value || '').trim();
+  if (!raw) { setStatus('Cole um JSON primeiro.', '#C62828'); return; }
+  let obj;
+  try { obj = JSON.parse(raw); } catch (e) { setStatus('JSON inválido: ' + e.message, '#C62828'); return; }
+  if (!obj || typeof obj !== 'object' || Array.isArray(obj)) { setStatus('O JSON deve ser um objeto { exame: valor }.', '#C62828'); return; }
+  const norm = s => String(s).toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^a-z0-9]+/g, ' ').trim();
+  let filled = 0; const skipped = [];
+  Object.keys(obj).forEach(k => {
+    const id = EXAM_ALIASES[norm(k)];
+    let v = obj[k];
+    if (v && typeof v === 'object') v = v.valor != null ? v.valor : (v.value != null ? v.value : (v.resultado != null ? v.resultado : v.result));
+    const el = id && document.getElementById(id);
+    if (el && v != null && v !== '') {
+      const num = parseFloat(String(v).replace(',', '.').replace(/[^0-9.\-]/g, ''));
+      if (!isNaN(num)) { el.value = num; filled++; return; }
+    }
+    skipped.push(k);
+  });
+  if (typeof recalcAll === 'function') recalcAll();
+  setStatus(filled + ' campo(s) preenchido(s).' + (skipped.length ? (' Não reconhecidos: ' + skipped.join(', ')) : ''), filled ? '#1E7E34' : '#C62828');
+}
+
 function updateGoals(imc, pas, pad, hba1c, tfge, rac, ldl, ca, fib4) {
   const container = document.getElementById('goalsContainer');
   // Keep header, clear rest
@@ -3630,18 +3928,20 @@ function updateGoals(imc, pas, pad, hba1c, tfge, rac, ldl, ca, fib4) {
 
   function goalRow(param, atual, meta12, unit) {
     if (!atual) return;
-    const meta3 = atual + (meta12 - atual) * 0.3;
-    const meta6 = atual + (meta12 - atual) * 0.6;
-    const progress = Math.min(100, Math.max(0, ((atual <= meta12 ? 100 : (1 - (atual - meta12) / atual) * 100))));
-    const isGood = (param.includes('PA') || param.includes('IMC') || param.includes('HbA1c') || param.includes('LDL') || param.includes('Circ')) ? atual <= meta12 : atual >= meta12;
+    const lowerBetter = isLowerBetterParam(param);
+    const t = progressiveTargets(atual, meta12, lowerBetter);
+    const progress = t.achieved ? 100 : Math.min(100, Math.max(0, lowerBetter ? (1 - (atual - meta12) / atual) * 100 : (atual / meta12) * 100));
+    const isGood = t.achieved;
     const barColor = isGood ? 'progress-green' : progress > 50 ? 'progress-yellow' : 'progress-red';
+    const r = x => Math.round(x * 10) / 10;
+    const m12disp = t.achieved ? 'manter' : r(t.m12);
     container.innerHTML += `<div class="goal-row">
       <div style="font-weight:600;">${param}</div>
       <div><div class="progress-bar"><div class="progress-fill ${barColor}" style="width:${progress}%"></div></div></div>
-      <div style="font-weight:700;${isGood?'color:var(--success)':'color:var(--danger)'}">${Math.round(atual*10)/10} ${unit}</div>
-      <div>${Math.round(meta3*10)/10}</div>
-      <div>${Math.round(meta6*10)/10}</div>
-      <div style="font-weight:700;color:var(--teal)">${Math.round(meta12*10)/10}</div>
+      <div style="font-weight:700;${isGood?'color:var(--success)':'color:var(--danger)'}">${r(atual)} ${unit}</div>
+      <div>${r(t.m3)}</div>
+      <div>${r(t.m6)}</div>
+      <div style="font-weight:700;color:var(--teal)">${m12disp}</div>
     </div>`;
   }
   goalRow('PA Sistólica', pas, 130, 'mmHg');
@@ -3650,6 +3950,22 @@ function updateGoals(imc, pas, pad, hba1c, tfge, rac, ldl, ca, fib4) {
   goalRow('LDL', ldl, ldl > 100 ? (calcASCVD() > 20 ? 55 : 70) : ldl, 'mg/dL');
   if (ca) goalRow('Circ. Abdominal', ca, isMale() ? 90 : 80, 'cm');
   if (rac && rac > 30) goalRow('RAC', rac, 30, 'mg/g');
+
+  // Composição corporal — metas de melhora SÓ quando há déficit (não inventar meta se está adequado).
+  // "Quanto maior melhor": goalRow trata como higher-is-better (param não está na lista lowerBetter).
+  const bcr = id => { const el = document.getElementById(id); const v = el ? parseFloat(String(el.value).replace(',', '.')) : NaN; return isNaN(v) ? null : v; };
+  const _magra = bcr('bio_magra'), _angulo = bcr('bio_angulo'), _altM = getV('altura') ? getV('altura') / 100 : null;
+  let bioDeficit = false;
+  if (_magra != null && _altM) {
+    const imlg = _magra / (_altM * _altM), thr = isMale() ? 17 : 15;
+    if (imlg < thr) { goalRow('IMLG (massa magra)', Math.round(imlg * 10) / 10, thr, 'kg/m²'); bioDeficit = true; }
+  }
+  if (_angulo != null && _angulo < 5) { goalRow('Ângulo de fase', _angulo, 5, '°'); bioDeficit = true; }
+  if (bioDeficit) {
+    container.innerHTML += `<div style="margin-top:10px;padding:10px 12px;background:#FFF8EC;border:1px solid var(--gold-border,#E6D29A);border-radius:8px;font-size:11.5px;color:#7A5E1A;line-height:1.5;">
+      <b>Protocolo de composição corporal:</b> índices corporais deficientes (massa magra/ângulo de fase). Conduta: otimizar ingesta proteica adequada ao estágio de DRC (encaminhar à nutrição), estímulo a treino resistido (encaminhar a profissional de educação física) e reavaliar bioimpedância a cada 3 meses. <span style="opacity:.8;">A prescrição de dieta/treino é do profissional habilitado.</span>
+    </div>`;
+  }
 }
 
 // ============================================================
@@ -3711,20 +4027,28 @@ function drawRadar() {
   const fib4 = calcFIB4(getAge(), labVal('ast_v'), labVal('plaq'), labVal('alt_v'));
   const au = labVal('au');
 
-  const norm = (val, min, max, invert) => {
-    if (!val) return 50;
-    const pct = Math.max(0, Math.min(100, ((val - min) / (max - min)) * 100));
-    return Math.round(invert ? 100 - pct : pct);
+  // Matriz calibrada por âncoras clínicas: valor na meta ≈ 100 pts, valor crítico ≈ 0 pts.
+  // sc(val, best, worst): funciona nos dois sentidos (best pode ser > ou < worst). null se não medido.
+  const sc = (val, best, worst) => {
+    if (val == null || val === 0 || isNaN(val)) return null;
+    const s = (val - worst) / (best - worst);
+    return Math.round(Math.max(0, Math.min(1, s)) * 100);
   };
-
-  const scores = [
-    norm(tfge, 0, 120, false), norm(pas, 80, 200, true),
-    norm(hba1c, 4, 12, true), norm(ldl, 0, 200, true),
-    norm(imc, 15, 45, true), norm(rac, 0, 500, true),
-    norm(fib4, 0, 4, true), norm(au, 0, 12, true)
+  const globalOf = arr => { const p = arr.filter(s => s != null); return p.length ? Math.round(p.reduce((a,b)=>a+b,0)/p.length) : null; };
+  const rawScores = [
+    sc(tfge, 90, 15),    // Renal (maior melhor)
+    sc(pas, 110, 180),   // PA (menor melhor)
+    sc(hba1c, 5.5, 10),  // Glicemia
+    sc(ldl, 55, 190),    // Lipídios
+    sc(imc, 22, 40),     // Peso
+    sc(rac, 10, 300),    // Albuminúria
+    sc(fib4, 1.0, 3.25), // Fígado
+    sc(au, 5, 10)        // Ácido úrico
   ];
-  const globalScore = Math.round(scores.reduce((a,b)=>a+b,0) / scores.length);
-  const goals3m = [75, 75, 75, 70, 65, 75, 80, 75]; // 3-month targets
+  const scores = rawScores.map(s => s == null ? 50 : s);  // gráfico: ponto neutro onde faltar dado
+  const globalScore = globalOf(rawScores);                // NOTA: ignora indicadores não medidos
+  const measuredCount = rawScores.filter(s => s != null).length;
+  const goals3m = [80, 85, 85, 80, 80, 85, 85, 80]; // 3-month targets
   const labels = ['Renal', 'PA', 'Glicemia', 'Lipídios', 'Peso', 'Albumin.', 'Fígado', 'Úrico'];
 
   function buildRadarConfig(data, goalData, showGoal) {
@@ -3755,23 +4079,26 @@ function drawRadar() {
     const prevRac = getV('rac_first');
     const prevFib4 = calcFIB4(getAge(), getV('ast_first'), getV('plaq_first'), getV('alt_first'));
     const prevAu = getV('au_first');
-    const prevScores = [
-      norm(prevTfge,0,120,false), norm(prevPas,80,200,true),
-      norm(prevHba1c,4,12,true), norm(prevLdl,0,200,true),
-      norm(prevImc,15,45,true), norm(prevRac,0,500,true),
-      norm(prevFib4,0,4,true), norm(prevAu,0,12,true)
+    const prevRaw = [
+      sc(prevTfge, 90, 15), sc(prevPas, 110, 180),
+      sc(prevHba1c, 5.5, 10), sc(prevLdl, 55, 190),
+      sc(prevImc, 22, 40), sc(prevRac, 10, 300),
+      sc(prevFib4, 1.0, 3.25), sc(prevAu, 5, 10)
     ];
-    const prevGlobal = Math.round(prevScores.reduce((a,b)=>a+b,0)/prevScores.length);
+    const prevScores = prevRaw.map(s => s == null ? 50 : s);
+    const prevGlobal = globalOf(prevRaw);
 
     const ctxPrev = document.getElementById('healthRadarPrev');
     const ctxCurr = document.getElementById('healthRadarCurrent');
     if (ctxPrev) window.radarChartPrev = new Chart(ctxPrev, buildRadarConfig(prevScores, goals3m, true));
     if (ctxCurr) window.radarChartCurrent = new Chart(ctxCurr, buildRadarConfig(scores, goals3m, true));
 
-    const diff = globalScore - prevGlobal;
+    const hasDiff = (globalScore != null && prevGlobal != null);
+    const diff = hasDiff ? globalScore - prevGlobal : 0;
     const diffColor = diff > 0 ? 'var(--success)' : diff < 0 ? 'var(--danger)' : 'var(--text)';
     const diffArrow = diff > 0 ? '&#x2191;' : diff < 0 ? '&#x2193;' : '&#x2194;';
-    document.getElementById('radarGlobalScoreDual').innerHTML = '<div style="display:flex;justify-content:center;gap:40px;align-items:center;"><div><div style="font-size:11px;color:#6B7A8D;">Anterior</div><div style="font-size:28px;font-weight:800;color:#999;">'+prevGlobal+'</div></div><div style="font-size:24px;color:'+diffColor+';font-weight:800;">'+diffArrow+' '+(diff>0?'+':'')+diff+'</div><div><div style="font-size:11px;color:#6B7A8D;">Atual</div><div style="font-size:28px;font-weight:800;color:var(--teal);">'+globalScore+'</div></div></div>';
+    const diffHtml = hasDiff ? ('<div style="font-size:24px;color:'+diffColor+';font-weight:800;">'+diffArrow+' '+(diff>0?'+':'')+diff+'</div>') : '<div style="font-size:18px;color:#999;">—</div>';
+    document.getElementById('radarGlobalScoreDual').innerHTML = '<div style="display:flex;justify-content:center;gap:40px;align-items:center;"><div><div style="font-size:11px;color:#6B7A8D;">Anterior</div><div style="font-size:28px;font-weight:800;color:#999;">'+(prevGlobal==null?'—':prevGlobal)+'</div></div>'+diffHtml+'<div><div style="font-size:11px;color:#6B7A8D;">Atual</div><div style="font-size:28px;font-weight:800;color:var(--teal);">'+(globalScore==null?'—':globalScore)+'</div></div></div>';
   } else {
     // Single mode
     document.getElementById('radarSingle').style.display = 'grid';
@@ -3784,8 +4111,8 @@ function drawRadar() {
 
     const scoreEl = document.getElementById('radarGlobalScore');
     if (scoreEl) {
-      const scoreColor = globalScore >= 70 ? 'var(--success)' : globalScore >= 50 ? 'var(--warning)' : 'var(--danger)';
-      scoreEl.innerHTML = '<div style="font-size:42px;font-weight:800;color:'+scoreColor+';line-height:1;">'+globalScore+'</div><div style="font-size:11px;color:#6B7A8D;margin-top:4px;">Score Global /100</div><div style="font-size:10px;color:#999;margin-top:8px;">Meta 3m: '+Math.round(goals3m.reduce((a,b)=>a+b,0)/goals3m.length)+'</div>';
+      const scoreColor = globalScore == null ? '#999' : globalScore >= 70 ? 'var(--success)' : globalScore >= 50 ? 'var(--warning)' : 'var(--danger)';
+      scoreEl.innerHTML = '<div style="font-size:42px;font-weight:800;color:'+scoreColor+';line-height:1;">'+(globalScore==null?'—':globalScore)+'</div><div style="font-size:11px;color:#6B7A8D;margin-top:4px;">Score Global /100</div><div style="font-size:10px;color:#999;margin-top:8px;">'+measuredCount+'/8 indicadores medidos</div>';
     }
   }
 }
@@ -4202,13 +4529,93 @@ function condicoesAtivasCKM() {
   const tfge = calcTFGe(labVal('cr'), age, !male);
   const stage = classifyTFGe(tfge).stage;
   const temDRC = !!document.getElementById('hpp_drc')?.checked;
+  const sel = window._selectedProtocols instanceof Set ? window._selectedProtocols : new Set();
   return Object.entries(PB.conditions).filter(([k, c]) => {
+    if (sel.has(k)) return true; // protocolo selecionado explicitamente pelo médico
     const dx = c.diagnostico;
     if (dx && dx.indexOf('hpp_') === 0) return !!document.getElementById(dx)?.checked;
     if (k === 'sindrome_metabolica') return (typeof calcMS === 'function') && calcMS().present;
     if (k === 'dmo_drc_anemia') return temDRC && /G3|G4|G5/.test(stage || '');
     return false;
   });
+}
+
+// ============================================================
+// SELETOR DE PROTOCOLOS (linha de cuidado) — escolha explícita do médico
+// ============================================================
+window._selectedProtocols = window._selectedProtocols || new Set();
+
+function _condCheckedByHpp(c) {
+  const dx = c && c.diagnostico;
+  return !!(dx && dx.indexOf('hpp_') === 0 && document.getElementById(dx)?.checked);
+}
+
+function renderProtocoloSelector() {
+  const PB = window.PROTOCOLOS_CKM;
+  const cont = document.getElementById('protocoloSelector');
+  if (!PB || !PB.conditions || !cont) return;
+  const sel = window._selectedProtocols;
+  // Esconde itens que são derivados/automáticos (não fazem sentido como escolha manual)
+  const hide = new Set(['sindrome_metabolica', 'dmo_drc_anemia', 'rastreio_cancer', 'vacinacao', 'risco_cv']);
+  cont.innerHTML = Object.entries(PB.conditions).filter(([k]) => !hide.has(k)).map(([k, c]) => {
+    const on = sel.has(k) || _condCheckedByHpp(c);
+    return '<button type="button" class="proto-chip' + (on ? ' on' : '') + '" onclick="toggleProtocolo(\'' + k + '\')">' + (c.label || k) + '</button>';
+  }).join('');
+  renderPeriodizacaoExames();
+}
+
+function toggleProtocolo(k) {
+  const PB = window.PROTOCOLOS_CKM; if (!PB) return;
+  const c = PB.conditions[k];
+  const sel = window._selectedProtocols;
+  const willOn = !(sel.has(k) || _condCheckedByHpp(c));
+  if (willOn) sel.add(k); else sel.delete(k);
+  // Mantém a anamnese coerente: sincroniza o checkbox de antecedente correspondente
+  if (c && c.diagnostico && c.diagnostico.indexOf('hpp_') === 0) {
+    const cb = document.getElementById(c.diagnostico);
+    if (cb) cb.checked = willOn;
+  }
+  renderProtocoloSelector();
+  if (typeof renderPainelProtocolos === 'function') renderPainelProtocolos();
+  if (typeof recalcAll === 'function') recalcAll();
+}
+
+function renderPeriodizacaoExames() {
+  const out = document.getElementById('periodizacaoExames');
+  if (!out) return;
+  const ativas = (typeof condicoesAtivasCKM === 'function') ? condicoesAtivasCKM() : [];
+  if (!ativas.length) { out.innerHTML = '<p style="color:#999;font-size:12px;">Selecione um protocolo acima para gerar a solicitação de exames com a periodicidade correta.</p>'; return; }
+  let html = '';
+  ativas.forEach(([k, c]) => {
+    const labs = (c.labs || []);
+    const comp = (c.exames_complementares || []).concat(c.imagem || []);
+    if (!labs.length && !comp.length) return;
+    html += '<div style="margin-bottom:12px;padding:10px 12px;background:#F8F8F5;border-radius:8px;border-left:3px solid var(--teal);">';
+    html += '<div style="font-weight:700;color:var(--navy);font-size:13px;margin-bottom:4px;">' + (c.label || k) + '</div>';
+    labs.forEach(l => { html += '<div style="font-size:12px;padding:2px 0;">• <b>' + (l.nome || '') + '</b>' + (l.cadencia ? ' <span style="color:#6B7A8D;">— ' + l.cadencia + '</span>' : '') + '</div>'; });
+    comp.forEach(l => { const nm = l.nome || l; html += '<div style="font-size:12px;padding:2px 0;color:#4A5E6F;">• ' + nm + (l.cadencia ? ' <span style="color:#6B7A8D;">— ' + l.cadencia + '</span>' : '') + '</div>'; });
+    html += '</div>';
+  });
+  html += '<button class="btn btn-primary btn-sm" onclick="adicionarExamesProtocolo()">&#x2795; Adicionar estes exames ao pedido</button>';
+  out.innerHTML = html;
+}
+
+function adicionarExamesProtocolo() {
+  if (typeof examPrescriptionList === 'undefined') return;
+  const ativas = (typeof condicoesAtivasCKM === 'function') ? condicoesAtivasCKM() : [];
+  const consultaNum = parseInt(document.getElementById('examConsultaNum')?.value) || 1;
+  let added = 0;
+  ativas.forEach(([k, c]) => {
+    (c.labs || []).concat(c.exames_complementares || [], c.imagem || []).forEach(l => {
+      const name = l.nome || l; if (!name) return;
+      if (examPrescriptionList.find(e => e.name === name && e.consultaNum === consultaNum)) return;
+      const ed = (typeof EXAMS_DB !== 'undefined') ? EXAMS_DB.find(e => e.name.toLowerCase() === String(name).toLowerCase()) : null;
+      examPrescriptionList.push({ name: name, type: ed ? ed.type : (l.type || 'sangue'), category: ed ? ed.category : ('Protocolo · ' + (c.label || k)), consultaNum: consultaNum });
+      added++;
+    });
+  });
+  if (typeof renderExams === 'function') renderExams();
+  if (typeof showToast === 'function') showToast(added + ' exame(s) adicionados ao pedido a partir do protocolo.');
 }
 
 function montarProtocoloDaBase() {
@@ -4398,8 +4805,9 @@ function autoPrescribe() {
   if (au && au > 8) add('Alopurinol','100mg','1x/dia (titular para < 6)','Ácido úrico > 8 mg/dL');
   // GI protection
   if (suggestions.length >= 4) add('Pantoprazol','40mg','1x/dia (jejum)','Gastroproteção — polifarmácia');
-  // AAS se risco muito alto
-  if (ascvd && ascvd > 20) add('AAS','100mg','1x/dia','Prevenção primária — ASCVD > 20%');
+  // NOTA: AAS NÃO é auto-prescrito. Antiagregante em prevenção primária é individualizado
+  // (ACC/AHA 2019; USPSTF 2022 — não recomendado de rotina, sobretudo ≥60a por risco de sangramento).
+  // Em prevenção secundária (DCV estabelecida), o médico adiciona manualmente.
   // Obesidade
   if (hasObes && imc > 30 && !suggestions.find(s=>s.name.includes('Semaglutida') || s.name.includes('Tirzepatida'))) {
     add('Tirzepatida','5mg','1x/semana',classifyIMC(imc).label+' — perda ponderal + controle metabólico');
@@ -4700,10 +5108,15 @@ function autoRecomendacao() {
 
 function removeSupp(idx) { supplementList.splice(idx, 1); renderSupplements(); }
 function addCustomSupplement() {
-  const name = prompt('Nome do suplemento:');
+  const cat = (typeof MEDS_DB !== 'undefined') ? MEDS_DB.filter(m => m.category === 'Suplemento') : [];
+  const nomes = cat.map(s => s.name).join(', ');
+  const name = prompt('Nome do suplemento:' + (nomes ? ('\n\nDisponíveis no catálogo:\n' + nomes) : ''));
   if (!name) return;
-  const dose = prompt('Dose e posologia:') || '';
-  supplementList.push({name, dose, reason:'Adicionado manualmente'});
+  const norm = s => String(s).toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').trim();
+  const match = cat.find(s => norm(s.name) === norm(name)) || cat.find(s => norm(s.name).includes(norm(name)));
+  const sugestao = match ? ((match.concentrations[0] && match.concentrations[0] !== '—' ? match.concentrations[0] + ' — ' : '') + match.defaultPosology) : '';
+  const dose = prompt('Dose e posologia:', sugestao) || '';
+  supplementList.push({ name: match ? match.name : name, dose, reason: 'Adicionado manualmente' });
   renderSupplements();
 }
 
@@ -4918,6 +5331,42 @@ function updateAllDocs() {
   const esp2 = document.getElementById('doc-rxesp-patient2'); if(esp2) esp2.textContent = patientName;
 }
 
+// Normaliza telefone BR para o formato do wa.me (55 + DDD + número)
+function _waPhoneBR(phone) {
+  let d = String(phone || '').replace(/\D/g, '');
+  if (!d) return '';
+  if (d.length === 10 || d.length === 11) d = '55' + d;        // DDD + número → prefixa país
+  else if (d.length === 12 || d.length === 13) { /* já tem 55 */ }
+  return d;
+}
+
+// Envia o documento atualmente aberto na aba Documentos ao WhatsApp do paciente (como texto).
+function enviarDocAtivoWhatsApp() {
+  updateAllDocs();
+  const sect = document.querySelector('.doc-section.active');
+  if (!sect) { alert('Abra um documento primeiro.'); return; }
+  const preview = sect.querySelector('.doc-preview') || sect;
+  const clone = preview.cloneNode(true);
+  ['.doc-header', '.doc-footer'].forEach(s => { const e = clone.querySelector(s); if (e) e.remove(); });
+  clone.querySelectorAll('button').forEach(b => b.remove());
+  let text = (clone.innerText || '').replace(/[ \t]+\n/g, '\n').replace(/\n{3,}/g, '\n\n').trim();
+  if (!text) { alert('Este documento está vazio.'); return; }
+  const nome = (document.getElementById('patientName')?.textContent || '').trim();
+  const saud = nome ? ('Olá ' + nome.split(' ')[0] + ', ') : 'Olá, ';
+  let msg = saud + 'segue o documento da sua consulta na APEX Health:\n\n' + text + '\n\n— Dr. Bruno Biluca · APEX Health';
+  if (msg.length > 1900) msg = msg.slice(0, 1890) + '…';
+  const phone = _waPhoneBR(window._apexPatientPhone);
+  const url = 'https://wa.me/' + phone + '?text=' + encodeURIComponent(msg);
+  window.open(url, '_blank');
+}
+
+// Envia o RESUMO do paciente por WhatsApp (a partir do Resumo, sem trocar de aba)
+function enviarResumoWhatsApp() {
+  if (typeof showDoc === 'function') showDoc('resumo');
+  if (typeof updateAllDocs === 'function') updateAllDocs();
+  if (typeof enviarDocAtivoWhatsApp === 'function') enviarDocAtivoWhatsApp();
+}
+
 function printDoc(id) {
   const el = document.getElementById(id);
   // Extrair header, footer e conteúdo separadamente
@@ -5077,20 +5526,20 @@ function generateResumo() {
   const clRac = classifyRAC(rac);
   const clFib4 = classifyFIB4(fib4);
 
-  // Radar normalization
-  const norm = (val, min, max, invert) => {
-    if (!val) return 50;
-    const pct = Math.max(0, Math.min(100, ((val - min) / (max - min)) * 100));
-    return Math.round(invert ? 100 - pct : pct);
+  // Radar — matriz calibrada por âncoras clínicas; ignora indicadores não medidos na nota.
+  const sc = (val, best, worst) => {
+    if (val == null || val === 0 || isNaN(val)) return null;
+    const s = (val - worst) / (best - worst);
+    return Math.round(Math.max(0, Math.min(1, s)) * 100);
   };
-  const scores = [
-    norm(tfge,0,120,false), norm(pas,80,200,true),
-    norm(hba1c,4,12,true), norm(ldl,0,200,true),
-    norm(imc,15,45,true), norm(rac,0,500,true),
-    norm(fib4,0,4,true), norm(au,0,12,true)
+  const rawScores = [
+    sc(tfge, 90, 15), sc(pas, 110, 180), sc(hba1c, 5.5, 10), sc(ldl, 55, 190),
+    sc(imc, 22, 40), sc(rac, 10, 300), sc(fib4, 1.0, 3.25), sc(au, 5, 10)
   ];
-  const globalScore = Math.round(scores.reduce((a,b)=>a+b,0)/scores.length);
-  const goals3m = [75,75,75,70,65,75,80,75];
+  const scores = rawScores.map(s => s == null ? 50 : s);
+  const _present = rawScores.filter(s => s != null);
+  const globalScore = _present.length ? Math.round(_present.reduce((a,b)=>a+b,0)/_present.length) : null;
+  const goals3m = [80,85,85,80,80,85,85,80];
   const radarLabels = ['Renal','PA','Glicemia','Lipídios','Peso','Albumin.','Fígado','Úrico'];
 
   // Build SVG Radar
@@ -5141,8 +5590,8 @@ function generateResumo() {
       svg += '<text x="'+lx+'" y="'+(ly+4)+'" text-anchor="'+anchor+'" fill="#4A5E6F" font-size="9" font-family="Inter,sans-serif" font-weight="600">'+lbl+'</text>';
     });
     // Global score center
-    const scoreColor = globalScore>=70 ? '#2E7D32' : globalScore>=50 ? '#F5A623' : '#C62828';
-    svg += '<text x="'+cx+'" y="'+(cy-4)+'" text-anchor="middle" fill="'+scoreColor+'" font-size="28" font-family="Inter,sans-serif" font-weight="800">'+globalScore+'</text>';
+    const scoreColor = globalScore==null ? '#999' : globalScore>=70 ? '#2E7D32' : globalScore>=50 ? '#F5A623' : '#C62828';
+    svg += '<text x="'+cx+'" y="'+(cy-4)+'" text-anchor="middle" fill="'+scoreColor+'" font-size="28" font-family="Inter,sans-serif" font-weight="800">'+(globalScore==null?'—':globalScore)+'</text>';
     svg += '<text x="'+cx+'" y="'+(cy+12)+'" text-anchor="middle" fill="#6B7A8D" font-size="8" font-family="Inter,sans-serif" font-weight="500">SCORE GLOBAL</text>';
     svg += '</svg>';
     return svg;
@@ -5462,7 +5911,10 @@ function saveConsulta() {
     notes: document.getElementById('exames_outros')?.value || document.getElementById('exames_outros_first')?.value || ''
   };
   const history = JSON.parse(localStorage.getItem(_consKey()) || '[]');
-  history.unshift(historyEntry);
+  /* Não duplicar: se já há consulta de hoje com mesmo tipo, atualiza em vez de empilhar */
+  const dupIdx = history.findIndex(h => h.date === historyEntry.date && h.type === historyEntry.type);
+  if (dupIdx >= 0) history[dupIdx] = historyEntry;
+  else history.unshift(historyEntry);
   if (history.length > 30) history.pop();
   localStorage.setItem(_consKey(), JSON.stringify(history));
   if (typeof loadConsultaHistory === 'function') loadConsultaHistory();

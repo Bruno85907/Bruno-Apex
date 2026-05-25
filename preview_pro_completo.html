@@ -170,6 +170,16 @@ body{font-family:var(--font-sans);background:var(--navy-deep);color:var(--text);
 .topbar-bc-active{color:var(--navy);font-weight:600;cursor:default;}
 .topbar-ext{margin-left:auto;display:flex;align-items:center;gap:6px;font-size:12px;font-weight:600;color:var(--teal);text-decoration:none;border:1px solid var(--gold-border);border-radius:999px;padding:6px 14px;transition:all .15s;}
 .topbar-ext:hover{background:var(--gold-dim);border-color:var(--gold);color:var(--navy);}
+.pac-ctx{display:none;align-items:center;gap:10px;margin-left:24px;padding:5px 6px 5px 5px;border:1px solid var(--gold-border);border-radius:999px;background:var(--bg-card);}
+.pac-ctx.active{display:flex;}
+.pac-ctx-av{width:26px;height:26px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;background:var(--navy);color:#fff;font-size:11px;font-weight:700;letter-spacing:.3px;}
+.pac-ctx-info{display:flex;flex-direction:column;line-height:1.15;}
+.pac-ctx-name{font-size:12.5px;font-weight:700;color:var(--navy);max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.pac-ctx-meta{font-size:10.5px;color:var(--text-3);}
+.pac-ctx-swap{border:none;background:none;cursor:pointer;color:var(--teal);font-size:11px;font-weight:600;font-family:inherit;padding:4px 8px;border-radius:999px;transition:all .15s;}
+.pac-ctx-swap:hover{background:var(--gold-dim);color:var(--navy);}
+.pro-toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(20px);z-index:2000;background:var(--navy);color:#fff;font-size:13px;font-weight:600;padding:12px 20px;border-radius:10px;box-shadow:0 8px 28px rgba(18,29,51,.32);opacity:0;pointer-events:none;transition:all .25s;}
+.pro-toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
 
 .content-page{display:none;padding:40px;animation:fadeIn .35s ease;position:relative;z-index:1;}
 .content-page.active{display:block;}
@@ -853,7 +863,6 @@ body.is-admin .ws-switch{display:flex;}
         </div>
         <div class="sb-children">
           <div class="sb-child" data-page="lista-pacientes" onclick="navTo('lista-pacientes')"><span class="sb-child-dot"></span>Lista de Pacientes</div>
-          <div class="sb-child" data-page="prontuario" onclick="navTo('prontuario')"><span class="sb-child-dot"></span>Prontuário CKM</div>
         </div>
       </div>
 
@@ -900,7 +909,11 @@ body.is-admin .ws-switch{display:flex;}
     <div class="topbar">
       <button class="topbar-back" id="topbar-back" onclick="navBack()" title="Voltar">&#8249;</button>
       <nav class="topbar-breadcrumb" id="topbar-bc"><span class="topbar-bc-active">Dashboard</span></nav>
-      <a class="topbar-ext" href="index.html#conteudo" target="_blank" rel="noopener" title="Abrir boletins e conteúdo na plataforma APEX">Boletim &amp; Conteúdo &#8599;</a>
+      <div class="pac-ctx" id="pac-ctx">
+        <div class="pac-ctx-av" id="pac-ctx-av"></div>
+        <div class="pac-ctx-info"><span class="pac-ctx-name" id="pac-ctx-name"></span><span class="pac-ctx-meta" id="pac-ctx-meta"></span></div>
+        <button class="pac-ctx-swap" onclick="navTo('lista-pacientes')" title="Trocar de paciente">Trocar</button>
+      </div>
     </div>
 
     <!-- PAGE: DASHBOARD -->
@@ -2007,9 +2020,21 @@ body.is-admin .ws-switch{display:flex;}
     <div class="content-page" id="page-prontuario">
       <div style="display:flex;align-items:center;gap:14px;padding:8px 4px 12px;flex-wrap:wrap;">
         <button onclick="salvarContratoApp()" style="background:linear-gradient(135deg,var(--gold),var(--gold-light,#E0C078));color:var(--navy-deep,#121D33);border:none;border-radius:8px;padding:10px 18px;font-size:13px;font-weight:700;letter-spacing:.3px;cursor:pointer;box-shadow:0 4px 14px rgba(212,168,83,.25);">↗ Salvar no app do paciente</button>
+        <button onclick="abrirRelatorioConsultas()" style="background:var(--bg-card,#fff);color:var(--navy);border:1px solid var(--border);border-radius:8px;padding:10px 16px;font-size:13px;font-weight:600;cursor:pointer;">&#x1F4C5; Consultas anteriores</button>
         <span id="contrato-status" style="font-size:12px;color:var(--text-2,#8A93A6);"></span>
       </div>
       <iframe id="prontuario-iframe" style="width:100%;border:none;min-height:calc(100vh - 110px);border-radius:8px;" src="about:blank"></iframe>
+    </div>
+
+    <!-- MODAL: Relatório de consultas anteriores (Supabase) -->
+    <div id="modal-relatorio" style="display:none;position:fixed;inset:0;z-index:1500;background:rgba(18,29,51,.5);align-items:center;justify-content:center;">
+      <div style="background:#fff;border-radius:14px;width:min(720px,94vw);max-height:86vh;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 24px 60px rgba(0,0,0,.3);">
+        <div style="display:flex;align-items:center;justify-content:space-between;padding:18px 22px;border-bottom:1px solid var(--border);">
+          <div><div style="font-size:16px;font-weight:700;color:var(--navy);">Consultas anteriores</div><div id="rel-pac-nome" style="font-size:12px;color:var(--text-3);"></div></div>
+          <button onclick="fecharRelatorioConsultas()" style="background:none;border:none;font-size:22px;cursor:pointer;color:var(--text-3);line-height:1;">&times;</button>
+        </div>
+        <div id="rel-body" style="padding:8px 14px 18px;overflow-y:auto;"></div>
+      </div>
     </div>
 
     <!-- PAGE: LISTA DE PACIENTES -->
@@ -2221,6 +2246,23 @@ body.is-admin .ws-switch{display:flex;}
           <label>Condições principais</label>
           <input type="text" id="np-condicoes" placeholder="HAS, DM2, DRC... (separado por vírgula)">
         </div>
+        <div style="display:flex;gap:14px;flex-wrap:wrap;align-items:flex-end;">
+          <div class="modal-field" style="flex:1;min-width:160px;">
+            <label>Gravidade / classificação</label>
+            <select id="np-gravidade">
+              <option value="">— selecionar —</option>
+              <option value="estavel">Estável</option>
+              <option value="atencao">Atenção</option>
+              <option value="grave">Grave</option>
+            </select>
+          </div>
+          <div class="modal-field" style="display:flex;flex-direction:column;align-items:center;gap:6px;">
+            <label style="align-self:flex-start;">Foto do paciente</label>
+            <img id="np-foto-preview" alt="" style="width:64px;height:64px;border-radius:50%;object-fit:cover;border:1px solid var(--border);background:var(--bg);display:none;">
+            <input type="file" id="np-foto-input" accept="image/*" capture="user" style="display:none;" onchange="onNovoPacienteFoto(this)">
+            <button type="button" onclick="document.getElementById('np-foto-input').click()" style="background:var(--bg-card,#fff);border:1px solid var(--border);border-radius:8px;padding:7px 12px;font-size:12px;font-weight:600;cursor:pointer;color:var(--navy);">&#x1F4F7; Tirar / escolher foto</button>
+          </div>
+        </div>
 
         <div id="np-error" style="font-size:11px;color:var(--red);min-height:16px;margin-top:4px;"></div>
 
@@ -2318,6 +2360,7 @@ async function doLogout() {
   sessionStorage.removeItem('apex_access_token');
   currentUser = null;
   currentDoctor = null;
+  clearPatientContext();
 
   var loginScreen = document.getElementById('login-screen');
   document.getElementById('app-shell').classList.remove('visible');
@@ -2395,7 +2438,7 @@ var NAV = {
   'indicadores-qualidade': { label:'Indicadores',      parent:'dashboard',     sidebar:'indicadores-qualidade', bc:['Dashboard','Qualidade Fenix','Indicadores'] },
   'agenda':              { label:'Minha Agenda',       parent:'dashboard',     sidebar:'agenda',             bc:['Dashboard','Minha Agenda'] },
   'planejamento':        { label:'Plan. Estratégico',  parent:'dashboard',     sidebar:'planejamento',       bc:['Dashboard','Gestão','Plan. Estratégico'] },
-  'prontuario':          { label:'Prontuário CKM',     parent:'dashboard',     sidebar:'prontuario',         bc:['Dashboard','Pacientes','Prontuário CKM'] },
+  'prontuario':          { label:'Prontuário CKM',     parent:'lista-pacientes', sidebar:'lista-pacientes',   bc:['Pacientes','Prontuário CKM'] },
   'lista-pacientes':     { label:'Lista de Pacientes', parent:'dashboard',     sidebar:'lista-pacientes',    bc:['Dashboard','Pacientes','Lista de Pacientes'] }
 };
 
@@ -2439,6 +2482,11 @@ function toggleWorkspace() {
 function navTo(pageId) {
   /* Bloquear acesso a páginas Fenix p/ quem não é fenix_admin */
   if (FENIX_PAGES.indexOf(pageId) !== -1 && !isFenixAdmin()) { pageId = 'dashboard'; }
+  /* Prontuário só abre com paciente em contexto */
+  if (pageId === 'prontuario' && !currentPatientId) {
+    showProToast('Selecione um paciente para abrir o prontuário.');
+    pageId = 'lista-pacientes';
+  }
   var info = NAV[pageId]; if (!info) return;
 
   document.querySelectorAll('.content-page').forEach(function(p){ p.classList.remove('active'); });
@@ -2488,6 +2536,10 @@ function navTo(pageId) {
   if (pageId === 'trs-agudo-servico') document.getElementById('agudo-iframe').src = 'painel_lancamento_mensal.html?embed=1';
   if (pageId === 'indicadores-qualidade') document.getElementById('indicadores-qualidade-iframe').src = 'fenix_qualidade.html?embed=1';
   if (pageId === 'prontuario') {
+    /* Breadcrumb com o nome do paciente em contexto */
+    var pacCtx = allPacientes.find(function(p) { return p.id === currentPatientId; });
+    var bcActive = bc.querySelector('.topbar-bc-active');
+    if (pacCtx && bcActive) bcActive.textContent = pacCtx.name;
     var iframe = document.getElementById('prontuario-iframe');
     if (iframe.src === 'about:blank' || !iframe.src.includes('prontuario_v2_test')) {
       iframe.src = 'prontuario_v2_test.html?embed=1&t=' + Date.now();
@@ -4317,6 +4369,40 @@ function fillProntuario(dados) {
 var currentPatientId = null;
 var currentProntuarioId = null;
 
+/* Chip de paciente em contexto no topbar da casca */
+function setPatientContext(pac) {
+  var box = document.getElementById('pac-ctx');
+  if (!box || !pac) return;
+  var idade = calcIdade(pac.date_of_birth);
+  var sexLabel = pac.sex === 'M' ? 'Masculino' : pac.sex === 'F' ? 'Feminino' : '';
+  document.getElementById('pac-ctx-av').textContent = getIniciais(pac.name);
+  document.getElementById('pac-ctx-name').textContent = pac.name;
+  document.getElementById('pac-ctx-meta').textContent = [idade ? idade + ' anos' : '', sexLabel].filter(Boolean).join(' · ');
+  box.classList.add('active');
+}
+function clearPatientContext() {
+  currentPatientId = null;
+  currentProntuarioId = null;
+  var box = document.getElementById('pac-ctx');
+  if (box) box.classList.remove('active');
+}
+
+/* Toast leve da casca */
+var _proToastTimer = null;
+function showProToast(msg) {
+  var t = document.getElementById('pro-toast');
+  if (!t) {
+    t = document.createElement('div');
+    t.id = 'pro-toast';
+    t.className = 'pro-toast';
+    document.body.appendChild(t);
+  }
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(_proToastTimer);
+  _proToastTimer = setTimeout(function(){ t.classList.remove('show'); }, 3200);
+}
+
 /* Enviar dados do paciente ao iframe do prontuário v2 */
 function sendPatientToIframe() {
   var iframe = document.getElementById('prontuario-iframe');
@@ -4330,6 +4416,17 @@ function sendPatientToIframe() {
     patientName: pac.name,
     sex: pac.sex,
     age: idade,
+    phone: pac.phone || '',
+    documento: pac.documento || '',
+    dob: pac.date_of_birth || '',
+    foto: pac.foto || '',
+    gravidade: pac.gravidade || '',
+    email: pac.email_personal || '',
+    city: pac.city || '',
+    endereco: pac.endereco || '',
+    acompanhante_nome: pac.acompanhante_nome || '',
+    acompanhante_telefone: pac.acompanhante_telefone || '',
+    conditions: pac.conditions || [],
     consultaNum: 1
   }, '*');
 }
@@ -4430,6 +4527,73 @@ async function listarProntuarios(patientId) {
 }
 
 /* ============================================================
+   RELATÓRIO DE CONSULTAS ANTERIORES (lê do Supabase, por data)
+   ============================================================ */
+function fecharRelatorioConsultas() { document.getElementById('modal-relatorio').style.display = 'none'; }
+
+async function abrirRelatorioConsultas() {
+  var modal = document.getElementById('modal-relatorio');
+  var body = document.getElementById('rel-body');
+  var nomeEl = document.getElementById('rel-pac-nome');
+  if (!currentDoctor) { alert('Faça login primeiro.'); return; }
+  if (!currentPatientId) { showProToast('Selecione um paciente primeiro.'); return; }
+  var pac = allPacientes.find(function(p){ return p.id === currentPatientId; });
+  if (nomeEl) nomeEl.textContent = pac ? pac.name : '';
+  modal.style.display = 'flex';
+  body.innerHTML = '<div style="text-align:center;padding:28px;color:var(--text-3);font-size:13px;">Carregando consultas…</div>';
+  var lista = await listarProntuarios(currentPatientId);
+  if (!lista.length) { body.innerHTML = '<div style="text-align:center;padding:28px;color:var(--text-3);font-size:13px;">Nenhuma consulta salva ainda para este paciente.</div>'; return; }
+  var tipoLabel = { primeira_consulta:'Primeira consulta', retorno:'Retorno' };
+  body.innerHTML = lista.map(function(c){
+    var dt = new Date(c.created_at);
+    var data = dt.toLocaleDateString('pt-BR') + ' · ' + dt.toLocaleTimeString('pt-BR', { hour:'2-digit', minute:'2-digit' });
+    var tipo = tipoLabel[c.tipo] || (c.tipo || 'Consulta');
+    var st = c.status === 'finalizado' ? '<span style="color:var(--green,#1E7E34);font-weight:600;">Finalizado</span>' : '<span style="color:var(--text-3);">' + (c.status||'rascunho') + '</span>';
+    return '<div style="display:flex;align-items:center;gap:12px;padding:12px 10px;border-bottom:1px solid var(--border);cursor:pointer;" onclick="verConsultaRelatorio(\'' + c.id + '\')">'
+      + '<div style="flex:1;"><div style="font-weight:600;color:var(--navy);font-size:13.5px;">' + data + '</div><div style="font-size:12px;color:var(--text-3);">' + tipo + ' · ' + st + '</div></div>'
+      + '<span style="color:var(--teal);font-size:12px;font-weight:600;">Ver relatório ›</span></div>';
+  }).join('');
+}
+
+async function verConsultaRelatorio(id) {
+  var body = document.getElementById('rel-body');
+  body.innerHTML = '<div style="text-align:center;padding:28px;color:var(--text-3);font-size:13px;">Carregando relatório…</div>';
+  var { data, error } = await supabase.from('prontuarios_ckm').select('*').eq('id', id).single();
+  if (error || !data) { body.innerHTML = '<div style="padding:20px;color:var(--red,#C62828);">Erro ao carregar a consulta.</div>'; return; }
+  var dt = new Date(data.created_at);
+  function sec(titulo, conteudo) {
+    if (!conteudo) return '';
+    return '<div style="margin-top:14px;"><div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--gold,#B8923C);margin-bottom:4px;">' + titulo + '</div><div style="font-size:12.5px;color:var(--text-1,#1E2D50);line-height:1.6;">' + conteudo + '</div></div>';
+  }
+  function fmtObj(o) {
+    if (!o) return '';
+    if (typeof o === 'string') return o;
+    try {
+      return Object.keys(o).map(function(k){
+        var v = o[k];
+        if (v == null || v === '') return '';
+        if (typeof v === 'object') v = Object.values(v).filter(Boolean).join(', ');
+        return '<b>' + k.replace(/_/g,' ') + ':</b> ' + v;
+      }).filter(Boolean).join(' · ');
+    } catch(e) { return ''; }
+  }
+  var c = data.contrato_app || {};
+  var risks = c.risks_classifications || data.ckm_staging || {};
+  var html = '<div style="padding:6px 6px 4px;">'
+    + '<button onclick="abrirRelatorioConsultas()" style="background:none;border:none;color:var(--teal);font-size:12px;font-weight:600;cursor:pointer;padding:0 0 8px;">‹ Voltar à lista</button>'
+    + '<div style="font-size:15px;font-weight:700;color:var(--navy);">' + dt.toLocaleDateString('pt-BR') + ' — ' + (data.tipo === 'primeira_consulta' ? 'Primeira consulta' : (data.tipo || 'Consulta')) + '</div>'
+    + sec('Classificações de risco', fmtObj(risks))
+    + sec('Cálculos', fmtObj(data.calculos))
+    + sec('Exames laboratoriais', fmtObj(data.exames_lab))
+    + sec('Prescrição', Array.isArray(data.prescricao) ? data.prescricao.map(function(p){ return (p.name||p.nome||'') + (p.concentration?' '+p.concentration:'') + (p.posology?' — '+p.posology:''); }).join('<br>') : fmtObj(data.prescricao))
+    + sec('Metas', fmtObj(data.metas))
+    + sec('Conduta', fmtObj(data.conduta))
+    + (data.notas ? sec('Notas', data.notas) : '')
+    + '</div>';
+  body.innerHTML = html;
+}
+
+/* ============================================================
    SALVAR CONTRATO v1 NO APP (prontuário iframe → prontuarios_ckm.contrato_app)
    ============================================================ */
 function _contratoStatus(t, c) {
@@ -4515,7 +4679,7 @@ var allPacientes = [];
 async function carregarListaPacientes() {
   if (!currentDoctor) return;
   var { data, error } = await supabase.from('patients')
-    .select('id, name, documento, email_personal, phone, date_of_birth, sex, city, endereco, acompanhante_nome, acompanhante_telefone, conditions, active, last_visit, created_at')
+    .select('id, name, documento, email_personal, phone, date_of_birth, sex, city, endereco, acompanhante_nome, acompanhante_telefone, conditions, gravidade, foto, active, last_visit, created_at')
     .eq('doctor_id', currentDoctor.id)
     .order('name', { ascending: true });
 
@@ -4624,7 +4788,33 @@ function fecharModalNovoPaciente() {
   document.getElementById('np-acomp-tel').value = '';
   document.getElementById('np-condicoes').value = '';
   document.getElementById('np-error').textContent = '';
+  document.getElementById('np-gravidade').value = '';
+  _npFoto = null;
+  var fp = document.getElementById('np-foto-preview'); if (fp) { fp.src = ''; fp.style.display = 'none'; }
+  var fi = document.getElementById('np-foto-input'); if (fi) fi.value = '';
   resetModalPaciente();
+}
+
+/* Foto do paciente: lê o arquivo, comprime para ~256px JPEG e guarda em base64 */
+var _npFoto = null;
+function onNovoPacienteFoto(input) {
+  var file = input.files && input.files[0];
+  if (!file) return;
+  var reader = new FileReader();
+  reader.onload = function(e) {
+    var img = new Image();
+    img.onload = function() {
+      var max = 256, scale = Math.min(1, max / Math.max(img.width, img.height));
+      var cw = Math.round(img.width * scale), ch = Math.round(img.height * scale);
+      var cv = document.createElement('canvas'); cv.width = cw; cv.height = ch;
+      cv.getContext('2d').drawImage(img, 0, 0, cw, ch);
+      _npFoto = cv.toDataURL('image/jpeg', 0.8);
+      var fp = document.getElementById('np-foto-preview');
+      if (fp) { fp.src = _npFoto; fp.style.display = 'block'; }
+    };
+    img.src = e.target.result;
+  };
+  reader.readAsDataURL(file);
 }
 
 /* Salvar novo paciente */
@@ -4662,6 +4852,8 @@ async function salvarNovoPaciente() {
         acompanhante_nome: document.getElementById('np-acomp-nome').value.trim() || null,
         acompanhante_telefone: document.getElementById('np-acomp-tel').value.trim() || null,
         conditions: condArray,
+        gravidade: document.getElementById('np-gravidade').value || null,
+        foto: _npFoto || null,
         active: true
       })
       .select()
@@ -4695,6 +4887,10 @@ function editarPaciente(patientId) {
   document.getElementById('np-acomp-nome').value = pac.acompanhante_nome || '';
   document.getElementById('np-acomp-tel').value = pac.acompanhante_telefone || '';
   document.getElementById('np-condicoes').value = (pac.conditions || []).join(', ');
+  document.getElementById('np-gravidade').value = pac.gravidade || '';
+  _npFoto = pac.foto || null;
+  var fp = document.getElementById('np-foto-preview');
+  if (fp) { if (_npFoto) { fp.src = _npFoto; fp.style.display = 'block'; } else { fp.src = ''; fp.style.display = 'none'; } }
   document.getElementById('np-error').textContent = '';
 
   var btn = document.getElementById('np-btn-save');
@@ -4739,7 +4935,9 @@ async function atualizarPaciente(patientId) {
         endereco: document.getElementById('np-endereco').value.trim() || null,
         acompanhante_nome: document.getElementById('np-acomp-nome').value.trim() || null,
         acompanhante_telefone: document.getElementById('np-acomp-tel').value.trim() || null,
-        conditions: condArray
+        conditions: condArray,
+        gravidade: document.getElementById('np-gravidade').value || null,
+        foto: _npFoto || null
       })
       .eq('id', patientId);
 
@@ -4789,6 +4987,7 @@ async function selecionarPaciente(patientId) {
 
   currentPatientId = patientId;
   currentProntuarioId = null;
+  setPatientContext(pac);
 
   /* Forçar reload do iframe para novo paciente */
   var iframe = document.getElementById('prontuario-iframe');
