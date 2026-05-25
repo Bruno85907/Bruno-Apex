@@ -4457,6 +4457,26 @@ function sendPatientToIframe() {
     conditions: pac.conditions || [],
     consultaNum: 1
   }, '*');
+
+  /* Buscar a última consulta salva e enviá-la (auto-preenche o "anterior" do Retorno) */
+  fetchPrevContrato(pac.id).then(function(contrato) {
+    if (contrato && iframe.contentWindow) {
+      iframe.contentWindow.postMessage({ type: 'apex-previous-consulta', contrato: contrato }, '*');
+    }
+  });
+}
+
+/* Último contrato_app salvo do paciente (consulta anterior, para comparação no Retorno) */
+async function fetchPrevContrato(patientId) {
+  if (!currentDoctor || !patientId) return null;
+  try {
+    var r = await supabase.from('prontuarios_ckm')
+      .select('contrato_app, created_at')
+      .eq('patient_id', patientId).eq('doctor_id', currentDoctor.id)
+      .not('contrato_app', 'is', null)
+      .order('created_at', { ascending: false }).limit(1).maybeSingle();
+    return (r.data && r.data.contrato_app) ? r.data.contrato_app : null;
+  } catch (e) { console.error('fetchPrevContrato:', e); return null; }
 }
 
 /* Salvar prontuário no Supabase */

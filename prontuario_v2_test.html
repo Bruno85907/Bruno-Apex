@@ -902,7 +902,12 @@ body {
   }
   /* Listen for patient data from parent (Pro) */
   window.addEventListener('message', function(e) {
-    if (!e.data || e.data.type !== 'apex-patient') return;
+    if (!e.data) return;
+    if (e.data.type === 'apex-previous-consulta') {
+      if (typeof applyPreviousConsulta === 'function') applyPreviousConsulta(e.data.contrato);
+      return;
+    }
+    if (e.data.type !== 'apex-patient') return;
     var d = e.data;
     var sexEl = document.getElementById('patientSex');
     var ageEl = document.getElementById('patientAge');
@@ -2768,8 +2773,8 @@ function renderResumo() {
   const bImc  = cmp ? _num(cmp.imc) : pImc;
   const bA1c  = cmp ? _num(cmp.hba1c) : pA1c;
   const bLdl  = cmp ? _num(cmp.ldl) : pLdl;
-  const bRac  = cmp ? null : pRac;
-  const bAu   = cmp ? null : pAu;
+  const bRac  = cmp ? (cmp.rac != null ? _num(cmp.rac) : null) : pRac;
+  const bAu   = cmp ? (cmp.au != null ? _num(cmp.au) : null) : pAu;
 
   // ── Tags topo ──
   const tags = [`<span class="p-pill stage">&#x1F9EC; CKM Estágio ${ckmStage}</span>`];
@@ -5276,6 +5281,10 @@ function generateAssessorCode() {
     alerts: { emergencia:['PA > 180/110 com sintomas','Dor torácica','Confusão mental','Glicemia < 50 ou > 400'], atencao:['PA > 160/100 persistente','Glicemia jejum > 200 por 3 dias','Edema novo','Ganho peso > 2kg/semana'] },
     next_consultation: { recommended_interval:'30 dias', exams_before: examPrescriptionList.filter(e=>e.consultaNum===(consultaNum+1)).map(e=>e.name) }
   };
+  // Snapshot bruto dos exames/vitais desta consulta — permite auto-preencher o "anterior" no próximo Retorno
+  var _snap = {};
+  _LAB_PAIRS.forEach(function(p){ var el = document.getElementById(p[0]); if (el && el.value !== '') _snap[p[0]] = el.value; });
+  json.labs_snapshot = _snap;
   document.getElementById('assessorJSON').textContent = JSON.stringify(json, null, 2);
   window._apexLastContract = json;
   showToast('Contrato JSON v1 gerado!');
@@ -5924,6 +5933,56 @@ function goalSummaryRow(label, atual, unit, target, achieved) {
 }
 
 // ============================================================
+// CONSULTA ANTERIOR (Supabase via Pro) — auto-preenche o "anterior" do Retorno
+// ============================================================
+// Pares [id da consulta ATUAL, id do campo "anterior" (_first)].
+// Exames com nome divergente em retorno: alt_v/ast_v/ca_lab/p_lab.
+const _LAB_PAIRS = [
+  ['cr','cr_first'],['ureia','ureia_first'],['k','k_first'],['na','na_first'],
+  ['bic','bic_first'],['hb','hb_first'],['glic','glic_first'],['hba1c','hba1c_first'],
+  ['ct','ct_first'],['ldl','ldl_first'],['hdl','hdl_first'],['tg','tg_first'],
+  ['alt_v','alt_first'],['ast_v','ast_first'],['plaq','plaq_first'],['au','au_first'],
+  ['ca_lab','ca_first'],['p_lab','p_first'],['pth','pth_first'],['vitd','vitd_first'],
+  ['ferr','ferr_first'],['pcr','pcr_first'],['rac','rac_first'],['alb','alb_first'],
+  ['pas','pas_first'],['pad','pad_first'],['fc','fc_first'],['peso','peso_first'],['altura','altura_first']
+];
+
+// Recebe o contrato_app da última consulta salva (vindo do Pro) e prepara a comparação.
+function applyPreviousConsulta(contrato) {
+  if (!contrato) return;
+  window._apexPrevContrato = contrato;
+  // 1) Auto-preenche os campos "anterior" (_first) vazios a partir do snapshot bruto
+  var snap = contrato.labs_snapshot || {};
+  _LAB_PAIRS.forEach(function(p){
+    var fEl = document.getElementById(p[1]);
+    if (fEl && (fEl.value === '' || fEl.value == null) && snap[p[0]] != null && snap[p[0]] !== '')
+      fEl.value = snap[p[0]];
+  });
+  // 2) Baseline de comparação do Resumo (deltas), independente do modo
+  var cl = contrato.clinical || {};
+  var rc = contrato.risks_classifications || {};
+  window._resumoCompare = {
+    date: (contrato.consultation && contrato.consultation.date) || String(contrato.generated_at || '').slice(0,10) || '',
+    type: 'Consulta anterior',
+    tfge: cl.tfge != null ? cl.tfge : (rc.kdigo && rc.kdigo.tfge) || null,
+    pa: cl.pa || null,
+    imc: cl.imc != null ? cl.imc : null,
+    hba1c: cl.hba1c != null ? cl.hba1c : null,
+    ldl: cl.ldl != null ? cl.ldl : null,
+    rac: (rc.kdigo && rc.kdigo.rac != null) ? rc.kdigo.rac : (snap.rac != null ? snap.rac : null),
+    au: (snap.au != null ? snap.au : null),
+    ckm: (rc.ckm && rc.ckm.stage != null) ? rc.ckm.stage : null,
+    diagnoses: (cl.diagnoses || []).join(', '),
+    fromServer: true
+  };
+  if (typeof autoCalcAntro === 'function') autoCalcAntro();
+  if (typeof recalcAll === 'function') recalcAll();
+  if (typeof renderResumo === 'function') renderResumo();
+  if (typeof loadConsultaHistory === 'function') loadConsultaHistory();
+  if (typeof showToast === 'function') showToast('Consulta anterior carregada do prontuário ✓');
+}
+
+// ============================================================
 // SAVE / LOAD
 // ============================================================
 function _consKey() { return 'apex_consultas_' + (window._apexPatientId || 'default'); }
@@ -6099,8 +6158,25 @@ function loadConsultaHistory() {
   const history = JSON.parse(localStorage.getItem(_consKey()) || '[]');
   const el = document.getElementById('consultaHistory');
   if (!el) return;
-  if (!history.length) { el.innerHTML = '<p style="color:#999;font-size:12px;text-align:center;margin:20px 0;">Nenhuma consulta anterior salva para este paciente</p>'; return; }
-  el.innerHTML = history.map((c, i) => `
+  // Card da consulta anterior vinda do prontuário (Supabase) — alimenta o auto-preenchimento do "anterior"
+  let serverCard = '';
+  const pc = window._apexPrevContrato;
+  if (pc) {
+    const cl = pc.clinical || {}, rc = pc.risks_classifications || {};
+    const dt = (pc.consultation && pc.consultation.date) || String(pc.generated_at || '').slice(0,10) || '';
+    const tfge = cl.tfge != null ? cl.tfge : (rc.kdigo && rc.kdigo.tfge);
+    serverCard = `
+      <div title="Carregada do prontuário — preenche os valores 'anterior' do Retorno" style="padding:12px;margin-bottom:8px;background:#F2F6FF;border-radius:var(--radius-sm);border-left:3px solid var(--navy);">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
+          <strong style="font-size:13px;color:var(--navy);">${dt || 'Consulta anterior'}</strong>
+          <span style="font-size:10px;background:var(--navy);color:#fff;padding:2px 8px;border-radius:10px;">&#x2601; Prontuário</span>
+        </div>
+        <div style="font-size:11px;color:#6B7A8D;"><strong>TFGe:</strong> ${tfge || '---'} | <strong>PA:</strong> ${cl.pa || '---'} | <strong>HbA1c:</strong> ${cl.hba1c || '---'} | <strong>IMC:</strong> ${cl.imc || '---'}${rc.ckm && rc.ckm.stage != null ? ' | <strong>CKM:</strong> '+rc.ckm.stage : ''}</div>
+        <div style="font-size:10.5px;color:#8A97A8;margin-top:5px;">Os campos &ldquo;anterior&rdquo; do Retorno foram preenchidos com esta consulta.</div>
+      </div>`;
+  }
+  if (!history.length) { el.innerHTML = serverCard || '<p style="color:#999;font-size:12px;text-align:center;margin:20px 0;">Nenhuma consulta anterior salva para este paciente</p>'; return; }
+  el.innerHTML = serverCard + history.map((c, i) => `
     <div onclick="loadConsulta(${i})" title="Clique para abrir o resumo" style="cursor:pointer;padding:12px;margin-bottom:8px;background:#f8f8f5;border-radius:var(--radius-sm);border-left:3px solid var(--teal);transition:background .15s;" onmouseover="this.style.background='#eef3f2'" onmouseout="this.style.background='#f8f8f5'">
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
         <strong style="font-size:13px;color:var(--navy);">${c.date || 'Data não registrada'} &#x203A;</strong>
