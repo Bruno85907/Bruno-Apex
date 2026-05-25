@@ -157,6 +157,13 @@ canvas{display:block;width:100%;}
 .apex-nav-space{flex:1;}
 .apex-nav-back{font-size:11px;font-weight:500;color:#777;letter-spacing:1px;text-decoration:none;transition:color .2s;}
 .apex-nav-back:hover{color:#B99454;}
+/* Cabeçalho do relatório (Fênix 30 anos) — visível também em embed */
+.fnx-header{display:flex;align-items:center;gap:24px;background:#fff;padding:18px 36px;border-bottom:1px solid #e8e6e1;}
+.fnx-logo{height:48px;width:auto;display:block;flex-shrink:0;}
+.fnx-htxt{border-left:2px solid #E8D5B0;padding-left:22px;}
+.fnx-htitle{font-size:18px;font-weight:700;color:#2a2a2a;letter-spacing:.01em;line-height:1.2;}
+.fnx-hsub{font-size:11.5px;color:#8a7a55;margin-top:4px;letter-spacing:.05em;text-transform:uppercase;}
+@media(max-width:640px){.fnx-header{padding:14px 18px;gap:14px;}.fnx-logo{height:38px;}.fnx-htxt{padding-left:14px;}.fnx-htitle{font-size:15px;}.fnx-hsub{font-size:10px;}}
 </style>
 <nav class="apex-nav">
   <a href="index.html" class="apex-nav-logo">APEX</a>
@@ -165,6 +172,15 @@ canvas{display:block;width:100%;}
   <div class="apex-nav-space"></div>
   <a href="javascript:history.back()" class="apex-nav-back">← Voltar</a>
 </nav>
+
+<!-- CABEÇALHO FÊNIX (logo 30 anos + título do relatório) -->
+<header class="fnx-header">
+  <img class="fnx-logo" src="landing-page/Logo-Fenix-30anos%20(1).png" alt="Fênix Nefrologia — 30 anos">
+  <div class="fnx-htxt">
+    <div class="fnx-htitle">Relatório de Qualidade Assistencial</div>
+    <div class="fnx-hsub">Terapia Renal Substitutiva — Crônico · Programa de Hemodiálise</div>
+  </div>
+</header>
 
 <!-- FILTRO DE UNIDADE -->
 <div style="background:#fff;border-bottom:1px solid #e8e6e1;padding:10px 36px;display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
@@ -182,6 +198,22 @@ canvas{display:block;width:100%;}
 /* Ocultar seções por unidade */
 .secao-rl, .secao-santos, .secao-tatuape, .secao-rede{transition:opacity .25s;}
 .secao-oculta{display:none !important;}
+/* Faixa-resumo executiva (visão de 5 segundos) */
+.fnx-exec{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;padding:18px 36px 2px;}
+.fnx-exec-card{background:#fff;border:1px solid #e8e6e1;border-radius:12px;padding:14px 16px;border-left:4px solid #BE9664;}
+.fnx-exec-card.ok{border-left-color:#2D6A4F;}
+.fnx-exec-card.bad{border-left-color:#E24B4A;}
+.fnx-exec-card .ec-lbl{font-size:10px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:#9a8c6f;}
+.fnx-exec-card .ec-val{font-size:26px;font-weight:800;color:#2a2a2a;line-height:1.1;margin-top:5px;}
+.fnx-exec-card .ec-foot{font-size:10.5px;margin-top:5px;min-height:14px;}
+.fnx-exec-card .ec-status{font-weight:700;}
+.fnx-exec-card.ok .ec-status{color:#2D6A4F;}
+.fnx-exec-card.bad .ec-status{color:#E24B4A;}
+/* Variação vs mês anterior (MoM) */
+.delta{font-size:11px;font-weight:700;display:inline-block;}
+.card-vol .delta{margin-top:4px;}
+.delta.up{color:#2D6A4F;} .delta.down{color:#E24B4A;} .delta.flat{color:#9a8c6f;font-weight:600;}
+@media(max-width:860px){.fnx-exec{grid-template-columns:repeat(2,1fr);}}
 </style>
 
 <div class="mes-bar">
@@ -201,6 +233,9 @@ canvas{display:block;width:100%;}
   </button>
 </div>
 
+<!-- FAIXA-RESUMO EXECUTIVA (atualiza com período/unidade) -->
+<div class="fnx-exec" id="fnx-exec"></div>
+
 <div class="dashboard">
 
   <!-- BLOCO 1 — VOLUMETRIA -->
@@ -208,13 +243,13 @@ canvas{display:block;width:100%;}
     <p class="sec-title">Volumetria</p>
     <div class="sec-bar"></div>
     <div class="cards-vol">
-      <div class="card-vol"><p class="lbl">Pacientes</p><p class="val" id="v-pac">—</p></div>
-      <div class="card-vol"><p class="lbl">Sessões</p><p class="val" id="v-ses">—</p></div>
-      <div class="card-vol"><p class="lbl">Admissões</p><p class="val" id="v-adm">—</p></div>
-      <div class="card-vol"><p class="lbl">Saídas</p><p class="val" id="v-sai">—</p></div>
-      <div class="card-vol"><p class="lbl">Sessões extras</p><p class="val" id="v-ext">—</p></div>
-      <div class="card-vol"><p class="lbl">Cons. especialista</p><p class="val" id="v-esp">—</p></div>
-      <div class="card-vol"><p class="lbl">Cons. nefro</p><p class="val" id="v-nef">—</p></div>
+      <div class="card-vol"><p class="lbl">Pacientes</p><p class="val" id="v-pac">—</p><span class="delta" id="d-pac"></span></div>
+      <div class="card-vol"><p class="lbl">Sessões</p><p class="val" id="v-ses">—</p><span class="delta" id="d-ses"></span></div>
+      <div class="card-vol"><p class="lbl">Admissões</p><p class="val" id="v-adm">—</p><span class="delta" id="d-adm"></span></div>
+      <div class="card-vol"><p class="lbl">Saídas</p><p class="val" id="v-sai">—</p><span class="delta" id="d-sai"></span></div>
+      <div class="card-vol"><p class="lbl">Sessões extras</p><p class="val" id="v-ext">—</p><span class="delta" id="d-ext"></span></div>
+      <div class="card-vol"><p class="lbl">Cons. especialista</p><p class="val" id="v-esp">—</p><span class="delta" id="d-esp"></span></div>
+      <div class="card-vol"><p class="lbl">Cons. nefro</p><p class="val" id="v-nef">—</p><span class="delta" id="d-nef"></span></div>
     </div>
     <div class="charts-row">
       <div>
@@ -237,15 +272,6 @@ canvas{display:block;width:100%;}
         </div>
         <canvas id="cSes" height="220"></canvas>
       </div>
-    </div>
-    <div class="analytic-box">
-      <div class="atitle">Análise Clínica — Volumetria <span>IA sugere · você edita</span></div>
-      <textarea id="analysis-vol" placeholder="Clique em Gerar análise para que a IA sugira uma interpretação dos resultados, ou digite sua análise diretamente..."></textarea>
-      <div class="btn-row">
-        <button class="ai-btn" onclick="gerarAnalise('vol','Volumetria','vol')">✦ Gerar análise com IA</button>
-        <button class="save-btn" id="save-btn-vol" onclick="salvarAnalise('vol', +document.getElementById('mesSel').value)">💾 Salvar análise</button>
-      </div>
-      <div class="ai-loading" id="loading-vol">Analisando os dados...</div>
     </div>
   </div>
 
@@ -283,15 +309,6 @@ canvas{display:block;width:100%;}
         </div>
         <canvas id="pizza" height="200"></canvas>
       </div>
-    </div>
-    <div class="analytic-box">
-      <div class="atitle">Análise Clínica — Desfechos Clínicos <span>IA sugere · você edita</span></div>
-      <textarea id="analysis-def" placeholder="Clique em Gerar análise para que a IA sugira uma interpretação dos resultados, ou digite sua análise diretamente..."></textarea>
-      <div class="btn-row">
-        <button class="ai-btn" onclick="gerarAnalise('def','Desfechos Clínicos','def')">✦ Gerar análise com IA</button>
-        <button class="save-btn" id="save-btn-def" onclick="salvarAnalise('def', +document.getElementById('mesSel').value)">💾 Salvar análise</button>
-      </div>
-      <div class="ai-loading" id="loading-def">Analisando os dados...</div>
     </div>
   </div>
 
@@ -372,15 +389,6 @@ canvas{display:block;width:100%;}
       </div>
 
     </div>
-    <div class="analytic-box">
-      <div class="atitle">Análise Clínica — Avaliação Nutricional <span>IA sugere · você edita</span></div>
-      <textarea id="analysis-nutri" placeholder="Clique em Gerar análise para que a IA sugira uma interpretação dos resultados, ou digite sua análise diretamente..."></textarea>
-      <div class="btn-row">
-        <button class="ai-btn" onclick="gerarAnalise('nutri','Avaliação Nutricional','nutri')">✦ Gerar análise com IA</button>
-        <button class="save-btn" id="save-btn-nutri" onclick="salvarAnalise('nutri', +document.getElementById('mesSel').value)">💾 Salvar análise</button>
-      </div>
-      <div class="ai-loading" id="loading-nutri">Analisando os dados...</div>
-    </div>
   </div>
 
   <!-- BLOCO 4 — ADEQUAÇÃO DA DIÁLISE -->
@@ -437,15 +445,6 @@ canvas{display:block;width:100%;}
         </div>
       </div>
     </div>
-    <div class="analytic-box">
-      <div class="atitle">Análise Clínica — Adequação da Diálise <span>IA sugere · você edita</span></div>
-      <textarea id="analysis-adequ" placeholder="Clique em Gerar análise para que a IA sugira uma interpretação dos resultados, ou digite sua análise diretamente..."></textarea>
-      <div class="btn-row">
-        <button class="ai-btn" onclick="gerarAnalise('adequ','Adequação da Diálise','adequ')">✦ Gerar análise com IA</button>
-        <button class="save-btn" id="save-btn-adequ" onclick="salvarAnalise('adequ', +document.getElementById('mesSel').value)">💾 Salvar análise</button>
-      </div>
-      <div class="ai-loading" id="loading-adequ">Analisando os dados...</div>
-    </div>
   </div>
 
   <!-- BLOCO 5 — QUALIDADE DE VIDA -->
@@ -494,15 +493,6 @@ canvas{display:block;width:100%;}
 
       </div>
     </div>
-    <div class="analytic-box">
-      <div class="atitle">Análise Clínica — Qualidade de Vida <span>IA sugere · você edita</span></div>
-      <textarea id="analysis-qol" placeholder="Clique em Gerar análise para que a IA sugira uma interpretação dos resultados, ou digite sua análise diretamente..."></textarea>
-      <div class="btn-row">
-        <button class="ai-btn" onclick="gerarAnalise('qol','Qualidade de Vida','qol')">✦ Gerar análise com IA</button>
-        <button class="save-btn" id="save-btn-qol" onclick="salvarAnalise('qol', +document.getElementById('mesSel').value)">💾 Salvar análise</button>
-      </div>
-      <div class="ai-loading" id="loading-qol">Analisando os dados...</div>
-    </div>
   </div>
 
   <!-- BLOCO 6 — CARDIOVASCULAR -->
@@ -532,15 +522,6 @@ canvas{display:block;width:100%;}
         <span class="badge" id="bg-hbg" style="margin-top:5px;"></span>
       </div>
 
-    </div>
-    <div class="analytic-box">
-      <div class="atitle">Análise Clínica — Cardiovascular <span>IA sugere · você edita</span></div>
-      <textarea id="analysis-cardio" placeholder="Clique em Gerar análise para que a IA sugira uma interpretação dos resultados, ou digite sua análise diretamente..."></textarea>
-      <div class="btn-row">
-        <button class="ai-btn" onclick="gerarAnalise('cardio','Cardiovascular','cardio')">✦ Gerar análise com IA</button>
-        <button class="save-btn" id="save-btn-cardio" onclick="salvarAnalise('cardio', +document.getElementById('mesSel').value)">💾 Salvar análise</button>
-      </div>
-      <div class="ai-loading" id="loading-cardio">Analisando os dados...</div>
     </div>
   </div>
 
@@ -604,15 +585,6 @@ canvas{display:block;width:100%;}
         </div>
       </div>
 
-    </div>
-    <div class="analytic-box">
-      <div class="atitle">Análise Clínica — Composição Corporal <span>IA sugere · você edita</span></div>
-      <textarea id="analysis-compcorp" placeholder="Clique em Gerar análise para que a IA sugira uma interpretação dos resultados, ou digite sua análise diretamente..."></textarea>
-      <div class="btn-row">
-        <button class="ai-btn" onclick="gerarAnalise('compcorp','Composição Corporal','compcorp')">✦ Gerar análise com IA</button>
-        <button class="save-btn" id="save-btn-compcorp" onclick="salvarAnalise('compcorp', +document.getElementById('mesSel').value)">💾 Salvar análise</button>
-      </div>
-      <div class="ai-loading" id="loading-compcorp">Analisando os dados...</div>
     </div>
   </div>
 
@@ -1792,6 +1764,47 @@ function exportarPDF() {
 // Variável global do filtro atual
 if(typeof _unidadeFiltro === 'undefined') var _unidadeFiltro = 'rede';
 
+/* Variação vs mês anterior (MoM). invert=true quando "subir é ruim" (ex.: Saídas). */
+function deltaChip(cur, prev, invert){
+  if(prev==null || cur==null) return '<span class="delta flat">— sem mês anterior</span>';
+  const diff = cur - prev;
+  if(diff===0) return '<span class="delta flat">▬ estável</span>';
+  const up = diff>0, good = invert ? !up : up;
+  const pct = prev!==0 ? Math.round(Math.abs(diff)/prev*100) : null;
+  return '<span class="delta '+(good?'up':'down')+'">'+(up?'▲ +':'▼ −')+Math.abs(diff)+(pct!=null?' ('+pct+'%)':'')+'</span>';
+}
+function _setDelta(id, cur, prev, invert){ const el=document.getElementById(id); if(el) el.innerHTML=deltaChip(cur,prev,invert); }
+
+/* Faixa-resumo executiva + deltas MoM da volumetria */
+function renderExecutivo(mes){
+  const u=_unidadeFiltro, isRede=(u==='rede'), D=BASE.def;
+  const prev = mes>0 ? mes-1 : null;
+  const pac = isRede?BASE.pacientes.rede[mes]:BASE.pacientes[u][mes];
+  const pacP = prev!=null ? (isRede?BASE.pacientes.rede[prev]:BASE.pacientes[u][prev]) : null;
+  const ses = isRede?BASE.sessoes.rede[mes]:BASE.sessoes[u][mes];
+  const sesP = prev!=null ? (isRede?BASE.sessoes.rede[prev]:BASE.sessoes[u][prev]) : null;
+
+  function neutral(lbl,val,foot){ return '<div class="fnx-exec-card"><div class="ec-lbl">'+lbl+'</div><div class="ec-val">'+val+'</div><div class="ec-foot">'+(foot||'')+'</div></div>'; }
+  function status(lbl,val,ok,metaTxt){ return '<div class="fnx-exec-card '+(ok?'ok':'bad')+'"><div class="ec-lbl">'+lbl+'</div><div class="ec-val">'+val+'</div><div class="ec-foot"><span class="ec-status">'+(ok?'✓ Meta atingida':'✕ '+metaTxt)+'</span></div></div>'; }
+
+  const ex=document.getElementById('fnx-exec');
+  if(ex) ex.innerHTML =
+    neutral('Pacientes ativos', fmt(pac), deltaChip(pac,pacP,false)) +
+    neutral('Sessões no mês', fmt(ses), deltaChip(ses,sesP,false)) +
+    status('Evento adverso grave', fmt(D.eag[mes]), D.eag[mes]===0, 'Meta: zero') +
+    status('Óbito / mortalidade', fmt(D.obi[mes])+' <span style="font-size:13px;color:#9a8c6f;">/ '+Math.round(D.obiPct[mes])+'%</span>', D.obi[mes]===0, 'Meta: zero') +
+    status('Internação hospitalar', D.intPct[mes].toFixed(1)+'%', D.intPct[mes]<=6, 'Meta: ≤6%');
+
+  /* Deltas nos cards da Volumetria (Saídas: subir é ruim → invertido) */
+  _setDelta('d-pac', pac, pacP, false);
+  _setDelta('d-ses', ses, sesP, false);
+  _setDelta('d-adm', BASE.admissoes[mes], prev!=null?BASE.admissoes[prev]:null, false);
+  _setDelta('d-sai', BASE.saidas[mes],    prev!=null?BASE.saidas[prev]:null,    true);
+  _setDelta('d-ext', BASE.sesExtras[mes], prev!=null?BASE.sesExtras[prev]:null, false);
+  _setDelta('d-esp', BASE.consEsp[mes],   prev!=null?BASE.consEsp[prev]:null,   false);
+  _setDelta('d-nef', BASE.consNefro[mes], prev!=null?BASE.consNefro[prev]:null, false);
+}
+
 function render(mes){
   const u = _unidadeFiltro;
   const isRede = (u === 'rede');
@@ -1865,6 +1878,9 @@ function render(mes){
   renderQoL(mes);
   renderCardio(mes);
   renderCompCorp(mes);
+
+  /* Faixa executiva + deltas vs mês anterior */
+  renderExecutivo(mes);
 }
 
 document.getElementById('mesSel').addEventListener('change',e=>render(+e.target.value));
