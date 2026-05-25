@@ -132,13 +132,14 @@ canvas{display:block;width:100%;}
   *{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important;color-adjust:exact!important;}
   body{background:#fff;}
   .dashboard{padding:8px 14px;}
-  .section{break-inside:avoid;page-break-inside:avoid;}
-  #bloco-cardio,#bloco-compcorp{page-break-before:always;break-before:page;}
-  .analytic-box .ai-btn{display:none;}
-  .analytic-box .save-btn{display:none;}
-  .mes-bar button{display:none;}
-  .mes-bar select{display:none;}
-  .mes-bar label{display:none;}
+  /* Fluxo contínuo: as seções podem atravessar a quebra de página — sem espaços em branco no fim da página */
+  .section{break-inside:auto;page-break-inside:auto;margin-bottom:10px;}
+  #bloco-cardio,#bloco-compcorp{break-before:auto;page-break-before:auto;}
+  /* Mas mantém juntos os blocos atômicos (não racha grids de cards nem gráficos no meio) */
+  .cards-vol,.cards-def,.fnx-exec,.charts-row,.card-vol,.card-def,canvas{break-inside:avoid;page-break-inside:avoid;}
+  /* Título de seção não fica órfão no fim da página */
+  .sec-title,.sec-bar{break-after:avoid;page-break-after:avoid;}
+  .mes-bar button,.mes-bar select,.mes-bar label{display:none;}
   #loading-overlay{display:none!important;}
   .portal-nav{display:none!important;}
 }
