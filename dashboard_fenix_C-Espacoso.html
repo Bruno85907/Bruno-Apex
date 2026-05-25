@@ -131,14 +131,22 @@ canvas{display:block;width:100%;}
 @media print{
   *{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important;color-adjust:exact!important;}
   body{background:#fff;}
-  .dashboard{padding:8px 14px;}
-  /* Fluxo contínuo: as seções podem atravessar a quebra de página — sem espaços em branco no fim da página */
-  .section{break-inside:auto;page-break-inside:auto;margin-bottom:10px;}
-  #bloco-cardio,#bloco-compcorp{break-before:auto;page-break-before:auto;}
-  /* Mas mantém juntos os blocos atômicos (não racha grids de cards nem gráficos no meio) */
-  .cards-vol,.cards-def,.fnx-exec,.charts-row,.card-vol,.card-def,canvas{break-inside:avoid;page-break-inside:avoid;}
-  /* Título de seção não fica órfão no fim da página */
-  .sec-title,.sec-bar{break-after:avoid;page-break-after:avoid;}
+  .dashboard{padding:6px 14px;}
+  /* Paginação fixa — uma folha por seção:
+     Folha 1: 5 cards executivos + Volumetria · 2: Desfechos clínicos · 3: Avaliação nutricional
+     4: Adequação da diálise · 5: Qualidade de vida · 6: Cardiovascular + Composição corporal */
+  #bloco-def,#bloco-nutri,#bloco-adequ,#bloco-qol,#bloco-cardio{break-before:page;page-break-before:always;}
+  #bloco-vol,#bloco-compcorp{break-before:auto;page-break-before:auto;}
+  .section{break-inside:avoid;page-break-inside:avoid;}
+  /* Folha 1 compacta: cabeçalho + 5 cards + Volumetria cabem numa página (medido: ~676px ≤ 718px) */
+  .fnx-header{padding:10px 36px;}
+  .fnx-logo{height:40px;}
+  .mes-bar{padding:6px 36px;}
+  .fnx-exec{grid-template-columns:repeat(5,1fr)!important;padding:8px 14px 2px;}
+  .fnx-exec-card{padding:10px 14px;}
+  .fnx-exec-card .ec-val{font-size:22px;}
+  #bloco-vol .charts-row canvas{max-height:185px;}
+  /* Controles interativos não saem na impressão */
   .mes-bar button,.mes-bar select,.mes-bar label{display:none;}
   #loading-overlay{display:none!important;}
   .portal-nav{display:none!important;}
