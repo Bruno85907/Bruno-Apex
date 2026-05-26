@@ -138,16 +138,15 @@ canvas{display:block;width:100%;}
   #bloco-def,#bloco-nutri,#bloco-adequ,#bloco-qol,#bloco-cardio{break-before:page;page-break-before:always;}
   #bloco-vol,#bloco-compcorp{break-before:auto;page-break-before:auto;}
   .section{break-inside:avoid;page-break-inside:avoid;}
-  /* Folha 1 compacta: cabeçalho + 5 cards + Volumetria cabem numa página (medido: ~676px ≤ 718px) */
+  /* Folha 1: cabeçalho + 5 cards + Volumetria numa página.
+     Período vai no cabeçalho; barras de Unidade e Período/Exportar saem da impressão. */
+  #unidade-bar{display:none!important;}
+  .mes-bar{display:none!important;}
   .fnx-header{padding:10px 36px;}
   .fnx-logo{height:40px;}
-  .mes-bar{padding:6px 36px;}
   .fnx-exec{grid-template-columns:repeat(5,1fr)!important;padding:8px 14px 2px;}
   .fnx-exec-card{padding:10px 14px;}
   .fnx-exec-card .ec-val{font-size:22px;}
-  #bloco-vol .charts-row canvas{max-height:185px;}
-  /* Controles interativos não saem na impressão */
-  .mes-bar button,.mes-bar select,.mes-bar label{display:none;}
   #loading-overlay{display:none!important;}
   .portal-nav{display:none!important;}
 }
@@ -187,12 +186,12 @@ canvas{display:block;width:100%;}
   <img class="fnx-logo" src="landing-page/Logo-Fenix-30anos%20(1).png" alt="Fênix Nefrologia — 30 anos">
   <div class="fnx-htxt">
     <div class="fnx-htitle">Relatório de Qualidade Assistencial</div>
-    <div class="fnx-hsub">Terapia Renal Substitutiva — Crônico · Programa de Hemodiálise</div>
+    <div class="fnx-hsub">Período avaliado: <span id="fnx-periodo">—</span></div>
   </div>
 </header>
 
 <!-- FILTRO DE UNIDADE -->
-<div style="background:#fff;border-bottom:1px solid #e8e6e1;padding:10px 36px;display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
+<div id="unidade-bar" style="background:#fff;border-bottom:1px solid #e8e6e1;padding:10px 36px;display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
   <span style="font-size:11px;font-weight:600;color:#777;letter-spacing:1px;text-transform:uppercase;margin-right:4px;">Visualizar:</span>
   <button class="filtro-unid active" id="fu-rede" onclick="filtrarUnidade('rede')">⬡ Rede Completa</button>
   <button class="filtro-unid" id="fu-rl" onclick="filtrarUnidade('rl')">RL</button>
@@ -1817,6 +1816,10 @@ function renderExecutivo(mes){
 function render(mes){
   const u = _unidadeFiltro;
   const isRede = (u === 'rede');
+
+  /* Período avaliado no cabeçalho (ex.: Abril · 2026) */
+  const _per = document.getElementById('fnx-periodo');
+  if(_per){ const _sel=document.getElementById('mesSel'); _per.textContent = (_sel ? _sel.options[mes].text : '') + ' · 2026'; }
 
   /* Volumetria — valores dos cards */
   document.getElementById('v-pac').textContent=fmt(isRede ? BASE.pacientes.rede[mes] : BASE.pacientes[u][mes]);
