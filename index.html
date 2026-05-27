@@ -139,6 +139,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
   <script src="https://unpkg.com/lucide@latest"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
   <style>
     :root {
       --navy: #1E2D50;
@@ -1182,16 +1183,17 @@
     .conteudo-full .card-arrow { color: var(--gold); }
 
     /* ===== BOLETIM ===== */
-    .bol-card { display:flex; align-items:center; gap:16px; padding:18px 22px; background:#fff; border-radius:12px; text-decoration:none; transition:transform .25s, box-shadow .25s; position:relative; overflow:hidden; }
+    .boletim { background: var(--bg-alt); }
+    .bol-card { display:flex; align-items:center; gap:16px; padding:18px 22px; background:#fff; border:1px solid rgba(30,45,80,0.10); border-radius:12px; text-decoration:none; transition:transform .25s, box-shadow .25s, border-color .25s; position:relative; overflow:hidden; }
     .bol-card::before { content:''; position:absolute; left:0; top:0; bottom:0; width:3px; background:var(--gold); opacity:0; transition:opacity .25s; }
-    .bol-card:hover { transform:translateY(-3px); box-shadow:0 16px 40px rgba(0,0,0,0.32); }
+    .bol-card:hover { transform:translateY(-3px); box-shadow:0 16px 40px rgba(30,45,80,0.12); border-color:rgba(196,163,90,0.4); }
     .bol-card:hover::before { opacity:1; }
     .bol-num { flex-shrink:0; width:48px; height:48px; border-radius:10px; background:linear-gradient(135deg,var(--navy-deep),var(--navy)); display:flex; align-items:center; justify-content:center; font-size:16px; font-weight:800; color:var(--gold); }
     .bol-title { font-size:15px; font-weight:700; color:var(--navy); line-height:1.4; }
     .bol-meta { font-size:12px; color:rgba(30,45,80,0.5); margin-top:4px; }
     .bol-go { flex-shrink:0; color:var(--teal); font-size:13px; font-weight:600; white-space:nowrap; }
-    .bol-all { display:inline-flex; align-items:center; gap:6px; margin-top:18px; font-size:13px; font-weight:600; color:var(--gold-light); text-decoration:none; }
-    .bol-all:hover { color:#fff; }
+    .bol-all { display:inline-flex; align-items:center; gap:6px; margin-top:18px; font-size:13px; font-weight:600; color:var(--gold); text-decoration:none; transition:color .25s; }
+    .bol-all:hover { color:var(--teal); }
 
     /* ===== PRO BANNER ===== */
     .pro-banner-inner {
@@ -1421,7 +1423,6 @@
   @media (max-width: 768px) {
     .trust-bar { font-size: 10px; padding: 9px 16px; line-height: 1.6; }
   }
-
   </style>
 </head>
 <body>
@@ -1954,11 +1955,11 @@
   </section>
 
 <!-- BOLETIM SEMANAL -->
- <section class="section-pad gold-dots" id="boletim" style="background:var(--navy-deep);color:#fff;position:relative;overflow:hidden;">
+ <section class="boletim section-pad gold-dots" id="boletim" style="position:relative;overflow:hidden;">
    <div class="container" style="max-width:760px;">
-     <p class="eyebrow eyebrow-center rv" style="color:var(--gold);">Boletim Semanal</p>
-     <h2 class="headline-serif headline-center rv" style="font-size:clamp(28px,3.5vw,42px);color:#fff;">Ciência que guia o <em>protocolo</em></h2>
-     <p class="subtitle rv" style="text-align:center;color:rgba(255,255,255,0.55);max-width:560px;margin:16px auto 44px;">Curadoria semanal das principais publicações em Nefrologia, Cardiologia, Diabetes e Síndrome CKM.</p>
+     <p class="eyebrow eyebrow-center rv">Boletim Semanal · Para profissionais</p>
+     <h2 class="headline-serif headline-center rv" style="font-size:clamp(28px,3.5vw,42px);">Ciência que guia o <em>protocolo</em></h2>
+     <p class="subtitle rv" style="text-align:center;max-width:560px;margin:16px auto 44px;">Curadoria semanal das principais publicações em Nefrologia, Cardiologia, Diabetes e Síndrome CKM.</p>
      <div class="rv" style="display:flex;flex-direction:column;gap:12px;">
        <a href="boletim-semanal-02.html" class="bol-card">
          <div class="bol-num">#2</div>
@@ -1978,13 +1979,14 @@
        </a>
      </div>
      <div style="text-align:center;"><a href="publicacoes.html" class="bol-all rv">Ver todas as edições &rarr;</a></div>
-     <div class="rv" style="text-align:center;padding:34px;background:rgba(255,255,255,0.05);border-radius:16px;border:1px solid rgba(255,255,255,0.12);margin-top:40px;backdrop-filter:blur(10px);">
+     <div class="rv" style="text-align:center;padding:40px 34px;background:var(--navy-deep);border-radius:16px;border:1px solid rgba(196,163,90,0.25);margin-top:48px;box-shadow:0 20px 50px rgba(18,29,51,0.18);">
        <div style="font-family:var(--font-serif);font-size:24px;color:#fff;margin-bottom:8px;">Receba no seu <em style="color:var(--gold-light);font-style:italic;">email</em></div>
-       <p style="font-size:14px;color:rgba(255,255,255,0.55);margin-bottom:22px;">Toda segunda-feira, direto na sua caixa de entrada.</p>
+       <p style="font-size:14px;color:rgba(255,255,255,0.6);margin-bottom:22px;">Toda segunda-feira, direto na sua caixa de entrada.</p>
        <form class="boletim-subscribe-form" onsubmit="return handleBoletimSubscribe(event)" style="display:flex;gap:10px;max-width:420px;margin:0 auto;">
          <input type="email" placeholder="Seu melhor email" required style="flex:1;padding:13px 18px;border-radius:50px;border:1px solid rgba(255,255,255,0.18);background:rgba(255,255,255,0.06);color:#fff;font-size:14px;font-family:var(--font-sans);outline:none;" />
          <button type="submit" style="padding:13px 24px;border-radius:50px;border:none;font-size:14px;font-weight:600;font-family:var(--font-sans);background:linear-gradient(135deg,var(--teal),#04b5c8);color:#fff;cursor:pointer;white-space:nowrap;">Inscrever-se</button>
        </form>
+       <p style="font-size:11px;color:rgba(255,255,255,0.42);margin-top:14px;line-height:1.5;max-width:420px;margin-left:auto;margin-right:auto;">Ao se inscrever, você concorda em receber o boletim por email e com a nossa <a href="politica-privacidade.html" style="color:rgba(255,255,255,0.65);text-decoration:underline;">Política de Privacidade</a>. Você pode cancelar quando quiser.</p>
      </div>
    </div>
  </section>
@@ -2126,6 +2128,11 @@
   </footer>
 
   <script>
+    // ===== SUPABASE (boletim) =====
+    var SUPA_URL = 'https://syzmsixhjlutsynnqivv.supabase.co';
+    var SUPA_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InN5em1zaXhoamx1dHN5bm5xaXZ2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQxMjkxMDMsImV4cCI6MjA4OTcwNTEwM30.poYHMbqAp1bQoZ4tehBoIHbwG5XMaaAcZPNR8Wsywnw';
+    var sb = (window.supabase && window.supabase.createClient) ? window.supabase.createClient(SUPA_URL, SUPA_KEY) : null;
+
     // ===== HEADER SCROLL =====
     const header = document.getElementById('header');
     window.addEventListener('scroll', () => {
@@ -2335,17 +2342,45 @@
     lucide.createIcons();
 
     // ===== BOLETIM SUBSCRIBE =====
-    function handleBoletimSubscribe(e) {
+    async function handleBoletimSubscribe(e) {
       e.preventDefault();
       const form = e.target;
       const input = form.querySelector('input');
       const btn = form.querySelector('button');
-      const email = input.value;
-      // TODO: integrar com Supabase
-      btn.textContent = 'Inscrito!';
-      btn.style.background = 'linear-gradient(135deg, #2DB3A0, #04b5c8)';
-      input.value = '';
-      setTimeout(() => { btn.textContent = 'Inscrever-se'; btn.style.background = ''; }, 3000);
+      const email = (input.value || '').trim().toLowerCase();
+      const original = btn.textContent;
+      const restore = (txt, ok) => {
+        btn.textContent = txt;
+        btn.style.background = ok ? 'linear-gradient(135deg, #2DB3A0, #04b5c8)' : '#C0392B';
+        setTimeout(() => { btn.textContent = original; btn.style.background = ''; btn.disabled = false; }, 3500);
+      };
+      if (!email) return false;
+      btn.disabled = true;
+      btn.textContent = 'Enviando…';
+      try {
+        if (!sb) throw new Error('supabase indisponível');
+        const { error } = await sb.from('boletim_inscritos').insert({
+          email: email,
+          source: 'site_index_boletim',
+          consent: true,
+          user_agent: navigator.userAgent
+        });
+        if (error) {
+          // 23505 = violação de unique (email já inscrito) → tratamos como sucesso
+          if (error.code === '23505' || /duplicate|unique/i.test(error.message || '')) {
+            input.value = '';
+            restore('Você já está inscrito ✓', true);
+          } else {
+            throw error;
+          }
+        } else {
+          input.value = '';
+          restore('Inscrito!', true);
+        }
+      } catch (err) {
+        console.error('Erro ao inscrever no boletim:', err);
+        restore('Tente novamente', false);
+      }
       return false;
     }
 
