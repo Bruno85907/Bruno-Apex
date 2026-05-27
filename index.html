@@ -964,41 +964,95 @@
       width: 60px; height: 1px; background: rgba(255,255,255,0.1);
       margin: 48px auto;
     }
-    .insights-row {
-      display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;
-      margin-top: 32px;
+    /* Editorial layout: destaque + lista */
+    .ed-grid {
+      display: grid; grid-template-columns: 1.35fr 1fr;
+      gap: 56px; margin-top: 44px; align-items: start;
     }
-    .insight-card {
-      border-radius: var(--radius); overflow: hidden;
-      background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.06);
-      transition: transform 0.3s, border-color 0.3s;
+    /* Featured */
+    .ed-feature { display: flex; flex-direction: column; }
+    .ed-feature-imgwrap {
+      position: relative; display: block; border-radius: var(--radius);
+      overflow: hidden; aspect-ratio: 16/10;
     }
-    .insight-card:hover { transform: translateY(-4px); border-color: rgba(255,255,255,0.12); }
-    .insight-card-img {
-      width: 100%; aspect-ratio: 16/9; object-fit: cover;
+    .ed-feature-imgwrap img {
+      width: 100%; height: 100%; object-fit: cover; display: block;
+      transition: transform 0.6s ease;
     }
-    .insight-card-body { padding: 20px; }
-    .insight-tag {
-      font-size: 10px; font-weight: 700; text-transform: uppercase;
-      letter-spacing: 2px; color: var(--teal-light); margin-bottom: 8px;
+    .ed-feature:hover .ed-feature-imgwrap img { transform: scale(1.04); }
+    .ed-feature-flag {
+      position: absolute; top: 16px; left: 16px;
+      background: var(--gold); color: var(--navy-deep);
+      font-size: 10px; font-weight: 700; letter-spacing: 2px;
+      text-transform: uppercase; padding: 6px 14px; border-radius: 20px;
     }
-    .insight-card h4 {
-      font-size: 16px; font-weight: 600; color: #fff; line-height: 1.4;
-      margin-bottom: 12px;
+    .ed-feature-meta {
+      display: flex; align-items: center; gap: 10px; margin: 22px 0 14px;
+      font-size: 12px; color: rgba(255,255,255,0.5);
     }
-    .insight-link {
+    .ed-cat {
+      color: var(--teal-light); font-weight: 700; letter-spacing: 1.5px;
+      text-transform: uppercase; font-size: 11px;
+    }
+    .ed-dot { color: rgba(255,255,255,0.3); }
+    .ed-feature h3 { margin: 0 0 14px; }
+    .ed-feature h3 a {
+      font-family: var(--font-serif);
+      font-size: clamp(28px, 3vw, 38px); font-weight: 400;
+      color: #fff; line-height: 1.18; text-decoration: none;
+      letter-spacing: -0.3px; transition: color 0.25s;
+    }
+    .ed-feature h3 a:hover { color: var(--gold-light); }
+    .ed-feature-body > p {
+      font-size: 16px; color: rgba(255,255,255,0.6);
+      line-height: 1.7; margin: 0 0 20px; max-width: 540px;
+    }
+    .ed-feature-link {
       font-size: 13px; color: var(--gold); text-decoration: none;
-      font-weight: 500; transition: color 0.25s;
+      font-weight: 600; letter-spacing: 0.5px; transition: color 0.25s;
     }
-    .insight-link:hover { color: var(--gold-light); }
-    .insights-all {
-      text-align: center; margin-top: 28px;
+    .ed-feature-link:hover { color: var(--gold-light); }
+    /* Most-read list */
+    .ed-list-title {
+      font-size: 11px; font-weight: 700; letter-spacing: 2.5px;
+      text-transform: uppercase; color: var(--gold);
+      padding-bottom: 18px; border-bottom: 1px solid rgba(255,255,255,0.12);
     }
-    .insights-all a {
+    .ed-list ol { list-style: none; margin: 0; padding: 0; }
+    .ed-list li { border-bottom: 1px solid rgba(255,255,255,0.08); }
+    .ed-list li a {
+      display: flex; gap: 18px; padding: 18px 0;
+      text-decoration: none; align-items: baseline;
+      transition: opacity 0.2s;
+    }
+    .ed-num {
+      font-size: 14px; font-weight: 700; color: rgba(255,255,255,0.28);
+      flex-shrink: 0; width: 22px; font-variant-numeric: tabular-nums;
+      transition: color 0.25s;
+    }
+    .ed-list li a:hover .ed-num { color: var(--gold); }
+    .ed-item-body { display: flex; flex-direction: column; gap: 5px; }
+    .ed-item-cat {
+      font-size: 10px; font-weight: 700; letter-spacing: 1.5px;
+      text-transform: uppercase; color: var(--teal-light);
+    }
+    .ed-item-h {
+      font-size: 15px; font-weight: 500; color: rgba(255,255,255,0.85);
+      line-height: 1.45; transition: color 0.25s;
+    }
+    .ed-list li a:hover .ed-item-h { color: #fff; }
+    /* Footer row: temas + ver todas */
+    .ed-foot {
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 24px; flex-wrap: wrap; margin-top: 52px;
+      padding-top: 32px; border-top: 1px solid rgba(255,255,255,0.1);
+    }
+    .ed-foot .destaque-cats { margin: 0; }
+    .insights-all-link {
       font-size: 14px; color: var(--gold); text-decoration: none;
-      font-weight: 500; transition: color 0.25s;
+      font-weight: 600; white-space: nowrap; transition: color 0.25s;
     }
-    .insights-all a:hover { color: var(--gold-light); }
+    .insights-all-link:hover { color: var(--gold-light); }
 
     /* ===== FAQ ===== */
     .faq { background: var(--bg); }
@@ -1175,7 +1229,7 @@
       .paraquem-grid { grid-template-columns: repeat(3, 1fr); }
       .paraquem-card-img { height: 140px; }
       .result-cards { grid-template-columns: repeat(3, 1fr); gap: 16px; }
-      .insights-row { grid-template-columns: repeat(3, 1fr); gap: 16px; }
+      .ed-grid { grid-template-columns: 1fr; gap: 40px; }
       .app-layout { gap: 40px; }
       .wf-2 { left: -40px; }
       .wf-3 { left: -30px; }
@@ -1265,11 +1319,8 @@
       .result-cards { grid-template-columns: 1fr; gap: 16px; }
       .result-card { padding: 32px 20px; }
       .result-num { font-size: 44px; }
-      .insights-row { grid-template-columns: 1fr; gap: 16px; }
-      .insight-card { display: flex; flex-direction: row; }
-      .insight-card-img { width: 120px; height: auto; aspect-ratio: 1/1; flex-shrink: 0; }
-      .insight-card-body { padding: 16px; display: flex; flex-direction: column; justify-content: center; }
-      .insight-card h4 { font-size: 14px; margin-bottom: 8px; }
+      .ed-grid { grid-template-columns: 1fr; gap: 36px; margin-top: 32px; }
+      .ed-foot { flex-direction: column; align-items: flex-start; gap: 20px; }
 
       .faq-q { font-size: 15px; padding: 18px 0; }
       .faq-a-inner { font-size: 13px; }
@@ -1856,66 +1907,48 @@
       </h2>
       <p class="subtitle rv" style="color:rgba(255,255,255,0.5);">Artigos e hubs temáticos sobre prevenção, doença renal e a Síndrome CKM — para pacientes e profissionais.</p>
 
-      <div class="destaque-cats rv">
-        <a href="nefrologia-doenca-renal.html" class="destaque-cat"><i data-lucide="activity" style="stroke-width:1.6"></i> Doença Renal Crônica</a>
-        <a href="sindrome-ckm.html" class="destaque-cat"><i data-lucide="heart-pulse" style="stroke-width:1.6"></i> Síndrome CKM</a>
-        <a href="wearables-saude-digital.html" class="destaque-cat"><i data-lucide="watch" style="stroke-width:1.6"></i> Wearables</a>
-        <a href="dados-apex.html" class="destaque-cat"><i data-lucide="bar-chart-3" style="stroke-width:1.6"></i> Indicadores de Qualidade</a>
-      </div>
+      <div class="ed-grid">
+        <!-- Destaque -->
+        <article class="ed-feature rv">
+          <a href="artigo_cancer_ckm.html" class="ed-feature-imgwrap">
+            <img src="iStock-2223206742.jpg" alt="Homem idoso medindo a pressão arterial em casa" loading="lazy">
+            <span class="ed-feature-flag">Em destaque</span>
+          </a>
+          <div class="ed-feature-body">
+            <div class="ed-feature-meta">
+              <span class="ed-cat">Síndrome CKM</span>
+              <span class="ed-dot">&middot;</span>
+              <span>7 min de leitura</span>
+            </div>
+            <h3><a href="artigo_cancer_ckm.html">Síndrome CKM e câncer: o elo que poucos comentam</a></h3>
+            <p>Obesidade, diabetes e doença renal não elevam apenas o risco cardiovascular — aumentam também o de câncer. Entenda a conexão metabólica e o que fazer a respeito.</p>
+            <a href="artigo_cancer_ckm.html" class="ed-feature-link">Ler artigo &rarr;</a>
+          </div>
+        </article>
 
-      <div class="insights-row">
-        <div class="insight-card rv">
-          <img class="insight-card-img" src="https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=600&q=80" alt="Medicamentos e rim" loading="lazy">
-          <div class="insight-card-body">
-            <div class="insight-tag">Nefrologia</div>
-            <h4>Anti-inflamatórios e seus rins: o que você precisa saber</h4>
-            <a href="artigo_antiinflamatorio_rim.html" class="insight-link">Ler artigo &rarr;</a>
-          </div>
-        </div>
-        <div class="insight-card rv" style="transition-delay:0.1s">
-          <img class="insight-card-img" src="https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=600&q=80" alt="DRC" loading="lazy">
-          <div class="insight-card-body">
-            <div class="insight-tag">DRC</div>
-            <h4>Exercício físico e doença renal: mitos e evidências</h4>
-            <a href="artigo_exercicio_drc.html" class="insight-link">Ler artigo &rarr;</a>
-          </div>
-        </div>
-        <div class="insight-card rv" style="transition-delay:0.2s">
-          <img class="insight-card-img" src="https://images.unsplash.com/photo-1434494878577-86c23bcb06b9?w=600&q=80" alt="Tecnologia" loading="lazy">
-          <div class="insight-card-body">
-            <div class="insight-tag">Tecnologia</div>
-            <h4>Wearables na prática clínica: dados que fazem diferença</h4>
-            <a href="artigo_wearables.html" class="insight-link">Ler artigo &rarr;</a>
-          </div>
-        </div>
-        <div class="insight-card rv" style="transition-delay:0.3s">
-          <img class="insight-card-img" src="pexels-shvets-production-8900023.jpg" alt="Hipertensão e rim" loading="lazy">
-          <div class="insight-card-body">
-            <div class="insight-tag">Hipertensão</div>
-            <h4>Como a pressão alta destrói os rins em silêncio</h4>
-            <a href="artigo_hipertensao_rim.html" class="insight-link">Ler artigo &rarr;</a>
-          </div>
-        </div>
-        <div class="insight-card rv" style="transition-delay:0.4s">
-          <img class="insight-card-img" src="pexels-artempodrez-6823395.jpg" alt="Nefropatia diabética" loading="lazy" style="object-position:center 75%">
-          <div class="insight-card-body">
-            <div class="insight-tag">Diabetes</div>
-            <h4>Nefropatia diabética: o que o diabetes faz com seus rins</h4>
-            <a href="artigo_diabetes_rim.html" class="insight-link">Ler artigo &rarr;</a>
-          </div>
-        </div>
-        <div class="insight-card rv" style="transition-delay:0.5s">
-          <img class="insight-card-img" src="pexels-annushka-ahuja-7991906.jpg" alt="Obesidade e doença renal" loading="lazy">
-          <div class="insight-card-body">
-            <div class="insight-tag">Obesidade</div>
-            <h4>Obesidade e doença renal: a conexão subestimada</h4>
-            <a href="artigo_obesidade_rim.html" class="insight-link">Ler artigo &rarr;</a>
-          </div>
+        <!-- Mais lidas -->
+        <div class="ed-list rv">
+          <p class="ed-list-title">Mais lidas</p>
+          <ol>
+            <li><a href="artigo_hipertensao_rim.html"><span class="ed-num">01</span><span class="ed-item-body"><span class="ed-item-cat">Hipertensão</span><span class="ed-item-h">Como a pressão alta destrói os rins em silêncio</span></span></a></li>
+            <li><a href="artigo_diabetes_rim.html"><span class="ed-num">02</span><span class="ed-item-body"><span class="ed-item-cat">Diabetes</span><span class="ed-item-h">Nefropatia diabética: o que o diabetes faz com seus rins</span></span></a></li>
+            <li><a href="artigo_obesidade_rim.html"><span class="ed-num">03</span><span class="ed-item-body"><span class="ed-item-cat">Obesidade</span><span class="ed-item-h">Obesidade e doença renal: a conexão subestimada</span></span></a></li>
+            <li><a href="artigo_qualidade_vida.html"><span class="ed-num">04</span><span class="ed-item-body"><span class="ed-item-cat">Prevenção</span><span class="ed-item-h">Qualidade de vida: a medicina que age antes da doença</span></span></a></li>
+            <li><a href="artigo_antiinflamatorio_rim.html"><span class="ed-num">05</span><span class="ed-item-body"><span class="ed-item-cat">Nefrologia</span><span class="ed-item-h">Anti-inflamatórios e seus rins: o que você precisa saber</span></span></a></li>
+            <li><a href="artigo_exercicio_drc.html"><span class="ed-num">06</span><span class="ed-item-body"><span class="ed-item-cat">DRC</span><span class="ed-item-h">Exercício físico e doença renal: mitos e evidências</span></span></a></li>
+            <li><a href="artigo_wearables.html"><span class="ed-num">07</span><span class="ed-item-body"><span class="ed-item-cat">Wearables</span><span class="ed-item-h">Wearables na prática clínica: dados que fazem diferença</span></span></a></li>
+          </ol>
         </div>
       </div>
 
-      <div class="insights-all rv">
-        <a href="publicacoes.html">Ver todas as publicações &rarr;</a>
+      <div class="ed-foot rv">
+        <div class="destaque-cats">
+          <a href="nefrologia-doenca-renal.html" class="destaque-cat"><i data-lucide="activity" style="stroke-width:1.6"></i> Doença Renal Crônica</a>
+          <a href="sindrome-ckm.html" class="destaque-cat"><i data-lucide="heart-pulse" style="stroke-width:1.6"></i> Síndrome CKM</a>
+          <a href="wearables-saude-digital.html" class="destaque-cat"><i data-lucide="watch" style="stroke-width:1.6"></i> Wearables</a>
+          <a href="dados-apex.html" class="destaque-cat"><i data-lucide="bar-chart-3" style="stroke-width:1.6"></i> Indicadores</a>
+        </div>
+        <a href="publicacoes.html" class="insights-all-link">Ver todas as publicações &rarr;</a>
       </div>
     </div>
   </section>
