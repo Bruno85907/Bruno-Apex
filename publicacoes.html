@@ -1221,30 +1221,13 @@
       <div class="gold-line rv" style="margin:0 0 22px;"></div>
       <p class="eyebrow rv">Publicações · Conhecimento baseado em evidências</p>
       <h2 class="headline-serif rv" style="font-size:clamp(34px,5vw,60px);color:#fff;max-width:15ch;margin-top:8px;">Ciência que guia o <em>protocolo</em>.</h2>
-      <p class="rv" style="font-size:16px;line-height:1.7;color:rgba(255,255,255,0.55);max-width:60ch;margin-top:18px;">Artigos, hubs temáticos e o boletim semanal sobre a Síndrome Cardiorrenal-Metabólica — por Dr. Bruno Biluca, nefrologista.</p>
-      <div class="pub-hubs rv">
-        <a href="nefrologia-doenca-renal.html" class="pub-hub">Doença Renal Crônica</a>
-        <a href="sindrome-ckm.html" class="pub-hub">Síndrome CKM</a>
-        <a href="wearables-saude-digital.html" class="pub-hub">Wearables &amp; Saúde Digital</a>
-        <a href="dados-apex.html" class="pub-hub">Indicadores de Qualidade</a>
-      </div>
+      <p class="rv" style="font-size:16px;line-height:1.7;color:rgba(255,255,255,0.55);max-width:60ch;margin-top:18px;">Artigos e o boletim semanal sobre a Síndrome Cardiorrenal-Metabólica — por Dr. Bruno Biluca, nefrologista.</p>
     </div>
   </section>
 
   <section class="section-pad" style="background:var(--navy-deep);color:#fff;padding-top:10px;">
     <div class="container">
-      <div class="pub-filter rv">
-        <button class="pub-chip on" data-f="all" onclick="filtrarPub(this)">Todos</button>
-        <button class="pub-chip" data-f="ckm" onclick="filtrarPub(this)">Síndrome CKM</button>
-        <button class="pub-chip" data-f="hipertensao" onclick="filtrarPub(this)">Hipertensão</button>
-        <button class="pub-chip" data-f="diabetes" onclick="filtrarPub(this)">Diabetes</button>
-        <button class="pub-chip" data-f="obesidade" onclick="filtrarPub(this)">Obesidade</button>
-        <button class="pub-chip" data-f="medicamentos" onclick="filtrarPub(this)">Medicamentos</button>
-        <button class="pub-chip" data-f="estilo" onclick="filtrarPub(this)">Estilo de vida</button>
-        <button class="pub-chip" data-f="wearables" onclick="filtrarPub(this)">Wearables</button>
-        <span class="pub-count" id="pubCount"></span>
-      </div>
-      <div class="insights-row" id="pubGrid" style="margin-top:28px;">
+      <div class="insights-row" id="pubGrid" style="margin-top:8px;">
       <a class="insight-card pub-item rv" data-theme="ckm" href="artigo_sindrome_ckm.html" style="text-decoration:none;display:block;">
         <img class="insight-card-img" src="robina-weermeijer--szKjHyPq28-unsplash.jpg" alt="Síndrome CKM" loading="lazy">
         <div class="insight-card-body"><div class="insight-tag">Síndrome CKM</div><h4>O que conecta coração, rim e metabolismo</h4><span class="insight-link">Ler artigo &rarr;</span></div>
@@ -1291,17 +1274,6 @@
       </div>
     </div>
   </section>
-
-  <script>
-    function filtrarPub(btn){
-      document.querySelectorAll('.pub-chip').forEach(function(c){c.classList.remove('on');});
-      btn.classList.add('on');
-      var f=btn.dataset.f, n=0;
-      document.querySelectorAll('.pub-item').forEach(function(el){ var s=(f==='all'||el.dataset.theme===f); el.style.display=s?'block':'none'; if(s)n++; });
-      var c=document.getElementById('pubCount'); if(c) c.textContent=n+(n===1?' publicação':' publicações');
-    }
-    document.addEventListener('DOMContentLoaded',function(){ var on=document.querySelector('.pub-chip.on'); if(on) filtrarPub(on); });
-  </script>
 
 <!-- FOOTER -->
   <footer class="footer gold-dots">
