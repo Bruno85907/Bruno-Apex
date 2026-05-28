@@ -135,6 +135,66 @@
   }
   </script>
 
+  <!-- FAQPage (rich snippet do Google) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "O que é o Apex Health?",
+        "acceptedAnswer": { "@type": "Answer", "text": "O Apex Health é um serviço médico de acompanhamento contínuo para condições crônicas. Combinamos consulta presencial, protocolo personalizado e assessor virtual para garantir que você atinja — e mantenha — suas metas de saúde." }
+      },
+      {
+        "@type": "Question",
+        "name": "Quais condições o Apex Health trata?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Hipertensão arterial, diabetes tipo 2, obesidade, doença renal crônica (DRC) e protocolos de bem-estar e qualidade de vida. Muitos pacientes apresentam mais de uma condição simultaneamente (Síndrome CKM), e o protocolo trata todas de forma integrada." }
+      },
+      {
+        "@type": "Question",
+        "name": "Como funciona o assessor virtual?",
+        "acceptedAnswer": { "@type": "Answer", "text": "O assessor virtual monitora diariamente sua aderência ao protocolo: dieta, hidratação, medicações, suplementação, hábitos e dados de wearables (sono, atividade, frequência cardíaca). Caso algo saia do caminho, o médico é alertado e pode intervir antes do retorno." }
+      },
+      {
+        "@type": "Question",
+        "name": "Preciso usar smartwatch ou dispositivos?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Não é obrigatório, mas recomendamos. Smartwatches, esfigmomanômetros digitais, glicosímetros e balanças inteligentes enriquecem os dados e permitem um acompanhamento mais preciso. Na consulta, orientamos quais dispositivos fazem sentido para o seu caso." }
+      },
+      {
+        "@type": "Question",
+        "name": "A consulta é presencial ou online?",
+        "acceptedAnswer": { "@type": "Answer", "text": "A primeira consulta é presencial em São Paulo, para avaliação completa e bioimpedância. Retornos podem ser presenciais ou por telemedicina, dependendo da necessidade clínica." }
+      },
+      {
+        "@type": "Question",
+        "name": "Quanto tempo dura o protocolo?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Depende da condição e das metas. Em geral, o ciclo até atingir a meta leva de 3 a 6 meses. Após atingir a meta, você migra para a fase de manutenção com check-ups periódicos." }
+      },
+      {
+        "@type": "Question",
+        "name": "O que inclui o protocolo?",
+        "acceptedAnswer": { "@type": "Answer", "text": "O protocolo completo inclui: dieta personalizada, hidratação, medicações, suplementação baseada em evidências, hábitos de vida, atividade física básica, cronograma de bioimpedância e exames periódicos." }
+      },
+      {
+        "@type": "Question",
+        "name": "O Dr. Bruno atende por convênio?",
+        "acceptedAnswer": { "@type": "Answer", "text": "O atendimento Apex Health é particular. O modelo de acompanhamento contínuo com assessor virtual vai além do que convênios cobrem. Valores são apresentados na consulta inicial." }
+      },
+      {
+        "@type": "Question",
+        "name": "O que é a Síndrome CKM?",
+        "acceptedAnswer": { "@type": "Answer", "text": "A Síndrome Cardiorrenal-Metabólica (CKM) é a coexistência de doença renal, diabetes, obesidade e doença cardiovascular. É definida pela AHA desde 2023 e multiplica o risco em até 4x. O Apex Health trata essas condições de forma integrada." }
+      },
+      {
+        "@type": "Question",
+        "name": "Como agendo minha consulta?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Use o botão Agendar Consulta no topo da página (no hero) ou fale com a gente diretamente pelo botão flutuante do WhatsApp — qualquer dos dois leva ao agendamento." }
+      }
+    ]
+  }
+  </script>
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -1210,21 +1270,31 @@
 
     /* ===== FOOTER ===== */
     .footer {
-      background-color: var(--footer-bg); padding: 48px 24px 32px; text-align: center;
+      background-color: var(--footer-bg); color: rgba(255,255,255,0.5);
+      padding: 64px 24px 28px; text-align: left;
     }
-    .footer-logo {
-      display: flex; justify-content: center; margin-bottom: 20px;
+    .footer-container { max-width: 1120px; margin: 0 auto; }
+    .footer-top { text-align: center; margin-bottom: 48px; }
+    .footer-logo { display: flex; justify-content: center; }
+    .footer-logo img { height: 56px; width: auto; opacity: 0.9; }
+    .footer-grid {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 36px 32px;
+      padding-bottom: 36px; border-bottom: 1px solid rgba(255,255,255,0.08);
     }
-    .footer-logo img {
-      height: 68px; width: auto;
+    .footer-col { display: flex; flex-direction: column; gap: 10px; }
+    .footer-col-title {
+      font-size: 10px; font-weight: 700; letter-spacing: 2.5px;
+      text-transform: uppercase; color: var(--gold); margin-bottom: 6px;
     }
-    .footer-links { display: flex; justify-content: center; gap: 24px; flex-wrap: wrap; margin-bottom: 24px; }
-    .footer-links a {
-      font-size: 13px; color: rgba(255,255,255,0.4); text-decoration: none;
-      transition: color 0.25s;
+    .footer-col-title + .footer-col-title { margin-top: 18px; }
+    .footer-col a {
+      font-size: 13px; color: rgba(255,255,255,0.55);
+      text-decoration: none; line-height: 1.4; transition: color 0.2s;
+      display: inline-flex; align-items: center; gap: 8px;
     }
-    .footer-links a:hover { color: rgba(255,255,255,0.7); }
-    .footer-copy { font-size: 12px; color: rgba(255,255,255,0.2); }
+    .footer-col a:hover { color: #fff; }
+    .footer-bottom { padding-top: 22px; text-align: center; }
+    .footer-copy { font-size: 12px; color: rgba(255,255,255,0.3); }
 
     /* ===== RESPONSIVE — TABLET ===== */
     @media (max-width: 1024px) {
@@ -1338,9 +1408,10 @@
 
       .pro-banner-inner { flex-direction: column; text-align: center; padding: 28px 24px; gap: 20px; }
 
-      .footer { padding: 36px 20px 28px; }
-      .footer-links { gap: 16px; }
-      .footer-links a { font-size: 12px; }
+      .footer { padding: 44px 20px 24px; }
+      .footer-top { margin-bottom: 32px; }
+      .footer-grid { grid-template-columns: repeat(2, 1fr); gap: 28px 20px; padding-bottom: 28px; }
+      .footer-col a { font-size: 12px; }
     }
 
     /* ===== RESPONSIVE — SMALL MOBILE ===== */
@@ -2001,74 +2072,74 @@
 
       <div class="faq-list">
         <div class="faq-item rv">
-          <button class="faq-q">
+          <button class="faq-q" aria-expanded="false">
             O que é o Apex Health?
             <i data-lucide="plus" class="faq-icon" style="width:20px;height:20px;color:var(--navy);stroke-width:2"></i>
           </button>
           <div class="faq-a"><div class="faq-a-inner">O Apex Health é um serviço médico de acompanhamento contínuo para condições crônicas. Combinamos consulta presencial, protocolo personalizado e assessor virtual para garantir que você atinja — e mantenha — suas metas de saúde.</div></div>
         </div>
         <div class="faq-item rv" style="transition-delay:0.05s">
-          <button class="faq-q">
+          <button class="faq-q" aria-expanded="false">
             Quais condições o Apex Health trata?
             <i data-lucide="plus" class="faq-icon" style="width:20px;height:20px;color:var(--navy);stroke-width:2"></i>
           </button>
           <div class="faq-a"><div class="faq-a-inner">Hipertensão arterial, diabetes tipo 2, obesidade, doença renal crônica (DRC) e protocolos de bem-estar e qualidade de vida. Muitos pacientes apresentam mais de uma condição simultaneamente (Síndrome CKM), e o protocolo trata todas de forma integrada.</div></div>
         </div>
         <div class="faq-item rv" style="transition-delay:0.1s">
-          <button class="faq-q">
+          <button class="faq-q" aria-expanded="false">
             Como funciona o assessor virtual?
             <i data-lucide="plus" class="faq-icon" style="width:20px;height:20px;color:var(--navy);stroke-width:2"></i>
           </button>
           <div class="faq-a"><div class="faq-a-inner">O assessor virtual monitora diariamente sua aderência ao protocolo: dieta, hidratação, medicações, suplementação, hábitos e dados de wearables (sono, atividade, frequência cardíaca). Caso algo saia do caminho, o médico é alertado e pode intervir antes do retorno.</div></div>
         </div>
         <div class="faq-item rv" style="transition-delay:0.15s">
-          <button class="faq-q">
+          <button class="faq-q" aria-expanded="false">
             Preciso usar smartwatch ou dispositivos?
             <i data-lucide="plus" class="faq-icon" style="width:20px;height:20px;color:var(--navy);stroke-width:2"></i>
           </button>
           <div class="faq-a"><div class="faq-a-inner">Não é obrigatório, mas recomendamos. Smartwatches, esfigmomanômetros digitais, glicosímetros e balanças inteligentes enriquecem os dados e permitem um acompanhamento mais preciso. Na consulta, orientamos quais dispositivos fazem sentido para o seu caso.</div></div>
         </div>
         <div class="faq-item rv" style="transition-delay:0.2s">
-          <button class="faq-q">
+          <button class="faq-q" aria-expanded="false">
             A consulta é presencial ou online?
             <i data-lucide="plus" class="faq-icon" style="width:20px;height:20px;color:var(--navy);stroke-width:2"></i>
           </button>
           <div class="faq-a"><div class="faq-a-inner">A primeira consulta é presencial em São Paulo, para avaliação completa e bioimpedância. Retornos podem ser presenciais ou por telemedicina, dependendo da necessidade clínica.</div></div>
         </div>
         <div class="faq-item rv" style="transition-delay:0.25s">
-          <button class="faq-q">
+          <button class="faq-q" aria-expanded="false">
             Quanto tempo dura o protocolo?
             <i data-lucide="plus" class="faq-icon" style="width:20px;height:20px;color:var(--navy);stroke-width:2"></i>
           </button>
           <div class="faq-a"><div class="faq-a-inner">Depende da condição e das metas. Em geral, o ciclo até atingir a meta leva de 3 a 6 meses. Após atingir a meta, você migra para a fase de manutenção com check-ups periódicos.</div></div>
         </div>
         <div class="faq-item rv" style="transition-delay:0.3s">
-          <button class="faq-q">
+          <button class="faq-q" aria-expanded="false">
             O que inclui o protocolo?
             <i data-lucide="plus" class="faq-icon" style="width:20px;height:20px;color:var(--navy);stroke-width:2"></i>
           </button>
           <div class="faq-a"><div class="faq-a-inner">O protocolo completo inclui: dieta personalizada, hidratação, medicações, suplementação baseada em evidências, hábitos de vida, atividade física básica, cronograma de bioimpedância e exames periódicos.</div></div>
         </div>
         <div class="faq-item rv" style="transition-delay:0.35s">
-          <button class="faq-q">
+          <button class="faq-q" aria-expanded="false">
             O Dr. Bruno atende por convênio?
             <i data-lucide="plus" class="faq-icon" style="width:20px;height:20px;color:var(--navy);stroke-width:2"></i>
           </button>
           <div class="faq-a"><div class="faq-a-inner">O atendimento Apex Health é particular. O modelo de acompanhamento contínuo com assessor virtual vai além do que convênios cobrem. Valores são apresentados na consulta inicial.</div></div>
         </div>
         <div class="faq-item rv" style="transition-delay:0.4s">
-          <button class="faq-q">
+          <button class="faq-q" aria-expanded="false">
             O que é a Síndrome CKM?
             <i data-lucide="plus" class="faq-icon" style="width:20px;height:20px;color:var(--navy);stroke-width:2"></i>
           </button>
           <div class="faq-a"><div class="faq-a-inner">A Síndrome Cardiorrenal-Metabólica (CKM) é a coexistência de doença renal, diabetes, obesidade e doença cardiovascular. É definida pela AHA desde 2023 e multiplica o risco em até 4x. O Apex Health trata essas condições de forma integrada.</div></div>
         </div>
         <div class="faq-item rv" style="transition-delay:0.45s">
-          <button class="faq-q">
+          <button class="faq-q" aria-expanded="false">
             Como agendo minha consulta?
             <i data-lucide="plus" class="faq-icon" style="width:20px;height:20px;color:var(--navy);stroke-width:2"></i>
           </button>
-          <div class="faq-a"><div class="faq-a-inner">Clique no botão "Agendar Consulta" em qualquer lugar da página. Você será direcionado para o agendamento. Também pode entrar em contato pelo WhatsApp para tirar dúvidas antes de agendar.</div></div>
+          <div class="faq-a"><div class="faq-a-inner">Use o botão "Agendar Consulta" no topo da página (no hero) ou fale com a gente diretamente pelo botão flutuante do WhatsApp — qualquer dos dois leva ao agendamento.</div></div>
         </div>
       </div>
     </div>
@@ -2082,7 +2153,7 @@
         <a href="https://wa.me/5511970833475?text=Ol%C3%A1%2C%20gostaria%20de%20agendar%20uma%20consulta%20na%20APEX%20Health." class="btn-teal" target="_blank" rel="noopener">Agendar Consulta</a>
         <a href="https://wa.me/5511970833475?text=Ol%C3%A1%2C%20tenho%20uma%20d%C3%BAvida%20sobre%20o%20APEX%20Health." class="btn-outline" target="_blank" rel="noopener">Tirar Dúvidas</a>
       </div>
-      <p class="cta-trust rv" style="transition-delay:0.2s">CRM-SP 151.041 &nbsp;|&nbsp; Assessor virtual proprietário</p>
+      <p class="cta-trust rv" style="transition-delay:0.2s">CRM-SP 151.041 &nbsp;&middot;&nbsp; RQE 70145 &nbsp;|&nbsp; Assessor virtual proprietário</p>
     </div>
   </section>
 
@@ -2106,25 +2177,45 @@
 
 <!-- FOOTER -->
   <footer class="footer gold-dots">
-    <div class="footer-logo"><img src="logo-apex-transparent.png" alt="Apex Health" /></div>
-    <div class="footer-links">
-      <a href="#metodo">O Método</a>
-      <a href="#paraquem">Para Quem</a>
-      <a href="#jornada">Como Funciona</a>
-      <a href="sobre-dr-bruno-biluca.html">O Médico</a>
-      <a href="#resultados">Resultados</a>
-      <a href="#faq">FAQ</a>
-      <a href="nefrologia-doenca-renal.html">DRC</a>
-      <a href="sindrome-ckm.html">CKM</a>
-      <a href="wearables-saude-digital.html">Wearables</a>
-      <a href="dados-apex.html">Indicadores</a>
-      <a href="imprensa.html">Imprensa</a>
-      <a href="preview_pro_completo.html">Pro</a>
-      <a href="#atualizacao">Atualizações</a>
-      <a href="politica-privacidade.html">Privacidade</a>
-      <a href="termos-uso.html">Termos</a>
+    <div class="footer-container">
+      <div class="footer-top">
+        <div class="footer-logo"><img src="logo-apex-transparent.png" alt="Apex Health" /></div>
+      </div>
+      <div class="footer-grid">
+        <div class="footer-col">
+          <h4 class="footer-col-title">Navegação</h4>
+          <a href="#metodo">O Método</a>
+          <a href="#paraquem">Para Quem</a>
+          <a href="#jornada">Como Funciona</a>
+          <a href="sobre-dr-bruno-biluca.html">O Médico</a>
+          <a href="#faq">Perguntas frequentes</a>
+        </div>
+        <div class="footer-col">
+          <h4 class="footer-col-title">Conteúdo</h4>
+          <a href="nefrologia-doenca-renal.html">Doença Renal Crônica</a>
+          <a href="sindrome-ckm.html">Síndrome CKM</a>
+          <a href="wearables-saude-digital.html">Wearables</a>
+          <a href="dados-apex.html">Indicadores</a>
+          <a href="publicacoes.html">Publicações</a>
+          <a href="imprensa.html">Imprensa</a>
+        </div>
+        <div class="footer-col">
+          <h4 class="footer-col-title">Profissional</h4>
+          <a href="preview_pro_completo.html">Apex Health Pro</a>
+        </div>
+        <div class="footer-col">
+          <h4 class="footer-col-title">Contato</h4>
+          <a href="https://wa.me/5511970833475" target="_blank" rel="noopener"><i data-lucide="message-circle" style="width:14px;height:14px;stroke-width:1.8"></i> WhatsApp</a>
+          <a href="https://www.instagram.com/apexhealth.med/" target="_blank" rel="noopener"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg> Instagram</a>
+          <h4 class="footer-col-title">Legal</h4>
+          <a href="politica-privacidade.html">Política de Privacidade</a>
+          <a href="termos-uso.html">Termos de Uso</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p class="footer-copy">&copy; <span id="footer-year">2026</span> Apex Health. Todos os direitos reservados.</p>
+      </div>
     </div>
-    <p class="footer-copy">&copy; 2026 Apex Health. Todos os direitos reservados. | <a href="politica-privacidade.html" style="color:rgba(255,255,255,0.5);text-decoration:underline;">Política de Privacidade</a></p>
   </footer>
 
   <script>
@@ -2322,8 +2413,15 @@
       btn.addEventListener('click', () => {
         const item = btn.parentElement;
         const wasOpen = item.classList.contains('open');
-        document.querySelectorAll('.faq-item.open').forEach(i => i.classList.remove('open'));
-        if (!wasOpen) item.classList.add('open');
+        document.querySelectorAll('.faq-item.open').forEach(i => {
+          i.classList.remove('open');
+          const b = i.querySelector('.faq-q');
+          if (b) b.setAttribute('aria-expanded', 'false');
+        });
+        if (!wasOpen) {
+          item.classList.add('open');
+          btn.setAttribute('aria-expanded', 'true');
+        }
       });
     });
 
@@ -2340,6 +2438,9 @@
 
     // ===== LUCIDE ICONS =====
     lucide.createIcons();
+
+    // ===== FOOTER YEAR =====
+    (function(){ const y = document.getElementById('footer-year'); if (y) y.textContent = new Date().getFullYear(); })();
 
     // ===== BOLETIM SUBSCRIBE =====
     async function handleBoletimSubscribe(e) {
