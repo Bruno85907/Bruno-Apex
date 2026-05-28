@@ -55,11 +55,12 @@
 }
 </script>
 
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
 <script src="https://unpkg.com/lucide@0.469.0"></script>
 <style>
 :root {
   --font-sans: 'Inter', sans-serif;
+  --font-serif: 'Instrument Serif', Georgia, serif;
   --navy: #1E2D50; --navy-deep: #121D33; --dark-section: #0a1220;
   --teal: #028090; --teal-light: #04b5c8;
   --gold: #C4A35A; --gold-light: #d4b76a;
@@ -125,11 +126,11 @@ body { font-family: var(--font-sans); background: var(--bg); color: var(--navy);
   padding: 5px 16px; border-radius: 20px; text-transform: uppercase; margin-bottom: 24px;
 }
 .artigo-titulo {
-  font-family: var(--font-sans); font-size: clamp(32px, 5vw, 52px);
-  font-weight: 800; color: var(--navy); line-height: 1.08;
-  letter-spacing: -2px; margin-bottom: 20px;
+  font-family: var(--font-serif); font-size: clamp(36px, 5.5vw, 58px);
+  font-weight: 400; color: var(--navy); line-height: 1.1;
+  letter-spacing: -0.5px; margin-bottom: 20px;
 }
-.artigo-titulo em { color: var(--gold); font-style: normal; font-weight: 800; }
+.artigo-titulo em { color: var(--gold); font-style: italic; font-weight: 400; }
 .artigo-subtitulo {
   font-size: clamp(16px, 2vw, 20px); font-weight: 400;
   color: #5a6a7a; line-height: 1.7; margin-bottom: 36px; max-width: 680px;
@@ -327,7 +328,7 @@ body { font-family: var(--font-sans); background: var(--bg); color: var(--navy);
   .header-nav > a { font-size: 11px; }
   .header-cta, .header-pro { display: none; }
   .artigo-hero { padding-top: 90px; }
-  .artigo-titulo { font-size: 28px; letter-spacing: -1px; }
+  .artigo-titulo { font-size: 32px; letter-spacing: -0.3px; }
   .artigo-body p { font-size: 16px; }
   .artigo-cta { padding: 28px 24px; }
   .artigo-destaque-box, .artigo-alerta, .artigo-resumo { padding: 20px 20px; }

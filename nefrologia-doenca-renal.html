@@ -117,7 +117,7 @@
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
 
   <style>
     :root {
@@ -133,6 +133,7 @@
       --dark-section: #0a1220;
       --radius: 14px;
       --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+      --font-serif: 'Instrument Serif', Georgia, serif;
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -202,17 +203,17 @@
     }
     .hub-hero .eyebrow { color: var(--teal-light); }
     .hub-hero h1 {
-      font-family: var(--font-sans);
-      font-size: clamp(36px, 5vw, 56px);
-      font-weight: 800;
-      line-height: 1.08;
-      letter-spacing: -2px;
+      font-family: var(--font-serif);
+      font-size: clamp(40px, 5.5vw, 60px);
+      font-weight: 400;
+      line-height: 1.1;
+      letter-spacing: -0.5px;
       color: #fff;
       margin-bottom: 20px;
     }
     .hub-hero h1 em {
       color: var(--gold);
-      font-style: normal;
+      font-style: italic;
       font-weight: 800;
     }
     .hub-hero .hero-sub {
