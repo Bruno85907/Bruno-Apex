@@ -673,10 +673,11 @@
     }
 
     /* Como Funciona + Assessor (fundidos no Método) */
-    .metodo-jornada { margin-top: 76px; }
-    .metodo-assessor { margin-top: 76px; }
-    .metodo .app-feature { color: rgba(255,255,255,0.88); }
-    .metodo .app-feature i { color: var(--teal-light) !important; }
+    /* Assessor virtual — seção própria, fundo escuro mantido */
+    .metodo-assessor { background-color: var(--navy-deep); color: #fff; }
+    .metodo-assessor .headline-serif { color: #fff; }
+    .metodo-assessor .app-feature { color: rgba(255,255,255,0.88); }
+    .metodo-assessor .app-feature i { color: var(--teal-light) !important; }
 
     /* Showcase do prontuário (dentro do Método) */
     .metodo-showcase {
@@ -905,24 +906,24 @@
     .paraquem-card.gold-accent h4 { color: var(--gold); }
     /* ===== PONTE SÍNDROME CKM (transição) ===== */
     .ckm-bridge {
-      background: linear-gradient(135deg, #0b1730, #122a4a);
-      border-top: 1px solid rgba(196,163,90,0.22);
-      border-bottom: 1px solid rgba(196,163,90,0.22);
+      background-color: var(--bg-alt);
+      border-top: 1px solid rgba(196,163,90,0.28);
+      border-bottom: 1px solid rgba(196,163,90,0.28);
       padding: 60px 0; text-align: center; position: relative; overflow: hidden;
     }
     .ckm-bridge::before {
       content: ''; position: absolute; top: -120px; left: 50%; transform: translateX(-50%);
       width: 600px; height: 300px; pointer-events: none;
-      background: radial-gradient(circle, rgba(2,128,144,0.18), transparent 70%);
+      background: radial-gradient(circle, rgba(2,128,144,0.10), transparent 70%);
     }
     .ckm-bridge .container { position: relative; z-index: 1; }
     .ckm-bridge-title {
-      font-family: var(--font-sans); font-weight: 800; font-size: clamp(23px,3vw,36px);
-      color: #fff; max-width: 720px; margin: 14px auto 0; line-height: 1.18; letter-spacing: -0.6px;
+      font-family: var(--font-serif); font-weight: 400; font-size: clamp(24px,3vw,38px);
+      color: var(--navy); max-width: 720px; margin: 14px auto 0; line-height: 1.18; letter-spacing: -0.3px;
     }
-    .ckm-bridge-title em { color: var(--gold); font-style: normal; }
+    .ckm-bridge-title em { color: var(--gold); font-style: italic; }
     .ckm-bridge-sub {
-      font-size: 15px; color: rgba(255,255,255,0.6); max-width: 660px; margin: 16px auto 0; line-height: 1.7;
+      font-size: 15px; color: rgba(30,45,80,0.62); max-width: 660px; margin: 16px auto 0; line-height: 1.7;
     }
     .ckm-pillars {
       display: flex; align-items: center; justify-content: center; gap: 11px; flex-wrap: wrap;
@@ -930,16 +931,16 @@
     }
     .ckm-pillar {
       display: flex; align-items: center; gap: 9px; font-size: 14px; font-weight: 600;
-      color: rgba(255,255,255,0.85); background: rgba(255,255,255,0.04);
-      border: 1px solid rgba(255,255,255,0.1); padding: 9px 16px; border-radius: 50px;
+      color: var(--navy); background: #fff;
+      border: 1px solid rgba(30,45,80,0.10); padding: 9px 16px; border-radius: 50px;
     }
-    .ckm-pi { width: 26px; height: 26px; border-radius: 50%; background: rgba(2,128,144,0.16); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
-    .ckm-pi i { width: 15px; height: 15px; color: var(--teal-light); stroke-width: 1.6; }
-    .ckm-plus, .ckm-eq { color: rgba(255,255,255,0.3); font-weight: 700; font-size: 16px; }
+    .ckm-pi { width: 26px; height: 26px; border-radius: 50%; background: rgba(2,128,144,0.10); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .ckm-pi i { width: 15px; height: 15px; color: var(--teal); stroke-width: 1.6; }
+    .ckm-plus, .ckm-eq { color: rgba(30,45,80,0.35); font-weight: 700; font-size: 16px; }
     .ckm-eq { color: var(--gold); }
-    .ckm-pillar-int { border-color: rgba(196,163,90,0.45); background: rgba(196,163,90,0.10); color: #fff; }
-    .ckm-pillar-int .ckm-pi { background: rgba(196,163,90,0.20); }
-    .ckm-pillar-int .ckm-pi i { color: var(--gold-light); }
+    .ckm-pillar-int { border-color: rgba(196,163,90,0.55); background: rgba(196,163,90,0.10); color: var(--navy); }
+    .ckm-pillar-int .ckm-pi { background: rgba(196,163,90,0.22); }
+    .ckm-pillar-int .ckm-pi i { color: var(--gold); }
     .ckm-bridge-cta { margin-top: 28px; }
     .ckm-bridge-cta a { font-size: 14px; color: var(--gold); font-weight: 600; text-decoration: none; transition: color 0.25s; }
     .ckm-bridge-cta a:hover { color: var(--gold-light); }
@@ -1786,8 +1787,12 @@
         </div>
       </div>
 
-      <!-- Como Funciona (fundido no Método) -->
-      <div class="metodo-jornada rv" id="jornada">
+    </div>
+  </section>
+
+  <!-- Como Funciona (seção própria, fundo claro) -->
+  <section class="jornada section-pad" id="jornada">
+    <div class="container">
       <p class="eyebrow eyebrow-center rv">Como funciona</p>
       <h2 class="headline-serif headline-center rv" style="font-size:clamp(30px,4vw,48px);max-width:600px;margin:0 auto;">
         Do primeiro contato ao <em>resultado</em>.
@@ -1864,10 +1869,12 @@
           </div>
         </div>
       </div>
-      </div>
+    </div>
+  </section>
 
-      <!-- Assessor virtual (fundido no Método) -->
-      <div class="metodo-assessor" id="app">
+  <!-- Assessor virtual (seção própria, fundo escuro mantido) -->
+  <section class="metodo-assessor section-pad" id="app">
+    <div class="container">
       <div class="app-layout">
         <div class="app-text rv">
           <p class="eyebrow" style="color:var(--gold);">Seu acompanhamento diário</p>
@@ -1925,7 +1932,6 @@
             </div>
           </div>
         </div>
-      </div>
       </div>
     </div>
   </section>
