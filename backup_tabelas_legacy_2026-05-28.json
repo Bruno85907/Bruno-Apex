@@ -1,0 +1,68 @@
+{
+  "exported_at": "2026-05-29T00:05:19.290939+00:00",
+  "project_ref": "syzmsixhjlutsynnqivv",
+  "reason": "Tabelas legacy (modelo antigo) substituídas pelas novas prescricao_*/tracking_*. Backup completo antes do DROP. Dados pertencem ao paciente-teste 5ddc9df8-27d4-4ce7-ac3f-6bfe6367964e (Dr. Bruno como primeiro paciente).",
+  "dropped_tables": [
+    "diet_meals (FK→diet_plans)",
+    "supplement_logs (FK→supplements)",
+    "training_intervals (FK→training_plans)",
+    "health_goal_logs (FK→health_goals)",
+    "diet_plans",
+    "supplements",
+    "training_plans",
+    "health_goals",
+    "admins",
+    "hydration_targets",
+    "hydration_logs"
+  ],
+  "tables": {
+    "supplements": [
+      {"id":"d07ea411-ed6b-4d5a-9271-ef102f136055","dose":"3-4g","name":"Creatina Monohidratada","notes":"Diluir em água ou suco. Pode tomar junto com Whey no pós-treino. Fase de manutenção.","times":["morning"],"active":true,"frequency":"daily","with_food":false,"created_at":"2026-04-14T01:15:23.361222+00:00","patient_id":"5ddc9df8-27d4-4ce7-ac3f-6bfe6367964e"},
+      {"id":"615671be-1693-4b65-aa66-0cf5885e40aa","dose":"2g (2 cápsulas)","name":"Ômega-3","notes":"Preferencialmente EPA+DHA. Tomar com refeição para melhor absorção e evitar refluxo.","times":["lunch"],"active":true,"frequency":"daily","with_food":true,"created_at":"2026-04-14T01:15:23.361222+00:00","patient_id":"5ddc9df8-27d4-4ce7-ac3f-6bfe6367964e"},
+      {"id":"f676c8ff-4560-4109-a12c-8df3c1824df1","dose":"D3 3000UI + K2 150mcg","name":"Vitamina D3 + K2","notes":"Tomar com refeição gordurosa para melhor absorção. K2 (MK-7) essencial para direcionar cálcio.","times":["morning"],"active":true,"frequency":"daily","with_food":true,"created_at":"2026-04-14T01:15:23.361222+00:00","patient_id":"5ddc9df8-27d4-4ce7-ac3f-6bfe6367964e"},
+      {"id":"dbf017c5-fc10-4019-a93a-deb842adda4b","dose":"100-200mg","name":"CoQ10","notes":"Ubiquinol preferível ao Ubiquinona. Importante pela Rosuvastatina. Tomar com refeição gordurosa.","times":["morning"],"active":true,"frequency":"daily","with_food":true,"created_at":"2026-04-14T01:15:23.361222+00:00","patient_id":"5ddc9df8-27d4-4ce7-ac3f-6bfe6367964e"},
+      {"id":"acd28b81-dea0-42e2-bb19-bbc20ce43f31","dose":"300-400mg","name":"Magnésio Glicinato","notes":"Antes de dormir. Melhor forma para absorção e tolerância gástrica. Suporte ao sono e recuperação.","times":["evening"],"active":true,"frequency":"daily","with_food":false,"created_at":"2026-04-14T01:15:23.361222+00:00","patient_id":"5ddc9df8-27d4-4ce7-ac3f-6bfe6367964e"},
+      {"id":"8cd5e7ea-e717-4d38-ac49-81065dbaf88f","dose":"≥10 bilhões UFC","name":"Probiótico","notes":"Com estômago vazio ou 30min antes do café. Multicepa preferível (L. acidophilus, B. longum, etc).","times":["morning"],"active":true,"frequency":"daily","with_food":false,"created_at":"2026-04-14T01:15:23.361222+00:00","patient_id":"5ddc9df8-27d4-4ce7-ac3f-6bfe6367964e"},
+      {"id":"bf61c820-c99b-441f-a193-31b0c85511e1","dose":"500mg","name":"Própolis","notes":"Extrato seco padronizado. Propriedades anti-inflamatórias e imunológicas.","times":["morning"],"active":true,"frequency":"daily","with_food":false,"created_at":"2026-04-14T01:15:23.361222+00:00","patient_id":"5ddc9df8-27d4-4ce7-ac3f-6bfe6367964e"},
+      {"id":"ed563b19-852c-4989-9009-cf711c4ad178","dose":"1 comprimido","name":"Polivitamínico","notes":"Com café da manhã. Evitar marcas com megadoses. Foco em zinco, selênio, vitaminas do complexo B.","times":["morning"],"active":true,"frequency":"daily","with_food":true,"created_at":"2026-04-14T01:15:23.361222+00:00","patient_id":"5ddc9df8-27d4-4ce7-ac3f-6bfe6367964e"},
+      {"id":"54f66c98-1f5d-48ba-b957-ed0260bc63da","dose":"1g (fresca/liofilizada)","name":"Geleia Real","notes":"Em jejum ou com pouco alimento. Propriedades adaptogênicas e anti-inflamatórias.","times":["morning"],"active":true,"frequency":"daily","with_food":false,"created_at":"2026-04-14T01:15:23.361222+00:00","patient_id":"5ddc9df8-27d4-4ce7-ac3f-6bfe6367964e"},
+      {"id":"b696c520-577a-4b26-a529-01914b7bbf36","dose":"30-35g","name":"Whey Protein","notes":"No pós-treino imediato (até 30 min). Concentrado ou isolado. Junto com Creatina.","times":["post-workout"],"active":true,"frequency":"daily","with_food":false,"created_at":"2026-04-14T01:15:23.361222+00:00","patient_id":"5ddc9df8-27d4-4ce7-ac3f-6bfe6367964e"},
+      {"id":"6b3bb82f-23b1-4092-addf-8d94a448fb23","dose":"480mg","name":"Tart Cherry","notes":"Extrato concentrado. Anti-inflamatório natural, reduz dor muscular tardia (DOMS). Pós-treino.","times":["post-workout"],"active":true,"frequency":"daily","with_food":false,"created_at":"2026-04-14T01:15:23.361222+00:00","patient_id":"5ddc9df8-27d4-4ce7-ac3f-6bfe6367964e"},
+      {"id":"1f72d3f9-7b06-4815-8ee7-7a2f425065b0","dose":"1 dose","name":"Eletrólitos","notes":"Apenas nos treinos. Sódio, potássio, magnésio. Essencial para corridas longas (>60 min).","times":["during-exercise"],"active":true,"frequency":"training_days","with_food":false,"created_at":"2026-04-14T01:15:23.361222+00:00","patient_id":"5ddc9df8-27d4-4ce7-ac3f-6bfe6367964e"},
+      {"id":"4ce4b0ce-cb09-4522-87e4-7e69461011a9","dose":"20g","name":"Caseína","notes":"Opcional. Antes de dormir em dias de treino intenso ou jejum prolongado. Proteína de digestão lenta.","times":["night"],"active":true,"frequency":"optional","with_food":false,"created_at":"2026-04-14T01:15:23.361222+00:00","patient_id":"5ddc9df8-27d4-4ce7-ac3f-6bfe6367964e"}
+    ],
+    "diet_plans": [
+      {"id":"68c1f977-e12b-4585-bde3-119f44d80def","goal":"Suporte à hipertrofia muscular e construção de base aeróbica para maratona. Energia suficiente para treinos de força + corrida ~38km/semana.","fat_g":72,"notes":"Fase 1 de 4 do plano de preparação para maratona (Setembro 2026). Semana 2/24. Distribuição: 21% proteína, 48% carboidrato, 25% gordura. Medicamentos: Sertralina 50mg (manhã + alimento) e Rosuvastatina 5mg (jantar). CoQ10 essencial pela estatina.","title":"Plano Alimentar Fase 1 — Hipertrofia + Base Aeróbica","active":true,"carbs_g":310,"protein_g":134,"created_at":"2026-04-14T01:15:58.748221+00:00","patient_id":"5ddc9df8-27d4-4ce7-ac3f-6bfe6367964e","calories_target":2600}
+    ],
+    "diet_meals": [
+      {"id":"b6c43683-cd58-436a-948d-c42a68ebea21","fat_g":1,"carbs_g":28,"calories":120,"meal_name":"Pré-treino","meal_time":"04:20","protein_g":2,"description":"2 tâmaras + 1 banana pequena — só carboidrato, sem proteína ou gordura. Creatina 3–4g + ½ Supercoffee.","order_index":1,"diet_plan_id":"68c1f977-e12b-4585-bde3-119f44d80def"},
+      {"id":"ba963901-913c-439f-819f-019fcef26b7b","fat_g":28,"carbs_g":38,"calories":550,"meal_name":"Café da Manhã + Sertralina","meal_time":"07:00","protein_g":35,"description":"3–4 ovos mexidos + 2 fatias pão integral + ½ abacate + azeite. Sertralina 50mg obrigatoriamente com alimento. Suplementos lipossolúveis: Vit D3+K2, CoQ10 200mg, Ômega-3 2g, Polivitamínico, Própolis.","order_index":2,"diet_plan_id":"68c1f977-e12b-4585-bde3-119f44d80def"},
+      {"id":"1eedc17b-96d1-41b5-9c33-7aa7c66c4997","fat_g":1,"carbs_g":35,"calories":150,"meal_name":"Suco Funcional (Berry Shield)","meal_time":"08:30","protein_g":2,"description":"Centrífuga: 1 xíc blueberry + 1 xíc uva roxa + ½ romã + 1 maçã + 1cm gengibre. Consumir em até 15min. Antocianinas + resveratrol — recuperação e anti-inflamação.","order_index":3,"diet_plan_id":"68c1f977-e12b-4585-bde3-119f44d80def"},
+      {"id":"80912d4a-756a-4dca-9ab5-b1f14d36b028","fat_g":3,"carbs_g":45,"calories":250,"meal_name":"Pós-treino","meal_time":"07:30","protein_g":33,"description":"Whey 30–35g + banana (35g proteína + 45g carbo). Janela anabólica — até 30min após treino. Creatina junto se não tomou antes.","order_index":4,"diet_plan_id":"68c1f977-e12b-4585-bde3-119f44d80def"},
+      {"id":"6685404a-f853-44ca-aa6b-6c7da5eb5aa9","fat_g":14,"carbs_g":72,"calories":600,"meal_name":"Almoço","meal_time":"12:00","protein_g":42,"description":"160g frango grelhado + arroz integral + feijão preto + legumes refogados + salada verde com azeite. Probiótico ≥10B UFC + Geleia Real 1g, 30min antes da refeição.","order_index":5,"diet_plan_id":"68c1f977-e12b-4585-bde3-119f44d80def"},
+      {"id":"5e6e0939-a0a1-45ff-bd71-a09d4fac3add","fat_g":16,"carbs_g":32,"calories":350,"meal_name":"Lanche da Tarde","meal_time":"15:00","protein_g":20,"description":"Iogurte grego 200g + 30g castanhas-do-pará/mix nuts + fruta (maçã, pera ou pêssego).","order_index":6,"diet_plan_id":"68c1f977-e12b-4585-bde3-119f44d80def"},
+      {"id":"664a36cb-7033-4c12-98e0-e1a438743712","fat_g":14,"carbs_g":42,"calories":450,"meal_name":"Jantar + Rosuvastatina","meal_time":"17:30","protein_g":36,"description":"Salmão 150g + batata-doce cozida + espinafre refogado + salada. Rosuvastatina 5mg COM o jantar — melhor eficácia noturna.","order_index":7,"diet_plan_id":"68c1f977-e12b-4585-bde3-119f44d80def"},
+      {"id":"f3a9853e-c180-4e25-a10e-79c1e837968a","fat_g":2,"carbs_g":8,"calories":130,"meal_name":"Pré-sono (opcional)","meal_time":"21:00","protein_g":22,"description":"Caseína 20g ou cottage 150g — opcional, especialmente em dias de treino intenso. Proteína de digestão lenta para suporte ao GH noturno. Magnésio Glicinato 300–400mg.","order_index":8,"diet_plan_id":"68c1f977-e12b-4585-bde3-119f44d80def"}
+    ],
+    "health_goals": [
+      {"id":"3125f32b-babc-4ce9-825f-c30d12faed6d","unit":"h:mm:ss","notes":"Meta: ~3h20 na maratona de 42km em Setembro 2026. Semana 2/24 do plano.","metric":"Tempo de Maratona","achieved":false,"category":"performance","deadline":"2026-09-30","created_at":"2026-04-14T01:15:41.408777+00:00","patient_id":"5ddc9df8-27d4-4ce7-ac3f-6bfe6367964e","target_value":3.33,"current_value":null},
+      {"id":"0430564a-a8de-414e-927e-4bdfddeac367","unit":"ml/kg/min","notes":"VO2max atual 50 (P96 para 40 anos). Meta: 56+ para pace de 4:45/km sustentado.","metric":"VO2max","achieved":false,"category":"fitness","deadline":"2026-09-30","created_at":"2026-04-14T01:15:41.408777+00:00","patient_id":"5ddc9df8-27d4-4ce7-ac3f-6bfe6367964e","target_value":56,"current_value":50},
+      {"id":"c063491c-a2a0-4edf-8ac2-e3d333fcf166","unit":"kg","notes":"Peso atual 67kg, meta 65kg para a maratona. Altura 1,72m — otimiza relação peso/potência.","metric":"Peso Corporal","achieved":false,"category":"body","deadline":"2026-09-30","created_at":"2026-04-14T01:15:41.408777+00:00","patient_id":"5ddc9df8-27d4-4ce7-ac3f-6bfe6367964e","target_value":65,"current_value":67},
+      {"id":"1e31704c-c91c-456a-9701-406d0ba4048c","unit":"km","notes":"Volume atual ~38km/semana. Progressão gradual até pico de 65-70km/semana na Fase 3.","metric":"Volume Semanal de Corrida","achieved":false,"category":"fitness","deadline":"2026-08-01","created_at":"2026-04-14T01:15:41.408777+00:00","patient_id":"5ddc9df8-27d4-4ce7-ac3f-6bfe6367964e","target_value":65,"current_value":38},
+      {"id":"3de2b67c-6c3d-4faf-aa03-79ac70d32dcf","unit":"ms","notes":"HRV basal atual 62ms (Oura). Meta: manter >62ms e evoluir para 70ms com treino aeróbico.","metric":"HRV Basal","achieved":false,"category":"recovery","deadline":"2026-09-30","created_at":"2026-04-14T01:15:41.408777+00:00","patient_id":"5ddc9df8-27d4-4ce7-ac3f-6bfe6367964e","target_value":70,"current_value":62},
+      {"id":"120eefe1-589e-436c-96c0-d61b7ad9b9b0","unit":"bpm","notes":"RHR atual 48bpm. Meta: 44-46bpm com melhora do condicionamento aeróbico.","metric":"FC de Repouso","achieved":false,"category":"recovery","deadline":"2026-09-30","created_at":"2026-04-14T01:15:41.408777+00:00","patient_id":"5ddc9df8-27d4-4ce7-ac3f-6bfe6367964e","target_value":44,"current_value":48},
+      {"id":"c0b88f3d-931b-40f5-ac78-70449fbb3466","unit":"g/dia","notes":"Meta diária 134g proteína (2g/kg). Fase 1 do plano nutricional: 2600kcal totais.","metric":"Ingestão de Proteína","achieved":false,"category":"nutrition","deadline":"2026-04-30","created_at":"2026-04-14T01:15:41.408777+00:00","patient_id":"5ddc9df8-27d4-4ce7-ac3f-6bfe6367964e","target_value":134,"current_value":null}
+    ],
+    "hydration_targets": [
+      {"id":"3805c2ce-a51e-41f4-83e1-e3d875fbf9da","active":true,"target_ml":3000,"created_at":"2026-04-14T01:15:48.08327+00:00","patient_id":"5ddc9df8-27d4-4ce7-ac3f-6bfe6367964e"}
+    ],
+    "hydration_logs": [
+      {"id":"536e3819-f0ab-444d-8052-71da5b3acc5b","notes":null,"amount_ml":500,"logged_at":"2026-04-14T01:37:39.121+00:00","patient_id":"5ddc9df8-27d4-4ce7-ac3f-6bfe6367964e"}
+    ],
+    "admins": [],
+    "training_plans": [],
+    "training_intervals": [],
+    "supplement_logs": [],
+    "health_goal_logs": []
+  }
+}
