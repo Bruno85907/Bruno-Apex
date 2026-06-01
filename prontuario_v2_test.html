@@ -466,6 +466,131 @@ body {
 .retorno-only { display: none; }
 .mode-retorno .retorno-only { display: block; }
 .mode-retorno .primeira-only { display: none; }
+
+/* ===== Aba Consulta — workspace de 4 zonas (Q1 linha do tempo · Q3 hoje · Q2 anterior · Q4 topo do Q3) ===== */
+.cz-grid { display: grid; grid-template-columns: 248px minmax(0,1fr) 344px; gap: 14px; height: calc(100vh - 168px); min-height: 520px; }
+html.embed-mode .cz-grid { height: calc(100vh - 92px); }
+.cz-zone { background: var(--card-bg); border: 1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow); display: flex; flex-direction: column; min-height: 0; overflow: hidden; }
+.cz-zone-head { padding: 12px 16px; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 8px; flex: none; }
+.cz-zone-head .czt { font-family: 'Instrument Serif', Georgia, serif; font-size: 18px; color: var(--navy); letter-spacing: .2px; }
+.cz-zone-head .czn { margin-left: auto; font-size: 10px; font-weight: 700; letter-spacing: .8px; text-transform: uppercase; color: var(--gold); background: var(--light-gold); padding: 3px 8px; border-radius: 20px; }
+.cz-zone-body { flex: 1; overflow-y: auto; padding: 14px 16px; }
+.cz-zone-body::-webkit-scrollbar { width: 8px; }
+.cz-zone-body::-webkit-scrollbar-thumb { background: #d8d5ce; border-radius: 8px; }
+/* Q3 central: o formulário existente (#consulta-body) vive aqui; section-headers/cards mantêm o estilo da casa */
+.cz-q3 .section-header:first-child, .cz-q3 #consulta-body > *:first-child { margin-top: 0; }
+/* Q4: barra de template no topo do Q3 */
+.cz-q4 { flex: none; padding: 12px 16px; background: linear-gradient(180deg,#fbfaf6,#fff); border-bottom: 1px solid var(--border); }
+.cz-q4-row { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.cz-q4-row label { font-size: 12px; font-weight: 700; color: #6B7A8D; text-transform: uppercase; letter-spacing: .5px; }
+.cz-q4-row select { font-family: inherit; font-size: 14px; font-weight: 700; color: var(--navy); padding: 7px 12px; border: 1.5px solid var(--gold); border-radius: 8px; background: #fff; cursor: pointer; }
+.cz-q4-cap { margin-top: 9px; font-size: 11.5px; color: #6B7A8D; line-height: 1.45; }
+.cz-q4-cap b { color: var(--teal); font-weight: 700; }
+.cz-q4-chips { margin-top: 8px; display: flex; flex-wrap: wrap; gap: 5px; }
+.cz-chip { font-size: 10.5px; font-weight: 600; color: var(--navy); background: #EEF1F6; border: 1px solid var(--border); padding: 3px 9px; border-radius: 20px; }
+.cz-chip.auto { background: var(--light-teal); border-color: #bfe3e0; color: #02615b; }
+/* Q1 linha do tempo */
+.cz-tl { display: flex; flex-direction: column; gap: 8px; }
+.cz-tl-item { position: relative; padding: 11px 12px 11px 30px; border: 1px solid var(--border); border-radius: var(--radius-sm); cursor: pointer; transition: .15s; background: #fff; }
+.cz-tl-item:hover { border-color: var(--gold); background: #fffdf6; }
+.cz-tl-item::before { content: ""; position: absolute; left: 12px; top: 15px; width: 9px; height: 9px; border-radius: 50%; background: #fff; border: 2px solid var(--border); }
+.cz-tl-item.active { border-color: var(--navy); background: var(--navy); color: #fff; box-shadow: var(--shadow); }
+.cz-tl-item.active::before { border-color: var(--gold); background: var(--gold); }
+.cz-tl-item.active .cz-tl-anchor { color: #C7D2E4; }
+.cz-tl-item.today { border-style: dashed; border-color: var(--gold); }
+.cz-tl-item.today::before { background: var(--gold); border-color: var(--gold); animation: czpulse 1.6s infinite; }
+@keyframes czpulse { 0%,100% { box-shadow: 0 0 0 0 rgba(196,163,90,.5); } 50% { box-shadow: 0 0 0 5px rgba(196,163,90,0); } }
+.cz-tl-date { font-size: 13px; font-weight: 700; }
+.cz-tl-type { font-size: 12px; font-weight: 600; opacity: .92; margin-top: 1px; }
+.cz-tl-anchor { font-size: 11px; color: #6B7A8D; margin-top: 3px; }
+.cz-tl-badge { display: inline-block; font-size: 9px; font-weight: 700; letter-spacing: .5px; text-transform: uppercase; color: var(--gold); margin-top: 4px; }
+.cz-empty { font-size: 12px; color: #97A1B0; text-align: center; padding: 24px 8px; line-height: 1.5; }
+/* Q2 narrativa */
+.cz-prev-meta { display: flex; align-items: center; gap: 8px; padding: 10px 13px; background: #f6f5f1; border: 1px solid var(--border); border-radius: var(--radius-sm); margin-bottom: 14px; }
+.cz-prev-meta .d { font-size: 13px; font-weight: 700; color: var(--navy); }
+.cz-prev-meta .t { font-size: 11px; color: #6B7A8D; margin-left: auto; }
+.cz-prev-narr h4 { font-size: 11px; font-weight: 800; letter-spacing: .6px; text-transform: uppercase; color: var(--teal); margin: 14px 0 5px; }
+.cz-prev-narr h4:first-child { margin-top: 0; }
+.cz-prev-narr p { font-size: 13px; line-height: 1.62; color: #2b3852; margin-bottom: 8px; }
+.cz-prev-narr .cap { font-weight: 700; color: var(--navy); }
+.cz-prev-hint { font-size: 11px; color: #97A1B0; font-style: italic; margin-top: 14px; padding-top: 12px; border-top: 1px dashed var(--border); }
+/* Q2 — faixa de chips de classificações + delta vs hoje */
+.cz-prev-chips { display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 14px; }
+.cz-pchip { font-size: 10.5px; font-weight: 700; padding: 3px 9px; border-radius: 20px; border: 1px solid var(--border); background: #EEF1F6; color: var(--navy); display: inline-flex; align-items: center; gap: 5px; }
+.cz-pchip.ok { background: #E8F5E9; border-color: #c7e7c9; color: #2E7D32; }
+.cz-pchip.warn { background: #FFF6E0; border-color: #f0dca6; color: #9a6a00; }
+.cz-pchip.bad { background: #FDECEC; border-color: #f3c2c2; color: #C62828; }
+.cz-pchip .dlt { font-weight: 800; font-size: 10px; padding: 0 4px; border-radius: 6px; }
+.cz-pchip .dlt.up { color: #2E7D32; }
+.cz-pchip .dlt.down { color: #C62828; }
+.cz-pchip .dlt.flat { color: #8A97A8; }
+/* Q3 — bloco de exames pendentes (solicitados na consulta anterior) */
+.cz-pending { border: 1px solid #e6d29a; background: var(--light-gold); border-radius: var(--radius-sm); padding: 12px 14px; margin-bottom: 16px; }
+.cz-pend-head { display: flex; align-items: center; justify-content: space-between; font-size: 12.5px; font-weight: 800; color: #7A5E1A; margin-bottom: 10px; }
+.cz-pend-count { font-size: 10.5px; font-weight: 700; background: #fff; border: 1px solid #e6d29a; color: #7A5E1A; padding: 2px 9px; border-radius: 20px; }
+.cz-pend-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 8px 10px; }
+.cz-pend-row { position: relative; display: flex; flex-direction: column; gap: 3px; }
+.cz-pend-row label { font-size: 10.5px; font-weight: 600; color: #6b5a2a; line-height: 1.25; }
+.cz-pend-row input { width: 100%; padding: 6px 24px 6px 8px; font-size: 12.5px; border: 1px solid #e0d4ab; border-radius: var(--radius-sm); background: #fff; font-family: inherit; }
+.cz-pend-row input:focus { outline: none; border-color: var(--gold); box-shadow: 0 0 0 2px rgba(196,163,90,.18); }
+.cz-pend-row .ok { position: absolute; right: 8px; bottom: 8px; font-size: 11px; color: var(--success); opacity: 0; transition: .15s; }
+.cz-pend-row.filled .ok { opacity: 1; }
+.cz-pend-row.filled input { border-color: #bfe3c0; background: #f6fbf6; }
+.cz-cadence { border: 1px solid #cfe0f5; background: #f3f8fe; border-radius: var(--radius-sm); padding: 12px 14px; margin-bottom: 16px; }
+.cz-cad-head { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; font-size: 12.5px; font-weight: 800; color: #1d4e89; margin-bottom: 10px; }
+.cz-cad-head > span:first-child { flex: 1 1 auto; }
+.cz-cad-tipo { font-size: 9.5px; font-weight: 800; padding: 2px 8px; border-radius: 20px; text-transform: uppercase; letter-spacing: .04em; }
+.cz-cad-tipo.pres { background: #1d4e89; color: #fff; }
+.cz-cad-tipo.tele { background: #e6eefb; color: #1d4e89; border: 1px solid #cfe0f5; }
+.cz-cad-count { font-size: 10.5px; font-weight: 700; background: #fff; border: 1px solid #cfe0f5; color: #1d4e89; padding: 2px 9px; border-radius: 20px; }
+.cz-cad-chips { display: flex; flex-wrap: wrap; gap: 7px; }
+.cz-cad-chip { font-size: 11.5px; font-weight: 600; padding: 5px 11px 5px 23px; border-radius: 20px; border: 1px solid #cfe0f5; background: #fff; color: #34506b; cursor: pointer; position: relative; font-family: inherit; transition: .13s; }
+.cz-cad-chip::before { content: '+'; position: absolute; left: 9px; top: 50%; transform: translateY(-50%); font-weight: 800; color: #9bb6d6; }
+.cz-cad-chip:hover { border-color: #1d4e89; }
+.cz-cad-chip.on { background: #1d4e89; color: #fff; border-color: #1d4e89; }
+.cz-cad-chip.on::before { content: '\2713'; color: #fff; }
+.cz-cad-obs { font-size: 11.5px; color: #5a6b7e; margin: 0; font-style: italic; }
+.cz-cad-extra { font-size: 11px; color: #1d4e89; margin: 9px 0 0; font-weight: 600; }
+.cz-cad-next { font-size: 11px; color: #5a6b7e; margin: 10px 0 0; padding-top: 9px; border-top: 1px dashed #cfe0f5; }
+.cz-cad-next b { color: #1d4e89; }
+.ex-collap-head { display: flex; align-items: center; gap: 8px; cursor: pointer; font-weight: 700; font-size: 13px; color: var(--navy); }
+.ex-collap-head .ex-chev { margin-left: auto; flex: none; width: 9px; height: 9px; margin-right: 3px; margin-bottom: 3px; border-right: 2px solid #97A1B0; border-bottom: 2px solid #97A1B0; transform: rotate(45deg); transition: transform .18s; }
+.ex-collap.open .ex-collap-head .ex-chev { transform: rotate(225deg); margin-bottom: -1px; }
+.ex-collap-body { display: none; margin-top: 14px; }
+.ex-collap.open .ex-collap-body { display: block; }
+@media (max-width: 1180px) { .cz-grid { grid-template-columns: 210px minmax(0,1fr) 290px; } }
+@media (max-width: 960px) { .cz-grid { grid-template-columns: 1fr; height: auto; } .cz-zone { height: auto; } .cz-zone-body { max-height: 70vh; } }
+/* ===== TRILHO LINEAR (Atendimento) ===== */
+.trilho-shell { display: grid; grid-template-columns: 252px minmax(0,1fr); gap: 16px; align-items: start; }
+.trilho-rail { position: sticky; top: 12px; display: flex; flex-direction: column; gap: 14px; }
+.rail-block { background: var(--card-bg); border: 1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow); padding: 14px; }
+.rail-title { font-family: 'Instrument Serif', Georgia, serif; font-size: 16px; color: var(--navy); margin-bottom: 10px; }
+.trilho-main { display: flex; flex-direction: column; gap: 14px; min-width: 0; }
+.trilho-toolbar { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; background: linear-gradient(180deg,#fbfaf6,#fff); border: 1px solid var(--border); border-radius: var(--radius); padding: 12px 16px; box-shadow: var(--shadow); }
+.trilho-toolbar label { font-size: 12px; font-weight: 700; color: #6B7A8D; text-transform: uppercase; letter-spacing: .5px; }
+.trilho-toolbar select { font-family: inherit; font-size: 14px; font-weight: 700; color: var(--navy); padding: 7px 12px; border: 1.5px solid var(--gold); border-radius: 8px; background: #fff; cursor: pointer; }
+.trilho-toolbar .cz-q4-cap, .trilho-toolbar .cz-q4-chips { flex-basis: 100%; margin-top: 0; }
+.trilho-progress { display: flex; gap: 8px; }
+.pstep { flex: 1; display: flex; align-items: center; gap: 9px; padding: 11px 14px; background: var(--card-bg); border: 1px solid var(--border); border-radius: var(--radius); cursor: pointer; font-family: inherit; transition: .15s; box-shadow: var(--shadow); }
+.pstep:hover { border-color: var(--gold); }
+.pstep .pdot { width: 24px; height: 24px; flex: none; border-radius: 50%; display: grid; place-items: center; font-size: 12px; font-weight: 800; background: #EEF1F6; color: #6B7A8D; border: 1.5px solid var(--border); }
+.pstep .plabel { font-size: 13px; font-weight: 700; color: #6B7A8D; }
+.pstep.current { border-color: var(--navy); background: #fff; }
+.pstep.current .pdot { background: var(--navy); color: #fff; border-color: var(--navy); }
+.pstep.current .plabel { color: var(--navy); }
+.pstep.done .pdot { background: var(--success); color: #fff; border-color: var(--success); }
+.pstep.done .plabel { color: var(--navy); }
+.trilho-step { background: var(--card-bg); border: 1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow); overflow: hidden; }
+.trilho-step .step-head { width: 100%; display: flex; align-items: center; gap: 12px; padding: 14px 18px; background: none; border: none; border-bottom: 1px solid transparent; cursor: pointer; font-family: inherit; text-align: left; }
+.trilho-step.open .step-head { border-bottom-color: var(--border); }
+.step-head .step-n { width: 26px; height: 26px; flex: none; border-radius: 50%; display: grid; place-items: center; font-size: 13px; font-weight: 800; background: var(--light-gold); color: var(--gold); border: 1.5px solid #e6d29a; }
+.step-head .step-title { font-family: 'Instrument Serif', Georgia, serif; font-size: 20px; color: var(--navy); }
+.step-head .step-sub { font-size: 12px; color: #6B7A8D; }
+.step-head .step-chevron { margin-left: auto; flex: none; width: 10px; height: 10px; margin-right: 4px; margin-bottom: 3px; border-right: 2px solid #97A1B0; border-bottom: 2px solid #97A1B0; transform: rotate(45deg); transition: transform .18s; }
+.trilho-step.open .step-head .step-chevron { transform: rotate(225deg); margin-bottom: -2px; }
+.trilho-step .step-body { display: none; padding: 16px 18px; }
+.trilho-step.open .step-body { display: block; }
+@media (max-width: 960px) { .trilho-shell { grid-template-columns: 1fr; } .trilho-rail { position: static; } }
 .proto-chip { border: 1.5px solid var(--border); background: #fff; color: var(--navy); border-radius: 999px; padding: 7px 14px; font-size: 12.5px; font-weight: 600; cursor: pointer; font-family: inherit; transition: all .15s; }
 .proto-chip:hover { border-color: var(--teal); }
 .proto-chip.on { background: var(--teal); color: #fff; border-color: var(--teal); }
@@ -976,7 +1101,7 @@ body {
 <div class="tabs-bar" id="tabsBar">
   <button class="tab-btn active" onclick="switchTab('resumo', this)">Resumo</button>
   <button class="tab-btn" onclick="switchTab('identificacao', this)">Identificação</button>
-  <button class="tab-btn" onclick="switchTab('consulta', this)">Consulta</button>
+  <button class="tab-btn" onclick="switchTab('consulta', this)">Atendimento</button>
   <button class="tab-btn" onclick="switchTab('protocolo', this)">Plano &amp; protocolo</button>
   <button class="tab-btn" onclick="switchTab('documentos', this)">Documentos</button>
 </div>
@@ -1103,32 +1228,72 @@ body {
 <!-- TAB 1: CONSULTA -->
 <div id="tab-consulta" class="tab-content">
 
-  <!-- Patient Header -->
-  <div class="patient-header">
+  <!-- Identidade do paciente vive no cabeçalho da PÁGINA; mantidos ocultos como portadores de dados p/ o JS -->
+  <div class="patient-header" style="display:none;" aria-hidden="true">
     <div class="patient-avatar" id="patientAvatar"></div>
     <div class="patient-info">
       <h3 id="patientName">Paciente</h3>
       <p id="patientHeaderMeta"></p>
     </div>
   </div>
+  <!-- Atendimento · trilho linear -->
+  <div class="trilho-shell">
 
-  <!-- Toggle Primeira / Retorno -->
-  <div class="toggle-bar" id="toggle-consulta">
-    <button class="toggle-btn active" onclick="setConsultaMode('primeira', this)">Primeira Consulta</button>
-    <button class="toggle-btn" onclick="setConsultaMode('retorno', this)">Retorno</button>
-  </div>
-  <div class="retorno-only" style="margin-bottom:16px;">
-    <div style="display:flex; gap:8px; align-items:center;">
-      <span style="font-size:12px; font-weight:600; color:var(--navy);">Tipo de retorno:</span>
-      <select id="tipoRetorno" onchange="setRetornoType(this.value)" style="padding:6px 12px; border-radius:var(--radius-sm); border:1.5px solid var(--border); font-size:12px;">
-        <option value="mensal">Mensal (30 dias)</option>
-        <option value="trimestral">Trimestral (90 dias)</option>
-        <option value="semestral">Semestral (180 dias)</option>
-        <option value="anual">Anual (365 dias)</option>
-      </select>
-    </div>
-  </div>
+    <!-- Trilho lateral · contexto -->
+    <aside class="trilho-rail">
+      <div class="rail-block">
+        <div class="rail-title">Linha do tempo</div>
+        <div class="cz-tl" id="czTimeline"><div class="cz-empty">As consultas salvas do paciente aparecem aqui.</div></div>
+      </div>
+    </aside>
 
+    <!-- Trilho principal -->
+    <div class="trilho-main">
+
+      <!-- Seletor de atendimento -->
+      <div class="trilho-toolbar">
+        <label>Atendendo</label>
+        <select id="czTemplate" onchange="onCzTemplate()">
+          <option value="primeira">Primeira consulta</option>
+          <option value="mensal">Retorno · mensal</option>
+          <option value="trimestral">Retorno · trimestral</option>
+          <option value="semestral">Retorno · semestral</option>
+          <option value="anual">Retorno · anual</option>
+        </select>
+        <div class="cz-q4-cap" id="czCap"></div>
+        <div class="cz-q4-chips" id="czChips"></div>
+      </div>
+
+      <!-- Barra de progresso -->
+      <div class="trilho-progress" id="trilhoProgress">
+        <button type="button" class="pstep" data-i="0" onclick="trilhoGo(0)"><span class="pdot">1</span><span class="plabel">Revisão</span></button>
+        <button type="button" class="pstep current" data-i="1" onclick="trilhoGo(1)"><span class="pdot">2</span><span class="plabel">Consulta</span></button>
+        <button type="button" class="pstep" data-i="2" onclick="trilhoGo(2)"><span class="pdot">3</span><span class="plabel">Avaliação</span></button>
+      </div>
+
+      <!-- Passo 1 · Revisão -->
+      <section class="trilho-step" data-step="0">
+        <button type="button" class="step-head" onclick="trilhoToggle(0)">
+          <span class="step-n">1</span>
+          <span class="step-title">Revisão</span>
+          <span class="step-sub">Consulta anterior e exames pendentes</span>
+          <span class="step-chevron" aria-hidden="true"></span>
+        </button>
+        <div class="step-body">
+          <div class="cz-prev" id="czPrev"><div class="cz-empty">Selecione uma data na linha do tempo para ver o resumo daquela consulta.</div></div>
+          <div id="czPendingHost"></div>
+        </div>
+      </section>
+
+      <!-- Passo 2 · Consulta -->
+      <section class="trilho-step open" data-step="1">
+        <button type="button" class="step-head" onclick="trilhoToggle(1)">
+          <span class="step-n">2</span>
+          <span class="step-title">Consulta</span>
+          <span class="step-sub">Anamnese, exame e exames laboratoriais</span>
+          <span class="step-chevron" aria-hidden="true"></span>
+        </button>
+        <div class="step-body">
 
   <div id="consulta-body">
 
@@ -1524,11 +1689,19 @@ body {
   </div>
 
   </div><!-- end consulta-body -->
-</div>
 
-<!-- TAB 2: PAINEL CLÍNICO -->
-<div id="tab-painel" class="tab-content">
+        </div><!-- end step-body · Passo 2 -->
+      </section>
 
+      <!-- Passo 3 · Avaliação (casca) -->
+      <section class="trilho-step" data-step="2">
+        <button type="button" class="step-head" onclick="trilhoToggle(2)">
+          <span class="step-n">3</span>
+          <span class="step-title">Avaliação</span>
+          <span class="step-sub">Classificações, escores de risco e radar</span>
+          <span class="step-chevron" aria-hidden="true"></span>
+        </button>
+        <div class="step-body">
   <div class="section-header">Classificações Clínicas</div>
 
   <!-- Classification Cards with colors -->
@@ -1641,7 +1814,14 @@ body {
       <p style="font-size:10px;color:#999;margin-top:8px;text-align:center;">Linha tracejada = meta 3 meses | Pontos coloridos = estado atual</p>
     </div>
   </div>
+          <div style="margin-top:18px; text-align:right;">
+            <button class="btn btn-gold btn-lg" onclick="cwGo('protocolo')">Avançar para o Plano &#x2192;</button>
+          </div>
+        </div>
+      </section>
 
+    </div><!-- end trilho-main -->
+  </div><!-- end trilho-shell -->
 </div>
 
 <!-- TAB 3: PROTOCOLO -->
@@ -1748,56 +1928,26 @@ body {
     </div>
   </div>
 
-  <!-- Protocol 12 Months -->
-  <div class="section-header">Protocolo de Acompanhamento — 12 Meses</div>
+  <!-- Solicitação de exames (consolidada — cadência do protocolo + avulsos) -->
+  <div class="section-header">Solicita&#231;&#227;o de exames</div>
   <div class="card">
-    <div class="card-title"><span class="icon">&#x1F4C5;</span> Cronograma APEX
-      <button class="btn btn-primary btn-sm" style="margin-left:auto;background:linear-gradient(135deg,var(--teal),#015560);" onclick="gerarCronogramaDaBase()">&#x1F9EC; Gerar cronograma da base CKM</button>
-    </div>
-    <p style="font-size:12px; color:#6B7A8D; margin-bottom:14px;">Distribui&#231;&#227;o de exames, consultas e teleconsultas ao longo do protocolo de 12 meses.</p>
-
-    <!-- 12-month visual grid -->
-    <div id="protocol12Grid" style="display:grid; grid-template-columns:repeat(6,1fr); gap:8px; margin-bottom:16px;">
-      <!-- Filled dynamically by renderProtocol12M() -->
-    </div>
-
-    <!-- Selected month detail -->
-    <div id="protocolMonthDetail" style="display:none; padding:16px; background:#F8F8F5; border-radius:var(--radius-sm); border-left:4px solid var(--teal);">
-      <!-- Filled dynamically -->
-    </div>
-  </div>
-
-  <!-- Rastreio e vacinas (gerados da base CKM) -->
-  <div class="card">
-    <div class="card-title"><span class="icon">&#x1F6E1;</span> Rastreio e Vacinas (da base CKM)</div>
-    <p style="font-size:12px; color:#6B7A8D; margin-bottom:10px;">Gerado por idade, sexo, história familiar e condições — junto com o cronograma.</p>
-    <div id="baseRastreioVacinas"><p style="color:#999;font-size:12px;">Clique em "Gerar cronograma da base CKM" para preencher.</p></div>
-  </div>
-
-  <!-- Ad-hoc exam additions -->
-  <div class="card">
-    <div class="card-title"><span class="icon">&#x1F9EA;</span> Adicionar Exames Avulsos
+    <div class="card-title"><span class="icon">&#x1F9EA;</span> Exames desta consulta
       <span style="margin-left:auto; font-size:11px; color:#6B7A8D;" id="examCount">0 exames total</span>
     </div>
 
+    <!-- Cadência do protocolo (mês atual) + próximo retorno -->
+    <div id="czCadenceHost"></div>
+
+    <!-- Mês-alvo (sincronizado com a consulta atual; oculto) -->
+    <select id="examConsultaNum" onchange="filterExamsByConsulta()" style="display:none;">
+      <option value="1">1</option><option value="2">2</option><option value="3">3</option>
+      <option value="4">4</option><option value="5">5</option><option value="6">6</option>
+      <option value="7">7</option><option value="8">8</option><option value="9">9</option>
+      <option value="10">10</option><option value="11">11</option><option value="12">12</option>
+    </select>
+
+    <!-- Adicionar exames avulsos a esta consulta -->
     <div class="form-grid cols-2" style="margin-bottom:12px;">
-      <div class="form-group">
-        <label>Para qual m&#234;s</label>
-        <select id="examConsultaNum" onchange="filterExamsByConsulta()">
-          <option value="1">M&#234;s 1 — Primeira Consulta</option>
-          <option value="2">M&#234;s 2 — Teleconsulta</option>
-          <option value="3">M&#234;s 3 — Retorno Trimestral</option>
-          <option value="4">M&#234;s 4 — Teleconsulta</option>
-          <option value="5">M&#234;s 5 — Teleconsulta</option>
-          <option value="6">M&#234;s 6 — Retorno Semestral</option>
-          <option value="7">M&#234;s 7 — Teleconsulta</option>
-          <option value="8">M&#234;s 8 — Teleconsulta</option>
-          <option value="9">M&#234;s 9 — Retorno Trimestral</option>
-          <option value="10">M&#234;s 10 — Teleconsulta</option>
-          <option value="11">M&#234;s 11 — Teleconsulta</option>
-          <option value="12">M&#234;s 12 — Avalia&#231;&#227;o Anual</option>
-        </select>
-      </div>
       <div class="form-group">
         <label>Painel r&#225;pido</label>
         <select id="examPanel" onchange="addExamPanel(this.value)">
@@ -1812,13 +1962,49 @@ body {
           <option value="rastreio_gn">Rastreio de Glomerulonefrite</option>
         </select>
       </div>
+      <div class="form-group">
+        <label>Buscar exame avulso</label>
+        <div class="autocomplete-container">
+          <input type="text" id="examSearch" placeholder="&#x1F50D; Buscar exame..." oninput="filterExams(this.value)" style="width:100%; padding:10px 14px; border-radius:var(--radius-sm); border:1px solid var(--border);">
+          <div class="autocomplete-list" id="examList"></div>
+        </div>
+      </div>
     </div>
 
-    <div class="autocomplete-container">
-      <input type="text" id="examSearch" placeholder="&#x1F50D; Buscar exame..." oninput="filterExams(this.value)" style="width:100%; padding:10px 14px; border-radius:var(--radius-sm); border:1px solid var(--border);">
-      <div class="autocomplete-list" id="examList"></div>
+    <!-- Lista de revisão única (cadência + avulsos desta consulta) -->
+    <div id="examReqList"></div>
+  </div>
+
+  <!-- Cronograma 12 meses (colapsável) -->
+  <div class="card ex-collap" id="cronogramaCollap">
+    <div class="ex-collap-head" onclick="toggleCronograma()">
+      <span class="icon">&#x1F4C5;</span>
+      <span>Protocolo de Acompanhamento &mdash; 12 Meses</span>
+      <span class="ex-chev" aria-hidden="true"></span>
     </div>
-    <div id="examReqList" style="margin-top:12px;"></div>
+    <div class="ex-collap-body">
+      <div style="display:flex; align-items:center; gap:10px; margin-bottom:14px;">
+        <p style="font-size:12px; color:#6B7A8D; margin:0;">Distribui&#231;&#227;o de exames, consultas e teleconsultas ao longo do protocolo de 12 meses.</p>
+        <button class="btn btn-primary btn-sm" style="margin-left:auto;flex:none;background:linear-gradient(135deg,var(--teal),#015560);" onclick="gerarCronogramaDaBase()">&#x1F9EC; Gerar cronograma da base CKM</button>
+      </div>
+
+      <!-- 12-month visual grid -->
+      <div id="protocol12Grid" style="display:grid; grid-template-columns:repeat(6,1fr); gap:8px; margin-bottom:16px;">
+        <!-- Filled dynamically by renderProtocol12M() -->
+      </div>
+
+      <!-- Selected month detail -->
+      <div id="protocolMonthDetail" style="display:none; padding:16px; background:#F8F8F5; border-radius:var(--radius-sm); border-left:4px solid var(--teal);">
+        <!-- Filled dynamically -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Rastreio e vacinas (gerados da base CKM) -->
+  <div class="card">
+    <div class="card-title"><span class="icon">&#x1F6E1;</span> Rastreio e Vacinas (da base CKM)</div>
+    <p style="font-size:12px; color:#6B7A8D; margin-bottom:10px;">Gerado por idade, sexo, história familiar e condições — junto com o cronograma.</p>
+    <div id="baseRastreioVacinas"><p style="color:#999;font-size:12px;">Clique em "Gerar cronograma da base CKM" para preencher.</p></div>
   </div>
 
 
@@ -2719,8 +2905,7 @@ function switchTab(name, btn) {
   const cwp = document.getElementById('cwPatient');
   if (cwp) cwp.textContent = document.getElementById('patientName')?.textContent || 'Paciente';
   if (name === 'resumo') renderResumo();
-  if (name === 'protocolo' && typeof renderPainelProtocolos === 'function') renderPainelProtocolos();
-  if (name === 'painel') { recalcAll(); setTimeout(drawRadar, 100); }
+  if (name === 'protocolo') { if (typeof renderPainelProtocolos === 'function') renderPainelProtocolos(); if (typeof renderCzCadence === 'function') renderCzCadence(); }
   if (name === 'documentos') updateAllDocs();
 }
 
@@ -3233,9 +3418,29 @@ function fecharConsultaModal() { document.getElementById('consultaModal').classL
 function setConsultaMode(mode, btn) {
   consultaMode = mode;
   const body = document.getElementById('consulta-body');
-  document.querySelectorAll('#toggle-consulta .toggle-btn').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
+  if (btn) {
+    document.querySelectorAll('#toggle-consulta .toggle-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+  }
   if (mode === 'retorno') { body.classList.add('mode-retorno'); } else { body.classList.remove('mode-retorno'); }
+}
+
+// Q4 · seletor de template (barra do Q3). Deriva o modo de consulta a partir do template escolhido.
+const _CZ_CAP = {
+  primeira: 'Primeira consulta · linha de base completa',
+  mensal: 'Retorno mensal · cadência intensiva',
+  trimestral: 'Retorno trimestral · reavaliação',
+  semestral: 'Retorno semestral · revisão de metas',
+  anual: 'Retorno anual · fechamento de ciclo'
+};
+function onCzTemplate() {
+  const sel = document.getElementById('czTemplate');
+  if (!sel) return;
+  const val = sel.value;
+  const isPrimeira = val === 'primeira';
+  setConsultaMode(isPrimeira ? 'primeira' : 'retorno');
+  const cap = document.getElementById('czCap');
+  if (cap) cap.textContent = _CZ_CAP[val] || '';
 }
 
 // Foto, gravidade e identificação (dados vindos do Pro via postMessage)
@@ -3885,6 +4090,9 @@ function recalcAll() {
 
   // Baseline cards
   updateBaseline(tfge, imc, pas, pad, hba1c, rac, ldl, ckmStage, ascvd, kfre);
+
+  // Q1 — mantém o dado-âncora da consulta de hoje vivo conforme o médico digita
+  if (typeof renderCzTimeline === 'function') renderCzTimeline();
 }
 
 // ============================================================
@@ -5994,7 +6202,7 @@ function _consKey() { return 'apex_consultas_' + (window._apexPatientId || 'defa
 function saveConsulta() {
   const historyEntry = {
     date: new Date().toLocaleDateString('pt-BR'),
-    type: consultaMode === 'primeira' ? 'Primeira Consulta' : 'Retorno '+(document.getElementById('tipoRetorno')?.value||'mensal'),
+    type: consultaMode === 'primeira' ? 'Primeira Consulta' : 'Retorno '+_czRetornoLabel(),
     diagnoses: Array.from(document.querySelectorAll('[id^="hpp_"]:checked')).map(el=>el.nextSibling?.textContent?.trim()||'').filter(Boolean).join(', '),
     tfge: calcTFGe(labVal('cr'), getAge(), !isMale()),
     pa: labVal('pas') ? labVal('pas')+'/'+getV('pad') : null,
@@ -6003,7 +6211,12 @@ function saveConsulta() {
     imc: calcIMC(getV('peso'), getV('altura')),
     ckm: (typeof calcCKM === 'function') ? calcCKM() : null,
     meds: (typeof prescriptionList !== 'undefined') ? prescriptionList.map(p => p.name) : [],
-    notes: document.getElementById('exames_outros')?.value || document.getElementById('exames_outros_first')?.value || ''
+    notes: document.getElementById('exames_outros')?.value || document.getElementById('exames_outros_first')?.value || '',
+    classif: (typeof _czSnapshotClassif === 'function') ? _czSnapshotClassif() : null,
+    narr: (typeof _czSnapshotFields === 'function') ? _czSnapshotFields() : [],
+    examsRequested: (typeof examPrescriptionList !== 'undefined')
+      ? [...new Map(examPrescriptionList.map(e => [e.name, { name: e.name, type: e.type }])).values()] : [],
+    extraResults: Object.assign({}, window._czExtraResults || {})
   };
   const history = JSON.parse(localStorage.getItem(_consKey()) || '[]');
   /* Não duplicar: se já há consulta de hoje com mesmo tipo, atualiza em vez de empilhar */
@@ -6180,7 +6393,7 @@ function loadConsultaHistory() {
         <div style="font-size:10.5px;color:#8A97A8;margin-top:5px;">Os campos &ldquo;anterior&rdquo; do Retorno foram preenchidos com esta consulta.</div>
       </div>`;
   }
-  if (!history.length) { el.innerHTML = serverCard || '<p style="color:#999;font-size:12px;text-align:center;margin:20px 0;">Nenhuma consulta anterior salva para este paciente</p>'; return; }
+  if (!history.length) { el.innerHTML = serverCard || '<p style="color:#999;font-size:12px;text-align:center;margin:20px 0;">Nenhuma consulta anterior salva para este paciente</p>'; if (typeof czInit === 'function') czInit(); return; }
   el.innerHTML = serverCard + history.map((c, i) => `
     <div onclick="loadConsulta(${i})" title="Clique para abrir o resumo" style="cursor:pointer;padding:12px;margin-bottom:8px;background:#f8f8f5;border-radius:var(--radius-sm);border-left:3px solid var(--teal);transition:background .15s;" onmouseover="this.style.background='#eef3f2'" onmouseout="this.style.background='#f8f8f5'">
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
@@ -6191,31 +6404,359 @@ function loadConsultaHistory() {
       ${c.tfge ? '<div style="font-size:11px;color:#6B7A8D;"><strong>TFGe:</strong> '+c.tfge+' | <strong>PA:</strong> '+(c.pa||'---')+' | <strong>HbA1c:</strong> '+(c.hba1c||'---')+' | <strong>IMC:</strong> '+(c.imc||'---')+'</div>' : ''}
     </div>
   `).join('');
+  if (typeof czInit === 'function') czInit();
 }
 
 // ============================================================
-// TIPO DE RETORNO (periodicidade)
+// Q1 · LINHA DO TEMPO (datas reais) + Q2 (resumo da consulta selecionada)
 // ============================================================
-function setRetornoType(type) {
-  const examSets = {
-    mensal: ['Creatinina sérica','Potássio sérico','Sódio sérico','Hemograma completo','EAS (Urina tipo I)'],
-    trimestral: ['Creatinina sérica','Ureia','Potássio sérico','Sódio sérico','Hemograma completo','HbA1c','Colesterol total','LDL-colesterol','HDL-colesterol','Triglicerídeos','AST (TGO)','ALT (TGP)','Ácido úrico','Relação albumina/creatinina (RAC)','EAS (Urina tipo I)'],
-    semestral: ['Creatinina sérica','Ureia','Potássio sérico','Sódio sérico','Bicarbonato / CO2 total','Hemograma completo','HbA1c','Glicemia de jejum','Colesterol total','LDL-colesterol','HDL-colesterol','Triglicerídeos','AST (TGO)','ALT (TGP)','Ácido úrico','Cálcio total','Fósforo sérico','PTH intacto','Vitamina D (25-OH)','Ferritina','PCR ultrassensível','Relação albumina/creatinina (RAC)','Proteinúria 24h','EAS (Urina tipo I)'],
-    anual: ['Creatinina sérica','Ureia','Potássio sérico','Sódio sérico','Bicarbonato / CO2 total','Hemograma completo','HbA1c','Glicemia de jejum','Insulina basal','Colesterol total','LDL-colesterol','HDL-colesterol','Triglicerídeos','Lipoproteína(a)','AST (TGO)','ALT (TGP)','GGT','Ácido úrico','Cálcio total','Fósforo sérico','Magnésio sérico','PTH intacto','Vitamina D (25-OH)','Ferritina','Ferro sérico','PCR ultrassensível','Relação albumina/creatinina (RAC)','Proteinúria 24h','EAS (Urina tipo I)','TSH','T4 livre','PSA total e livre','Vitamina B12','Albumina','ECG 12 derivações','USG de rins e vias urinárias']
-  };
-  const label = {mensal:'Mensal',trimestral:'Trimestral',semestral:'Semestral',anual:'Anual'};
-  const exams = examSets[type] || [];
-  const consultaNum = 2;
-  exams.forEach(name => {
-    if (!examPrescriptionList.find(e => e.name === name && e.consultaNum === consultaNum)) {
-      const examData = EXAMS_DB.find(e => e.name === name);
-      if (examData) {
-        examPrescriptionList.push({ name, type: examData.type || 'sangue', category: examData.category || '', consultaNum });
-      }
+let _czSel = 0; // índice no histórico (newest-first); -1 = hoje em andamento; 'srv' = consulta da nuvem
+function _czHistory() { return JSON.parse(localStorage.getItem(_consKey()) || '[]'); }
+function _czAnchor(o) {
+  if (o == null) return '';
+  if (o.tfge != null && o.tfge !== '' && o.tfge !== '—') return 'TFGe ' + o.tfge;
+  if (o.pa) return 'PA ' + o.pa;
+  if (o.hba1c) return 'HbA1c ' + o.hba1c;
+  if (o.ckm != null && o.ckm !== '') return 'CKM ' + o.ckm;
+  if (o.imc) return 'IMC ' + o.imc;
+  return '';
+}
+function _czItem(o) {
+  const idxArg = (typeof o.idx === 'string') ? ("'" + o.idx + "'") : o.idx;
+  return '<div class="cz-tl-item' + (o.today ? ' today' : '') + (o.active ? ' active' : '') + '" onclick="czSelect(' + idxArg + ')">'
+    + '<div class="cz-tl-date">' + o.date + '</div>'
+    + '<div class="cz-tl-type">' + o.type + '</div>'
+    + (o.anchor ? '<div class="cz-tl-anchor">' + o.anchor + '</div>' : '')
+    + (o.badge ? '<div class="cz-tl-badge">' + o.badge + '</div>' : '')
+    + '</div>';
+}
+function renderCzTimeline() {
+  const tl = document.getElementById('czTimeline'); if (!tl) return;
+  const hist = _czHistory();
+  const tfgeNow = (typeof calcTFGe === 'function') ? calcTFGe(labVal('cr'), getAge(), !isMale()) : null;
+  const todayAnchor = tfgeNow ? ('TFGe ' + tfgeNow)
+    : (labVal('pas') ? ('PA ' + labVal('pas') + '/' + (getV('pad') || '')) : '');
+  const todayType = (typeof consultaMode !== 'undefined' && consultaMode === 'primeira')
+    ? 'Primeira consulta'
+    : 'Retorno ' + _czRetornoLabel();
+  let html = _czItem({ idx: -1, today: true, active: _czSel === -1, date: 'Hoje', type: todayType, anchor: todayAnchor, badge: 'Em andamento' });
+  if (hist.length) {
+    html += hist.map((c, i) => _czItem({ idx: i, active: _czSel === i, date: c.date || '—', type: c.type || 'Consulta', anchor: _czAnchor(c) })).join('');
+  } else if (window._apexPrevContrato) {
+    const pc = window._apexPrevContrato, cl = pc.clinical || {}, rc = pc.risks_classifications || {};
+    const dt = (pc.consultation && pc.consultation.date) || String(pc.generated_at || '').slice(0, 10) || 'Anterior';
+    const tfge = cl.tfge != null ? cl.tfge : (rc.kdigo && rc.kdigo.tfge);
+    html += _czItem({ idx: 'srv', active: _czSel === 'srv', date: dt, type: 'Prontuário (nuvem)', anchor: tfge ? ('TFGe ' + tfge) : '' });
+  } else {
+    html += '<div class="cz-empty">Nenhuma consulta anterior salva ainda.<br>Ao salvar a consulta de hoje, ela aparece aqui.</div>';
+  }
+  tl.innerHTML = html;
+}
+function czSelect(idx) {
+  _czSel = idx;
+  renderCzTimeline();
+  renderCzPrev(idx);
+}
+// Snapshot das classificações da consulta atual (chips do Q2 + delta)
+function _czSnapshotClassif() {
+  try {
+    const tfge = calcTFGe(labVal('cr'), getAge(), !isMale());
+    const rac = labVal('rac');
+    const ms = (typeof calcMS === 'function') ? calcMS() : { count: null };
+    const prevent = (typeof calcPREVENT === 'function') ? calcPREVENT() : null;
+    return {
+      kdigoG: classifyTFGe(tfge).stage || '',
+      kdigoA: classifyRAC(rac).stage || '',
+      tfge: tfge || null,
+      ckm: (typeof calcCKM === 'function') ? calcCKM() : null,
+      prevent: (prevent && prevent.totalCVD != null) ? prevent.totalCVD : null,
+      msCount: ms ? ms.count : null
+    };
+  } catch (e) { return {}; }
+}
+// Snapshot de TODOS os campos preenchidos do template (narrativa do Q2), em ordem, por seção
+function _czSnapshotFields() {
+  const root = document.getElementById('consulta-body'); if (!root) return [];
+  const out = []; let section = 'Consulta';
+  const nodes = root.querySelectorAll('.section-header, .card-title, input[id], select[id], textarea[id]');
+  const clean = s => (s || '').replace(/\s+/g, ' ').replace(/^[^A-Za-zÀ-ú]+/, '').trim();
+  const ownText = lab => lab ? clean([...lab.childNodes].filter(n => n.nodeType === 3).map(n => n.textContent).join(' ')) : '';
+  nodes.forEach(el => {
+    if (el.classList.contains('section-header') || el.classList.contains('card-title')) {
+      const t = clean(el.textContent); if (t) section = t; return;
     }
+    if (el.offsetParent === null) return;                 // oculto (modo não aplicável / seção fechada)
+    if (/_first$/.test(el.id)) return;                    // coluna "anterior" — não é input desta consulta
+    let label = '', value = '';
+    if (el.type === 'checkbox' || el.type === 'radio') {
+      if (!el.checked) return;
+      label = ownText(el.closest('label')) || clean(el.nextSibling?.textContent) || el.id;
+      value = '✓';
+    } else {
+      value = (el.value || '').trim(); if (!value) return;
+      if (el.tagName === 'SELECT') value = clean(el.options[el.selectedIndex]?.text) || value;
+      label = ownText(el.closest('.form-group')?.querySelector('label'))
+        || (el.previousElementSibling?.tagName === 'LABEL' ? ownText(el.previousElementSibling) : '')
+        || el.placeholder || el.getAttribute('aria-label') || el.id;
+    }
+    out.push({ section, label, value });
   });
-  renderExams();
-  showToast('Protocolo '+label[type]+' aplicado — '+exams.length+' exames adicionados');
+  return out;
+}
+function _esc(s) { return String(s == null ? '' : s).replace(/[&<>]/g, m => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[m])); }
+function _czSev(kind, v) {
+  if (v == null || v === '') return '';
+  if (kind === 'g') return /^G[12]$/.test(v) ? 'ok' : /^G3/.test(v) ? 'warn' : 'bad';
+  if (kind === 'a') return v === 'A1' ? 'ok' : v === 'A2' ? 'warn' : 'bad';
+  if (kind === 'ckm') return v >= 3 ? 'bad' : v == 2 ? 'warn' : 'ok';
+  if (kind === 'prevent') return v >= 20 ? 'bad' : v >= 7.5 ? 'warn' : 'ok';
+  if (kind === 'ms') return v >= 3 ? 'bad' : v == 2 ? 'warn' : 'ok';
+  return '';
+}
+// delta: compara valor de hoje (live) com o da consulta selecionada. higherBetter define a cor da seta.
+function _czDelta(prev, now, higherBetter) {
+  if (prev == null || now == null || prev === '' || now === '') return '';
+  const d = Math.round((now - prev) * 10) / 10;
+  if (d === 0) return ' <span class="dlt flat">→ ' + now + '</span>';
+  const up = d > 0;
+  const good = higherBetter ? up : !up;
+  return ' <span class="dlt ' + (good ? 'up' : 'down') + '">' + (up ? '▲' : '▼') + ' ' + now + '</span>';
+}
+function renderCzPrev(idx) {
+  const box = document.getElementById('czPrev'); if (!box) return;
+  if (idx === -1) {
+    box.innerHTML = '<div class="cz-empty">Consulta de hoje em andamento.<br>Preencha o template no centro (Q3); o resumo aparece aqui depois de salvar.</div>';
+    return;
+  }
+  let c, dt, type;
+  if (idx === 'srv') {
+    const pc = window._apexPrevContrato;
+    if (!pc) { box.innerHTML = '<div class="cz-empty">Sem dados desta consulta.</div>'; return; }
+    const cl = pc.clinical || {}, rc = pc.risks_classifications || {};
+    dt = (pc.consultation && pc.consultation.date) || String(pc.generated_at || '').slice(0, 10) || 'Consulta anterior';
+    type = 'Prontuário (nuvem)';
+    c = {
+      tfge: (cl.tfge != null ? cl.tfge : (rc.kdigo && rc.kdigo.tfge)), pa: cl.pa, hba1c: cl.hba1c, imc: cl.imc, ldl: cl.ldl,
+      ckm: (rc.ckm && rc.ckm.stage), diagnoses: '', meds: [], notes: '',
+      classif: { kdigoG: rc.kdigo && rc.kdigo.g, kdigoA: rc.kdigo && rc.kdigo.a, tfge: (cl.tfge != null ? cl.tfge : (rc.kdigo && rc.kdigo.tfge)), ckm: rc.ckm && rc.ckm.stage, prevent: (rc.prevent && rc.prevent.totalCVD), msCount: rc.ms && rc.ms.count }
+    };
+  } else {
+    const hist = _czHistory(); c = hist[idx];
+    if (!c) { box.innerHTML = '<div class="cz-empty">Consulta não encontrada.</div>'; return; }
+    dt = c.date || '—'; type = c.type || 'Consulta';
+  }
+
+  // 1) Faixa de chips de classificações (snapshot daquela consulta; fallback p/ resumo antigo)
+  const cf = c.classif || { kdigoG: classifyTFGe(c.tfge).stage, tfge: c.tfge, ckm: c.ckm };
+  const live = _czSnapshotClassif();
+  const chips = [];
+  if (cf.kdigoG || cf.kdigoA) {
+    const sev = _czSev('g', cf.kdigoG) === 'bad' || _czSev('a', cf.kdigoA) === 'bad' ? 'bad'
+      : (_czSev('g', cf.kdigoG) === 'warn' || _czSev('a', cf.kdigoA) === 'warn' ? 'warn' : 'ok');
+    chips.push('<span class="cz-pchip ' + sev + '">KDIGO ' + _esc(cf.kdigoG || '?') + (cf.kdigoA ? '·' + _esc(cf.kdigoA) : '') + '</span>');
+  }
+  if (cf.tfge != null) chips.push('<span class="cz-pchip ' + _czSev('g', cf.kdigoG || classifyTFGe(cf.tfge).stage) + '">TFGe ' + _esc(cf.tfge) + _czDelta(cf.tfge, live.tfge, true) + '</span>');
+  if (cf.ckm != null && cf.ckm !== '') chips.push('<span class="cz-pchip ' + _czSev('ckm', cf.ckm) + '">CKM ' + _esc(cf.ckm) + _czDelta(cf.ckm, live.ckm, false) + '</span>');
+  if (cf.prevent != null) chips.push('<span class="cz-pchip ' + _czSev('prevent', cf.prevent) + '">PREVENT ' + _esc(cf.prevent) + '%</span>');
+  if (cf.msCount != null) chips.push('<span class="cz-pchip ' + _czSev('ms', cf.msCount) + '">SM ' + _esc(cf.msCount) + '/5</span>');
+
+  let h = '<div class="cz-prev-meta"><span class="d">' + _esc(dt) + '</span><span class="t">' + _esc(type) + '</span></div>';
+  if (chips.length) h += '<div class="cz-prev-chips">' + chips.join('') + '</div>';
+  h += '<div class="cz-prev-narr">';
+
+  // 2) Narrativa: campos reais salvos daquela consulta, agrupados por seção
+  if (c.narr && c.narr.length) {
+    const bySec = [];
+    c.narr.forEach(f => {
+      let g = bySec.find(x => x.s === f.section);
+      if (!g) { g = { s: f.section, items: [] }; bySec.push(g); }
+      g.items.push(f);
+    });
+    bySec.forEach(g => {
+      h += '<h4>' + _esc(g.s) + '</h4><p>' + g.items.map(f =>
+        f.value === '✓' ? '<span class="cap">' + _esc(f.label) + '</span>'
+          : '<span class="cap">' + _esc(f.label) + ':</span> ' + _esc(f.value)
+      ).join(' · ') + '</p>';
+    });
+  } else {
+    // Fallback p/ consultas antigas (sem snapshot de campos): usa o resumo
+    const vit = [];
+    if (c.tfge) vit.push('TFGe ' + c.tfge + ' mL/min');
+    if (c.pa) vit.push('PA ' + c.pa + ' mmHg');
+    if (c.hba1c) vit.push('HbA1c ' + c.hba1c + '%');
+    if (c.ldl) vit.push('LDL ' + c.ldl + ' mg/dL');
+    if (c.imc) vit.push('IMC ' + c.imc);
+    if (c.diagnoses) h += '<h4>Diagnósticos</h4><p>' + _esc(c.diagnoses) + '</p>';
+    if (vit.length) h += '<h4>Exame &amp; laboratório</h4><p>' + _esc(vit.join(' · ')) + '.</p>';
+    if (c.meds && c.meds.length) h += '<h4>Prescrição</h4><p>' + _esc(c.meds.join(', ')) + '.</p>';
+    if (c.notes) h += '<h4>Observações</h4><p>' + _esc(c.notes) + '</p>';
+    if (!c.diagnoses && !vit.length && !(c.meds && c.meds.length) && !c.notes && !chips.length)
+      h += '<p style="color:#97A1B0;">Sem dados registrados nesta consulta.</p>';
+  }
+  h += '</div>';
+  box.innerHTML = h;
+}
+// ---- Q4 (motor de composição) · Bloco #2: exames solicitados na consulta anterior → campos p/ lançar resultados ----
+const _normExam = s => String(s).toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^a-z0-9]+/g, ' ').trim();
+function _examFieldId(name) {
+  return EXAM_ALIASES[_normExam(name)]                       // match exato
+    || EXAM_ALIASES[_normExam(String(name).replace(/\(.*?\)/g, ''))] // sem parênteses: "RAC (relação...)" → "relação..."
+    || null;
+}
+window._czExtraResults = window._czExtraResults || {};
+function _czPrevRequestedExams() {
+  const hist = _czHistory();
+  const prev = hist[0];                              // consulta imediatamente anterior salva
+  if (prev && Array.isArray(prev.examsRequested) && prev.examsRequested.length) return prev.examsRequested;
+  // fallback: prescrição vinda da nuvem (prontuário)
+  const pc = window._apexPrevContrato;
+  if (pc && Array.isArray(pc.examPrescription) && pc.examPrescription.length) {
+    return pc.examPrescription.map(e => ({ name: e.name || e, type: e.type || '' }));
+  }
+  return [];
+}
+function _czExamValue(name) {
+  const fid = _examFieldId(name);
+  if (fid && document.getElementById(fid)) return document.getElementById(fid).value || '';
+  return window._czExtraResults[name] || '';
+}
+function renderCzPending() {
+  const host = document.getElementById('czPendingHost') || document.getElementById('consulta-body'); if (!host) return;
+  let block = document.getElementById('czPending');
+  if (!block) { block = document.createElement('div'); block.id = 'czPending'; block.className = 'cz-pending'; host.appendChild(block); }
+  const reqs = _czPrevRequestedExams();
+  if (!reqs.length) { block.style.display = 'none'; block.innerHTML = ''; return; }
+  block.style.display = '';
+  let done = 0;
+  const rows = reqs.map(ex => {
+    const name = ex.name || ex;
+    const fid = _examFieldId(name);
+    const hasField = fid && document.getElementById(fid);
+    const cur = hasField ? (document.getElementById(fid).value || '') : (window._czExtraResults[name] || '');
+    if (cur !== '') done++;
+    const attr = hasField ? ('data-fid="' + fid + '"') : ('data-extra="' + _esc(name) + '"');
+    return '<div class="cz-pend-row' + (cur !== '' ? ' filled' : '') + '">'
+      + '<label>' + _esc(name) + '</label>'
+      + '<input type="text" ' + attr + ' value="' + _esc(cur) + '" oninput="czPendInput(this)" placeholder="resultado">'
+      + '<span class="ok">&#x2713;</span></div>';
+  }).join('');
+  block.innerHTML = '<div class="cz-pend-head"><span>&#x1F9EA; Exames solicitados na última consulta</span>'
+    + '<span class="cz-pend-count">' + done + '/' + reqs.length + ' lançados</span></div>'
+    + '<div class="cz-pend-grid">' + rows + '</div>';
+}
+function czPendInput(inp) {
+  const val = inp.value.trim();
+  const fid = inp.getAttribute('data-fid');
+  if (fid) {
+    const el = document.getElementById(fid);
+    if (el) { el.value = val; el.dispatchEvent(new Event('input', { bubbles: true })); }
+  } else {
+    const name = inp.getAttribute('data-extra');
+    if (name) window._czExtraResults[name] = val;
+  }
+  const row = inp.closest('.cz-pend-row'); if (row) row.classList.toggle('filled', val !== '');
+  const block = document.getElementById('czPending');
+  if (block) {
+    const rows = [...block.querySelectorAll('.cz-pend-row')];
+    const done = rows.filter(r => r.classList.contains('filled')).length;
+    const c = block.querySelector('.cz-pend-count'); if (c) c.textContent = done + '/' + rows.length + ' lançados';
+  }
+  if (typeof recalcAll === 'function') recalcAll();
+}
+function _czCurrentMonth() {
+  const n = parseInt((document.getElementById('consultaNum')?.textContent || '1').replace(/\D/g, '')) || 1;
+  return Math.min(Math.max(n, 1), 12);
+}
+function _czRetornoLabel() {
+  const v = document.getElementById('czTemplate')?.value;
+  return ({ mensal: 'mensal', trimestral: 'trimestral', semestral: 'semestral', anual: 'anual' })[v] || 'mensal';
+}
+function renderCzCadence() {
+  const host = document.getElementById('czCadenceHost'); if (!host) return;
+  let block = document.getElementById('czCadence');
+  if (!block) {
+    block = document.createElement('div'); block.id = 'czCadence'; block.className = 'cz-cadence';
+    host.appendChild(block);
+  }
+  const month = _czCurrentMonth();
+  const ecn = document.getElementById('examConsultaNum');
+  if (ecn) ecn.value = month;
+  const d = PROTOCOL_12M[month];
+  if (!d) { block.style.display = 'none'; block.innerHTML = ''; if (typeof renderExams === 'function') renderExams(); return; }
+  block.style.display = '';
+  block.dataset.month = month;
+  const items = [];
+  d.lab.forEach(n => items.push(n)); d.urina.forEach(n => items.push(n)); d.imagem.forEach(n => items.push(n));
+  let sel = 0;
+  const chips = items.map(name => {
+    const on = examPrescriptionList.some(e => e.name === name && e.consultaNum === month);
+    if (on) sel++;
+    return '<button type="button" class="cz-cad-chip' + (on ? ' on' : '') + '" data-name="' + _esc(name) + '" onclick="czCadToggle(this)">' + _esc(name) + '</button>';
+  }).join('');
+  const tipoBadge = '<span class="cz-cad-tipo ' + (d.tipo === 'presencial' ? 'pres' : 'tele') + '">' + (d.tipo === 'presencial' ? 'Presencial' : 'Teleconsulta') + '</span>';
+  const bodyHtml = items.length
+    ? '<div class="cz-cad-chips">' + chips + '</div>' + (d.bioimpedancia ? '<p class="cz-cad-extra">+ Bioimpedância (InBody) neste mês</p>' : '')
+    : '<p class="cz-cad-obs">' + _esc(d.obs || 'Sem exames laboratoriais neste mês.') + '</p>';
+  const nxt = PROTOCOL_12M[month + 1];
+  const nextHtml = nxt
+    ? '<p class="cz-cad-next">Pr&oacute;ximo retorno: <b>M&ecirc;s ' + (month + 1) + ' &middot; ' + _esc(nxt.label) + '</b> (' + (nxt.tipo === 'presencial' ? 'Presencial' : 'Teleconsulta') + ') &mdash; exames seguem o protocolo de 12 meses.</p>'
+    : '<p class="cz-cad-next">Ciclo de 12 meses conclu&iacute;do &mdash; reavaliar plano anual.</p>';
+  block.innerHTML = '<div class="cz-cad-head"><span>&#x1F4C5; Cadência do protocolo &mdash; M&ecirc;s ' + month + ' &middot; ' + _esc(d.label) + '</span>'
+    + tipoBadge
+    + (items.length ? '<span class="cz-cad-count">' + sel + '/' + items.length + ' agendados</span>' : '')
+    + '</div>' + bodyHtml + nextHtml;
+  if (typeof renderExams === 'function') renderExams();
+}
+function toggleCronograma() {
+  document.getElementById('cronogramaCollap')?.classList.toggle('open');
+}
+function czCadToggle(btn) {
+  const name = btn.getAttribute('data-name');
+  const block = document.getElementById('czCadence');
+  const month = parseInt(block?.dataset.month) || _czCurrentMonth();
+  const i = examPrescriptionList.findIndex(e => e.name === name && e.consultaNum === month);
+  if (i >= 0) { examPrescriptionList.splice(i, 1); btn.classList.remove('on'); }
+  else {
+    const ed = EXAMS_DB.find(e => e.name === name);
+    examPrescriptionList.push({ name, type: ed?.type || 'sangue', category: ed?.category || 'Cadência protocolo', consultaNum: month });
+    btn.classList.add('on');
+  }
+  if (block) {
+    const chips = [...block.querySelectorAll('.cz-cad-chip')];
+    const c = block.querySelector('.cz-cad-count');
+    if (c) c.textContent = chips.filter(x => x.classList.contains('on')).length + '/' + chips.length + ' agendados';
+  }
+  if (typeof renderExams === 'function') renderExams();
+}
+function trilhoGo(i) {
+  document.querySelectorAll('#tab-consulta .trilho-step').forEach(s => {
+    s.classList.toggle('open', parseInt(s.dataset.step) === i);
+  });
+  document.querySelectorAll('#tab-consulta .pstep').forEach(p => {
+    p.classList.toggle('current', parseInt(p.dataset.i) === i);
+  });
+  const step = document.querySelector('#tab-consulta .trilho-step[data-step="' + i + '"]');
+  if (step) step.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  if (i === 2) { if (typeof recalcAll === 'function') recalcAll(); if (typeof drawRadar === 'function') setTimeout(drawRadar, 120); }
+  if (window.lucide) lucide.createIcons();
+}
+function trilhoToggle(i) {
+  const step = document.querySelector('#tab-consulta .trilho-step[data-step="' + i + '"]');
+  if (!step) return;
+  if (step.classList.contains('open')) step.classList.remove('open');
+  else trilhoGo(i);
+}
+
+function czInit() {
+  const hist = _czHistory();
+  if (hist.length) _czSel = 0;
+  else if (window._apexPrevContrato) _czSel = 'srv';
+  else _czSel = -1;
+  renderCzTimeline();
+  renderCzPrev(_czSel);
+  renderCzPending();
+  renderCzCadence();
+  if (window.lucide) lucide.createIcons();
 }
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -6225,6 +6766,10 @@ document.addEventListener('DOMContentLoaded', function() {
   renderExams();
   renderSupplements();
   if (typeof renderResumo === 'function') renderResumo();
+  const _czCap = document.getElementById('czCap');
+  const _czTplSel = document.getElementById('czTemplate');
+  if (_czCap && _czTplSel) _czCap.textContent = _CZ_CAP[_czTplSel.value] || '';
+  if (typeof czInit === 'function') czInit();
 });
 </script>
 
