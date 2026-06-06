@@ -558,6 +558,13 @@ html.embed-mode .cz-grid { height: calc(100vh - 92px); }
 .ex-collap.open .ex-collap-head .ex-chev { transform: rotate(225deg); margin-bottom: -1px; }
 .ex-collap-body { display: none; margin-top: 14px; }
 .ex-collap.open .ex-collap-body { display: block; }
+/* Seções que recolhem SÓ em teleconsulta (item 6 · mês-template). Em presencial ficam estáticas/abertas. */
+.ex-tele-hint { display: none; font-size: 11px; font-weight: 600; color: #a9842f; }
+.ex-collap.cz-tele:not(.cz-static):not(.open) .ex-tele-hint { display: inline-block; }
+.ex-collap.cz-tele:not(.cz-static):not(.open) > .ex-collap-head { background: #fcfaf4; border-radius: 8px; padding: 4px 8px; }
+.ex-collap.cz-static > .ex-collap-head { cursor: default; }
+.ex-collap.cz-static > .ex-collap-head .ex-chev { display: none; }
+.ex-collap.cz-static > .ex-collap-body { display: block; }
 @media (max-width: 1180px) { .cz-grid { grid-template-columns: 210px minmax(0,1fr) 290px; } }
 @media (max-width: 960px) { .cz-grid { grid-template-columns: 1fr; height: auto; } .cz-zone { height: auto; } .cz-zone-body { max-height: 70vh; } }
 /* ===== TRILHO LINEAR (Atendimento) ===== */
@@ -1079,6 +1086,8 @@ html.embed-mode .cz-grid { height: calc(100vh - 92px); }
     if (typeof restoreDraft === 'function') setTimeout(restoreDraft, 50);
     /* Carregar memória de consultas anteriores deste paciente */
     if (typeof loadConsultaHistory === 'function') setTimeout(loadConsultaHistory, 80);
+    /* Sincronizar o seletor "Atendendo" com o mês real do paciente */
+    if (typeof syncCzTemplate === 'function') setTimeout(syncCzTemplate, 90);
   });
 })();
 </script>
@@ -1253,13 +1262,7 @@ html.embed-mode .cz-grid { height: calc(100vh - 92px); }
       <!-- Seletor de atendimento -->
       <div class="trilho-toolbar">
         <label>Atendendo</label>
-        <select id="czTemplate" onchange="onCzTemplate()">
-          <option value="primeira">Primeira consulta</option>
-          <option value="mensal">Retorno · mensal</option>
-          <option value="trimestral">Retorno · trimestral</option>
-          <option value="semestral">Retorno · semestral</option>
-          <option value="anual">Retorno · anual</option>
-        </select>
+        <select id="czTemplate" onchange="onCzTemplate()"></select>
         <div class="cz-q4-cap" id="czCap"></div>
         <div class="cz-q4-chips" id="czChips"></div>
       </div>
@@ -1309,9 +1312,13 @@ html.embed-mode .cz-grid { height: calc(100vh - 92px); }
   </div>
 
   <!-- Exames laboratoriais (consulta ATUAL) — reposicionado após a Anamnese via CSS (order) -->
-  <div id="examBlockWrap">
-    <div class="section-header">Exames Laboratoriais</div>
-    <div class="card">
+  <div id="examBlockWrap" class="card ex-collap cz-tele cz-static open">
+    <div class="ex-collap-head" onclick="this.closest('.ex-collap').classList.toggle('open')">
+      <span class="icon">&#x1F9EA;</span> Exames Laboratoriais
+      <span class="ex-tele-hint">+ clique para preencher</span>
+      <span class="ex-chev"></span>
+    </div>
+    <div class="ex-collap-body">
       <p style="font-size:12px; color:#6B7A8D; margin-bottom:12px;">Resultados da consulta atual. Dica: use "Importar exames via JSON" (abaixo) para preencher rápido.</p>
       <div class="retorno-only" style="margin-bottom:16px;">
         <div class="card-title" style="margin-bottom:10px;"><span class="icon">&#x1F4CF;</span> Consulta anterior (comparação)</div>
@@ -1594,8 +1601,13 @@ html.embed-mode .cz-grid { height: calc(100vh - 92px); }
   <div class="section-header">Exame Físico</div>
 
   <!-- Sinais vitais + Antropometria -->
-  <div class="card">
-    <div class="card-title"><span class="icon">&#x1F4CF;</span> Sinais Vitais e Antropometria</div>
+  <div class="card ex-collap cz-tele cz-static open" id="foldVitais">
+    <div class="ex-collap-head" onclick="this.closest('.ex-collap').classList.toggle('open')">
+      <span class="icon">&#x1F4CF;</span> Sinais Vitais e Antropometria
+      <span class="ex-tele-hint">+ clique para preencher</span>
+      <span class="ex-chev"></span>
+    </div>
+    <div class="ex-collap-body">
     <div style="display:grid; grid-template-columns:repeat(5,1fr) minmax(100px,160px); gap:12px; align-items:end;">
       <div class="form-group"><label>PA Sistólica</label><input type="number" id="pas" placeholder="mmHg" onchange="autoCalc()"></div>
       <div class="form-group"><label>PA Diastólica</label><input type="number" id="pad" placeholder="mmHg"></div>
@@ -1610,11 +1622,17 @@ html.embed-mode .cz-grid { height: calc(100vh - 92px); }
       <div class="form-group"><label>Temperatura</label><input type="number" step="0.1" id="temp" placeholder="°C"></div>
       <div class="form-group"><label>FR</label><input type="number" id="fr" placeholder="irpm"></div>
     </div>
+    </div><!-- end ex-collap-body Sinais Vitais -->
   </div>
 
   <!-- Bioimpedância -->
-  <div class="card">
-    <div class="card-title"><span class="icon">&#x26A1;</span> Bioimpedância</div>
+  <div class="card ex-collap cz-tele cz-static open" id="foldBio">
+    <div class="ex-collap-head" onclick="this.closest('.ex-collap').classList.toggle('open')">
+      <span class="icon">&#x26A1;</span> Bioimpedância
+      <span class="ex-tele-hint">+ clique para preencher</span>
+      <span class="ex-chev"></span>
+    </div>
+    <div class="ex-collap-body">
     <div class="form-grid cols-5">
       <div class="form-group"><label>% Gordura corporal</label><input type="number" step="0.1" id="bio_gordura" placeholder="%"></div>
       <div class="form-group"><label>Massa magra (kg)</label><input type="number" step="0.1" id="bio_magra" placeholder="kg"></div>
@@ -1628,12 +1646,19 @@ html.embed-mode .cz-grid { height: calc(100vh - 92px); }
       <div class="form-group"><label>Músculo esquelético (%)</label><input type="number" step="0.1" id="bio_musculo" placeholder="%"></div>
       <div class="form-group"><label>Ângulo de fase</label><input type="number" step="0.1" id="bio_angulo" placeholder="°"></div>
     </div>
+    </div><!-- end ex-collap-body Bioimpedância -->
   </div>
 
   <!-- Exame físico detalhado -->
-  <div class="card">
-    <div class="card-title"><span class="icon">&#x1FA7A;</span> Exame Físico Segmentar
-      <button class="btn btn-outline btn-sm" style="margin-left:auto;" onclick="fillNormal()">&#x2705; Preencher Normal</button>
+  <div class="card ex-collap cz-tele cz-static open" id="foldFisico">
+    <div class="ex-collap-head" onclick="this.closest('.ex-collap').classList.toggle('open')">
+      <span class="icon">&#x1FA7A;</span> Exame Físico Segmentar
+      <span class="ex-tele-hint">+ clique para preencher</span>
+      <span class="ex-chev"></span>
+    </div>
+    <div class="ex-collap-body">
+    <div style="text-align:right;margin-bottom:8px;">
+      <button class="btn btn-outline btn-sm" onclick="fillNormal()">&#x2705; Preencher Normal</button>
     </div>
     <div class="form-grid cols-2">
       <div class="form-group"><label>Estado geral</label><textarea id="ef_geral" rows="2"></textarea></div>
@@ -1645,6 +1670,7 @@ html.embed-mode .cz-grid { height: calc(100vh - 92px); }
       <div class="form-group"><label>Neurológico</label><textarea id="ef_neuro" rows="2"></textarea></div>
       <div class="form-group"><label>Pele e anexos</label><textarea id="ef_pele" rows="2"></textarea></div>
     </div>
+    </div><!-- end ex-collap-body Exame físico -->
   </div>
 
   <!-- Linha de cuidado / Protocolos do paciente (fim da Consulta · só primeira consulta) -->
@@ -3402,22 +3428,39 @@ function setConsultaMode(mode, btn) {
   if (mode === 'retorno') { body.classList.add('mode-retorno'); } else { body.classList.remove('mode-retorno'); }
 }
 
-// Q4 · seletor de template (barra do Q3). Deriva o modo de consulta a partir do template escolhido.
-const _CZ_CAP = {
-  primeira: 'Primeira consulta · linha de base completa',
-  mensal: 'Retorno mensal · cadência intensiva',
-  trimestral: 'Retorno trimestral · reavaliação',
-  semestral: 'Retorno semestral · revisão de metas',
-  anual: 'Retorno anual · fechamento de ciclo'
-};
+// Q4 · seletor "Atendendo": o MÊS é o modelo. Lista os 12 meses do PROTOCOL_12M;
+// o mês escolhido define tipo (presencial/tele), cadência de exames e recolhimento em tele.
+function buildCzTemplate() {
+  const sel = document.getElementById('czTemplate');
+  if (!sel) return;
+  sel.innerHTML = Object.keys(PROTOCOL_12M).map(function(m) {
+    const d = PROTOCOL_12M[m];
+    const t = d.tipo === 'presencial' ? 'Presencial' : 'Teleconsulta';
+    return '<option value="' + m + '">Mês ' + m + ' · ' + d.label + ' (' + t + ')</option>';
+  }).join('');
+}
+// Sincroniza o seletor com o mês REAL do paciente (#consultaNum) — auto-default com override manual.
+function syncCzTemplate() {
+  const sel = document.getElementById('czTemplate');
+  if (!sel) return;
+  if (!sel.options.length) buildCzTemplate();
+  const n = parseInt((document.getElementById('consultaNum')?.textContent || '1').replace(/\D/g, '')) || 1;
+  sel.value = Math.min(Math.max(n, 1), 12);
+  onCzTemplate();
+}
 function onCzTemplate() {
   const sel = document.getElementById('czTemplate');
   if (!sel) return;
-  const val = sel.value;
-  const isPrimeira = val === 'primeira';
-  setConsultaMode(isPrimeira ? 'primeira' : 'retorno');
+  const month = parseInt(sel.value) || 1;
+  const d = PROTOCOL_12M[month];
+  setConsultaMode(month === 1 ? 'primeira' : 'retorno');
   const cap = document.getElementById('czCap');
-  if (cap) cap.textContent = _CZ_CAP[val] || '';
+  if (cap) {
+    const tipoTxt = d && d.tipo === 'presencial' ? 'Presencial' : 'Teleconsulta';
+    cap.textContent = d ? (/teleconsulta|presencial/i.test(d.label) ? d.label : d.label + ' · ' + tipoTxt) : '';
+  }
+  if (typeof renderCzCadence === 'function') renderCzCadence();
+  if (typeof applyTeleCollapse === 'function') applyTeleCollapse(!!d && d.tipo === 'teleconsulta');
 }
 
 // Foto, gravidade e identificação (dados vindos do Pro via postMessage)
@@ -6181,7 +6224,7 @@ function _consKey() { return 'apex_consultas_' + (window._apexPatientId || 'defa
 function saveConsulta() {
   const historyEntry = {
     date: new Date().toLocaleDateString('pt-BR'),
-    type: consultaMode === 'primeira' ? 'Primeira Consulta' : 'Retorno '+_czRetornoLabel(),
+    type: _czRetornoLabel(),
     diagnoses: Array.from(document.querySelectorAll('[id^="hpp_"]:checked')).map(el=>el.nextSibling?.textContent?.trim()||'').filter(Boolean).join(', '),
     tfge: calcTFGe(labVal('cr'), getAge(), !isMale()),
     pa: labVal('pas') ? labVal('pas')+'/'+getV('pad') : null,
@@ -6415,9 +6458,7 @@ function renderCzTimeline() {
   const tfgeNow = (typeof calcTFGe === 'function') ? calcTFGe(labVal('cr'), getAge(), !isMale()) : null;
   const todayAnchor = tfgeNow ? ('TFGe ' + tfgeNow)
     : (labVal('pas') ? ('PA ' + labVal('pas') + '/' + (getV('pad') || '')) : '');
-  const todayType = (typeof consultaMode !== 'undefined' && consultaMode === 'primeira')
-    ? 'Primeira consulta'
-    : 'Retorno ' + _czRetornoLabel();
+  const todayType = _czRetornoLabel();
   let html = _czItem({ idx: -1, today: true, active: _czSel === -1, date: 'Hoje', type: todayType, anchor: todayAnchor, badge: 'Em andamento' });
   if (hist.length) {
     html += hist.map((c, i) => _czItem({ idx: i, active: _czSel === i, date: c.date || '—', type: c.type || 'Consulta', anchor: _czAnchor(c) })).join('');
@@ -6643,12 +6684,15 @@ function czPendInput(inp) {
   if (typeof recalcAll === 'function') recalcAll();
 }
 function _czCurrentMonth() {
+  const sel = document.getElementById('czTemplate');
+  const fromSel = sel ? parseInt(sel.value) : NaN;
+  if (fromSel >= 1 && fromSel <= 12) return fromSel;
   const n = parseInt((document.getElementById('consultaNum')?.textContent || '1').replace(/\D/g, '')) || 1;
   return Math.min(Math.max(n, 1), 12);
 }
 function _czRetornoLabel() {
-  const v = document.getElementById('czTemplate')?.value;
-  return ({ mensal: 'mensal', trimestral: 'trimestral', semestral: 'semestral', anual: 'anual' })[v] || 'mensal';
+  const d = PROTOCOL_12M[_czCurrentMonth()];
+  return d ? d.label : 'Retorno';
 }
 function renderCzCadence() {
   const host = document.getElementById('czCadenceHost'); if (!host) return;
@@ -6688,6 +6732,16 @@ function renderCzCadence() {
 }
 function toggleCronograma() {
   document.getElementById('cronogramaCollap')?.classList.toggle('open');
+}
+// Item 6 · mês-template: em teleconsulta recolhe Exame físico, Bioimpedância e Exames laboratoriais.
+// Campos seguem no DOM (só escondidos atrás de cabeçalho clicável) — comparação/Radar/Supabase intactos.
+function applyTeleCollapse(isTele) {
+  ['foldVitais', 'foldBio', 'foldFisico', 'examBlockWrap'].forEach(function(id) {
+    const el = document.getElementById(id);
+    if (!el || !el.classList.contains('ex-collap')) return;
+    if (isTele) { el.classList.remove('cz-static'); el.classList.remove('open'); }
+    else { el.classList.add('cz-static'); el.classList.add('open'); }
+  });
 }
 function czCadToggle(btn) {
   const name = btn.getAttribute('data-name');
@@ -6745,9 +6799,8 @@ document.addEventListener('DOMContentLoaded', function() {
   renderExams();
   renderSupplements();
   if (typeof renderResumo === 'function') renderResumo();
-  const _czCap = document.getElementById('czCap');
-  const _czTplSel = document.getElementById('czTemplate');
-  if (_czCap && _czTplSel) _czCap.textContent = _CZ_CAP[_czTplSel.value] || '';
+  if (typeof buildCzTemplate === 'function') buildCzTemplate();
+  if (typeof syncCzTemplate === 'function') syncCzTemplate();
   if (typeof czInit === 'function') czInit();
 });
 </script>
