@@ -1308,33 +1308,6 @@ html.embed-mode .cz-grid { height: calc(100vh - 92px); }
     </div>
   </div>
 
-  <!-- RETORNO: Histórico de consultas anteriores -->
-  <div class="retorno-only">
-    <div class="section-header">Consultas Anteriores</div>
-    <div class="card">
-      <div class="card-title"><span class="icon">&#x1F4C5;</span> Histórico de Consultas
-        <button class="btn btn-outline btn-sm" style="margin-left:auto;" onclick="loadConsultaHistory()">&#x1F504; Carregar Histórico</button>
-      </div>
-      <div id="consultaHistory" style="max-height:400px; overflow-y:auto;">
-        <p style="color:#999; font-size:12px; text-align:center; margin:20px 0;">Clique em "Carregar Histórico" para ver consultas anteriores salvas</p>
-      </div>
-      <div id="consultaDetail" style="display:none; margin-top:12px; padding:14px; background:#F8F8F5; border-radius:var(--radius-sm); border-left:4px solid var(--gold);"></div>
-    </div>
-  </div>
-
-  <!-- Linha de cuidado / Protocolos do paciente -->
-  <div id="protocoloSelectorWrap">
-    <div class="section-header">Linha de cuidado · Protocolos</div>
-    <div class="card">
-      <p style="font-size:12px; color:#6B7A8D; margin-bottom:10px;">Selecione o(s) protocolo(s) em que o paciente será incluído. Isso individualiza a conduta, as metas e a <b>solicitação de exames com a periodicidade correta</b>.</p>
-      <div id="protocoloSelector" style="display:flex;flex-wrap:wrap;gap:8px;"></div>
-      <div style="margin-top:16px;">
-        <div class="card-title" style="margin-bottom:6px;"><span class="icon">&#x1F4C5;</span> Solicitação de exames por protocolo (periodicidade)</div>
-        <div id="periodizacaoExames" style="margin-top:6px;"></div>
-      </div>
-    </div>
-  </div>
-
   <!-- Exames laboratoriais (consulta ATUAL) — reposicionado após a Anamnese via CSS (order) -->
   <div id="examBlockWrap">
     <div class="section-header">Exames Laboratoriais</div>
@@ -1573,10 +1546,13 @@ html.embed-mode .cz-grid { height: calc(100vh - 92px); }
   </div>
 
   <!-- EXAMES LABORATORIAIS (MOVED ABOVE Exame Físico per Bruno's request) -->
-  <div class="section-header retorno-only">Exames da consulta anterior (comparação)</div>
-  <div class="card retorno-only">
-    <div class="card-title"><span class="icon">&#x1F9EA;</span> Resultados da consulta anterior</div>
-    <p style="font-size:12px; color:#6B7A8D; margin-bottom:12px;">Preenchidos automaticamente a partir da última consulta no Supabase (para comparar a evolução). Você pode ajustar se necessário.</p>
+  <div class="card ex-collap retorno-only" id="examPrevCollap">
+    <div class="ex-collap-head" onclick="this.closest('.ex-collap').classList.toggle('open')">
+      <span class="icon">&#x1F9EA;</span> Ajustar valores da consulta anterior
+      <span style="font-weight:400; color:#8A97A8; font-size:11px;">— preenchidos automaticamente do Supabase; abra só se precisar corrigir</span>
+      <span class="ex-chev" aria-hidden="true"></span>
+    </div>
+    <div class="ex-collap-body">
     <div class="form-grid cols-4">
       <div class="form-group"><label>Creatinina</label><input type="number" step="0.01" id="cr_first" placeholder="mg/dL" onchange="autoCalc()"></div>
       <div class="form-group"><label>Ureia</label><input type="number" step="1" id="ureia_first" placeholder="mg/dL"></div>
@@ -1611,6 +1587,7 @@ html.embed-mode .cz-grid { height: calc(100vh - 92px); }
       <button class="btn btn-primary btn-sm" onclick="recalcAll()">&#x1F504; Recalcular Painel</button>
       <button class="btn btn-outline btn-sm" onclick="loadDemoLabs()">&#x1F4CB; Carregar Demo</button>
     </div>
+    </div><!-- end ex-collap-body -->
   </div>
 
   <!-- O: Exame Físico -->
@@ -1670,21 +1647,21 @@ html.embed-mode .cz-grid { height: calc(100vh - 92px); }
     </div>
   </div>
 
-  <!-- BASELINE (auto-send to patient) -->
-  <div class="section-header">Baseline</div>
-  <div class="card">
-    <div class="card-title"><span class="icon">&#x1F4CA;</span> Resumo Baseline — Dados de Partida</div>
-    <div id="baselineCards" style="display:grid; grid-template-columns:repeat(4,1fr); gap:10px; margin-bottom:16px;">
-      <!-- Filled dynamically -->
+  <!-- Linha de cuidado / Protocolos do paciente (fim da Consulta · só primeira consulta) -->
+  <div id="protocoloSelectorWrap" class="primeira-only">
+    <div class="section-header">Linha de cuidado · Protocolos</div>
+    <div class="card">
+      <p style="font-size:12px; color:#6B7A8D; margin-bottom:10px;">Selecione o(s) protocolo(s) em que o paciente será incluído. Isso individualiza a conduta, as metas e a <b>solicitação de exames com a periodicidade correta</b>.</p>
+      <div id="protocoloSelector" style="display:flex;flex-wrap:wrap;gap:8px;"></div>
+      <div style="margin-top:16px;">
+        <div class="card-title" style="margin-bottom:6px;"><span class="icon">&#x1F4C5;</span> Solicitação de exames por protocolo (periodicidade)</div>
+        <div id="periodizacaoExames" style="margin-top:6px;"></div>
+      </div>
     </div>
-    <div class="chart-container" style="height:280px;">
-      <canvas id="baselineRadar"></canvas>
-    </div>
-    <p style="font-size:11px; color:#999; margin-top:8px;">Este resumo será enviado automaticamente para o sumário do paciente</p>
   </div>
 
   <!-- SAVE BUTTON at bottom -->
-  <div style="margin-top:24px; text-align:center;">
+  <div id="saveConsultaWrap" style="margin-top:24px; text-align:center;">
     <button class="btn btn-success btn-lg" onclick="saveConsulta()">&#x1F4BE; SALVAR CONSULTA</button>
   </div>
 
@@ -3494,8 +3471,9 @@ function reorderConsultaBody() {
   var hitFisico = false;
   Array.prototype.forEach.call(body.children, function(el) {
     if (el.classList.contains('section-header') && /Exame F[ií]sico/.test(el.textContent || '')) hitFisico = true;
-    if (el.id === 'protocoloSelectorWrap') el.style.order = 3;
-    else if (el.id === 'examBlockWrap') el.style.order = 5;
+    if (el.id === 'examBlockWrap') el.style.order = 5;
+    else if (el.id === 'protocoloSelectorWrap') el.style.order = 20;
+    else if (el.id === 'saveConsultaWrap') el.style.order = 30;
     else if (hitFisico) el.style.order = 10;
     else el.style.order = 1;
   });
@@ -4222,6 +4200,7 @@ function updateGoals(imc, pas, pad, hba1c, tfge, rac, ldl, ca, fib4) {
 // ============================================================
 function updateBaseline(tfge, imc, pas, pad, hba1c, rac, ldl, ckm, ascvd, kfre) {
   const c = document.getElementById('baselineCards');
+  if (!c) return;
   c.innerHTML = '';
   const isRetorno = consultaMode === 'retorno';
   
