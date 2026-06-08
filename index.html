@@ -1494,6 +1494,61 @@
   @media (max-width: 768px) {
     .trust-bar { font-size: 10px; padding: 9px 16px; line-height: 1.6; }
   }
+
+  /* ───── NA MÍDIA ───── */
+  .namidia { background-color: var(--bg-alt); }
+  .nm-head { text-align: center; margin-bottom: 14px; }
+  .nm-head .headline-serif { font-size: clamp(30px,4vw,46px); max-width: 640px; margin: 0 auto; }
+  .nm-sub { color: rgba(30,45,80,0.6); font-size: 16px; line-height: 1.7; max-width: 560px; margin: 14px auto 0; text-align: center; }
+  .nm-outlets { display: flex; align-items: center; gap: 28px; margin: 38px auto 56px; max-width: 920px; }
+  .nm-outlets .lbl { flex: none; font-size: 11px; letter-spacing: 2.5px; text-transform: uppercase; color: rgba(30,45,80,0.4); font-weight: 600; }
+  .nm-marquee { flex: 1; overflow: hidden;
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 7%, #000 93%, transparent);
+    mask-image: linear-gradient(90deg, transparent, #000 7%, #000 93%, transparent); }
+  .nm-track { display: flex; align-items: center; gap: 52px; width: max-content; animation: nmMarquee 30s linear infinite; }
+  .nm-marquee:hover .nm-track { animation-play-state: paused; }
+  @keyframes nmMarquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+  .nm-outlet { font-family: var(--font-serif); font-size: 22px; color: rgba(30,45,80,0.55); letter-spacing: 0.3px; white-space: nowrap; filter: grayscale(1); transition: color .25s, opacity .25s; opacity: .72; }
+  .nm-outlet:hover { color: var(--navy); opacity: 1; }
+  .nm-grid { display: grid; grid-template-columns: 1.35fr 1fr; gap: 32px; align-items: stretch; }
+  .nm-feature { position: relative; border-radius: var(--radius); overflow: hidden; cursor: pointer; min-height: 420px; display: flex; align-items: flex-end; box-shadow: 0 10px 40px rgba(30,45,80,0.10); }
+  .poster { position: absolute; inset: 0; background: linear-gradient(135deg,#1c2c4d,#0d1830); }
+  .poster::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(10,18,32,0) 35%, rgba(10,18,32,.88) 100%); }
+  .poster img { width: 100%; height: 100%; object-fit: cover; opacity: .9; }
+  .nm-meta-over { position: relative; z-index: 2; padding: 36px; color: #fff; }
+  .nm-badge { display: inline-flex; align-items: center; gap: 7px; background: rgba(255,255,255,.14); backdrop-filter: blur(6px); border: 1px solid rgba(255,255,255,.18); color: #fff; font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; padding: 6px 13px; border-radius: 50px; margin-bottom: 16px; }
+  .nm-feature h3 { font-family: var(--font-serif); font-weight: 400; font-size: 30px; line-height: 1.15; margin-bottom: 10px; max-width: 90%; color: #fff; }
+  .nm-line { font-size: 13.5px; color: rgba(255,255,255,.7); }
+  .nm-play { position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); z-index: 3; width: 68px; height: 68px; border-radius: 50%; background: rgba(2,128,144,.92); display: flex; align-items: center; justify-content: center; box-shadow: 0 8px 30px rgba(0,0,0,.35); transition: transform .25s, background .25s; }
+  .nm-feature:hover .nm-play, .nm-card:hover .nm-play { transform: translate(-50%,-50%) scale(1.08); background: var(--teal-light); }
+  .nm-play i { color: #fff; width: 26px; height: 26px; margin-left: 3px; }
+  .nm-list { display: flex; flex-direction: column; gap: 24px; }
+  .nm-card { position: relative; flex: 1; border-radius: var(--radius); overflow: hidden; cursor: pointer; display: flex; align-items: flex-end; min-height: 186px; box-shadow: 0 6px 24px rgba(30,45,80,0.08); }
+  .nm-card .nm-meta-over { padding: 22px; }
+  .nm-card .nm-badge { margin-bottom: 10px; font-size: 10px; padding: 5px 11px; }
+  .nm-card h3 { font-family: var(--font-serif); font-weight: 400; font-size: 20px; line-height: 1.18; color: #fff; }
+  .nm-card .nm-play { width: 50px; height: 50px; }
+  .nm-card .nm-play i { width: 20px; height: 20px; }
+  .nm-foot { text-align: center; margin-top: 44px; }
+  .nm-all { display: inline-flex; align-items: center; gap: 8px; color: var(--teal); font-weight: 600; font-size: 15px; text-decoration: none; }
+  .nm-all:hover { color: var(--teal-light); }
+  /* lightbox */
+  .lb { position: fixed; inset: 0; z-index: 1000; background: rgba(10,18,32,.82); backdrop-filter: blur(8px); display: none; align-items: center; justify-content: center; padding: 24px; }
+  .lb.open { display: flex; }
+  .lb-inner { background: #0d1830; border: 1px solid rgba(255,255,255,.1); border-radius: 18px; width: min(400px,100%); max-height: 92vh; overflow-y: auto; display: flex; flex-direction: column; animation: lbIn .35s cubic-bezier(.16,1,.3,1); }
+  @keyframes lbIn { from { opacity: 0; transform: translateY(20px) scale(.98); } to { opacity: 1; transform: none; } }
+  .lb-video { aspect-ratio: 9/16; max-height: 58vh; background: linear-gradient(135deg,#1c2c4d,#0d1830); display: flex; align-items: center; justify-content: center; color: rgba(255,255,255,.4); font-size: 13px; text-align: center; padding: 24px; position: relative; flex: none; }
+  .lb-video .ig-note { max-width: 240px; line-height: 1.6; }
+  .lb-info { padding: 20px 22px 22px; }
+  .lb-info .nm-badge { margin-bottom: 12px; background: rgba(2,128,144,.16); border-color: rgba(2,128,144,.3); color: var(--teal-light); }
+  .lb-info h3 { font-family: var(--font-serif); color: #fff; font-weight: 400; font-size: 22px; line-height: 1.2; margin-bottom: 8px; }
+  .lb-info p { color: rgba(255,255,255,.6); font-size: 14px; line-height: 1.6; margin-bottom: 18px; }
+  .lb-ig { display: inline-flex; align-items: center; gap: 9px; background: var(--teal); color: #fff; text-decoration: none; padding: 12px 22px; border-radius: 50px; font-weight: 600; font-size: 14px; transition: background .25s, transform .25s; }
+  .lb-ig:hover { background: var(--teal-light); transform: scale(1.03); }
+  .lb-close { position: absolute; top: 18px; right: 20px; z-index: 1001; width: 42px; height: 42px; border-radius: 50%; background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.18); color: #fff; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+  .lb-close:hover { background: rgba(255,255,255,.2); }
+  @media (max-width: 860px) { .nm-grid { grid-template-columns: 1fr; } }
+  @media (prefers-reduced-motion: reduce) { .nm-track { animation: none; flex-wrap: wrap; } }
   </style>
 </head>
 <body>
@@ -1975,6 +2030,81 @@
     </div>
   </section>
 
+<!-- NA MÍDIA — ⚠️ cards de EXEMPLO (preview). Substituir pelos vídeos reais antes do deploy. -->
+  <section class="namidia section-pad" id="na-midia">
+    <div class="container">
+      <div class="nm-head">
+        <p class="eyebrow eyebrow-center rv">Na Mídia</p>
+        <h2 class="headline-serif headline-center rv rv-delay-1">Levando a nefrologia para o <em>debate público</em>.</h2>
+        <p class="nm-sub rv rv-delay-2">Participações do Dr. Bruno Biluca em entrevistas e conteúdos sobre saúde renal, Síndrome CKM e prevenção.</p>
+      </div>
+
+      <div class="nm-outlets rv rv-delay-2">
+        <span class="lbl">Visto em</span>
+        <div class="nm-marquee">
+          <div class="nm-track">
+            <span class="nm-outlet">TV Gazeta</span>
+            <span class="nm-outlet">CBN</span>
+            <span class="nm-outlet">Veja Saúde</span>
+            <span class="nm-outlet">Band</span>
+            <span class="nm-outlet">UOL VivaBem</span>
+            <span class="nm-outlet">Metrópoles</span>
+            <span class="nm-outlet" aria-hidden="true">TV Gazeta</span>
+            <span class="nm-outlet" aria-hidden="true">CBN</span>
+            <span class="nm-outlet" aria-hidden="true">Veja Saúde</span>
+            <span class="nm-outlet" aria-hidden="true">Band</span>
+            <span class="nm-outlet" aria-hidden="true">UOL VivaBem</span>
+            <span class="nm-outlet" aria-hidden="true">Metrópoles</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="nm-grid">
+        <article class="nm-feature rv" onclick="openLB(this)"
+          data-title="Hipertensão e os rins: o dano silencioso"
+          data-desc="Como a pressão alta lesa os rins sem dar sintomas — e por que o rastreio precoce muda o desfecho."
+          data-outlet="TV Gazeta · Programa Saúde" data-date="Abril 2026" data-ig="https://www.instagram.com/">
+          <div class="poster"></div>
+          <div class="nm-play"><i data-lucide="play"></i></div>
+          <div class="nm-meta-over">
+            <span class="nm-badge"><i data-lucide="tv" style="width:13px;height:13px"></i> Entrevista</span>
+            <h3>Hipertensão e os rins: o dano silencioso</h3>
+            <p class="nm-line">TV Gazeta · Programa Saúde — Abril 2026</p>
+          </div>
+        </article>
+
+        <div class="nm-list">
+          <article class="nm-card rv rv-delay-1" onclick="openLB(this)"
+            data-title="Síndrome CKM: por que tratar separado não funciona"
+            data-desc="A nova classificação da AHA que une coração, rim e metabolismo."
+            data-outlet="CBN · Saúde em Foco" data-date="Março 2026" data-ig="https://www.instagram.com/">
+            <div class="poster"></div>
+            <div class="nm-play"><i data-lucide="play"></i></div>
+            <div class="nm-meta-over">
+              <span class="nm-badge"><i data-lucide="radio" style="width:12px;height:12px"></i> Rádio</span>
+              <h3>Síndrome CKM: tratar junto</h3>
+            </div>
+          </article>
+          <article class="nm-card rv rv-delay-2" onclick="openLB(this)"
+            data-title="Wearables na prática clínica"
+            data-desc="Como dados de Oura e Garmin mudam a relação médico-paciente."
+            data-outlet="Reel @drbrunobiluca" data-date="Fevereiro 2026" data-ig="https://www.instagram.com/">
+            <div class="poster"></div>
+            <div class="nm-play"><i data-lucide="play"></i></div>
+            <div class="nm-meta-over">
+              <span class="nm-badge"><i data-lucide="instagram" style="width:12px;height:12px"></i> Reel</span>
+              <h3>Wearables na prática clínica</h3>
+            </div>
+          </article>
+        </div>
+      </div>
+
+      <div class="nm-foot rv">
+        <a href="na-midia.html" class="nm-all">Ver todas as participações <i data-lucide="arrow-right" style="width:16px;height:16px"></i></a>
+      </div>
+    </div>
+  </section>
+
 <!-- EM DESTAQUE / MAIS LIDAS -->
   <section class="destaque section-pad gold-dots" id="conteudo">
     <div class="container">
@@ -2031,6 +2161,14 @@
      <h2 class="headline-serif headline-center rv" style="font-size:clamp(28px,3.5vw,42px);">Ciência que guia o <em>protocolo</em></h2>
      <p class="subtitle rv" style="text-align:center;max-width:560px;margin:16px auto 44px;">Curadoria semanal das principais publicações em Nefrologia, Cardiologia, Diabetes e Síndrome CKM.</p>
      <div class="rv" style="display:flex;flex-direction:column;gap:12px;">
+       <a href="boletim-semanal-05.html" class="bol-card">
+         <div class="bol-num">#5</div>
+         <div style="flex:1;min-width:0;">
+           <div class="bol-title">A semana da Nefrologia: ERA 2026 redefine a nefropatia por IgA</div>
+           <div class="bol-meta">08 de junho de 2026 · ALIGN (atrasentan) no Lancet, APPLAUSE-IgAN (iptacopan), KDIGO 2026 Anemia da DRC, ADA Scientific Sessions</div>
+         </div>
+         <div class="bol-go">Ler &rarr;</div>
+       </a>
        <a href="boletim-semanal-04.html" class="bol-card">
          <div class="bol-num">#4</div>
          <div style="flex:1;min-width:0;">
@@ -2451,6 +2589,31 @@
       });
     });
 
+    // ===== NA MÍDIA — lightbox =====
+    function openLB(card){
+      const d = card.dataset;
+      document.getElementById('lbTitle').textContent = d.title || '';
+      document.getElementById('lbDesc').textContent = d.desc || '';
+      document.getElementById('lbOutlet').textContent = (d.outlet || '') + (d.date ? ' · ' + d.date : '');
+      document.getElementById('lbIg').href = d.ig || '#';
+      const v = document.getElementById('lbVideo');
+      // embed nativo do Instagram, carregado só ao abrir (lazy)
+      v.innerHTML = '<blockquote class="instagram-media" data-instgrm-permalink="' + (d.ig || '') + '" data-instgrm-version="14" style="margin:0;width:100%;min-width:0;background:transparent"></blockquote>';
+      if (window.instgrm) { window.instgrm.Embeds.process(); }
+      else if (!document.getElementById('ig-embed-js')) {
+        const s = document.createElement('script'); s.id = 'ig-embed-js'; s.async = true; s.src = 'https://www.instagram.com/embed.js'; document.body.appendChild(s);
+      }
+      document.getElementById('lb').classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeLB(){
+      document.getElementById('lb').classList.remove('open');
+      document.getElementById('lbVideo').innerHTML = '';
+      document.body.style.overflow = '';
+    }
+    document.getElementById('lb').addEventListener('click', function(e){ if (e.target === this) closeLB(); });
+    document.addEventListener('keydown', function(e){ if (e.key === 'Escape') closeLB(); });
+
     // ===== LUCIDE ICONS =====
     lucide.createIcons();
 
@@ -2538,6 +2701,22 @@
 </div>
 
 <!-- WhatsApp FAB (APEX) -->
+<!-- Lightbox Na Mídia -->
+<div class="lb" id="lb">
+  <button class="lb-close" onclick="closeLB()" aria-label="Fechar"><i data-lucide="x"></i></button>
+  <div class="lb-inner">
+    <div class="lb-video" id="lbVideo">
+      <div class="ig-note"><i data-lucide="instagram" style="width:30px;height:30px;opacity:.5"></i><br><br>Carregando vídeo do Instagram…</div>
+    </div>
+    <div class="lb-info">
+      <span class="nm-badge"><i data-lucide="clapperboard" style="width:13px;height:13px"></i> <span id="lbOutlet"></span></span>
+      <h3 id="lbTitle"></h3>
+      <p id="lbDesc"></p>
+      <a class="lb-ig" id="lbIg" href="#" target="_blank" rel="noopener"><i data-lucide="instagram" style="width:16px;height:16px"></i> Ver no Instagram</a>
+    </div>
+  </div>
+</div>
+
 <a id="apex-wa-fab" href="https://wa.me/5511970833475?text=Ol%C3%A1%2C%20gostaria%20de%20agendar%20uma%20consulta%20na%20APEX%20Health." target="_blank" rel="noopener" aria-label="Falar no WhatsApp — iniciar atendimento">
   <svg viewBox="0 0 32 32" width="30" height="30" fill="#fff" aria-hidden="true"><path d="M16.002 4C9.42 4 4.06 9.36 4.057 15.943c0 2.105.55 4.16 1.595 5.97L3.96 28l6.255-1.64a11.94 11.94 0 0 0 5.683 1.448h.005c6.58 0 11.94-5.36 11.944-11.945a11.88 11.88 0 0 0-3.49-8.42A11.86 11.86 0 0 0 16.002 4zm0 21.79h-.004a9.87 9.87 0 0 1-5.027-1.376l-.36-.214-3.74.98 1-3.65-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.002-5.45 4.437-9.884 9.889-9.884a9.82 9.82 0 0 1 6.988 2.898 9.825 9.825 0 0 1 2.892 6.994c-.003 5.45-4.438 9.885-9.886 9.885zm5.42-7.404c-.297-.149-1.758-.868-2.03-.967-.272-.099-.47-.148-.67.15-.197.296-.767.966-.94 1.164-.173.198-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.76-1.653-2.058-.173-.297-.019-.458.13-.606.134-.133.297-.347.446-.52.149-.174.198-.298.297-.496.099-.198.05-.372-.025-.521-.074-.149-.669-1.612-.916-2.206-.242-.58-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479s1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.71.306 1.263.489 1.694.625.712.227 1.36.195 1.872.118.571-.085 1.758-.719 2.006-1.413.247-.694.247-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/></svg>
   <span class="apex-wa-label">Iniciar atendimento</span>

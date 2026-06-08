@@ -125,7 +125,10 @@ window.PROTOCOLOS_CKM = {
         "peso",
         "PA"
       ],
-      "diretriz": "SBD 2023-2024; ADA Standards of Care 2025; KDIGO 2024 (FLOW)"
+      "diretriz": "SBD 2023-2024; ADA Standards of Care 2025; KDIGO 2024 (FLOW)",
+      "drc_avancada_REVISAR": "ADA 2026 / KDIGO 2026 (draft): em DM2 com TFGe <30 mL/min/1.73m², GLP-1 RA é PREFERIDO sobre outros hipoglicemiantes pelo menor risco de hipoglicemia e benefício CV/renal. Em diálise, considerar manter/iniciar GLP-1 RA para redução de risco CV.",
+      "pas_meta_REVISAR": "PAS < 120 mmHg em adultos com DM2 e alto risco CV/renal (ADA 2026)",
+      "estratificacao_CV_REVISAR": "Usar equação AHA PREVENT (com TFGe e UACR)"
     },
     "obesidade": {
       "label": "Obesidade",
@@ -166,8 +169,9 @@ window.PROTOCOLOS_CKM = {
       "diagnostico": "hpp_dlp",
       "gatilho_lab": "Iniciar estatina se LDL ≥ 100 com risco, ou conforme categoria de risco (não depende só do checkbox)",
       "metas_ldl": {
-        "muito_alto": "< 50 mg/dL (e ↓≥50%)",
-        "alto": "< 70",
+        "muito_alto_risco_ASCVD": "< 55 mg/dL (REVISAR — 2026 ACC/AHA)",
+        "ASCVD_nao_muito_alto": "< 70 mg/dL (REVISAR — 2026 ACC/AHA)",
+        "alto_risco_primaria": "< 70 mg/dL (sugerido em DRC+DM)",
         "intermediario": "< 100",
         "baixo": "< 130"
       },
@@ -219,7 +223,10 @@ window.PROTOCOLOS_CKM = {
         }
       ],
       "drc_nota": "KDIGO: estatina (±ezetimiba) em DRC não-dialítica ≥ 50 anos. Em diálise, as diretrizes não mostram benefício de iniciar de novo (manter se já usava); na prática do Dr. Bruno, pode-se iniciar também em dialíticos, individualizado pelo risco CV.",
-      "diretriz": "Atualização Diretriz Brasileira de Dislipidemias 2017 (SBC); ESC/EAS 2019; AHA/ACC 2018"
+      "diretriz": "2026 ACC/AHA/Multisociety Guideline on Management of Dyslipidemia (Circulation 2026, DOI:10.1161/CIR.0000000000001423) — REVISAR antes de virar padrão; mantém SBC 2017 e ESC/EAS 2019 como referências.",
+      "rastreio_universal_lpa_REVISAR": "Solicitar Lp(a) ao menos 1× na vida em todo adulto (2026 ACC/AHA)",
+      "apoB_REVISAR": "ApoB como marcador adicional de risco residual (hipertrigliceridemia, DM, SM, LDL discordante)",
+      "estratificacao_REVISAR": "Adotar equação AHA PREVENT (incorpora TFGe e UACR) em substituição às Pooled Cohort Equations; framework CPR"
     },
     "drc": {
       "label": "Doença Renal Crônica",
@@ -278,7 +285,9 @@ window.PROTOCOLOS_CKM = {
             "obs": "Alternativa"
           }
         ]
-      }
+      },
+      "glp1_avancada_REVISAR": "KDIGO 2026 Diabetes-CKD (draft, março 2026) + ADA 2026: GLP-1 RA PREFERIDO em DRC avançada (TFGe <30). Em diálise, considerar manter/iniciar para redução CV/mortalidade.",
+      "finerenona_combinada_REVISAR": "Em DRC + DM2 já em RASi + iSGLT2 com UACR persistente, finerenona como adicional (CONFIDENCE/NEJM 2025)."
     },
     "litiase": {
       "label": "Litíase renal",
@@ -388,6 +397,16 @@ window.PROTOCOLOS_CKM = {
               "nome": "Corticoide sistêmico",
               "dose": "individualizar",
               "obs": "Uso restrito pelo risco de toxicidade (TESTING)"
+            },
+            {
+              "nome": "Atrasentano (Vanrafia) — REVISAR",
+              "dose": "conforme bula (antagonista seletivo do receptor de endotelina A)",
+              "obs": "ALIGN final 2,5 anos (Lancet 2026, DOI:10.1016/S0140-6736(26)00960-8): desacelera declínio de TFGe em IgAN de alto risco; benefício consistente em uso concomitante com iSGLT2. Adicionar a RASi otimizado. NÃO virar padrão sem validação Dr. Bruno."
+            },
+            {
+              "nome": "Iptacopan (Fabhalta) — REVISAR",
+              "dose": "200 mg VO 2x/dia (inibidor oral do fator B, via alternativa do complemento)",
+              "obs": "APPLAUSE-IgAN final (ERA 2026, Glasgow): atinge desfecho primário de TFGe; subgrupo com declínio quase normal. Reservar para IgAN de alto risco com proteinúria residual apesar de terapia de base. NÃO virar padrão sem validação Dr. Bruno."
             }
           ],
           "monitoramento": "Proteinúria e TFGe a cada 3 meses"
@@ -571,7 +590,11 @@ window.PROTOCOLOS_CKM = {
           ],
           "monitoramento": "Complemento (C3/C4, via alternativa), proteinúria, função renal"
         }
-      }
+      },
+      "iga_meta_REVISAR": "KDIGO 2025 IgAN: meta passa de UPCR <1 g/g para REMISSÃO COMPLETA (idealmente UPCR <0,3 g/g)",
+      "iga_sparsentan_REVISAR": "Sparsentan (DEARA) é primeira linha após otimização de RASi; pode COMBINAR com iSGLT2 (real-world: redução adicional ~62% de UPCR mesmo já em iSGLT2).",
+      "iga_imunossupressao": "Reservar imunossupressão sistêmica para proteinúria persistente acima do alvo após terapias de suporte (RASi+iSGLT2±sparsentan); budesonida-alvejada (NefIgArd) é opção com perfil sistêmico favorável.",
+      "iga_terapia_dirigida_REVISAR": "ERA 2026 (jun/2026): consolidam-se TERAPIAS DIRIGIDAS em IgAN de alto risco somadas ao suporte de base (RASi otimizado + iSGLT2). (1) Antagonista do receptor de endotelina A — atrasentan (ALIGN final, Lancet 2026, DOI:10.1016/S0140-6736(26)00960-8) confirma benefício em DESFECHO de TFGe (não só proteinúria), consistente com iSGLT2. (2) Inibidor do complemento (via alternativa) — iptacopan (APPLAUSE-IgAN final, ERA 2026) atinge desfecho primário de TFGe. Esparsentano (PROTECT) permanece opção de antagonismo duplo endotelina/AT1. Seleção entre as classes por fenótipo, proteinúria residual e tolerância. REVISAR — pendente validação Dr. Bruno."
     },
     "itu": {
       "label": "Infecção do trato urinário",
@@ -681,7 +704,10 @@ window.PROTOCOLOS_CKM = {
         "dialise": "Ferritina > 200 ng/mL e IST 20-30%",
         "prova_de_ferro_iv": "Considerar se IST ≤ 30% e ferritina ≤ 500 ng/mL (KDIGO)",
         "limite_seguranca": "Evitar manter ferritina > 500 ng/mL e IST > 30%"
-      }
+      },
+      "anemia_primeira_linha_REVISAR": "KDIGO 2026 Anemia in CKD (Kidney Int 2026): AEE (eritropoietina/análogos) SUGERIDA como primeira linha, ao invés de HIF-PHI, por preocupações persistentes de segurança CV. HIF-PHI fica como opção secundária.",
+      "ferro_REVISAR": "Corrigir ferropenia ANTES de AEE/HIF-PHI. Em dialítica, ferro IV proativo (alvo TSAT ~30%, ferritina 100–500 ng/mL).",
+      "hb_alvo": "10–12 g/dL; evitar Hb >13 (risco CV/tromboembólico)"
     }
   },
   "modificadores": {
@@ -753,7 +779,241 @@ window.PROTOCOLOS_CKM = {
       "aas": "NÃO de rotina em prevenção primária; sim em secundária",
       "calculadora_primaria": "PREVENT (AHA 2023) — dirige a conduta; incorpora TFGe, HbA1c, albuminúria; risco em 10 e 30 anos",
       "calculadora_secundaria": "ASCVD (Pooled Cohort) — referência comparativa; limiares de tratamento calibrados nela; PREVENT estima risco menor (cuidado p/ não subtratar)"
+    },
+    "nutrologia": {
+      "label": "Nutrologia / Terapia Nutricional Médica na CKM",
+      "diagnostico": "tnt_ckm",
+      "principios": [
+        "Avaliação nutricional inicial: peso, IMC, CA, força de preensão palmar (Jamar), SARC-F, recordatório 24h, SGA em DRC G4-G5",
+        "Calorias 25-35 kcal/kg/dia (KDOQI 2020) — ajustar para perda ponderal em obesidade (déficit 500-750 kcal/dia)",
+        "Sódio < 2.000 mg/dia (ou < 1.500 mg em HAS resistente / DRC com edema)",
+        "Fibras 25-30 g/dia",
+        "Restringir aditivos fosforados antes de restringir fósforo orgânico em DRC G3b-G5"
+      ],
+      "padroes_alimentares": [
+        {
+          "padrao": "DASH",
+          "indicacao_primaria": "HAS, síndrome metabólica",
+          "efeito": "PAS -3 a -5 mmHg; aditivo à restrição de Na"
+        },
+        {
+          "padrao": "Mediterrânea",
+          "indicacao_primaria": "DCV, MASLD, DM2, dislipidemia, DRC G1-G3",
+          "efeito": "DCV -24 a -28% (PREDIMED)"
+        },
+        {
+          "padrao": "PLADO (Plant-Dominant Low-Protein)",
+          "indicacao_primaria": "DRC G3-G4 não dialítica",
+          "efeito": "Retarda progressão; melhora acidose; reduz toxinas urêmicas",
+          "regra": "Proteína 0,6-0,8 g/kg/dia com ≥ 50% vegetal; Na < 3 g; fibra 25-30 g"
+        },
+        {
+          "padrao": "Plant-based / vegetariana",
+          "indicacao_primaria": "Prevenção primária CKM",
+          "regra": "Suplementar B12 obrigatoriamente"
+        },
+        {
+          "padrao": "Hipocalórica + Mediterrânea",
+          "indicacao_primaria": "Obesidade CKM, MASLD",
+          "efeito": "Peso -5 a -10%; resolução de MASH"
+        }
+      ],
+      "proteina_por_estagio_drc": {
+        "G1_G2": "0,8-1,0 g/kg/dia",
+        "G3a": "0,6-0,8 g/kg/dia",
+        "G3b_G4_sem_DM": "0,55-0,60 g/kg/dia",
+        "G3b_G4_com_DM": "0,60-0,80 g/kg/dia",
+        "G5_nao_dialitica": "0,55-0,60 g/kg/dia ± cetoanálogos",
+        "HD": "1,0-1,2 g/kg/dia",
+        "DP": "1,0-1,2 g/kg/dia",
+        "transplantado": "0,8-1,0 g/kg/dia"
+      },
+      "suplementacao_racional": [
+        "Vitamina D (colecalciferol) se 25-OH-D < 30 ng/mL",
+        "Vitamina B12 em veganos, idosos, uso prolongado de IBP/metformina, B12 < 300 pg/mL",
+        "Ômega-3 (EPA+DHA) 1-2 g/dia em alto risco CV; icosapente etila se TG > 150 mg/dL (REDUCE-IT)",
+        "Bicarbonato de sódio se HCO3- < 22 mEq/L em DRC (cuidado com sobrecarga)",
+        "Cetoanálogos em DRC G4-G5 com proteína 0,3-0,4 g/kg/dia (supervisionado)",
+        "EVITAR: vit A megadose, mega-cálcio em DRC, erva-de-são-joão em transplantado, ervas aristolóquicas"
+      ],
+      "indicacoes_encaminhamento_nutricionista": [
+        "DRC G3b-G5 com restrição proteica prescrita",
+        "Diálise (HD ou DP) — acompanhamento mensal",
+        "Obesidade grau II-III em farmacoterapia/pré-cirúrgico",
+        "DM2 mal controlado",
+        "MASLD/MASH com meta de perda 7-10%",
+        "Hiperoxalúria, hipocitratúria, hipercalciúria, hiperuricosúria",
+        "SARC-F ≥ 4 ou perda involuntária > 5% em 6 meses",
+        "Pediatria CKM (todos)"
+      ],
+      "diretriz": "KDOQI 2020 Nutrition in CKD; KDIGO 2024; ADA 2026 Section 5 (MNT); EASL-EASD-EASO 2024 MASLD; ACR 2020 Gout; AUA 2014/2024 Urolithiasis; SBN/ABRAN/SBC nutrição"
+    },
+    "tracking_performance_wearables": {
+      "label": "Indicadores de performance, longevidade e wearables (foco em saúde — não em estética)",
+      "indicadores_metabolicos_funcionais": [
+        {
+          "indicador": "VO2 máx (estimado ou medido)",
+          "metodo": "Teste cardiopulmonar (padrão-ouro), teste de caminhada de 6 minutos, estimativa por wearable (Apple Watch, Garmin)",
+          "cadencia": "Anual (basal e seguimento); 6 meses se em programa de reabilitação CV",
+          "alvo": "≥ percentil 50 para idade/sexo; cada +1 MET = -13-15% mortalidade (Kokkinos JACC 2022)"
+        },
+        {
+          "indicador": "HRV (SDNN, RMSSD)",
+          "metodo": "Holter 24h (clínico), wearable validado (Oura Gen 4, Whoop) para tendência",
+          "cadencia": "Conforme indicação clínica; tendência semanal/mensal por wearable",
+          "alvo": "SDNN ≥ 70 ms (corte com HR 1,73 para MACE); foco em tendência individual"
+        },
+        {
+          "indicador": "Massa muscular e força",
+          "metodo": "Bioimpedância (BIA) ou DXA para massa; dinamômetro de preensão palmar (Jamar) + SARC-F",
+          "cadencia": "Anual; semestral em CKD G3b-G5 ou idoso frágil",
+          "alvo_preensao": "H ≥ 27 kg, M ≥ 16 kg (EWGSOP2)",
+          "alvo_sarc_f": "< 4 pontos"
+        },
+        {
+          "indicador": "Passos diários e atividade física",
+          "metodo": "Wearable (Apple Watch, Fitbit, Garmin) ou IPAQ-SF",
+          "alvo": "≥ 7.000-8.000 passos/dia (associado a menor mortalidade); ≥ 150 min/sem moderada + treino resistido 2x/sem"
+        },
+        {
+          "indicador": "Tempo no alvo glicêmico (TIR) via CGM",
+          "metodo": "FreeStyle Libre 3, Dexcom G7, Stelo (não-DM)",
+          "indicacao": "DM2 em insulina, DM2 não-insulino com HbA1c > 7,5%, gestação, hipoglicemias",
+          "alvo": "TIR ≥ 70% (70-180 mg/dL); TBR < 4%; ADA 2025/2026"
+        },
+        {
+          "indicador": "Pressão arterial via wearable",
+          "metodo": "Apple Watch (notificação de hipertensão — FDA set/2025), Withings BPM, Omron HeartGuide",
+          "indicacao": "Triagem populacional (Apple) ou MRPA validada (manguito)",
+          "alvo": "< 130/80 mmHg"
+        },
+        {
+          "indicador": "Fibrilação atrial paroxística",
+          "metodo": "Apple Watch (AFib History — FDA MDDT 2024; sens 98,5%, spec 99,3%), KardiaMobile",
+          "indicacao": "Triagem oportunística ≥ 65 anos, palpitações, AVC criptogênico"
+        },
+        {
+          "indicador": "Qualidade de sono",
+          "metodo": "Oura Ring (acurácia 89% vs PSG), Apple Watch, Whoop",
+          "alvo": "7-9 h/noite; eficiência > 85%; SAOS rastreado se ronco/sonolência/HAS resistente"
+        }
+      ],
+      "wearables_aprovados_e_uso_clinico": [
+        "Apple Watch — AFib History (FDA MDDT 2024), ECG, hipertensão (FDA set/2025), notificação de queda, SpO2",
+        "FreeStyle Libre 3 / Dexcom G7 — CGM com dados em tempo real",
+        "Withings BPM / Omron HeartGuide — PA validada",
+        "Oura Ring Gen 4 — HRV, sono, temperatura cutânea (alta acurácia)",
+        "Whoop 5.0 — HRV, sono, esforço (acurácia moderada)",
+        "KardiaMobile (AliveCor) — ECG de 1 ou 6 derivações",
+        "Garmin Venu / Fenix — VO2máx estimado, HRV, passos"
+      ],
+      "diretriz_e_fontes": "Mandsager R et al. JAMA Netw Open 2018; Kokkinos P et al. JACC 2022; ESC Task Force HRV 1996 (atualizações Frontiers CVM 2025); EWGSOP2 (Cruz-Jentoft AJ 2019); FDA Digital Health Center of Excellence; ADA Standards 2026 (CGM)"
+    },
+    "proms_ichom": {
+      "label": "Patient-Reported Outcome Measures — Standard Sets do ICHOM (uso INTERNO)",
+      "visibilidade": "INTERNA — uso clínico do Dr. Bruno (prontuário CKM e boletim DOCX). NÃO publicar na newsletter da APEX.",
+      "fonte": "https://www.ichom.org/",
+      "principio": "Medir o que importa ao paciente — qualidade de vida, capacidade funcional, sintomas, adesão. Padronizado, comparável entre serviços.",
+      "standard_sets_aplicaveis": [
+        {
+          "set": "CKD Standard Set (ICHOM 2019)",
+          "proms_centrais": [
+            "KDQOL-36 (qualidade de vida)",
+            "EQ-5D-5L (utilidade)",
+            "PHQ-9 (depressão)"
+          ],
+          "cadencia": "Basal + anual; semestral em G4-G5"
+        },
+        {
+          "set": "Diabetes Standard Set",
+          "proms_centrais": [
+            "PAID (Problem Areas in Diabetes)",
+            "EQ-5D-5L",
+            "PHQ-9"
+          ],
+          "cadencia": "Anual"
+        },
+        {
+          "set": "Heart Failure Standard Set",
+          "proms_centrais": [
+            "KCCQ-12 (Kansas City Cardiomyopathy Questionnaire)",
+            "EQ-5D-5L"
+          ],
+          "cadencia": "Basal, 30 dias, 6 e 12 meses"
+        },
+        {
+          "set": "Hypertension Standard Set (LMIC)",
+          "proms_centrais": [
+            "BMQ-Specific (crenças sobre medicação)",
+            "Hill-Bone (adesão)",
+            "IPAQ-SF (atividade física)",
+            "WHO STEPS (sal)"
+          ],
+          "cadencia": "Anual"
+        },
+        {
+          "set": "Obesity Standard Set (Lancet 2024)",
+          "proms_centrais": [
+            "IWQOL-Lite (Impact of Weight on Quality of Life)",
+            "EQ-5D-5L",
+            "PHQ-9"
+          ],
+          "cadencia": "Basal + a cada 6 meses durante intervenção, anual após"
+        }
+      ],
+      "regra_pratica": "Coletar via prontuário CKM em consulta de retorno; compor sumário gráfico de tendência; usar para discussão com paciente e ajuste de plano"
     }
   },
-  "validado_em": "2026-05-22"
+  "validado_em": "2026-05-22",
+  "atualizado_em": "2026-06-01",
+  "atualizacao_2026_05_24": "Adicionados blocos 'nutrologia' (Módulo 18), 'tracking_performance_wearables' e 'proms_ichom' conforme expansão de escopo solicitada pelo Dr. Bruno",
+  "atualizacao_2026_05_25": {
+    "responsavel": "Tarefa agendada vigilancia-semanal-literatura-ckm (executada pelo orientador automatizado)",
+    "status": "REVISAR — pendente validação Dr. Bruno antes de virar padrão clínico",
+    "mudancas": [
+      "Dislipidemia: metas LDL 2026 ACC/AHA (<55 muito alto risco; <70 ASCVD), rastreio universal Lp(a), ApoB, PREVENT.",
+      "DM2 e DRC: GLP-1 RA preferido em TFGe <30 (ADA 2026 + KDIGO 2026 Diabetes-CKD draft).",
+      "DMO-DRC/Anemia: AEE permanece 1ª linha; HIF-PHI 2ª linha (KDIGO 2026 Anemia in CKD).",
+      "Glomerulonefrite IgAN: meta de remissão completa; sparsentan como 1ª linha após RASi, podendo combinar com iSGLT2 (KDIGO 2025 IgAN)."
+    ],
+    "fontes": [
+      "Grundy SM et al. 2026 ACC/AHA Dyslipidemia Guideline. Circulation 2026. DOI:10.1161/CIR.0000000000001423",
+      "ADA. Standards of Care in Diabetes—2026. Diabetes Care 2026;49(Supl 1):S183, S246",
+      "KDIGO 2026 Diabetes-CKD Public Review Draft. KDIGO, março 2026",
+      "KDIGO 2026 Anemia in CKD Guideline. Kidney International 2026",
+      "KDIGO 2025 IgAN/IgAV Guideline. Kidney Int 2025; Clin Kidney J 2025;18(11):sfaf324",
+      "Bakris GL et al. CONFIDENCE Trial. NEJM 2025. DOI:10.1056/NEJMoa2410659"
+    ]
+  },
+  "atualizacao_2026_06_01": {
+    "responsavel": "Tarefa agendada vigilancia-semanal-literatura-ckm (executada pelo orientador automatizado em 01/06/2026)",
+    "status": "REVISAR — pendente validação Dr. Bruno antes de virar padrão clínico",
+    "mudancas": [
+      "DM2 + comorbidades CKM: ADA atualizou em maio/2026 a Section 4 dos Standards of Care 2026 — cuidado holístico integrado para DM2 + ≥1 condição crônica (DRC, IC, MASLD, obesidade, transtornos mentais). Reforço: GLP-1 RA + iSGLT2 como espinha dorsal. GLP-1 RA preferido em TFGe <30 mL/min/1.73m².",
+      "DRC: KDIGO encerrou em 11/05/2026 a revisão pública do KDIGO 2026 AKI/AKD Guideline. Antecipa publicação final ainda em 2026 com framework integrado AKI-AKD-DRC, biomarcadores estruturais, alertas eletrônicos e seguimento pós-AKI obrigatório aos 3 e 12 meses.",
+      "Risco CV / IC: finerenona consolidada como SEGUNDO PILAR (com iSGLT2) em IC com FEVE ≥40% (HFmrEF/HFpEF), com base no FINEARTS-HF (NEJM 2024) e aprovação FDA de 14/07/2025. Em CKM com IC + FE preservada: considerar finerenona em adição a iSGLT2 + RASi conforme tolerância (TFGe ≥25, K+ <5.0)."
+    ],
+    "fontes": [
+      "ADA. Section 4. Comprehensive Medical Evaluation and Assessment of Comorbidities — Standards of Care in Diabetes—2026 (Living Update, maio/2026). Diabetes Care 2026;49(Supl 1).",
+      "KDIGO 2026 AKI/AKD Clinical Practice Guideline — Public Review Draft (revisão pública encerrada em 11/05/2026). kdigo.org/kdigo-2026-aki-akd-guideline-draft-available-for-public-review.",
+      "Solomon SD, McMurray JJV et al. FINEARTS-HF. N Engl J Med 2024;391:1475–1485. DOI:10.1056/NEJMoa2407107.",
+      "FDA Approval — KERENDIA® (finerenone) for HFmrEF/HFpEF, 14/07/2025.",
+      "Boletim_CKM_Semana_2026-06-01.docx (vigilância editorial)."
+    ]
+  },
+  "atualizacao_2026_06_08": {
+    "responsavel": "Tarefa agendada vigilancia-semanal-literatura-ckm (executada pelo orientador automatizado em 08/06/2026)",
+    "status": "REVISAR — pendente validação Dr. Bruno antes de virar padrão clínico",
+    "mudancas": [
+      "Glomerulonefrite / Nefropatia por IgA: ERA 2026 (Glasgow, 3-6/jun) consolida terapias dirigidas em IgAN de alto risco. ALIGN final 2,5 anos (Lancet, 4/jun/2026) — atrasentan (Vanrafia), antagonista seletivo do receptor de endotelina A, desacelera declínio de TFGe (desfecho confirmatório, não só proteinúria), benefício consistente com iSGLT2. APPLAUSE-IgAN final — iptacopan (Fabhalta), inibidor oral do fator B, atinge desfecho primário de TFGe. Terapias dirigidas somam-se ao suporte de base (RASi otimizado + iSGLT2).",
+      "Anemia da DRC (consolidação): KDIGO 2026 Anemia in CKD publicada no Kidney International, com comentário ERBP (NDT). Limiares mais proativos para ferro IV (sobretudo hemodiálise); HIF-PHI em casos selecionados; correção de ferropenia antes de iniciar AEE. Sem mudança de meta de Hb (10–12 g/dL, evitar >13).",
+      "Diabetes/Obesidade (vigilância, SEM mudança de conduta): ADA 86ª Scientific Sessions (New Orleans, 5-8/jun) — late-breaking de incretinas (head-to-head titulação semaglutida 1→2 mg vs troca para tirzepatida; pipeline CagriSema, retatrutida, survodutida, oral). Apenas sinaliza direção; aguardar publicação peer-reviewed para incorporação."
+    ],
+    "fontes": [
+      "Atrasentan in patients with IgA nephropathy (ALIGN): final results of a randomised, double-blind, placebo-controlled phase 3 trial. Lancet 2026 (publicado online 04/06/2026). DOI:10.1016/S0140-6736(26)00960-8.",
+      "Novartis Fabhalta (iptacopan) — APPLAUSE-IgAN final Phase III (desfecho primário de TFGe). ERA Congress 2026, Glasgow (3-6/jun/2026); Novartis media release 04/06/2026.",
+      "KDIGO 2026 Clinical Practice Guideline for the Management of Anemia in CKD. Kidney Int 2026 (S0085-2538(25)00495-8). Comentário ERBP: Nephrol Dial Transplant 2026. DOI:10.1093/ndt/gfag014.",
+      "American Diabetes Association — 86th Scientific Sessions, New Orleans, 5-8/jun/2026 (late-breaking abstracts; aguardar publicação peer-reviewed)."
+    ]
+  }
 };
