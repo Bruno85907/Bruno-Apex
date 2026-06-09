@@ -808,29 +808,50 @@ html.embed-mode .cz-grid { height: calc(100vh - 92px); }
 .resumo-patient .p-pill.risk { background: #FDE7E7; color: var(--danger); }
 .resumo-patient .p-pill.risk-mod { background: #FFE9C7; color: #7A4E00; }
 .resumo-patient .p-pill.risk-low { background: #E6F4EA; color: var(--success); }
+/* Tags-resumo no header "Visão geral" (compactas, alinhadas à direita) */
+.rz-headtags { margin-left: auto; display: flex; gap: 8px; align-self: center; flex-wrap: wrap; }
+.rz-headtags .p-pill { font-size: 11.5px; font-weight: 700; padding: 5px 13px; border-radius: 999px; border: none; display: inline-flex; align-items: center; gap: 6px; }
+.rz-headtags .p-pill.stage { background: var(--navy); color: #fff; }
+.rz-headtags .p-pill.risk { background: #FDE7E7; color: var(--danger); }
+.rz-headtags .p-pill.risk-mod { background: #FFE9C7; color: #7A4E00; }
+.rz-headtags .p-pill.risk-low { background: #E6F4EA; color: var(--success); }
 .rz-sect { display: flex; align-items: baseline; gap: 10px; font-family: 'Instrument Serif', Georgia, serif; font-size: 21px; font-weight: 400; text-transform: none; letter-spacing: 0; color: var(--navy); margin: 22px 2px 12px; padding-bottom: 0; border-bottom: none; }
 .rz-sect .hint { margin-left: auto; font-size: 10.5px; font-weight: 600; color: #8A97A8; text-transform: none; letter-spacing: 0; font-style: italic; font-family: 'Inter', sans-serif; align-self: center; }
 .rz-card { background: #fff; border: 1px solid var(--border); border-radius: 12px; box-shadow: var(--shadow); }
 /* cockpit */
-.rz-cockpit { display: grid; grid-template-columns: 300px 1fr; gap: 12px; }
-.rz-radarwrap { padding: 14px 10px 12px; display: flex; flex-direction: column; align-items: center; justify-content: flex-start; }
-.rz-radar-title { font-size: 12px; font-weight: 800; color: var(--navy); align-self: flex-start; margin-bottom: 4px; }
-.rz-radar-cap { width: 100%; margin-top: 8px; text-align: center; border-top: 1px solid var(--border); padding-top: 10px; }
+.rz-cockpit { display: grid; grid-template-columns: 320px 1fr; gap: 14px; align-items: stretch; }
+.rz-radarwrap { padding: 14px 14px; display: flex; flex-direction: column; align-items: center; justify-content: flex-start; }
+/* coluna direita: tags em cima, classificação CKM embaixo (mesma altura do radar) */
+.rz-rightcol { display: flex; flex-direction: column; gap: 14px; min-width: 0; }
+.rz-rightcol .rz-ckmcard { flex: 1; }
+.rz-tagscard { padding: 14px 16px; display: flex; flex-direction: column; }
+.rz-tagbody { flex: 1; display: flex; flex-direction: column; gap: 11px; margin-top: 6px; }
+.rz-taggrp .cap { font-size: 9.5px; text-transform: uppercase; letter-spacing: .05em; color: #8A97A8; font-weight: 700; margin-bottom: 6px; }
+.rz-tagwrap { display: flex; flex-wrap: wrap; gap: 7px; }
+.ctag { font-size: 11px; font-weight: 700; padding: 4px 11px; border-radius: 999px; display: inline-flex; align-items: center; gap: 6px; line-height: 1.3; }
+.ctag .pn { font-size: 9px; font-weight: 800; text-transform: uppercase; letter-spacing: .04em; opacity: .65; }
+.ctag.ok { background: #E4F3ED; color: var(--success); }
+.ctag.warn { background: #FEF6E0; color: #B8860B; }
+.ctag.bad { background: #FBEAE8; color: var(--danger); }
+.ctag.na { background: #EEF1F5; color: #6B7A8D; }
+.ctag.dx { background: #EAEDF4; color: var(--navy); }
+.rz-radar-title { font-size: 12px; font-weight: 800; color: var(--navy); align-self: flex-start; margin-bottom: 6px; }
+.rz-radar-cap { width: 100%; margin-top: auto; text-align: center; border-top: 1px solid var(--border); padding-top: 12px; }
 .rz-radar-cap .gscore { font-size: 30px; font-weight: 800; line-height: 1; }
-.rz-radar-cap .glabel { font-size: 10.5px; color: var(--text-3, #8A93A6); margin-top: 2px; }
+.rz-radar-cap .glabel { font-size: 10.5px; color: var(--text-3, #8A93A6); margin-top: 3px; }
 .rz-radar-cap .gevo { font-size: 11px; font-weight: 700; margin-top: 4px; }
-.rz-ckm-panel { display: flex; flex-direction: column; gap: 9px; }
-.rz-bigscores { display: grid; grid-template-columns: 1fr; gap: 9px; flex: 1; }
+/* Card de classificação CKM — espelha o card do radar (título · destaque · stepper) */
+.rz-ckmcard { padding: 14px 16px; display: flex; flex-direction: column; }
+.rz-ckm-body { flex: 1; display: flex; align-items: center; }
 .rz-bscore { border: 1px solid var(--border); border-radius: 11px; padding: 10px 12px; background: #FBFCFE; }
 .rz-bscore .nm { font-size: 11px; font-weight: 700; color: var(--text); }
 .rz-bscore .vl { font-size: 21px; font-weight: 800; margin-top: 2px; line-height: 1.1; }
 .rz-bscore .ds { font-size: 10px; color: #6B7A8D; }
 .rz-bscore .vl.bad { color: var(--danger); } .rz-bscore .vl.warn { color: var(--warning); } .rz-bscore .vl.ok { color: var(--success); } .rz-bscore .vl.na { color: #B6BFCB; }
 /* CKM didático */
-.rz-ckm-head { display: flex; align-items: center; gap: 14px; border: 1px solid var(--border); border-radius: 12px; padding: 16px 18px; background: #FBFCFE; height: 100%; box-sizing: border-box; }
+.rz-ckm-head { display: flex; align-items: center; gap: 16px; border: none; padding: 0; background: transparent; width: 100%; box-sizing: border-box; }
 .rz-ckm-info { flex: 1; min-width: 0; }
 .rz-ckm-desc { font-size: 12px; line-height: 1.5; }
-.rz-ckm-head.ok { border-left: 5px solid var(--success); } .rz-ckm-head.warn { border-left: 5px solid var(--warning); } .rz-ckm-head.bad { border-left: 5px solid var(--danger); }
 .rz-ckm-badge { display: flex; flex-direction: column; align-items: center; justify-content: center; min-width: 66px; height: 66px; border-radius: 14px; background: var(--navy); color: #fff; flex: none; }
 .rz-ckm-head.ok .rz-ckm-badge { background: var(--success); } .rz-ckm-head.warn .rz-ckm-badge { background: var(--warning); } .rz-ckm-head.bad .rz-ckm-badge { background: var(--danger); }
 .rz-ckm-badge span { font-size: 9px; text-transform: uppercase; letter-spacing: .06em; opacity: .9; } .rz-ckm-badge b { font-size: 30px; line-height: 1; font-weight: 800; }
@@ -853,13 +874,9 @@ html.embed-mode .cz-grid { height: calc(100vh - 92px); }
 .rz-ms-risk.ok .rr b { color: var(--success); } .rz-ms-risk.warn .rr b { color: #B8860B; } .rz-ms-risk.bad .rr b { color: var(--danger); }
 .rz-ms-risk .rb { font-size: 10.5px; font-weight: 800; padding: 2px 9px; border-radius: 20px; background: rgba(255,255,255,.7); }
 .rz-ms-risk .re { font-size: 11px; color: var(--muted); margin-top: 4px; line-height: 1.4; }
-.rz-ckmbar { display: flex; gap: 5px; margin-top: 9px; }
-/* Régua de estágios dentro do Resumo: mais compacta (Bruno: "tags muito soltas") */
-.rz-ckmbar .ckm-bar { margin: 4px 0 0; gap: 6px; }
-.rz-ckmbar .ckm-stage { padding: 8px 5px; font-size: 10.5px; line-height: 1.25; }
-.rz-ckmst { flex: 1; text-align: center; padding: 7px 4px; border-radius: 8px; background: #F1F4F8; font-size: 9.5px; font-weight: 700; color: #6B7A8D; line-height: 1.25; }
-.rz-ckmst b { font-size: 11px; color: var(--text); display: block; }
-.rz-ckmst.on { background: var(--danger); color: #fff; } .rz-ckmst.on b { color: #fff; }
+/* Régua de estágios (stepper conectado) no rodapé do card, alinhada à nota do radar */
+.rz-ckm-stepper { border-top: 1px solid var(--border); margin-top: 14px; padding-top: 14px; }
+.rz-ckm-stepper .rz-ckm-steps { margin-top: 0; }
 /* classification cards */
 .rz-cls-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
 .rz-cls { border: 1px solid var(--border); border-radius: 11px; padding: 10px 12px; background: #fff; position: relative; }
@@ -1026,6 +1043,22 @@ html.embed-mode .cz-grid { height: calc(100vh - 92px); }
 .bz-marker { position: absolute; top: -5px; width: 3px; height: 24px; background: var(--navy); border-radius: 2px; transform: translateX(-50%); }
 .bz-ticks { display: flex; justify-content: space-between; font-size: 9.5px; color: #6B7A8D; }
 .bz-chart { height: 190px; margin-top: 8px; }
+
+/* Card de resumo do intake (topo do Resumo) — read-only, voz do paciente */
+.intk-card { border: 1px solid var(--border); border-radius: var(--radius); background: var(--card-bg); box-shadow: var(--shadow); overflow: hidden; margin-bottom: 16px; }
+.intk-head { display: flex; align-items: baseline; gap: 8px; padding: 11px 16px; border-bottom: 1px solid var(--border); background: #FCFBF8; }
+.intk-head .intk-kicker { font-size: 10.5px; font-weight: 800; letter-spacing: .07em; text-transform: uppercase; color: var(--teal); }
+.intk-head .intk-meta { font-size: 11px; color: #8A95A6; margin-left: auto; font-style: italic; }
+.intk-body { padding: 14px 16px; }
+.intk-vinculo { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.intk-vbox { position: relative; border-left: 3px solid var(--gold); background: var(--light-gold); border-radius: var(--radius-sm); padding: 9px 12px 10px; }
+.intk-vbox .lbl { font-size: 10px; font-weight: 800; letter-spacing: .05em; text-transform: uppercase; color: #9A7B2E; margin-bottom: 3px; }
+.intk-vbox .val { font-size: 14px; font-weight: 600; color: var(--navy); line-height: 1.35; }
+.intk-demo { display: flex; flex-wrap: wrap; gap: 7px 20px; margin-top: 13px; padding-top: 12px; border-top: 1px dashed var(--border); }
+.intk-demo .di { display: flex; flex-direction: column; min-width: 0; }
+.intk-demo .di .lbl { font-size: 9.5px; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; color: #97A0AE; }
+.intk-demo .di .val { font-size: 13px; font-weight: 600; color: var(--text); }
+@media (max-width: 680px) { .intk-vinculo { grid-template-columns: 1fr; } }
 </style>
 </head>
 <body>
@@ -1042,6 +1075,35 @@ html.embed-mode .cz-grid { height: calc(100vh - 92px); }
     if (!e.data) return;
     if (e.data.type === 'apex-previous-consulta') {
       if (typeof applyPreviousConsulta === 'function') applyPreviousConsulta(e.data.contrato);
+      return;
+    }
+    if (e.data.type === 'apex-atendimento-iniciado') {
+      window._apexProntuarioId = e.data.prontuarioId || null;
+      window._apexAtendimentoAtivo = true;
+      var _n0 = document.getElementById('consultaNum');
+      if (_n0 && e.data.consultaNum) _n0.textContent = e.data.consultaNum;
+      if (typeof showToast === 'function') showToast('Atendimento iniciado — consulta #' + (e.data.consultaNum || '') + ' criada na nuvem ✓');
+      return;
+    }
+    if (e.data.type === 'apex-consulta-num') {
+      var _n1 = document.getElementById('consultaNum');
+      if (_n1 && e.data.consultaNum) _n1.textContent = e.data.consultaNum;
+      return;
+    }
+    if (e.data.type === 'apex-save-result') {
+      if (typeof showToast === 'function') showToast(e.data.ok ? 'Salvo na nuvem ✓' : ('Falha ao salvar na nuvem: ' + (e.data.error || '')));
+      return;
+    }
+    if (e.data.type === 'apex-papel') {
+      if (typeof _applyPapelGating === 'function') _applyPapelGating(e.data.papel);
+      return;
+    }
+    if (e.data.type === 'apex-triagem-result') {
+      if (typeof showToast === 'function') showToast(e.data.ok ? 'Triagem salva na nuvem ✓' : ('Falha ao salvar triagem: ' + (e.data.error || '')));
+      return;
+    }
+    if (e.data.type === 'apex-intake-resumo') {
+      if (typeof window.renderIntakeResumo === 'function') window.renderIntakeResumo(e.data.intake);
       return;
     }
     if (e.data.type !== 'apex-patient') return;
@@ -1089,6 +1151,50 @@ html.embed-mode .cz-grid { height: calc(100vh - 92px); }
     /* Sincronizar o seletor "Atendendo" com o mês real do paciente */
     if (typeof syncCzTemplate === 'function') setTimeout(syncCzTemplate, 90);
   });
+
+  /* Card de resumo do intake — popula Vínculo + Demografia social a partir da última submissão */
+  window.renderIntakeResumo = function(intake){
+    var card = document.getElementById('intakeResumoCard');
+    if (!card) return;
+    if (!intake) { card.style.display = 'none'; return; }
+    var v = intake.vinculo || {};
+    var id = intake.identificacao || {};
+    var clean = function(s){ s = (s == null ? '' : String(s)).trim(); return s; };
+
+    /* Vínculo (destaque) — esconde a caixa que vier vazia */
+    var hobby = clean(v.hobby), meta = clean(v.meta_fisica);
+    var hBox = document.getElementById('intkHobbyBox'), mBox = document.getElementById('intkMetaBox');
+    if (hobby) { document.getElementById('intkHobby').textContent = hobby; hBox.style.display = ''; }
+    else { hBox.style.display = 'none'; }
+    if (meta) { document.getElementById('intkMetaFisica').textContent = meta; mBox.style.display = ''; }
+    else { mBox.style.display = 'none'; }
+
+    /* Demografia social */
+    var demoFields = [
+      ['Estado civil', id.estado_civil],
+      ['Profissão', id.profissao],
+      ['Escolaridade', id.escolaridade],
+      ['Naturalidade', id.naturalidade],
+      ['Religião', id.religiao]
+    ];
+    var demo = document.getElementById('intkDemo');
+    demo.innerHTML = demoFields.filter(function(f){ return clean(f[1]); }).map(function(f){
+      var lbl = f[0].replace(/&/g,'&amp;').replace(/</g,'&lt;');
+      var val = clean(f[1]).replace(/&/g,'&amp;').replace(/</g,'&lt;');
+      return '<div class="di"><span class="lbl">'+lbl+'</span><span class="val">'+val+'</span></div>';
+    }).join('');
+
+    /* Meta: data da submissão */
+    var meta2 = document.getElementById('intkMeta');
+    if (intake.submitted_at) {
+      var p = String(intake.submitted_at).slice(0,10).split('-');
+      meta2.textContent = (p.length === 3) ? ('respondido em ' + p[2] + '/' + p[1] + '/' + p[0]) : '';
+    } else { meta2.textContent = ''; }
+
+    /* Só exibe o card se houver ao menos um dado */
+    var hasAny = hobby || meta || demoFields.some(function(f){ return clean(f[1]); });
+    card.style.display = hasAny ? '' : 'none';
+  };
 })();
 </script>
 
@@ -1108,11 +1214,12 @@ html.embed-mode .cz-grid { height: calc(100vh - 92px); }
 
 <!-- TABS BAR -->
 <div class="tabs-bar" id="tabsBar">
-  <button class="tab-btn active" onclick="switchTab('resumo', this)">Resumo</button>
-  <button class="tab-btn" onclick="switchTab('identificacao', this)">Identificação</button>
-  <button class="tab-btn" onclick="switchTab('consulta', this)">Atendimento</button>
-  <button class="tab-btn" onclick="switchTab('protocolo', this)">Plano &amp; protocolo</button>
-  <button class="tab-btn" onclick="switchTab('documentos', this)">Documentos</button>
+  <button class="tab-btn" data-tab="identificacao" onclick="switchTab('identificacao', this)">Identificação</button>
+  <button class="tab-btn" data-tab="triagem" onclick="switchTab('triagem', this)">Triagem</button>
+  <button class="tab-btn active" data-tab="resumo" onclick="switchTab('resumo', this)">Resumo</button>
+  <button class="tab-btn" data-tab="consulta" onclick="switchTab('consulta', this)">Atendimento</button>
+  <button class="tab-btn" data-tab="protocolo" onclick="switchTab('protocolo', this)">Plano &amp; protocolo</button>
+  <button class="tab-btn" data-tab="documentos" onclick="switchTab('documentos', this)">Documentos</button>
 </div>
 
 <!-- Barra de workflow do atendimento (aparece fora da home) -->
@@ -1130,7 +1237,7 @@ html.embed-mode .cz-grid { height: calc(100vh - 92px); }
 <div id="tab-resumo" class="tab-content active">
   <!-- Barra de ações (vias impressas — religa ao printDoc/Documentos) -->
   <div class="rz-toolbar">
-    <button class="rz-tb-start" onclick="document.querySelector('.tab-btn[onclick*=&quot;consulta&quot;]').click()">&#x1FA7A; Iniciar atendimento</button>
+    <button class="rz-tb-start" onclick="apexIniciarAtendimento()">&#x1FA7A; Iniciar atendimento</button>
     <div class="rz-tb-sep"></div>
     <div class="rz-tb" onclick="abrirVia('receituario')"><span class="ico">&#x1F4DD;</span><span>Receituário</span></div>
     <div class="rz-tb" onclick="abrirVia('exames_sangue')"><span class="ico">&#x1FA78;</span><span>Pedido exames</span></div>
@@ -1146,10 +1253,22 @@ html.embed-mode .cz-grid { height: calc(100vh - 92px); }
   <aside class="rz-rail" id="resumoRail"></aside>
   <main class="rz-center">
 
-  <div class="resumo-patient" style="border:none;padding:0;margin-bottom:6px;">
-    <div style="display:none;"><span id="resumoAvatar"></span><span id="resumoName"></span><span id="resumoMeta"></span></div>
-    <div class="p-tags" id="resumoTags"></div>
+  <!-- Card de resumo do intake (questionário pré-consulta) — read-only, oculto até receber dados -->
+  <div class="intk-card" id="intakeResumoCard" style="display:none;">
+    <div class="intk-head">
+      <span class="intk-kicker">&#x1F4DD; Questionário pré-consulta</span>
+      <span class="intk-meta" id="intkMeta"></span>
+    </div>
+    <div class="intk-body">
+      <div class="intk-vinculo">
+        <div class="intk-vbox" id="intkHobbyBox"><div class="lbl">O que gosta de fazer</div><div class="val" id="intkHobby">—</div></div>
+        <div class="intk-vbox" id="intkMetaBox"><div class="lbl">Meta de vida</div><div class="val" id="intkMetaFisica">—</div></div>
+      </div>
+      <div class="intk-demo" id="intkDemo"></div>
+    </div>
   </div>
+
+  <div class="resumo-patient" style="display:none;"><span id="resumoAvatar"></span><span id="resumoName"></span><span id="resumoMeta"></span></div>
 
   <!-- 1. COCKPIT -->
   <div class="rz-sect"><span>&#x1F4CA; Visão geral</span></div>
@@ -1159,10 +1278,16 @@ html.embed-mode .cz-grid { height: calc(100vh - 92px); }
       <canvas id="resumoRadar" width="230" height="230"></canvas>
       <div id="resumoRadarCap" class="rz-radar-cap"></div>
     </div>
-    <div class="rz-ckm-panel">
-      <div class="rz-radar-title">&#x1F9EC; Classificação CKM</div>
-      <div class="rz-bigscores" id="resumoScores"></div>
-      <div class="rz-ckmbar" id="resumoCkmBar"></div>
+    <div class="rz-rightcol">
+      <div class="rz-card rz-tagscard">
+        <div class="rz-radar-title">&#x1F3F7;&#xFE0F; Classificações &amp; diagnósticos</div>
+        <div class="rz-tagbody" id="resumoTags"></div>
+      </div>
+      <div class="rz-card rz-ckmcard">
+        <div class="rz-radar-title">&#x1F9EC; Classificação CKM</div>
+        <div class="rz-ckm-body" id="resumoScores"></div>
+        <div class="rz-ckm-stepper" id="resumoCkmBar"></div>
+      </div>
     </div>
   </div>
 
@@ -1234,6 +1359,65 @@ html.embed-mode .cz-grid { height: calc(100vh - 92px); }
   </div>
 </div>
 
+<!-- TAB: TRIAGEM (enfermagem) — vitais + antropometria + bioimpedância -->
+<div id="tab-triagem" class="tab-content">
+  <div class="section-header">Triagem de enfermagem</div>
+  <div class="card" style="margin-bottom:14px;">
+    <p style="font-size:12.5px;color:#6B7A8D;margin:0;">Aferição de sinais vitais, antropometria e composição corporal antes da consulta. Ao concluir, os dados seguem pré-preenchidos para o prontuário do médico.</p>
+  </div>
+
+  <!-- Sinais vitais + Antropometria -->
+  <div class="card ex-collap open" id="foldVitais">
+    <div class="ex-collap-head" onclick="this.closest('.ex-collap').classList.toggle('open')">
+      <span class="icon">&#x1F4CF;</span> Sinais Vitais e Antropometria
+      <span class="ex-chev"></span>
+    </div>
+    <div class="ex-collap-body">
+    <div style="display:grid; grid-template-columns:repeat(5,1fr) minmax(100px,160px); gap:12px; align-items:end;">
+      <div class="form-group"><label>PA Sistólica</label><input type="number" id="pas" placeholder="mmHg" onchange="autoCalc()"></div>
+      <div class="form-group"><label>PA Diastólica</label><input type="number" id="pad" placeholder="mmHg"></div>
+      <div class="form-group"><label>FC</label><input type="number" id="fc" placeholder="bpm"></div>
+      <div class="form-group"><label>Peso (kg)</label><input type="number" step="0.1" id="peso" placeholder="kg" onchange="autoCalcAntro()"></div>
+      <div class="form-group"><label>Altura (cm)</label><input type="number" step="1" id="altura" placeholder="cm" onchange="autoCalcAntro()"></div>
+      <div class="form-group"><label>IMC</label><div id="imc_display" style="padding:8px 12px; background:#f0f0f0; border-radius:var(--radius-sm); font-weight:700; font-size:12px; white-space:nowrap; text-align:center; min-height:38px; display:flex; align-items:center; justify-content:center; overflow:hidden; max-width:160px;"></div></div>
+    </div>
+    <div class="form-grid cols-4" style="margin-top:8px;">
+      <div class="form-group"><label>Circ. Abdominal</label><input type="number" step="0.1" id="ca" placeholder="cm" onchange="autoCalc()"></div>
+      <div class="form-group"><label>Saturação O₂</label><input type="number" id="spo2" placeholder="%"></div>
+      <div class="form-group"><label>Temperatura</label><input type="number" step="0.1" id="temp" placeholder="°C"></div>
+      <div class="form-group"><label>FR</label><input type="number" id="fr" placeholder="irpm"></div>
+    </div>
+    </div><!-- end ex-collap-body Sinais Vitais -->
+  </div>
+
+  <!-- Bioimpedância -->
+  <div class="card ex-collap open" id="foldBio">
+    <div class="ex-collap-head" onclick="this.closest('.ex-collap').classList.toggle('open')">
+      <span class="icon">&#x26A1;</span> Bioimpedância
+      <span class="ex-chev"></span>
+    </div>
+    <div class="ex-collap-body">
+    <div class="form-grid cols-5">
+      <div class="form-group"><label>% Gordura corporal</label><input type="number" step="0.1" id="bio_gordura" placeholder="%"></div>
+      <div class="form-group"><label>Massa magra (kg)</label><input type="number" step="0.1" id="bio_magra" placeholder="kg"></div>
+      <div class="form-group"><label>Água corporal (%)</label><input type="number" step="0.1" id="bio_agua" placeholder="%"></div>
+      <div class="form-group"><label>Gordura visceral</label><input type="number" step="1" id="bio_visceral" placeholder="nível"></div>
+      <div class="form-group"><label>Idade metabólica</label><input type="number" step="1" id="bio_idade_met" placeholder="anos"></div>
+    </div>
+    <div class="form-grid cols-4" style="margin-top:8px;">
+      <div class="form-group"><label>Taxa metabólica basal</label><input type="number" step="1" id="bio_tmb" placeholder="kcal"></div>
+      <div class="form-group"><label>Massa óssea (kg)</label><input type="number" step="0.1" id="bio_ossea" placeholder="kg"></div>
+      <div class="form-group"><label>Músculo esquelético (%)</label><input type="number" step="0.1" id="bio_musculo" placeholder="%"></div>
+      <div class="form-group"><label>Ângulo de fase</label><input type="number" step="0.1" id="bio_angulo" placeholder="°"></div>
+    </div>
+    </div><!-- end ex-collap-body Bioimpedância -->
+  </div>
+
+  <div id="triagemConcluirWrap" style="margin-top:20px; text-align:center;">
+    <button class="btn btn-success btn-lg" onclick="apexConcluirTriagem()">&#x2705; Concluir triagem</button>
+  </div>
+</div>
+
 <!-- TAB 1: CONSULTA -->
 <div id="tab-consulta" class="tab-content">
 
@@ -1299,6 +1483,17 @@ html.embed-mode .cz-grid { height: calc(100vh - 92px); }
         <div class="step-body">
 
   <div id="consulta-body">
+
+  <!-- Resumo READ-ONLY da triagem (fonte editável vive na aba Triagem) -->
+  <div class="card" id="triagemMirror" style="border-left:3px solid var(--teal);margin-bottom:14px;">
+    <div class="card-title" style="margin-bottom:8px;display:flex;align-items:center;gap:8px;">
+      <span class="icon">&#x1F4CF;</span> Triagem (enfermagem)
+      <span style="font-size:11px;font-weight:500;color:#8A97A8;">preenchido na triagem · editar na aba <b style="color:var(--teal);cursor:pointer;" onclick="switchTab('triagem', document.querySelector('.tab-btn[data-tab=triagem]'))">Triagem</b></span>
+    </div>
+    <div id="triagemMirrorBody" style="display:flex;flex-wrap:wrap;gap:10px 22px;font-size:13px;">
+      <span style="color:#B6BFCB;">Sem dados de triagem ainda.</span>
+    </div>
+  </div>
 
   <!-- RETORNO: Evolução -->
   <div class="retorno-only">
@@ -1599,55 +1794,6 @@ html.embed-mode .cz-grid { height: calc(100vh - 92px); }
 
   <!-- O: Exame Físico -->
   <div class="section-header">Exame Físico</div>
-
-  <!-- Sinais vitais + Antropometria -->
-  <div class="card ex-collap cz-tele cz-static open" id="foldVitais">
-    <div class="ex-collap-head" onclick="this.closest('.ex-collap').classList.toggle('open')">
-      <span class="icon">&#x1F4CF;</span> Sinais Vitais e Antropometria
-      <span class="ex-tele-hint">+ clique para preencher</span>
-      <span class="ex-chev"></span>
-    </div>
-    <div class="ex-collap-body">
-    <div style="display:grid; grid-template-columns:repeat(5,1fr) minmax(100px,160px); gap:12px; align-items:end;">
-      <div class="form-group"><label>PA Sistólica</label><input type="number" id="pas" placeholder="mmHg" onchange="autoCalc()"></div>
-      <div class="form-group"><label>PA Diastólica</label><input type="number" id="pad" placeholder="mmHg"></div>
-      <div class="form-group"><label>FC</label><input type="number" id="fc" placeholder="bpm"></div>
-      <div class="form-group"><label>Peso (kg)</label><input type="number" step="0.1" id="peso" placeholder="kg" onchange="autoCalcAntro()"></div>
-      <div class="form-group"><label>Altura (cm)</label><input type="number" step="1" id="altura" placeholder="cm" onchange="autoCalcAntro()"></div>
-      <div class="form-group"><label>IMC</label><div id="imc_display" style="padding:8px 12px; background:#f0f0f0; border-radius:var(--radius-sm); font-weight:700; font-size:12px; white-space:nowrap; text-align:center; min-height:38px; display:flex; align-items:center; justify-content:center; overflow:hidden; max-width:160px;"></div></div>
-    </div>
-    <div class="form-grid cols-4" style="margin-top:8px;">
-      <div class="form-group"><label>Circ. Abdominal</label><input type="number" step="0.1" id="ca" placeholder="cm" onchange="autoCalc()"></div>
-      <div class="form-group"><label>Saturação O₂</label><input type="number" id="spo2" placeholder="%"></div>
-      <div class="form-group"><label>Temperatura</label><input type="number" step="0.1" id="temp" placeholder="°C"></div>
-      <div class="form-group"><label>FR</label><input type="number" id="fr" placeholder="irpm"></div>
-    </div>
-    </div><!-- end ex-collap-body Sinais Vitais -->
-  </div>
-
-  <!-- Bioimpedância -->
-  <div class="card ex-collap cz-tele cz-static open" id="foldBio">
-    <div class="ex-collap-head" onclick="this.closest('.ex-collap').classList.toggle('open')">
-      <span class="icon">&#x26A1;</span> Bioimpedância
-      <span class="ex-tele-hint">+ clique para preencher</span>
-      <span class="ex-chev"></span>
-    </div>
-    <div class="ex-collap-body">
-    <div class="form-grid cols-5">
-      <div class="form-group"><label>% Gordura corporal</label><input type="number" step="0.1" id="bio_gordura" placeholder="%"></div>
-      <div class="form-group"><label>Massa magra (kg)</label><input type="number" step="0.1" id="bio_magra" placeholder="kg"></div>
-      <div class="form-group"><label>Água corporal (%)</label><input type="number" step="0.1" id="bio_agua" placeholder="%"></div>
-      <div class="form-group"><label>Gordura visceral</label><input type="number" step="1" id="bio_visceral" placeholder="nível"></div>
-      <div class="form-group"><label>Idade metabólica</label><input type="number" step="1" id="bio_idade_met" placeholder="anos"></div>
-    </div>
-    <div class="form-grid cols-4" style="margin-top:8px;">
-      <div class="form-group"><label>Taxa metabólica basal</label><input type="number" step="1" id="bio_tmb" placeholder="kcal"></div>
-      <div class="form-group"><label>Massa óssea (kg)</label><input type="number" step="0.1" id="bio_ossea" placeholder="kg"></div>
-      <div class="form-group"><label>Músculo esquelético (%)</label><input type="number" step="0.1" id="bio_musculo" placeholder="%"></div>
-      <div class="form-group"><label>Ângulo de fase</label><input type="number" step="0.1" id="bio_angulo" placeholder="°"></div>
-    </div>
-    </div><!-- end ex-collap-body Bioimpedância -->
-  </div>
 
   <!-- Exame físico detalhado -->
   <div class="card ex-collap cz-tele cz-static open" id="foldFisico">
@@ -2908,8 +3054,77 @@ function switchTab(name, btn) {
   const cwp = document.getElementById('cwPatient');
   if (cwp) cwp.textContent = document.getElementById('patientName')?.textContent || 'Paciente';
   if (name === 'resumo') renderResumo();
+  if (name === 'consulta') { if (typeof _renderTriagemMirror === 'function') _renderTriagemMirror(); }
   if (name === 'protocolo') { if (typeof renderPainelProtocolos === 'function') renderPainelProtocolos(); if (typeof renderCzCadence === 'function') renderCzCadence(); }
   if (name === 'documentos') updateAllDocs();
+}
+
+// ============================================================
+// TRIAGEM — espelho read-only no Atendimento + gating por papel + concluir
+// ============================================================
+function _renderTriagemMirror() {
+  const body = document.getElementById('triagemMirrorBody');
+  if (!body) return;
+  const gv = id => { const e = document.getElementById(id); return e ? (e.value || '').trim() : ''; };
+  const pas = gv('pas'), pad = gv('pad'), fc = gv('fc');
+  const imc = (document.getElementById('imc_display')?.textContent || '').trim();
+  const ca = gv('ca'), spo2 = gv('spo2'), gord = gv('bio_gordura'), musc = gv('bio_musculo');
+  const items = [];
+  if (pas || pad) items.push(['PA', (pas || '—') + '/' + (pad || '—') + ' mmHg']);
+  if (fc) items.push(['FC', fc + ' bpm']);
+  if (imc) items.push(['IMC', imc]);
+  if (ca) items.push(['Circ. abd.', ca + ' cm']);
+  if (spo2) items.push(['SpO₂', spo2 + '%']);
+  if (gord) items.push(['% gordura', gord + '%']);
+  if (musc) items.push(['Músculo', musc + '%']);
+  if (!items.length) { body.innerHTML = '<span style="color:#B6BFCB;">Sem dados de triagem ainda.</span>'; return; }
+  body.innerHTML = items.map(([k, v]) =>
+    `<span><b style="color:#5A6480;font-weight:600;">${k}:</b> <span style="color:var(--navy);font-weight:600;">${v}</span></span>`
+  ).join('');
+}
+
+// Gating por papel: secretária → só Identificação; enfermagem → só Triagem; médico → tudo.
+window._apexPapel = window._apexPapel || null;
+function _applyPapelGating(papel) {
+  window._apexPapel = papel || 'medico';
+  const allow = {
+    secretaria: ['identificacao'],
+    enfermeira: ['triagem'],
+    enfermagem: ['triagem'],
+    medico: ['identificacao','triagem','resumo','consulta','protocolo','documentos'],
+    admin:   ['identificacao','triagem','resumo','consulta','protocolo','documentos'],
+    operador:['identificacao','triagem','resumo','consulta','protocolo','documentos'],
+  };
+  const allowed = allow[window._apexPapel] || allow.medico;
+  document.querySelectorAll('.tab-btn').forEach(b => {
+    const t = b.dataset.tab;
+    const ok = allowed.includes(t);
+    b.disabled = !ok;
+    b.style.opacity = ok ? '' : '0.32';
+    b.style.pointerEvents = ok ? '' : 'none';
+    b.style.cursor = ok ? '' : 'not-allowed';
+  });
+  // Esconder botão "Concluir triagem" para quem não é enfermagem/médico
+  const cw = document.getElementById('triagemConcluirWrap');
+  if (cw) cw.style.display = (['enfermeira','enfermagem','medico','admin','operador'].includes(window._apexPapel)) ? '' : 'none';
+  // Abrir a aba padrão do papel
+  const home = (window._apexPapel === 'secretaria') ? 'identificacao'
+             : (window._apexPapel === 'enfermeira' || window._apexPapel === 'enfermagem') ? 'triagem'
+             : 'resumo';
+  const homeBtn = document.querySelector('.tab-btn[data-tab="' + home + '"]');
+  if (homeBtn) switchTab(home, homeBtn);
+}
+
+function apexConcluirTriagem() {
+  const snap = (typeof _apexCollectSnapshot === 'function') ? _apexCollectSnapshot() : {};
+  const vitais = {};
+  ['pas','pad','fc','fr','temp','spo2','peso','altura','ca'].forEach(id => { const e = document.getElementById(id); if (e && e.value) vitais[id] = e.value; });
+  const bio = {};
+  ['bio_gordura','bio_magra','bio_agua','bio_visceral','bio_idade_met','bio_tmb','bio_ossea','bio_musculo','bio_angulo'].forEach(id => { const e = document.getElementById(id); if (e && e.value) bio[id] = e.value; });
+  try {
+    parent.postMessage({ type: 'apex-concluir-triagem', vitais, bioimpedancia: bio, circ_abdominal: vitais.ca || null, snapshot: snap }, '*');
+  } catch (e) {}
+  if (typeof showToast === 'function') showToast('Triagem concluída — dados enviados ao prontuário do médico ✓');
 }
 
 // ============================================================
@@ -2969,14 +3184,7 @@ function renderResumo() {
   const bRac  = cmp ? (cmp.rac != null ? _num(cmp.rac) : null) : pRac;
   const bAu   = cmp ? (cmp.au != null ? _num(cmp.au) : null) : pAu;
 
-  // ── Tags topo ──
-  const tags = [`<span class="p-pill stage">&#x1F9EC; CKM Estágio ${ckmStage}</span>`];
-  if (ascvd !== null) {
-    const rk = ascvd >= 20 ? 'risk' : ascvd >= 7.5 ? 'risk-mod' : 'risk-low';
-    const lbl = ascvd >= 20 ? 'Risco CV alto' : ascvd >= 7.5 ? 'Risco CV intermediário' : 'Risco CV baixo';
-    tags.push(`<span class="p-pill ${rk}">&#x2764; ${lbl} · ${ascvd}%</span>`);
-  }
-  document.getElementById('resumoTags').innerHTML = tags.join('');
+  // ── Tags (classificações dos pilares CKM + diagnósticos) renderizadas após os antecedentes ──
 
   // ── 1. Cockpit: escores grandes ──
   const ascvdCls = ascvd === null ? 'na' : ascvd >= 20 ? 'bad' : ascvd >= 5 ? 'warn' : 'ok';
@@ -3000,8 +3208,10 @@ function renderResumo() {
      </div>`;
   const ckmShort = ['Sem fatores','Excesso adiposidade','Fatores metab. + DRC','DCV subclínica / alto risco','DCV clínica'];
   document.getElementById('resumoCkmBar').innerHTML =
-    '<div class="ckm-bar">' + ckmShort.map((l,i) =>
-      `<div class="ckm-stage ckm-${i}${i===ckmStage?' active':''}">Estágio ${i}<br><span style="font-size:10px;font-weight:400;">${l}</span></div>`).join('') + '</div>';
+    '<div class="rz-ckm-steps">' + ckmShort.map((l,i) => {
+      const cls = i < ckmStage ? 'past' : i === ckmStage ? 'cur' : '';
+      return `<div class="rz-ckm-step ${cls}"><div class="num">${i}</div><div class="lbl">${l}</div></div>`;
+    }).join('') + '</div>';
 
   // ── 2. Problemas ativos (derivados dos antecedentes) ──
   const sb = c => { const s = sev(c); return s==='ok'?'b-ok':s==='warn'?'b-warn':s==='bad'?'b-bad':'b-warn'; };
@@ -3034,6 +3244,27 @@ function renderResumo() {
   });
   document.getElementById('resumoProblemas').innerHTML = probHtml ||
     '<div style="color:#8A97A8;font-size:12.5px;font-style:italic;padding:4px 2px;">Nenhum antecedente marcado na consulta ainda.</div>';
+
+  // ── Tags do card "Classificações & diagnósticos" ──
+  (function(){
+    const sevCls = c => { const s = sev(c); return s==='ok'?'ok':s==='warn'?'warn':s==='bad'?'bad':'na'; };
+    const pil = [];
+    const pTag = (pn, has, c) => { if (has && c && c.label && c.label !== '—') pil.push(`<span class="ctag ${sevCls(c)}"><span class="pn">${pn}</span>${c.label}</span>`); };
+    pTag('Renal', tfge, cTfge);
+    pTag('Albumin.', rac, cRac);
+    pTag('PA', pas, cPa);
+    pTag('Glicemia', hba1c, cA1c);
+    pTag('LDL', ldl, cLdl);
+    pTag('IMC', imc, cImc);
+    const dx = [];
+    probDefs.forEach(p => { if (document.getElementById(p.id)?.checked) dx.push(`<span class="ctag dx">${p.label}</span>`); });
+    Object.keys(simples).forEach(id => { if (document.getElementById(id)?.checked) dx.push(`<span class="ctag dx">${simples[id]}</span>`); });
+    let html = '';
+    if (pil.length) html += `<div class="rz-taggrp"><div class="cap">Pilares CKM</div><div class="rz-tagwrap">${pil.join('')}</div></div>`;
+    if (dx.length) html += `<div class="rz-taggrp"><div class="cap">Diagnósticos</div><div class="rz-tagwrap">${dx.join('')}</div></div>`;
+    if (!html) html = '<div style="color:#8A97A8;font-size:11.5px;font-style:italic;padding:8px 2px;">Preencha exames e antecedentes na Consulta para gerar as tags.</div>';
+    document.getElementById('resumoTags').innerHTML = html;
+  })();
 
   // ── 3. Classificações (8) ──
   const auCls = !au ? {label:'—',badge:'badge-blue'} : (au > (male?7:6) ? {label:'Elevado',badge:'badge-red'} : {label:'Normal',badge:'badge-green'});
@@ -3139,13 +3370,14 @@ function renderResumo() {
   renderResumoRail();
   renderResumoDetail({ tfge, pas, pad, hba1c, ldl, rac, k: labVal('k'), ascvd });
 
-  // ── Radar (8 eixos, dados reais normalizados) ── nota global anterior p/ evolução (retorno) ──
+  // ── Radar (6 eixos núcleo CKM, dados reais normalizados) ── nota global anterior p/ evolução (retorno) ──
   if (isRet) {
     const scP = (v, b, w) => { if (v == null || v === 0 || isNaN(v)) return null; return Math.round(Math.max(0, Math.min(1, (v - w) / (b - w))) * 100); };
-    const pv = [scP(calcTFGe(getV('cr_first'), age, !male),90,15), scP(getV('pas_first'),110,180), scP(getV('hba1c_first'),5.5,10), scP(getV('ldl_first'),55,190), scP(calcIMC(getV('peso_first'),getV('altura_first')),22,40), scP(getV('rac_first'),10,300), null, scP(getV('au_first'),5,10)].filter(s => s != null);
-    window._radarGlobalPrev = pv.length ? Math.round(pv.reduce((a,b)=>a+b,0)/pv.length) : undefined;
+    const pvRaw = [scP(calcTFGe(getV('cr_first'), age, !male),90,15), scP(getV('pas_first'),110,180), scP(getV('hba1c_first'),5.5,10), scP(getV('ldl_first'),55,190), scP(calcIMC(getV('peso_first'),getV('altura_first')),22,40), scP(getV('rac_first'),10,300)];
+    let ws=0, wt=0; pvRaw.forEach((s,i)=>{ if(s!=null){ ws += s*APEX_RADAR_W[i]; wt += APEX_RADAR_W[i]; } });
+    window._radarGlobalPrev = wt ? Math.round(ws/wt) : undefined;
   } else { window._radarGlobalPrev = undefined; }
-  renderResumoRadar(tfge, pas, hba1c, ldl, imc, rac, fib4, au);
+  renderResumoRadar(tfge, pas, hba1c, ldl, imc, rac);
 }
 
 // ── Rail esquerdo: perfil clínico persistente ──
@@ -3285,7 +3517,10 @@ function renderResumoDetail(v) {
     card('&#x1F4C5; Registro cronológico', chrono);
 }
 
-function renderResumoRadar(tfge, pas, hba1c, ldl, imc, rac, fib4, au) {
+// Pesos do radar = contribuição de cada pilar CKM para risco CV (evento isquêmico/morte). Ordem: Renal, Pressórico, Glicêmico, Lipídico, IMC, Albuminúria. Soma 100.
+// PA: maior risco atribuível populacional (cada +20 mmHg ~dobra mortalidade CV, PSC/Lewington). Renal+Albuminúria: preditores independentes fortes e aditivos (CKD-PC, HR ~2,3–3). Glicemia: DM ~2x morte coronariana (ERFC). LDL: causal (CTT). IMC: efeito majoritariamente mediado por PA/glicose/lipídio.
+const APEX_RADAR_W = [19, 22, 16, 15, 9, 19];
+function renderResumoRadar(tfge, pas, hba1c, ldl, imc, rac) {
   const el = document.getElementById('resumoRadar');
   if (!el || typeof Chart === 'undefined') return;
   // Matriz calibrada por âncoras clínicas (igual ao radar principal); 50 neutro só p/ desenho quando não medido.
@@ -3296,10 +3531,12 @@ function renderResumoRadar(tfge, pas, hba1c, ldl, imc, rac, fib4, au) {
   };
   // raw (null = não medido) para a NOTA; scores (50 neutro) para o desenho
   const scR = (val, best, worst) => { if (val == null || val === 0 || isNaN(val)) return null; const s = (val - worst) / (best - worst); return Math.round(Math.max(0, Math.min(1, s)) * 100); };
-  const raw = [scR(tfge,90,15), scR(pas,110,180), scR(hba1c,5.5,10), scR(ldl,55,190), scR(imc,22,40), scR(rac,10,300), scR(fib4,1.0,3.25), scR(au,5,10)];
+  const raw = [scR(tfge,90,15), scR(pas,110,180), scR(hba1c,5.5,10), scR(ldl,55,190), scR(imc,22,40), scR(rac,10,300)];
   const scores = raw.map(s => s == null ? 50 : s);
   const _present = raw.filter(s => s != null);
-  const global = _present.length ? Math.round(_present.reduce((a,b)=>a+b,0)/_present.length) : null;
+  // Nota = média PONDERADA por risco cardiovascular (evento isquêmico/morte) de cada pilar CKM; eixo sem dado redistribui o peso.
+  let _ws = 0, _wt = 0; raw.forEach((s,i) => { if (s != null) { _ws += s*APEX_RADAR_W[i]; _wt += APEX_RADAR_W[i]; } });
+  const global = _wt ? Math.round(_ws/_wt) : null;
   // Legenda: nota global + banda + evolução vs. anterior (window._radarGlobalPrev)
   const cap = document.getElementById('resumoRadarCap');
   if (cap) {
@@ -3316,16 +3553,16 @@ function renderResumoRadar(tfge, pas, hba1c, ldl, imc, rac, fib4, au) {
         else evo = '<div class="gevo" style="color:var(--text-3,#8A93A6);">&#x2194; estável vs. anterior</div>';
       }
       cap.innerHTML = '<div class="gscore" style="color:' + col + ';">' + global + '<span style="font-size:13px;color:var(--text-3,#8A93A6);">/100</span></div>'
-        + '<div class="glabel">Nota global · ' + band + ' · ' + _present.length + '/8 medidos</div>' + evo;
+        + '<div class="glabel">Nota global · ' + band + ' · ' + _present.length + '/6 medidos</div>' + evo;
     }
     window._radarGlobalCur = global;
   }
   if (window._resumoRadar) window._resumoRadar.destroy();
   window._resumoRadar = new Chart(el, { type:'radar',
-    data:{ labels:['Renal','Pressórico','Glicêmico','Lipídico','IMC','Albuminúria','Hepático','Ác.Úrico'],
+    data:{ labels:['Renal','Pressórico','Glicêmico','Lipídico','IMC','Albuminúria'],
       datasets:[
         { label:'Atual', data:scores, backgroundColor:'rgba(2,128,144,.15)', borderColor:'#028090', borderWidth:2, pointRadius:2 },
-        { label:'Meta', data:[75,75,75,70,65,75,80,75], backgroundColor:'rgba(196,163,90,.10)', borderColor:'#C4A35A', borderWidth:2, borderDash:[4,3], pointRadius:0 }
+        { label:'Meta', data:[75,75,75,70,65,75], backgroundColor:'rgba(196,163,90,.10)', borderColor:'#C4A35A', borderWidth:2, borderDash:[4,3], pointRadius:0 }
       ]},
     options:{ responsive:false, plugins:{legend:{labels:{font:{size:10},boxWidth:10}}},
       scales:{r:{min:0,max:100,ticks:{display:false,stepSize:25},pointLabels:{font:{size:9.5},color:'#5C6B82'},grid:{color:'#E2E0DB'},angleLines:{color:'#E2E0DB'}}}}});
@@ -6248,7 +6485,38 @@ function saveConsulta() {
   if (history.length > 30) history.pop();
   localStorage.setItem(_consKey(), JSON.stringify(history));
   if (typeof loadConsultaHistory === 'function') loadConsultaHistory();
+  _apexPersistConsulta(historyEntry);
   showToast('Consulta salva na memória do paciente ✓');
+}
+
+/* ============================================================
+   M6 — PONTE PARA O SUPABASE (persistência por-consulta na nuvem)
+   O iframe coleta os dados; o shell (preview_pro_completo) tem o
+   client do Supabase + a auth do médico e grava em prontuarios_ckm.
+   ============================================================ */
+function _apexCollectSnapshot() {
+  var data = {};
+  document.querySelectorAll('input[id], textarea[id], select[id]').forEach(function(el) {
+    if (el.type === 'checkbox' || el.type === 'radio') data[el.id] = el.checked;
+    else if (el.value !== '') data[el.id] = el.value;
+  });
+  return data;
+}
+function apexIniciarAtendimento() {
+  /* navega pro passo de Atendimento (comportamento antigo do botão) */
+  var tabBtn = document.querySelector('.tab-btn[onclick*="consulta"]');
+  if (tabBtn) tabBtn.click();
+  /* pede ao shell pra criar a linha da consulta no Supabase (1 linha por atendimento) */
+  if (window.parent && window.parent !== window) {
+    window.parent.postMessage({ type: 'apex-iniciar-atendimento' }, '*');
+  }
+}
+function _apexPersistConsulta(resumo) {
+  if (!window.parent || window.parent === window) return;
+  window.parent.postMessage({
+    type: 'apex-save-consulta',
+    payload: { snapshot: _apexCollectSnapshot(), resumo: resumo || null }
+  }, '*');
 }
 function loadConsulta(idx) {
   const history = JSON.parse(localStorage.getItem(_consKey()) || '[]');
@@ -6736,7 +7004,7 @@ function toggleCronograma() {
 // Item 6 · mês-template: em teleconsulta recolhe Exame físico, Bioimpedância e Exames laboratoriais.
 // Campos seguem no DOM (só escondidos atrás de cabeçalho clicável) — comparação/Radar/Supabase intactos.
 function applyTeleCollapse(isTele) {
-  ['foldVitais', 'foldBio', 'foldFisico', 'examBlockWrap'].forEach(function(id) {
+  ['foldFisico', 'examBlockWrap'].forEach(function(id) {
     const el = document.getElementById(id);
     if (!el || !el.classList.contains('ex-collap')) return;
     if (isTele) { el.classList.remove('cz-static'); el.classList.remove('open'); }
