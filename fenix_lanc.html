@@ -67,6 +67,15 @@ body{font-family:'Space Grotesk',system-ui,sans-serif;color:var(--text-primary);
 .save-status.ok{color:var(--green);}
 .save-status.err{color:var(--red);}
 .save-status.saving{color:var(--amber);}
+.session-banner{display:none;position:fixed;left:50%;bottom:84px;transform:translateX(-50%);z-index:60;max-width:560px;width:calc(100% - 40px);background:#fff;border:1px solid var(--amber,#d98e04);border-left:4px solid var(--amber,#d98e04);border-radius:8px;box-shadow:0 8px 28px rgba(0,0,0,.18);padding:14px 16px;}
+.session-banner.show{display:block;}
+.session-banner .sb-title{font-size:13px;font-weight:700;color:var(--text-primary,#1a1a1a);margin-bottom:4px;}
+.session-banner .sb-msg{font-size:12px;color:var(--text-secondary,#555);line-height:1.45;margin-bottom:10px;}
+.session-banner .sb-actions{display:flex;gap:8px;}
+.session-banner .sb-retry{background:var(--gold);color:#fff;border:none;border-radius:6px;padding:8px 18px;font-family:inherit;font-size:12px;font-weight:700;letter-spacing:.5px;cursor:pointer;}
+.session-banner .sb-retry:hover{opacity:.88;}
+.session-banner .sb-retry:disabled{opacity:.5;cursor:default;}
+.session-banner .sb-dismiss{background:none;border:1px solid var(--border,#ddd);color:var(--text-muted,#888);border-radius:6px;padding:8px 14px;font-family:inherit;font-size:12px;font-weight:600;cursor:pointer;}
 .toast{position:fixed;top:66px;right:20px;padding:10px 18px;border-radius:6px;font-size:11px;font-weight:600;letter-spacing:.5px;opacity:0;transform:translateY(-8px);transition:all .3s;z-index:200;pointer-events:none;}
 .toast.show{opacity:1;transform:translateY(0);}
 .toast.ok{background:#EAF5EE;border:1px solid rgba(45,122,79,0.25);color:var(--green);}
@@ -336,7 +345,7 @@ body{font-family:'Space Grotesk',system-ui,sans-serif;color:var(--text-primary);
         <span class="inp-hint">Água corporal extracelular</span>
       </div>
       <div class="campo">
-        <label class="campo-lbl">Hb Global <span class="campo-unit">g/dL</span></label>
+        <label class="campo-lbl">Hb Glicada <span class="campo-unit">%</span></label>
         <input type="number" class="inp" id="f-hbg" placeholder="0.0" min="0" max="20" step="0.1" oninput="markChanged(this)"/>
         <span class="inp-hint">Hemoglobina — valor médio</span>
       </div>
@@ -376,6 +385,16 @@ body{font-family:'Space Grotesk',system-ui,sans-serif;color:var(--text-primary);
   <button class="btn-save" id="btn-save" onclick="salvar()">Salvar</button>
   <button class="btn-clear" onclick="limparFormulario()">Limpar</button>
   <span class="save-status" id="save-status"></span>
+</div>
+
+<!-- BANNER DE SESSÃO EXPIRADA (dados preservados) -->
+<div class="session-banner" id="session-banner">
+  <div class="sb-title">Sua sessão expirou</div>
+  <div class="sb-msg">Seus dados continuam preenchidos aqui — nada foi perdido. Clique em <b>Tentar salvar novamente</b> que renovamos a sessão e gravamos.</div>
+  <div class="sb-actions">
+    <button class="sb-retry" id="sb-retry" onclick="tentarReenviar()">Tentar salvar novamente</button>
+    <button class="sb-dismiss" onclick="document.getElementById('session-banner').classList.remove('show')">Fechar</button>
+  </div>
 </div>
 
 <!-- TOAST -->
@@ -514,6 +533,72 @@ async function carregarDados(){
 }
 
 // ── SALVAR ────────────────────────────────────────────────────
+// Detecta falha de autenticação (token/JWT expirado) para acionar recuperação
+function _isAuthError(status,msg){
+  if(status===401)return true;
+  const m=(msg||'').toLowerCase();
+  return m.includes('jwt')||m.includes('expired')||m.includes('token');
+}
+
+// Pede ao portal (página-pai) que renove a sessão e espelhe um token fresco
+// no sessionStorage. Resolve com true se um token novo ficou disponível.
+function renovarSessao(){
+  return new Promise(resolve=>{
+    const antes=getToken();
+    if(window.parent===window){resolve(false);return;} // standalone, sem portal
+    let pronto=false;
+    function onMsg(ev){
+      const d=ev.data||{};
+      if(d.type==='apex-token-refreshed'){
+        pronto=true;
+        window.removeEventListener('message',onMsg);
+        resolve(true);
+      }
+    }
+    window.addEventListener('message',onMsg);
+    try{window.parent.postMessage({type:'apex-refresh-token'},'*');}catch(e){}
+    // Fallback: se o token no sessionStorage mudar sozinho, também serve
+    setTimeout(()=>{
+      if(pronto)return;
+      window.removeEventListener('message',onMsg);
+      resolve(getToken()!==antes);
+    },4500);
+  });
+}
+
+function _montarPayload(m){
+  const payload={ano:m.ano,mes:m.mes};
+  Object.entries(CAMPOS).forEach(([fid,col])=>{
+    const el=document.getElementById(fid);
+    if(el&&el.value!==''){payload[col]=parseFloat(el.value)||0;}
+  });
+  return payload;
+}
+
+async function _enviarPayload(payload){
+  const resp=await fetch(`${SUPA_URL}/rest/v1/dados_mensais?on_conflict=ano,mes`,{
+    method:'POST',
+    headers:getHeaders({'Prefer':'resolution=merge-duplicates'}),
+    body:JSON.stringify(payload),
+  });
+  if(resp.ok||resp.status===201||resp.status===200)return{ok:true};
+  const err=await resp.json().catch(()=>({}));
+  return{ok:false,status:resp.status,msg:err.message||`HTTP ${resp.status}`};
+}
+
+function _salvarSucesso(status){
+  Object.keys(CAMPOS).forEach(fid=>{
+    const el=document.getElementById(fid);
+    if(el)el.classList.remove('changed');
+  });
+  status.className='save-status ok';
+  status.textContent=`✓ Salvo às ${new Date().toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'})}`;
+  document.getElementById('mes-status').className='mes-status loaded';
+  document.getElementById('mes-status').textContent='✓ Dados salvos';
+  document.getElementById('session-banner').classList.remove('show');
+  showToast('Dados salvos com sucesso','ok');
+}
+
 async function salvar(){
   const m=getMes();
   if(!m){showToast('Selecione o mês antes de salvar','err');return;}
@@ -523,36 +608,28 @@ async function salvar(){
   btn.disabled=true;btn.textContent='Salvando...';
   status.className='save-status saving';status.textContent='Salvando...';
 
-  // Monta payload
-  const payload={ano:m.ano,mes:m.mes};
-  Object.entries(CAMPOS).forEach(([fid,col])=>{
-    const el=document.getElementById(fid);
-    if(el&&el.value!==''){
-      payload[col]=parseFloat(el.value)||0;
-    }
-  });
+  // IMPORTANTE: os valores ficam no DOM; nada é apagado se der erro.
+  const payload=_montarPayload(m);
 
   try{
-    const resp=await fetch(`${SUPA_URL}/rest/v1/dados_mensais?on_conflict=ano,mes`,{
-      method:'POST',
-      headers:getHeaders({'Prefer':'resolution=merge-duplicates'}),
-      body:JSON.stringify(payload),
-    });
+    let r=await _enviarPayload(payload);
 
-    if(resp.ok||resp.status===201||resp.status===200){
-      // Limpa marcações de changed
-      Object.keys(CAMPOS).forEach(fid=>{
-        const el=document.getElementById(fid);
-        if(el)el.classList.remove('changed');
-      });
-      status.className='save-status ok';
-      status.textContent=`✓ Salvo às ${new Date().toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'})}`;
-      document.getElementById('mes-status').className='mes-status loaded';
-      document.getElementById('mes-status').textContent='✓ Dados salvos';
-      showToast('Dados salvos com sucesso','ok');
+    // Token expirado: tenta renovar a sessão e reenviar UMA vez, sem perder dados
+    if(!r.ok&&_isAuthError(r.status,r.msg)){
+      status.textContent='Renovando sessão...';
+      const renovou=await renovarSessao();
+      if(renovou)r=await _enviarPayload(payload);
+    }
+
+    if(r.ok){
+      _salvarSucesso(status);
+    }else if(_isAuthError(r.status,r.msg)){
+      // Não conseguiu renovar automaticamente → banner de recuperação (dados preservados)
+      status.className='save-status err';
+      status.textContent='Sessão expirada';
+      document.getElementById('session-banner').classList.add('show');
     }else{
-      const err=await resp.json().catch(()=>({}));
-      throw new Error(err.message||`HTTP ${resp.status}`);
+      throw new Error(r.msg);
     }
   }catch(e){
     status.className='save-status err';
@@ -561,6 +638,16 @@ async function salvar(){
   }finally{
     btn.disabled=false;btn.textContent='Salvar';
   }
+}
+
+// Botão "Tentar salvar novamente" do banner de sessão expirada
+async function tentarReenviar(){
+  const rbtn=document.getElementById('sb-retry');
+  rbtn.disabled=true;rbtn.textContent='Renovando...';
+  await renovarSessao();
+  document.getElementById('session-banner').classList.remove('show');
+  rbtn.disabled=false;rbtn.textContent='Tentar salvar novamente';
+  await salvar();
 }
 
 // ── LIMPAR ────────────────────────────────────────────────────

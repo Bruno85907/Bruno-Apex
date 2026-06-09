@@ -270,6 +270,18 @@ body.pront-focus .pac-ctx-swap:hover{background:rgba(255,255,255,.12);color:#fff
 .dash-pac .dp-meta{font-size:10.5px;color:var(--text-3);margin-top:1px;}
 .dash-pac .dp-grav{font-size:9px;font-weight:700;padding:3px 9px;border-radius:999px;white-space:nowrap;}
 .dash-empty{padding:26px 12px;text-align:center;color:var(--text-3);font-size:12px;}
+#dash-checkin-panel{max-width:960px;border-color:rgba(2,128,144,0.35);}
+.dash-checkin-count{font-size:10px;font-weight:700;letter-spacing:0.5px;text-transform:uppercase;color:var(--teal);background:rgba(2,128,144,0.10);padding:3px 11px;border-radius:999px;}
+.ci-row{display:flex;align-items:center;gap:12px;padding:10px 8px;border-radius:8px;transition:background .15s;}
+.ci-row:hover{background:#F7F8FA;}
+.ci-row .ci-info{flex:1;min-width:0;cursor:pointer;}
+.ci-row .ci-name{font-size:13px;font-weight:600;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.ci-row .ci-meta{font-size:10.5px;color:var(--text-3);margin-top:1px;}
+.ci-row .ci-actions{display:flex;align-items:center;gap:8px;flex-shrink:0;}
+.ci-btn{font-size:11px;font-weight:600;font-family:inherit;padding:6px 13px;border-radius:7px;cursor:pointer;border:1px solid var(--border);background:#fff;color:var(--text-2);transition:all .15s;white-space:nowrap;}
+.ci-btn:hover{border-color:var(--navy);color:var(--navy);}
+.ci-btn.ci-confirm{background:var(--teal);border-color:var(--teal);color:#fff;}
+.ci-btn.ci-confirm:hover{filter:brightness(1.06);color:#fff;}
 
 /* ============================================================
    TRS CARDS
@@ -534,6 +546,12 @@ body.pront-focus .pac-ctx-swap:hover{background:rgba(255,255,255,.12);color:#fff
 .pac-row-tag.t-obes{background:rgba(6,182,212,0.08);color:#06b6d4;}
 .pac-row-tag.t-ckm{background:rgba(236,72,153,0.08);color:#ec4899;}
 .pac-row-tag.t-ativo{background:rgba(34,197,94,0.08);color:#22c55e;}
+/* selo de status do intake (jornada do paciente) */
+.intk-badge{display:inline-block;font-size:9px;font-weight:700;letter-spacing:0.5px;text-transform:uppercase;padding:3px 9px;border-radius:20px;white-space:nowrap;}
+.intk-badge.ik-none{background:rgba(120,120,120,0.07);color:#9a9a90;}
+.intk-badge.ik-sent{background:rgba(245,158,11,0.10);color:#b8860b;}
+.intk-badge.ik-recv{background:rgba(2,128,144,0.10);color:var(--teal);}
+.pac-action-btn.pac-intk:hover{color:#25D366;border-color:rgba(37,211,102,0.4);background:rgba(37,211,102,0.06);}
 
 /* Modal Novo Paciente */
 .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:9999;display:none;align-items:center;justify-content:center;backdrop-filter:blur(4px);}
@@ -1001,6 +1019,13 @@ body.is-admin .ws-switch{display:flex;}
 
       <div class="dash-section-label rv" style="margin-top:34px;">Visão do dia</div>
       <div class="dash-stats rv" id="dash-stats"></div>
+      <div class="dash-panel rv" id="dash-checkin-panel" style="display:none;margin-bottom:30px;">
+        <div class="dash-panel-head">
+          <span class="dp-title">Intake recebido &middot; aguardando check-in</span>
+          <span class="dash-checkin-count" id="dash-checkin-count"></span>
+        </div>
+        <div class="dash-panel-body" id="dash-checkin"></div>
+      </div>
       <div class="dash-two rv">
         <div class="dash-panel">
           <div class="dash-panel-head">
@@ -2128,12 +2153,13 @@ body.is-admin .ws-switch{display:flex;}
               <th>Paciente</th>
               <th>Condições</th>
               <th>Último atendimento</th>
+              <th>Intake</th>
               <th>Status</th>
-              <th style="width:80px;text-align:center;">Ações</th>
+              <th style="width:110px;text-align:center;">Ações</th>
             </tr>
           </thead>
           <tbody id="pac-tbody">
-            <tr><td colspan="5" style="text-align:center;padding:40px;color:var(--text-3);font-size:13px;">Carregando pacientes...</td></tr>
+            <tr><td colspan="6" style="text-align:center;padding:40px;color:var(--text-3);font-size:13px;">Carregando pacientes...</td></tr>
           </tbody>
         </table>
       </div>
@@ -2351,6 +2377,37 @@ var SUPABASE_URL = 'https://syzmsixhjlutsynnqivv.supabase.co';
 var SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InN5em1zaXhoamx1dHN5bm5xaXZ2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQxMjkxMDMsImV4cCI6MjA4OTcwNTEwM30.poYHMbqAp1bQoZ4tehBoIHbwG5XMaaAcZPNR8Wsywnw';
 var supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
 
+/* Mantém o token espelhado no sessionStorage SEMPRE fresco.
+   O supabase-js renova o access_token automaticamente (~a cada hora) enquanto
+   a aba está aberta; sem isto, iframes como o lançamento de dados (fenix_lanc.html)
+   continuariam usando o snapshot do login e quebrariam com "JWT expired". */
+supabase.auth.onAuthStateChange(function(event, session){
+  if (session && session.access_token) {
+    sessionStorage.setItem('apex_access_token', session.access_token);
+  } else if (event === 'SIGNED_OUT') {
+    sessionStorage.removeItem('apex_access_token');
+  }
+});
+
+/* Iframes (ex.: lançamento de dados) podem pedir renovação da sessão quando
+   topam com token expirado ao salvar. Renovamos via supabase-js e devolvemos
+   confirmação — sem que o usuário perca o que digitou. */
+window.addEventListener('message', function(ev){
+  var d = ev.data || {};
+  if (d.type !== 'apex-refresh-token') return;
+  supabase.auth.refreshSession().then(function(res){
+    var tok = res && res.data && res.data.session && res.data.session.access_token;
+    if (tok) sessionStorage.setItem('apex_access_token', tok);
+    if (ev.source) {
+      try { ev.source.postMessage({ type:'apex-token-refreshed', ok: !!tok }, '*'); } catch(e){}
+    }
+  }).catch(function(){
+    if (ev.source) {
+      try { ev.source.postMessage({ type:'apex-token-refreshed', ok:false }, '*'); } catch(e){}
+    }
+  });
+});
+
 /* Estado global da sessão */
 var currentUser = null;
 var currentDoctor = null;
@@ -2499,6 +2556,40 @@ async function renderDashboardWidgets() {
   if (statsEl) {
     function stat(n, l){ return '<div class="dash-stat"><div class="ds-num">' + n + '</div><div class="ds-lab">' + l + '</div></div>'; }
     statsEl.innerHTML = stat(pacs.length, 'Pacientes ativos') + stat(atendidos30, 'Atendidos (30 dias)') + stat(hojeEvts.length, 'Compromissos hoje');
+  }
+
+  /* Intakes recebidos aguardando check-in (jornada do paciente) */
+  var ciPanel = document.getElementById('dash-checkin-panel');
+  var ciBody = document.getElementById('dash-checkin');
+  var ciCount = document.getElementById('dash-checkin-count');
+  if (ciPanel && ciBody) {
+    var preCheckin = { 'aguardando_checkin':1, 'enviado':1, '':1 };
+    var aguardando = pacs.filter(function(p){
+      if (p.status === 'aguardando_checkin') return true;
+      // fallback: intake recebido mas status ainda não avançou (sem drift p/ triagem/consulta)
+      return p.intake_status === 'recebido' && preCheckin[p.status || ''] === 1;
+    });
+    if (!aguardando.length) {
+      ciPanel.style.display = 'none';
+    } else {
+      ciPanel.style.display = '';
+      if (ciCount) ciCount.textContent = aguardando.length + (aguardando.length === 1 ? ' paciente' : ' pacientes');
+      ciBody.innerHTML = aguardando.map(function(p){
+        var idade = calcIdade(p.date_of_birth);
+        var meta = 'Questionário pré-consulta respondido' + (idade ? ' · ' + idade + ' anos' : '');
+        return '<div class="ci-row">' +
+          '<div class="pac-row-avatar">' + getIniciais(p.name) + '</div>' +
+          '<div class="ci-info" onclick="selecionarPaciente(\'' + p.id + '\')">' +
+            '<div class="ci-name">' + p.name + '</div>' +
+            '<div class="ci-meta">' + meta + '</div>' +
+          '</div>' +
+          '<div class="ci-actions">' +
+            '<button class="ci-btn" onclick="selecionarPaciente(\'' + p.id + '\')">Abrir prontuário</button>' +
+            '<button class="ci-btn ci-confirm" onclick="confirmarCheckin(\'' + p.id + '\')">Confirmar check-in</button>' +
+          '</div>' +
+        '</div>';
+      }).join('');
+    }
   }
 
   /* Agenda de hoje */
@@ -4995,11 +5086,29 @@ var allPacientes = [];
 async function carregarListaPacientes() {
   if (!currentDoctor) return;
   var { data, error } = await supabase.from('patients')
-    .select('id, name, documento, email_personal, phone, date_of_birth, sex, city, endereco, acompanhante_nome, acompanhante_telefone, conditions, gravidade, foto, active, last_visit, created_at')
+    .select('id, name, documento, email_personal, phone, date_of_birth, sex, city, endereco, acompanhante_nome, acompanhante_telefone, conditions, gravidade, foto, active, last_visit, created_at, status')
     .eq('doctor_id', currentDoctor.id)
     .order('name', { ascending: true });
 
   allPacientes = data || [];
+
+  // Status do intake por paciente (jornada): recebido > enviado > nenhum
+  try {
+    var ids = allPacientes.map(function(p){ return p.id; });
+    if (ids.length) {
+      var ir = await supabase.from('intake_submissions')
+        .select('patient_id, status, submitted_at')
+        .in('patient_id', ids);
+      var imap = {};
+      (ir.data || []).forEach(function(s){
+        if (!s.patient_id) return;
+        var rank = function(st){ return st === 'recebido' ? 2 : st === 'enviado' ? 1 : 0; };
+        if (!imap[s.patient_id] || rank(s.status) >= rank(imap[s.patient_id])) imap[s.patient_id] = s.status;
+      });
+      allPacientes.forEach(function(p){ p.intake_status = imap[p.id] || null; });
+    }
+  } catch(e) { console.warn('intake status:', e); }
+
   renderPacientes(allPacientes);
 }
 
@@ -5038,7 +5147,7 @@ function renderPacientes(lista) {
   var countEl = document.getElementById('pac-count');
 
   if (!lista || lista.length === 0) {
-    tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;padding:48px;color:var(--text-3);font-size:13px;">Nenhum paciente cadastrado. Clique em "Novo Paciente" para começar.</td></tr>';
+    tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;padding:48px;color:var(--text-3);font-size:13px;">Nenhum paciente cadastrado. Clique em "Novo Paciente" para começar.</td></tr>';
     if (countEl) countEl.textContent = '0 pacientes';
     return;
   }
@@ -5066,12 +5175,69 @@ function renderPacientes(lista) {
     html += '<td><div class="pac-row-name"><div class="pac-row-avatar">' + getIniciais(p.name) + '</div><div><div class="pac-row-nome-txt">' + p.name + '</div><div class="pac-row-email">' + (demoText || p.email_personal || '') + '</div></div></div></td>';
     html += '<td>' + (tagsHtml || '<span style="color:var(--text-3);">—</span>') + '</td>';
     html += '<td style="font-size:12px;color:var(--text-2);">' + lastVisit + '</td>';
+    html += '<td>' + intakeBadgeHtml(p.intake_status) + '</td>';
     html += '<td><span class="pac-row-tag ' + statusClass + '">' + statusLabel + '</span></td>';
-    html += '<td class="pac-actions"><button class="pac-action-btn" onclick="event.stopPropagation();editarPaciente(\'' + p.id + '\')" title="Editar"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></button><button class="pac-action-btn pac-del" onclick="event.stopPropagation();excluirPaciente(\'' + p.id + '\',\'' + p.name.replace(/'/g,"\\\'") + '\')" title="Excluir"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6"/><path d="M10 11v6M14 11v6"/></svg></button></td>';
+    html += '<td class="pac-actions"><button class="pac-action-btn pac-intk" onclick="event.stopPropagation();enviarIntakeWhatsApp(\'' + p.id + '\')" title="Enviar questionário de intake pelo WhatsApp"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg></button><button class="pac-action-btn" onclick="event.stopPropagation();editarPaciente(\'' + p.id + '\')" title="Editar"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></button><button class="pac-action-btn pac-del" onclick="event.stopPropagation();excluirPaciente(\'' + p.id + '\',\'' + p.name.replace(/'/g,"\\\'") + '\')" title="Excluir"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6"/><path d="M10 11v6M14 11v6"/></svg></button></td>';
     html += '</tr>';
   });
 
   tbody.innerHTML = html;
+}
+
+/* Selo de status do intake */
+function intakeBadgeHtml(status) {
+  if (status === 'recebido') return '<span class="intk-badge ik-recv">Recebido</span>';
+  if (status === 'enviado')  return '<span class="intk-badge ik-sent">Enviado</span>';
+  return '<span class="intk-badge ik-none">—</span>';
+}
+
+/* Gerar link de intake (RPC) e abrir o WhatsApp do paciente com a mensagem pronta */
+async function enviarIntakeWhatsApp(patientId) {
+  var pac = (allPacientes || []).find(function(p){ return p.id === patientId; });
+  if (!pac) return;
+  var digits = (pac.phone || '').replace(/\D/g, '');
+  if (!digits) { alert('Este paciente não tem telefone cadastrado. Edite o cadastro para incluir o número antes de enviar o intake.'); return; }
+  if (digits.length <= 11) digits = '55' + digits; // assume Brasil quando não há código do país
+
+  try {
+    var r = await supabase.rpc('apex_intake_criar_link', { p_patient_id: patientId });
+    if (r.error) throw r.error;
+    var token = (r.data && typeof r.data === 'object') ? (r.data.token || (Array.isArray(r.data) && r.data[0] && r.data[0].token)) : r.data;
+    if (!token) throw new Error('RPC não retornou token');
+
+    // Link local (mockup). Em produção apontará para intake.html.
+    var base = location.href.replace(/[^/]*$/, '');
+    var intakeUrl = base + 'mockup_intake.html?t=' + token;
+
+    var primeiro = (pac.name || '').trim().split(/\s+/)[0];
+    var msg = 'Olá, ' + primeiro + '. Aqui é da equipe do Dr. Bruno Lima (Apex Health). '
+      + 'Antes da sua consulta, pedimos que responda este breve questionário pré-consulta — '
+      + 'leva cerca de 3 minutos e ajuda o médico a preparar o seu atendimento:\n\n' + intakeUrl;
+
+    window.open('https://wa.me/' + digits + '?text=' + encodeURIComponent(msg), '_blank');
+
+    // Reflete o novo status 'enviado' na lista
+    await carregarListaPacientes();
+  } catch(e) {
+    console.error('enviarIntakeWhatsApp:', e);
+    alert('Não foi possível gerar o link de intake: ' + (e.message || e));
+  }
+}
+
+/* Confirmar check-in: paciente chegou; avança jornada p/ triagem (enfermagem) */
+async function confirmarCheckin(patientId) {
+  var pac = (allPacientes || []).find(function(p){ return p.id === patientId; });
+  var nome = pac ? (pac.name || 'paciente') : 'paciente';
+  if (!confirm('Confirmar check-in de ' + nome + '? O paciente segue para a triagem de enfermagem.')) return;
+  try {
+    var r = await supabase.from('patients').update({ status: 'aguardando_triagem' }).eq('id', patientId);
+    if (r.error) throw r.error;
+    await carregarListaPacientes();
+    renderDashboardWidgets();
+  } catch(e) {
+    console.error('confirmarCheckin:', e);
+    alert('Não foi possível confirmar o check-in: ' + (e.message || e));
+  }
 }
 
 /* Filtrar por busca */
@@ -5179,6 +5345,10 @@ async function salvarNovoPaciente() {
 
     fecharModalNovoPaciente();
     await carregarListaPacientes();
+    // Oferecer o envio do questionário de intake já no cadastro
+    if (data && data.id && data.phone && confirm('Paciente cadastrado. Deseja enviar o questionário de intake agora pelo WhatsApp?')) {
+      enviarIntakeWhatsApp(data.id);
+    }
   } catch(e) {
     errEl.textContent = 'Erro: ' + e.message;
   } finally {
