@@ -125,6 +125,11 @@ body{font-family:'Space Grotesk',system-ui,sans-serif;color:var(--text-primary);
         <span class="inp-hint">Total de sessões no mês</span>
       </div>
       <div class="campo">
+        <label class="campo-lbl">Sessões Extras</label>
+        <input type="number" class="inp" id="f-ses-extra" placeholder="0" min="0" oninput="markChanged(this)"/>
+        <span class="inp-hint">Sessões extras no mês</span>
+      </div>
+      <div class="campo">
         <label class="campo-lbl">Admissões</label>
         <input type="number" class="inp" id="f-adm" placeholder="0" min="0" oninput="markChanged(this)"/>
         <span class="inp-hint">Novos pacientes no mês</span>
@@ -428,6 +433,7 @@ function getHeaders(extra={}){
 const CAMPOS={
   'f-pac':          `pac_${U}`,
   'f-ses':          `ses_${U}`,
+  'f-ses-extra':    `ses_extras_${U}`,
   'f-adm':          `adm_${U}`,
   'f-sai':          `sai_${U}`,
   'f-cons-nefro':   `cons_nefro_${U}`,

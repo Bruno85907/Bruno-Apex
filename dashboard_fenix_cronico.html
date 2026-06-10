@@ -389,7 +389,12 @@ function renderAll() {
   html += kpiHTML('Sessões', sumField(row,'ses'), '', null, null);
   html += kpiHTML('Admissões', sumField(row,'adm'), '', null, null);
   html += kpiHTML('Saídas', sumField(row,'sai'), '', null, null);
-  html += kpiHTML('Sessões Extras', null, '', null, null); // campo não disponível
+  var sesExtras = sumField(row,'ses_extras');
+  // fallback: meses antigos só têm o total de rede em ses_extras (sem quebra por unidade)
+  if (sesExtras === null && currentFilter === 'rede' && row.ses_extras !== null && row.ses_extras !== undefined && row.ses_extras !== '') {
+    sesExtras = parseFloat(row.ses_extras);
+  }
+  html += kpiHTML('Sessões Extras', sesExtras, '', null, null);
   html += kpiHTML('Cons. Especialista', sumField(row,'cons_esp'), '', null, null);
   html += kpiHTML('Cons. Nefro', sumField(row,'cons_nefro'), '', null, null);
   html += '</div>';
