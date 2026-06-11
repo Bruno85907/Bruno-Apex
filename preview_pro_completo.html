@@ -2393,17 +2393,18 @@ supabase.auth.onAuthStateChange(function(event, session){
    topam com token expirado ao salvar. Renovamos via supabase-js e devolvemos
    confirmação — sem que o usuário perca o que digitou. */
 window.addEventListener('message', function(ev){
+  if (ev.origin !== window.location.origin) return;
   var d = ev.data || {};
   if (d.type !== 'apex-refresh-token') return;
   supabase.auth.refreshSession().then(function(res){
     var tok = res && res.data && res.data.session && res.data.session.access_token;
     if (tok) sessionStorage.setItem('apex_access_token', tok);
     if (ev.source) {
-      try { ev.source.postMessage({ type:'apex-token-refreshed', ok: !!tok }, '*'); } catch(e){}
+      try { ev.source.postMessage({ type:'apex-token-refreshed', ok: !!tok }, window.location.origin); } catch(e){}
     }
   }).catch(function(){
     if (ev.source) {
-      try { ev.source.postMessage({ type:'apex-token-refreshed', ok:false }, '*'); } catch(e){}
+      try { ev.source.postMessage({ type:'apex-token-refreshed', ok:false }, window.location.origin); } catch(e){}
     }
   });
 });
@@ -4652,24 +4653,24 @@ function sendPatientToIframe() {
     acompanhante_telefone: pac.acompanhante_telefone || '',
     conditions: pac.conditions || [],
     consultaNum: 1
-  }, '*');
+  }, window.location.origin);
 
   /* Papel do usuário logado → controla quais abas o prontuário libera */
   _proGetPapel().then(function(papel) {
-    if (iframe.contentWindow) iframe.contentWindow.postMessage({ type: 'apex-papel', papel: papel }, '*');
+    if (iframe.contentWindow) iframe.contentWindow.postMessage({ type: 'apex-papel', papel: papel }, window.location.origin);
   });
 
   /* Buscar a última consulta salva e enviá-la (auto-preenche o "anterior" do Retorno) */
   fetchPrevContrato(pac.id).then(function(contrato) {
     if (contrato && iframe.contentWindow) {
-      iframe.contentWindow.postMessage({ type: 'apex-previous-consulta', contrato: contrato }, '*');
+      iframe.contentWindow.postMessage({ type: 'apex-previous-consulta', contrato: contrato }, window.location.origin);
     }
   });
 
   /* Buscar a última submissão de intake (questionário pré-consulta) → card no topo do Resumo */
   fetchIntakeResumo(pac.id).then(function(intake) {
     if (iframe.contentWindow) {
-      iframe.contentWindow.postMessage({ type: 'apex-intake-resumo', intake: intake }, '*');
+      iframe.contentWindow.postMessage({ type: 'apex-intake-resumo', intake: intake }, window.location.origin);
     }
   });
 
@@ -4682,7 +4683,7 @@ function sendPatientToIframe() {
       .order('consulta_num', { ascending: false }).limit(1).maybeSingle()
       .then(function(r) {
         var prox = ((r.data && r.data.consulta_num) ? r.data.consulta_num : 0) + 1;
-        if (iframe.contentWindow) iframe.contentWindow.postMessage({ type: 'apex-consulta-num', consultaNum: prox }, '*');
+        if (iframe.contentWindow) iframe.contentWindow.postMessage({ type: 'apex-consulta-num', consultaNum: prox }, window.location.origin);
       });
   }
 }
@@ -4720,15 +4721,10 @@ async function salvarProntuarioSupabase() {
   var dados = collectProntuario();
   var statusEl = document.getElementById('save-status');
 
-  /* Se não tem paciente selecionado, usar o primeiro paciente do médico */
+  /* Gravação clínica exige paciente confirmado — nunca redirecionar para outro */
   if (!currentPatientId) {
-    var { data: pts } = await supabase.from('patients').select('id').eq('doctor_id', currentDoctor.id).limit(1);
-    if (pts && pts.length > 0) {
-      currentPatientId = pts[0].id;
-    } else {
-      alert('Nenhum paciente cadastrado. Cadastre um paciente primeiro.');
-      return;
-    }
+    alert('Nenhum paciente selecionado. Abra o prontuário do paciente antes de salvar.');
+    return;
   }
 
   try {
@@ -4778,7 +4774,7 @@ async function salvarProntuarioSupabase() {
    ============================================================ */
 function _proIframeReply(msg) {
   var iframe = document.getElementById('prontuario-iframe');
-  if (iframe && iframe.contentWindow) iframe.contentWindow.postMessage(msg, '*');
+  if (iframe && iframe.contentWindow) iframe.contentWindow.postMessage(msg, window.location.origin);
 }
 /* Cria a linha da consulta no Supabase. Retorna o id ou LANÇA o erro real
    (status do DOCUMENTO = 'rascunho'; o status da JORNADA vai em patients.status). */
@@ -4828,6 +4824,7 @@ async function _proPersistConsulta(payload) {
   }
 }
 window.addEventListener('message', function(e) {
+  if (e.origin !== window.location.origin) return;
   if (!e.data || !e.data.type) return;
   if (e.data.type === 'apex-iniciar-atendimento') {
     _proIniciarAtendimento()
@@ -5035,11 +5032,10 @@ async function salvarContratoApp() {
   var contrato = win._apexLastContract;
   if (!contrato) { _contratoStatus('Não foi possível gerar o contrato.', 'var(--red)'); return; }
 
-  /* 2) Resolver paciente */
+  /* 2) Paciente confirmado é pré-condição — nunca cair em outro prontuário */
   if (!currentPatientId) {
-    var r = await supabase.from('patients').select('id').eq('doctor_id', currentDoctor.id).limit(1);
-    if (r.data && r.data.length) currentPatientId = r.data[0].id;
-    else { _contratoStatus('Cadastre um paciente primeiro.', 'var(--red)'); return; }
+    _contratoStatus('Nenhum paciente selecionado. Abra o prontuário do paciente primeiro.', 'var(--red)');
+    return;
   }
   contrato.consultation.patient_id = currentPatientId;
 

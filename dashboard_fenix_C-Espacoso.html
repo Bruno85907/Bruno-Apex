@@ -613,6 +613,9 @@ canvas{display:block;width:100%;}
 ═══════════════════════════════ */
 const SUPA_URL = 'https://syzmsixhjlutsynnqivv.supabase.co';
 const SUPA_KEY = 'sb_publishable_poKCFHc9n1CtIfCbAxTN0Q_dmlsEy1t';
+/* Token da sessão espelhado pelo portal (mesma aba). Leitura/escrita de
+   dados_mensais exige usuário com perfil — a key pública não basta. */
+function getToken(){ try{ return sessionStorage.getItem('apex_access_token')||SUPA_KEY; }catch(e){ return SUPA_KEY; } }
 
 /* ═══════════════════════════════
    BASE DE DADOS — preenchida via Supabase
@@ -685,7 +688,7 @@ async function carregarDadosSupabase() {
   try {
     const resp = await fetch(
       `${SUPA_URL}/rest/v1/dados_mensais?ano=eq.2026&select=*&order=mes.asc`,
-      { headers: { 'apikey': SUPA_KEY, 'Authorization': `Bearer ${SUPA_KEY}` } }
+      { headers: { 'apikey': SUPA_KEY, 'Authorization': `Bearer ${getToken()}` } }
     );
     const rows = await resp.json();
     if(!Array.isArray(rows) || rows.length === 0) {
@@ -819,7 +822,7 @@ async function salvarAnalise(blockId, mes) {
   const body = {}; body[campo] = ta.value;
   await fetch(
     `${SUPA_URL}/rest/v1/dados_mensais?ano=eq.2026&mes=eq.${mes}`,
-    { method: 'PATCH', headers: { 'Content-Type':'application/json', 'apikey':SUPA_KEY, 'Authorization':`Bearer ${SUPA_KEY}`, 'Prefer':'return=minimal' }, body: JSON.stringify(body) }
+    { method: 'PATCH', headers: { 'Content-Type':'application/json', 'apikey':SUPA_KEY, 'Authorization':`Bearer ${getToken()}`, 'Prefer':'return=minimal' }, body: JSON.stringify(body) }
   );
 }
 

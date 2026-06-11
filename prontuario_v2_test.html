@@ -1072,6 +1072,7 @@ html.embed-mode .cz-grid { height: calc(100vh - 92px); }
   }
   /* Listen for patient data from parent (Pro) */
   window.addEventListener('message', function(e) {
+    if (e.origin !== window.location.origin) return;
     if (!e.data) return;
     if (e.data.type === 'apex-previous-consulta') {
       if (typeof applyPreviousConsulta === 'function') applyPreviousConsulta(e.data.contrato);
@@ -3122,7 +3123,7 @@ function apexConcluirTriagem() {
   const bio = {};
   ['bio_gordura','bio_magra','bio_agua','bio_visceral','bio_idade_met','bio_tmb','bio_ossea','bio_musculo','bio_angulo'].forEach(id => { const e = document.getElementById(id); if (e && e.value) bio[id] = e.value; });
   try {
-    parent.postMessage({ type: 'apex-concluir-triagem', vitais, bioimpedancia: bio, circ_abdominal: vitais.ca || null, snapshot: snap }, '*');
+    parent.postMessage({ type: 'apex-concluir-triagem', vitais, bioimpedancia: bio, circ_abdominal: vitais.ca || null, snapshot: snap }, window.location.origin);
   } catch (e) {}
   if (typeof showToast === 'function') showToast('Triagem concluída — dados enviados ao prontuário do médico ✓');
 }
@@ -6508,7 +6509,7 @@ function apexIniciarAtendimento() {
   if (tabBtn) tabBtn.click();
   /* pede ao shell pra criar a linha da consulta no Supabase (1 linha por atendimento) */
   if (window.parent && window.parent !== window) {
-    window.parent.postMessage({ type: 'apex-iniciar-atendimento' }, '*');
+    window.parent.postMessage({ type: 'apex-iniciar-atendimento' }, window.location.origin);
   }
 }
 function _apexPersistConsulta(resumo) {
@@ -6516,7 +6517,7 @@ function _apexPersistConsulta(resumo) {
   window.parent.postMessage({
     type: 'apex-save-consulta',
     payload: { snapshot: _apexCollectSnapshot(), resumo: resumo || null }
-  }, '*');
+  }, window.location.origin);
 }
 function loadConsulta(idx) {
   const history = JSON.parse(localStorage.getItem(_consKey()) || '[]');

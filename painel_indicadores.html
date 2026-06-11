@@ -260,7 +260,7 @@ async function fetchCronicoSupabase(mes){
   try{
     // Busca todos os meses do ano igual ao dashboard (ano fixo 2026)
     const resp=await fetch(
-      `${SUPA_URL}/rest/v1/dados_mensais?ano=eq.2026&select=mes,pac_rede,ses_rede&order=mes.asc`,
+      `${SUPA_URL}/rest/v1/dados_mensais_censo?ano=eq.2026&select=mes,pac_rede,ses_rede&order=mes.asc`,
       {headers:{'apikey':SUPA_KEY,'Authorization':`Bearer ${SUPA_KEY}`}}
     );
     const rows=await resp.json();

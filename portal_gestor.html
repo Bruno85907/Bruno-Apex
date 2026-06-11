@@ -688,8 +688,9 @@ async function login() {
       return;
     }
 
-    /* Sucesso — salva sessão */
+    /* Sucesso — salva sessão e espelha o token para os módulos (iframes da mesma aba) */
     sessionStorage.setItem('apex_gestor_logado', '1');
+    sessionStorage.setItem('apex_access_token', data.access_token);
     const nome = 'Dr. Bruno Biluca';
     document.getElementById('login-screen').style.display = 'none';
     document.getElementById('portal').style.display = 'block';
@@ -706,6 +707,7 @@ async function login() {
 
 function logout() {
   sessionStorage.removeItem('apex_gestor_logado');
+  sessionStorage.removeItem('apex_access_token');
   document.getElementById('portal').style.display = 'none';
   document.getElementById('login-screen').style.display = 'flex';
   document.getElementById('email').value = '';

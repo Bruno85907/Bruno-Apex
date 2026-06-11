@@ -507,10 +507,26 @@ async function carregarDados(){
 
   const cols=Object.values(CAMPOS).join(',');
   try{
-    const resp=await fetch(
+    let resp=await fetch(
       `${SUPA_URL}/rest/v1/dados_mensais?ano=eq.${m.ano}&mes=eq.${m.mes}&select=${cols}`,
       {headers:getHeaders()}
     );
+    /* 401/403 (token vencido) NÃO é "mês sem dados": tenta renovar a sessão 1x */
+    if(resp.status===401||resp.status===403){
+      const ok=await renovarSessao();
+      if(ok){
+        resp=await fetch(
+          `${SUPA_URL}/rest/v1/dados_mensais?ano=eq.${m.ano}&mes=eq.${m.mes}&select=${cols}`,
+          {headers:getHeaders()}
+        );
+      }
+    }
+    if(!resp.ok){
+      status.className='mes-status';
+      status.textContent='Sessão expirada — recarregue o portal para ver os dados';
+      showToast('Não foi possível carregar (sessão expirada)','err');
+      return;
+    }
     const rows=await resp.json();
     if(Array.isArray(rows)&&rows.length>0){
       const d=rows[0];
@@ -554,6 +570,7 @@ function renovarSessao(){
     if(window.parent===window){resolve(false);return;} // standalone, sem portal
     let pronto=false;
     function onMsg(ev){
+      if(ev.origin!==window.location.origin)return;
       const d=ev.data||{};
       if(d.type==='apex-token-refreshed'){
         pronto=true;
@@ -562,7 +579,7 @@ function renovarSessao(){
       }
     }
     window.addEventListener('message',onMsg);
-    try{window.parent.postMessage({type:'apex-refresh-token'},'*');}catch(e){}
+    try{window.parent.postMessage({type:'apex-refresh-token'},window.location.origin);}catch(e){}
     // Fallback: se o token no sessionStorage mudar sozinho, também serve
     setTimeout(()=>{
       if(pronto)return;
