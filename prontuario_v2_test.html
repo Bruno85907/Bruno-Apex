@@ -1081,6 +1081,11 @@ html.embed-mode .cz-grid { height: calc(100vh - 92px); }
     if (e.data.type === 'apex-atendimento-iniciado') {
       window._apexProntuarioId = e.data.prontuarioId || null;
       window._apexAtendimentoAtivo = true;
+      /* novo encontro = registro aberto: destrava a UI se o anterior foi finalizado */
+      window._apexConsultaFinalizada = false;
+      document.body.classList.remove('consulta-finalizada');
+      var _fb = document.getElementById('finalizadaBanner');
+      if (_fb) _fb.style.display = 'none';
       var _n0 = document.getElementById('consultaNum');
       if (_n0 && e.data.consultaNum) _n0.textContent = e.data.consultaNum;
       if (typeof showToast === 'function') showToast('Atendimento iniciado — consulta #' + (e.data.consultaNum || '') + ' criada na nuvem ✓');
@@ -1092,7 +1097,26 @@ html.embed-mode .cz-grid { height: calc(100vh - 92px); }
       return;
     }
     if (e.data.type === 'apex-save-result') {
-      if (typeof showToast === 'function') showToast(e.data.ok ? 'Salvo na nuvem ✓' : ('Falha ao salvar na nuvem: ' + (e.data.error || '')));
+      if (typeof _apexOnSaveResult === 'function') _apexOnSaveResult(e.data);
+      return;
+    }
+    if (e.data.type === 'apex-consultas-list') {
+      window._apexServerHistory = (e.data.consultas || []).map(function(r){
+        return (typeof _apexMapServerConsulta === 'function') ? _apexMapServerConsulta(r) : null;
+      }).filter(Boolean);
+      if (typeof renderCzTimeline === 'function') renderCzTimeline();
+      return;
+    }
+    if (e.data.type === 'apex-finalizar-result') {
+      if (typeof _apexOnFinalizarResult === 'function') _apexOnFinalizarResult(e.data);
+      return;
+    }
+    if (e.data.type === 'apex-adendo-result') {
+      if (typeof _apexOnAdendoResult === 'function') _apexOnAdendoResult(e.data);
+      return;
+    }
+    if (e.data.type === 'apex-consulta-full') {
+      if (typeof _apexOnConsultaFull === 'function') _apexOnConsultaFull(e.data);
       return;
     }
     if (e.data.type === 'apex-papel') {
@@ -1833,9 +1857,14 @@ html.embed-mode .cz-grid { height: calc(100vh - 92px); }
     </div>
   </div>
 
-  <!-- SAVE BUTTON at bottom -->
-  <div id="saveConsultaWrap" style="margin-top:24px; text-align:center;">
+  <!-- SAVE / FINALIZE at bottom -->
+  <div id="finalizadaBanner" style="display:none;align-items:center;gap:10px;justify-content:center;margin-top:24px;padding:12px 16px;background:#EAF4EC;border:1px solid #BBDCC3;border-radius:var(--radius-sm);color:#1E7E34;font-size:13px;font-weight:600;">
+    <span id="finalizadaBannerTxt">Consulta finalizada — registro travado.</span>
+    <button type="button" class="btn-mini" onclick="abrirAdendo()">+ Adicionar adendo</button>
+  </div>
+  <div id="saveConsultaWrap" style="margin-top:24px; text-align:center; display:flex; gap:12px; justify-content:center; flex-wrap:wrap;">
     <button class="btn btn-success btn-lg" onclick="saveConsulta()">&#x1F4BE; SALVAR CONSULTA</button>
+    <button id="finalizarBtn" class="btn btn-lg" style="background:var(--navy);color:#fff;" onclick="finalizarConsulta()" title="Grava a versão final e trava o registro — depois disso, só adendos">&#x1F512; FINALIZAR E TRAVAR</button>
   </div>
 
   </div><!-- end consulta-body -->
@@ -2631,6 +2660,60 @@ html.embed-mode .cz-grid { height: calc(100vh - 92px); }
 
 <!-- Save Toast -->
 <div class="save-toast" id="saveToast">&#x2705; Consulta salva com sucesso!</div>
+
+<!-- ═══ Sprint 1: confirmação de save, finalização e adendos ═══ -->
+<style>
+.cloud-save-bar{position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:1200;display:none;align-items:center;gap:14px;padding:11px 18px;border-radius:10px;font-size:13px;font-weight:600;box-shadow:0 8px 24px rgba(30,45,80,.25);max-width:92%;}
+.cloud-save-bar.saving{background:var(--navy);color:#fff;}
+.cloud-save-bar.ok{background:#1E7E34;color:#fff;}
+.cloud-save-bar.warn{background:#9A6B1A;color:#fff;}
+.cloud-save-bar.err{background:#C62828;color:#fff;}
+.cloud-save-bar button{background:#fff;color:#C62828;border:none;border-radius:7px;padding:7px 14px;font-family:inherit;font-size:12.5px;font-weight:700;cursor:pointer;flex:none;}
+.btn-mini{background:#fff;color:var(--navy);border:1px solid var(--border);border-radius:7px;padding:5px 10px;font-family:inherit;font-size:11.5px;font-weight:600;cursor:pointer;}
+.btn-mini:hover{border-color:var(--teal);color:var(--teal);}
+.apex-modal{position:fixed;inset:0;z-index:1300;display:none;align-items:center;justify-content:center;background:rgba(13,27,51,.45);padding:20px;}
+.apex-modal .box{background:#fff;border-radius:14px;max-width:680px;width:100%;max-height:85vh;display:flex;flex-direction:column;box-shadow:0 24px 60px rgba(13,27,51,.35);}
+.apex-modal .box-h{display:flex;align-items:center;justify-content:space-between;padding:16px 20px;border-bottom:1px solid var(--border);}
+.apex-modal .box-h h3{font-family:'Instrument Serif',Georgia,serif;font-weight:400;font-size:20px;color:var(--navy);margin:0;}
+.apex-modal .box-h button{background:none;border:none;font-size:20px;color:#8A97A8;cursor:pointer;line-height:1;}
+.apex-modal .box-b{padding:18px 20px;overflow-y:auto;}
+.apex-modal textarea{width:100%;min-height:110px;font-family:inherit;font-size:13.5px;border:1px solid var(--border);border-radius:8px;padding:10px 12px;resize:vertical;}
+.apex-modal .box-f{display:flex;justify-content:flex-end;gap:10px;padding:14px 20px;border-top:1px solid var(--border);}
+.ci-meta{font-size:13px;color:var(--navy);margin-bottom:10px;}
+.ci-badge{font-size:10.5px;font-weight:700;padding:2px 8px;border-radius:10px;margin-left:4px;}
+.ci-badge.ok{background:#EAF4EC;color:#1E7E34;}
+.ci-badge.draft{background:#FFF6E5;color:#9A6B1A;}
+.ci-adendo{background:#F7F9FC;border:1px solid var(--border);border-left:3px solid var(--gold);border-radius:8px;padding:10px 12px;font-size:12.5px;margin-top:8px;white-space:pre-wrap;}
+.ci-adendo-meta{font-size:10.5px;color:#8A97A8;margin-bottom:4px;font-weight:600;}
+#consultaIntegraBody h4{font-size:12px;text-transform:uppercase;letter-spacing:.4px;color:#6B7A8D;margin:12px 0 4px;}
+#consultaIntegraBody p{font-size:13px;line-height:1.6;color:var(--text);margin:0 0 6px;}
+#consultaIntegraBody .cap{color:#6B7A8D;font-weight:600;}
+/* Consulta finalizada: registro travado (edição bloqueada; navegação livre) */
+.consulta-finalizada #tab-consulta input, .consulta-finalizada #tab-consulta select, .consulta-finalizada #tab-consulta textarea,
+.consulta-finalizada #tab-protocolo input, .consulta-finalizada #tab-protocolo select, .consulta-finalizada #tab-protocolo textarea,
+.consulta-finalizada #tab-triagem input, .consulta-finalizada #tab-triagem select, .consulta-finalizada #tab-triagem textarea{pointer-events:none;background:#F4F5F7 !important;color:#6B7A8D;}
+.consulta-finalizada #saveConsultaWrap button{opacity:.45;pointer-events:none;}
+</style>
+<div class="cloud-save-bar" id="cloudSaveBar"></div>
+<div class="apex-modal" id="adendoModal">
+  <div class="box">
+    <div class="box-h"><h3>Adicionar adendo</h3><button type="button" onclick="fecharAdendo()">&times;</button></div>
+    <div class="box-b">
+      <p style="font-size:12.5px;color:#6B7A8D;margin:0 0 10px;">O adendo é acrescentado ao registro finalizado com data, hora e autoria — o conteúdo original permanece intacto.</p>
+      <textarea id="adendoTexto" placeholder="Ex.: Resultado de exame recebido após a consulta: potássio 5,8 mEq/L. Orientado ajuste de dieta por telefone."></textarea>
+    </div>
+    <div class="box-f">
+      <button type="button" class="btn-mini" onclick="fecharAdendo()">Cancelar</button>
+      <button type="button" class="btn-mini" style="background:var(--navy);color:#fff;border-color:var(--navy);" onclick="enviarAdendo()">Registrar adendo</button>
+    </div>
+  </div>
+</div>
+<div class="apex-modal" id="consultaIntegraModal">
+  <div class="box">
+    <div class="box-h"><h3>Consulta na íntegra</h3><button type="button" onclick="fecharConsultaIntegra()">&times;</button></div>
+    <div class="box-b" id="consultaIntegraBody"></div>
+  </div>
+</div>
 
 
 <!-- TAB 5: RELATÓRIO DO ASSESSOR VIRTUAL -->
@@ -6459,8 +6542,9 @@ function applyPreviousConsulta(contrato) {
 // SAVE / LOAD
 // ============================================================
 function _consKey() { return 'apex_consultas_' + (window._apexPatientId || 'default'); }
-function saveConsulta() {
-  const historyEntry = {
+function _apexBuildEntry() {
+  return {
+    pid: window._apexProntuarioId || null,
     date: new Date().toLocaleDateString('pt-BR'),
     type: _czRetornoLabel(),
     diagnoses: Array.from(document.querySelectorAll('[id^="hpp_"]:checked')).map(el=>el.nextSibling?.textContent?.trim()||'').filter(Boolean).join(', '),
@@ -6478,16 +6562,28 @@ function saveConsulta() {
       ? [...new Map(examPrescriptionList.map(e => [e.name, { name: e.name, type: e.type }])).values()] : [],
     extraResults: Object.assign({}, window._czExtraResults || {})
   };
+}
+function _apexCacheEntry(entry) {
+  /* Cache LOCAL (a fonte da verdade é o servidor). Chave = pid do encontro:
+     re-salvar a mesma consulta atualiza a mesma entrada; encontros diferentes
+     nunca se sobrescrevem (corrige a perda silenciosa por data+tipo). */
   const history = JSON.parse(localStorage.getItem(_consKey()) || '[]');
-  /* Não duplicar: se já há consulta de hoje com mesmo tipo, atualiza em vez de empilhar */
-  const dupIdx = history.findIndex(h => h.date === historyEntry.date && h.type === historyEntry.type);
-  if (dupIdx >= 0) history[dupIdx] = historyEntry;
-  else history.unshift(historyEntry);
+  const i = entry.pid
+    ? history.findIndex(h => h.pid === entry.pid)
+    : history.findIndex(h => !h.pid && h.date === entry.date && h.type === entry.type);
+  if (i >= 0) history[i] = entry; else history.unshift(entry);
   if (history.length > 30) history.pop();
   localStorage.setItem(_consKey(), JSON.stringify(history));
+}
+function saveConsulta() {
+  if (window._apexConsultaFinalizada) {
+    showToast('Consulta finalizada — registro travado. Use "Adicionar adendo".');
+    return;
+  }
+  const entry = _apexBuildEntry();
+  _apexCacheEntry(entry);
   if (typeof loadConsultaHistory === 'function') loadConsultaHistory();
-  _apexPersistConsulta(historyEntry);
-  showToast('Consulta salva na memória do paciente ✓');
+  _apexPersistConsulta(entry);
 }
 
 /* ============================================================
@@ -6512,12 +6608,201 @@ function apexIniciarAtendimento() {
     window.parent.postMessage({ type: 'apex-iniciar-atendimento' }, window.location.origin);
   }
 }
+/* ============================================================
+   SALVAR COM CONFIRMAÇÃO (server-first)
+   O save só é considerado feito quando o shell confirma a gravação
+   no Supabase. Falha/timeout = barra vermelha persistente + retry.
+   ============================================================ */
+var _apexSaveTimeout = null;
+function _apexSaveUI(state, msg) {
+  var bar = document.getElementById('cloudSaveBar');
+  if (!bar) return;
+  bar.className = 'cloud-save-bar ' + state;
+  if (state === 'off') { bar.style.display = 'none'; return; }
+  bar.style.display = 'flex';
+  bar.innerHTML = '<span>' + msg + '</span>'
+    + (state === 'err' ? '<button type="button" onclick="saveConsulta()">Tentar de novo</button>' : '');
+}
 function _apexPersistConsulta(resumo) {
-  if (!window.parent || window.parent === window) return;
+  if (!window.parent || window.parent === window) {
+    _apexSaveUI('warn', 'Sem conexão com o prontuário na nuvem — salvo APENAS neste navegador.');
+    return;
+  }
+  _apexSaveUI('saving', 'Salvando na nuvem…');
+  clearTimeout(_apexSaveTimeout);
+  _apexSaveTimeout = setTimeout(function(){
+    _apexSaveUI('err', 'Sem resposta da nuvem — a consulta NÃO foi confirmada. O rascunho local está preservado.');
+  }, 12000);
   window.parent.postMessage({
     type: 'apex-save-consulta',
-    payload: { snapshot: _apexCollectSnapshot(), resumo: resumo || null }
+    payload: { snapshot: _apexCollectSnapshot(), narrativa: _czSnapshotFields(), resumo: resumo || null }
   }, window.location.origin);
+}
+function _apexOnSaveResult(d) {
+  clearTimeout(_apexSaveTimeout);
+  if (d.ok) {
+    if (d.prontuarioId) window._apexProntuarioId = d.prontuarioId;
+    var hora = new Date().toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+    _apexSaveUI('ok', 'Consulta salva na nuvem às ' + hora + ' ✓');
+    setTimeout(function(){ var b=document.getElementById('cloudSaveBar'); if(b && b.className.indexOf('ok')>-1) _apexSaveUI('off'); }, 6000);
+  } else if (d.error === 'consulta_finalizada') {
+    _apexSaveUI('err', 'Este registro já foi finalizado e está travado. Correções entram como adendo.');
+  } else {
+    _apexSaveUI('err', 'Falha ao salvar na nuvem (' + (d.error || 'erro') + '). O rascunho local está preservado.');
+  }
+}
+
+/* ============================================================
+   FINALIZAR CONSULTA (encounter lifecycle)
+   rascunho → finalizado: grava a versão final e TRAVA o registro
+   no servidor. Depois disso, só adendos.
+   ============================================================ */
+function finalizarConsulta() {
+  if (window._apexConsultaFinalizada) { showToast('Esta consulta já está finalizada.'); return; }
+  if (!window.parent || window.parent === window) {
+    showToast('Finalização exige o prontuário conectado à nuvem (abra pelo APEX Pro).');
+    return;
+  }
+  if (!confirm('Finalizar a consulta?\n\nO registro será gravado e TRAVADO — depois disso, alterações só por adendo.')) return;
+  const entry = _apexBuildEntry();
+  entry.status = 'finalizado';
+  _apexCacheEntry(entry);
+  _apexSaveUI('saving', 'Finalizando e travando o registro…');
+  clearTimeout(_apexSaveTimeout);
+  _apexSaveTimeout = setTimeout(function(){
+    _apexSaveUI('err', 'Sem resposta da nuvem — a finalização NÃO foi confirmada.');
+  }, 12000);
+  window.parent.postMessage({
+    type: 'apex-finalizar-consulta',
+    payload: { snapshot: _apexCollectSnapshot(), narrativa: _czSnapshotFields(), resumo: entry }
+  }, window.location.origin);
+}
+function _apexOnFinalizarResult(d) {
+  clearTimeout(_apexSaveTimeout);
+  if (!d.ok) {
+    _apexSaveUI('err', 'Falha ao finalizar (' + (d.error || 'erro') + '). A consulta segue como rascunho.');
+    return;
+  }
+  window._apexConsultaFinalizada = true;
+  document.body.classList.add('consulta-finalizada');
+  var quando = d.finalizedAt ? new Date(d.finalizedAt) : new Date();
+  var carimbo = quando.toLocaleDateString('pt-BR') + ' às ' + quando.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+  _apexSaveUI('off');
+  var banner = document.getElementById('finalizadaBanner');
+  if (banner) {
+    banner.style.display = 'flex';
+    var t = document.getElementById('finalizadaBannerTxt');
+    if (t) t.textContent = 'Consulta finalizada em ' + carimbo + ' — registro travado.';
+  }
+  showToast('Consulta finalizada e travada ✓');
+  if (typeof renderCzTimeline === 'function') renderCzTimeline();
+}
+
+/* ============================================================
+   ADENDOS (correção pós-finalização, com autoria carimbada no servidor)
+   ============================================================ */
+function abrirAdendo(pid) {
+  window._apexAdendoPid = pid || window._apexProntuarioId || null;
+  var m = document.getElementById('adendoModal');
+  if (!m) return;
+  m.style.display = 'flex';
+  var ta = document.getElementById('adendoTexto');
+  if (ta) { ta.value = ''; setTimeout(function(){ ta.focus(); }, 50); }
+}
+function fecharAdendo() {
+  var m = document.getElementById('adendoModal');
+  if (m) m.style.display = 'none';
+}
+function enviarAdendo() {
+  var ta = document.getElementById('adendoTexto');
+  var texto = (ta && ta.value || '').trim();
+  if (!texto) { showToast('Escreva o texto do adendo.'); return; }
+  if (!window.parent || window.parent === window) { showToast('Adendo exige conexão com a nuvem.'); return; }
+  window.parent.postMessage({ type: 'apex-add-adendo', prontuarioId: window._apexAdendoPid, texto: texto }, window.location.origin);
+}
+function _apexOnAdendoResult(d) {
+  if (!d.ok) { showToast('Falha ao gravar adendo: ' + (d.error || 'erro')); return; }
+  fecharAdendo();
+  showToast('Adendo registrado ✓');
+  /* atualiza o cache do histórico do servidor, se a consulta estiver lá */
+  var sh = window._apexServerHistory || [];
+  for (var i = 0; i < sh.length; i++) {
+    if (sh[i].pid === window._apexAdendoPid) sh[i].addendums = d.addendums || sh[i].addendums;
+  }
+  if (typeof renderCzPrev === 'function' && typeof _czSel !== 'undefined' && _czSel !== -1) renderCzPrev(_czSel);
+}
+
+/* ============================================================
+   VER CONSULTA ANTERIOR NA ÍNTEGRA (read-only, vinda do servidor)
+   ============================================================ */
+function apexVerConsultaIntegra(pid) {
+  if (!pid) return;
+  if (!window.parent || window.parent === window) { showToast('Disponível apenas com o prontuário na nuvem.'); return; }
+  window.parent.postMessage({ type: 'apex-load-consulta-full', prontuarioId: pid }, window.location.origin);
+}
+function _apexOnConsultaFull(d) {
+  if (!d.ok || !d.consulta) { showToast('Não foi possível carregar a consulta (' + (d.error || 'erro') + ')'); return; }
+  var c = d.consulta;
+  var m = document.getElementById('consultaIntegraModal');
+  var body = document.getElementById('consultaIntegraBody');
+  if (!m || !body) return;
+  var dt = c.consulta_date ? c.consulta_date.split('-').reverse().join('/') : '—';
+  var h = '<div class="ci-meta"><strong>Consulta #' + (c.consulta_num || '?') + '</strong> · ' + dt
+    + ' · ' + (c.tipo === 'primeira_consulta' ? 'Primeira consulta' : 'Retorno')
+    + (c.status === 'finalizado'
+        ? ' <span class="ci-badge ok">Finalizada' + (c.finalized_at ? ' em ' + new Date(c.finalized_at).toLocaleDateString('pt-BR') : '') + '</span>'
+        : ' <span class="ci-badge draft">Rascunho</span>')
+    + '</div>';
+  var narr = c.narrativa || (c.resumo && c.resumo.narr) || [];
+  if (narr.length) {
+    var bySec = [];
+    narr.forEach(function(f){
+      var g = null;
+      for (var i = 0; i < bySec.length; i++) if (bySec[i].s === f.section) g = bySec[i];
+      if (!g) { g = { s: f.section, items: [] }; bySec.push(g); }
+      g.items.push(f);
+    });
+    bySec.forEach(function(g){
+      h += '<h4>' + _esc(g.s) + '</h4><p>' + g.items.map(function(f){
+        return f.value === '✓' ? '<span class="cap">' + _esc(f.label) + '</span>'
+          : '<span class="cap">' + _esc(f.label) + ':</span> ' + _esc(f.value);
+      }).join(' · ') + '</p>';
+    });
+  } else {
+    h += '<p style="color:#97A1B0;">Sem narrativa estruturada registrada nesta consulta.</p>';
+  }
+  var ads = c.addendums || [];
+  if (ads.length) {
+    h += '<h4 style="margin-top:14px;">Adendos</h4>';
+    ads.forEach(function(a){
+      var quando = a.at ? new Date(a.at).toLocaleDateString('pt-BR') + ' ' + new Date(a.at).toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' }) : '';
+      h += '<div class="ci-adendo"><div class="ci-adendo-meta">' + _esc(quando) + (a.papel ? ' · ' + _esc(a.papel) : '') + '</div>' + _esc(a.texto || '') + '</div>';
+    });
+  }
+  if (c.status === 'finalizado') {
+    h += '<div style="margin-top:14px;"><button type="button" class="btn btn-secondary" onclick="abrirAdendo(\'' + c.id + '\')">+ Adicionar adendo</button></div>';
+  }
+  body.innerHTML = h;
+  m.style.display = 'flex';
+}
+function fecharConsultaIntegra() {
+  var m = document.getElementById('consultaIntegraModal');
+  if (m) m.style.display = 'none';
+}
+
+/* Mapeia a linha do servidor para o shape do histórico local (resumo = historyEntry) */
+function _apexMapServerConsulta(r) {
+  if (!r) return null;
+  var base = (r.resumo && typeof r.resumo === 'object') ? Object.assign({}, r.resumo) : {};
+  base.pid = r.id;
+  base.cnum = r.consulta_num;
+  base.status = r.status || 'rascunho';
+  base.finalized_at = r.finalized_at || null;
+  base.addendums = r.addendums || [];
+  base.cloud = true;
+  if (!base.date && r.consulta_date) base.date = r.consulta_date.split('-').reverse().join('/');
+  if (!base.type) base.type = r.tipo === 'primeira_consulta' ? 'Primeira consulta' : 'Retorno';
+  return base;
 }
 function loadConsulta(idx) {
   const history = JSON.parse(localStorage.getItem(_consKey()) || '[]');
@@ -6664,6 +6949,13 @@ function renderAssessorCharts() {
 // HISTÓRICO DE CONSULTAS
 // ============================================================
 function loadConsultaHistory() {
+  /* A linha do tempo (czTimeline + czPrev) é o componente vivo do histórico.
+     Este wrapper mantém os chamadores antigos funcionando; o render em
+     #consultaHistory (elemento que nunca existiu) foi aposentado. */
+  if (typeof czInit === 'function') czInit();
+  return;
+}
+function _loadConsultaHistory_MORTO() {
   const history = JSON.parse(localStorage.getItem(_consKey()) || '[]');
   const el = document.getElementById('consultaHistory');
   if (!el) return;
@@ -6702,7 +6994,20 @@ function loadConsultaHistory() {
 // Q1 · LINHA DO TEMPO (datas reais) + Q2 (resumo da consulta selecionada)
 // ============================================================
 let _czSel = 0; // índice no histórico (newest-first); -1 = hoje em andamento; 'srv' = consulta da nuvem
-function _czHistory() { return JSON.parse(localStorage.getItem(_consKey()) || '[]'); }
+function _czHistory() {
+  /* Servidor primeiro (fonte da verdade); o cache local entra só para
+     consultas que ainda não existem na nuvem (legado / offline). */
+  const local = JSON.parse(localStorage.getItem(_consKey()) || '[]');
+  const srv = window._apexServerHistory || [];
+  if (!srv.length) return local;
+  const naNuvem = {};
+  srv.forEach(r => { if (r.pid) naNuvem[r.pid] = true; });
+  const atual = window._apexProntuarioId || null;
+  /* o encontro ABERTO de hoje não entra no histórico — ele é o item "Hoje" */
+  const passadas = srv.filter(r => !(r.pid === atual && r.status === 'rascunho'));
+  const soLocais = local.filter(h => !h.pid || (!naNuvem[h.pid] && h.pid !== atual));
+  return passadas.concat(soLocais);
+}
 function _czAnchor(o) {
   if (o == null) return '';
   if (o.tfge != null && o.tfge !== '' && o.tfge !== '—') return 'TFGe ' + o.tfge;
@@ -6730,7 +7035,10 @@ function renderCzTimeline() {
   const todayType = _czRetornoLabel();
   let html = _czItem({ idx: -1, today: true, active: _czSel === -1, date: 'Hoje', type: todayType, anchor: todayAnchor, badge: 'Em andamento' });
   if (hist.length) {
-    html += hist.map((c, i) => _czItem({ idx: i, active: _czSel === i, date: c.date || '—', type: c.type || 'Consulta', anchor: _czAnchor(c) })).join('');
+    html += hist.map((c, i) => _czItem({
+      idx: i, active: _czSel === i, date: c.date || '—', type: c.type || 'Consulta', anchor: _czAnchor(c),
+      badge: c.status === 'finalizado' ? '&#x2713; Finalizada' : (c.cloud ? 'Rascunho' : (c.pid ? '' : 'Só local'))
+    })).join('');
   } else if (window._apexPrevContrato) {
     const pc = window._apexPrevContrato, cl = pc.clinical || {}, rc = pc.risks_classifications || {};
     const dt = (pc.consultation && pc.consultation.date) || String(pc.generated_at || '').slice(0, 10) || 'Anterior';
@@ -6745,6 +7053,10 @@ function czSelect(idx) {
   _czSel = idx;
   renderCzTimeline();
   renderCzPrev(idx);
+  /* O resumo renderiza no painel do passo "Revisão" — que fica colapsado por
+     padrão. Clicar numa consulta passada abre o passo e rola até ele, senão
+     a seleção parece não fazer nada. */
+  if (idx !== -1 && typeof trilhoGo === 'function') trilhoGo(0);
 }
 // Snapshot das classificações da consulta atual (chips do Q2 + delta)
 function _czSnapshotClassif() {
@@ -6774,7 +7086,9 @@ function _czSnapshotFields() {
     if (el.classList.contains('section-header') || el.classList.contains('card-title')) {
       const t = clean(el.textContent); if (t) section = t; return;
     }
-    if (el.offsetParent === null) return;                 // oculto (modo não aplicável / seção fechada)
+    /* NÃO filtrar por visibilidade (offsetParent): campo preenchido em card
+       colapsado / aba inativa é dado clínico e PRECISA entrar no registro.
+       Campo vazio já é pulado adiante. */
     if (/_first$/.test(el.id)) return;                    // coluna "anterior" — não é input desta consulta
     let label = '', value = '';
     if (el.type === 'checkbox' || el.type === 'radio') {
@@ -6849,7 +7163,18 @@ function renderCzPrev(idx) {
   if (cf.prevent != null) chips.push('<span class="cz-pchip ' + _czSev('prevent', cf.prevent) + '">PREVENT ' + _esc(cf.prevent) + '%</span>');
   if (cf.msCount != null) chips.push('<span class="cz-pchip ' + _czSev('ms', cf.msCount) + '">SM ' + _esc(cf.msCount) + '/5</span>');
 
-  let h = '<div class="cz-prev-meta"><span class="d">' + _esc(dt) + '</span><span class="t">' + _esc(type) + '</span></div>';
+  let h = '<div class="cz-prev-meta"><span class="d">' + _esc(dt) + '</span><span class="t">' + _esc(type)
+    + (c.status === 'finalizado' ? ' · <span style="color:var(--success);font-weight:700;">&#x2713; Finalizada</span>' : '')
+    + '</span></div>';
+  if (c.pid) {
+    h += '<div style="margin:6px 0 2px;display:flex;gap:8px;flex-wrap:wrap;">'
+      + '<button type="button" class="btn-mini" onclick="apexVerConsultaIntegra(\'' + c.pid + '\')">Ver consulta na íntegra</button>'
+      + (c.status === 'finalizado' ? '<button type="button" class="btn-mini" onclick="abrirAdendo(\'' + c.pid + '\')">+ Adendo</button>' : '')
+      + '</div>';
+    if (c.addendums && c.addendums.length) {
+      h += '<div style="font-size:11px;color:#6B7A8D;margin-bottom:4px;">' + c.addendums.length + ' adendo' + (c.addendums.length > 1 ? 's' : '') + ' registrado' + (c.addendums.length > 1 ? 's' : '') + '</div>';
+    }
+  }
   if (chips.length) h += '<div class="cz-prev-chips">' + chips.join('') + '</div>';
   h += '<div class="cz-prev-narr">';
 

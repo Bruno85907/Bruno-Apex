@@ -4686,6 +4686,20 @@ function sendPatientToIframe() {
         if (iframe.contentWindow) iframe.contentWindow.postMessage({ type: 'apex-consulta-num', consultaNum: prox }, window.location.origin);
       });
   }
+
+  /* Histórico de consultas do servidor (fonte da verdade da linha do tempo).
+     Leve de propósito: sem form_snapshot/narrativa — a íntegra vem sob demanda. */
+  if (currentDoctor) {
+    supabase.from('prontuarios_ckm')
+      .select('id, consulta_num, consulta_date, tipo, status, finalized_at, resumo, addendums')
+      .eq('patient_id', pac.id).eq('doctor_id', currentDoctor.id)
+      .order('consulta_num', { ascending: false }).limit(50)
+      .then(function(r) {
+        if (!r.error && iframe.contentWindow) {
+          iframe.contentWindow.postMessage({ type: 'apex-consultas-list', consultas: r.data || [] }, window.location.origin);
+        }
+      });
+  }
 }
 
 /* Último contrato_app salvo do paciente (consulta anterior, para comparação no Retorno) */
@@ -4781,6 +4795,20 @@ function _proIframeReply(msg) {
 async function _proIniciarAtendimento() {
   if (!currentDoctor) throw new Error('Faça login primeiro.');
   if (!currentPatientId) throw new Error('Selecione um paciente primeiro.');
+  var hoje = new Date().toISOString().slice(0, 10);
+  /* Se já existe RASCUNHO de hoje, retoma em vez de criar outra linha
+     (re-iniciar o atendimento no mesmo dia não duplica o encontro) */
+  var aberto = await supabase.from('prontuarios_ckm')
+    .select('id, consulta_num')
+    .eq('patient_id', currentPatientId).eq('doctor_id', currentDoctor.id)
+    .eq('consulta_date', hoje).eq('status', 'rascunho')
+    .order('consulta_num', { ascending: false }).limit(1).maybeSingle();
+  if (aberto.error) throw aberto.error;
+  if (aberto.data) {
+    currentProntuarioId = aberto.data.id;
+    await supabase.from('patients').update({ status: 'em_consulta' }).eq('id', currentPatientId);
+    return aberto.data;
+  }
   /* próximo número de consulta deste paciente (max + 1) */
   var ult = await supabase.from('prontuarios_ckm')
     .select('consulta_num')
@@ -4795,13 +4823,15 @@ async function _proIniciarAtendimento() {
       tipo: prox === 1 ? 'primeira_consulta' : 'retorno',
       status: 'rascunho',
       consulta_num: prox,
-      consulta_date: new Date().toISOString().slice(0, 10)
+      consulta_date: hoje
     })
     .select('id, consulta_num').single();
   if (ins.error) throw ins.error;
   currentProntuarioId = ins.data.id;
-  /* status da jornada do paciente (texto livre, sem constraint) */
-  await supabase.from('patients').update({ status: 'em_consulta' }).eq('id', currentPatientId);
+  /* status da jornada + carimbo de atendimento real (não de clique na lista) */
+  await supabase.from('patients')
+    .update({ status: 'em_consulta', last_visit: new Date().toISOString() })
+    .eq('id', currentPatientId);
   return ins.data;
 }
 async function _proPersistConsulta(payload) {
@@ -4812,15 +4842,72 @@ async function _proPersistConsulta(payload) {
     var up = await supabase.from('prontuarios_ckm')
       .update({
         form_snapshot: (payload && payload.snapshot) ? payload.snapshot : null,
+        narrativa: (payload && payload.narrativa) ? payload.narrativa : null,
         resumo: (payload && payload.resumo) ? payload.resumo : null,
         updated_at: new Date().toISOString()
       })
-      .eq('id', currentProntuarioId);
+      .eq('id', currentProntuarioId)
+      .select('id, consulta_num, status').single();
     if (up.error) throw up.error;
-    _proIframeReply({ type: 'apex-save-result', ok: true });
+    _proIframeReply({ type: 'apex-save-result', ok: true,
+      prontuarioId: up.data.id, consultaNum: up.data.consulta_num, status: up.data.status,
+      savedAt: new Date().toISOString() });
   } catch (e) {
     console.error('persistConsulta:', e);
-    _proIframeReply({ type: 'apex-save-result', ok: false, error: e.message });
+    var travada = /consulta_finalizada/.test(e.message || '');
+    _proIframeReply({ type: 'apex-save-result', ok: false,
+      error: travada ? 'consulta_finalizada' : e.message });
+  }
+}
+/* Finalizar: trava o registro no servidor (trigger impede edição posterior)
+   e devolve o paciente à jornada como 'atendido' (ciclo fecha p/ retornos). */
+async function _proFinalizarConsulta(payload) {
+  try {
+    if (!currentDoctor || !currentPatientId) throw new Error('sem paciente/médico');
+    if (!currentProntuarioId) await _proIniciarAtendimento();
+    var up = await supabase.from('prontuarios_ckm')
+      .update({
+        form_snapshot: (payload && payload.snapshot) ? payload.snapshot : null,
+        narrativa: (payload && payload.narrativa) ? payload.narrativa : null,
+        resumo: (payload && payload.resumo) ? payload.resumo : null,
+        status: 'finalizado',
+        updated_at: new Date().toISOString()
+      })
+      .eq('id', currentProntuarioId)
+      .select('id, consulta_num, finalized_at').single();
+    if (up.error) throw up.error;
+    await supabase.from('patients').update({ status: 'atendido' }).eq('id', currentPatientId);
+    _proIframeReply({ type: 'apex-finalizar-result', ok: true,
+      prontuarioId: up.data.id, finalizedAt: up.data.finalized_at });
+  } catch (e) {
+    console.error('finalizarConsulta:', e);
+    _proIframeReply({ type: 'apex-finalizar-result', ok: false, error: e.message });
+  }
+}
+async function _proAddAdendo(data) {
+  try {
+    var r = await supabase.rpc('apex_prontuario_add_adendo', {
+      p_prontuario_id: data.prontuarioId || currentProntuarioId,
+      p_texto: data.texto || ''
+    });
+    if (r.error) throw r.error;
+    if (r.data && r.data.ok === false) throw new Error(r.data.error || 'falha');
+    _proIframeReply({ type: 'apex-adendo-result', ok: true, addendums: r.data.addendums });
+  } catch (e) {
+    console.error('addAdendo:', e);
+    _proIframeReply({ type: 'apex-adendo-result', ok: false, error: e.message });
+  }
+}
+/* Consulta anterior na íntegra (narrativa + adendos) para visualização read-only */
+async function _proLoadConsultaFull(data) {
+  try {
+    var r = await supabase.from('prontuarios_ckm')
+      .select('id, consulta_num, consulta_date, tipo, status, finalized_at, narrativa, resumo, addendums')
+      .eq('id', data.prontuarioId).eq('doctor_id', currentDoctor.id).single();
+    if (r.error) throw r.error;
+    _proIframeReply({ type: 'apex-consulta-full', ok: true, consulta: r.data });
+  } catch (e) {
+    _proIframeReply({ type: 'apex-consulta-full', ok: false, error: e.message });
   }
 }
 window.addEventListener('message', function(e) {
@@ -4833,6 +4920,9 @@ window.addEventListener('message', function(e) {
     return;
   }
   if (e.data.type === 'apex-save-consulta') { _proPersistConsulta(e.data.payload); return; }
+  if (e.data.type === 'apex-finalizar-consulta') { _proFinalizarConsulta(e.data.payload); return; }
+  if (e.data.type === 'apex-add-adendo') { _proAddAdendo(e.data); return; }
+  if (e.data.type === 'apex-load-consulta-full') { _proLoadConsultaFull(e.data); return; }
   if (e.data.type === 'apex-concluir-triagem') { _proConcluirTriagem(e.data); return; }
 });
 
@@ -5480,8 +5570,8 @@ async function selecionarPaciente(patientId) {
   var iframe = document.getElementById('prontuario-iframe');
   if (iframe) iframe.src = 'about:blank';
 
-  /* Atualizar last_visit */
-  await supabase.from('patients').update({ last_visit: new Date().toISOString() }).eq('id', patientId);
+  /* last_visit NÃO é atualizado aqui: abrir o prontuário não é atendimento.
+     O carimbo acontece em _proIniciarAtendimento(). */
 
   /* Navegar para prontuário (navTo carrega iframe + envia dados) */
   navTo('prontuario');
