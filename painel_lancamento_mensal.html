@@ -67,6 +67,7 @@ body::before{content:'';position:fixed;inset:0;z-index:-2;
 .form-row.cols-2{grid-template-columns:1fr 1fr;}
 .form-row.cols-3{grid-template-columns:1fr 1fr 1fr;}
 .form-row.cols-5{grid-template-columns:1fr 1fr 1fr 1fr 1fr;}
+.form-row.cols-6{grid-template-columns:1fr 1fr 1fr 1fr 1fr 1fr;}
 
 .form-group{display:flex;flex-direction:column;gap:6px;}
 .form-label{font-size:10px;font-weight:700;color:var(--text-3);text-transform:uppercase;letter-spacing:1.2px;}
@@ -150,7 +151,7 @@ body::before{content:'';position:fixed;inset:0;z-index:-2;
 .total-value{font-family:var(--font-serif);font-size:22px;color:var(--navy);}
 
 @media(max-width:700px){
-  .form-row.cols-2,.form-row.cols-3,.form-row.cols-5{grid-template-columns:1fr;}
+  .form-row.cols-2,.form-row.cols-3,.form-row.cols-5,.form-row.cols-6{grid-template-columns:1fr;}
   .container{padding:24px 20px 40px;}
   .header-top,.header-title-area{padding-left:20px;padding-right:20px;}
 }
@@ -207,7 +208,7 @@ body::before{content:'';position:fixed;inset:0;z-index:-2;
   <!-- SESSÕES POR MODALIDADE -->
   <div class="section-label"><h2>Sessões por Modalidade</h2><div class="line"></div></div>
   <div class="card">
-    <div class="form-row cols-5">
+    <div class="form-row cols-6">
       <div class="form-group">
         <label class="form-label">HD</label>
         <input type="number" id="sesHD" class="form-input ses-input" min="0" placeholder="0" value="0">
@@ -232,6 +233,11 @@ body::before{content:'';position:fixed;inset:0;z-index:-2;
         <label class="form-label">DP</label>
         <input type="number" id="sesDP" class="form-input ses-input" min="0" placeholder="0" value="0">
         <div class="form-hint">Diálise peritoneal</div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">UF Isolada</label>
+        <input type="number" id="sesUF" class="form-input ses-input" min="0" placeholder="0" value="0">
+        <div class="form-hint">Ultrafiltração isolada</div>
       </div>
     </div>
     <div class="totals-bar" id="totalSessoes">
@@ -465,6 +471,7 @@ function loadMes(mesKey) {
   document.getElementById('sesPlasma').value = m.sessoes.plasmaferese || 0;
   document.getElementById('sesCRRT').value = m.sessoes.crrt || 0;
   document.getElementById('sesDP').value = m.sessoes.dp || 0;
+  document.getElementById('sesUF').value = m.sessoes.uf || 0;
   document.getElementById('acFAV').value = m.acessos.fav || 0;
   document.getElementById('acPerm').value = m.acessos.permcath || 0;
   document.getElementById('acCDL').value = m.acessos.cdl || 0;
@@ -484,7 +491,7 @@ function loadMes(mesKey) {
 function clearForm() {
   document.getElementById('pacientes').value = '';
   document.getElementById('diasAtend').value = '';
-  ['sesHD','sesSLED','sesPlasma','sesCRRT','sesDP','acFAV','acPerm','acCDL'].forEach(function(id) {
+  ['sesHD','sesSLED','sesPlasma','sesCRRT','sesDP','sesUF','acFAV','acPerm','acCDL'].forEach(function(id) {
     document.getElementById(id).value = 0;
   });
   document.getElementById('icList').innerHTML = '';
@@ -516,7 +523,7 @@ function addIC(nome, qtd) {
 
 /* ═══ TOTALS ═══ */
 function updateTotals() {
-  var ses = getInt('sesHD') + getInt('sesSLED') + getInt('sesPlasma') + getInt('sesCRRT') + getInt('sesDP');
+  var ses = getInt('sesHD') + getInt('sesSLED') + getInt('sesPlasma') + getInt('sesCRRT') + getInt('sesDP') + getInt('sesUF');
   document.getElementById('totalSesVal').textContent = ses;
 
   var ac = getInt('acFAV') + getInt('acPerm') + getInt('acCDL');
@@ -536,7 +543,7 @@ function updateTotals() {
 function getInt(id) { return parseInt(document.getElementById(id).value) || 0; }
 
 function totalSessoes(m) {
-  return (m.sessoes.hd||0) + (m.sessoes.sled||0) + (m.sessoes.plasmaferese||0) + (m.sessoes.crrt||0) + (m.sessoes.dp||0);
+  return (m.sessoes.hd||0) + (m.sessoes.sled||0) + (m.sessoes.plasmaferese||0) + (m.sessoes.crrt||0) + (m.sessoes.dp||0) + (m.sessoes.uf||0);
 }
 
 /* ═══ SAVE ═══ */
@@ -557,7 +564,8 @@ function salvarMes() {
       sled: getInt('sesSLED'),
       plasmaferese: getInt('sesPlasma'),
       crrt: getInt('sesCRRT'),
-      dp: getInt('sesDP')
+      dp: getInt('sesDP'),
+      uf: getInt('sesUF')
     },
     acessos: {
       fav: getInt('acFAV'),

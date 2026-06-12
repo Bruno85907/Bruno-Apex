@@ -132,6 +132,7 @@ body::before{content:'';position:fixed;inset:0;z-index:-2;
 .modal-color.plasma{background:var(--teal);}
 .modal-color.crrt{background:#8B5CF6;}
 .modal-color.dp{background:#F59E0B;}
+.modal-color.uf{background:#5B9E50;}
 .modal-info{flex:1;}
 .modal-name{font-size:12px;font-weight:600;color:var(--text);margin-bottom:2px;}
 .modal-detail{font-size:11px;color:var(--text-3);}
@@ -286,7 +287,7 @@ function getMes(mesKey) {
 
 function totalSessoes(m) {
   if (!m || !m.sessoes) return 0;
-  return (m.sessoes.hd||0)+(m.sessoes.sled||0)+(m.sessoes.plasmaferese||0)+(m.sessoes.crrt||0)+(m.sessoes.dp||0);
+  return (m.sessoes.hd||0)+(m.sessoes.sled||0)+(m.sessoes.plasmaferese||0)+(m.sessoes.crrt||0)+(m.sessoes.dp||0)+(m.sessoes.uf||0);
 }
 
 function totalAcessos(m) {
@@ -534,7 +535,8 @@ function renderDashboard(mesKey) {
     {key:'sled', name:'SLED', detail:'Sustained Low-Efficiency Dialysis', css:'sled', color:'#C4A35A'},
     {key:'plasmaferese', name:'Plasmaférese', detail:'Troca plasmática terapêutica', css:'plasma', color:'#028090'},
     {key:'crrt', name:'CRRT', detail:'Terapia contínua', css:'crrt', color:'#8B5CF6'},
-    {key:'dp', name:'DP', detail:'Diálise peritoneal', css:'dp', color:'#F59E0B'}
+    {key:'dp', name:'DP', detail:'Diálise peritoneal', css:'dp', color:'#F59E0B'},
+    {key:'uf', name:'UF Isolada', detail:'Ultrafiltração isolada', css:'uf', color:'#5B9E50'}
   ];
 
   // Build modalidade HTML
@@ -659,6 +661,7 @@ function renderDashboard(mesKey) {
   var barPlasma = sortedMonths.map(function(m){return m.sessoes.plasmaferese||0;});
   var barCRRT = sortedMonths.map(function(m){return m.sessoes.crrt||0;});
   var barDP = sortedMonths.map(function(m){return m.sessoes.dp||0;});
+  var barUF = sortedMonths.map(function(m){return m.sessoes.uf||0;});
 
   // Find first and last month labels for period display
   var firstMonth = sortedMonths.length > 0 ? formatMesShort(sortedMonths[0].mes) : '';
@@ -750,7 +753,8 @@ function renderDashboard(mesKey) {
             {label:'SLED', data:barSLED, backgroundColor:'#C4A35A', borderRadius:0, borderSkipped:false, barPercentage:0.5, categoryPercentage:0.65, order:4},
             {label:'Plasmaférese', data:barPlasma, backgroundColor:'#028090', borderRadius:0, borderSkipped:false, barPercentage:0.5, categoryPercentage:0.65, order:3},
             {label:'CRRT', data:barCRRT, backgroundColor:'#8B5CF6', borderRadius:0, borderSkipped:false, barPercentage:0.5, categoryPercentage:0.65, order:2},
-            {label:'DP', data:barDP, backgroundColor:'#F59E0B', borderRadius:0, borderSkipped:false, barPercentage:0.5, categoryPercentage:0.65, order:1}
+            {label:'DP', data:barDP, backgroundColor:'#F59E0B', borderRadius:0, borderSkipped:false, barPercentage:0.5, categoryPercentage:0.65, order:1},
+            {label:'UF Isolada', data:barUF, backgroundColor:'#5B9E50', borderRadius:0, borderSkipped:false, barPercentage:0.5, categoryPercentage:0.65, order:0}
           ]
         },
         options: {
