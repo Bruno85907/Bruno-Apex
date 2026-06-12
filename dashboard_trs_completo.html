@@ -266,15 +266,102 @@ body::before{content:'';position:fixed;inset:0;z-index:-2;
 <div id="dashboardContent"></div>
 
 <script>
+/* Embed (iframe no Pro): esconde a marca/título — o shell já tem topo próprio;
+   a barra de período permanece para trocar o mês dentro do iframe. */
+(function(){
+  if (new URLSearchParams(window.location.search).get('embed') !== '1') return;
+  document.addEventListener('DOMContentLoaded', function(){
+    document.querySelectorAll('.header-top, .header-title-area').forEach(function(el){ el.style.display = 'none'; });
+    var pb = document.querySelector('.period-bar');
+    if (pb) pb.style.paddingTop = '20px';
+  });
+})();
+</script>
+<script>
 /* =================================================================
-   STORAGE & DATA
+   DATA — Supabase (trs_agudo_mensal), token espelhado pelo shell
    ================================================================= */
-var STORAGE_KEY = 'trs_mensal_mont_serrat';
+var SUPA_URL = 'https://syzmsixhjlutsynnqivv.supabase.co';
+var SUPA_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InN5em1zaXhoamx1dHN5bm5xaXZ2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQxMjkxMDMsImV4cCI6MjA4OTcwNTEwM30.poYHMbqAp1bQoZ4tehBoIHbwG5XMaaAcZPNR8Wsywnw';
+var HOSPITAL = 'mont_serrat';
 var chartInstances = {};
+var _DATA = []; // meses carregados do Supabase, no formato interno do dashboard
+
+function getToken() {
+  try { return sessionStorage.getItem('apex_access_token') || SUPA_KEY; } catch(e) { return SUPA_KEY; }
+}
+
+function getHeaders() {
+  return { 'apikey': SUPA_KEY, 'Authorization': 'Bearer ' + getToken() };
+}
+
+function _isAuthError(status, msg) {
+  if (status === 401) return true;
+  var m = (msg || '').toLowerCase();
+  return m.includes('jwt') || m.includes('expired') || m.includes('token');
+}
+
+// Pede ao portal (página-pai) que renove a sessão — mesmo fluxo do fenix_lanc
+function renovarSessao() {
+  return new Promise(function(resolve) {
+    var antes = getToken();
+    if (window.parent === window) { resolve(false); return; }
+    var pronto = false;
+    function onMsg(ev) {
+      if (ev.origin !== window.location.origin) return;
+      var d = ev.data || {};
+      if (d.type === 'apex-token-refreshed') {
+        pronto = true;
+        window.removeEventListener('message', onMsg);
+        resolve(true);
+      }
+    }
+    window.addEventListener('message', onMsg);
+    try { window.parent.postMessage({type:'apex-refresh-token'}, window.location.origin); } catch(e) {}
+    setTimeout(function() {
+      if (pronto) return;
+      window.removeEventListener('message', onMsg);
+      resolve(getToken() !== antes);
+    }, 4500);
+  });
+}
+
+function _rowToMes(r) {
+  return {
+    mes: r.ano + '-' + String(r.mes).padStart(2, '0'),
+    hospital: r.hospital,
+    pacientes: r.pacientes || 0,
+    diasAtend: r.dias_atend || 0,
+    sessoes: { hd:r.ses_hd||0, sled:r.ses_sled||0, plasmaferese:r.ses_plasmaferese||0, crrt:r.ses_crrt||0, dp:r.ses_dp||0, uf:r.ses_uf||0 },
+    acessos: { fav:r.ac_fav||0, permcath:r.ac_permcath||0, cdl:r.ac_cdl||0 },
+    ic: Array.isArray(r.ic) ? r.ic : []
+  };
+}
+
+async function carregarMeses(retry) {
+  var url = SUPA_URL + '/rest/v1/trs_agudo_mensal?hospital=eq.' + HOSPITAL + '&select=*&order=ano.asc,mes.asc';
+  var resp, body = '';
+  try {
+    resp = await fetch(url, { headers: getHeaders() });
+    body = await resp.text();
+  } catch(e) {
+    return { ok:false, motivo:'rede' };
+  }
+  if (resp.ok) {
+    var rows = [];
+    try { rows = JSON.parse(body) || []; } catch(e) {}
+    _DATA = rows.map(_rowToMes);
+    return { ok:true };
+  }
+  if (_isAuthError(resp.status, body) && !retry) {
+    var renovou = await renovarSessao();
+    if (renovou) return carregarMeses(true);
+  }
+  return { ok:false, motivo: _isAuthError(resp.status, body) ? 'auth' : ('http ' + resp.status) };
+}
 
 function getData() {
-  var raw = localStorage.getItem(STORAGE_KEY);
-  return raw ? JSON.parse(raw) : [];
+  return _DATA;
 }
 
 function getMes(mesKey) {
@@ -858,7 +945,7 @@ function gerarDashboard() {
 /* =================================================================
    INIT
    ================================================================= */
-function initAll() {
+async function initAll() {
   if (typeof Chart === 'undefined') {
     setTimeout(initAll, 200);
     return;
@@ -867,21 +954,42 @@ function initAll() {
   Chart.defaults.font.family = "'Inter', system-ui, sans-serif";
   Chart.register(doughnutCenterTextPlugin);
 
-  // Find latest month with data
-  var data = getData();
+  var content = document.getElementById('dashboardContent');
+  content.innerHTML = '<div class="no-data"><h3>Carregando indicadores…</h3><p>Buscando os meses lançados no Supabase.</p></div>';
+
+  var r = await carregarMeses();
   var mesSel = document.getElementById('mesSelecionado');
+  var data = getData();
+
+  if (!r.ok && r.motivo === 'auth') {
+    content.innerHTML = '<div class="no-data"><h3>Sessão necessária</h3><p>Abra este dashboard pelo APEX Pro (login) para visualizar os indicadores do Mont Serrat.</p></div>';
+    return;
+  }
+  if (!r.ok) {
+    content.innerHTML = '<div class="no-data"><h3>Não foi possível carregar</h3><p>Falha de conexão com o banco (' + r.motivo + '). Recarregue a página para tentar de novo.</p></div>';
+    return;
+  }
+
+  // ?mes=YYYY-MM abre direto no mês pedido (ex.: link da página Relatórios)
+  var paramMes = null;
+  try { paramMes = new URLSearchParams(window.location.search).get('mes'); } catch(e) {}
+  var temParam = paramMes && /^\d{4}-\d{2}$/.test(paramMes);
+
+  var _semSessao = getToken() === SUPA_KEY;
+  if (data.length === 0 && _semSessao) {
+    content.innerHTML = '<div class="no-data"><h3>Sessão necessária</h3><p>Abra este dashboard pelo APEX Pro (login) para visualizar os indicadores do Mont Serrat.</p></div>';
+    return;
+  }
 
   if (data.length > 0) {
     var sorted = data.slice().sort(function(a,b){return b.mes.localeCompare(a.mes);});
-    mesSel.value = sorted[0].mes;
-    renderDashboard(sorted[0].mes);
+    var alvo = temParam ? paramMes : sorted[0].mes;
+    mesSel.value = alvo;
+    renderDashboard(alvo);
   } else {
-    // Default to current month
     var now = new Date();
-    var y = now.getFullYear();
-    var m = String(now.getMonth() + 1).padStart(2, '0');
-    mesSel.value = y + '-' + m;
-    document.getElementById('dashboardContent').innerHTML = '<div class="no-data"><h3>Nenhum dado disponível</h3><p>Comece lançando os dados do primeiro mês no painel.</p><a href="painel_lancamento_mensal.html">Lançar dados →</a></div>';
+    mesSel.value = now.getFullYear() + '-' + String(now.getMonth() + 1).padStart(2, '0');
+    content.innerHTML = '<div class="no-data"><h3>Nenhum dado disponível</h3><p>Comece lançando os dados do primeiro mês no painel.</p><a href="painel_lancamento_mensal.html">Lançar dados →</a></div>';
   }
 }
 

@@ -304,136 +304,139 @@ body::before{content:'';position:fixed;inset:0;z-index:-2;
   }
 })();
 
-var STORAGE_KEY = 'trs_mensal_mont_serrat';
+/* ═══ DATA — Supabase (trs_agudo_mensal), token espelhado pelo shell ═══ */
+var SUPA_URL = 'https://syzmsixhjlutsynnqivv.supabase.co';
+var SUPA_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InN5em1zaXhoamx1dHN5bm5xaXZ2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQxMjkxMDMsImV4cCI6MjA4OTcwNTEwM30.poYHMbqAp1bQoZ4tehBoIHbwG5XMaaAcZPNR8Wsywnw';
+var HOSPITAL = 'mont_serrat';
+var _MESES = [];
+
 var IC_TIPOS_COMUNS = ['Hipotensão','Desconforto Respiratório','Taquicardia','Náuseas',
   'Calafrios','Dor','Bradicardia','Vômito','Tremores','Febre','Hematoma',
   'Hipertensão','Mau Funcionamento do Cateter','Sangramento','Câimbras'];
 
-/* ═══ INIT ═══ */
-function init() {
-  migrateWeeklyData();
-  updateTotals();
-  renderSavedMonths();
-  checkMesStatus();
-
-  // Event listeners
-  document.getElementById('mesRef').addEventListener('change', function() {
-    checkMesStatus();
-    loadMes(this.value);
+function getToken() {
+  try { return sessionStorage.getItem('apex_access_token') || SUPA_KEY; } catch(e) { return SUPA_KEY; }
+}
+function getHeaders(extra) {
+  var h = { 'apikey': SUPA_KEY, 'Authorization': 'Bearer ' + getToken(), 'Content-Type': 'application/json' };
+  if (extra) Object.keys(extra).forEach(function(k){ h[k] = extra[k]; });
+  return h;
+}
+function _isAuthError(status, msg) {
+  if (status === 401) return true;
+  var m = (msg || '').toLowerCase();
+  return m.includes('jwt') || m.includes('expired') || m.includes('token');
+}
+// Pede ao portal (página-pai) que renove a sessão — mesmo fluxo do fenix_lanc
+function renovarSessao() {
+  return new Promise(function(resolve) {
+    var antes = getToken();
+    if (window.parent === window) { resolve(false); return; }
+    var pronto = false;
+    function onMsg(ev) {
+      if (ev.origin !== window.location.origin) return;
+      var d = ev.data || {};
+      if (d.type === 'apex-token-refreshed') {
+        pronto = true;
+        window.removeEventListener('message', onMsg);
+        resolve(true);
+      }
+    }
+    window.addEventListener('message', onMsg);
+    try { window.parent.postMessage({type:'apex-refresh-token'}, window.location.origin); } catch(e) {}
+    setTimeout(function() {
+      if (pronto) return;
+      window.removeEventListener('message', onMsg);
+      resolve(getToken() !== antes);
+    }, 4500);
   });
+}
 
+function _rowToMes(r) {
+  return {
+    mes: r.ano + '-' + String(r.mes).padStart(2, '0'),
+    hospital: r.hospital,
+    pacientes: r.pacientes || 0,
+    diasAtend: r.dias_atend || 0,
+    sessoes: { hd:r.ses_hd||0, sled:r.ses_sled||0, plasmaferese:r.ses_plasmaferese||0, crrt:r.ses_crrt||0, dp:r.ses_dp||0, uf:r.ses_uf||0 },
+    acessos: { fav:r.ac_fav||0, permcath:r.ac_permcath||0, cdl:r.ac_cdl||0 },
+    ic: Array.isArray(r.ic) ? r.ic : []
+  };
+}
+function _mesToRow(m) {
+  var p = m.mes.split('-');
+  return {
+    hospital: HOSPITAL, ano: parseInt(p[0]), mes: parseInt(p[1]),
+    pacientes: m.pacientes, dias_atend: m.diasAtend,
+    ses_hd: m.sessoes.hd, ses_sled: m.sessoes.sled, ses_plasmaferese: m.sessoes.plasmaferese,
+    ses_crrt: m.sessoes.crrt, ses_dp: m.sessoes.dp, ses_uf: m.sessoes.uf,
+    ac_fav: m.acessos.fav, ac_permcath: m.acessos.permcath, ac_cdl: m.acessos.cdl,
+    ic: m.ic, fonte: 'Painel de lançamento mensal'
+  };
+}
+
+async function carregarMeses(retry) {
+  var url = SUPA_URL + '/rest/v1/trs_agudo_mensal?hospital=eq.' + HOSPITAL + '&select=*&order=ano.asc,mes.asc';
+  var resp, body = '';
+  try {
+    resp = await fetch(url, { headers: getHeaders() });
+    body = await resp.text();
+  } catch(e) { return { ok:false, motivo:'rede' }; }
+  if (resp.ok) {
+    var rows = [];
+    try { rows = JSON.parse(body) || []; } catch(e) {}
+    _MESES = rows.map(_rowToMes);
+    return { ok:true };
+  }
+  if (_isAuthError(resp.status, body) && !retry) {
+    var renovou = await renovarSessao();
+    if (renovou) return carregarMeses(true);
+  }
+  return { ok:false, motivo: _isAuthError(resp.status, body) ? 'auth' : ('http ' + resp.status) };
+}
+
+/* ═══ INIT ═══ */
+async function init() {
   document.querySelectorAll('.ses-input').forEach(function(el) {
     el.addEventListener('input', updateTotals);
   });
   document.querySelectorAll('.ac-input').forEach(function(el) {
     el.addEventListener('input', updateTotals);
   });
+  document.getElementById('mesRef').addEventListener('change', function() {
+    checkMesStatus();
+    loadMes(this.value);
+  });
 
-  // Add 3 default IC rows
   addIC('Hipotensão');
   addIC('Desconforto Respiratório');
   addIC('Mau Funcionamento do Cateter');
-}
+  updateTotals();
 
-/* ═══ MIGRATE WEEKLY → MONTHLY ═══ */
-function migrateWeeklyData() {
-  var saved = getData();
-  // If monthly data already exists, skip migration
-  if (saved && saved.length > 0) return;
-
-  var weekly = localStorage.getItem('trs_agudo_mont_serrat');
-  if (!weekly) return;
-
-  var weeks = JSON.parse(weekly);
-  var months = {};
-
-  weeks.forEach(function(w) {
-    var wNum = parseInt(w.semana.split('W')[1]);
-    var mes;
-    if (wNum <= 9) mes = '2026-02';
-    else if (wNum <= 13) mes = '2026-03';
-    else mes = '2026-04';
-
-    if (!months[mes]) {
-      months[mes] = {
-        mes: mes, hospital: 'mont_serrat',
-        pacientes: 0, diasAtend: 0,
-        sessoes: {hd:0,sled:0,plasmaferese:0,crrt:0,dp:0},
-        acessos: {fav:0,permcath:0,cdl:0},
-        ic: {}
-      };
-    }
-    var m = months[mes];
-    m.pacientes = Math.max(m.pacientes, w.pac || 0);
-    m.sessoes.hd += (w.sessoes.hd || 0);
-    m.sessoes.sled += (w.sessoes.sled || 0);
-    m.sessoes.crrt += (w.sessoes.crrt || 0);
-    m.sessoes.dp += (w.sessoes.dp || 0);
-    m.acessos.fav += (w.acessos.fav || 0);
-    m.acessos.permcath += (w.acessos.permcath || 0);
-    m.acessos.cdl += (w.acessos.cdl || 0);
-    if (w.ic) {
-      w.ic.forEach(function(ic) {
-        if (!m.ic[ic.nome]) m.ic[ic.nome] = 0;
-        m.ic[ic.nome] += ic.qtd;
-      });
-    }
-  });
-
-  // Apply corrections from PDF data
-  // March: 54 sessions (HD 52, SLED 2), 14 patients, FAV 4, Permcath 14, CDL 36
-  if (months['2026-03']) {
-    months['2026-03'].pacientes = 14;
-    months['2026-03'].sessoes.hd = 52;
-    months['2026-03'].sessoes.sled = 2;
-    months['2026-03'].acessos.fav = 4;
-    months['2026-03'].acessos.permcath = 14;
-    months['2026-03'].acessos.cdl = 36;
-    months['2026-03'].diasAtend = 22;
+  var r = await carregarMeses();
+  if (!r.ok) {
+    var aviso = r.motivo === 'auth'
+      ? 'Sessão necessária: abra este painel pelo APEX Pro (login) para carregar e salvar os meses.'
+      : 'Falha ao conectar no banco (' + r.motivo + '). Recarregue a página.';
+    document.getElementById('savedMonths').innerHTML =
+      '<div style="text-align:center;padding:24px;color:var(--red);font-size:13px;">' + aviso + '</div>';
+    showToast(aviso, 'error');
+    return;
   }
-
-  // April: add 5 plasmaférese, correct totals
-  if (months['2026-04']) {
-    months['2026-04'].pacientes = 19;
-    months['2026-04'].sessoes.hd = 80;
-    months['2026-04'].sessoes.plasmaferese = 5;
-    months['2026-04'].acessos.cdl = 57;
-    months['2026-04'].acessos.fav = 22;
-    months['2026-04'].acessos.permcath = 12;
-    months['2026-04'].diasAtend = 30;
+  if (_MESES.length === 0 && getToken() === SUPA_KEY) {
+    document.getElementById('savedMonths').innerHTML =
+      '<div style="text-align:center;padding:24px;color:var(--text-3);font-size:13px;">Sessão necessária — abra este painel pelo APEX Pro (login) para carregar e salvar os meses.</div>';
+    return;
   }
-
-  // Feb
-  if (months['2026-02']) {
-    months['2026-02'].pacientes = 4;
-    months['2026-02'].diasAtend = 10;
-  }
-
-  // Convert IC objects to arrays and save
-  var result = [];
-  Object.keys(months).sort().forEach(function(k) {
-    var m = months[k];
-    var icArr = [];
-    Object.keys(m.ic).forEach(function(nome) {
-      if (m.ic[nome] > 0) icArr.push({nome: nome, qtd: m.ic[nome]});
-    });
-    icArr.sort(function(a, b) { return b.qtd - a.qtd; });
-    m.ic = icArr;
-    result.push(m);
-  });
-
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(result));
-  showToast('Dados semanais migrados para formato mensal', 'success');
+  renderSavedMonths();
+  checkMesStatus();
+  var mesAtual = document.getElementById('mesRef').value;
+  if (mesAtual) loadMes(mesAtual);
 }
 
 /* ═══ DATA ACCESS ═══ */
 function getData() {
-  var raw = localStorage.getItem(STORAGE_KEY);
-  return raw ? JSON.parse(raw) : [];
-}
-
-function saveData(data) {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+  return _MESES;
 }
 
 function getMes(mesKey) {
@@ -585,25 +588,42 @@ function salvarMes() {
   });
   entry.ic.sort(function(a, b) { return b.qtd - a.qtd; });
 
-  // Save
-  var data = getData();
-  var idx = -1;
-  for (var i = 0; i < data.length; i++) {
-    if (data[i].mes === mes) { idx = i; break; }
-  }
-  if (idx >= 0) {
-    data[idx] = entry;
-  } else {
-    data.push(entry);
-    data.sort(function(a, b) { return a.mes.localeCompare(b.mes); });
-  }
+  // Upsert no Supabase (em erro, o formulário permanece intacto)
+  var btn = document.querySelector('.btn-save');
+  btn.disabled = true; btn.textContent = 'Salvando…';
+  _upsertMes(entry).then(function(r) {
+    btn.disabled = false; btn.textContent = 'Salvar Mês →';
+    if (!r.ok) {
+      showToast(r.motivo === 'auth'
+        ? 'Sessão expirada e não foi possível renovar — faça login no Pro e salve de novo (os campos foram mantidos).'
+        : 'Falha ao salvar (' + r.motivo + ') — os campos foram mantidos, tente novamente.', 'error');
+      return;
+    }
+    var idx = -1;
+    for (var i = 0; i < _MESES.length; i++) if (_MESES[i].mes === entry.mes) { idx = i; break; }
+    if (idx >= 0) _MESES[idx] = entry; else { _MESES.push(entry); _MESES.sort(function(a,b){ return a.mes.localeCompare(b.mes); }); }
+    renderSavedMonths();
+    checkMesStatus();
+    showToast(formatMes(entry.mes) + ' salvo no Supabase · ' + totalSessoes(entry) + ' sessões', 'success');
+  });
+}
 
-  saveData(data);
-  renderSavedMonths();
-  checkMesStatus();
-
-  var total = totalSessoes(entry);
-  showToast(formatMes(mes) + ' salvo · ' + total + ' sessões', 'success');
+async function _upsertMes(entry, retry) {
+  var resp, body = '';
+  try {
+    resp = await fetch(SUPA_URL + '/rest/v1/trs_agudo_mensal?on_conflict=hospital,ano,mes', {
+      method: 'POST',
+      headers: getHeaders({ 'Prefer': 'resolution=merge-duplicates' }),
+      body: JSON.stringify(_mesToRow(entry))
+    });
+    body = await resp.text();
+  } catch(e) { return { ok:false, motivo:'rede' }; }
+  if (resp.ok) return { ok:true };
+  if (_isAuthError(resp.status, body) && !retry) {
+    var renovou = await renovarSessao();
+    if (renovou) return _upsertMes(entry, true);
+  }
+  return { ok:false, motivo: _isAuthError(resp.status, body) ? 'auth' : ('http ' + resp.status) };
 }
 
 /* ═══ RENDER SAVED MONTHS ═══ */
@@ -639,12 +659,17 @@ function editMes(mesKey) {
 }
 
 function deleteMes(mesKey) {
-  if (!confirm('Excluir dados de ' + formatMes(mesKey) + '?')) return;
-  var data = getData().filter(function(m) { return m.mes !== mesKey; });
-  saveData(data);
-  renderSavedMonths();
-  checkMesStatus();
-  showToast(formatMes(mesKey) + ' excluído', 'success');
+  if (!confirm('Excluir dados de ' + formatMes(mesKey) + ' do Supabase?')) return;
+  var p = mesKey.split('-');
+  fetch(SUPA_URL + '/rest/v1/trs_agudo_mensal?hospital=eq.' + HOSPITAL + '&ano=eq.' + parseInt(p[0]) + '&mes=eq.' + parseInt(p[1]), {
+    method: 'DELETE', headers: getHeaders()
+  }).then(function(resp) {
+    if (!resp.ok) { showToast('Falha ao excluir (http ' + resp.status + ')', 'error'); return; }
+    _MESES = _MESES.filter(function(m) { return m.mes !== mesKey; });
+    renderSavedMonths();
+    checkMesStatus();
+    showToast(formatMes(mesKey) + ' excluído', 'success');
+  }).catch(function() { showToast('Falha de rede ao excluir', 'error'); });
 }
 
 /* ═══ HELPERS ═══ */

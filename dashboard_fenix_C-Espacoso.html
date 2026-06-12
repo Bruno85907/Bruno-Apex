@@ -2115,6 +2115,16 @@ if(new URLSearchParams(window.location.search).get('embed')==='1'){
     document.body.style.paddingTop='0';
   });
 }
+// ?mes=YYYY-MM (ex.: vindo da página Relatórios do Pro) pré-seleciona o período
+(function(){
+  const pm=new URLSearchParams(window.location.search).get('mes');
+  if(!pm||!/^\d{4}-\d{2}$/.test(pm))return;
+  const idx=parseInt(pm.split('-')[1],10)-1;
+  document.addEventListener('DOMContentLoaded',()=>{
+    const sel=document.getElementById('mesSel');
+    if(sel&&idx>=0&&idx<12)sel.value=String(idx);
+  });
+})();
 </script>
 </body>
 </html>
