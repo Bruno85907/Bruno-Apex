@@ -4778,6 +4778,8 @@ function sendPatientToIframe() {
     acompanhante_nome: pac.acompanhante_nome || '',
     acompanhante_telefone: pac.acompanhante_telefone || '',
     conditions: pac.conditions || [],
+    alergias: pac.alergias || { itens: [], nenhuma_conhecida: false },
+    medicacoesUso: pac.medicacoes_uso || [],
     consultaNum: 1
   }, window.location.origin);
 
@@ -5010,6 +5012,24 @@ async function _proFinalizarConsulta(payload) {
     _proIframeReply({ type: 'apex-finalizar-result', ok: false, error: e.message });
   }
 }
+/* Alergias / medicação em uso são dados do PACIENTE (persistem entre consultas).
+   A trilha de auditoria registra a mudança via trigger no banco. */
+async function _proUpdatePaciente(campo, valor) {
+  try {
+    if (!currentDoctor || !currentPatientId) throw new Error('sem paciente selecionado');
+    var patch = {};
+    patch[campo] = valor;
+    var up = await supabase.from('patients').update(patch).eq('id', currentPatientId).select('id').single();
+    if (up.error) throw up.error;
+    /* espelha no cache da lista para a próxima abertura do prontuário */
+    var pac = allPacientes.find(function(p){ return p.id === currentPatientId; });
+    if (pac) pac[campo] = valor;
+    _proIframeReply({ type: 'apex-paciente-atualizado', ok: true, campo: campo });
+  } catch (err) {
+    console.error('updatePaciente:', err);
+    _proIframeReply({ type: 'apex-paciente-atualizado', ok: false, campo: campo, error: err.message });
+  }
+}
 async function _proAddAdendo(data) {
   try {
     var r = await supabase.rpc('apex_prontuario_add_adendo', {
@@ -5046,6 +5066,8 @@ window.addEventListener('message', function(e) {
     return;
   }
   if (e.data.type === 'apex-save-consulta') { _proPersistConsulta(e.data.payload); return; }
+  if (e.data.type === 'apex-update-alergias') { _proUpdatePaciente('alergias', e.data.alergias); return; }
+  if (e.data.type === 'apex-update-meds-uso') { _proUpdatePaciente('medicacoes_uso', e.data.medicacoesUso); return; }
   if (e.data.type === 'apex-finalizar-consulta') { _proFinalizarConsulta(e.data.payload); return; }
   if (e.data.type === 'apex-add-adendo') { _proAddAdendo(e.data); return; }
   if (e.data.type === 'apex-load-consulta-full') { _proLoadConsultaFull(e.data); return; }
@@ -5298,7 +5320,7 @@ var allPacientes = [];
 async function carregarListaPacientes() {
   if (!currentDoctor) return;
   var { data, error } = await supabase.from('patients')
-    .select('id, name, documento, email_personal, phone, date_of_birth, sex, city, endereco, acompanhante_nome, acompanhante_telefone, conditions, gravidade, foto, active, last_visit, created_at, status')
+    .select('id, name, documento, email_personal, phone, date_of_birth, sex, city, endereco, acompanhante_nome, acompanhante_telefone, conditions, gravidade, foto, active, last_visit, created_at, status, alergias, medicacoes_uso')
     .eq('doctor_id', currentDoctor.id)
     .order('name', { ascending: true });
 

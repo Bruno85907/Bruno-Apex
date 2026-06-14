@@ -1119,6 +1119,10 @@ html.embed-mode .cz-grid { height: calc(100vh - 92px); }
       if (typeof _apexOnConsultaFull === 'function') _apexOnConsultaFull(e.data);
       return;
     }
+    if (e.data.type === 'apex-paciente-atualizado') {
+      if (typeof _apexOnPacienteAtualizado === 'function') _apexOnPacienteAtualizado(e.data);
+      return;
+    }
     if (e.data.type === 'apex-papel') {
       if (typeof _applyPapelGating === 'function') _applyPapelGating(e.data.papel);
       return;
@@ -1169,8 +1173,19 @@ html.embed-mode .cz-grid { height: calc(100vh - 92px); }
     if (typeof renderGravidadeBadge === 'function') renderGravidadeBadge(d.gravidade || '');
     if (typeof renderIdentificacao === 'function') renderIdentificacao();
     if (typeof renderResumo === 'function') setTimeout(renderResumo, 30);
+    /* Alergias e medicação em uso ESTRUTURADAS (dados do paciente, vindos do Pro) */
+    window._apexAlergias = (d.alergias && typeof d.alergias === 'object') ? d.alergias : { itens: [], nenhuma_conhecida: false };
+    window._apexMedsUso = Array.isArray(d.medicacoesUso) ? d.medicacoesUso : [];
+    /* Paciente REAL aberto: modo demo sai da tela */
+    document.querySelectorAll('button[onclick^="loadDemoLabs"]').forEach(function(b){ b.style.display = 'none'; });
     /* Restaurar rascunho salvo deste paciente (anti-perda de dados) */
     if (typeof restoreDraft === 'function') setTimeout(restoreDraft, 50);
+    /* Banner do paciente + editores estruturados (depois do restoreDraft, que mexe nos campos legados) */
+    setTimeout(function(){
+      if (typeof renderTopbarPaciente === 'function') renderTopbarPaciente();
+      if (typeof renderAlergiasUI === 'function') renderAlergiasUI();
+      if (typeof renderMedsUso === 'function') renderMedsUso();
+    }, 70);
     /* Carregar memória de consultas anteriores deste paciente */
     if (typeof loadConsultaHistory === 'function') setTimeout(loadConsultaHistory, 80);
     /* Sincronizar o seletor "Atendendo" com o mês real do paciente */
@@ -1230,7 +1245,13 @@ html.embed-mode .cz-grid { height: calc(100vh - 92px); }
     <span class="tb-divider"></span>
     <span class="tb-sub">Prontuário CKM</span>
   </div>
-  <img id="topbarFoto" alt="" style="display:none;width:38px;height:38px;border-radius:50%;object-fit:cover;border:2px solid var(--gold,#C4A35A);margin-left:auto;">
+  <!-- Banner do paciente (fixo em todas as abas — identificação + alergias sempre visíveis) -->
+  <div class="tb-patient" id="tbPatient" style="display:none;">
+    <div class="tb-pname" id="tbName">—</div>
+    <div class="tb-pmeta" id="tbMeta"></div>
+  </div>
+  <button type="button" class="tb-alergias neutral" id="tbAlergias" style="display:none;" onclick="abrirAlergias()" title="Alergias do paciente — clique para gerenciar"></button>
+  <img id="topbarFoto" alt="" style="display:none;width:38px;height:38px;border-radius:50%;object-fit:cover;border:2px solid var(--gold,#C4A35A);">
   <span id="gravidadeBadge" style="display:none;font-size:11px;font-weight:700;padding:4px 12px;border-radius:999px;"></span>
   <div class="patient-tag" id="patientTag">
     <span id="patientSex">—</span> · <span id="patientAge">—</span> anos · Consulta #<span id="consultaNum">1</span>
@@ -1763,12 +1784,23 @@ html.embed-mode .cz-grid { height: calc(100vh - 92px); }
       </div>
     </div>
     <div class="form-group" style="margin-top:8px;">
-      <label>Medicações em uso (texto livre)</label>
-      <textarea id="meds_em_uso" rows="2" placeholder="Liste as medicações que o paciente já usa..."></textarea>
+      <label>Medicações em uso</label>
+      <div style="display:flex; gap:8px;">
+        <input type="text" id="medUsoInput" placeholder="Ex.: Losartana 50mg — 1x/dia" style="flex:1;" onkeydown="if(event.key==='Enter'){event.preventDefault();addMedUso();}">
+        <button type="button" class="btn btn-outline btn-sm" onclick="addMedUso()">Adicionar</button>
+      </div>
+      <div id="medUsoList" style="margin-top:8px;"></div>
+      <!-- campo legado oculto, sincronizado: cálculos e narrativa continuam lendo daqui -->
+      <textarea id="meds_em_uso" rows="2" style="display:none;" aria-hidden="true"></textarea>
     </div>
     <div class="form-group" style="margin-top:8px;">
       <label>Alergias</label>
-      <input type="text" id="alergias" placeholder="Alergias medicamentosas e alimentares...">
+      <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
+        <div id="alergiasChipsInline" style="display:flex; gap:6px; flex-wrap:wrap; flex:1; min-height:24px;"></div>
+        <button type="button" class="btn btn-outline btn-sm" onclick="abrirAlergias()">Gerenciar alergias</button>
+      </div>
+      <!-- campo legado oculto, sincronizado (narrativa/snapshot) -->
+      <input type="hidden" id="alergias">
     </div>
   </div>
 
@@ -2660,6 +2692,351 @@ html.embed-mode .cz-grid { height: calc(100vh - 92px); }
 
 <!-- Save Toast -->
 <div class="save-toast" id="saveToast">&#x2705; Consulta salva com sucesso!</div>
+
+<!-- ═══ Sprint 2: banner do paciente, alergias/medicação estruturadas, segurança de prescrição ═══ -->
+<script>
+/* ---------- estado (fonte: patients.alergias / patients.medicacoes_uso) ---------- */
+window._apexAlergias = window._apexAlergias || { itens: [], nenhuma_conhecida: false };
+window._apexMedsUso = window._apexMedsUso || [];
+
+/* ---------- banner do paciente (topbar, visível em todas as abas) ---------- */
+function renderTopbarPaciente() {
+  var info = window._apexPatientInfo || {};
+  var wrap = document.getElementById('tbPatient');
+  if (!wrap) return;
+  if (!info.name) { wrap.style.display = 'none'; return; }
+  wrap.style.display = '';
+  var partes = String(info.name).trim().split(/\s+/);
+  var fmt = partes.length > 1
+    ? partes[partes.length - 1].toUpperCase() + ', ' + partes.slice(0, -1).join(' ')
+    : info.name;
+  document.getElementById('tbName').textContent = fmt;
+  var meta = [];
+  if (info.dob) { var p = String(info.dob).slice(0,10).split('-'); if (p.length === 3) meta.push(p[2]+'/'+p[1]+'/'+p[0]); }
+  if (info.age) meta.push(info.age + ' anos');
+  if (info.sex) meta.push(info.sex === 'M' ? 'Masculino' : info.sex === 'F' ? 'Feminino' : info.sex);
+  if (info.documento) meta.push('CPF ' + info.documento);
+  document.getElementById('tbMeta').textContent = meta.join(' · ');
+  renderAlergiasChipTopbar();
+}
+function renderAlergiasChipTopbar() {
+  var btn = document.getElementById('tbAlergias');
+  if (!btn) return;
+  if (!window._apexPatientId) { btn.style.display = 'none'; return; }
+  btn.style.display = '';
+  var a = window._apexAlergias || { itens: [], nenhuma_conhecida: false };
+  if (a.itens && a.itens.length) {
+    btn.className = 'tb-alergias red';
+    btn.innerHTML = '&#x26A0; ALERGIAS: ' + a.itens.map(function(i){ return _esc(i.substancia); }).join(', ');
+  } else if (a.nenhuma_conhecida) {
+    btn.className = 'tb-alergias neutral';
+    btn.textContent = 'Sem alergias conhecidas';
+  } else {
+    btn.className = 'tb-alergias amber';
+    btn.textContent = 'Alergias não verificadas — registrar';
+  }
+}
+
+/* ---------- alergias: sincronização com o campo legado + chips inline ---------- */
+function _alergiasTexto() {
+  var a = window._apexAlergias || {};
+  if (a.itens && a.itens.length) return a.itens.map(function(i){ return i.substancia + (i.gravidade ? ' (' + i.gravidade + ')' : ''); }).join('; ');
+  return a.nenhuma_conhecida ? 'Nega alergias conhecidas' : '';
+}
+function renderAlergiasUI() {
+  var hid = document.getElementById('alergias');
+  if (hid) hid.value = _alergiasTexto();
+  var box = document.getElementById('alergiasChipsInline');
+  if (box) {
+    var a = window._apexAlergias || {};
+    if (a.itens && a.itens.length) {
+      box.innerHTML = a.itens.map(function(i){
+        return '<span class="alergia-chip g-' + (i.gravidade || 'na') + '">' + _esc(i.substancia) + (i.gravidade ? ' · ' + _esc(i.gravidade) : '') + '</span>';
+      }).join('');
+    } else if (a.nenhuma_conhecida) {
+      box.innerHTML = '<span style="font-size:12px;color:#5B9E50;font-weight:600;">Paciente nega alergias conhecidas.</span>';
+    } else {
+      box.innerHTML = '<span style="font-size:12px;color:#9A6B1A;font-weight:600;">Não verificadas — registre na primeira oportunidade.</span>';
+    }
+  }
+  renderAlergiasChipTopbar();
+}
+
+/* ---------- gerenciador de alergias (modal) ---------- */
+function abrirAlergias() {
+  var m = document.getElementById('alergiasModal');
+  if (!m) return;
+  _alergiasRenderModal();
+  m.style.display = 'flex';
+}
+function fecharAlergias() { var m = document.getElementById('alergiasModal'); if (m) m.style.display = 'none'; }
+function _alergiasRenderModal() {
+  var a = window._apexAlergias || { itens: [], nenhuma_conhecida: false };
+  var lista = document.getElementById('alergiasModalLista');
+  if (lista) {
+    lista.innerHTML = (a.itens && a.itens.length)
+      ? a.itens.map(function(i, idx){
+          return '<div class="alergia-row"><div><strong>' + _esc(i.substancia) + '</strong>'
+            + (i.gravidade ? ' <span class="alergia-chip g-' + i.gravidade + '">' + _esc(i.gravidade) + '</span>' : '')
+            + (i.nota ? '<div style="font-size:11.5px;color:#6B7A8D;margin-top:2px;">' + _esc(i.nota) + '</div>' : '')
+            + '</div><button type="button" onclick="alergiaRm(' + idx + ')" aria-label="remover">&times;</button></div>';
+        }).join('')
+      : '<p style="font-size:12.5px;color:#8A97A8;margin:4px 0;">Nenhuma alergia registrada.</p>';
+  }
+  var nega = document.getElementById('alergiasNega');
+  if (nega) { nega.checked = !!a.nenhuma_conhecida; nega.disabled = !!(a.itens && a.itens.length); }
+}
+function alergiaAdd() {
+  var sub = (document.getElementById('alergiaSub').value || '').trim();
+  if (!sub) { showToast('Informe a substância.'); return; }
+  var a = window._apexAlergias;
+  a.itens.push({ substancia: sub, gravidade: document.getElementById('alergiaGrav').value || '', nota: (document.getElementById('alergiaNota').value || '').trim() });
+  a.nenhuma_conhecida = false;
+  document.getElementById('alergiaSub').value = ''; document.getElementById('alergiaNota').value = '';
+  _alergiasRenderModal();
+}
+function alergiaRm(idx) { window._apexAlergias.itens.splice(idx, 1); _alergiasRenderModal(); }
+function alergiaNegaToggle(el) { window._apexAlergias.nenhuma_conhecida = !!el.checked; }
+/* Vigia de silêncio da nuvem: updates de cadastro têm ACK do shell
+   (apex-paciente-atualizado); sem resposta em 8s o usuário é avisado —
+   antes a falha era invisível e o dado parecia salvo. */
+var _apexPacPending = {};
+function _apexPacWatch(campo) {
+  clearTimeout(_apexPacPending[campo]);
+  _apexPacPending[campo] = setTimeout(function(){
+    showToast('\u26A0 Sem resposta da nuvem — ' + (campo === 'alergias' ? 'as ALERGIAS' : 'as medicações em uso') + ' NÃO foram confirmadas no cadastro. Salve novamente.');
+  }, 8000);
+}
+function salvarAlergias() {
+  renderAlergiasUI();
+  if (typeof renderPrescription === 'function') renderPrescription();
+  if (window.parent && window.parent !== window) {
+    window.parent.postMessage({ type: 'apex-update-alergias', alergias: window._apexAlergias }, window.location.origin);
+    _apexPacWatch('alergias');
+  } else {
+    showToast('Alergias atualizadas (somente neste navegador — sem nuvem).');
+  }
+  fecharAlergias();
+}
+function _apexOnPacienteAtualizado(d) {
+  if (d.campo) clearTimeout(_apexPacPending[d.campo]);
+  if (d.ok) showToast(d.campo === 'alergias' ? 'Alergias salvas no cadastro do paciente ✓' : 'Medicações em uso salvas no cadastro ✓');
+  else showToast('Falha ao salvar ' + (d.campo || '') + ': ' + (d.error || 'erro'));
+}
+
+/* ---------- medicações em uso (estruturadas) ---------- */
+function renderMedsUso() {
+  var box = document.getElementById('medUsoList');
+  var hid = document.getElementById('meds_em_uso');
+  var lista = window._apexMedsUso || [];
+  if (hid) hid.value = lista.join('\n');
+  if (!box) return;
+  box.innerHTML = lista.length
+    ? lista.map(function(m, i){
+        return '<span class="meduso-chip">' + _esc(m) + '<button type="button" onclick="rmMedUso(' + i + ')" aria-label="remover">&times;</button></span>';
+      }).join('')
+    : '<span style="font-size:12px;color:#8A97A8;font-style:italic;">Nenhuma medicação registrada.</span>';
+}
+function addMedUso() {
+  var inp = document.getElementById('medUsoInput');
+  var v = (inp.value || '').trim();
+  if (!v) return;
+  window._apexMedsUso.push(v);
+  inp.value = ''; inp.focus();
+  renderMedsUso();
+  _salvarMedsUso();
+}
+function rmMedUso(i) { window._apexMedsUso.splice(i, 1); renderMedsUso(); _salvarMedsUso(); }
+var _medsUsoTimer = null;
+function _salvarMedsUso() {
+  clearTimeout(_medsUsoTimer);
+  _medsUsoTimer = setTimeout(function(){
+    if (window.parent && window.parent !== window) {
+      window.parent.postMessage({ type: 'apex-update-meds-uso', medicacoesUso: window._apexMedsUso }, window.location.origin);
+      _apexPacWatch('medicacoes_uso');
+    }
+  }, 600);
+}
+
+/* ============================================================
+   SEGURANÇA DE PRESCRIÇÃO
+   1) alergia registrada × medicamento (match direto + classe)
+   2) ajuste/contraindicação por TFGe (regras nefro, KDIGO/bula)
+   ============================================================ */
+function _normMed(s) {
+  return String(s || '').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^a-z0-9 ]+/g, ' ').replace(/\s+/g, ' ').trim();
+}
+/* grupos de reação cruzada: termo na alergia → medicamentos do formulário */
+const ALERGIA_GRUPOS = [
+  { kw: /penicilin|amoxicilin|ampicilin|beta.?lact/i, med: /amoxicilina/i, label: 'penicilinas / beta-lactâmicos' },
+  { kw: /\baas\b|aspirina|acetilsalic|salicilat/i, med: /^aas\b/i, label: 'AAS / salicilatos' },
+  { kw: /dipirona|metamizol/i, med: /dipirona/i, label: 'dipirona' },
+  { kw: /estatina/i, med: /vastatina/i, label: 'estatinas' },
+  { kw: /sulfa\b|sulfonamida|sulfametoxazol/i, med: /sulfametoxazol|sulfadiazina/i, label: 'sulfas' }
+];
+function _alergiaConflitos(medName) {
+  const out = [];
+  const a = window._apexAlergias || {};
+  const itens = a.itens || [];
+  if (!itens.length) return out;
+  const nMed = _normMed(medName);
+  itens.forEach(function(it){
+    const nAl = _normMed(it.substancia);
+    if (!nAl) return;
+    /* 1. match direto (inclusão em qualquer direção) */
+    if (nMed.indexOf(nAl) > -1 || nAl.indexOf(nMed) > -1) {
+      out.push({ nivel: 'direto', substancia: it.substancia, grav: it.gravidade || '' });
+      return;
+    }
+    /* 2. grupos de reação cruzada conhecidos */
+    for (const g of ALERGIA_GRUPOS) {
+      if (g.kw.test(it.substancia) && g.med.test(medName)) {
+        out.push({ nivel: 'direto', substancia: it.substancia, grav: it.gravidade || '', grupo: g.label });
+        return;
+      }
+    }
+    /* 3. mesma classe terapêutica (ex.: alergia a enalapril → alerta p/ ramipril) */
+    if (typeof MEDS_DB !== 'undefined') {
+      const medAl = MEDS_DB.find(function(m){ const n = _normMed(m.name); return nAl.indexOf(n) > -1 || n.indexOf(nAl) > -1; });
+      const medRx = MEDS_DB.find(function(m){ return m.name === medName; });
+      if (medAl && medRx && medAl.category && medAl.category === medRx.category && medAl.name !== medRx.name) {
+        out.push({ nivel: 'classe', substancia: it.substancia, grav: it.gravidade || '', classe: medAl.category });
+      }
+    }
+  });
+  return out;
+}
+/* regras de ajuste renal por TFGe — conservadoras, alinhadas a KDIGO/bula */
+function _ci(m){ return { nivel: 'ci', msg: m }; }
+function _aj(m){ return { nivel: 'ajuste', msg: m }; }
+function _ca(m){ return { nivel: 'cautela', msg: m }; }
+const RENAL_RULES = [
+  { re: /^metformina/i, f: function(t){ return t < 30 ? _ci('contraindicada com TFGe < 30') : t < 45 ? _aj('TFGe 30–44: máx. 1.000 mg/dia; não iniciar') : null; } },
+  { re: /empagliflozina|dapagliflozina|canagliflozina/i, f: function(t){ return t < 20 ? _aj('TFGe < 20: não INICIAR iSGLT2 (manter se já em uso até TRS)') : t < 45 ? _ca('TFGe < 45: efeito glicêmico reduzido; benefício cardiorrenal mantido') : null; } },
+  { re: /espironolactona/i, f: function(t){ return t < 30 ? _aj('TFGe < 30: evitar — alto risco de hipercalemia') : t < 50 ? _ca('TFGe 30–49: vigiar K+ e creatinina em 1–2 semanas') : null; } },
+  { re: /finerenona/i, f: function(t){ return t < 25 ? _aj('não iniciar com TFGe < 25; vigiar K+') : null; } },
+  { re: /sacubitril/i, f: function(t){ return t < 30 ? _aj('TFGe < 30: iniciar com dose reduzida') : null; } },
+  { re: /rivaroxabana/i, f: function(t){ return t < 15 ? _ci('evitar com TFGe < 15') : t < 50 ? _aj('FA com TFGe 15–49: reduzir para 15 mg/dia') : null; } },
+  { re: /apixabana/i, f: function(t){ return t < 15 ? _aj('TFGe < 15: evidência limitada — cautela') : t < 30 ? _ca('avaliar critérios de ajuste de dose (Cr ≥ 1,5 + idade ≥ 80 ou peso ≤ 60 kg)') : null; } },
+  { re: /^alopurinol/i, f: function(t){ return t < 60 ? _aj('TFGe < 60: iniciar com ≤ 100 mg/dia e titular pelo ácido úrico') : null; } },
+  { re: /febuxostato/i, f: function(t){ return t < 30 ? _ca('TFGe < 30: dados limitados') : null; } },
+  { re: /fenofibrato/i, f: function(t){ return t < 30 ? _ci('contraindicado com TFGe < 30') : t < 60 ? _aj('TFGe 30–59: reduzir dose') : null; } },
+  { re: /glimepirida/i, f: function(t){ return t < 60 ? _aj('TFGe < 60: risco de hipoglicemia — preferir gliclazida ou outra classe') : null; } },
+  { re: /gliclazida/i, f: function(t){ return t < 30 ? _aj('TFGe < 30: risco de hipoglicemia — cautela') : null; } },
+  { re: /sitagliptina/i, f: function(t){ return t < 30 ? _aj('TFGe < 30: 25 mg/dia') : t < 45 ? _aj('TFGe 30–44: 50 mg/dia') : null; } },
+  { re: /vildagliptina/i, f: function(t){ return t < 50 ? _aj('TFGe < 50: 50 mg 1x/dia') : null; } },
+  { re: /pregabalina|gabapentina/i, f: function(t){ return t < 60 ? _aj('TFGe < 60: ajustar dose por faixa de função renal') : null; } },
+  { re: /tramadol/i, f: function(t){ return t < 30 ? _aj('TFGe < 30: aumentar intervalo (12/12h); máx. 200 mg/dia') : null; } },
+  { re: /code[ií]na/i, f: function(t){ return t < 30 ? _ca('TFGe < 30: acúmulo de metabólitos ativos — cautela') : null; } },
+  { re: /^atenolol/i, f: function(t){ return t < 35 ? _aj('TFGe < 35: reduzir dose (excreção renal)') : null; } },
+  { re: /hidroclorotiazida|clortalidona|indapamida/i, f: function(t){ return t < 30 ? _aj('TFGe < 30: tiazídicos perdem eficácia — preferir diurético de alça') : null; } },
+  { re: /ciprofloxacino/i, f: function(t){ return t < 30 ? _aj('TFGe < 30: reduzir ~50% da dose ou intervalo 24/24h') : null; } },
+  { re: /amoxicilina/i, f: function(t){ return t < 30 ? _aj('TFGe < 30: ajustar intervalo (12–24h)') : null; } },
+  { re: /duloxetina/i, f: function(t){ return t < 30 ? _ci('não recomendada com TFGe < 30') : null; } },
+  { re: /magn[eé]sio/i, f: function(t){ return t < 30 ? _ca('TFGe < 30: risco de acúmulo de magnésio') : null; } },
+  { re: /creatina/i, f: function(t){ return t < 60 ? _ca('DRC: eleva creatinina e confunde a monitorização — avaliar') : null; } },
+  { re: /citrato de pot[aá]ssio/i, f: function(t){ return t < 45 ? _aj('TFGe < 45: risco de hipercalemia — vigiar K+') : null; } }
+];
+function _tfgeAtual() {
+  try {
+    const t = calcTFGe(labVal('cr'), getAge(), !isMale());
+    return (t && isFinite(t)) ? Number(t) : null;
+  } catch (e) { return null; }
+}
+function _renalAlerta(medName, tfge) {
+  if (tfge == null) return null;
+  for (const r of RENAL_RULES) { if (r.re.test(medName)) return r.f(tfge); }
+  return null;
+}
+/* checagem interativa no momento de prescrever (confirmRx) */
+function _rxSafetyConfirm(medName) {
+  const conflitos = _alergiaConflitos(medName);
+  for (const c of conflitos) {
+    const msg = (c.nivel === 'direto')
+      ? '⚠️ ALERGIA REGISTRADA\n\nPaciente com alergia a "' + c.substancia + '"' + (c.grav ? ' (' + c.grav + ')' : '') + (c.grupo ? ' — grupo: ' + c.grupo : '') + '.\n' + medName + ' corresponde a essa substância.\n\nPrescrever MESMO ASSIM?'
+      : '⚠️ Possível reação cruzada de classe\n\nAlergia registrada: "' + c.substancia + '". ' + medName + ' pertence à mesma classe (' + c.classe + ').\n\nPrescrever mesmo assim?';
+    if (!confirm(msg)) return false;
+  }
+  const t = _tfgeAtual();
+  const r = _renalAlerta(medName, t);
+  if (r) {
+    if (r.nivel === 'ci') {
+      if (!confirm('⛔ AJUSTE RENAL — TFGe ' + t + ' mL/min\n\n' + medName + ': ' + r.msg + '.\n\nPrescrever MESMO ASSIM?')) return false;
+    } else {
+      showToast('⚠ ' + medName + ' — ' + r.msg);
+    }
+  }
+  return true;
+}
+/* selos vivos na lista de prescrição (recalculados a cada render, com o TFGe atual) */
+function _rxBadges(medName) {
+  let h = '';
+  _alergiaConflitos(medName).forEach(function(c){
+    h += '<span class="rx-flag red">&#x26A0; alergia: ' + _esc(c.substancia) + (c.nivel === 'classe' ? ' (mesma classe)' : '') + '</span>';
+  });
+  const t = _tfgeAtual();
+  const r = _renalAlerta(medName, t);
+  if (r) {
+    const cls = r.nivel === 'ci' ? 'red' : (r.nivel === 'ajuste' ? 'amber' : 'info');
+    h += '<span class="rx-flag ' + cls + '">' + (r.nivel === 'ci' ? '&#x26D4;' : '&#x26A0;') + ' TFGe ' + t + ': ' + _esc(r.msg) + '</span>';
+  }
+  return h ? '<div class="rx-flags">' + h + '</div>' : '';
+}
+document.addEventListener('DOMContentLoaded', function(){
+  if (typeof renderAlergiasUI === 'function') renderAlergiasUI();
+  if (typeof renderMedsUso === 'function') renderMedsUso();
+});
+</script>
+<style>
+.tb-patient{margin-left:auto;text-align:right;line-height:1.3;min-width:0;}
+.tb-pname{font-weight:700;font-size:13.5px;letter-spacing:.2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:340px;}
+.tb-pmeta{font-size:10.5px;color:#C3CCE4;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:340px;}
+.tb-alergias{border:none;border-radius:999px;padding:6px 13px;font-family:inherit;font-size:11px;font-weight:700;cursor:pointer;max-width:280px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;flex:none;}
+.tb-alergias.red{background:#C62828;color:#fff;}
+.tb-alergias.amber{background:#B26A00;color:#fff;}
+.tb-alergias.neutral{background:rgba(255,255,255,.13);color:#D4DBEC;}
+.alergia-chip{display:inline-flex;align-items:center;font-size:11.5px;font-weight:600;padding:3px 10px;border-radius:999px;background:#FDECEA;color:#C62828;border:1px solid #F2C4C0;}
+.alergia-chip.g-grave{background:#C62828;color:#fff;border-color:#C62828;}
+.alergia-chip.g-moderada{background:#FDECEA;color:#C62828;}
+.alergia-chip.g-leve{background:#FFF6E5;color:#9A6B1A;border-color:#EDD9AE;}
+.alergia-row{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;padding:9px 12px;background:#F7F9FC;border:1px solid var(--border);border-radius:8px;margin-bottom:7px;font-size:13px;}
+.alergia-row button{background:none;border:none;color:#8A97A8;font-size:17px;cursor:pointer;line-height:1;}
+.meduso-chip{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:500;padding:5px 10px;border-radius:8px;background:#F7F9FC;border:1px solid var(--border);margin:0 6px 6px 0;}
+.meduso-chip button{background:none;border:none;color:#8A97A8;font-size:15px;cursor:pointer;line-height:1;padding:0;}
+.rx-flags{margin-top:5px;display:flex;flex-wrap:wrap;gap:5px;}
+.rx-flag{font-size:10.5px;font-weight:700;padding:3px 9px;border-radius:8px;line-height:1.3;}
+.rx-flag.red{background:#FDECEA;color:#C62828;border:1px solid #F2C4C0;}
+.rx-flag.amber{background:#FFF6E5;color:#9A6B1A;border:1px solid #EDD9AE;}
+.rx-flag.info{background:#EAF2F4;color:#02697A;border:1px solid #C5DEE2;}
+</style>
+<div class="apex-modal" id="alergiasModal">
+  <div class="box">
+    <div class="box-h"><h3>Alergias do paciente</h3><button type="button" onclick="fecharAlergias()">&times;</button></div>
+    <div class="box-b">
+      <div id="alergiasModalLista"></div>
+      <div style="display:grid;grid-template-columns:1fr 130px;gap:8px;margin-top:12px;">
+        <input type="text" id="alergiaSub" placeholder="Substância (ex.: dipirona, penicilina, contraste iodado…)" style="font-family:inherit;font-size:13px;border:1px solid var(--border);border-radius:8px;padding:9px 12px;" onkeydown="if(event.key==='Enter'){event.preventDefault();alergiaAdd();}">
+        <select id="alergiaGrav" style="font-family:inherit;font-size:13px;border:1px solid var(--border);border-radius:8px;padding:9px 10px;">
+          <option value="">Gravidade…</option>
+          <option value="leve">Leve</option>
+          <option value="moderada">Moderada</option>
+          <option value="grave">Grave</option>
+        </select>
+      </div>
+      <div style="display:flex;gap:8px;margin-top:8px;">
+        <input type="text" id="alergiaNota" placeholder="Reação observada (opcional — ex.: urticária, angioedema)" style="flex:1;font-family:inherit;font-size:13px;border:1px solid var(--border);border-radius:8px;padding:9px 12px;">
+        <button type="button" class="btn-mini" onclick="alergiaAdd()">Adicionar</button>
+      </div>
+      <label style="display:flex;align-items:center;gap:8px;margin-top:14px;font-size:12.5px;color:var(--text);cursor:pointer;">
+        <input type="checkbox" id="alergiasNega" onchange="alergiaNegaToggle(this)"> Paciente NEGA alergias conhecidas (registro ativo de ausência)
+      </label>
+    </div>
+    <div class="box-f">
+      <button type="button" class="btn-mini" onclick="fecharAlergias()">Cancelar</button>
+      <button type="button" class="btn-mini" style="background:var(--navy);color:#fff;border-color:var(--navy);" onclick="salvarAlergias()">Salvar no cadastro</button>
+    </div>
+  </div>
+</div>
 
 <!-- ═══ Sprint 1: confirmação de save, finalização e adendos ═══ -->
 <style>
@@ -3661,12 +4038,27 @@ const VIAS = [
 ];
 function _viaLabel(type) { const f = VIAS.find(v => v[0] === type); return f ? f[1] : 'Documento'; }
 function _viaKey(type) { return 'apex_via_' + (window._apexPatientId || 'default') + '_' + type; }
+/* Remove vetores de script de HTML vindo do localStorage (vias editadas):
+   conteúdo é HTML por design (contenteditable), mas nunca executável. */
+function _apexSanitizeHTML(html) {
+  var doc = new DOMParser().parseFromString(String(html || ''), 'text/html');
+  doc.querySelectorAll('script, iframe, object, embed, link, meta').forEach(function(el){ el.remove(); });
+  doc.querySelectorAll('*').forEach(function(el){
+    Array.prototype.slice.call(el.attributes).forEach(function(a){
+      var n = a.name.toLowerCase();
+      var v = String(a.value || '').replace(/\s/g, '').toLowerCase();
+      if (n.indexOf('on') === 0) el.removeAttribute(a.name);
+      else if ((n === 'href' || n === 'src' || n === 'xlink:href' || n === 'formaction') && v.indexOf('javascript:') === 0) el.removeAttribute(a.name);
+    });
+  });
+  return doc.body.innerHTML;
+}
 function abrirVia(type) {
   window._viaAtual = type;
   const body = document.getElementById('viaModalBody');
   const saved = localStorage.getItem(_viaKey(type));
   if (saved) {
-    body.innerHTML = saved; // versão editada/salva deste paciente
+    body.innerHTML = _apexSanitizeHTML(saved); // versão editada/salva deste paciente
   } else {
     if (typeof updateAllDocs === 'function') updateAllDocs();
     const src = document.getElementById('doc-' + type);
@@ -3718,15 +4110,15 @@ function verConsulta(idx) {
   const hist = JSON.parse(localStorage.getItem(_consKey()) || '[]');
   const h = hist[idx]; if (!h) return;
   window._consultaModalIdx = idx;
-  const row = (k, v) => v ? `<div class="rz-mon"><span class="k">${k}</span><span class="v">${v}</span></div>` : '';
-  document.getElementById('consultaModalTitle').innerHTML = '&#x1F4C5; Consulta — ' + (h.date || '');
+  const row = (k, v) => v ? `<div class="rz-mon"><span class="k">${k}</span><span class="v">${_esc(v)}</span></div>` : '';
+  document.getElementById('consultaModalTitle').innerHTML = '&#x1F4C5; Consulta — ' + _esc(h.date || '');
   document.getElementById('consultaModalBody').innerHTML =
-    `<div style="font-size:11px;color:#8A97A8;margin-bottom:8px;">${h.type || 'Consulta'}</div>` +
-    (h.diagnoses ? `<div style="margin-bottom:10px;font-size:12.5px;"><b>Diagnósticos:</b> ${h.diagnoses}</div>` : '') +
+    `<div style="font-size:11px;color:#8A97A8;margin-bottom:8px;">${_esc(h.type || 'Consulta')}</div>` +
+    (h.diagnoses ? `<div style="margin-bottom:10px;font-size:12.5px;"><b>Diagnósticos:</b> ${_esc(h.diagnoses)}</div>` : '') +
     row('TFGe', h.tfge ? h.tfge + ' mL/min' : '') + row('PA', h.pa) + row('HbA1c', h.hba1c ? h.hba1c + '%' : '') +
     row('LDL', h.ldl ? h.ldl + ' mg/dL' : '') + row('IMC', h.imc) + row('Estágio CKM', h.ckm != null ? h.ckm : '') +
-    (h.meds && h.meds.length ? `<div style="margin-top:10px;font-size:12px;"><b>Medicações:</b> ${h.meds.join(', ')}</div>` : '') +
-    (h.notes ? `<div style="margin-top:10px;font-size:12px;color:#3A4658;"><b>Notas:</b> ${h.notes}</div>` : '');
+    (h.meds && h.meds.length ? `<div style="margin-top:10px;font-size:12px;"><b>Medicações:</b> ${_esc(h.meds.join(', '))}</div>` : '') +
+    (h.notes ? `<div style="margin-top:10px;font-size:12px;color:#3A4658;"><b>Notas:</b> ${_esc(h.notes)}</div>` : '');
   document.getElementById('consultaModal').classList.add('open');
 }
 function compararConsulta() {
@@ -4742,6 +5134,8 @@ function confirmRx() {
   // Check for duplicates
   const exists = prescriptionList.find(p => p.name === selectedMed.name);
   if (exists) { alert('Este medicamento já está na prescrição. Remova o anterior para alterar.'); return; }
+  /* Segurança: alergia registrada × medicamento + ajuste por função renal */
+  if (typeof _rxSafetyConfirm === 'function' && !_rxSafetyConfirm(selectedMed.name)) return;
   prescriptionList.push({
     name: selectedMed.name,
     concentration: document.getElementById('rxConc').value,
@@ -4771,9 +5165,10 @@ function renderPrescription() {
   if (!prescriptionList.length) { el.innerHTML = '<p style="color:#999;font-size:12px;">Nenhum medicamento adicionado</p>'; return; }
   el.innerHTML = prescriptionList.map((rx, i) =>
     `<div style="display:flex;justify-content:space-between;align-items:center;padding:8px 12px;background:#FAFAFA;border-radius:var(--radius-sm);margin-bottom:6px;border-left:3px solid var(--teal);">
-      <div>
+      <div style="flex:1;">
         <strong style="color:var(--navy);">${i+1}. ${rx.name}</strong> ${rx.concentration} (${rx.form})<br>
         <span style="font-size:12px;color:#555;">Posologia: ${rx.posology}${rx.qty ? ' — Qtd: '+rx.qty : ''}${rx.obs ? ' — '+rx.obs : ''}</span>
+        ${typeof _rxBadges === 'function' ? _rxBadges(rx.name) : ''}
       </div>
       <button class="btn btn-outline btn-sm" onclick="removeRx(${i})" style="color:var(--danger);border-color:var(--danger);">&#x2716;</button>
     </div>`
@@ -6613,6 +7008,24 @@ function apexIniciarAtendimento() {
    O save só é considerado feito quando o shell confirma a gravação
    no Supabase. Falha/timeout = barra vermelha persistente + retry.
    ============================================================ */
+/* Autosave para a nuvem: o rascunho local (700ms) protege contra fechar a
+   aba; isto protege contra esquecer o botão Salvar — a cada 30s, se a
+   consulta está aberta (rascunho) e o conteúdo mudou desde a última
+   confirmação do servidor, dispara o mesmo save server-first do botão. */
+var _apexCloudSavedHash = null;
+function _apexSnapshotHash() {
+  try { return JSON.stringify(_apexCollectSnapshot()); } catch(e) { return null; }
+}
+setInterval(function(){
+  if (document.hidden) return;
+  if (!window._apexProntuarioId || window._apexConsultaFinalizada) return;
+  if (!window.parent || window.parent === window) return;
+  var bar = document.getElementById('cloudSaveBar');
+  if (bar && bar.className.indexOf('saving') > -1) return; // save manual em voo
+  var h = _apexSnapshotHash();
+  if (h && h !== _apexCloudSavedHash) saveConsulta();
+}, 30000);
+
 var _apexSaveTimeout = null;
 function _apexSaveUI(state, msg) {
   var bar = document.getElementById('cloudSaveBar');
@@ -6641,6 +7054,7 @@ function _apexPersistConsulta(resumo) {
 function _apexOnSaveResult(d) {
   clearTimeout(_apexSaveTimeout);
   if (d.ok) {
+    _apexCloudSavedHash = _apexSnapshotHash();
     if (d.prontuarioId) window._apexProntuarioId = d.prontuarioId;
     var hora = new Date().toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
     _apexSaveUI('ok', 'Consulta salva na nuvem às ' + hora + ' ✓');
