@@ -44,18 +44,35 @@ input[type=text]{ min-width:170px; }
 .toggle{ display:inline-flex; align-items:center; gap:6px; font-size:13px; color:#5A574F; cursor:pointer; }
 .groupname{ font-size:13px; font-weight:600; margin:20px 0 9px; display:flex; align-items:center; gap:10px; padding:9px 14px; border-radius:11px; color:#fff; }
 .groupname .gi{ width:22px; height:22px; display:flex; align-items:center; justify-content:center; }
-.row{ display:grid; grid-template-columns:26px 42px 1fr 156px 72px 176px; gap:10px; align-items:center; background:#fff; border:1px solid #ECE8DF; border-radius:12px; padding:11px 13px; margin-bottom:7px; transition:opacity .2s; }
-.row.done{ opacity:.5; background:#F1F6F0; }
+.row{ display:grid; grid-template-columns:22px 36px 1fr 128px 58px 150px 150px; gap:8px; align-items:center; background:#fff; border:1px solid #ECE8DF; border-radius:12px; padding:11px 13px 11px 10px; margin-bottom:7px; transition:opacity .2s; border-left:5px solid #DAD5CA; }
+.row.done{ opacity:.55; background:#F1F6F0; }
 .row.done .task{ text-decoration:line-through; }
 .chk{ width:20px; height:20px; cursor:pointer; accent-color:var(--green); }
 .num{ font-size:12px; color:#A39F94; font-weight:700; }
 .task{ font-size:14px; }
 .resp{ font-size:12px; color:#5A574F; }
 .prio{ font-size:11px; font-weight:700; text-align:center; padding:4px 6px; border-radius:7px; color:#fff; }
-.gantt{ display:grid; grid-template-columns:repeat(12,1fr); gap:2px; }
+/* Semáforo de situação */
+.stat{ display:flex; flex-direction:column; align-items:flex-start; gap:2px; font-size:12px; font-weight:600; padding:5px 9px; border-radius:9px; line-height:1.2; }
+.stat .sico{ font-size:12px; }
+.stat .sdays{ font-weight:700; font-size:10.5px; opacity:.85; }
+.s-prazo{ background:#EAF3E9; color:#3F7A38; }
+.s-atencao{ background:#FBF1DC; color:#9A6A18; }
+.s-atrasado{ background:#FBE3E3; color:#B23B3B; }
+.s-comecar{ background:#EEF1F4; color:#5A6A7A; }
+.s-feito{ background:#E7F0F1; color:#0E7C6B; }
+.gantt{ display:grid; grid-template-columns:repeat(12,1fr); gap:2px; position:relative; }
 .wk{ height:16px; border-radius:3px; background:#EEEAE0; }
-.wk.cur{ outline:2px solid var(--navy); outline-offset:-1px; }
-.gantt-head{ display:grid; grid-template-columns:26px 42px 1fr 156px 72px 176px; gap:10px; padding:0 13px 4px; font-size:11px; color:#A39F94; }
+.wk.fut{ opacity:.42; }
+.wk.cur{ box-shadow:0 0 0 2px var(--navy); position:relative; z-index:2; }
+.gantt-head{ display:grid; grid-template-columns:22px 36px 1fr 128px 58px 150px 150px; gap:8px; padding:0 13px 4px 10px; font-size:11px; color:#A39F94; }
+.gh-hoje{ display:inline-flex; align-items:center; gap:3px; background:var(--navy); color:#fff; border-radius:10px; padding:1px 6px; font-weight:700; }
+/* Legenda e resumo do semáforo */
+.legend{ display:flex; flex-wrap:wrap; gap:8px; align-items:center; background:#fff; border:1px solid #ECE8DF; border-radius:16px; padding:11px 16px; margin-bottom:14px; }
+.legend .lt{ font-size:12px; color:#7C7A73; margin-right:2px; }
+.spill{ display:inline-flex; align-items:center; gap:6px; font-size:12.5px; font-weight:600; padding:6px 11px; border-radius:20px; border:1px solid transparent; cursor:pointer; }
+.spill.off{ opacity:.5; }
+.spill b{ font-weight:800; }
 .gh-w{ display:grid; grid-template-columns:repeat(12,1fr); gap:2px; }
 .gh-w span{ text-align:center; }
 .rr{ display:grid; grid-template-columns:130px 1fr 52px; gap:11px; align-items:center; margin-bottom:9px; font-size:13px; }
@@ -66,7 +83,7 @@ input[type=text]{ min-width:170px; }
 svg{ display:block; }
 @media(max-width:860px){ .panels,.charts2{ grid-template-columns:1fr; } }
 @media(max-width:720px){
- .row,.gantt-head{ grid-template-columns:24px 36px 1fr; }
+ .row,.gantt-head{ grid-template-columns:22px 32px 1fr 118px; }
  .row .resp,.row .prio,.row .gantt,.gantt-head .g-r,.gantt-head .g-p,.gantt-head .gh-w{ display:none; }
 }
 </style>
@@ -95,7 +112,8 @@ svg{ display:block; }
     <label class="toggle"><input type="checkbox" id="fHide"> ocultar concluídas</label>
   </div>
   <div class="panel" style="margin-bottom:18px"><h3>Progresso por responsável</h3><div id="byResp"></div></div>
-  <div class="gantt-head"><span></span><span></span><span>Tarefa</span><span class="g-r">Responsável</span><span class="g-p" style="text-align:center">Prior.</span><span class="gh-w" id="wkHead"></span></div>
+  <div class="legend" id="legend"></div>
+  <div class="gantt-head"><span></span><span></span><span>Tarefa</span><span class="g-r">Responsável</span><span class="g-p" style="text-align:center">Prior.</span><span>Situação</span><span class="gh-w" id="wkHead"></span></div>
   <div id="list"></div>
   <div class="empty" id="empty" style="display:none">Nenhuma tarefa com esses filtros.</div>
   <p class="foot">Marcações salvas no banco de dados da Fênix e compartilhadas com a equipe. Nenhum dado sensível trafega aqui — apenas o andamento das tarefas.</p>
@@ -116,9 +134,35 @@ const AREA = {
 const RESPS = ["Helga","Juliano","Coordenadoras","Qualidade","Cassiano","Bruno","Robson","Natália","Médico RT"];
 const RESP_COLOR = {"Helga":"#028090","Juliano":"#5B9E50","Coordenadoras":"#3E7CA8","Qualidade":"#C4A35A","Cassiano":"#5A6A7A","Bruno":"#1E2D50","Robson":"#8A6D3B","Natália":"#D96A4A","Médico RT":"#D99A3D"};
 const START = new Date(2026,6,6);
-const CUR = Math.max(1,Math.min(12,Math.floor((new Date()-START)/(7*864e5))+1));
+const DAY = 864e5;
+const CUR = Math.max(1,Math.min(12,Math.floor((new Date()-START)/(7*DAY))+1));
 let done = new Set();
-let fResp="",fArea="",fPrio="",fSearch="",fHide=false;
+let fResp="",fArea="",fPrio="",fSearch="",fHide=false,fStat="";
+// Semáforo de situação — calculado a partir da semana atual (CUR) e do prazo da tarefa (ini→fim)
+const STAT_COLOR={prazo:"#5B9E50",atencao:"#D99A3D",atrasado:"#E05252",comecar:"#B9B3A6",feito:"#0E9B86"};
+const STAT_DEF=[
+ {k:"atrasado",ico:"🔴",lab:"Atrasadas",cls:"s-atrasado"},
+ {k:"atencao",ico:"🟡",lab:"Atenção",cls:"s-atencao"},
+ {k:"prazo",ico:"🟢",lab:"No prazo",cls:"s-prazo"},
+ {k:"comecar",ico:"⏳",lab:"A começar",cls:"s-comecar"},
+ {k:"feito",ico:"✅",lab:"Concluídas",cls:"s-feito"}
+];
+function statusOf(t){
+  if(done.has(t.n)) return {k:"feito",cls:"s-feito",ico:"✅",lab:"Concluída",days:""};
+  const daysLeft=Math.ceil((START.getTime()+t.fim*7*DAY-Date.now())/DAY);
+  if(CUR<t.ini) return {k:"comecar",cls:"s-comecar",ico:"⏳",lab:"A começar",days:"começa sem "+t.ini};
+  if(CUR>t.fim) return {k:"atrasado",cls:"s-atrasado",ico:"🔴",lab:"Atrasada",days:daysLeft<0?"atraso "+Math.abs(daysLeft)+"d":"venceu"};
+  if(CUR===t.fim) return {k:"atencao",cls:"s-atencao",ico:"🟡",lab:"Atenção",days:daysLeft>0?"faltam "+daysLeft+"d":"vence hoje"};
+  return {k:"prazo",cls:"s-prazo",ico:"🟢",lab:"No prazo",days:"faltam "+daysLeft+"d"};
+}
+function statBadge(s){ return `<div class="stat ${s.cls}"><span><span class="sico">${s.ico}</span> ${s.lab}</span>${s.days?`<span class="sdays">${s.days}</span>`:""}</div>`; }
+function renderLegend(){
+  const cnt={}; TASKS.forEach(t=>{const k=statusOf(t).k; cnt[k]=(cnt[k]||0)+1;});
+  let h='<span class="lt">Situação:</span><span class="spill'+(fStat?" off":"")+'" data-s="" style="background:#F4F1EA;color:#5A574F;border-color:#DAD5CA">Todas</span>';
+  STAT_DEF.forEach(s=>{ const n=cnt[s.k]||0; h+=`<span class="spill ${s.cls}${fStat&&fStat!==s.k?" off":""}" data-s="${s.k}">${s.ico} ${s.lab} <b>${n}</b></span>`; });
+  const el=document.getElementById("legend"); el.innerHTML=h;
+  el.querySelectorAll(".spill").forEach(p=>{ p.onclick=()=>{ fStat=(fStat===p.dataset.s)?"":p.dataset.s; render(); }; });
+}
 let donut,barArea,barWeek;
 const anum = t => t.area.split(" ")[0];
 function icon(p,s,w){ return '<svg width="'+(w||16)+'" height="'+(w||16)+'" viewBox="0 0 24 24" fill="none" stroke="'+s+'" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">'+p+'</svg>'; }
@@ -141,7 +185,7 @@ function initFilters(){
   document.getElementById("fResp").innerHTML='<option value="">Todos</option>'+RESPS.map(r=>`<option>${r}</option>`).join("");
   const areas=[...new Set(TASKS.map(t=>t.area))];
   document.getElementById("fArea").innerHTML='<option value="">Todas</option>'+areas.map(a=>`<option value="${a}">${a}</option>`).join("");
-  document.getElementById("wkHead").innerHTML=Array.from({length:12},(_,i)=>`<span${i+1===CUR?' style="color:#1E2D50;font-weight:700"':''}>${i+1}</span>`).join("");
+  document.getElementById("wkHead").innerHTML=Array.from({length:12},(_,i)=>i+1===CUR?`<span><span class="gh-hoje">📍${i+1}</span></span>`:`<span>${i+1}</span>`).join("");
   document.getElementById("fResp").onchange=e=>{fResp=e.target.value;render();};
   document.getElementById("fArea").onchange=e=>{fArea=e.target.value;render();};
   document.getElementById("fSearch").oninput=e=>{fSearch=e.target.value.toLowerCase();render();};
@@ -153,10 +197,11 @@ function match(t){
   if(fArea && t.area!==fArea) return false;
   if(fPrio && t.prio!==fPrio) return false;
   if(fSearch && !(t.t.toLowerCase().includes(fSearch)||t.n.includes(fSearch))) return false;
+  if(fStat && statusOf(t).k!==fStat) return false;
   if(fHide && done.has(t.n)) return false;
   return true;
 }
-function gantt(t){ let c=""; for(let w=1;w<=12;w++){ const on=w>=t.ini&&w<=t.fim; c+=`<div class="wk${w===CUR?' cur':''}" style="${on?'background:'+PRIO_COLOR[t.prio]:''}"></div>`; } return `<div class="gantt">${c}</div>`; }
+function gantt(t){ let c=""; for(let w=1;w<=12;w++){ const on=w>=t.ini&&w<=t.fim; const fut=on&&w>CUR; c+=`<div class="wk${w===CUR?' cur':''}${fut?' fut':''}" style="${on?'background:'+PRIO_COLOR[t.prio]:''}"></div>`; } return `<div class="gantt">${c}</div>`; }
 function render(){
   const shown=TASKS.filter(match);
   document.getElementById("empty").style.display=shown.length?"none":"block";
@@ -164,9 +209,11 @@ function render(){
   shown.forEach(t=>{
     if(t.area!==last){ const a=AREA[anum(t)]; html+=`<div class="groupname" style="background:${a.c}"><span class="gi">${icon(a.ic,'#fff',18)}</span>${t.area}</div>`; last=t.area; }
     const d=done.has(t.n);
-    html+=`<div class="row${d?' done':''}"><input type="checkbox" class="chk" data-n="${t.n}" ${d?'checked':''}><div class="num">${t.n}</div><div class="task">${t.t}</div><div class="resp">${t.resp}</div><div class="prio" style="background:${PRIO_COLOR[t.prio]}">${t.prio}</div>${gantt(t)}</div>`;
+    const s=statusOf(t);
+    html+=`<div class="row${d?' done':''}" style="border-left-color:${STAT_COLOR[s.k]}"><input type="checkbox" class="chk" data-n="${t.n}" ${d?'checked':''}><div class="num">${t.n}</div><div class="task">${t.t}</div><div class="resp">${t.resp}</div><div class="prio" style="background:${PRIO_COLOR[t.prio]}">${t.prio}</div>${statBadge(s)}${gantt(t)}</div>`;
   });
   document.getElementById("list").innerHTML=html;
+  renderLegend();
   document.querySelectorAll("#list .chk").forEach(c=>{ c.onchange=async()=>{ const n=c.dataset.n; if(c.checked)done.add(n); else done.delete(n); render(); await setStatus(n,c.checked); }; });
   metrics();
 }
