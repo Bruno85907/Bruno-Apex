@@ -3,13 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Apex Health — Protocolo Médico + Assessor Virtual para Resultados Reais</title>
-  <meta name="description" content="Protocolo médico personalizado com assessor virtual que te acompanha todos os dias. Hipertensão, diabetes, obesidade, DRC e qualidade de vida.">
+  <title>Apex Health — Protocolo Médico Personalizado para CKM</title>
+  <meta name="description" content="Protocolo médico personalizado para Síndrome Cardiorrenal-Metabólica (CKM). Hipertensão, diabetes, obesidade e doença renal tratados de forma integrada, com acompanhamento próximo do médico.">
 
   <!-- OpenGraph -->
   <meta property="og:type" content="website">
-  <meta property="og:title" content="Apex Health — Protocolo Médico + Assessor Virtual para Resultados Reais">
-  <meta property="og:description" content="Protocolo médico personalizado com assessor virtual que te acompanha todos os dias. Hipertensão, diabetes, obesidade, DRC e qualidade de vida.">
+  <meta property="og:title" content="Apex Health — Protocolo Médico Personalizado para CKM">
+  <meta property="og:description" content="Protocolo médico personalizado para Síndrome Cardiorrenal-Metabólica (CKM). Hipertensão, diabetes, obesidade e doença renal tratados de forma integrada, com acompanhamento próximo do médico.">
   <meta property="og:url" content="https://www.apex.med.br/">
   <meta property="og:site_name" content="Apex Health">
   <meta property="og:locale" content="pt_BR">
@@ -17,8 +17,8 @@
 
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Apex Health — Protocolo Médico + Assessor Virtual">
-  <meta name="twitter:description" content="Protocolo médico personalizado com assessor virtual. Hipertensão, diabetes, obesidade, DRC e qualidade de vida.">
+  <meta name="twitter:title" content="Apex Health — Protocolo Médico Personalizado para CKM">
+  <meta name="twitter:description" content="Protocolo médico personalizado para CKM. Hipertensão, diabetes, obesidade e doença renal, com acompanhamento próximo do médico.">
   <meta name="twitter:image" content="https://www.apex.med.br/og-image.jpg">
 
   <!-- Canonical -->
@@ -38,7 +38,7 @@
           "@type": "ImageObject",
           "url": "https://www.apex.med.br/logo-apex-transparent.png"
         },
-        "description": "Protocolo médico personalizado com assessor virtual para condições crônicas. Hipertensão, diabetes, obesidade e doença renal crônica.",
+        "description": "Protocolo médico personalizado para Síndrome Cardiorrenal-Metabólica (CKM). Hipertensão, diabetes, obesidade e doença renal tratados de forma integrada.",
         "foundingDate": "2025",
         "founder": {
           "@id": "https://www.apex.med.br/sobre-dr-bruno-biluca.html#person"
@@ -65,7 +65,7 @@
         "name": "Apex Health — Consultório Dr. Bruno Biluca",
         "url": "https://www.apex.med.br",
         "image": "https://www.apex.med.br/dr-bruno.jpg",
-        "description": "Acompanhamento médico contínuo para condições crônicas com protocolo personalizado e assessor virtual.",
+        "description": "Acompanhamento médico contínuo para Síndrome CKM com protocolo personalizado e retornos regulares.",
         "medicalSpecialty": [
           "Nephrology",
           "InternalMedicine"
@@ -625,80 +625,7 @@
     }
     .jornada-device-chip i { width: 13px; height: 13px; }
 
-    /* ===== APP SECTION ===== */
-    .app-section { background: var(--bg-alt); }
-    .app-layout {
-      display: flex; align-items: center; gap: 64px; justify-content: center;
-    }
-    .app-text { flex: 1; max-width: 480px; }
-    .app-features {
-      display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 28px;
-    }
-    .app-feature {
-      display: flex; align-items: center; gap: 10px;
-      font-size: 13px; font-weight: 500; color: var(--navy);
-    }
-    .app-phone { flex-shrink: 0; position: relative; }
-    .wearable-float {
-      position: absolute; width: 44px; height: 44px; border-radius: 12px;
-      display: flex; align-items: center; justify-content: center;
-      box-shadow: 0 6px 20px rgba(0,0,0,0.1);
-      z-index: 2; animation: wFloat 4s ease-in-out infinite;
-    }
-    .wf-1 { top: 30px; left: -40px; background: var(--teal); animation-delay: 0s; }
-    .wf-2 { top: 140px; left: -55px; background: #e25555; animation-delay: 0.7s; }
-    .wf-3 { bottom: 140px; left: -40px; background: #4a90d9; animation-delay: 1.4s; }
-    .wf-4 { bottom: 40px; left: -20px; background: var(--gold); animation-delay: 2.1s; }
-    .wf-5 { top: 60px; right: -45px; background: #6c5ce7; animation-delay: 0.5s; }
-    .wf-6 { top: 200px; right: -50px; background: #00b894; animation-delay: 1.2s; }
-    @keyframes wFloat {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-10px); }
-    }
-    .phone-frame {
-      width: 280px; height: 520px; border-radius: 32px;
-      background: #fff; border: 6px solid var(--navy-deep);
-      box-shadow: 0 20px 60px rgba(0,0,0,0.12);
-      display: flex; flex-direction: column; overflow: hidden;
-      position: relative;
-    }
-    .phone-notch {
-      width: 100px; height: 22px; background: var(--navy-deep);
-      border-radius: 0 0 14px 14px; margin: 0 auto;
-    }
-    .phone-header {
-      display: flex; align-items: center; gap: 10px;
-      padding: 12px 16px; border-bottom: 1px solid rgba(30,45,80,0.06);
-    }
-    .phone-avatar {
-      width: 32px; height: 32px; border-radius: 50%;
-      background: linear-gradient(135deg, var(--teal), var(--teal-light));
-      display: flex; align-items: center; justify-content: center;
-      font-size: 11px; font-weight: 700; color: #fff;
-    }
-    .phone-name { font-size: 13px; font-weight: 600; color: var(--navy); }
-    .phone-status { font-size: 10px; color: var(--teal); }
-    .phone-chat {
-      flex: 1; padding: 12px 14px; overflow-y: auto;
-      display: flex; flex-direction: column; gap: 8px;
-    }
-    .chat-msg {
-      max-width: 85%; padding: 10px 13px; border-radius: 14px;
-      font-size: 12px; line-height: 1.55;
-    }
-    .chat-msg.ia {
-      background: rgba(2,128,144,0.08); color: var(--navy);
-      align-self: flex-start; border-bottom-left-radius: 4px;
-    }
-    .chat-msg.user {
-      background: var(--navy-deep); color: #fff;
-      align-self: flex-end; border-bottom-right-radius: 4px;
-    }
-    .phone-input {
-      padding: 12px 16px; border-top: 1px solid rgba(30,45,80,0.06);
-      display: flex; align-items: center; justify-content: space-between;
-      font-size: 12px; color: rgba(30,45,80,0.3);
-    }
+    
 
     /* ===== PARA QUEM ===== */
     .paraquem { background-color: var(--navy-deep); color: #fff; }
@@ -1005,7 +932,6 @@
       .paraquem-card-img { height: 140px; }
       .result-cards { grid-template-columns: repeat(3, 1fr); gap: 16px; }
       .insights-row { grid-template-columns: repeat(3, 1fr); gap: 16px; }
-      .app-layout { gap: 40px; }
       .wf-2 { left: -40px; }
       .wf-3 { left: -30px; }
       .wf-6 { right: -40px; }
@@ -1048,13 +974,7 @@
       .jornada-num { font-size: 48px; }
       .jornada-card { padding: 24px 20px 20px; }
       .jornada-devices { gap: 6px; }
-
-      .app-layout { flex-direction: column; gap: 36px; text-align: center; }
-      .app-text { max-width: 100%; }
-      .app-text .headline-serif { font-size: 28px; }
-      .app-features { justify-items: center; grid-template-columns: 1fr; gap: 10px; }
       .phone-frame { width: 260px; height: 480px; margin: 0 auto; }
-      .wearable-float { width: 38px; height: 38px; border-radius: 10px; }
       .wf-1 { left: -24px; top: 20px; }
       .wf-2 { left: -32px; top: 120px; }
       .wf-3 { left: -24px; bottom: 120px; }
@@ -1201,10 +1121,6 @@
             <div class="dd-icon" style="background:rgba(196,163,90,0.12)"><i data-lucide="heart-pulse" style="width:16px;height:16px;color:var(--gold);stroke-width:1.5"></i></div>
             Síndrome CKM
           </a>
-          <a href="wearables-saude-digital.html" role="menuitem">
-            <div class="dd-icon" style="background:rgba(2,128,144,0.12)"><i data-lucide="watch" style="width:16px;height:16px;color:var(--teal-light);stroke-width:1.5"></i></div>
-            Wearables e Saúde Digital
-          </a>
           <a href="dados-apex.html" role="menuitem">
             <div class="dd-icon" style="background:rgba(255,255,255,0.06)"><i data-lucide="bar-chart-3" style="width:16px;height:16px;color:rgba(255,255,255,0.5);stroke-width:1.5"></i></div>
             Indicadores de Qualidade
@@ -1236,7 +1152,7 @@
     <div class="hero-content">
       <div class="hero-kicker"><span class="hk-rule"></span>Síndrome Cardiovascular-Renal-Metabólica</div>
       <h1>Coração, rim e metabolismo.<br>Tratados juntos.<br><span class="highlight">Resultados que você mede.</span></h1>
-      <p class="hero-sub">O protocolo da Síndrome CKM — a conexão entre hipertensão, diabetes, obesidade e doença renal tratada de forma integrada, com assessor virtual que te acompanha todos os dias.</p>
+      <p class="hero-sub">O protocolo da Síndrome CKM — a conexão entre hipertensão, diabetes, obesidade e doença renal tratada de forma integrada, com acompanhamento próximo do médico.</p>
       <div class="hero-ctas">
         <a href="https://wa.me/5511970833475?text=Ol%C3%A1%2C%20gostaria%20de%20agendar%20uma%20consulta%20na%20APEX%20Health." class="btn-teal" target="_blank" rel="noopener">Agendar Consulta</a>
         <a href="#metodo" class="hero-secondary">Conheça o método &#8595;</a>
@@ -1276,7 +1192,7 @@
           <h3>Dr. Bruno Biluca</h3>
           <div class="medico-spec">Especialista em Síndrome CKM &middot; Nefrologia &middot; Clínica Médica</div>
           <div class="medico-crm" style="margin-top:8px;">CRM-SP 151.041 &middot; RQE 70145 &middot; Diretor Médico Fenix Nefrologia</div>
-          <p class="medico-text">Nefrologista e clínico, com foco na Síndrome Cardiovascular-Renal-Metabólica (CKM) — a interação entre hipertensão, diabetes, obesidade e doença renal. MBA em Gestão de Saúde pela FGV. Desenvolveu o protocolo APEX Health para tratar essas condições de forma integrada, com acompanhamento contínuo por assessor virtual.</p>
+          <p class="medico-text">Nefrologista e clínico, com foco na Síndrome Cardiovascular-Renal-Metabólica (CKM) — a interação entre hipertensão, diabetes, obesidade e doença renal. MBA em Gestão de Saúde pela FGV. Desenvolveu o protocolo APEX Health para tratar essas condições de forma integrada, com retornos regulares e acesso direto ao médico.</p>
           <div class="medico-diffs">
             <div class="medico-diff">
               <div class="medico-diff-dot"></div>
@@ -1284,7 +1200,7 @@
             </div>
             <div class="medico-diff">
               <div class="medico-diff-dot"></div>
-              <p>Assessor virtual desenvolvido por ele — tecnologia a serviço da aderência ao protocolo</p>
+              <p>Diretor Médico da Fenix Nefrologia — atuação clínica em rede com múltiplas unidades</p>
             </div>
             <div class="medico-diff">
               <div class="medico-diff-dot"></div>
@@ -1447,7 +1363,7 @@
           <div class="pillar-icon">
             <i data-lucide="brain-circuit" style="width:36px;height:36px;color:var(--teal-light);stroke-width:1.5"></i>
           </div>
-          <h4>Assessor virtual todos os dias</h4>
+          <h4>Acompanhamento estruturado</h4>
           <p>Monitora, lembra, cobra e registra. Você nunca está sozinho no protocolo.</p>
         </div>
         <!-- Pillar 3: Doctor -->
@@ -1510,8 +1426,8 @@
             <i data-lucide="brain-circuit" style="width:22px;height:22px;stroke-width:1.5"></i>
           </div>
           <div class="jornada-body">
-            <h4>Assessor virtual todos os dias</h4>
-            <p>Entre consultas, o assessor virtual monitora aderência à dieta, medicações, suplementos, dados de wearables e hábitos. Alerta o médico se algo sair do caminho.</p>
+            <h4>Acompanhamento estruturado</h4>
+            <p>Retornos regulares presenciais ou por telemedicina. Entre eles, canal direto com o Dr. Bruno ou secretária via WhatsApp para dúvidas urgentes e intercorrências.</p>
             <div class="jornada-devices">
               <span class="jornada-device-chip"><i data-lucide="watch" style="width:13px;height:13px;stroke-width:1.5"></i> Watch</span>
               <span class="jornada-device-chip"><i data-lucide="heart-pulse" style="width:13px;height:13px;stroke-width:1.5"></i> PA</span>
@@ -1520,7 +1436,7 @@
             </div>
             <div class="jornada-recurrence">
               <i data-lucide="repeat" style="width:15px;height:15px;stroke-width:1.5"></i>
-              Contínuo — todos os dias
+              Contínuo — com retornos programados
             </div>
           </div>
         </div>
@@ -1533,7 +1449,7 @@
           </div>
           <div class="jornada-body">
             <h4>Retorno, evolução e novas metas</h4>
-            <p>Reavaliação: bioimpedância, exames de controle, revisão dos dados do assessor virtual. Ajustes no protocolo e — quando a meta é atingida — migração para manutenção.</p>
+            <p>Reavaliação: bioimpedância, exames de controle, revisão dos exames e da evolução clínica. Ajustes no protocolo e — quando a meta é atingida — migração para manutenção.</p>
             <div class="jornada-recurrence">
               <i data-lucide="calendar-check" style="width:15px;height:15px;stroke-width:1.5"></i>
               Mensal — retornos regulares
@@ -1578,30 +1494,6 @@
       <p class="subtitle rv" style="color:rgba(255,255,255,0.5);">Conteúdo sobre saúde, bem-estar e qualidade de vida baseado em evidências.</p>
 
       <div class="insights-row">
-        <div class="insight-card rv">
-          <img class="insight-card-img" src="https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=600&q=80" alt="Medicamentos e rim" loading="lazy">
-          <div class="insight-card-body">
-            <div class="insight-tag">Nefrologia</div>
-            <h4>Anti-inflamatórios e seus rins: o que você precisa saber</h4>
-            <a href="artigo_antiinflamatorio_rim.html" class="insight-link">Ler artigo &rarr;</a>
-          </div>
-        </div>
-        <div class="insight-card rv" style="transition-delay:0.1s">
-          <img class="insight-card-img" src="https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=600&q=80" alt="DRC" loading="lazy">
-          <div class="insight-card-body">
-            <div class="insight-tag">DRC</div>
-            <h4>Exercício físico e doença renal: mitos e evidências</h4>
-            <a href="artigo_exercicio_drc.html" class="insight-link">Ler artigo &rarr;</a>
-          </div>
-        </div>
-        <div class="insight-card rv" style="transition-delay:0.2s">
-          <img class="insight-card-img" src="https://images.unsplash.com/photo-1434494878577-86c23bcb06b9?w=600&q=80" alt="Tecnologia" loading="lazy">
-          <div class="insight-card-body">
-            <div class="insight-tag">Tecnologia</div>
-            <h4>Wearables na prática clínica: dados que fazem diferença</h4>
-            <a href="artigo_wearables.html" class="insight-link">Ler artigo &rarr;</a>
-          </div>
-        </div>
         <div class="insight-card rv" style="transition-delay:0.3s">
           <img class="insight-card-img" src="pexels-shvets-production-8900023.jpg" alt="Hipertensão e rim" loading="lazy">
           <div class="insight-card-body">
@@ -1657,13 +1549,6 @@
           <span class="card-arrow">Explorar &rarr;</span>
         </a>
 
-        <a href="wearables-saude-digital.html" class="conteudo-card rv" style="transition-delay:0.1s">
-          <div class="conteudo-card-icon" style="background:rgba(2,128,144,0.08); color:var(--teal);"><i data-lucide="watch" style="width:22px;height:22px;stroke-width:1.6"></i></div>
-          <h3>Wearables e Saúde Digital</h3>
-          <p>Monitoramento contínuo: métricas, dispositivos e fluxo clínico.</p>
-          <span class="card-arrow">Explorar &rarr;</span>
-        </a>
-
         <a href="dados-apex.html" class="conteudo-card conteudo-full rv" style="transition-delay:0.15s">
           <div>
             <h3>Indicadores de Qualidade Clínica</h3>
@@ -1687,34 +1572,6 @@
       </h2>
 
       <div class="faq-list">
-        <div class="faq-item rv">
-          <button class="faq-q">
-            O que é o Apex Health?
-            <i data-lucide="plus" class="faq-icon" style="width:20px;height:20px;color:var(--navy);stroke-width:2"></i>
-          </button>
-          <div class="faq-a"><div class="faq-a-inner">O Apex Health é um serviço médico de acompanhamento contínuo para condições crônicas. Combinamos consulta presencial, protocolo personalizado e assessor virtual para garantir que você atinja — e mantenha — suas metas de saúde.</div></div>
-        </div>
-        <div class="faq-item rv" style="transition-delay:0.05s">
-          <button class="faq-q">
-            Quais condições o Apex Health trata?
-            <i data-lucide="plus" class="faq-icon" style="width:20px;height:20px;color:var(--navy);stroke-width:2"></i>
-          </button>
-          <div class="faq-a"><div class="faq-a-inner">Hipertensão arterial, diabetes tipo 2, obesidade, doença renal crônica (DRC) e protocolos de bem-estar e qualidade de vida. Muitos pacientes apresentam mais de uma condição simultaneamente (Síndrome CKM), e o protocolo trata todas de forma integrada.</div></div>
-        </div>
-        <div class="faq-item rv" style="transition-delay:0.1s">
-          <button class="faq-q">
-            Como funciona o assessor virtual?
-            <i data-lucide="plus" class="faq-icon" style="width:20px;height:20px;color:var(--navy);stroke-width:2"></i>
-          </button>
-          <div class="faq-a"><div class="faq-a-inner">O assessor virtual monitora diariamente sua aderência ao protocolo: dieta, hidratação, medicações, suplementação, hábitos e dados de wearables (sono, atividade, frequência cardíaca). Caso algo saia do caminho, o médico é alertado e pode intervir antes do retorno.</div></div>
-        </div>
-        <div class="faq-item rv" style="transition-delay:0.15s">
-          <button class="faq-q">
-            Preciso usar smartwatch ou dispositivos?
-            <i data-lucide="plus" class="faq-icon" style="width:20px;height:20px;color:var(--navy);stroke-width:2"></i>
-          </button>
-          <div class="faq-a"><div class="faq-a-inner">Não é obrigatório, mas recomendamos. Smartwatches, esfigmomanômetros digitais, glicosímetros e balanças inteligentes enriquecem os dados e permitem um acompanhamento mais preciso. Na consulta, orientamos quais dispositivos fazem sentido para o seu caso.</div></div>
-        </div>
         <div class="faq-item rv" style="transition-delay:0.2s">
           <button class="faq-q">
             A consulta é presencial ou online?
@@ -1741,7 +1598,7 @@
             O Dr. Bruno atende por convênio?
             <i data-lucide="plus" class="faq-icon" style="width:20px;height:20px;color:var(--navy);stroke-width:2"></i>
           </button>
-          <div class="faq-a"><div class="faq-a-inner">O atendimento Apex Health é particular. O modelo de acompanhamento contínuo com assessor virtual vai além do que convênios cobrem. Valores são apresentados na consulta inicial.</div></div>
+          <div class="faq-a"><div class="faq-a-inner">O atendimento Apex Health é particular. O modelo de acompanhamento contínuo com retornos regulares e acesso direto ao médico vai além do que convênios cobrem. Valores são apresentados na consulta inicial.</div></div>
         </div>
         <div class="faq-item rv" style="transition-delay:0.4s">
           <button class="faq-q">
@@ -1769,7 +1626,7 @@
         <a href="https://wa.me/5511970833475?text=Ol%C3%A1%2C%20gostaria%20de%20agendar%20uma%20consulta%20na%20APEX%20Health." class="btn-teal" target="_blank" rel="noopener">Agendar Consulta</a>
         <a href="https://wa.me/5511970833475?text=Ol%C3%A1%2C%20tenho%20uma%20d%C3%BAvida%20sobre%20o%20APEX%20Health." class="btn-outline" target="_blank" rel="noopener">Tirar Dúvidas</a>
       </div>
-      <p class="cta-trust rv" style="transition-delay:0.2s">CRM-SP 151.041 &nbsp;|&nbsp; Guidelines AHA &amp; KDIGO &nbsp;|&nbsp; Assessor virtual proprietário</p>
+      <p class="cta-trust rv" style="transition-delay:0.2s">CRM-SP 151.041 &nbsp;|&nbsp; Guidelines AHA &amp; KDIGO</p>
     </div>
   </section>
 
@@ -1783,7 +1640,7 @@
             Apex Health <em style="color:var(--gold);font-style:normal;">Pro</em>
           </h3>
           <p style="font-size:15px;color:rgba(30,45,80,0.6);line-height:1.7;max-width:480px;">
-            Painel médico para prescrição de protocolos, acompanhamento de metas e gestão de pacientes com assessor virtual.
+            Painel médico para prescrição de protocolos, acompanhamento de metas e gestão clínica de pacientes.
           </p>
         </div>
         <a href="preview_pro_completo.html" class="btn-pro">Acessar o Pro &rarr;</a>
@@ -1803,7 +1660,6 @@
       <a href="#faq">FAQ</a>
       <a href="nefrologia-doenca-renal.html">DRC</a>
       <a href="sindrome-ckm.html">CKM</a>
-      <a href="wearables-saude-digital.html">Wearables</a>
       <a href="dados-apex.html">Indicadores</a>
       <a href="imprensa.html">Imprensa</a>
       <a href="preview_pro_completo.html">Pro</a>
