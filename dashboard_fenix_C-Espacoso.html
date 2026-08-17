@@ -1537,6 +1537,11 @@ function renderNutri(mes) {
 /* ═══════════════════════════════
    RENDER QUALIDADE DE VIDA
 ═══════════════════════════════ */
+/* Formata valor KDQOL: 1 casa decimal, sem casa quando inteiro (48 / 47.5) */
+function fmtKdqol(v){
+  if (v === null || v === undefined || isNaN(v)) return '—';
+  return String(Number(Number(v).toFixed(1)));
+}
 function drawKdqol() {
   const canvas = document.getElementById('cKdqol');
   if (!canvas) return;
@@ -1593,7 +1598,7 @@ function drawKdqol() {
       /* Value label on top */
       ctx.font='bold 9px Arial'; ctx.fillStyle='#3a3a3a';
       ctx.textAlign='center';
-      ctx.fillText(val, x+bW/2, y-4);
+      ctx.fillText(fmtKdqol(val), x+bW/2, y-4);
     });
 
     /* X label */
@@ -1971,9 +1976,9 @@ Bloco: ${blockName}
     } else if(dataKey === 'qol') {
       const Q = BASE.qol;
       const kdqol = Q.kdqol[Math.min(mes, Q.kdqol.length-1)];
-      resumo += `KDQOL Mental: ${kdqol.mental} (meta ≥50)
+      resumo += `KDQOL Mental: ${fmtKdqol(kdqol.mental)} (meta ≥50)
 `;
-      resumo += `KDQOL Físico: ${kdqol.fisico} (meta ≥50)
+      resumo += `KDQOL Físico: ${fmtKdqol(kdqol.fisico)} (meta ≥50)
 `;
       resumo += `Hemoglobina (meta ≥70%): Rede ${Q.hb.rede[mes]}% | CBD 2025: 58%`;
     } else if(dataKey === 'cardio') {
