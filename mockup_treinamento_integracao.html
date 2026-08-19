@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Treinamento &amp; Integração — Fenix Nefrologia</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+ --bg:#e9edf2; --bloco:#f8f9fb; --line:#dde2e8; --card:#fff;
+ --text:#1d2530; --muted:#7a8391; --slate:#5a6472;
+ --navy:#1f3b4d; --gold:#B99454; --gold-l:#d9c39a;
+ --verde:#2F9E44; --verm:#c0392b; --ambar:#E8A33D;
+}
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Space Grotesk',sans-serif;}
+body{background:var(--bg);color:var(--text);font-size:14px;}
+
+/* ===== app bar ===== */
+.appbar{background:var(--navy);color:#fff;padding:18px 28px 14px;display:flex;align-items:flex-end;justify-content:space-between;flex-wrap:wrap;gap:14px;}
+.ab-l .marca{font-size:11px;letter-spacing:.28em;color:var(--gold);font-weight:700;}
+.ab-l h1{font-size:21px;font-weight:600;margin-top:2px;}
+.ab-l h1 b{font-weight:700;}
+.ab-r{display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
+.ab-r select{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.25);color:#fff;border-radius:8px;padding:8px 12px;font-size:13px;}
+.quem{font-size:12.5px;color:#dfe5ea;}
+.quem b{color:var(--gold-l);}
+.tabs{background:var(--navy);padding:0 28px;display:flex;gap:6px;}
+.tab{padding:10px 22px;border-radius:10px 10px 0 0;cursor:pointer;font-size:13.5px;color:#c8d1d8;background:transparent;border:none;font-weight:600;}
+.tab.on{background:var(--bg);color:var(--text);}
+
+.wrap{max-width:1180px;margin:0 auto;padding:22px 28px 60px;}
+.tela{display:none;}
+.tela.on{display:block;}
+
+/* ===== hero ===== */
+.hero{background:var(--card);border:1px solid var(--line);border-radius:14px;box-shadow:0 1px 4px rgba(29,37,48,.06);padding:18px 22px;display:flex;gap:34px;align-items:center;flex-wrap:wrap;}
+.hk{min-width:120px;}
+.hk .l{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);font-weight:700;}
+.hk .v{font-size:21px;font-weight:700;margin-top:3px;}
+.hk .v small{font-size:12px;color:var(--muted);font-weight:500;}
+.hbar{flex:1;min-width:220px;}
+.hbar .pct{font-size:12.5px;color:var(--slate);margin-bottom:5px;display:flex;justify-content:space-between;}
+.bar{height:9px;background:#e4e8ee;border-radius:99px;overflow:hidden;}
+.bar i{display:block;height:100%;background:var(--slate);border-radius:99px;}
+.badge{font-size:12px;padding:5px 12px;border-radius:99px;background:#fdf3e3;color:#9a6b12;font-weight:600;white-space:nowrap;}
+
+/* ===== bloco (padrão T2) ===== */
+.bloco{background:var(--bloco);border:1px solid var(--line);border-radius:14px;box-shadow:0 1px 3px rgba(29,37,48,.05);margin-top:20px;padding:16px 18px;}
+.bh{display:flex;align-items:center;gap:10px;margin-bottom:12px;}
+.bn{width:26px;height:26px;border-radius:7px;background:#eef1f4;color:var(--slate);font-weight:700;font-size:13px;display:flex;align-items:center;justify-content:center;}
+.bt{font-size:15px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:#2b3440;}
+.bs{margin-left:auto;font-size:12px;color:var(--muted);}
+
+/* ===== linhas de documento ===== */
+table{width:100%;border-collapse:collapse;background:var(--card);border-radius:10px;overflow:hidden;border:1px solid var(--line);}
+th{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);text-align:left;padding:9px 12px;background:#fbfcfd;border-bottom:1px solid var(--line);font-weight:700;}
+td{padding:10px 12px;border-bottom:1px solid #eef1f4;font-size:13.5px;vertical-align:middle;}
+tr:last-child td{border-bottom:none;}
+td.num,th.num{text-align:center;}
+.doc b{font-weight:600;}
+.ver{font-size:11.5px;color:var(--muted);}
+.min{font-size:12px;color:var(--muted);white-space:nowrap;}
+.st{font-size:15px;text-align:center;width:40px;}
+.ok{color:var(--verde);} .and{color:var(--ambar);} .no{color:var(--verm);} .neu{color:#b7bec8;}
+.btn{border:1px solid var(--line);background:#fff;border-radius:8px;padding:6px 13px;font-size:12.5px;cursor:pointer;color:var(--text);font-weight:600;}
+.btn:hover{border-color:var(--gold);}
+.btn.p{background:var(--gold);border-color:var(--gold);color:#fff;}
+.btn.ghost{border:none;background:none;color:var(--muted);font-size:15px;padding:2px 6px;}
+.assin{font-size:11.5px;color:var(--muted);white-space:nowrap;}
+.assin b{color:var(--verde);font-weight:600;}
+.quiz{font-size:12px;white-space:nowrap;}
+
+/* ===== matriz equipe ===== */
+.kpis{display:flex;gap:14px;margin-top:20px;flex-wrap:wrap;}
+.kpi{flex:1;min-width:150px;background:var(--card);border:1px solid var(--line);border-left:3px solid var(--slate);border-radius:12px;padding:13px 16px;box-shadow:0 1px 3px rgba(29,37,48,.05);}
+.kpi.r{border-left-color:var(--verm);} .kpi.g{border-left-color:var(--verde);}
+.kpi .l{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:700;}
+.kpi .v{font-size:23px;font-weight:700;margin-top:3px;}
+.kpi .v small{font-size:12px;color:var(--muted);font-weight:500;}
+.pbar{height:7px;background:#e4e8ee;border-radius:99px;overflow:hidden;min-width:110px;}
+.pbar i{display:block;height:100%;background:var(--slate);}
+.pp{font-size:12px;color:var(--slate);margin-top:3px;}
+.sig{width:30px;height:30px;border-radius:50%;background:#eef1f4;color:var(--slate);font-size:11.5px;font-weight:700;display:inline-flex;align-items:center;justify-content:center;margin-right:9px;}
+.papel{font-size:11.5px;color:var(--muted);}
+.venc{font-size:12px;white-space:nowrap;}
+.venc.r{color:var(--verm);font-weight:600;}
+
+.rechead{display:flex;align-items:center;gap:10px;margin-bottom:12px;}
+.recnote{font-size:12.5px;color:var(--muted);}
+
+.rodape{background:var(--navy);color:#9fb2bf;text-align:center;font-size:11.5px;padding:16px;margin-top:50px;}
+.rodape b{color:var(--gold);}
+.mock{position:fixed;bottom:14px;right:14px;background:var(--navy);color:var(--gold-l);font-size:10.5px;letter-spacing:.14em;padding:6px 13px;border-radius:99px;opacity:.9;}
+</style>
+</head>
+<body>
+
+<div class="appbar">
+ <div class="ab-l">
+  <div class="marca">FENIX NEFROLOGIA</div>
+  <h1>Treinamento &amp; <b>Integração</b></h1>
+ </div>
+ <div class="ab-r">
+  <select><option>Penha</option><option>Praiamar — Santos</option><option>República do Líbano</option><option>Tatuapé / Anália Franco</option></select>
+  <span class="quem"><b>Coord./RT</b> · Penha</span>
+ </div>
+</div>
+<div class="tabs">
+ <button class="tab" id="tb1" onclick="tela(1)">Minha Trilha</button>
+ <button class="tab on" id="tb2" onclick="tela(2)">Equipe</button>
+</div>
+
+<div class="wrap">
+
+<!-- ============ TELA 1 · MINHA TRILHA (visão do colaborador) ============ -->
+<div class="tela" id="t1">
+
+ <div class="hero">
+  <div class="hk"><div class="l">Colaborador</div><div class="v">T.S. <small>· Téc. Enfermagem</small></div></div>
+  <div class="hk"><div class="l">Trilha</div><div class="v" style="font-size:15px;">Integração — Téc. Enfermagem</div></div>
+  <div class="hk"><div class="l">Prazo</div><div class="v">14/09 <small>· admissão + 30d</small></div></div>
+  <div class="hbar">
+   <div class="pct"><span>11 de 16 itens</span><span>69%</span></div>
+   <div class="bar"><i style="width:69%"></i></div>
+  </div>
+  <span class="badge">● no ritmo</span>
+ </div>
+
+ <div class="bloco">
+  <div class="bh"><div class="bn">1</div><div class="bt">POPs de Enfermagem</div><div class="bs">5 de 7 · lidos em conjunto com o preceptor</div></div>
+  <table>
+   <tr><th>Documento</th><th>Versão vigente</th><th class="num">Leitura</th><th class="num">Verificação</th><th>Registro</th><th class="num">Situação</th><th></th></tr>
+   <tr>
+    <td class="doc"><b>POP 082 — Reprocessamento de dialisadores</b></td><td class="ver">v2.0 · rev. 004</td>
+    <td class="num"><button class="btn">Abrir</button></td>
+    <td class="num quiz ok">✓ 3/3</td>
+    <td class="assin"><b>✓ Li e compreendi</b> · 02/09 14:12</td>
+    <td class="st ok">✓</td><td><button class="btn ghost" title="desfazer registro">↺</button></td>
+   </tr>
+   <tr>
+    <td class="doc"><b>POP 041 — Punção de FAV e enxerto</b></td><td class="ver">v2.0 · rev. 004</td>
+    <td class="num"><button class="btn">Abrir</button></td>
+    <td class="num quiz ok">✓ 3/3</td>
+    <td class="assin"><b>✓ Li e compreendi</b> · 03/09 09:40</td>
+    <td class="st ok">✓</td><td><button class="btn ghost" title="desfazer registro">↺</button></td>
+   </tr>
+   <tr>
+    <td class="doc"><b>POP 017 — Antissepsia e curativo do acesso</b></td><td class="ver">v2.0 · rev. 004</td>
+    <td class="num"><button class="btn">Abrir</button></td>
+    <td class="num quiz and">● 2/3 · refazer</td>
+    <td class="assin">—</td>
+    <td class="st and">●</td><td></td>
+   </tr>
+   <tr>
+    <td class="doc"><b>POP 055 — Intercorrências intradialíticas</b></td><td class="ver">v2.0 · rev. 004</td>
+    <td class="num"><button class="btn p" onclick="ler(this)">Ler agora</button></td>
+    <td class="num quiz neu">—</td>
+    <td class="assin">—</td>
+    <td class="st neu">—</td><td></td>
+   </tr>
+  </table>
+ </div>
+
+ <div class="bloco">
+  <div class="bh"><div class="bn">2</div><div class="bt">Normas e Rotinas</div><div class="bs">3 de 4</div></div>
+  <table>
+   <tr><th>Documento</th><th>Versão vigente</th><th class="num">Leitura</th><th class="num">Verificação</th><th>Registro</th><th class="num">Situação</th><th></th></tr>
+   <tr>
+    <td class="doc"><b>Rotina de abertura e fechamento de sala</b></td><td class="ver">v1.2 · rev. 002</td>
+    <td class="num"><button class="btn">Abrir</button></td>
+    <td class="num quiz ok">✓ 3/3</td>
+    <td class="assin"><b>✓ Li e compreendi</b> · 05/09 07:55</td>
+    <td class="st ok">✓</td><td><button class="btn ghost">↺</button></td>
+   </tr>
+   <tr>
+    <td class="doc"><b>Rotina de tratamento de água — checagens diárias</b></td><td class="ver">v1.4 · rev. 003</td>
+    <td class="num"><button class="btn">Abrir</button></td>
+    <td class="num quiz neu">—</td>
+    <td class="assin">—</td>
+    <td class="st neu">—</td><td></td>
+   </tr>
+  </table>
+ </div>
+
+ <div class="bloco">
+  <div class="bh"><div class="bn">3</div><div class="bt">Segurança do Paciente</div><div class="bs">3 de 3</div></div>
+  <table>
+   <tr><th>Documento</th><th>Versão vigente</th><th class="num">Leitura</th><th class="num">Verificação</th><th>Registro</th><th class="num">Situação</th><th></th></tr>
+   <tr>
+    <td class="doc"><b>Protocolo de identificação do paciente</b></td><td class="ver">v1.0 · rev. 001</td>
+    <td class="num"><button class="btn">Abrir</button></td>
+    <td class="num quiz ok">✓ 3/3</td>
+    <td class="assin"><b>✓ Li e compreendi</b> · 01/09 16:03</td>
+    <td class="st ok">✓</td><td><button class="btn ghost">↺</button></td>
+   </tr>
+   <tr>
+    <td class="doc"><b>Notificação de eventos adversos</b></td><td class="ver">v1.0 · rev. 001</td>
+    <td class="num"><button class="btn">Abrir</button></td>
+    <td class="num quiz ok">✓ 3/3</td>
+    <td class="assin"><b>✓ Li e compreendi</b> · 01/09 16:31</td>
+    <td class="st ok">✓</td><td><button class="btn ghost">↺</button></td>
+   </tr>
+  </table>
+ </div>
+
+ <div class="bloco">
+  <div class="bh"><div class="bn">4</div><div class="bt">Indicadores da Rede</div><div class="bs">0 de 2</div></div>
+  <table>
+   <tr><th>Documento</th><th>Versão vigente</th><th class="num">Leitura</th><th class="num">Verificação</th><th>Registro</th><th class="num">Situação</th><th></th></tr>
+   <tr>
+    <td class="doc"><b>Cartaz A3 — Resumo dos indicadores</b></td><td class="ver">v2.2 · rev. 004</td>
+    <td class="num"><button class="btn">Abrir</button></td>
+    <td class="num quiz neu">—</td>
+    <td class="assin">—</td>
+    <td class="st neu">—</td><td></td>
+   </tr>
+   <tr>
+    <td class="doc"><b>Caderno de Indicadores — blocos da minha função</b></td><td class="ver">v2.2 · rev. 004</td>
+    <td class="num"><button class="btn">Abrir</button></td>
+    <td class="num quiz neu">—</td>
+    <td class="assin">—</td>
+    <td class="st neu">—</td><td></td>
+   </tr>
+  </table>
+ </div>
+
+</div>
+
+<!-- ============ TELA 2 · EQUIPE (visão da coordenação) ============ -->
+<div class="tela on" id="t2">
+
+ <div class="kpis">
+  <div class="kpi"><div class="l">Em integração</div><div class="v">6 <small>colaboradores</small></div></div>
+  <div class="kpi g"><div class="l">Conclusão média</div><div class="v">72<small>%</small></div></div>
+  <div class="kpi"><div class="l">Vencem em 7 dias</div><div class="v">2 <small>trilhas</small></div></div>
+  <div class="kpi r"><div class="l">Releitura vencida</div><div class="v">3 <small>registros</small></div></div>
+ </div>
+
+ <div class="bloco">
+  <div class="bh"><div class="bn">1</div><div class="bt">Integração — Penha · turma 1</div><div class="bs">abertura setembro/2026 · ordenado do mais atrasado</div></div>
+  <table>
+   <tr><th>Colaborador</th><th>Papel</th><th>Trilha</th><th>Progresso</th><th class="num">Pendentes</th><th class="num">Verificação</th><th>Prazo</th><th class="num">Situação</th></tr>
+   <tr>
+    <td><span class="sig">R.M.</span><b>R.M.</b></td><td class="papel">Téc. Enfermagem</td><td class="min">Téc. Enfermagem · 16 itens</td>
+    <td><div class="pbar"><i style="width:25%"></i></div><div class="pp">4/16 · 25%</div></td>
+    <td class="num">12</td><td class="num quiz and">2/4</td><td class="venc r">09/09 · 3d</td><td class="st no">✕</td>
+   </tr>
+   <tr>
+    <td><span class="sig">A.P.</span><b>A.P.</b></td><td class="papel">Enfermeira</td><td class="min">Enfermagem · 21 itens</td>
+    <td><div class="pbar"><i style="width:52%"></i></div><div class="pp">11/21 · 52%</div></td>
+    <td class="num">10</td><td class="num quiz and">8/11</td><td class="venc r">11/09 · 5d</td><td class="st and">▲</td>
+   </tr>
+   <tr>
+    <td><span class="sig">T.S.</span><b>T.S.</b></td><td class="papel">Téc. Enfermagem</td><td class="min">Téc. Enfermagem · 16 itens</td>
+    <td><div class="pbar"><i style="width:69%"></i></div><div class="pp">11/16 · 69%</div></td>
+    <td class="num">5</td><td class="num quiz ok">10/11</td><td class="venc">14/09</td><td class="st and">●</td>
+   </tr>
+   <tr>
+    <td><span class="sig">C.L.</span><b>C.L.</b></td><td class="papel">Recepção / Adm.</td><td class="min">Administrativo · 9 itens</td>
+    <td><div class="pbar"><i style="width:78%"></i></div><div class="pp">7/9 · 78%</div></td>
+    <td class="num">2</td><td class="num quiz ok">7/7</td><td class="venc">18/09</td><td class="st and">●</td>
+   </tr>
+   <tr>
+    <td><span class="sig">J.F.</span><b>J.F.</b></td><td class="papel">Médico</td><td class="min">Médica · 12 itens</td>
+    <td><div class="pbar"><i style="width:100%"></i></div><div class="pp">12/12 · 100%</div></td>
+    <td class="num">0</td><td class="num quiz ok">12/12</td><td class="venc">—</td><td class="st ok">✓</td>
+   </tr>
+   <tr>
+    <td><span class="sig">D.B.</span><b>D.B.</b></td><td class="papel">Enfermeira</td><td class="min">Enfermagem · 21 itens</td>
+    <td><div class="pbar"><i style="width:100%"></i></div><div class="pp">21/21 · 100%</div></td>
+    <td class="num">0</td><td class="num quiz ok">21/21</td><td class="venc">—</td><td class="st ok">✓</td>
+   </tr>
+  </table>
+ </div>
+
+ <div class="bloco">
+  <div class="bh"><div class="bn">2</div><div class="bt">Releitura — documento revisado</div><div class="bs">nova revisão publicada dispara releitura de quem já tinha assinado</div></div>
+  <table>
+   <tr><th>Documento</th><th>Nova versão</th><th>Publicada em</th><th class="num">Precisam reler</th><th class="num">Releram</th><th></th><th class="num">Situação</th></tr>
+   <tr>
+    <td class="doc"><b>POP 017 — Antissepsia e curativo do acesso</b></td><td class="ver">v2.1 · rev. 005</td><td class="min">01/09</td>
+    <td class="num">14</td><td class="num">11</td>
+    <td class="num"><button class="btn">Cobrar pendentes</button></td>
+    <td class="st and">●</td>
+   </tr>
+   <tr>
+    <td class="doc"><b>Rotina de tratamento de água — checagens diárias</b></td><td class="ver">v1.4 · rev. 003</td><td class="min">12/08</td>
+    <td class="num">14</td><td class="num">14</td>
+    <td></td>
+    <td class="st ok">✓</td>
+   </tr>
+  </table>
+ </div>
+
+ <div class="bloco">
+  <div class="bh"><div class="bn">3</div><div class="bt">Reciclagem anual</div><div class="bs">releitura obrigatória a cada 12 meses</div></div>
+  <table>
+   <tr><th>Colaborador</th><th>Papel</th><th>Documento</th><th>Assinado em</th><th>Vence</th><th class="num">Situação</th></tr>
+   <tr>
+    <td><span class="sig">M.G.</span><b>M.G.</b></td><td class="papel">Téc. Enfermagem</td><td class="doc"><b>POP 082 — Reprocessamento de dialisadores</b></td><td class="min">28/08/2025</td><td class="venc r">venceu 28/08</td><td class="st no">✕</td>
+   </tr>
+   <tr>
+    <td><span class="sig">V.T.</span><b>V.T.</b></td><td class="papel">Enfermeira</td><td class="doc"><b>Protocolo de identificação do paciente</b></td><td class="min">15/09/2025</td><td class="venc">15/09 · 27d</td><td class="st and">▲</td>
+   </tr>
+  </table>
+ </div>
+
+</div>
+
+</div>
+
+<div class="rodape"><b>FENIX NEFROLOGIA</b> · Treinamento &amp; Integração · registros de leitura com data, hora e usuário</div>
+<div class="mock">MOCKUP · DADOS ILUSTRATIVOS</div>
+
+<script>
+function tela(n){
+ document.getElementById('t1').classList.toggle('on',n===1);
+ document.getElementById('t2').classList.toggle('on',n===2);
+ document.getElementById('tb1').classList.toggle('on',n===1);
+ document.getElementById('tb2').classList.toggle('on',n===2);
+}
+function ler(btn){
+ const tr=btn.closest('tr');
+ btn.outerHTML='<button class="btn">Abrir</button>';
+ const tds=tr.querySelectorAll('td');
+ tds[3].innerHTML='✓ 3/3'; tds[3].className='num quiz ok';
+ tds[4].innerHTML='<b>✓ Li e compreendi</b> · agora'; tds[4].className='assin';
+ tds[5].innerHTML='✓'; tds[5].className='st ok';
+ tds[6].innerHTML='<button class="btn ghost" title="desfazer registro">↺</button>';
+}
+</script>
+</body>
+</html>
