@@ -5,15 +5,48 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Indicadores · Fenix Nefrologia</title>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap');
 :root{
   --gold:#B99454; --bg:#e9edf2; --ink:#1d2530; --muted:#7a8391; --line:#dde2e8;
-  --card:#fff; --navy:#1F3B4D;
+  --card:#fff; --navy:#1E2D50; --accent:#1F6FC4;
   --cA:#C2410C; --cP:#1D7FA8; --cC:#6B21A8; --cM:#4D7C0F;
   --ok:#4D7C0F; --warn:#B45309; --bad:#B91C1C;
 }
 *{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--ink);font-family:'Space Grotesk',-apple-system,sans-serif;font-size:15px;line-height:1.5}
+@media print{body.print-unid .top,body.print-unid .abas,body.print-unid .rodape,body.print-unid .ctx{display:none!important}
+ body.print-unid #telaReuniao .bloco{break-inside:avoid;box-shadow:none}
+ body.print-unid .hero{break-inside:avoid}
+ .top,.abas,.rodape{display:none!important}}
+/* ===== ATA (T3) ===== */
+.ata{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:22px 26px;margin:16px 0 40px;box-shadow:0 1px 3px rgba(29,37,48,.05)}
+.ata h2{font-size:19px;margin:0 0 2px;color:var(--navy)}
+.ata .cab{display:flex;flex-wrap:wrap;gap:8px 26px;font-size:12.5px;color:var(--muted);border-bottom:1px solid var(--line);padding-bottom:14px;margin-bottom:6px}
+.ata .cab b{color:var(--ink);font-weight:600}
+.ata section{padding:16px 0;border-bottom:1px solid var(--line)}
+.ata section:last-child{border-bottom:none}
+.ata h3{font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin:0 0 10px}
+.ata table{width:100%;border-collapse:collapse;font-size:12.5px}
+.ata th{text-align:left;font-size:9.5px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--muted);padding:7px 9px;border-bottom:1px solid #c9ced6}
+.ata td{padding:8px 9px;border-bottom:1px solid var(--line);vertical-align:top}
+.ata tr:last-child td{border-bottom:none}
+.ata .vaz{color:var(--muted);font-style:italic;padding:10px 0;font-size:12.5px}
+.ata .sig{font-weight:700;letter-spacing:.02em}
+.ata .pill{display:inline-block;font-size:9.5px;font-weight:700;border-radius:99px;padding:2px 8px;background:#eef1f4;color:var(--ink);white-space:nowrap;margin:1px 3px 1px 0}
+.ata .pill.f{background:#fbecec;color:var(--bad)}
+.ata .pill.k{background:#f0f6e8;color:var(--ok)}
+.ata .aviso{background:#fdf7ec;border-left:3px solid var(--gold);border-radius:6px;padding:10px 13px;font-size:12.5px;color:#5a4a2c;margin-top:9px}
+.ata .part{display:flex;gap:8px;margin-bottom:6px;flex-wrap:wrap}
+.ata .part input{flex:1;min-width:150px;border:1px solid var(--line);border-radius:6px;padding:6px 9px;font-size:12.5px}
+.ata .acoes-ata{display:flex;gap:9px;margin-top:16px;flex-wrap:wrap;align-items:center}
+@media print{.top,.abas,.rodape,.acoes-ata,.bnav{display:none!important}.ata{border:none;box-shadow:none;margin:0}body{background:#fff}}
+/* Apex embed — o cabecalho do Apex ja diz onde estamos: nao repetir marca nem titulo */
+body.embed .ident{display:none}
+body.embed .top{padding-top:8px}
+body.embed .sel{margin-left:0;width:100%}
+/* navegacao por teclado */
+a:focus-visible,button:focus-visible,select:focus-visible,input:focus-visible,textarea:focus-visible,[tabindex]:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:4px}
+.brand,.top h1,.gate h2,#telaReuniao .top h1{font-family:'Space Grotesk',-apple-system,sans-serif;letter-spacing:-.005em}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:'Inter',-apple-system,sans-serif;font-size:15px;line-height:1.5}
 .wrap{max-width:1140px;margin:0 auto;padding:0 18px 110px}
 button,select,input,textarea{font-family:inherit;font-size:14px;color:var(--ink)}
 button{cursor:pointer}
@@ -37,7 +70,7 @@ button{cursor:pointer}
 .quem{font-size:11.5px;color:rgba(255,255,255,.8);display:flex;align-items:center;gap:8px}
 .quem b{color:var(--gold)}
 .quem button{background:none;border:none;color:rgba(255,255,255,.55);font-size:11px;text-decoration:underline;cursor:pointer;padding:0}
-.gate{position:fixed;inset:0;z-index:80;background:linear-gradient(160deg,#1F3B4D,#152836);display:flex;align-items:center;justify-content:center}
+.gate{position:fixed;inset:0;z-index:80;background:linear-gradient(160deg,#1E2D50,#152836);display:flex;align-items:center;justify-content:center}
 .gate .gc{background:#fff;border-radius:12px;padding:30px 34px;width:420px;box-shadow:0 30px 80px rgba(0,0,0,.4)}
 .gate h2{margin:0 0 4px;font-size:17px;color:var(--navy)}
 .gate .gs{font-size:12px;color:var(--muted);margin-bottom:18px}
@@ -117,11 +150,10 @@ table.u tr:last-child td{border-bottom:none}
 .c-ok{background:#f0f6e8;color:var(--ok)} .c-al{background:#fdf0e6;color:var(--warn)}
 
 /* ---- régua de navegação de blocos ---- */
-.bnav{position:sticky;top:10px;z-index:5;display:flex;flex-wrap:nowrap;align-items:center;justify-content:center;gap:2px;
+.bnav{position:sticky;top:10px;z-index:5;display:flex;flex-wrap:nowrap;align-items:center;justify-content:center;justify-content:safe center;gap:2px;
   margin:10px calc(50% - 49vw) 16px;padding:8px 20px;border-radius:999px;
-  background:rgba(31,59,77,.92);
-  -webkit-backdrop-filter:blur(16px) saturate(1.4);backdrop-filter:blur(16px) saturate(1.4);
-  border:1px solid rgba(255,255,255,.16);box-shadow:0 14px 40px rgba(15,32,44,.38);
+  background:var(--navy);
+  border:1px solid rgba(255,255,255,.10);box-shadow:0 12px 34px rgba(30,45,80,.30);
   overflow-x:auto;scrollbar-width:none}
 .bnav::-webkit-scrollbar{display:none}
 .bnav a{display:inline-flex;align-items:center;gap:6px;white-space:nowrap;font-size:12px;font-weight:600;letter-spacing:.01em;
@@ -129,6 +161,13 @@ table.u tr:last-child td{border-bottom:none}
 .bnav a:hover{color:var(--gold);background:rgba(255,255,255,.07)}
 .bnav a .bn{color:var(--gold);font-size:11px;font-weight:700}
 .bnav a .pa{color:#ff9d94;font-size:9px}
+/* setas de rolagem das réguas (só aparecem quando falta espaço) */
+.bnav .bsx,#telaReuniao .subnav .bsx{position:sticky;z-index:2;flex:0 0 auto;width:24px;height:24px;border-radius:50%;
+  border:none;background:var(--navy);color:rgba(255,255,255,.85);font-size:15px;font-weight:700;line-height:1;
+  display:none;align-items:center;justify-content:center;cursor:pointer;padding:0}
+.bnav.has-ov .bsx,#telaReuniao .subnav.has-ov .bsx{display:inline-flex}
+.bsx.l{left:0;margin-right:4px}.bsx.r{right:0;margin-left:4px}
+.bsx:hover{color:var(--gold);border-color:var(--gold)}
 .bloco{scroll-margin-top:72px}
 #blocos .cod{display:none}
 .rost{background:#f2f6fb;border:1px solid #d9e4f0;border-radius:8px;padding:12px 14px;margin:12px 0}
@@ -276,6 +315,8 @@ table.dt select.vazio{border-color:var(--warn);background:#fffaf4}
 /* somente leitura */
 body.ro .ib input,body.ro .ib select,body.ro .ib textarea{pointer-events:none;background:#eef1f4;color:var(--muted)}
 body.ro .b-pri,body.ro .b-del,body.ro .lix,body.ro .addrow,body.ro .bt-g,body.ro .bg3 button{display:none}
+body.ro #telaReuniao input,body.ro #telaReuniao select,body.ro #telaReuniao textarea,
+body.ro #telaAta input,body.ro #telaAta select,body.ro #telaAta textarea{pointer-events:none;background:#eef1f4;color:var(--muted)}
 .lock{display:flex;align-items:center;gap:10px;background:#e9edf1;border:1px solid var(--line);border-radius:8px;padding:11px 16px;margin:14px 0;font-size:13px}
 .lock b{color:var(--ink)}
 .lock button{margin-left:auto;background:#fff;border:1px solid var(--line);border-radius:5px;padding:7px 15px;font-size:12.5px}
@@ -286,7 +327,7 @@ body.ro .b-pri,body.ro .b-del,body.ro .lix,body.ro .addrow,body.ro .bt-g,body.ro
 
 #telaReuniao{
   --gold:#B99454; --bg:#e9edf2; --ink:#1d2530; --muted:#7a8391; --line:#dde2e8;
-  --card:#ffffff; --navy:#1F3B4D; --slate:#5a6472;
+  --card:#ffffff; --navy:#1E2D50; --slate:#5a6472;
   --cA:#C2410C; --cP:#1D7FA8; --cC:#6B21A8; --cM:#4D7C0F;
   --ok:#4D7C0F; --warn:#B45309; --bad:#B91C1C; --cbd:#9db4c6;
 }
@@ -387,11 +428,10 @@ body.ro .b-pri,body.ro .b-del,body.ro .lix,body.ro .addrow,body.ro .bt-g,body.ro
 #telaReuniao .mig button{background:var(--card);border:1px solid var(--line);border-radius:6px;padding:7px 15px;font-size:13px;font-weight:700;color:var(--muted)}
 #telaReuniao .mig button:hover{border-color:var(--navy);color:var(--navy)}
 #telaReuniao .mig .btd{font-size:16px;font-weight:700}
-#telaReuniao .subnav{position:sticky;top:10px;z-index:7;display:flex;flex-wrap:nowrap;align-items:center;justify-content:center;gap:2px;
+#telaReuniao .subnav{position:sticky;top:10px;z-index:7;display:flex;flex-wrap:nowrap;align-items:center;justify-content:center;justify-content:safe center;gap:2px;
   margin:0 calc(50% - 49vw) 16px;padding:8px 20px;border-radius:999px;
-  background:rgba(31,59,77,.92);
-  -webkit-backdrop-filter:blur(16px) saturate(1.4);backdrop-filter:blur(16px) saturate(1.4);
-  border:1px solid rgba(255,255,255,.16);box-shadow:0 14px 40px rgba(15,32,44,.38);
+  background:var(--navy);
+  border:1px solid rgba(255,255,255,.10);box-shadow:0 12px 34px rgba(30,45,80,.30);
   overflow-x:auto;scrollbar-width:none}
 #telaReuniao .subnav::-webkit-scrollbar{display:none}
 #telaReuniao .subnav a{white-space:nowrap;font-size:12px;font-weight:600;text-decoration:none;color:rgba(255,255,255,.88);background:transparent;border:none;border-radius:999px;padding:6px 11px;cursor:pointer}
@@ -557,9 +597,13 @@ body.ro .b-pri,body.ro .b-del,body.ro .lix,body.ro .addrow,body.ro .bt-g,body.ro
       <select id="unidade"><option>Praiamar — Santos</option><option>República do Líbano</option>
         <option>Tatuapé / Anália Franco</option><option>Penha</option></select>
       <select id="comp" onchange="trocaComp()">
-        <option value="jul">Julho / 2026</option>
+        <option value="ago">Agosto / 2026</option>
+        <option value="jul">Julho / 2026 🔒</option>
         <option value="jun">Junho / 2026 🔒</option>
-        <option value="mai">Maio / 2026 🔒</option></select>
+        <option value="mai">Maio / 2026 🔒</option>
+        <option value="abr">Abril / 2026 🔒</option>
+        <option value="mar">Março / 2026 🔒</option>
+        <option value="fev">Fevereiro / 2026 🔒</option></select>
       <button class="sbbt" onclick="sbGravar()" title="Gravar a competência no banco">☁ Gravar</button>
       <button class="sbbt" onclick="sbCarregar()" title="Carregar a competência do banco">↻ Carregar</button>
       <button class="sbbt" id="btMetas" style="display:none" onclick="abreMetas()" title="Metas, faixas e benchmarks — administrador">⚙ Metas</button>
@@ -570,6 +614,7 @@ body.ro .b-pri,body.ro .b-del,body.ro .lix,body.ro .addrow,body.ro .bt-g,body.ro
   <div class="abas">
     <button class="aba on" id="ab1" onclick="tela(1)">Lançamento</button>
     <button class="aba" id="ab2" onclick="tela(2)">Reunião de Metas</button>
+        <button class="aba" id="ab3" onclick="tela(3)">Ata</button>
   </div>
 </div></div>
 
@@ -579,10 +624,10 @@ body.ro .b-pri,body.ro .b-del,body.ro .lix,body.ro .addrow,body.ro .bt-g,body.ro
 
   <div class="crono">
     <div class="ch">
-      <div class="g"><span class="k">Competência</span><span class="v">Julho / 2026</span></div>
-      <div class="g"><span class="k">Prazo</span><span class="v">07 / 08</span></div>
-      <div class="g"><span class="k">Reuniões</span><span class="v">10 a 12 / 08</span></div>
-      <div class="prazo"><b>3</b><span>dias</span></div>
+      <div class="g"><span class="k">Competência</span><span class="v" id="ccComp">Agosto / 2026</span></div>
+      <div class="g"><span class="k">Prazo</span><span class="v">07 / 09</span></div>
+      <div class="g"><span class="k">Reuniões</span><span class="v">10 a 12 / 09</span></div>
+      <div class="prazo"><b>—</b><span>em aberto</span></div>
     </div>
     <div class="tl" id="tl"></div>
     <table class="u"><thead><tr>
@@ -614,9 +659,10 @@ body.ro .b-pri,body.ro .b-del,body.ro .lix,body.ro .addrow,body.ro .bt-g,body.ro
   <div id="blocos"></div>
 </div>
 
+<div id="telaAta" style="display:none"><div class="wrap"><div id="ataCorpo"></div></div></div>
 <div id="telaReuniao" style="display:none">
 <div class="wrap">
-<div class="ctx"><span class="cad" id="rmChip">esboço · dados ilustrativos</span></div>
+<div class="ctx"><span class="cad" id="rmChip">competência aberta · sem lançamento</span></div>
 
 <!-- ============ VISTA 1 · PAUTA ============ -->
 <div class="view on" id="rmVPauta">
@@ -648,7 +694,8 @@ body.ro .b-pri,body.ro .b-del,body.ro .lix,body.ro .addrow,body.ro .bt-g,body.ro
 <!-- barra da reunião -->
 <div class="rodape"><div class="in">
   <span class="ra num" id="rmRAc">◷ 0 ações registradas nesta reunião</span>
-  <button class="b-pri" onclick="RM.abreEmail()">Encerrar reunião</button>
+  <button class="b-sec" onclick="exportaUnidadePDF()">Exportar PDF da unidade</button>
+ <button class="b-pri" onclick="RM.abreEmail()">Encerrar reunião</button>
 </div></div>
 
 <datalist id="rmDlResp"><option>Nutrição</option><option>Enfermagem</option><option>Equipe médica</option><option>Farmácia</option><option>Psicologia</option><option>Serviço social</option><option>Recepção</option></datalist>
@@ -723,12 +770,12 @@ const IND49=[{"c": "IND-01", "n": "Taxa de conformidade do fósforo sérico", "b
 let RO=false;
 
 /* ---------- cronograma ---------- */
-const TL=[["31/07","Competência fecha","f"],["01 a 07/08","Input","h"],["10 a 12/08","Reuniões",""],["14/08","Mural",""]];
+const TL=[["31/08","Competência fecha",""],["01 a 07/09","Input",""],["10 a 12/09","Reuniões",""],["14/09","Mural",""]];
 const UNI=[
- {n:"República do Líbano",v:49,t:49,ic:"✓",cl:"i-ok",st:"Concluído",cc:"02/08",r:"10/08 · 8h"},
- {n:"Praiamar — Santos",v:34,t:49,ic:"●",cl:"i-rit",st:"No ritmo",cc:"06/08",r:"11/08 · 8h"},
- {n:"Tatuapé / Anália Franco",v:11,t:49,ic:"▲",cl:"i-ris",st:"Em risco",cc:"12/08",atraso:true,r:"11/08 · 14h",rr:true},
- {n:"Penha",v:0,t:49,ic:"✕",cl:"i-nao",st:"Não iniciado",cc:"—",r:"12/08 · 8h",rr:true},
+ {n:"Tatuapé / Anália Franco",v:0,t:49,ic:"✕",cl:"i-nao",st:"Não iniciado",cc:"—",r:"—",rr:true},
+ {n:"República do Líbano",v:0,t:49,ic:"✕",cl:"i-nao",st:"Não iniciado",cc:"—",r:"—",rr:true},
+ {n:"Praiamar — Santos",v:0,t:49,ic:"✕",cl:"i-nao",st:"Não iniciado",cc:"—",r:"—",rr:true},
+ {n:"Penha",v:0,t:49,ic:"",cl:"",st:"A cadastrar",cc:"—",r:"—",fut:true},
  {n:"unidade 5 … 10",v:0,t:49,ic:"",cl:"",st:"A cadastrar",cc:"—",r:"—",fut:true}
 ];
 document.getElementById("tl").innerHTML=TL.map(m=>
@@ -760,9 +807,9 @@ const LOTE_PAC=[["A. I. F.",4.0,5.0,83.5,11.1],["C. P. P.",3.7,5.6,82.9,11.3],["
  ["L. A. R.",3.2,4.9,95.7,10.6],["M. C. P.",5.2,5.3,84.4,12.4],["M. C. R.",5.1,4.9,76.6,10.5],
  ["M. L. G.",5.1,5.1,81.1,12.4],["M. R. S.",5.5,5.4,78.9,11.1],["R. L. M.",3.9,4.8,96.8,10.2],
  ["T. A. S.",3.7,4.8,94.5,9.7],["W. B.",3.9,3.5,85.7,11.5],["W. N. C.",5.3,4.1,75.9,10.7]];
-const LOTES=[{a:"RESULTADOS1716353.XML",e:"Grupo Fleury",p:"06 a 12/05",n:21}];
-const L2={a:"RESULTADOS1718902.XML",e:"Lab. São Marcos",p:"13 a 19/05",n:17};
-const TOTP=42;
+const LOTES=[];
+const L2=null;
+const TOTP=0;
 function fonte(f){
  document.getElementById("sgL").classList.toggle("on",f==="lab");
  document.getElementById("sgN").classList.toggle("on",f==="assist");
@@ -770,56 +817,172 @@ function fonte(f){
  document.getElementById("pAssist").style.display=f==="assist"?"block":"none";
 }
 function renderLotes(){
- const cob=LOTES.reduce((a,l)=>a+l.n,0), falta=TOTP-cob;
+ const cob=LOTES.reduce((a,l)=>a+l.n,0);
+ const alvo=(typeof NUT!=="undefined"&&NUT["IND-01"]&&NUT["IND-01"].tot)?NUT["IND-01"].tot:0;
+ const falta=alvo?alvo-cob:0;
  document.getElementById("lotes").innerHTML=`
   <table class="dt"><thead><tr><th style="width:220px">Arquivo</th><th style="width:170px">Emissor</th>
    <th style="width:110px">Coleta</th><th style="width:80px">Pacientes</th><th style="width:40px"></th></tr></thead><tbody>
    ${LOTES.map((l,i)=>`<tr><td class="pac">${l.a}</td><td>${l.e}</td><td class="dim">${l.p}</td>
      <td class="tx">${l.n}</td><td><button class="lix" onclick="delLote(${i})" title="apagar lote">🗑</button></td></tr>`).join("")}
   </tbody></table>
-  <div style="margin-top:10px"><span class="chipc ${falta?'c-al':'c-ok'}">
-   ${falta?'▲':'✓'} ${cob} / ${TOTP} pacientes${falta?' · faltam '+falta:''}</span></div>`;
+  <div style="margin-top:10px">${LOTES.length?`<span class="chipc ${alvo&&falta>0?'c-al':'c-ok'}">
+   ${alvo&&falta>0?'▲':'✓'} ${cob} paciente${cob===1?'':'s'} no lote${alvo?' · elegíveis lançados: '+alvo+(falta>0?' · faltam '+falta:''):' · elegíveis ainda não lançados'}</span>`:""}</div>`;
  document.getElementById("btL").textContent=LOTES.length?"Carregar mais um lote":"Carregar lote";
- document.getElementById("fSub").textContent=`${LOTES.length} lote${LOTES.length>1?'s':''} · ${cob}/${TOTP} pacientes`;
+ document.getElementById("fSub").textContent=LOTES.length?`${LOTES.length} lote${LOTES.length>1?'s':''} · ${cob} paciente${cob===1?'':'s'}`:"nenhum arquivo carregado";
 }
 function delLote(i){if(RO)return;LOTES.splice(i,1);renderLotes();if(!LOTES.length)document.getElementById("labRes").innerHTML="";}
-function lerLote(){if(RO)return;if(LOTES.length===1)LOTES.push(L2);renderLotes();
- const n=LOTE_PAC.length, fo=LOTE_PAC.filter(p=>p[1]<=5.5).length, po=LOTE_PAC.filter(p=>p[2]>=3.5&&p[2]<=6).length, uo=LOTE_PAC.filter(p=>p[3]>=65).length;
- const pc=x=>(x/n*100).toFixed(1).replace(".",",")+"%";
- document.getElementById("labRes").innerHTML=`
-  <h4>Distribuição</h4>
-  <table class="dt"><thead><tr><th style="width:170px">Exame</th><th style="width:230px">Item</th>
-   <th style="width:90px">Indicador</th><th style="width:70px">Pac.</th><th style="width:40px"></th></tr></thead><tbody>
-   ${EXAMES.map(e=>`<tr><td class="pac">${e.e}</td><td class="dim">${e.it}</td>
-    <td>${e.ind}</td><td class="tx">${e.n}</td>
-    <td><span class="ic ${e.ok===1?'i-ok':e.ok===2?'i-ris':'dim'}">${e.ok===1?'✓':e.ok===2?'▲':'—'}</span></td></tr>`).join("")}
-  </tbody></table>
-  <div class="nums" style="margin-top:12px">
-   <div class="n calc"><label>Fósforo ≤ 5,5</label><b>${pc(fo)}</b><small>${fo}/${n}</small></div>
-   <div class="n calc"><label>Potássio na faixa</label><b>${pc(po)}</b><small>${po}/${n}</small></div>
-   <div class="n calc"><label>URR ≥ 65%</label><b>${pc(uo)}</b><small>${uo}/${n}</small></div>
-  </div>
-  <div class="acoes" style="margin:14px 0 0"><span class="st">Unidade do lote:
-   <select style="border:1px solid var(--line);border-radius:4px;padding:5px 8px;margin-left:6px">
-    <option>Praiamar — Santos</option><option>República do Líbano</option><option>Tatuapé / Anália Franco</option><option>Penha</option></select></span>
-   <button class="b-sec">Vincular nomes</button><button class="b-pri on">Distribuir</button></div>`;
+/* ====== LEITOR DO LOTE DO LABORATÓRIO (padrão de apoio: Resultados > Pedido > SuperExame) ====== */
+/* Mapeia SÓ o que o laboratório manda de fato. O que não vem fica declarado na tela. */
+const LAB_MAP=[
+ {ind:"IND-01", item:"Fósforo",     rot:"Fósforo"},
+ {ind:"IND-02", item:"Potássio",    rot:"Potássio"},
+ {ind:"IND-36", item:"Hemoglobina", rot:"Hemoglobina"},
+ {ind:"IND-11", item:"PTH",         rot:"PTH"}
+];
+const LAB_NAO_VEM=["Albumina — IND-03","Hemoglobina glicada — IND-14","IMC e bioimpedância — IND-04, 09, 13",
+                   "Kt/V — IND-05 (exige peso, tempo efetivo e UF, que o laboratório não envia)"];
+function labIniciais(nome){
+ return String(nome||"").trim().split(/\s+/).filter(function(w){return w.length>2||/^[A-Z]$/.test(w);})
+  .slice(0,3).map(function(w){return w[0].toUpperCase()+".";}).join(" ");
+}
+function labNum(t){ const n=parseFloat(String(t||"").replace(/\./g,"").replace(",",".")); return isNaN(n)?null:n; }
+function labFmt(n){ return String(Math.round(n*100)/100).replace(".",","); }
+function labLeXML(txt){
+ const doc=new DOMParser().parseFromString(txt,"application/xml");
+ if(doc.querySelector("parsererror")) return {erro:"arquivo não é um XML válido"};
+ const cl=doc.querySelector("ControleDeLote");
+ const g=(el,tag)=>{const x=el?el.querySelector(tag):null; return x?x.textContent.trim():"";};
+ const per=cl?cl.querySelector("Periodo"):null;
+ const dt=t=>t?t.slice(8,10)+"/"+t.slice(5,7):"";
+ const pedidos=Array.from(doc.querySelectorAll("Pedido"));
+ if(!pedidos.length) return {erro:"nenhum pedido encontrado no arquivo"};
+ const pacientes=pedidos.map(function(p){
+  const vals={};
+  Array.from(p.querySelectorAll("ItemDeExame")).forEach(function(it){
+   const nome=g(it,"Nome"); const res=it.querySelector("Resultado");
+   const v=res?g(res,"Conteudo Valor"):""; const un=res?g(res,"UnidadeDeMedida"):"";
+   if(nome&&v!==""&&vals[nome]===undefined) vals[nome]={v:v,un:un};
+  });
+  return {sigla:labIniciais(g(p,"Nome")), vals:vals};
+ });
+ return {emissor:g(cl,"Emissor"), ini:dt(per?g(per,"DataInicial"):""), fim:dt(per?g(per,"DataFinal"):""),
+         n:pacientes.length, pacientes:pacientes};
+}
+function labAplica(lote){
+ const linhas=[];
+ LAB_MAP.forEach(function(m){
+  const o=(typeof NUT!=="undefined")?NUT[m.ind]:null; if(!o) return;
+  let lidos=0, fora=0;
+  lote.pacientes.forEach(function(pc){
+   const x=pc.vals[m.item]; if(!x) return;
+   const n=labNum(x.v); if(n===null) return;
+   lidos++;
+   const alto=(o.alta!=null&&n>o.alta), baixo=(o.baixa!=null&&n<o.baixa&&o.baixaConta);
+   if(!(alto||baixo)) return;
+   fora++;
+   const ja=(o.fora||[]).find(function(r){return r.p===pc.sigla;});
+   if(ja){ ja.v=labFmt(n); }
+   else { o.fora.push({p:pc.sigla, v:labFmt(n), c:"", s:"", rec:["","",""]}); }
+  });
+  if(lidos){
+   /* ★ o denominador vem do proprio arquivo: quem teve o exame coletado no periodo.
+      Nao e invencao — e contagem. Ele pode sobrescrever no campo de elegiveis. */
+   o.tot=lidos;
+   const campo=document.getElementById(m.ind+"_t"); if(campo)campo.value=lidos;
+   if(typeof nutR==="function"){try{nutR(m.ind);}catch(_){}}
+   const exc=(o.exc||[]).length, den=Math.max(0,lidos-exc);
+   let a=0,bx=0;
+   (o.fora||[]).forEach(function(r){const l=(typeof nutLado==="function")?nutLado(o,r):"alta"; if(l==="alta")a++; else if(l==="baixa")bx++;});
+   const naoConf=o.livre?(o.fora||[]).length:(a+(o.baixaConta?bx:0));
+   const cf=den?Math.max(0,den-naoConf)/den*100:null;
+   linhas.push({rot:m.rot, cod:m.ind, lidos:lidos, fora:fora, cf:cf, meta:o.meta, un:o.un});
+  }
+ });
+ /* URR — leitura auxiliar, NÃO é o Kt/V */
+ let urrN=0, urrSoma=0, urrBaixo=0;
+ lote.pacientes.forEach(function(pc){
+  const pre=labNum((pc.vals["Ureia"]||{}).v), pos=labNum((pc.vals["Ureia pós-diálise"]||{}).v);
+  if(pre===null||pos===null||pre<=0) return;
+  const urr=(pre-pos)/pre*100; urrN++; urrSoma+=urr; if(urr<65)urrBaixo++;
+ });
+ return {linhas:linhas, urrN:urrN, urrMed:urrN?urrSoma/urrN:null, urrBaixo:urrBaixo};
+}
+function lerLote(){
+ if(RO)return;
+ let inp=document.getElementById("inpLote");
+ if(!inp){
+  inp=document.createElement("input");
+  inp.type="file"; inp.id="inpLote"; inp.accept=".xml,.XML"; inp.multiple=true; inp.style.display="none";
+  inp.addEventListener("change",function(){
+   const arqs=Array.from(inp.files||[]); inp.value="";
+   let pend=arqs.length; if(!pend)return;
+   arqs.forEach(function(f){
+    const fr=new FileReader();
+    fr.onload=function(){
+     const lote=labLeXML(String(fr.result||""));
+     if(lote.erro){
+      document.getElementById("labRes").innerHTML='<div class="al"><b>Não consegui ler '+f.name+'.</b> '+lote.erro+'. Nada foi alterado.</div>';
+     } else {
+      const r=labAplica(lote);
+      const ja=LOTES.findIndex(function(l){return l.a===f.name;});
+      const reg={a:f.name,e:lote.emissor||"—",p:(lote.ini&&lote.fim)?lote.ini+" a "+lote.fim:"—",n:lote.n};
+      if(ja>=0)LOTES[ja]=reg; else LOTES.push(reg);
+      renderLotes();
+      const lidosTot=r.linhas.reduce(function(a,x){return a+x.lidos;},0);
+      document.getElementById("labRes").innerHTML=
+       '<h4>Lido de '+f.name+'</h4>'+
+       '<table class="dt"><thead><tr><th style="width:180px">Exame</th><th style="width:80px">Indicador</th>'+
+       '<th style="width:90px">Elegíveis</th><th style="width:90px">Fora</th>'+
+       '<th style="width:110px">Conformidade</th><th style="width:90px">Meta</th><th style="width:110px">Situação</th></tr></thead><tbody>'+
+       (r.linhas.length?r.linhas.map(function(x){
+         const temMeta=(x.meta!=null&&x.cf!=null);
+         const ok=temMeta&&x.cf>=x.meta;
+         const cfTxt=(x.cf==null)?"—":labFmt(x.cf)+"%";
+         const mtTxt=(x.meta==null)?"a calibrar":"≥ "+x.meta+"%";
+         const sit=!temMeta?'<span class="ic dim">—</span>'
+                   :(ok?'<span class="ic i-ok">✓ dentro</span>':'<span class="ic i-nao">▲ fora</span>');
+         return '<tr><td class="pac">'+x.rot+'</td><td class="dim">'+x.cod+'</td>'+
+                '<td class="tx">'+x.lidos+'</td><td class="tx">'+x.fora+'</td>'+
+                '<td class="tx"><b>'+cfTxt+'</b></td><td class="dim">'+mtTxt+'</td><td>'+sit+'</td></tr>';}).join("")
+        :'<tr><td colspan="7" class="dim">nenhum exame do catálogo neste arquivo</td></tr>')+
+       '</tbody></table>'+
+       (r.urrN?'<div class="okb" style="margin-top:10px">URR médio de '+labFmt(r.urrMed)+'% em '+r.urrN+
+        ' pacientes · '+r.urrBaixo+' abaixo de 65%. <b>Leitura auxiliar — não substitui o Kt/V</b>, que depende de peso, tempo efetivo e UF.</div>':"")+
+       '<div class="okb" style="margin-top:10px"><b>Pronto — os indicadores acima já estão calculados e lançados nos blocos.</b> '+
+       'Elegíveis, valores fora da faixa e conformidade vieram do arquivo. Só falta você classificar a causa dos '+
+       r.linhas.reduce(function(a,x){return a+x.fora;},0)+' pacientes fora da faixa, que é julgamento clínico e a ferramenta não decide por você.</div>'+
+       '<div class="al" style="margin-top:8px"><b>Este arquivo não traz:</b> '+LAB_NAO_VEM.join(" · ")+'. Esses continuam manuais.</div>';
+      if(typeof recalcTudo==="function")recalcTudo();
+     }
+     if(--pend===0&&typeof recalcTudo==="function")recalcTudo();
+    };
+    fr.readAsText(f,"utf-8");
+   });
+  });
+  document.body.appendChild(inp);
+ }
+ inp.click();
 }
 const ASSIST=[["Pacientes, admissões, saídas, trânsitos","IND-41 a 44 · 47 a 49"],
  ["Sessões por modalidade","IND-45 · 46 · 39"],["Kt/V calculado","IND-05"],
  ["Volume convectivo","IND-06"],["Peso pré e pós","IND-12"],["Faltas","IND-19"],
  ["Ocupação e giro","IND-38"],["Tempo de sessão e UF horária","base da análise de intercorrências"]];
-function lerAssist(){if(RO)return;
- document.getElementById("dzA").style.display="none";
- document.getElementById("assistRes").innerHTML=`
-  <div class="nums"><div class="n calc"><label>Pacientes</label><b>42</b></div>
-   <div class="n calc"><label>Sessões</label><b>1.894</b></div>
-   <div class="n calc"><label>Indicadores</label><b>14</b></div></div>
-  <table class="dt"><thead><tr><th style="width:340px">Campo</th><th>Indicador</th><th style="width:40px"></th></tr></thead><tbody>
-   ${ASSIST.map(a=>`<tr><td class="pac">${a[0]}</td><td>${a[1]}</td><td><span class="ic i-ok">✓</span></td></tr>`).join("")}
-  </tbody></table>
-  <div class="acoes" style="margin:14px 0 0"><span class="st"></span>
-   <button class="b-sec" onclick="document.getElementById('assistRes').innerHTML='';document.getElementById('dzA').style.display='block'">Remover</button>
-   <button class="b-pri on">Distribuir</button></div>`;
+function lerAssist(){
+ if(RO)return;
+ let inp=document.getElementById("inpAssist");
+ if(!inp){
+  inp=document.createElement("input");
+  inp.type="file"; inp.id="inpAssist"; inp.accept=".xlsx,.xls,.csv"; inp.style.display="none";
+  inp.addEventListener("change",function(){
+   var f=(inp.files||[])[0]; inp.value=""; if(!f)return;
+   document.getElementById("assistRes").innerHTML=
+    '<table class="dt"><thead><tr><th style="width:340px">Arquivo</th><th>Situação</th><th style="width:40px"></th></tr></thead><tbody><tr><td class="pac">'+f.name+'</td><td class="dim">recebido — leitura automática ainda não implementada</td><td><button class="lix" title="apagar" onclick="document.getElementById(\'assistRes\').innerHTML=\'\';document.getElementById(\'dzA\').style.display=\'block\'">🗑</button></td></tr></tbody></table><div class="al" style="margin-top:10px"><b>Nenhum valor foi extraído.</b> Lance os dados manualmente até o leitor da Planilha Assistencial entrar.</div>';
+   document.getElementById("dzA").style.display="none";
+  });
+  document.body.appendChild(inp);
+ }
+ inp.click();
 }
 
 /* ---------- causas ---------- */
@@ -1028,10 +1191,10 @@ function r38(){
  document.getElementById("g6").textContent=(100-oc).toFixed(1).replace(".",",")+"% da capacidade";
  const serie=[SER38[0],SER38[1],["Jul",+oc.toFixed(1)]], mx=Math.max(...serie.map(x=>x[1]));
  document.getElementById("sr38").innerHTML=serie.map((x,i)=>
-  `<div class="mes ${i===2?'atual':''}"><span class="vv">${String(x[1]).replace(".",",")}%</span>
-   <span class="col" style="height:${Math.max(5,x[1]/mx*52)}px"></span><span class="lb">${x[0]}</span></div>`).join("");
- const sobe=serie[1][1]>serie[0][1]&&serie[2][1]>serie[1][1];
- const cai=serie[1][1]<serie[0][1]&&serie[2][1]<serie[1][1];
+  `<div class="mes ${i===serie.length-1?'atual':''}"><span class="vv">${String(x[1]).replace(".",",")}%</span>
+   <span class="col" style="height:${Math.max(2,(x[1]||0)/mx*52)}px"></span><span class="lb">${x[0]}</span></div>`).join("");
+ const sobe=serie.length===3&&serie.every(x=>typeof x[1]==="number")&&serie[1][1]>serie[0][1]&&serie[2][1]>serie[1][1];
+ const cai=serie.length===3&&serie.every(x=>typeof x[1]==="number")&&serie[1][1]<serie[0][1]&&serie[2][1]<serie[1][1];
  const disp=sobe||cai;
  document.getElementById("al38").innerHTML=disp
   ? `<div class="al"><b>▲ Variação sustentada em 2 meses.</b> Análise crítica exigida.</div>`
@@ -1064,7 +1227,7 @@ function racDel(ind,i){if(RO)return;RACREF[ind]().splice(i,1);RACRUN[ind]();}
 function racSet(ind,i,k,v){const a=RACREF[ind]();a[i][k]=v;if(k==="c")a[i].s="";RACRUN[ind]();}
 
 /* ---------- IND-39 · SESSÕES EXTRAS ---------- */
-const SER39=[["Mai",14],["Jun",17]];
+const SER39=[];
 let EX39={tot:20,pub:12,pri:8};
 let AC39=[];
 CARD["IND-39"]=()=>`<div class="ind" id="IND-39"><div class="ih" onclick="abre('IND-39')">
@@ -1095,11 +1258,12 @@ function r39(){
  document.getElementById("tr39").innerHTML=bate
   ? `<div class="okb">✓ Público + privado fecha com o total.</div>`
   : `<div class="al"><b>✕ Não fecha.</b> ${som} contra ${t}.</div>`;
- const serie=[SER39[0],SER39[1],["Jul",t]], mx=Math.max(...serie.map(x=>x[1]),1);
+ const lblX=((document.getElementById("comp").selectedOptions[0]||{text:"—"}).text||"—").slice(0,3);
+  const serie=SER39.slice(-2).concat([[lblX,t]]), mx=Math.max(...serie.map(x=>x[1]||0),1);
  document.getElementById("sr39").innerHTML=serie.map((x,i)=>
-  `<div class="mes ${i===2?'atual':''}"><span class="vv">${x[1]}</span>
-   <span class="col" style="height:${Math.max(5,x[1]/mx*52)}px"></span><span class="lb">${x[0]}</span></div>`).join("");
- const sobe=serie[1][1]>serie[0][1]&&serie[2][1]>serie[1][1];
+  `<div class="mes ${i===serie.length-1?'atual':''}"><span class="vv">${x[1]==null?"—":x[1]}</span>
+   <span class="col" style="height:${Math.max(2,(x[1]||0)/mx*52)}px"></span><span class="lb">${x[0]}</span></div>`).join("");
+ const sobe=serie.length===3&&serie.every(x=>typeof x[1]==="number")&&serie[1][1]>serie[0][1]&&serie[2][1]>serie[1][1];
  document.getElementById("al39").innerHTML=sobe
   ? `<div class="al"><b>▲ Alta sustentada em 2 meses.</b> Análise crítica exigida.</div>`
   : `<div class="okb">✓ Sem alta sustentada. Análise crítica não exigida.</div>`;
@@ -1495,7 +1659,7 @@ function r23(){
 }
 
 /* ================= IND-30 — simples, abre só se disparar ================= */
-const SER30=[["Mai",2.9],["Jun",3.4],["Jul",4.1]];
+const SER30=[];
 const REC=[["R. S. T.",9,"UF 14,8 · prescrita 13","P",6],["M. A. S.",7,"3 faltas no mês","A2",2],
  ["C. L. P.",6,"peso seco há 94 dias","P",5],["D. F. C.",4,"UF 14,1 em sessões de 3h30","P",7],
  ["A. B. M.",5,"diabetes há 18 anos","C",13],["J. R. O.",3,"anti-HAS na manhã da sessão","A1",1]];
@@ -1516,7 +1680,7 @@ CARD["IND-30"]=()=>`<div class="ind" id="IND-30"><div class="ih" onclick="abre('
   <div id="an30"></div>
   ${acoes("IND-30","",true)}
  </div></div>`;
-let E30={h:55,f:23};
+let E30={h:0,f:0};
 function m30(m,v){E30[m]=+v||0;calc30();}
 function calc30(){
  const el=document.getElementById("mod30"); if(!el)return;
@@ -1525,12 +1689,13 @@ function calc30(){
  document.getElementById("e30").textContent=e;
  const v=s?+(e/s*100).toFixed(1):0;
  document.getElementById("i30").textContent=String(v).replace(".",",")+"%";
- const serie=[SER30[0],SER30[1],["Jul",v]];
- const mx=Math.max(...serie.map(x=>x[1]),5);
+ const lblX=((document.getElementById("comp").selectedOptions[0]||{text:"—"}).text||"—").slice(0,3);
+  const serie=SER30.slice(-2).concat([[lblX,v]]);
+ const mx=Math.max(...serie.map(x=>x[1]||0),5);
  document.getElementById("sr30").innerHTML=serie.map((x,i)=>
-  `<div class="mes ${i===2?'atual':''}"><span class="vv">${String(x[1]).replace(".",",")}%</span>
-   <span class="col" style="height:${Math.max(5,x[1]/mx*52)}px"></span><span class="lb">${x[0]}</span></div>`).join("");
- const disp = serie[1][1]>serie[0][1] && serie[2][1]>serie[1][1];
+  `<div class="mes ${i===serie.length-1?'atual':''}"><span class="vv">${String(x[1]).replace(".",",")}%</span>
+   <span class="col" style="height:${Math.max(2,(x[1]||0)/mx*52)}px"></span><span class="lb">${x[0]}</span></div>`).join("");
+ const disp = serie.length===3&&serie.every(x=>typeof x[1]==="number")&&serie[1][1]>serie[0][1] && serie[2][1]>serie[1][1];
  document.getElementById("c30").className="n res calc "+(disp?"ruim":"bom");
  document.getElementById("al30").innerHTML = disp
   ? `<div class="al"><b>▲ Alta sustentada em 2 meses.</b> Análise crítica exigida — ${r30.length} pacientes com 3 ou mais episódios.</div>`
@@ -1897,7 +2062,7 @@ function r07(){
 }
 
 /* ========== IND-08 · PERDA DE CIRCUITO — bloco 6, Complicações Intradialíticas ========== */
-const SER08=[["Mai",1.6],["Jun",1.9]];
+const SER08=[];
 let AC08=[];
 CARD["IND-08"]=()=>`<div class="ind" id="IND-08"><div class="ih" onclick="abre('IND-08')">
  <span class="cod">IND-08</span><span class="inome">Perda de circuito</span><span class="per">mensal</span>
@@ -1914,7 +2079,7 @@ CARD["IND-08"]=()=>`<div class="ind" id="IND-08"><div class="ih" onclick="abre('
   <div id="rac08"></div>
   ${acoes("IND-08","",true)}
  </div></div>`;
-let E08={h:29,f:12};
+let E08={h:0,f:0};
 function m08(m,v){E08[m]=+v||0;r08();}
 function r08(){
  const el=document.getElementById("mod08"); if(!el)return;
@@ -1922,12 +2087,13 @@ function r08(){
  const s=sesHD()+sesHDF(), e=E08.h+E08.f;
  document.getElementById("u1").textContent=e;
  const v=s?+(e/s*100).toFixed(1):0;
- document.getElementById("u2").textContent=String(v).replace(".",",")+"%";
- const serie=[SER08[0],SER08[1],["Jul",v]], mx=Math.max(...serie.map(x=>x[1]),1);
+ document.getElementById("u2").textContent=s?String(v).replace(".",",")+"%":"—";
+ const lbl08=((document.getElementById("comp").selectedOptions[0]||{text:"—"}).text||"—").slice(0,3);
+ const serie=SER08.slice(-2).concat([[lbl08,s?v:null]]), mx=Math.max(...serie.map(x=>x[1]||0),1);
  document.getElementById("sr08").innerHTML=serie.map((x,i)=>
-  `<div class="mes ${i===2?'atual':''}"><span class="vv">${String(x[1]).replace(".",",")}%</span>
-   <span class="col" style="height:${Math.max(5,x[1]/mx*52)}px"></span><span class="lb">${x[0]}</span></div>`).join("");
- const disp=serie[1][1]>serie[0][1]&&serie[2][1]>serie[1][1];
+  `<div class="mes ${i===serie.length-1?'atual':''}"><span class="vv">${x[1]==null?"—":String(x[1]).replace(".",",")+"%"}</span>
+   <span class="col" style="height:${Math.max(2,(x[1]||0)/mx*52)}px"></span><span class="lb">${x[0]}</span></div>`).join("");
+ const disp=serie.length===3&&serie.every(x=>typeof x[1]==="number")&&serie.length===3&&serie.every(x=>typeof x[1]==="number")&&serie[1][1]>serie[0][1]&&serie[2][1]>serie[1][1];
  document.getElementById("u2c").className="n res calc "+(disp?"ruim":"bom");
  document.getElementById("al08").innerHTML=disp
   ? `<div class="al"><b>▲ Alta sustentada em 2 meses.</b> Análise crítica exigida.</div>`
@@ -2020,9 +2186,12 @@ function nutR(k){
    <td class="tx" style="color:${(o.meta&&p<o.meta)?'var(--bad)':'var(--ink)'}">${p.toFixed(1).replace(".",",")}%</td></tr>`;}).join("");
  const mp=o.mod.reduce((a,x)=>a+x[1],0), mk=o.mod.reduce((a,x)=>a+x[2],0);
  const bateM=(mp===den)&&(mk===dentro);
- document.getElementById(k+"_trm").innerHTML=bateM
-  ? `<div class="okb">✓ As linhas somam ${mp} elegíveis e ${mk} na faixa · confere.</div>`
-  : `<div class="al"><b>✕ Não fecha.</b> As linhas somam ${mp} elegíveis (${den}) e ${mk} na faixa (${dentro}).</div>`;
+ const modVazia=(mp===0&&mk===0);
+ document.getElementById(k+"_trm").innerHTML=modVazia
+  ? `<div class="okb">A quebra por modalidade ainda não foi lançada — o laboratório não informa se o paciente é HD, HDF ou DP. A conformidade acima não depende dela.</div>`
+  : (bateM
+     ? `<div class="okb">✓ As linhas somam ${mp} elegíveis e ${mk} na faixa · confere.</div>`
+     : `<div class="al"><b>✕ Não fecha.</b> As linhas somam ${mp} elegíveis (${den}) e ${mk} na faixa (${dentro}).</div>`);
  document.getElementById(k+"_e").textContent=exc;
  document.getElementById(k+"_d").textContent=den;
  document.getElementById(k+"_f").textContent=naoConf;
@@ -2095,12 +2264,13 @@ function tendR(k){
  const s=sesHD()+sesHDF(), e=o.eh+o.ef;
  document.getElementById(k+"_e").textContent=e;
  const v=s?+(e/s*100).toFixed(1):0;
- document.getElementById(k+"_c").textContent=String(v).replace(".",",")+"%";
- const serie=[o.serie[0],o.serie[1],["Jul",v]], mx=Math.max(...serie.map(x=>x[1]),1);
+ document.getElementById(k+"_c").textContent=s?String(v).replace(".",",")+"%":"—";
+ const lbl=((document.getElementById("comp").selectedOptions[0]||{text:"—"}).text||"—").slice(0,3);
+ const serie=(o.serie||[]).slice(-2).concat([[lbl,s?v:null]]), mx=Math.max(...serie.map(x=>x[1]||0),1);
  document.getElementById(k+"_sr").innerHTML=serie.map((x,i)=>
-  `<div class="mes ${i===2?'atual':''}"><span class="vv">${String(x[1]).replace(".",",")}%</span>
-   <span class="col" style="height:${Math.max(5,x[1]/mx*52)}px"></span><span class="lb">${x[0]}</span></div>`).join("");
- const disp=serie[1][1]>serie[0][1]&&serie[2][1]>serie[1][1];
+  `<div class="mes ${i===serie.length-1?'atual':''}"><span class="vv">${x[1]==null?"—":String(x[1]).replace(".",",")+"%"}</span>
+   <span class="col" style="height:${Math.max(2,(x[1]||0)/mx*52)}px"></span><span class="lb">${x[0]}</span></div>`).join("");
+ const disp=serie.length===3&&serie.every(x=>typeof x[1]==="number")&&serie.length===3&&serie.every(x=>typeof x[1]==="number")&&serie[1][1]>serie[0][1]&&serie[2][1]>serie[1][1];
  document.getElementById(k+"_cc").className="n res calc "+(disp?"ruim":"bom");
  document.getElementById(k+"_al").innerHTML=disp
   ? `<div class="al"><b>▲ Alta sustentada em 2 meses.</b> Análise crítica exigida — ${o.prop.length} pacientes com 3 ou mais episódios.</div>`
@@ -2284,10 +2454,12 @@ function evtR(k){
              :`<div class="al"><b>▲ Acima da referência.</b> ${tx.toFixed(1).replace(".",",")}% contra ${String(ref).replace(".",",")}%.</div>`)
    : `<div class="okb">Referência do Censo ainda não preenchida — a série roda mesmo assim.</div>`;
  }
- if(o.serie){const serie=[o.serie[0],o.serie[1],["Jul",n]], mx=Math.max(...serie.map(x=>x[1]),1);
+ if(o.serie){
+  const lblE=((document.getElementById("comp").selectedOptions[0]||{text:"—"}).text||"—").slice(0,3);
+  const serie=o.serie.slice(-2).concat([[lblE,n]]), mx=Math.max(...serie.map(x=>x[1]||0),1);
   document.getElementById(k+"_sr").innerHTML=serie.map((x,i)=>
-   `<div class="mes ${i===2?'atual':''}"><span class="vv">${x[1]}</span>
-    <span class="col" style="height:${Math.max(5,x[1]/mx*52)}px"></span><span class="lb">${x[0]}</span></div>`).join("");}
+   `<div class="mes ${i===serie.length-1?'atual':''}"><span class="vv">${x[1]==null?"—":x[1]}</span>
+    <span class="col" style="height:${Math.max(2,(x[1]||0)/mx*52)}px"></span><span class="lb">${x[0]}</span></div>`).join("");}
  const ok=o.rows.filter(r=>evtOk(o,r)).length;
  const st=document.getElementById("st_"+k);
  if(st){st.innerHTML=`<b>${ok}</b> de ${n} analisados`;
@@ -2514,11 +2686,12 @@ function r27(){
  document.getElementById("n27s").textContent=sem;
  document.getElementById("n27c").textContent=cf.toFixed(1).replace(".",",")+"%";
  document.getElementById("n27cc").className="n res calc "+(cf>=100?"bom":"ruim");
- const serie=[NOTIF.serie[0],NOTIF.serie[1],["Jul",rec]], mx=Math.max(...serie.map(x=>x[1]),1);
+ const lblX=((document.getElementById("comp").selectedOptions[0]||{text:"—"}).text||"—").slice(0,3);
+  const serie=NOTIF.serie.slice(-2).concat([[lblX,rec]]), mx=Math.max(...serie.map(x=>x[1]||0),1);
  document.getElementById("n27sr").innerHTML=serie.map((x,i)=>
-  `<div class="mes ${i===2?'atual':''}"><span class="vv">${x[1]}</span>
-   <span class="col" style="height:${Math.max(5,x[1]/mx*52)}px"></span><span class="lb">${x[0]}</span></div>`).join("");
- const cai=serie[1][1]<serie[0][1]&&serie[2][1]<serie[1][1];
+  `<div class="mes ${i===serie.length-1?'atual':''}"><span class="vv">${x[1]==null?"—":x[1]}</span>
+   <span class="col" style="height:${Math.max(2,(x[1]||0)/mx*52)}px"></span><span class="lb">${x[0]}</span></div>`).join("");
+ const cai=serie.length===3&&serie.every(x=>typeof x[1]==="number")&&serie[1][1]<serie[0][1]&&serie[2][1]<serie[1][1];
  document.getElementById("n27al").innerHTML=cai
   ? `<div class="al"><b>▼ Queda sustentada em 2 meses.</b> Volume caindo levanta suspeita de subnotificação.</div>`
   : `<div class="okb">✓ Volume sem queda sustentada.</div>`;
@@ -2531,7 +2704,7 @@ function r27(){
  if(st){st.innerHTML=`<b>${ok}</b> de ${NOTIF.lista.length} classificadas`;
   document.getElementById("sv_IND-27").classList.toggle("on",bateL&&ok===NOTIF.lista.length);}
 }
-const POLI={med:9,serie:[["Mai",8],["Jun",9]],faixas:[["Menos de 65 anos",8],["65 anos ou mais",11]]};
+const POLI={med:0,serie:[],faixas:[["Menos de 65 anos",0],["65 anos ou mais",0]]};
 
 CARD["IND-29"]=()=>{const k="IND-29";
  return `<div class="ind" id="${k}"><div class="ih" onclick="abre('${k}')">
@@ -2553,10 +2726,11 @@ function r29(){
  el.innerHTML=POLI.faixas.map((f,i)=>
   `<tr><td class="pac">${f[0]}</td><td><input type="number" value="${f[1]}" oninput="POLI.faixas[${i}][1]=+this.value||0;r29()"></td></tr>`).join("");
  const m=+document.getElementById("p29m").value||0;
- const serie=[POLI.serie[0],POLI.serie[1],["Jul",m]], mx=Math.max(...serie.map(x=>x[1]),1);
+ const lblX=((document.getElementById("comp").selectedOptions[0]||{text:"—"}).text||"—").slice(0,3);
+  const serie=POLI.serie.slice(-2).concat([[lblX,m]]), mx=Math.max(...serie.map(x=>x[1]||0),1);
  document.getElementById("p29sr").innerHTML=serie.map((x,i)=>
-  `<div class="mes ${i===2?'atual':''}"><span class="vv">${x[1]}</span>
-   <span class="col" style="height:${Math.max(5,x[1]/mx*52)}px"></span><span class="lb">${x[0]}</span></div>`).join("");
+  `<div class="mes ${i===serie.length-1?'atual':''}"><span class="vv">${x[1]==null?"—":x[1]}</span>
+   <span class="col" style="height:${Math.max(2,(x[1]||0)/mx*52)}px"></span><span class="lb">${x[0]}</span></div>`).join("");
 }
 
 /* ================= BLOCOS 8 e 9 · QUALIDADE DE VIDA E EXPERIÊNCIA ================= */
@@ -2615,8 +2789,9 @@ function r37(){
 }
 
 /* ---------- competência ---------- */
+const COMP_ABERTA="ago";
 function trocaComp(){
- RO = document.getElementById("comp").value!=="jul";
+ RO = document.getElementById("comp").value!==COMP_ABERTA;
  document.body.classList.toggle("ro",RO);
  renderTudo();
  document.getElementById("lockBar").innerHTML = RO
@@ -2632,6 +2807,101 @@ function alertaReabrir(){
 /* T2 antiga (maquete estatica) removida — substituida pela Reuniao de Metas integrada (modulo RM).
    INTEGRACAO DE DADOS (proxima etapa): estadoDoIndicador(c) deve ler o estado vivo da T1
    (NUT/COB/TEND/EVT/standalone) + banco (series 12m, Rede, CBD). Hoje o RM usa o conjunto demonstrativo. */
+/* ====== CARGA REAL — historico herdado do painel anterior ======
+   Fonte: dados_mensais (Supabase), colunas por unidade. null = NAO MEDIDO, nunca zero.
+   Sem analise critica: o ritual nao existia ate julho/2026. */
+const HIST_MESKEY={jan:0,fev:1,mar:2,abr:3,mai:4,jun:5,jul:6,ago:7,set:8,out:9,nov:10,dez:11};
+const HIST={"rl": {"IND-41": [null, 71, 69, 71, 71, 74, 72, null, null, null, null, null], "IND-45": [null, 886, 953, 954, 946, 919, 925, null, null, null, null, null], "IND-47": [null, null, 2, 2, 2, 6, 3, null, null, null, null, null], "IND-48": [null, null, 3, 0, 2, 3, 1, null, null, null, null, null], "IND-39": [null, null, 9, 8, 7, 8, 11, null, null, null, null, null], "IND-40": [null, null, 25, 35, 30, 27, 40, null, null, null, null, null], "IND-40e": [null, null, 105, 41, 70, 87, 76, null, null, null, null, null], "IND-19": [null, null, 7, 4, 3, 5, 5, null, null, null, null, null], "IND-19p": [null, null, 0.8, 0.4, 0.3, 0.5, 0.5, null, null, null, null, null], "IND-15": [null, null, 1, 0, 0, 0, 0, null, null, null, null, null], "IND-18": [null, null, 1, 0, 2, 0, 0, null, null, null, null, null], "IND-22": [null, null, 1, 0, 0, 1, 0, null, null, null, null, null], "IND-21": [null, null, 1, 0, 1, 0, 0, null, null, null, null, null], "IND-20": [null, null, 56, 57, 55, 53, 53, null, null, null, null, null], "IND-23": [null, null, 7, 8.4, 3, 8, 8, null, null, null, null, null], "IND-01": [null, 74, 73, 66, 67, 67, 63, null, null, null, null, null], "IND-02": [null, 92, 85, 76.5, 89, 88, 88, null, null, null, null, null], "IND-03": [null, null, null, 98, null, null, 97, null, null, null, null, null], "IND-04": [null, null, null, 51, null, null, 59, null, null, null, null, null], "IND-05": [null, 97, 97, 98, 97, 95, 98, null, null, null, null, null], "IND-06": [null, 93, 86, 84, 83, 83, 82, null, null, null, null, null], "IND-07": [null, 84, 83, 85, 83, 82, 82, null, null, null, null, null], "IND-36": [null, 59, 64, 74, 64, 56, 72, null, null, null, null, null], "IND-12": [null, 86, 85, 81, 77, 68, 71, null, null, null, null, null], "IND-13": [null, 66, 64, 64, 69, 69, 70, null, null, null, null, null], "IND-14": [null, null, null, 84, null, null, 83, null, null, null, null, null], "IND-09": [null, 66, null, 65, 67, 68, 69, null, null, null, null, null], "IND-10": [null, 90, 91, 94, 94, 89, 89, null, null, null, null, null], "IND-11": [null, null, null, 57, null, null, 69, null, null, null, null, null]}, "santos": {"IND-41": [null, 37, 40, 41, 44, 47, 45, null, null, null, null, null], "IND-45": [null, 462, 583, 535, 537, 554, 615, null, null, null, null, null], "IND-47": [null, null, 4, 4, 5, 4, 2, null, null, null, null, null], "IND-48": [null, null, 0, 3, 2, 1, 4, null, null, null, null, null], "IND-39": [null, null, 0, null, 0, 0, 0, null, null, null, null, null], "IND-40": [null, null, 50, 20, 6, 19, 36, null, null, null, null, null], "IND-40e": [null, null, null, null, 0, 0, 0, null, null, null, null, null], "IND-19": [null, null, 11, 12, 17, 15, 16, null, null, null, null, null], "IND-19p": [null, null, 2, 2, 3, 2.6, 2.5, null, null, null, null, null], "IND-15": [null, null, 0, 0, 0, 0, 0, null, null, null, null, null], "IND-18": [null, null, 0, 1, 0, 0, 2, null, null, null, null, null], "IND-22": [null, null, 0, 3, 1, 0, 0, null, null, null, null, null], "IND-21": [null, null, 0, 1, 1, 2, 1, null, null, null, null, null], "IND-20": [null, null, 57, 65, 59, 57, 57, null, null, null, null, null], "IND-23": [null, null, 5, 17, 15, 4, 2, null, null, null, null, null], "IND-01": [null, 76, 70, 68, 77, 70, 69, null, null, null, null, null], "IND-02": [null, 96, 100, 94, 86, 92, 95, null, null, null, null, null], "IND-03": [null, null, null, 97, null, null, 92, null, null, null, null, null], "IND-04": [null, null, null, 40, null, null, 34, null, null, null, null, null], "IND-05": [null, 93, 93, 92, 91, 90, 90, null, null, null, null, null], "IND-06": [null, 81, 75, 72, 80, 81, 88, null, null, null, null, null], "IND-07": [null, 67, 58, 68, 68, 61, 62, null, null, null, null, null], "IND-36": [null, 72, 75, 78, 80, 73, 71, null, null, null, null, null], "IND-12": [null, 85, 88, 79, 74, 88, 75, null, null, null, null, null], "IND-13": [null, 73, 73, 63, 74, 76, 72, null, null, null, null, null], "IND-14": [null, null, null, 75, null, null, 75, null, null, null, null, null], "IND-09": [null, 75, null, 76, null, null, 70, null, null, null, null, null], "IND-10": [null, null, null, null, null, null, null, null, null, null, null, null], "IND-11": [null, null, null, 71, null, null, 71, null, null, null, null, null]}, "tatuape": {"IND-41": [null, 58, 57, 57, 57, 57, 58, null, null, null, null, null], "IND-45": [null, 616, 710, 723, 712, 738, 785, null, null, null, null, null], "IND-47": [null, null, 4, 1, 0, 0, 2, null, null, null, null, null], "IND-48": [null, null, 5, 1, 0, 1, 1, null, null, null, null, null], "IND-39": [null, null, 3, null, 1, 3, 4, null, null, null, null, null], "IND-40": [null, null, 25, 29, 30, 22, 24, null, null, null, null, null], "IND-40e": [null, null, 4, 4, 2, 2, 1, null, null, null, null, null], "IND-19": [null, null, 3, 2, 3, 4, 1, null, null, null, null, null], "IND-19p": [null, null, 0.4, 0.0, 0.4, 0.4, 0.1, null, null, null, null, null], "IND-15": [null, null, 0, 0, 0, 0, 0, null, null, null, null, null], "IND-18": [null, null, 0, 0, 0, 0, 0, null, null, null, null, null], "IND-22": [null, null, 1, 0, 0, 0, 0, null, null, null, null, null], "IND-21": [null, null, 0, 1, 1, 1, 1, null, null, null, null, null], "IND-20": [null, null, 64, 63, 65, 65, 65, null, null, null, null, null], "IND-23": [null, null, 4, 3, 12, 3.5, 7, null, null, null, null, null], "IND-01": [null, 72, 76, 75, 90, 75, 71, null, null, null, null, null], "IND-02": [null, 90, 96, 91, 96, 91, 93, null, null, null, null, null], "IND-03": [null, null, null, 98, null, null, 98, null, null, null, null, null], "IND-04": [null, null, null, 67, null, null, 65, null, null, null, null, null], "IND-05": [null, 94, 96, 86, 90, 90, 95, null, null, null, null, null], "IND-06": [null, 79, 86, 91, 90, 95, 95, null, null, null, null, null], "IND-07": [null, 82, 74, 79, 77, 77, 77, null, null, null, null, null], "IND-36": [null, 68, 73, 72, 72, 73, 98, null, null, null, null, null], "IND-12": [null, 92, 90, 87, 89, 87, 87, null, null, null, null, null], "IND-13": [null, 73, 69, 68, 75, 76, 69, null, null, null, null, null], "IND-14": [null, null, null, 92, null, null, 80, null, null, null, null, null], "IND-09": [null, 68, null, 72, 78, 74, 71, null, null, null, null, null], "IND-10": [null, 90, 87, 88, 90, 96, 96, null, null, null, null, null], "IND-11": [null, null, null, 86, null, null, 81, null, null, null, null, null]}, "penha": {}};
+let IDXATUAL=7;
+
+function zeraDemo(){
+ const LISTAS_FORA=["exc","fora","rows","lista","prop","serie","extra","meses","div"];
+ const NUMS=["tot","feitos","ev","prev","rec","trat","med","ativos","prom","neu","det",
+             "eh","ef","h","f","q","d","pub","pri","hdPub","hdPri","hdfPub","hdfPri",
+             "ant","adm","sai","tra"];
+ function limpa(o){
+  if(Array.isArray(o)){
+   for(let i=o.length-1;i>=0;i--){
+    const it=o[i];
+    if(it&&typeof it==="object"&&!Array.isArray(it)&&(("p" in it)||("i" in it))){o.splice(i,1);continue;}
+    limpa(it);
+   }
+   return;
+  }
+  if(!o||typeof o!=="object")return;
+  Object.keys(o).forEach(k=>{
+   const v=o[k];
+   if(k==="mot"||k==="cols"||k==="opts")return;
+   if(LISTAS_FORA.includes(k)&&Array.isArray(v)){v.length=0;return;}
+   if(k==="v"&&typeof v==="string"&&/^[\d.,]+$/.test(v)){o[k]="";return;}
+   if(NUMS.includes(k)&&typeof v==="number"){o[k]=0;return;}
+   if(k==="j"&&typeof v==="string"){o[k]="";return;}
+   limpa(v);
+  });
+ }
+ const VAZIA=["SALAS38","INTERD","AC38","iRows","r30","EXC05","KT05","EXC06","VC06","EXC07","CAT"];
+ Object.keys(REG).forEach(k=>{
+  let o; try{o=REG[k]();}catch(_){return;}
+  if(VAZIA.includes(k)&&Array.isArray(o)){o.length=0;return;}
+  limpa(o);
+ });
+ try{(REG.POLI().faixas||[]).forEach(f=>{f[1]=0;});}catch(_){}
+ try{Object.keys(NUT).forEach(function(k){(NUT[k].mod||[]).forEach(function(r){r[1]=0;r[2]=0;});});}catch(_){}
+ try{Object.keys(ROST).forEach(k=>{ROST[k].conf=false;(ROST[k].div||[]).forEach(d=>{d.st="";});});}catch(_){}
+ try{if(typeof montaBlocos==="function")montaBlocos(); if(typeof recalcTudo==="function")recalcTudo();}catch(_){}
+}
+
+function t1SemBase(){
+ try{const m=REG.MOV(),se=REG.SES();
+  return ((m.ant||0)+(m.adm||0)+(se.hdPub||0)+(se.hdPri||0)+(se.hdfPub||0)+(se.hdfPri||0))===0;
+ }catch(_){return false;}
+}
+/* ★ sem elegiveis lancados o indicador mostra "—", NUNCA 0% marcado como fora da meta */
+function indSemLancamento(cod){
+ try{if(typeof NUT!=="undefined"&&NUT[cod])return !(NUT[cod].tot>0);}catch(_){}
+ try{if(typeof COB!=="undefined"&&COB[cod])return !(COB[cod].tot>0);}catch(_){}
+ try{if(cod==="IND-19")return !(FAL.prev>0);}catch(_){}
+ try{if(cod==="IND-27")return !(NOTIF.rec>0);}catch(_){}
+ try{if(cod==="IND-37")return !(NPS.ativos>0);}catch(_){}
+ return t1SemBase();
+}
+function t1Vazia(){
+ try{
+  const m=REG.MOV(), se=REG.SES();
+  let tot=(m.ant||0)+(m.adm||0)+(se.hdPub||0)+(se.hdPri||0)+(se.hdfPub||0)+(se.hdfPri||0);
+  /* lote de laboratorio ja lancado tambem conta como competencia iniciada */
+  try{Object.keys(NUT).forEach(function(k){tot+=(NUT[k].tot||0);});}catch(_){}
+  try{tot+=(typeof LOTES!=="undefined"?LOTES.length:0);}catch(_){}
+  return tot===0;
+ }catch(_){return false;}
+}
+function aplicaHist(){
+ try{if(typeof RM!=="undefined"&&RM.zeraHero)RM.zeraHero();}catch(_){}
+ if(typeof RM==="undefined"||!RM.blocos)return;
+ const u=(typeof UN_CHAVE!=="undefined")?UN_CHAVE[document.getElementById("unidade").value]:"rl";
+ const h=HIST[u]||{};
+ const comp=document.getElementById("comp").value;
+ const iAtual=(HIST_MESKEY[comp]!=null)?HIST_MESKEY[comp]:7; IDXATUAL=iAtual;
+ RM.blocos().forEach(b=>b.inds.forEach(ind=>{
+  const key=ind.id||ind.c;
+  const serie=h[key]||h[ind.c];
+  if(!serie){ ind.serie=new Array(12).fill(null); ind.srede=null; ind.v="—"; ind.st="neu"; ind.d=""; ind.casos=0; ind.u=null; ind.rede=null; ind.k2=""; ind.qb=null; return; }
+  ind.serie=serie.slice(0,12);
+  const val=serie[iAtual], ant=serie[iAtual-1];
+  ind.u=(typeof val==="number")?val:null;
+  ind.rede=null; ind.srede=null; ind.casos=0; ind.k2=""; ind.qb=null;
+  if(val==null){ ind.v="—"; ind.st="neu"; ind.d=""; return; }
+  ind.v=(ind.fmt==="%")?String(val).replace(".",",")+"%":String(val).replace(".",",");
+  if(typeof ant==="number"&&ant!==0){
+   const dif=val-ant, pct=Math.round(Math.abs(dif)/ant*100);
+   ind.d=(dif>0?"▲ +":(dif<0?"▼ −":"▬ "))+(dif===0?"estavel":Math.abs(Math.round(dif*10)/10)+" ("+pct+"%)");
+   ind.dc=dif>0?"up":(dif<0?"dn":"");
+  } else { ind.d=""; ind.dc=""; }
+  if(ind.meta!=null&&typeof val==="number") ind.st=(val>=ind.meta)?"okt":"fora"; else ind.st="neu";
+ }));
+ try{RM.rerender();}catch(_){}
+}
+
 const RM=(function(){
 "use strict";
 
@@ -2653,7 +2923,7 @@ const BLOCOS=[
    {c:"IND-40",id:"IND-40e",dupnav:1,l:"Consultas outros especialistas",v:"27",st:"neu",d:"▼ −3 (10%)",dc:"dn",spk:1,serie:[24,26,25,28,29,30,27]}]},
  {num:2,nome:"Adequação da Diálise",inds:[
    {c:"IND-05",l:"Kt/V ≥ 1,2",v:"88,2%",st:"fora",tm:"meta ≥ 90%",k2:"Kt/V ≥ 1,4 · 74%",u:88.2,rede:94,cbd:78,casos:8,serie:[93,92,91,90,89.5,89.9,88.2],srede:[95,94,94,93,94,94,94],meta:90,fmt:"%"},
-   {c:"IND-06",l:"Volume convectivo ≥ 69 L",v:"88%",st:"okt",tm:"meta ≥ 80%",u:88,rede:88,cbd:null,sr:1,casos:2,serie:[86,87,88,87,88,88,88],srede:[87,88,88,88,88,89,88],meta:80,fmt:"%"},
+   {c:"IND-06",l:"Volume convectivo ≥ 23 L/sessão",v:"88%",st:"okt",tm:"meta ≥ 80%",u:88,rede:88,cbd:null,sr:1,casos:2,serie:[86,87,88,87,88,88,88],srede:[87,88,88,88,88,89,88],meta:80,fmt:"%"},
    {c:"IND-07",l:"Acesso em FAV / prótese",v:"72%",st:"fora",tm:"meta ≥ 80%",u:72,rede:74,cbd:70,casos:6,serie:[77,76,75,75,74,73,72],srede:[76,75,75,74,74,74,74],meta:80,fmt:"%"}]},
  {num:3,nome:"Avaliação Nutricional",drill:1,inds:[
    {c:"IND-01",l:"Fósforo ≤ 5,5 mg/dL",v:"65,8%",st:"fora",tm:"meta ≥ 70%",u:65.8,rede:68,cbd:68,casos:13,serie:[63.4,70.1,72.5,66.9,71.2,68.4,65.8],srede:[61,68,71,68,70,69,68],meta:70,fmt:"%"},
@@ -2705,9 +2975,9 @@ const RECOR=[
  {p:"S. C. D.",ind:["01","03"]},{p:"V. R. B.",ind:["01","03"]},{p:"T. O. V.",ind:["01","04"]},{p:"P. H. R.",ind:["01","04"]},
  {p:"Q. S. V.",ind:["05","19"]},{p:"D. M. J.",ind:["07","21"]}
 ];
-const GOV=17;
-const REC2={2:4,3:12,4:0,5:1,6:6,7:1};  /* pacientes do bloco em >=2 indicadores — só onde a leitura por paciente recorrente faz sentido */
-const ATIVOS=64;
+let GOV=0;
+const REC2={2:0,3:0,4:0,5:0,6:0,7:0};  /* pacientes do bloco em >=2 indicadores — só onde a leitura por paciente recorrente faz sentido */
+let ATIVOS=0;
 
 /* sub-causas — Catálogo v1.0 (listas validadas) */
 const GRUPO={A1:"A",A2:"A",A3:"A",P:"P",C:"C",M:"M"};
@@ -2871,13 +3141,7 @@ const CASOS={
 "IND-02":{vlab:"K (mmol/L)",rows:[["F. G. M.","6,8",6],["R. S. T.","6,4",13],["O. P. N.","6,2",9]]},
 "IND-03":{vlab:"Alb (g/dL)",rows:[["V. R. B.","3,2",10],["S. C. D.","3,4",4]]},
 "IND-04":{vlab:"IMC (kg/m²)",rows:[["T. O. V.","17,9",2],["P. H. R.","18,2",7]]}};
-const ANT={
-"IND-01":[["Revisar dose de quelante","Nutrição","20/07","concluído"],["Ajustar dispensação","Farmácia","15/07","aberto"]],
-"IND-05":[["Aumentar tempo de sessão dos casos abaixo da faixa","Equipe médica","10/07","aberto"]],
-"IND-07":[["Encaminhar pacientes em cateter para avaliação da cirurgia vascular","Equipe médica","30/07","aberto"]],
-"IND-30":[["Revisar UF horária da tarde","Equipe médica","31/07","aberto"]],
-"IND-19":[["Confirmar presença por telefone na véspera","Recepção","05/07","aberto"]],
-"IND-37":[["Rever grade de início das sessões da tarde","Enfermagem","20/07","aberto"]]};
+const ANT={}/* pendencias do mes anterior — virao do banco quando a competencia anterior for encerrada */;
 const PL={};   /* ações novas por indicador */
 const PLP=[];  /* ações por paciente */
 const DISC={}; /* indicador já discutido na reunião */
@@ -2902,6 +3166,7 @@ renderHero();
 /* ================= CARDS DE BLOCO ================= */
 function badge(b){
  const f=foraDe(b).length;
+ if(!b.inds.some(i=>i.v&&i.v!=="—"&&i.v!==""))return `<span class="badge lei">sem lançamento</span>`;
  if(f)return `<span class="badge fora num">▲ ${f} de ${b.inds.length} fora — em pauta</span>`;
  if(b.inds.some(i=>i.tm||i.meta!=null))return `<span class="badge okb num">✓ conforme</span>`;
  return `<span class="badge lei">leitura</span>`;
@@ -2910,17 +3175,26 @@ function barra(cls,val,max,lab,suf){
  if(val==null)return "";
  return `<span class="cr ${cls}"><span class="cl">${lab}</span><span class="cb"><i style="width:${Math.min(100,val/max*100)}%"></i></span><span class="cv num">${String(val).replace(".",",")}${suf||""}</span></span>`;
 }
-function mspark(s){
+/* ★ REGRA FIXA: o micro-gráfico do card mostra 6 meses anteriores + o mês corrente. 7 colunas, nunca 12.
+   O gráfico de 12 meses existe só no DETALHE do indicador (função graf). */
+function janela7(s){
+ if(!Array.isArray(s))return [];
+ if(s.length===12){const ini=Math.max(0,IDXATUAL-6);return s.slice(ini,IDXATUAL+1);}
+ return s.slice(-7);
+}
+function offJanela(){ return (typeof IDXATUAL==="number")?Math.max(0,IDXATUAL-6):0; }
+function mspark(s,off){
+ off=off||0;
  const v=s.filter(x=>x!=null),w=150,ht=41,hb=28;
  const mx=Math.max(...v)||1;
  const ant=v.slice(0,-1), med=ant.length?ant.reduce((a,x)=>a+x,0)/ant.length:0;
  const bw=(w-6)/s.length;
  let g=s.map((x,i)=>{
   const cx=3+i*bw;
-  const rot=`<text x="${(cx+bw*0.34).toFixed(1)}" y="${ht-1}" text-anchor="middle" font-size="7" fill="#9aa4b0">${MES[i]}</text>`;
+  const rot=`<text x="${(cx+bw*0.34).toFixed(1)}" y="${ht-1}" text-anchor="middle" font-size="7" fill="#9aa4b0">${MES[off+i]||""}</text>`;
   if(x==null)return rot;
   const bh=Math.max(2,(hb-4)*(x/mx)), ult=i===s.length-1;
-  return `<rect x="${cx.toFixed(1)}" y="${(hb-bh).toFixed(1)}" width="${(bw*0.68).toFixed(1)}" height="${bh.toFixed(1)}" rx="2" fill="${ult?"#1F6FC4":"#B9D4F0"}"><title>${MES[i]}: ${String(x).replace(".",",")}</title></rect>`+rot;
+  return `<rect x="${cx.toFixed(1)}" y="${(hb-bh).toFixed(1)}" width="${(bw*0.68).toFixed(1)}" height="${bh.toFixed(1)}" rx="2" fill="${ult?"#1F6FC4":"#B9D4F0"}"><title>${MES[off+i]||""}: ${String(x).replace(".",",")}</title></rect>`+rot;
  }).join("");
  if(med)g+=`<line x1="1" x2="${w-1}" y1="${(hb-(hb-4)*(med/mx)).toFixed(1)}" y2="${(hb-(hb-4)*(med/mx)).toFixed(1)}" stroke="#2F9E44" stroke-width="1.3" stroke-dasharray="4 3"><title>média 6 m: ${String(Math.round(med*10)/10).replace(".",",")}</title></line>`;
  return `<svg class="tsp" width="${w}" height="${ht}" aria-hidden="true">${g}</svg>`;
@@ -2940,7 +3214,7 @@ function tile(i){
   ${i.d?`<div class="dl ${i.dc} num">${i.d}</div>`:""}
   ${i.k2?`<div class="k2 num">${i.k2}</div>`:""}
   ${i.tm?`<div class="tm">${i.tm}</div>`:""}${cmp}
-  ${i.spk?mspark(i.serie):""}</div>`;
+  ${i.spk?mspark(janela7(i.serie),offJanela()):""}</div>`;
 }
 function recTile(b){
  if(REC2[b.num]==null)return "";
@@ -3007,30 +3281,33 @@ function sync(){
   i.v=r.v; if(r.st)i.st=r.st;
   if(cfg.ex){try{i.qb=cfg.ex();}catch(_){}}
   const num=parseFloat(String(r.v).replace("%","").replace(",","."));
-  if(!isNaN(num)&&i.serie&&i.serie.length===12){/*12m*/ i.serie[6]=num;}
-  else if(!isNaN(num)&&i.serie)i.serie[6]=num;
+  if(indSemLancamento(i.c)){ i.v="—"; i.st="neu"; i.d=""; i.casos=0; if(i.serie)i.serie[IDXATUAL]=null; return; }
+  if(!isNaN(num)&&i.serie)i.serie[IDXATUAL]=num;
  }));
  renderHero(); renderPauta();
  const ch=document.getElementById("rmChip");
- if(ch)ch.textContent="✓ valores do mês sincronizados da aba Lançamento · séries 12m e Rede/CBD demonstrativos até o banco";
+ if(ch)ch.textContent="Série histórica herdada do painel anterior (fev a jul/2026) · sem análise crítica registrada · Rede e CBD entram com o banco";
 }
 
 /* ================= GRÁFICO 12 MESES (SVG) ================= */
 function graf(i){
- const W=980,H=150,px=34,pt=16,pb=24,cw=(W-2*px)/12;
+ /* janela de 7: 6 meses anteriores + o atual — regra fixa dos 6 meses (Bruno, 20/08) */
+ const W=980,H=150,px=34,pt=16,pb=24,cw=(W-2*px)/7;
  const vals=i.serie||[],todos=vals.filter(v=>v!=null).concat(i.srede?i.srede.filter(v=>v!=null):[]);
  let mx=Math.max(...todos,i.meta||0); if(i.fmt==="%"&&mx<=100&&mx>60)mx=100; mx=mx*1.12||1;
  const Y=v=>H-pb-(v/mx)*(H-pt-pb);
+ const jIni=(vals.length===12&&typeof IDXATUAL==="number")?Math.max(0,IDXATUAL-6):0;
  let g="";
- for(let m=0;m<12;m++){
+ for(let k=0;k<7;k++){
+  const m=jIni+k; if(m>=12||(vals.length<12&&k>=vals.length))break;
   const v=vals[m];
-  g+=`<text x="${px+cw*m+cw/2}" y="${H-8}" text-anchor="middle" font-size="9.5" fill="#9aa4b0">${MES[m]}</text>`;
+  g+=`<text x="${px+cw*k+cw/2}" y="${H-8}" text-anchor="middle" font-size="9.5" fill="#9aa4b0">${MES[m]}</text>`;
   if(v==null)continue;
   const bh=Math.max(2,(H-pt-pb)*(v/mx));
-  g+=`<rect x="${px+cw*m+cw*0.22}" y="${Y(v)}" width="${cw*0.56}" height="${bh}" rx="3"
-     fill="${m===6?(i.st==="fora"?"#B91C1C":"#1F6FC4"):"#B9D4F0"}"><title>${MES[m]}: ${String(v).replace(".",",")}${i.fmt||""}</title></rect>`;
-  g+=`<text x="${px+cw*m+cw/2}" y="${Y(v)-4}" text-anchor="middle" font-size="9" font-weight="700"
-     fill="${m===6?(i.st==="fora"?"#B91C1C":"#1F6FC4"):"#8fa6bd"}">${String(v).replace(".",",")}</text>`;
+  g+=`<rect x="${px+cw*k+cw*0.22}" y="${Y(v)}" width="${cw*0.56}" height="${bh}" rx="3"
+     fill="${m===IDXATUAL?(i.st==="fora"?"#B91C1C":"#1F6FC4"):"#B9D4F0"}"><title>${MES[m]}: ${String(v).replace(".",",")}${i.fmt||""}</title></rect>`;
+  g+=`<text x="${px+cw*k+cw/2}" y="${Y(v)-4}" text-anchor="middle" font-size="9" font-weight="700"
+     fill="${m===IDXATUAL?(i.st==="fora"?"#B91C1C":"#1F6FC4"):"#8fa6bd"}">${String(v).replace(".",",")}</text>`;
  }
  if(i.meta!=null)g+=`<line x1="${px}" x2="${W-px}" y1="${Y(i.meta)}" y2="${Y(i.meta)}" stroke="#2F9E44" stroke-width="1.6" stroke-dasharray="6 4"/>
   <text x="${W-px}" y="${Y(i.meta)-5}" text-anchor="end" font-size="9.5" font-weight="700" fill="#2F9E44">meta ${i.meta}${i.fmt||""}</text>`;
@@ -3299,16 +3576,20 @@ function aplicaMetas(rows){
  }));});
  renderHero(); renderPauta();
 }
-return {abreBloco,fil,regP,delP,antOK,antRe,marcaDisc,voltar,abrePac,fechaPac,fichaPac,listaPac,regPF,delPF,abreEmail,fechaEmail,enviaEmail,sync,metas:metasLista,aplicaMetas,estado:()=>({PL,PLP,DISC}),carrega:o=>{if(!o)return;absorve(PL,o.PL);absorve(PLP,o.PLP);absorve(DISC,o.DISC);}};
+return {abreBloco,fil,regP,delP,antOK,antRe,marcaDisc,voltar,abrePac,fechaPac,fichaPac,listaPac,regPF,delPF,abreEmail,fechaEmail,enviaEmail,sync,metas:metasLista,aplicaMetas,acoes:todasAcoes,cobrancas:cobrancas,blocos:()=>BLOCOS,zeraHero:()=>{try{RECOR.length=0;}catch(_){}try{GOV=0;}catch(_){}},rerender:()=>{try{renderHero();}catch(_){}try{renderPauta();}catch(_){}},estado:()=>({PL,PLP,DISC}),carrega:o=>{if(!o)return;absorve(PL,o.PL);absorve(PLP,o.PLP);absorve(DISC,o.DISC);}};
 })();
 
 function tela(n){
  document.getElementById("ab1").classList.toggle("on",n===1);
  document.getElementById("ab2").classList.toggle("on",n===2);
+ document.getElementById("ab3").classList.toggle("on",n===3);
  document.getElementById("telaLanc").style.display=n===1?"block":"none";
  document.getElementById("telaReuniao").style.display=n===2?"block":"none";
- document.getElementById("tt").textContent=n===1?"Lançamento mensal":"Reunião de Metas · julho / 2026";
+ document.getElementById("telaAta").style.display=n===3?"block":"none";
+ const compTx=(document.getElementById("comp").selectedOptions[0]||{text:""}).text.replace(" 🔒","").toLowerCase();
+ document.getElementById("tt").textContent=n===1?"Lançamento mensal":(n===2?("Reunião de Metas · "+compTx):("Ata da Reunião · "+compTx));
  if(n===2)RM.sync();
+ if(n===3){try{RM.sync();}catch(_){} montaAta();}
 }
 function renderTudo(){
  montaBlocos(); rCT(); r38(); r39(); r40(); r05(); r06(); r07(); r08();
@@ -3412,12 +3693,16 @@ function entrar(){
  document.getElementById("btMetas").style.display=PERFIL.adm?"inline-block":"none";
  document.getElementById("quem").innerHTML=`<b>${PERFIL.papel}</b> · ${PERFIL.adm?"rede inteira":u} <button onclick="trocarUsuario()">trocar</button>`;
  document.getElementById("gate").style.display="none";
+ try{zeraDemo();}catch(e){console.log("zeraDemo:",e);}
+ try{aplicaHist();}catch(e){console.log("aplicaHist:",e);}
+ try{document.getElementById("unidade").addEventListener("change",aplicaHist);document.getElementById("comp").addEventListener("change",function(){setTimeout(aplicaHist,60);});}catch(_){}
 }
 function trocarUsuario(){document.getElementById("gate").style.display="flex";}
 
 /* ---- Apex embed: identificação vem do login do PRO (tabela perfis) ---- */
 async function gateApex(){
  if(!EMBED)return;
+ try{document.body.classList.add("embed");}catch(_){}
  try{
   const tk=sbToken(); if(tk===SB_KEY)return;            /* sem token de login → gate manual */
   const r=await fetch(SB_URL+"/rest/v1/perfis?select=unidade,papel&ativo=eq.true",{headers:sbHdrs()});
@@ -3432,6 +3717,32 @@ async function gateApex(){
   if(new URLSearchParams(location.search).get("metas")==="1"&&PERFIL.adm)setTimeout(function(){try{abreMetas();}catch(_){}},700);
  }catch(_){/* falhou → gate manual continua */}
 }
+/* ---- setas de rolagem das réguas (escolha C, 20/08) ---- */
+function setasNav(el){
+ if(!el)return;
+ if(!el.querySelector(".bsx")){
+  const mk=(cl,tx,dx)=>{const b=document.createElement("button");b.type="button";b.className="bsx "+cl;b.textContent=tx;
+    b.onclick=e=>{e.stopPropagation();el.scrollBy({left:dx*Math.round(el.clientWidth*0.7),behavior:"smooth"});};return b;};
+  el.prepend(mk("l","\u2039",-1)); el.append(mk("r","\u203a",1));
+ }
+ el.classList.toggle("has-ov",el.scrollWidth>el.clientWidth+2);
+}
+function setasTudo(){["bnav","rmBnav","rmMNav"].forEach(id=>setasNav(document.getElementById(id)));}
+new MutationObserver(function(muts){
+ for(const m of muts){const el=m.target;
+  if(el.__setando)continue;
+  if(el.classList&&(el.classList.contains("bnav")||el.classList.contains("subnav"))){el.__setando=true;setasNav(el);el.__setando=false;}}
+}).observe(document.body,{childList:true,subtree:true});
+window.addEventListener("resize",setasTudo);
+setasTudo();
+/* ---- competência fechada: o teclado também respeita o somente-leitura ---- */
+document.addEventListener("focusin",function(e){
+ if(!RO)return;
+ const el=e.target;
+ if(!/^(INPUT|SELECT|TEXTAREA)$/.test(el.tagName))return;
+ if(!el.closest("#telaLanc,#telaReuniao,#telaAta"))return;
+ el.blur();
+});
 gateApex();
 
 /* ---- matriz de metas e referências (admin) ---- */
@@ -3484,6 +3795,118 @@ async function sbPlanos(acoes){
  if(!rows.length)return;
  try{await fetch(SB_URL+"/rest/v1/plano_acao",{method:"POST",headers:{...sbHdrs(),"Prefer":"return=minimal"},body:JSON.stringify(rows)});}catch(_){}
 }
+
+/* ================= ATA DA REUNIÃO (T3) ================= */
+let ATA_PART=[{n:"",f:""}];
+function ataPartAdd(){ATA_PART.push({n:"",f:""});montaAta();}
+function ataPartDel(i){ATA_PART.splice(i,1);if(!ATA_PART.length)ATA_PART.push({n:"",f:""});montaAta();}
+function ataPartSet(i,k,v){ATA_PART[i][k]=v;}
+function ataOcorrencias(){
+ const out=[];
+ const push=function(ind,p,v){p=String(p||"").trim(); if(p)out.push({ind:ind,p:p,v:(v==null?"":String(v))});};
+ const cada=function(obj,campo,fn){try{Object.keys(obj).forEach(function(k){(obj[k][campo]||[]).forEach(function(r){fn(k,r);});});}catch(_){}};
+ try{cada(NUT,"fora",function(k,r){push(k,r.p,r.v);});}catch(_){}
+ try{cada(COB,"fora",function(k,r){push(k,r.p,"");});}catch(_){}
+ try{cada(EVT,"rows",function(k,r){push(k,r.p,"");});}catch(_){}
+ try{cada(TEND,"prop",function(k,r){push(k,r.p,r.ep);});}catch(_){}
+ try{(FAL.lista||[]).forEach(function(r){push("IND-19",r.p,r.q);});}catch(_){}
+ try{(KT05||[]).forEach(function(r){push("IND-05",r.p,r.v);});}catch(_){}
+ try{(VC06||[]).forEach(function(r){push("IND-06",r.p,r.a);});}catch(_){}
+ try{(CAT||[]).forEach(function(r){push("IND-07",r.p,"");});}catch(_){}
+ try{(iRows||[]).forEach(function(r){push("IND-23",r.p,"");});}catch(_){}
+ try{(r30||[]).forEach(function(r){push("IND-30",r.p,r.ep);});}catch(_){}
+ return out;
+}
+function ataMapaInd(){
+ const m={};
+ try{RM.blocos().forEach(function(b){b.inds.forEach(function(i){if(!m[i.c])m[i.c]={l:i.l,st:i.st,v:i.v,tm:i.tm||"",bloco:b.nome};});});}catch(_){}
+ return m;
+}
+/* ★★ paciente fora em 2+ indicadores entra na ata AINDA QUE cada indicador esteja conforme */
+function ataRecorrentes(){
+ const oc=ataOcorrencias(), mapa=ataMapaInd(), por={};
+ oc.forEach(function(o){
+  if(!por[o.p])por[o.p]={p:o.p,inds:{}};
+  if(!por[o.p].inds[o.ind])por[o.p].inds[o.ind]={cod:o.ind,v:o.v};
+ });
+ return Object.keys(por).map(function(p){
+  const lista=Object.keys(por[p].inds).map(function(c){
+   const info=mapa[c]||{};
+   return {cod:c,v:por[p].inds[c].v,l:info.l||c,conforme:(info.st?info.st!=="fora":null),bloco:info.bloco||""};
+  }).sort(function(a,b){return a.cod<b.cod?-1:1;});
+  return {p:p,n:lista.length,inds:lista};
+ }).filter(function(x){return x.n>=2;}).sort(function(a,b){return b.n-a.n||(a.p<b.p?-1:1);});
+}
+function ataCausaPredominante(cod){
+ try{
+  const o=NUT[cod]; if(!o||!o.fora)return "";
+  const c={}; o.fora.forEach(function(r){if(r.c)c[r.c]=(c[r.c]||0)+1;});
+  const ks=Object.keys(c); if(!ks.length)return "";
+  ks.sort(function(a,b){return c[b]-c[a];});
+  return ((typeof GNOME!=="undefined"&&GNOME[GRUPO[ks[0]]])?GNOME[GRUPO[ks[0]]]:ks[0])+" ("+c[ks[0]]+")";
+ }catch(_){return "";}
+}
+function montaAta(){
+ const box=document.getElementById("ataCorpo"); if(!box)return;
+ const un=document.getElementById("unidade").value;
+ const comp=((document.getElementById("comp").selectedOptions[0]||{text:""}).text||"").replace(" 🔒","");
+ const mapa=ataMapaInd();
+ const pauta=Object.keys(mapa).filter(function(c){return mapa[c].st==="fora";}).map(function(c){return Object.assign({cod:c},mapa[c]);});
+ const rec=ataRecorrentes();
+ const acs=(RM.acoes?RM.acoes():[]);
+ const cob=(RM.cobrancas?RM.cobrancas():[]);
+ const nada=!pauta.length&&!rec.length&&!acs.length;
+ box.innerHTML='<div class="ata">'+
+  '<h2>Ata da Reunião de Metas</h2>'+
+  '<div class="cab"><span>Unidade <b>'+un+'</b></span><span>Competência <b>'+comp+'</b></span>'+
+   '<span>Indicadores na pauta <b>'+pauta.length+'</b></span>'+
+   '<span>Pacientes recorrentes <b>'+rec.length+'</b></span>'+
+   '<span>Ações registradas <b>'+acs.length+'</b></span></div>'+
+  '<section><h3>Participantes</h3>'+
+   ATA_PART.map(function(p,i){return '<div class="part">'+
+     '<input placeholder="Nome" value="'+(p.n||"")+'" oninput="ataPartSet('+i+',\'n\',this.value)">'+
+     '<input placeholder="Função" value="'+(p.f||"")+'" oninput="ataPartSet('+i+',\'f\',this.value)">'+
+     '<button class="lix" onclick="ataPartDel('+i+')" title="remover">🗑</button></div>';}).join("")+
+   '<button class="b-sec" onclick="ataPartAdd()">+ participante</button></section>'+
+  '<section><h3>Pendências da reunião anterior</h3>'+
+   (cob.length?'<table><thead><tr><th style="width:90px">Indicador</th><th>Ação</th><th style="width:140px">Responsável</th><th style="width:130px">Situação</th></tr></thead><tbody>'+
+     cob.map(function(x){return '<tr><td class="dim">'+x.ind+'</td><td>'+x.t+'</td><td>'+x.r+'</td><td>'+x.st+'</td></tr>';}).join("")+
+     '</tbody></table>':'<div class="vaz">Nenhuma pendência da competência anterior.</div>')+'</section>'+
+  '<section><h3>Indicadores fora da meta</h3>'+
+   (pauta.length?'<table><thead><tr><th style="width:80px">Código</th><th>Indicador</th><th style="width:90px">Resultado</th><th style="width:110px">Meta</th><th style="width:180px">Causa predominante</th></tr></thead><tbody>'+
+     pauta.map(function(x){return '<tr><td class="dim">'+x.cod+'</td><td><b>'+x.l+'</b><div class="dim" style="font-size:11px">'+(x.bloco||"")+'</div></td>'+
+       '<td class="sig">'+x.v+'</td><td class="dim">'+(x.tm||"—")+'</td><td>'+(ataCausaPredominante(x.cod)||'<span class="dim">a classificar</span>')+'</td></tr>';}).join("")+
+     '</tbody></table>':'<div class="vaz">Nenhum indicador fora da meta nesta competência.</div>')+'</section>'+
+  '<section><h3>Pacientes em dois ou mais indicadores</h3>'+
+   (rec.length?'<table><thead><tr><th style="width:90px">Paciente</th><th style="width:70px">Indic.</th><th>Onde aparece</th></tr></thead><tbody>'+
+     rec.map(function(r){return '<tr><td class="sig">'+r.p+'</td><td class="sig">'+r.n+'</td><td>'+
+       r.inds.map(function(i){
+         const cls=(i.conforme===false)?"pill f":(i.conforme===true?"pill k":"pill");
+         const marca=(i.conforme===true)?" ✓":((i.conforme===false)?" ▲":"");
+         return '<span class="'+cls+'" title="'+i.l+'">'+i.cod+(i.v?" · "+i.v:"")+marca+'</span>';
+       }).join("")+'</td></tr>';}).join("")+
+     '</tbody></table>'+
+     '<div class="aviso"><b>Entram aqui também os indicadores conformes</b> — marcados com ✓. Um indicador dentro da meta pode esconder o mesmo paciente aparecendo em vários lugares, e é essa repetição que precisa de conduta.</div>'
+    :'<div class="vaz">Nenhum paciente aparece em dois ou mais indicadores nesta competência.</div>')+'</section>'+
+  '<section><h3>Decisões e plano de ação</h3>'+
+   (acs.length?'<table><thead><tr><th style="width:90px">Indicador</th><th style="width:90px">Paciente</th><th>Ação</th><th style="width:140px">Responsável</th><th style="width:100px">Prazo</th></tr></thead><tbody>'+
+     acs.map(function(a){return '<tr><td class="dim">'+(a.ind||"—")+'</td><td class="sig">'+(a.p||"—")+'</td><td>'+a.t+'</td><td>'+(a.r||"—")+'</td><td>'+(a.z||"—")+'</td></tr>';}).join("")+
+     '</tbody></table>':'<div class="vaz">Nenhuma ação registrada na reunião.</div>')+'</section>'+
+  (nada?'<div class="aviso">A competência ainda não tem lançamento. A ata se monta sozinha conforme os dados entram no Lançamento e as decisões são tomadas na Reunião de Metas.</div>':"")+
+  '<div class="acoes-ata"><button class="bt-g" onclick="window.print()">Imprimir / PDF</button>'+
+   '<button class="b-sec" onclick="tela(2)">Voltar à reunião</button></div>'+
+ '</div>';
+}
+
+
+/* PDF da unidade: compilado dos blocos da T2, com todos fechados */
+function exportaUnidadePDF(){
+ try{document.querySelectorAll("#telaReuniao .view").forEach(function(v){v.classList.remove("on");});
+     const p=document.getElementById("rmVPauta"); if(p)p.classList.add("on");}catch(_){}
+ document.body.classList.add("print-unid");
+ setTimeout(function(){window.print();setTimeout(function(){document.body.classList.remove("print-unid");},400);},250);
+}
+
 renderTudo(); renderLotes(); sbMetasCarregar();
 </script>
 </body>
