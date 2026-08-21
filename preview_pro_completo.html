@@ -163,13 +163,20 @@ body.tool-focus .sidebar:not(:hover) .sb-chevron,body.tool-focus .sidebar:not(:h
 body.tool-focus .sidebar:not(:hover) .sb-user-info,body.tool-focus .sidebar:not(:hover) .sb-btn-sair{display:none;}
 body.tool-focus .sidebar:not(:hover) .sb-item-icon,body.tool-focus .sidebar:not(:hover) .sb-module-icon{display:flex;}
 body.tool-focus .sidebar:not(:hover) .sb-item,body.tool-focus .sidebar:not(:hover) .sb-module-label{justify-content:center;padding:12px 0;margin:1px 4px;}
-body.tool-focus .sidebar:not(:hover) .sb-logo{padding:16px 0;text-align:center;}
+body.tool-focus .sidebar:not(:hover) .sb-logo{padding:14px 0 12px;text-align:center;}
+body.tool-focus .sidebar:not(:hover) .sb-logo img{display:none;}
+body.tool-focus .sidebar:not(:hover) .sb-logo::before{content:"A";font-family:var(--font-sans);font-weight:800;font-size:20px;color:#fff;}
+body.tool-focus .sidebar:not(:hover) .sb-logo::after{content:"X";font-family:var(--font-sans);font-weight:800;font-size:20px;color:var(--gold);}
+body.tool-focus .sidebar:not(:hover) .sb-item-icon svg,body.tool-focus .sidebar:not(:hover) .sb-module-icon svg{width:22px;height:22px;}
+body.tool-focus .sidebar:not(:hover) .sb-item-icon,body.tool-focus .sidebar:not(:hover) .sb-module-icon{width:24px;height:24px;opacity:.85;}
+body.tool-focus .sidebar:not(:hover) .sb-item,body.tool-focus .sidebar:not(:hover) .sb-module-label{padding:13px 0;margin:2px 6px;}
+body.tool-focus .sidebar:not(:hover) .sb-grp-lbl{display:none;}
 body.tool-focus .sidebar:not(:hover) .sb-footer{padding:12px 0;align-items:center;}
 body.tool-focus .sidebar:hover{width:260px;box-shadow:8px 0 30px rgba(13,34,63,.35);}
 body.tool-focus .main{margin-left:60px;}
 body.tool-focus .main::before{left:60px;}
 /* topo navy incorporado na sidebar — sem faixa clara acima do cabeçalho (Bruno, 20/08) */
-body.tool-focus .topbar{background:var(--navy-deep);backdrop-filter:none;-webkit-backdrop-filter:none;border-bottom:none;}
+body.tool-focus .topbar{background:var(--navy-deep);backdrop-filter:none;-webkit-backdrop-filter:none;border-bottom:none;height:44px;padding:0 24px;}
 body.tool-focus .topbar .topbar-bc-item{color:rgba(255,255,255,.55);}
 body.tool-focus .topbar .topbar-bc-item:hover{color:#fff;}
 body.tool-focus .topbar .topbar-bc-active{color:#fff;}
@@ -180,7 +187,7 @@ body.tool-focus .sidebar{border-right:none;}
 /* a ferramenta ocupa a página inteira: sem margem duplicada e sem rolagem dupla */
 body.tool-focus .main{overflow:hidden;}
 body.tool-focus .content-page.active{padding:0;}
-body.tool-focus .content-page.active>iframe{height:calc(100vh - 56px);min-height:0;display:block;}
+body.tool-focus .content-page.active>iframe{height:calc(100vh - 44px);min-height:0;display:block;}
 /* ...e cabeçalho navy com logo, estética do mockup */
 .pro-logo{display:none;height:44px;width:auto;object-fit:contain;}
 body.pront-focus .topbar{background:var(--navy-deep);border-bottom-color:rgba(255,255,255,.10);height:74px;padding:0 32px;}
@@ -965,7 +972,7 @@ body.is-admin .adm-only{display:block;}
       </div>
       <div class="adm-only">
         <div class="sb-module-label" onclick="toggleModule(this)">
-          <span class="sb-module-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 5v14M5 12h14"/></svg></span>
+          <span class="sb-module-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4.8 2.3A.3.3 0 105 2H4a2 2 0 00-2 2v5a6 6 0 006 6 6 6 0 006-6V4a2 2 0 00-2-2h-1a.2.2 0 10.3.3"/><path d="M8 15v1a6 6 0 006 6 6 6 0 006-6v-4"/><circle cx="20" cy="10" r="2"/></svg></span>
           <span>Consult&oacute;rio</span>
           <span class="sb-lock">S&Oacute; VOC&Ecirc;</span>
           <span class="sb-chevron">&rsaquo;</span>
@@ -978,7 +985,7 @@ body.is-admin .adm-only{display:block;}
       </div>
       <div class="sb-divider"></div>
       <div class="sb-module-label open" onclick="toggleModule(this)">
-        <span class="sb-module-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="9"/></svg></span>
+        <span class="sb-module-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 21h18"/><rect x="5" y="12" width="3.4" height="9" rx="1"/><rect x="10.3" y="7" width="3.4" height="14" rx="1"/><rect x="15.6" y="10" width="3.4" height="11" rx="1"/><path d="M3 5.5h18" stroke-dasharray="3 2"/></svg></span>
         <span>Qualidade</span>
         <span class="sb-chevron">&rsaquo;</span>
       </div>
@@ -2080,6 +2087,9 @@ function navTo(pageId) {
 
   /* Modo ferramenta (D1): trilho de ícones nas páginas de Indicadores */
   document.body.classList.toggle('tool-focus', pageId === 'indicadores-metas' || pageId === 'cfg-metas');
+  document.querySelectorAll('.sb-item,.sb-module-label,.sb-child').forEach(function(el){
+    if(!el.title){var sp=el.querySelector('span:not([class])'); el.title=(sp?sp.textContent:el.textContent).trim(); }
+  });
 
   /* Carregar dados da página ao navegar */
   if (pageId === 'lista-pacientes' && currentDoctor) carregarListaPacientes();
