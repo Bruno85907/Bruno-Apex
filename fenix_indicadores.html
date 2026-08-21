@@ -3694,6 +3694,7 @@ async function sbGravar(auto){
   STATUS_BANCO[document.getElementById("comp").value]="aberto";
   sbMsg((auto?"✓ salvo automático às ":"✓ gravado no banco às ")+new Date().toLocaleTimeString("pt-BR").slice(0,5),true);
   sbLog("gravou",{auto:!!auto});
+  try{sbAlertas();}catch(_){}
  }catch(e){if(!auto)sbMsg("✕ falha ao gravar ("+e.message+")",false);}
 }
 async function sbCarregar(){
@@ -3791,6 +3792,37 @@ async function sbHerdaAnterior(){
   }
   return pegou;
  }catch(_){return false;}
+}
+/* D3 — alerta por limiar nos 6 indicadores escolhidos (Bruno, 21/08) */
+const ALERTA_INDS={"IND-02":"Potássio","IND-36":"Hemoglobina","IND-21":"Infecção do acesso vascular","IND-15":"Evento adverso grave","IND-05":"Kt/V — dose entregue","IND-01":"Fósforo"};
+async function sbAlertas(){
+ if(!sbLogado())return;
+ try{
+  if(typeof RM==="undefined"||!RM.blocos)return;
+  try{RM.sync();}catch(_){}
+  const k=compChave(); const fora=[];
+  RM.blocos().forEach(function(b){b.inds.forEach(function(i){
+   if(!ALERTA_INDS[i.c])return;
+   const evt=(i.c==="IND-15"||i.c==="IND-21");
+   const num=parseFloat(String(i.v).replace(",","."));
+   if(i.st==="fora"||(evt&&!isNaN(num)&&num>0))fora.push({c:i.c,nome:ALERTA_INDS[i.c],v:i.v,tm:i.tm||"meta zero"});
+  });});
+  for(const f of fora){
+   await fetch(SB_URL+"/rest/v1/qual_notificacao?on_conflict=chave",{
+    method:"POST",headers:{...sbHdrs(),"Prefer":"resolution=ignore-duplicates,return=minimal"},
+    body:JSON.stringify([{chave:"alerta:"+k.unidade+":"+k.ano+":"+k.mes+":"+f.c,
+     tipo:"alerta",canal:"email",unidade:k.unidade,ano:k.ano,mes:k.mes,papel_destino:"coordenacao",
+     corpo:{modelo:"alerta_meta",indicador:f.c,indicador_nome:f.nome,valor:String(f.v),meta:f.tm}}])});
+  }
+ }catch(_){}
+}
+/* prazo dos planos: "dd/mm" ou "dd/mm/aaaa" vira data real para a cobrança automática */
+function prazoData(t){
+ const m=String(t||"").trim().match(/^(\d{1,2})\/(\d{1,2})(?:\/(\d{2,4}))?$/);
+ if(!m)return null;
+ const a=m[3]?(+m[3]<100?2000+ +m[3]:+m[3]):compChave().ano;
+ const mm=String(+m[2]).padStart(2,"0"), dd=String(+m[1]).padStart(2,"0");
+ return a+"-"+mm+"-"+dd;
 }
 let SB_DIRTY=false,SB_TIMER=null;
 function sbMarcaSujo(){
@@ -3919,7 +3951,8 @@ async function sbMetasCarregar(){
 async function sbPlanos(acoes){
  const k=compChave();
  const rows=(acoes||[]).filter(a=>a.t).map(a=>({unidade:k.unidade,ano:k.ano,mes:k.mes,
-  indicador:a.ind||null,acao:a.t,responsavel:a.r||null,prazo:a.z||null}));
+  indicador:a.ind||null,acao:a.t,responsavel:a.r||null,prazo:a.z||null,
+  prazo_data:(typeof prazoData==="function"?prazoData(a.z):null)}));
  if(!rows.length)return;
  try{await fetch(SB_URL+"/rest/v1/plano_acao",{method:"POST",headers:{...sbHdrs(),"Prefer":"return=minimal"},body:JSON.stringify(rows)});}catch(_){}
 }
