@@ -716,8 +716,8 @@ body.ro #telaAta input,body.ro #telaAta select,body.ro #telaAta textarea{pointer
   <div class="mch"><h3>E-mail — decisões da reunião</h3><button class="x" onclick="RM.fechaEmail()">✕</button></div>
   <div class="mmeta">
     <span class="k">De</span><span>Plataforma de Indicadores · Fenix Nefrologia</span>
-    <span class="k">Para</span><span>Equipe República do Líbano · 12 destinatários</span>
-    <span class="k">Assunto</span><span><b>Reunião de Metas · República do Líbano · julho/2026 — plano de ação</b></span>
+    <span class="k">Para</span><span>Coordenação, médico RT e equipe multidisciplinar da unidade</span>
+    <span class="k">Assunto</span><span><b id="rmMailAss">Reunião de Metas — plano de ação</b></span>
   </div>
   <div class="mbody" id="rmMailBody"></div>
   <div class="mrod">
@@ -840,9 +840,17 @@ function fonte(f){
  document.getElementById("pLab").style.display=f==="lab"?"block":"none";
  document.getElementById("pAssist").style.display=f==="assist"?"block":"none";
 }
-function labIniciais(nome){
+const NOMES_COMPLETOS=true;   /* Bruno, 22/08: equipe identifica pelo nome, não pela sigla */
+function labSigla(nome){
  return String(nome||"").trim().split(/\s+/).filter(function(w){return w.length>2||/^[A-Z]$/.test(w);})
   .slice(0,3).map(function(w){return w[0].toUpperCase()+".";}).join(" ");
+}
+function labIniciais(nome){
+ if(!NOMES_COMPLETOS) return labSigla(nome);
+ const MIN={DA:1,DE:1,DO:1,DAS:1,DOS:1,E:1};
+ return String(nome||"").trim().replace(/\s+/g," ").split(" ").map(function(w,i){
+  const u=w.toUpperCase(); if(i&&MIN[u])return u.toLowerCase();
+  return w.charAt(0).toUpperCase()+w.slice(1).toLowerCase();}).join(" ");
 }
 function labNorm(nome){
  return String(nome||"").normalize("NFD").replace(/[\u0300-\u036f]/g,"").toUpperCase().replace(/[^A-Z ]/g,"").replace(/\s+/g," ").trim();
@@ -3154,7 +3162,10 @@ function zeraDemo(){
  try{(REG.POLI().faixas||[]).forEach(f=>{f[1]=0;});}catch(_){}
  try{Object.keys(NUT).forEach(function(k){(NUT[k].mod||[]).forEach(function(r){r[1]=0;r[2]=0;});});}catch(_){}
  try{Object.keys(ROST).forEach(k=>{ROST[k].conf=false;(ROST[k].div||[]).forEach(d=>{d.st="";});});}catch(_){}
- try{if(typeof montaBlocos==="function")montaBlocos(); if(typeof recalcTudo==="function")recalcTudo();}catch(_){}
+ try{if(typeof montaBlocos==="function")montaBlocos();}catch(_){}
+ /* os números de exemplo escritos no HTML (ativos em junho, internações, extras, consultas…) saem junto */
+ try{document.querySelectorAll("#telaLanc input[type=number]").forEach(function(el){el.value="";});}catch(_){}
+ try{if(typeof recalcTudo==="function")recalcTudo();}catch(_){}
 }
 
 function t1SemBase(){
@@ -3580,7 +3591,31 @@ function estadoDoIndicador(cfg){
   if(b)st=/ruim/.test(b.className)?"fora":(/bom/.test(b.className)?"okt":"neu");}
  return {v:txt,st:st};
 }
+/* ★ análise crítica da T2 = pacientes lançados na T1 (lote, planilha ou digitação). Nunca lista demo. */
+function syncCasos(){
+ const src={};
+ const add=function(k,p,v,sc){p=String(p||"").trim(); if(!p)return; (src[k]=src[k]||[]).push([p,String(v==null?"":v),sc||""]);};
+ try{Object.keys(NUT).forEach(k=>(NUT[k].fora||[]).forEach(r=>add(k,r.p,r.v,r.s)));}catch(_){}
+ try{Object.keys(COB).forEach(k=>(COB[k].fora||[]).forEach(r=>add(k,r.p,r.v||"",r.s)));}catch(_){}
+ try{Object.keys(EVT).forEach(k=>(EVT[k].rows||[]).forEach(r=>add(k,r.p,r.tipo||r.causa||r.local||r.data||"",r.s)));}catch(_){}
+ try{Object.keys(TEND).forEach(k=>(TEND[k].prop||[]).forEach(r=>add(k,r.p,r.ep,r.s)));}catch(_){}
+ try{(FAL.lista||[]).forEach(r=>add("IND-19",r.p,r.q,r.s));}catch(_){}
+ try{KT05.forEach(r=>add("IND-05",r.p,r.v,r.s));}catch(_){}
+ try{VC06.forEach(r=>add("IND-06",r.p,(r.a||0)+" de "+(r.t||0),r.s));}catch(_){}
+ try{CAT.forEach(r=>add("IND-07",r.p,"cateter",r.s));}catch(_){}
+ try{iRows.forEach(r=>add("IND-23",r.p,r.cl||"",r.s));}catch(_){}
+ try{r30.forEach(r=>add("IND-30",r.p,r.ep,r.s));}catch(_){}
+ Object.keys(CASOS).forEach(k=>{CASOS[k].rows=src[k]||[];});
+ BLOCOS.forEach(b=>b.inds.forEach(i=>{if(CASOS[i.c])i.casos=CASOS[i.c].rows.length;}));
+ RECOR.length=0; const por={};
+ Object.keys(src).forEach(k=>src[k].forEach(r=>{(por[r[0]]=por[r[0]]||{})[k.replace("IND-","")]=1;}));
+ Object.keys(por).forEach(p=>{const l=Object.keys(por[p]).sort(); if(l.length>=2)RECOR.push({p:p,ind:l});});
+ RECOR.sort((a,b)=>b.ind.length-a.ind.length||(a.p<b.p?-1:1));
+ Object.keys(RECMAP).forEach(k=>delete RECMAP[k]); RECOR.forEach(r=>RECMAP[r.p]=r.ind.length);
+ Object.keys(FICHA_EXTRA).forEach(k=>delete FICHA_EXTRA[k]);
+}
 function sync(){
+ try{syncCasos();}catch(e){console.log("syncCasos:",e);}
  BLOCOS.forEach(b=>b.inds.forEach(i=>{
   const cfg=LIGA[i.id||i.c]; if(!cfg)return;
   const r=estadoDoIndicador(cfg); if(!r)return;
@@ -3803,7 +3838,7 @@ function abreEmail(){
  const acs=todasAcoes();
  const cob=cobrancas();
  rmMailBody.innerHTML=`<h2>Reunião de Metas — plano de ação</h2>
-  <div class="sub2 num">República do Líbano · competência julho/2026 · ${nPauta} indicadores na pauta · ${nCasos} análises críticas</div>`+
+  <div class="sub2 num">${document.getElementById("unidade").value} · competência ${(typeof nomeMesComp==="function"?nomeMesComp():"")} · ${nPauta} indicadores na pauta · ${nCasos} análises críticas</div>`+
   (acs.length?`<table><thead><tr><th style="width:88px">Indicador</th><th style="width:82px">Paciente</th><th>Ação</th><th style="width:110px">Responsável</th><th style="width:64px">Prazo</th></tr></thead><tbody>`+
    acs.map(a=>`<tr><td>${a.ind?`<b>${a.ind}</b><br><span style="color:#7a8391;font-size:11px">${nomeInd(a.ind)}</span>`:"—"}</td>
     <td class="num">${a.p||"—"}</td><td>${a.t}</td><td>${a.r||"—"}</td><td class="num">${a.z||"—"}</td></tr>`).join("")+`</tbody></table>`
@@ -3813,6 +3848,7 @@ function abreEmail(){
    cob.map(c=>`<tr><td><b>${c.ind}</b></td><td>${c.t}</td><td>${c.r}</td>
     <td style="font-weight:700;color:${c.st==="concluído"?"#4D7C0F":c.st==="reconduzida"?"#B45309":"#7a8391"}">${c.st==="concluído"?"✓ concluída":c.st==="reconduzida"?"↻ reconduzida":"◷ sem registro"}</td></tr>`).join("")+`</tbody></table>`:"")+
   `<div style="font-size:11px;color:#7a8391;margin-top:14px">Gerado automaticamente pela Plataforma de Indicadores · Fenix Nefrologia</div>`;
+ try{document.getElementById("rmMailAss").textContent="Reunião de Metas · "+document.getElementById("unidade").value+" · "+(typeof nomeMesComp==="function"?nomeMesComp():"")+" — plano de ação";}catch(_){}
  rmEnvOk.classList.remove("on"); rmBtEnv.style.display=todasAcoes().length?"":"none";
  rmModal.classList.add("on");
 }
@@ -3841,7 +3877,7 @@ function fichaPac(n){
  const rg=regsDe(n);
  rmPpTit.textContent=n;
  rmPpl.innerHTML=`<div style="padding:10px 0 6px"><button class="bmini" onclick="RM.listaPac()">← todos os pacientes</button></div>
-  <div class="pqt num">${rg.length} ${rg.length===1?"registro":"registros"} · julho/2026</div>
+  <div class="pqt num">${rg.length} ${rg.length===1?"registro":"registros"} · ${(typeof nomeMesComp==="function"?nomeMesComp():"")}</div>
   <table class="dt"><thead><tr><th>Indicador</th><th style="width:80px">Valor</th><th style="width:40px">Cód.</th></tr></thead><tbody>`+
   rg.map(r=>`<tr><td>${r[0]}<div style="font-size:11px;color:var(--muted)">${r[3]||""}</div></td>
    <td class="num">${r[1]}</td><td>${r[2]?`<span class="tagc ${gcls(GRUPO[r[2]])}">${r[2]}</span>`:"—"}</td></tr>`).join("")+`</tbody></table>
@@ -3883,7 +3919,7 @@ function aplicaMetas(rows){
  }));});
  renderHero(); renderPauta();
 }
-return {abreBloco,fil,regP,delP,antOK,antRe,marcaDisc,voltar,abrePac,fechaPac,fichaPac,listaPac,regPF,delPF,abreEmail,fechaEmail,enviaEmail,sync,metas:metasLista,aplicaMetas,acoes:todasAcoes,cobrancas:cobrancas,blocos:()=>BLOCOS,antSet:o=>{Object.keys(ANT).forEach(function(x){delete ANT[x];});Object.assign(ANT,o||{});},antGet:()=>ANT,zeraHero:()=>{try{RECOR.length=0;}catch(_){}try{GOV=0;}catch(_){}},rerender:()=>{try{renderHero();}catch(_){}try{renderPauta();}catch(_){}},estado:()=>({PL,PLP,DISC}),carrega:o=>{if(!o)return;absorve(PL,o.PL);absorve(PLP,o.PLP);absorve(DISC,o.DISC);}};
+return {abreBloco,fil,regP,delP,antOK,antRe,marcaDisc,voltar,abrePac,fechaPac,fichaPac,listaPac,regPF,delPF,abreEmail,fechaEmail,enviaEmail,sync,metas:metasLista,aplicaMetas,acoes:todasAcoes,cobrancas:cobrancas,blocos:()=>BLOCOS,antSet:o=>{Object.keys(ANT).forEach(function(x){delete ANT[x];});Object.assign(ANT,o||{});},antGet:()=>ANT,casos:()=>CASOS,recor:()=>RECOR,zeraHero:()=>{try{RECOR.length=0;}catch(_){}try{GOV=0;}catch(_){}},rerender:()=>{try{renderHero();}catch(_){}try{renderPauta();}catch(_){}},estado:()=>({PL,PLP,DISC}),carrega:o=>{if(!o)return;absorve(PL,o.PL);absorve(PLP,o.PLP);absorve(DISC,o.DISC);}};
 })();
 
 function tela(n){
