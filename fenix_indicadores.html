@@ -2790,13 +2790,25 @@ function r37(){
 
 /* ---------- competência ---------- */
 const COMP_ABERTA="ago";
-function trocaComp(){
- RO = document.getElementById("comp").value!==COMP_ABERTA;
+let STATUS_BANCO={}; /* comp -> aberto | encerrado (fonte: qual_lancamento.status) */
+function travaDaComp(){
+ const c=document.getElementById("comp").value, st=STATUS_BANCO[c];
+ if(st==="encerrado")return true;
+ if(st==="aberto")return false;
+ return c!==COMP_ABERTA;
+}
+function aplicaTrava(){
+ RO=travaDaComp();
  document.body.classList.toggle("ro",RO);
- renderTudo();
+ const c=document.getElementById("comp").value, enc=STATUS_BANCO[c]==="encerrado";
  document.getElementById("lockBar").innerHTML = RO
-  ? `<div class="lock">🔒 <b>Competência encerrada.</b> Somente leitura.
-     <button onclick="alertaReabrir()">Solicitar reabertura</button></div>` : "";
+  ? `<div class="lock">🔒 <b>${enc?"Competência encerrada em Reunião de Metas.":"Competência encerrada."}</b> Somente leitura.
+     ${(enc&&PERFIL.adm)?`<button onclick="sbReabrir()">Reabrir competência</button>`:`<button onclick="alertaReabrir()">Solicitar reabertura</button>`}</div>` : "";
+}
+function trocaComp(){
+ aplicaTrava();
+ renderTudo();
+ if(typeof sbAutoCarregar==="function")sbAutoCarregar();
 }
 function alertaReabrir(){
  document.getElementById("lockBar").innerHTML=
@@ -3512,7 +3524,8 @@ function abreEmail(){
 }
 function fechaEmail(){rmModal.classList.remove("on");}
 function enviaEmail(){rmEnvOk.classList.add("on");rmBtEnv.style.display="none";
- try{if(typeof sbPlanos==="function")sbPlanos(todasAcoes());}catch(_){}}
+ try{if(typeof sbPlanos==="function")sbPlanos(todasAcoes());}catch(_){}
+ try{if(typeof sbEncerrar==="function")sbEncerrar();}catch(_){}}
 
 /* ================= PAINEL PACIENTES ================= */
 function listaPac(){
@@ -3576,7 +3589,7 @@ function aplicaMetas(rows){
  }));});
  renderHero(); renderPauta();
 }
-return {abreBloco,fil,regP,delP,antOK,antRe,marcaDisc,voltar,abrePac,fechaPac,fichaPac,listaPac,regPF,delPF,abreEmail,fechaEmail,enviaEmail,sync,metas:metasLista,aplicaMetas,acoes:todasAcoes,cobrancas:cobrancas,blocos:()=>BLOCOS,zeraHero:()=>{try{RECOR.length=0;}catch(_){}try{GOV=0;}catch(_){}},rerender:()=>{try{renderHero();}catch(_){}try{renderPauta();}catch(_){}},estado:()=>({PL,PLP,DISC}),carrega:o=>{if(!o)return;absorve(PL,o.PL);absorve(PLP,o.PLP);absorve(DISC,o.DISC);}};
+return {abreBloco,fil,regP,delP,antOK,antRe,marcaDisc,voltar,abrePac,fechaPac,fichaPac,listaPac,regPF,delPF,abreEmail,fechaEmail,enviaEmail,sync,metas:metasLista,aplicaMetas,acoes:todasAcoes,cobrancas:cobrancas,blocos:()=>BLOCOS,antSet:o=>{Object.keys(ANT).forEach(function(x){delete ANT[x];});Object.assign(ANT,o||{});},antGet:()=>ANT,zeraHero:()=>{try{RECOR.length=0;}catch(_){}try{GOV=0;}catch(_){}},rerender:()=>{try{renderHero();}catch(_){}try{renderPauta();}catch(_){}},estado:()=>({PL,PLP,DISC}),carrega:o=>{if(!o)return;absorve(PL,o.PL);absorve(PLP,o.PLP);absorve(DISC,o.DISC);}};
 })();
 
 function tela(n){
@@ -3661,15 +3674,18 @@ function compChave(){
  return {unidade:u,ano:2026,mes:MESKEY[c]||7};
 }
 function sbMsg(t,ok){const e=document.getElementById("sbSt");if(e){e.textContent=t;e.style.color=ok?"#9BE29B":"#F3B7B7";}}
-async function sbGravar(){
- const k=compChave(); sbMsg("gravando…",true);
+async function sbGravar(auto){
+ if(travaDaComp()){if(!auto)sbMsg("🔒 competência travada — nada gravado",false);return;}
+ const k=compChave(); if(!auto)sbMsg("gravando…",true);
  try{
   const r=await fetch(SB_URL+"/rest/v1/qual_lancamento?on_conflict=unidade,ano,mes",{
    method:"POST",headers:{...sbHdrs(),"Prefer":"resolution=merge-duplicates,return=minimal"},
-   body:JSON.stringify([{unidade:k.unidade,ano:k.ano,mes:k.mes,payload:estadoT1(),atualizado_em:new Date().toISOString()}])});
+   body:JSON.stringify([{unidade:k.unidade,ano:k.ano,mes:k.mes,payload:estadoT1(),status:"aberto",atualizado_em:new Date().toISOString()}])});
   if(!r.ok)throw new Error(r.status);
-  sbMsg("✓ gravado no banco às "+new Date().toLocaleTimeString("pt-BR").slice(0,5),true);
- }catch(e){sbMsg("✕ falha ao gravar ("+e.message+")",false);}
+  STATUS_BANCO[document.getElementById("comp").value]="aberto";
+  sbMsg((auto?"✓ salvo automático às ":"✓ gravado no banco às ")+new Date().toLocaleTimeString("pt-BR").slice(0,5),true);
+  sbLog("gravou",{auto:!!auto});
+ }catch(e){if(!auto)sbMsg("✕ falha ao gravar ("+e.message+")",false);}
 }
 async function sbCarregar(){
  const k=compChave(); sbMsg("carregando…",true);
@@ -3695,7 +3711,8 @@ function entrar(){
  document.getElementById("gate").style.display="none";
  try{zeraDemo();}catch(e){console.log("zeraDemo:",e);}
  try{aplicaHist();}catch(e){console.log("aplicaHist:",e);}
- try{document.getElementById("unidade").addEventListener("change",aplicaHist);document.getElementById("comp").addEventListener("change",function(){setTimeout(aplicaHist,60);});}catch(_){}
+ try{if(typeof sbAutoCarregar==="function")sbAutoCarregar();}catch(_){}
+ try{document.getElementById("unidade").addEventListener("change",function(){aplicaHist();if(typeof sbAutoCarregar==="function")sbAutoCarregar();});document.getElementById("comp").addEventListener("change",function(){setTimeout(aplicaHist,60);});}catch(_){}
 }
 function trocarUsuario(){document.getElementById("gate").style.display="flex";}
 
@@ -3705,11 +3722,12 @@ async function gateApex(){
  try{document.body.classList.add("embed");}catch(_){}
  try{
   const tk=sbToken(); if(tk===SB_KEY)return;            /* sem token de login → gate manual */
-  const r=await fetch(SB_URL+"/rest/v1/perfis?select=unidade,papel&ativo=eq.true",{headers:sbHdrs()});
+  const r=await fetch(SB_URL+"/rest/v1/perfis?select=nome,unidade,papel&ativo=eq.true",{headers:sbHdrs()});
   if(!r.ok)return;
   const d=await r.json(); if(!d.length)return;
   const UN_NOME={santos:"Praiamar — Santos",rl:"República do Líbano",tatuape:"Tatuapé / Anália Franco",penha:"Penha"};
   const gU=document.getElementById("gU"), gP=document.getElementById("gP");
+  try{window.APEX_NOME=d[0].nome||null;}catch(_){}
   const p=(d[0].papel||"").toLowerCase();
   gP.selectedIndex = p==="admin" ? 2 : (/coord|rt|direc/.test(p) ? 1 : 0);
   if(UN_NOME[d[0].unidade]) gU.value=UN_NOME[d[0].unidade];
@@ -3717,6 +3735,85 @@ async function gateApex(){
   if(new URLSearchParams(location.search).get("metas")==="1"&&PERFIL.adm)setTimeout(function(){try{abreMetas();}catch(_){}},700);
  }catch(_){/* falhou → gate manual continua */}
 }
+/* ===== ONDA 1 — banco de verdade (aprovado em 21/08) ===== */
+function sbLogado(){return sbToken()!==SB_KEY;}
+function sbUsuario(){try{if(window.APEX_NOME)return window.APEX_NOME;}catch(_){}
+ return ((PERFIL.papel||"")+(PERFIL.u?(" · "+PERFIL.u):""))||"anônimo";}
+async function sbLog(acao,detalhe){
+ if(!sbLogado())return;
+ const k=compChave();
+ try{await fetch(SB_URL+"/rest/v1/qual_log",{method:"POST",headers:{...sbHdrs(),"Prefer":"return=minimal"},
+  body:JSON.stringify([{tabela:"qual_lancamento",unidade:k.unidade,ano:k.ano,mes:k.mes,acao:acao,usuario:sbUsuario(),detalhe:detalhe||null}])});}catch(_){}
+}
+async function sbAutoCarregar(){
+ const k=compChave(), c=document.getElementById("comp").value;
+ try{
+  const r=await fetch(SB_URL+"/rest/v1/qual_lancamento?unidade=eq."+k.unidade+"&ano=eq."+k.ano+"&mes=eq."+k.mes+"&select=payload,status,atualizado_em",{headers:sbHdrs()});
+  if(r.ok){
+   const d=await r.json();
+   if(d.length){
+    aplicaEstado(d[0].payload);
+    STATUS_BANCO[c]=d[0].status||"aberto";
+    sbMsg("✓ banco · "+new Date(d[0].atualizado_em).toLocaleString("pt-BR").slice(0,16),true);
+   }
+   aplicaTrava();
+  }
+ }catch(_){}
+ try{sbAnt();}catch(_){}
+}
+let SB_DIRTY=false,SB_TIMER=null;
+function sbMarcaSujo(){
+ if(RO||!sbLogado())return;
+ SB_DIRTY=true; clearTimeout(SB_TIMER);
+ SB_TIMER=setTimeout(function(){if(SB_DIRTY){SB_DIRTY=false;sbGravar(true);}},30000);
+}
+document.addEventListener("input",function(e){
+ if(e.target&&e.target.closest&&e.target.closest("#telaLanc,#telaReuniao,#telaAta"))sbMarcaSujo();});
+document.addEventListener("change",function(e){
+ if(!e.target||!e.target.closest)return;
+ if(e.target.id==="comp"||e.target.id==="unidade")return;
+ if(e.target.closest("#telaLanc,#telaReuniao,#telaAta"))sbMarcaSujo();});
+async function sbEncerrar(){
+ if(!sbLogado())return;
+ try{
+  await sbGravar(true);
+  try{montaAta();}catch(_){}
+  const k=compChave(), c=document.getElementById("comp").value;
+  const corpo=document.getElementById("ataCorpo");
+  await fetch(SB_URL+"/rest/v1/qual_ata?on_conflict=unidade,ano,mes",{
+   method:"POST",headers:{...sbHdrs(),"Prefer":"resolution=merge-duplicates,return=minimal"},
+   body:JSON.stringify([{unidade:k.unidade,ano:k.ano,mes:k.mes,
+    participantes:(typeof ATA_PART!=="undefined"?ATA_PART:[]),
+    payload:{ver:"v1",html:corpo?corpo.innerHTML:""},
+    encerrada_em:new Date().toISOString(),encerrada_por:sbUsuario(),atualizado_em:new Date().toISOString()}])});
+  await fetch(SB_URL+"/rest/v1/qual_lancamento?unidade=eq."+k.unidade+"&ano=eq."+k.ano+"&mes=eq."+k.mes,{
+   method:"PATCH",headers:{...sbHdrs(),"Prefer":"return=minimal"},body:JSON.stringify({status:"encerrado"})});
+  STATUS_BANCO[c]="encerrado"; aplicaTrava(); sbLog("encerrou",null);
+ }catch(_){}
+}
+async function sbReabrir(){
+ if(!PERFIL.adm||!sbLogado())return;
+ const m=prompt("Motivo da reabertura (obrigatório):"); if(!m)return;
+ const k=compChave(), c=document.getElementById("comp").value;
+ try{
+  await fetch(SB_URL+"/rest/v1/qual_lancamento?unidade=eq."+k.unidade+"&ano=eq."+k.ano+"&mes=eq."+k.mes,{
+   method:"PATCH",headers:{...sbHdrs(),"Prefer":"return=minimal"},body:JSON.stringify({status:"aberto"})});
+  STATUS_BANCO[c]="aberto"; aplicaTrava(); sbLog("reabriu",{motivo:m});
+ }catch(_){}
+}
+async function sbAnt(){
+ try{
+  const k=compChave();
+  let a=k.ano,m=k.mes-1; if(m<1){m=12;a--;}
+  const r=await fetch(SB_URL+"/rest/v1/plano_acao?unidade=eq."+k.unidade+"&ano=eq."+a+"&mes=eq."+m+"&select=indicador,acao,responsavel,prazo,status&order=criado_em",{headers:sbHdrs()});
+  if(!r.ok)return;
+  const d=await r.json(); if(!d.length)return;
+  const novo={};
+  d.forEach(function(p){const ind=p.indicador||"—";(novo[ind]=novo[ind]||[]).push([p.acao,p.responsavel||"—",p.prazo||"—",p.status==="aberto"?"aberto":"feito"]);});
+  if(typeof RM!=="undefined"&&RM.antSet)RM.antSet(novo);
+ }catch(_){}
+}
+
 /* ---- setas de rolagem das réguas (escolha C, 20/08) ---- */
 function setasNav(el){
  if(!el)return;
