@@ -629,6 +629,7 @@ body.ro #telaAta input,body.ro #telaAta select,body.ro #telaAta textarea{pointer
       <div class="g"><span class="k">Competência</span><span class="v" id="ccComp">Agosto / 2026</span></div>
       <div class="g"><span class="k">Prazo</span><span class="v">10 / 09</span></div>
       <div class="g"><span class="k">Reuniões</span><span class="v">11 a 20 / 09</span></div>
+      <div class="g"><span class="k">Reunião marcada</span><input type="date" id="reuniaoData" lang="pt-BR" class="v" style="border:0;padding:0;background:transparent;font:inherit;font-size:15px;font-weight:700;color:inherit;width:150px" onchange="reuniaoSet(this.value)"></div>
       <div class="prazo"><b>—</b><span>em aberto</span></div>
     </div>
     <div class="tl" id="tl"></div>
@@ -3472,8 +3473,8 @@ function renderPlanos(){
   el.innerHTML=a+n;
  });
 }
-function antOK(k,ai){ANTST[k+"_"+ai]="concluído";renderPlanos();}
-function antRe(k,ai){ANTST[k+"_"+ai]="reconduzida";const x=ANT[k][ai];
+function antOK(k,ai){ANTST[k+"_"+ai]="concluído";renderPlanos();try{if(typeof sbPlanoStatus==="function")sbPlanoStatus(ANT[k][ai][4],"concluido");}catch(_){}}
+function antRe(k,ai){ANTST[k+"_"+ai]="reconduzida";const x=ANT[k][ai];try{if(typeof sbPlanoStatus==="function")sbPlanoStatus(x[4],"reconduzido");}catch(_){}
  document.getElementById("rmpa_"+k).value=x[0];document.getElementById("rmpr_"+k).value=x[1];
  renderPlanos();document.getElementById("rmpz_"+k).focus();}
 function regP(k){
@@ -3667,7 +3668,7 @@ function estadoT1(){
  const arr={}; Object.keys(REG).forEach(k=>{arr[k]=JSON.parse(JSON.stringify(REG[k]()));});
  const rost={};
  Object.keys(ROST).forEach(k=>{rost[k]={conf:ROST[k].conf,st:ROST[k].div.map(d=>d.st)};});
- return {ver:"v29",dados:arr,dom:domFoto(),rost:rost,rm:(typeof RM!=="undefined"&&RM.estado)?RM.estado():null};
+ return {ver:"v29",dados:arr,dom:domFoto(),rost:rost,reuniao:(typeof REUNIAO!=="undefined"?REUNIAO:null),rm:(typeof RM!=="undefined"&&RM.estado)?RM.estado():null};
 }
 function aplicaEstado(p){
  if(!p||!p.dados)return;
@@ -3676,6 +3677,7 @@ function aplicaEstado(p){
   (p.rost[k].st||[]).forEach((st,i)=>{if(ROST[k].div[i])ROST[k].div[i].st=st;});}});
  montaBlocos(); domAplica(p.dom); recalcTudo();
  if(p.rm&&typeof RM!=="undefined"&&RM.carrega)RM.carrega(p.rm);
+ try{reuniaoAplica(p.reuniao||null);}catch(_){}
 }
 function compChave(){
  const u=UN_CHAVE[document.getElementById("unidade").value]||"rl";
@@ -3852,7 +3854,57 @@ async function sbEncerrar(){
   await fetch(SB_URL+"/rest/v1/qual_lancamento?unidade=eq."+k.unidade+"&ano=eq."+k.ano+"&mes=eq."+k.mes,{
    method:"PATCH",headers:{...sbHdrs(),"Prefer":"return=minimal"},body:JSON.stringify({status:"encerrado"})});
   STATUS_BANCO[c]="encerrado"; aplicaTrava(); sbLog("encerrou",null);
+  try{await sbEnfileira("ata:"+k.unidade+":"+k.ano+":"+k.mes,"ata",k,{modelo:"ata",texto:textoAta()},"merge-duplicates");}catch(_){}
  }catch(_){}
+}
+/* ---- planos do mês anterior: concluir / reconduzir grava no banco ---- */
+async function sbPlanoStatus(id,st){
+ if(!id||!sbLogado())return;
+ try{await fetch(SB_URL+"/rest/v1/plano_acao?id=eq."+id,{method:"PATCH",headers:{...sbHdrs(),"Prefer":"return=minimal"},body:JSON.stringify({status:st})});
+  sbLog("plano_"+st,{id:id});}catch(_){}
+}
+/* ---- fila de comunicados (qual_notificacao) ---- */
+async function sbEnfileira(chave,tipo,k,corpo,res){
+ if(!sbLogado())return;
+ await fetch(SB_URL+"/rest/v1/qual_notificacao?on_conflict=chave",{
+  method:"POST",headers:{...sbHdrs(),"Prefer":"resolution="+(res||"ignore-duplicates")+",return=minimal"},
+  body:JSON.stringify([{chave:chave,tipo:tipo,canal:"email",unidade:k.unidade,ano:k.ano,mes:k.mes,papel_destino:"todos",corpo:corpo}])});
+}
+/* ---- reunião marcada: a pauta sai por e-mail na véspera ---- */
+let REUNIAO=null;
+function reuniaoAplica(d){REUNIAO=d||null;const el=document.getElementById("reuniaoData");if(el)el.value=REUNIAO||"";}
+function reuniaoSet(d){
+ REUNIAO=d||null;
+ if(!REUNIAO||RO||!sbLogado())return;
+ sbMarcaSujo();
+ try{
+  const k=compChave(), v=new Date(REUNIAO+"T12:00:00"); v.setDate(v.getDate()-1);
+  const vesp=v.toISOString().slice(0,10);
+  sbEnfileira("pauta:"+k.unidade+":"+k.ano+":"+k.mes,"pauta",k,{modelo:"pauta",agendar_para:vesp,reuniao:REUNIAO,texto:textoPauta()},"merge-duplicates");
+ }catch(_){}
+}
+function nomeMesComp(){return ((document.getElementById("comp").selectedOptions[0]||{text:""}).text||"").replace(" 🔒","");}
+function dtBR(iso){if(!iso)return "—";const p=String(iso).split("-");return p.length===3?p[2]+"/"+p[1]+"/"+p[0]:iso;}
+function textoPauta(){
+ const un=document.getElementById("unidade").value;
+ try{RM.sync();}catch(_){}
+ const fora=[]; try{RM.blocos().forEach(function(b){b.inds.forEach(function(i){if(i.st==="fora")fora.push(i.c+" "+i.l+" — "+i.v+(i.tm?" (meta "+i.tm+")":""));});});}catch(_){}
+ const cob=(RM.cobrancas?RM.cobrancas():[]);
+ let rec=0; try{rec=ataRecorrentes().length;}catch(_){}
+ return "Reunião de Metas — "+un+" · competência "+nomeMesComp()+"\nData: "+dtBR(REUNIAO)+"\n\n"+
+  "INDICADORES NA PAUTA ("+fora.length+")\n"+(fora.length?fora.map(function(x){return "• "+x;}).join("\n"):"• nenhum indicador fora da meta")+"\n\n"+
+  "PACIENTES EM 2 OU MAIS INDICADORES: "+rec+"\n\n"+
+  "PENDÊNCIAS DA REUNIÃO ANTERIOR ("+cob.length+")\n"+(cob.length?cob.map(function(c){return "• "+c.ind+" · "+c.t+" · "+c.r;}).join("\n"):"• nenhuma")+"\n\n"+
+  "Plataforma: https://www.apex.med.br";
+}
+function textoAta(){
+ const box=document.getElementById("ataCorpo"); if(!box)return "";
+ const cl=box.cloneNode(true);
+ cl.querySelectorAll("button").forEach(function(b){b.remove();});
+ cl.querySelectorAll("input,textarea,select").forEach(function(i){const sp=document.createElement("span");sp.textContent=(i.value||"")+"  ";i.replaceWith(sp);});
+ document.body.appendChild(cl); cl.style.position="absolute"; cl.style.left="-9999px";
+ const t=(cl.innerText||"").replace(/\n{3,}/g,"\n\n").trim(); cl.remove();
+ return t+"\n\nAta encerrada por "+sbUsuario()+" em "+new Date().toLocaleString("pt-BR",{timeZone:"America/Sao_Paulo"})+"\nPlataforma: https://www.apex.med.br";
 }
 async function sbReabrir(){
  if(!PERFIL.adm||!sbLogado())return;
@@ -3868,11 +3920,12 @@ async function sbAnt(){
  try{
   const k=compChave();
   let a=k.ano,m=k.mes-1; if(m<1){m=12;a--;}
-  const r=await fetch(SB_URL+"/rest/v1/plano_acao?unidade=eq."+k.unidade+"&ano=eq."+a+"&mes=eq."+m+"&select=indicador,acao,responsavel,prazo,status&order=criado_em",{headers:sbHdrs()});
+  /* mês anterior (qualquer situação) + planos ainda abertos de qualquer competência anterior (vencido entra na pauta seguinte) */
+  const r=await fetch(SB_URL+"/rest/v1/plano_acao?unidade=eq."+k.unidade+"&or=(and(ano.eq."+a+",mes.eq."+m+"),status.eq.aberto)&select=id,ano,mes,indicador,acao,responsavel,prazo,status&order=ano,mes,criado_em",{headers:sbHdrs()});
   if(!r.ok)return;
-  const d=await r.json(); if(!d.length)return;
+  const d=(await r.json()).filter(function(p){return p.ano<k.ano||(p.ano===k.ano&&p.mes<k.mes);}); if(!d.length)return;
   const novo={};
-  d.forEach(function(p){const ind=p.indicador||"—";(novo[ind]=novo[ind]||[]).push([p.acao,p.responsavel||"—",p.prazo||"—",p.status==="aberto"?"aberto":"feito"]);});
+  d.forEach(function(p){const ind=p.indicador||"—";(novo[ind]=novo[ind]||[]).push([p.acao,p.responsavel||"—",p.prazo||"—",p.status==="aberto"?"aberto":"feito",p.id]);});
   if(typeof RM!=="undefined"&&RM.antSet)RM.antSet(novo);
  }catch(_){}
 }
