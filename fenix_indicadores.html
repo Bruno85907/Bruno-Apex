@@ -816,106 +816,218 @@ const LOTE_PAC=[["A. I. F.",4.0,5.0,83.5,11.1],["C. P. P.",3.7,5.6,82.9,11.3],["
  ["L. A. R.",3.2,4.9,95.7,10.6],["M. C. P.",5.2,5.3,84.4,12.4],["M. C. R.",5.1,4.9,76.6,10.5],
  ["M. L. G.",5.1,5.1,81.1,12.4],["M. R. S.",5.5,5.4,78.9,11.1],["R. L. M.",3.9,4.8,96.8,10.2],
  ["T. A. S.",3.7,4.8,94.5,9.7],["W. B.",3.9,3.5,85.7,11.5],["W. N. C.",5.3,4.1,75.9,10.7]];
-const LOTES=[];
+/* ====== LEITOR DO LOTE DO LABORATÓRIO — v2 (22/08/2026) ======
+   Uma competência aceita VÁRIOS lotes (regra de 16/08). Tudo é acumulado em LAB por pedido e
+   recalculado do zero a cada arquivo: dedupe por pedido+item, coleta mais recente vence,
+   denominador = pacientes distintos com o exame. Aceita REQUISIÇÃO (Protocolo 2) e RESULTADO.
+   Nenhum nome completo é guardado: só sigla, código do paciente (CodPacLab) e um hash do nome. */
+const LAB={lotes:{},ped:{},req:{}};
+const LOTES=[];                        /* compat: lista derivada de LAB.lotes (renderLotes/contagem) */
 const L2=null;
 const TOTP=0;
+const LAB_MAP=[
+ {ind:"IND-01", item:"Fósforo",            rot:"Fósforo"},
+ {ind:"IND-02", item:"Potássio",           rot:"Potássio"},
+ {ind:"IND-36", item:"Hemoglobina",        rot:"Hemoglobina"},
+ {ind:"IND-11", item:"PTH",                rot:"PTH"},
+ {ind:"IND-03", item:"Albumina",           rot:"Albumina"},
+ {ind:"IND-14", item:"Hemoglobina Glicada",rot:"HbA1c", soLeitura:true}   /* alvo individual: a ferramenta só conta, não classifica */
+];
+const LAB_NAO_VEM=["IMC e bioimpedância — IND-04, 09, 13","Kt/V — IND-05 (vem da Planilha Assistencial)"];
 function fonte(f){
  document.getElementById("sgL").classList.toggle("on",f==="lab");
  document.getElementById("sgN").classList.toggle("on",f==="assist");
  document.getElementById("pLab").style.display=f==="lab"?"block":"none";
  document.getElementById("pAssist").style.display=f==="assist"?"block":"none";
 }
-function renderLotes(){
- const cob=LOTES.reduce((a,l)=>a+l.n,0);
- const alvo=(typeof NUT!=="undefined"&&NUT["IND-01"]&&NUT["IND-01"].tot)?NUT["IND-01"].tot:0;
- const falta=alvo?alvo-cob:0;
- document.getElementById("lotes").innerHTML=`
-  <table class="dt"><thead><tr><th style="width:220px">Arquivo</th><th style="width:170px">Emissor</th>
-   <th style="width:110px">Coleta</th><th style="width:80px">Pacientes</th><th style="width:40px"></th></tr></thead><tbody>
-   ${LOTES.map((l,i)=>`<tr><td class="pac">${l.a}</td><td>${l.e}</td><td class="dim">${l.p}</td>
-     <td class="tx">${l.n}</td><td><button class="lix" onclick="delLote(${i})" title="apagar lote">🗑</button></td></tr>`).join("")}
-  </tbody></table>
-  <div style="margin-top:10px">${LOTES.length?`<span class="chipc ${alvo&&falta>0?'c-al':'c-ok'}">
-   ${alvo&&falta>0?'▲':'✓'} ${cob} paciente${cob===1?'':'s'} no lote${alvo?' · elegíveis lançados: '+alvo+(falta>0?' · faltam '+falta:''):' · elegíveis ainda não lançados'}</span>`:""}</div>`;
- document.getElementById("btL").textContent=LOTES.length?"Carregar mais um lote":"Carregar lote";
- document.getElementById("fSub").textContent=LOTES.length?`${LOTES.length} lote${LOTES.length>1?'s':''} · ${cob} paciente${cob===1?'':'s'}`:"nenhum arquivo carregado";
-}
-function delLote(i){if(RO)return;LOTES.splice(i,1);renderLotes();if(!LOTES.length)document.getElementById("labRes").innerHTML="";}
-/* ====== LEITOR DO LOTE DO LABORATÓRIO (padrão de apoio: Resultados > Pedido > SuperExame) ====== */
-/* Mapeia SÓ o que o laboratório manda de fato. O que não vem fica declarado na tela. */
-const LAB_MAP=[
- {ind:"IND-01", item:"Fósforo",     rot:"Fósforo"},
- {ind:"IND-02", item:"Potássio",    rot:"Potássio"},
- {ind:"IND-36", item:"Hemoglobina", rot:"Hemoglobina"},
- {ind:"IND-11", item:"PTH",         rot:"PTH"}
-];
-const LAB_NAO_VEM=["Albumina — IND-03","Hemoglobina glicada — IND-14","IMC e bioimpedância — IND-04, 09, 13",
-                   "Kt/V — IND-05 (exige peso, tempo efetivo e UF, que o laboratório não envia)"];
 function labIniciais(nome){
  return String(nome||"").trim().split(/\s+/).filter(function(w){return w.length>2||/^[A-Z]$/.test(w);})
   .slice(0,3).map(function(w){return w[0].toUpperCase()+".";}).join(" ");
 }
+function labNorm(nome){
+ return String(nome||"").normalize("NFD").replace(/[\u0300-\u036f]/g,"").toUpperCase().replace(/[^A-Z ]/g,"").replace(/\s+/g," ").trim();
+}
+function labHash(nome){ /* hash curto e estável do nome normalizado — identifica sem guardar o nome */
+ const s=labNorm(nome); let h=5381; for(let i=0;i<s.length;i++)h=((h<<5)+h+s.charCodeAt(i))|0; return "h"+(h>>>0).toString(36);
+}
 function labNum(t){ const n=parseFloat(String(t||"").replace(/\./g,"").replace(",",".")); return isNaN(n)?null:n; }
 function labFmt(n){ return String(Math.round(n*100)/100).replace(".",","); }
+function labDt(t){ return t?t.slice(8,10)+"/"+t.slice(5,7):""; }
+/* ---- parse: devolve {tipo:"resultado"|"requisicao", id, emissor, ini, fim, pedidos:[...]} ---- */
 function labLeXML(txt){
  const doc=new DOMParser().parseFromString(txt,"application/xml");
  if(doc.querySelector("parsererror")) return {erro:"arquivo não é um XML válido"};
- const cl=doc.querySelector("ControleDeLote");
  const g=(el,tag)=>{const x=el?el.querySelector(tag):null; return x?x.textContent.trim():"";};
- const per=cl?cl.querySelector("Periodo"):null;
- const dt=t=>t?t.slice(8,10)+"/"+t.slice(5,7):"";
+ const raiz=doc.documentElement?doc.documentElement.tagName:"";
+ if(raiz==="Registro"){                                  /* REQUISIÇÃO (Protocolo 2) */
+  const lote=doc.querySelector("Lote"); if(!lote) return {erro:"requisição sem <Lote>"};
+  const peds=Array.from(lote.querySelectorAll("Pedido"));
+  if(!peds.length) return {erro:"nenhum pedido encontrado no arquivo"};
+  return {tipo:"requisicao", id:g(lote,"CodLoteLab")||g(doc,"ID"), emissor:"requisição · CodLab "+g(lote,"CodLab"),
+   ini:labDt(g(lote,"DataLote")), fim:labDt(g(lote,"DataLote")),
+   pedidos:peds.map(function(p){
+    const pac=p.querySelector("Paciente"); let peso=null, alt=null;
+    Array.from(p.querySelectorAll("InformacaoComplementar")).forEach(function(ic){
+     const k=g(ic,"InfoComp").toLowerCase(), v=labNum(g(ic,"Valor")); if(k==="peso"&&v!=null&&peso==null)peso=v; if(k==="altura"&&v!=null&&alt==null)alt=v;});
+    return {num:g(p,"CodPedLab"), sig:labIniciais(g(pac,"Nome")), h:labHash(g(pac,"Nome")), cp:g(pac,"CodPacLab"),
+     peso:peso, alt:alt, ex:Array.from(p.querySelectorAll("Exame")).map(function(e){return (g(e,"CodExmApoio").split("|")[1]||"").trim();}).filter(Boolean)};
+   })};
+ }
+ const cl=doc.querySelector("ControleDeLote"); const per=cl?cl.querySelector("Periodo"):null;
  const pedidos=Array.from(doc.querySelectorAll("Pedido"));
  if(!pedidos.length) return {erro:"nenhum pedido encontrado no arquivo"};
- const pacientes=pedidos.map(function(p){
-  const vals={};
-  Array.from(p.querySelectorAll("ItemDeExame")).forEach(function(it){
-   const nome=g(it,"Nome"); const res=it.querySelector("Resultado");
-   const v=res?g(res,"Conteudo Valor"):""; const un=res?g(res,"UnidadeDeMedida"):"";
-   if(nome&&v!==""&&vals[nome]===undefined) vals[nome]={v:v,un:un};
-  });
-  return {sigla:labIniciais(g(p,"Nome")), vals:vals};
- });
- return {emissor:g(cl,"Emissor"), ini:dt(per?g(per,"DataInicial"):""), fim:dt(per?g(per,"DataFinal"):""),
-         n:pacientes.length, pacientes:pacientes};
+ return {tipo:"resultado", id:g(doc,"ID")||"", emissor:g(cl,"Emissor"), ini:labDt(per?g(per,"DataInicial"):""), fim:labDt(per?g(per,"DataFinal"):""),
+  pedidos:pedidos.map(function(p){
+   const vals={};
+   Array.from(p.querySelectorAll("ItemDeExame")).forEach(function(it){
+    const nome=g(it,"Nome"); const res=it.querySelector("Resultado");
+    const v=res?g(res,"Conteudo Valor"):""; const un=res?g(res,"UnidadeDeMedida"):"";
+    if(nome&&v!==""&&vals[nome]===undefined) vals[nome]={v:v,un:un};
+   });
+   return {num:g(p,"CodPedLab"), sig:labIniciais(g(p,"Nome")), h:labHash(g(p,"Nome")), vals:vals};
+  })};
 }
-function labAplica(lote){
- const linhas=[];
+/* ---- acumula um arquivo em LAB (idempotente: o mesmo lote/pedido substitui, nunca duplica) ---- */
+function labAcumula(lote,nomeArq){
+ const id=(lote.tipo==="requisicao"?"R":"L")+(lote.id||nomeArq);
+ const ex=LAB.lotes[id];
+ LAB.lotes[id]={id:id,tipo:lote.tipo,a:(ex&&ex.a&&ex.a.indexOf(nomeArq)<0)?ex.a+" · "+nomeArq:nomeArq,e:lote.emissor||"—",
+  p:(lote.ini&&lote.fim)?(lote.ini===lote.fim?lote.ini:lote.ini+" a "+lote.fim):"—",n:Math.max(lote.pedidos.length,ex?ex.n||0:0)};
+ lote.pedidos.forEach(function(p){
+  if(lote.tipo==="requisicao"){ LAB.req[p.num]={sig:p.sig,h:p.h,cp:p.cp,peso:p.peso,alt:p.alt,ex:p.ex,lote:id}; return; }
+  const ant=LAB.ped[p.num]||{itens:{},lotes:[]};
+  Object.keys(p.vals).forEach(function(k){ant.itens[k]=p.vals[k];});           /* pedido+item: último lido vence (valores idênticos na prática) */
+  ant.sig=p.sig; ant.h=p.h; if(ant.lotes.indexOf(id)<0)ant.lotes.push(id);
+  LAB.ped[p.num]=ant;
+ });
+ labSincLotes();
+}
+function labSincLotes(){ LOTES.length=0; Object.keys(LAB.lotes).forEach(function(k){LOTES.push(LAB.lotes[k]);}); }
+/* identidade do paciente: CodPacLab quando a requisição do pedido existe; senão hash do nome */
+function labIdPac(num,ped){
+ const r=LAB.req[num]; if(r&&r.cp) return "cp"+r.cp;
+ /* pedido sem requisição (recoleta, outro turno): se o hash do nome já tem código na requisição, é o mesmo paciente */
+ const h=ped.h; for(const k in LAB.req){ if(LAB.req[k].h===h&&LAB.req[k].cp) return "cp"+LAB.req[k].cp; }
+ return h;
+}
+/* ---- visão consolidada: por paciente, o valor mais recente (maior nº de pedido) de cada item ---- */
+function labPacientes(){
+ const pac={};
+ Object.keys(LAB.ped).sort(function(a,b){return (+a)-(+b);}).forEach(function(num){
+  const p=LAB.ped[num]; const id=labIdPac(num,p);
+  const o=pac[id]||(pac[id]={id:id,sig:p.sig,vals:{},pedidos:[]});
+  o.sig=p.sig; o.pedidos.push(num);
+  Object.keys(p.itens).forEach(function(k){o.vals[k]=p.itens[k];});          /* pedido maior sobrescreve = coleta mais recente vence */
+ });
+ return pac;
+}
+/* pacientes da requisição ainda sem nenhum resultado */
+function labAguardando(){
+ const comRes={}; Object.keys(LAB.ped).forEach(function(num){comRes[labIdPac(num,LAB.ped[num])]=1;});
+ const vistos={}, out=[];
+ Object.keys(LAB.req).forEach(function(num){const r=LAB.req[num]; const id=r.cp?("cp"+r.cp):r.h; if(vistos[id])return; vistos[id]=1; if(!comRes[id])out.push(r.sig);});
+ return out;
+}
+/* ---- aplica nos indicadores: recalcula DO ZERO a partir de LAB (nunca acumula entre chamadas) ---- */
+function labAplica(){
+ const pac=labPacientes(); const ids=Object.keys(pac); const linhas=[];
  LAB_MAP.forEach(function(m){
   const o=(typeof NUT!=="undefined")?NUT[m.ind]:null; if(!o) return;
-  let lidos=0, fora=0;
-  lote.pacientes.forEach(function(pc){
-   const x=pc.vals[m.item]; if(!x) return;
+  let lidos=0, fora=0; const foraNovo=[]; const foraSig={};
+  ids.forEach(function(id){
+   const pc=pac[id]; const x=pc.vals[m.item]; if(!x) return;
    const n=labNum(x.v); if(n===null) return;
    lidos++;
+   if(m.soLeitura) return;
    const alto=(o.alta!=null&&n>o.alta), baixo=(o.baixa!=null&&n<o.baixa&&o.baixaConta);
    if(!(alto||baixo)) return;
-   fora++;
-   const ja=(o.fora||[]).find(function(r){return r.p===pc.sigla;});
-   if(ja){ ja.v=labFmt(n); }
-   else { o.fora.push({p:pc.sigla, v:labFmt(n), c:"", s:"", rec:["","",""]}); }
+   fora++; foraSig[pc.sig]=1;
+   const ja=(o.fora||[]).find(function(r){return r.p===pc.sig;});
+   if(ja){ ja.v=labFmt(n); ja.lab=1; foraNovo.push(ja); }
+   else foraNovo.push({p:pc.sig, v:labFmt(n), c:"", s:"", rec:["","",""], lab:1});
   });
-  if(lidos){
-   /* ★ o denominador vem do proprio arquivo: quem teve o exame coletado no periodo.
-      Nao e invencao — e contagem. Ele pode sobrescrever no campo de elegiveis. */
+  if(!lidos) return;
+  if(!m.soLeitura){
+   /* mantém o que foi digitado à mão (sem marca lab); troca toda a parte vinda do laboratório */
+   const manuais=(o.fora||[]).filter(function(r){return !r.lab&&!foraSig[r.p];});
+   o.fora=manuais.concat(foraNovo);
    o.tot=lidos;
    const campo=document.getElementById(m.ind+"_t"); if(campo)campo.value=lidos;
    if(typeof nutR==="function"){try{nutR(m.ind);}catch(_){}}
-   const exc=(o.exc||[]).length, den=Math.max(0,lidos-exc);
-   let a=0,bx=0;
-   (o.fora||[]).forEach(function(r){const l=(typeof nutLado==="function")?nutLado(o,r):"alta"; if(l==="alta")a++; else if(l==="baixa")bx++;});
-   const naoConf=o.livre?(o.fora||[]).length:(a+(o.baixaConta?bx:0));
-   const cf=den?Math.max(0,den-naoConf)/den*100:null;
-   linhas.push({rot:m.rot, cod:m.ind, lidos:lidos, fora:fora, cf:cf, meta:o.meta, un:o.un});
   }
+  const exc=(o.exc||[]).length, den=Math.max(0,lidos-exc);
+  let a=0,bx=0;
+  (o.fora||[]).forEach(function(r){const l=(typeof nutLado==="function")?nutLado(o,r):"alta"; if(l==="alta")a++; else if(l==="baixa")bx++;});
+  const naoConf=o.livre?(o.fora||[]).length:(a+(o.baixaConta?bx:0));
+  const cf=(m.soLeitura||!den)?null:Math.max(0,den-naoConf)/den*100;
+  linhas.push({rot:m.rot, cod:m.ind, lidos:lidos, fora:m.soLeitura?null:fora, cf:cf, meta:o.meta, un:o.un, soLeitura:!!m.soLeitura});
  });
- /* URR — leitura auxiliar, NÃO é o Kt/V */
  let urrN=0, urrSoma=0, urrBaixo=0;
- lote.pacientes.forEach(function(pc){
-  const pre=labNum((pc.vals["Ureia"]||{}).v), pos=labNum((pc.vals["Ureia pós-diálise"]||{}).v);
+ ids.forEach(function(id){
+  const pc=pac[id]; const pre=labNum((pc.vals["Ureia"]||{}).v), pos=labNum((pc.vals["Ureia pós-diálise"]||{}).v);
   if(pre===null||pos===null||pre<=0) return;
   const urr=(pre-pos)/pre*100; urrN++; urrSoma+=urr; if(urr<65)urrBaixo++;
  });
- return {linhas:linhas, urrN:urrN, urrMed:urrN?urrSoma/urrN:null, urrBaixo:urrBaixo};
+ const recoletas=ids.filter(function(id){return pac[id].pedidos.length>1;}).length;
+ return {linhas:linhas, urrN:urrN, urrMed:urrN?urrSoma/urrN:null, urrBaixo:urrBaixo, nPac:ids.length, recoletas:recoletas, aguardando:labAguardando()};
+}
+function renderLotes(){
+ labSincLotes();
+ const pac=labPacientes(); const nPac=Object.keys(pac).length;
+ const nReq=(function(){const v={};Object.keys(LAB.req).forEach(function(n){const r=LAB.req[n];v[r.cp?("cp"+r.cp):r.h]=1;});return Object.keys(v).length;})();
+ const ag=labAguardando().length;
+ document.getElementById("lotes").innerHTML=`
+  <table class="dt"><thead><tr><th style="width:220px">Arquivo</th><th style="width:90px">Tipo</th><th style="width:150px">Emissor</th>
+   <th style="width:100px">Coleta</th><th style="width:70px">Pedidos</th><th style="width:40px"></th></tr></thead><tbody>
+   ${LOTES.map((l)=>`<tr><td class="pac">${l.a}</td><td class="dim">${l.tipo==="requisicao"?"requisição":"resultado"}</td><td>${l.e}</td><td class="dim">${l.p}</td>
+     <td class="tx">${l.n}</td><td><button class="lix" onclick="delLote('${l.id}')" title="apagar lote">🗑</button></td></tr>`).join("")}
+  </tbody></table>
+  <div style="margin-top:10px">${LOTES.length?`<span class="chipc ${ag>0?'c-al':'c-ok'}">
+   ${ag>0?'▲':'✓'} ${nPac} paciente${nPac===1?'':'s'} com resultado${nReq?' · '+nReq+' na requisição'+(ag?' · '+ag+' aguardando resultado':''):''}</span>`:""}</div>`;
+ document.getElementById("btL").textContent=LOTES.length?"Carregar mais um lote":"Carregar lote";
+ document.getElementById("fSub").textContent=LOTES.length?`${LOTES.length} arquivo${LOTES.length>1?'s':''} · ${nPac} paciente${nPac===1?'':'s'}`:"nenhum arquivo carregado";
+}
+function delLote(id){
+ if(RO)return;
+ const l=LAB.lotes[id]; if(!l)return;
+ delete LAB.lotes[id];
+ if(l.tipo==="requisicao"){ Object.keys(LAB.req).forEach(function(n){if(LAB.req[n].lote===id)delete LAB.req[n];}); }
+ else { Object.keys(LAB.ped).forEach(function(n){const p=LAB.ped[n]; p.lotes=(p.lotes||[]).filter(function(x){return x!==id;}); if(!p.lotes.length)delete LAB.ped[n];}); }
+ /* sem lotes de resultado, o que veio do laboratório sai dos indicadores */
+ if(!Object.keys(LAB.ped).length){
+  LAB_MAP.forEach(function(m){const o=NUT[m.ind]; if(!o)return; if(o.fora)o.fora=o.fora.filter(function(r){return !r.lab;}); if(typeof nutR==="function"){try{nutR(m.ind);}catch(_){}}});
+  document.getElementById("labRes").innerHTML="";
+ } else { labMostra(labAplica(),null); }
+ renderLotes(); if(typeof recalcTudo==="function")recalcTudo(); if(typeof sbMarcaSujo==="function")sbMarcaSujo();
+}
+function labMostra(r,nomeArq,aviso){
+ const el=document.getElementById("labRes"); if(!el)return;
+ const nFora=r.linhas.reduce(function(a,x){return a+(x.fora||0);},0);
+ el.innerHTML=
+  (nomeArq?'<h4>Lido de '+nomeArq+'</h4>':'<h4>Consolidado dos lotes</h4>')+
+  (aviso?'<div class="al">'+aviso+'</div>':'')+
+  '<table class="dt"><thead><tr><th style="width:180px">Exame</th><th style="width:80px">Indicador</th>'+
+  '<th style="width:90px">Pacientes</th><th style="width:90px">Fora</th>'+
+  '<th style="width:110px">Conformidade</th><th style="width:90px">Meta</th><th style="width:110px">Situação</th></tr></thead><tbody>'+
+  (r.linhas.length?r.linhas.map(function(x){
+    const temMeta=(x.meta!=null&&x.cf!=null);
+    const ok=temMeta&&x.cf>=x.meta;
+    const cfTxt=(x.cf==null)?"—":String(Math.round(x.cf*10)/10).replace(".",",")+"%";
+    const mtTxt=x.soLeitura?"alvo individual":(x.meta==null)?"a calibrar":"≥ "+x.meta+"%";
+    const sit=x.soLeitura?'<span class="ic dim">só leitura</span>':!temMeta?'<span class="ic dim">—</span>'
+              :(ok?'<span class="ic i-ok">✓ dentro</span>':'<span class="ic i-nao">▲ fora</span>');
+    return '<tr><td class="pac">'+x.rot+'</td><td class="dim">'+x.cod+'</td>'+
+           '<td class="tx">'+x.lidos+'</td><td class="tx">'+(x.fora==null?"—":x.fora)+'</td>'+
+           '<td class="tx"><b>'+cfTxt+'</b></td><td class="dim">'+mtTxt+'</td><td>'+sit+'</td></tr>';}).join("")
+   :'<tr><td colspan="7" class="dim">nenhum exame do catálogo nos lotes carregados</td></tr>')+
+  '</tbody></table>'+
+  (r.urrN?'<div class="okb" style="margin-top:10px">URR médio de '+String(Math.round(r.urrMed*10)/10).replace(".",",")+'% em '+r.urrN+
+   ' pacientes · '+r.urrBaixo+' abaixo de 65%. <b>Leitura auxiliar — não substitui o Kt/V</b>, que vem da Planilha Assistencial.</div>':"")+
+  '<div class="okb" style="margin-top:10px"><b>'+r.nPac+' paciente'+(r.nPac===1?'':'s')+' com resultado</b> nos lotes desta competência'+
+   (r.recoletas?' · '+r.recoletas+' com mais de uma coleta (vale a mais recente)':'')+
+   (r.aguardando.length?' · <b>'+r.aguardando.length+' da requisição ainda sem resultado</b>: '+r.aguardando.join(", "):'')+'.'+
+   (r.linhas.length?' Pacientes e conformidade vieram do arquivo; falta classificar a causa dos '+nFora+' fora da faixa, que é julgamento clínico.':'')+'</div>'+
+  '<div class="al" style="margin-top:8px"><b>O laboratório não traz:</b> '+LAB_NAO_VEM.join(" · ")+'. Esses continuam manuais ou vêm da planilha.</div>';
 }
 function lerLote(){
  if(RO)return;
@@ -926,68 +1038,240 @@ function lerLote(){
   inp.addEventListener("change",function(){
    const arqs=Array.from(inp.files||[]); inp.value="";
    let pend=arqs.length; if(!pend)return;
+   const erros=[], reqs=[];
    arqs.forEach(function(f){
     const fr=new FileReader();
     fr.onload=function(){
-     const lote=labLeXML(String(fr.result||""));
-     if(lote.erro){
-      document.getElementById("labRes").innerHTML='<div class="al"><b>Não consegui ler '+f.name+'.</b> '+lote.erro+'. Nada foi alterado.</div>';
-     } else {
-      const r=labAplica(lote);
-      const ja=LOTES.findIndex(function(l){return l.a===f.name;});
-      const reg={a:f.name,e:lote.emissor||"—",p:(lote.ini&&lote.fim)?lote.ini+" a "+lote.fim:"—",n:lote.n};
-      if(ja>=0)LOTES[ja]=reg; else LOTES.push(reg);
-      renderLotes();
-      const lidosTot=r.linhas.reduce(function(a,x){return a+x.lidos;},0);
-      document.getElementById("labRes").innerHTML=
-       '<h4>Lido de '+f.name+'</h4>'+
-       '<table class="dt"><thead><tr><th style="width:180px">Exame</th><th style="width:80px">Indicador</th>'+
-       '<th style="width:90px">Elegíveis</th><th style="width:90px">Fora</th>'+
-       '<th style="width:110px">Conformidade</th><th style="width:90px">Meta</th><th style="width:110px">Situação</th></tr></thead><tbody>'+
-       (r.linhas.length?r.linhas.map(function(x){
-         const temMeta=(x.meta!=null&&x.cf!=null);
-         const ok=temMeta&&x.cf>=x.meta;
-         const cfTxt=(x.cf==null)?"—":labFmt(x.cf)+"%";
-         const mtTxt=(x.meta==null)?"a calibrar":"≥ "+x.meta+"%";
-         const sit=!temMeta?'<span class="ic dim">—</span>'
-                   :(ok?'<span class="ic i-ok">✓ dentro</span>':'<span class="ic i-nao">▲ fora</span>');
-         return '<tr><td class="pac">'+x.rot+'</td><td class="dim">'+x.cod+'</td>'+
-                '<td class="tx">'+x.lidos+'</td><td class="tx">'+x.fora+'</td>'+
-                '<td class="tx"><b>'+cfTxt+'</b></td><td class="dim">'+mtTxt+'</td><td>'+sit+'</td></tr>';}).join("")
-        :'<tr><td colspan="7" class="dim">nenhum exame do catálogo neste arquivo</td></tr>')+
-       '</tbody></table>'+
-       (r.urrN?'<div class="okb" style="margin-top:10px">URR médio de '+labFmt(r.urrMed)+'% em '+r.urrN+
-        ' pacientes · '+r.urrBaixo+' abaixo de 65%. <b>Leitura auxiliar — não substitui o Kt/V</b>, que depende de peso, tempo efetivo e UF.</div>':"")+
-       '<div class="okb" style="margin-top:10px"><b>Pronto — os indicadores acima já estão calculados e lançados nos blocos.</b> '+
-       'Elegíveis, valores fora da faixa e conformidade vieram do arquivo. Só falta você classificar a causa dos '+
-       r.linhas.reduce(function(a,x){return a+x.fora;},0)+' pacientes fora da faixa, que é julgamento clínico e a ferramenta não decide por você.</div>'+
-       '<div class="al" style="margin-top:8px"><b>Este arquivo não traz:</b> '+LAB_NAO_VEM.join(" · ")+'. Esses continuam manuais.</div>';
-      if(typeof recalcTudo==="function")recalcTudo();
+     let txt=fr.result;
+     if(txt instanceof ArrayBuffer){                       /* respeita o encoding declarado (requisição vem em ISO-8859-1) */
+      const cab=new TextDecoder("utf-8").decode(txt.slice(0,200));
+      const m=cab.match(/encoding=["']([^"']+)["']/i); let enc=(m?m[1]:"utf-8").toLowerCase();
+      try{txt=new TextDecoder(enc).decode(txt);}catch(_){txt=new TextDecoder("utf-8").decode(txt);}
      }
-     if(--pend===0&&typeof recalcTudo==="function")recalcTudo();
+     const lote=labLeXML(String(txt||""));
+     if(lote.erro) erros.push("<b>"+f.name+"</b>: "+lote.erro+" — nada foi alterado.");
+     else { labAcumula(lote,f.name); if(lote.tipo==="requisicao")reqs.push(f.name+" ("+lote.pedidos.length+" pedidos)"); }
+     if(--pend===0){
+      const r=labAplica(); renderLotes();
+      let aviso=erros.join("<br>");
+      if(reqs.length) aviso+=(aviso?"<br>":"")+"Requisição lida: "+reqs.join(", ")+" — traz quem coletou e o que foi pedido, <b>sem valores</b>. Os resultados entram quando o arquivo do laboratório for carregado.";
+      labMostra(r, arqs.length===1?arqs[0].name:null, aviso);
+      if(typeof recalcTudo==="function")recalcTudo();
+      if(typeof sbMarcaSujo==="function")sbMarcaSujo();
+     }
     };
-    fr.readAsText(f,"utf-8");
+    fr.readAsArrayBuffer(f);
    });
   });
   document.body.appendChild(inp);
  }
  inp.click();
 }
-const ASSIST=[["Pacientes, admissões, saídas, trânsitos","IND-41 a 44 · 47 a 49"],
- ["Sessões por modalidade","IND-45 · 46 · 39"],["Kt/V calculado","IND-05"],
- ["Volume convectivo","IND-06"],["Peso pré e pós","IND-12"],["Faltas","IND-19"],
- ["Ocupação e giro","IND-38"],["Tempo de sessão e UF horária","base da análise de intercorrências"]];
+/* ====== LEITOR DA PLANILHA ASSISTENCIAL — v1 (22/08/2026) ======
+   Export do sistema assistencial: CSV ';' · ISO-8859-1 · vírgula decimal · UMA LINHA POR SESSÃO.
+   Colunas: Nome · Data exame · Data da sessão · stdKt/V · Kt/V · Data óbito · Vol. Convectivo Total ·
+   GID % · Qtd. sessões · Programa atual · Escala · Convênio · Acesso.
+   Nada de nome completo fica guardado: sigla + hash (mesmo esquema do leitor de lotes → cruza com o URR). */
+const ASSIST={arq:"",n:0,ses:0,pac:{}};
+function asNorm(s){return String(s||"").normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase().replace(/[^a-z0-9%\/ ]/g,"").replace(/\s+/g," ").trim();}
+function asCSV(txt){
+ const linhas=txt.split(/\r?\n/).filter(function(l){return l.trim();});
+ if(!linhas.length) return {erro:"arquivo vazio"};
+ const sep=(linhas[0].split(";").length>linhas[0].split(",").length)?";":",";
+ const cab=linhas[0].split(sep).map(asNorm);
+ const idx=function(){for(let i=0;i<arguments.length;i++){const j=cab.indexOf(arguments[i]); if(j>=0)return j;} return -1;};
+ const C={nome:idx("nome","paciente"),datex:idx("data exame"),dses:idx("data da sessao","data sessao"),std:idx("stdkt/v"),ktv:idx("kt/v"),
+  obito:idx("data obito"),vc:idx("vol convectivo total","volume convectivo total","vol convectivo"),gid:idx("gid %","gid"),qtd:idx("qtd sessoes","qtd sessao"),
+  prog:idx("programa atual","programa"),esc:idx("escala"),conv:idx("convenio"),acesso:idx("acesso")};
+ if(C.nome<0||C.prog<0) return {erro:"não reconheci as colunas (esperado: Nome · Programa atual · Kt/V · Vol. Convectivo Total · GID % · Escala · Acesso)"};
+ const rows=[];
+ for(let i=1;i<linhas.length;i++){const c=linhas[i].split(sep); if(c.length<3)continue; rows.push(c);}
+ return {C:C,rows:rows,cols:cab.length};
+}
+function asFreq(escala){
+ const e=asNorm(escala); if(!e) return "";
+ if(/segunda a sabado|segunda a sab/.test(e)) return "6x";
+ const dias=["segunda","terca","quarta","quinta","sexta","sabado","domingo"].filter(function(d){return e.indexOf(d)>=0;}).length;
+ return dias?dias+"x":"";
+}
+function asAcesso(a){
+ const t=asNorm(a);
+ if(/^fav|fistula/.test(t)) return "Fístula";
+ if(/protese|ptfe|enxerto/.test(t)) return "Prótese";
+ if(/cateter/.test(t)) return /longa|tunel|perm/.test(t)?"Cateter tunelizado":"Cateter não tunelizado";
+ return "";
+}
+function asProg(p){
+ const t=asNorm(p);
+ if(/hemodiafiltra/.test(t)) return "HDF";
+ if(/hemodialise/.test(t)) return "HD";
+ if(/^dp|dpa|dpac|peritoneal/.test(t)) return "DP";
+ if(/transfer|transit/.test(t)) return "TRANSITO";
+ return t?t.toUpperCase():"";
+}
+/* ---- lê o CSV em ASSIST (por paciente, sem nome) ---- */
+function assistCarrega(parsed,nomeArq){
+ const C=parsed.C, pac={}; let ses=0;
+ parsed.rows.forEach(function(c){
+  const g=function(k){return C[k]>=0?String(c[C[k]]||"").trim():"";};
+  const nome=g("nome"); if(!nome) return;
+  const h=labHash(nome); let id=h;
+  if(typeof LAB!=="undefined"){for(const k in LAB.req){if(LAB.req[k].h===h&&LAB.req[k].cp){id="cp"+LAB.req[k].cp;break;}}}
+  const o=pac[id]||(pac[id]={id:id,sig:labIniciais(nome),prog:asProg(g("prog")),freq:asFreq(g("esc")),ktv:labNum(g("ktv")),std:labNum(g("std")),
+   obito:!!g("obito"),datex:g("datex").slice(0,10),conv:g("conv"),pub:/sus|publico|gratuit/.test(asNorm(g("conv")))?1:0,acesso:asAcesso(g("acesso")),
+   ses:0,vcOk:0,vcLow:0,vcNA:0,vcSum:0,vcN:0,gidSum:0,gidN:0});
+  if(o.ktv==null&&labNum(g("ktv"))!=null)o.ktv=labNum(g("ktv"));
+  if(o.std==null&&labNum(g("std"))!=null)o.std=labNum(g("std"));
+  if(!g("dses")) return;                               /* linha sem sessão (Qtd 0) */
+  o.ses++; ses++;
+  const vc=labNum(g("vc")); if(o.prog==="HDF"){ if(vc==null||vc<=0)o.vcNA++; else { o.vcN++; o.vcSum+=vc; if(vc>=23)o.vcOk++; else o.vcLow++; } }
+  const gid=labNum(g("gid")); if(gid!=null){o.gidN++; o.gidSum+=gid;}
+ });
+ ASSIST.arq=nomeArq; ASSIST.pac=pac; ASSIST.n=Object.keys(pac).length; ASSIST.ses=ses;
+}
+function assistIds(){return Object.keys(ASSIST.pac);}
+/* ---- aplica nos indicadores: recalcula do zero a cada carga ---- */
+function assistAplica(){
+ const ids=assistIds(); if(!ids.length) return null;
+ const P=ids.map(function(i){return ASSIST.pac[i];});
+ const ativos=P.filter(function(p){return p.prog==="HD"||p.prog==="HDF"||p.prog==="DP";});
+ const trans=P.filter(function(p){return p.prog==="TRANSITO";});
+ const R={ativos:ativos.length,hd:0,hdf:0,dp:0,trans:trans.length,ses:ASSIST.ses,sesHD:0,sesHDF:0,sesTrans:0,semSessao:0,semFreq:0};
+ /* 41-49 · pacientes por modalidade × frequência, sessões, trânsitos */
+ if(typeof MOD!=="undefined"){
+  MOD.forEach(function(r){r.pub=0;r.pri=0;});
+  ativos.forEach(function(p){
+   if(p.prog==="HD")R.hd++; else if(p.prog==="HDF")R.hdf++; else R.dp++;
+   if(!p.ses)R.semSessao++;
+   let r=null;
+   if(p.prog==="DP") r=MOD.find(function(x){return x.m==="DP";});
+   else { if(!p.freq){R.semFreq++;return;} r=MOD.find(function(x){return x.m===p.prog&&x.f===p.freq;}); }
+   if(r){ if(p.pub)r.pub++; else r.pri++; }
+  });
+ }
+ P.forEach(function(p){ if(p.prog==="HD")R.sesHD+=p.ses; else if(p.prog==="HDF")R.sesHDF+=p.ses; else if(p.prog==="TRANSITO")R.sesTrans+=p.ses; });
+ if(typeof SES!=="undefined"){ SES.hdPub=0;SES.hdfPub=0;SES.hdPri=R.sesHD;SES.hdfPri=R.sesHDF; }
+ const m5=document.getElementById("m5"); if(m5)m5.value=R.trans; if(typeof MOV!=="undefined")MOV.tra=R.trans;
+ /* IND-05 · Kt/V (3x/sem) e stdKt/V (demais) */
+ const tresX=ativos.filter(function(p){return p.prog!=="DP"&&p.freq==="3x"&&p.ktv!=null;});
+ const outros=ativos.filter(function(p){return p.prog!=="DP"&&p.freq&&p.freq!=="3x"&&p.std!=null;});
+ R.ktvN=tresX.length; R.ktvOk=tresX.filter(function(p){return p.ktv>=1.2;}).length; R.ktv14=tresX.filter(function(p){return p.ktv>=1.4;}).length;
+ R.stdN=outros.length; R.stdOk=outros.filter(function(p){return p.std>=2.1;}).length;
+ const lab=(typeof labPacientes==="function")?labPacientes():{};
+ const urrDe=function(id){const pc=lab[id]; if(!pc)return null; const a=labNum((pc.vals["Ureia"]||{}).v), b=labNum((pc.vals["Ureia pós-diálise"]||{}).v); return (a&&b!=null)?Math.round((a-b)/a*1000)/10:null;};
+ R.urrCruz=0; R.urrDiverge=0;
+ tresX.forEach(function(p){const u=urrDe(p.id); if(u==null)return; R.urrCruz++; if((p.ktv>=1.2&&u<65)||(p.ktv<1.2&&u>=65))R.urrDiverge++;});
+ if(typeof KT05!=="undefined"){
+  const q0=document.getElementById("q0"), q5=document.getElementById("q5"), q7=document.getElementById("q7"), q8=document.getElementById("q8");
+  if(q0)q0.value=R.ktvN; if(q5)q5.value=R.ktv14; if(q7)q7.value=R.stdN; if(q8)q8.value=R.stdOk;
+  if(typeof MOD05!=="undefined"){ MOD05.length=0; ["HD","HDF"].forEach(function(m){const g=tresX.filter(function(p){return p.prog===m;}); MOD05.push([m,g.length,g.filter(function(p){return p.ktv>=1.2;}).length]);}); }
+  const manuais=KT05.filter(function(r){return !r.assist;});
+  KT05.length=0; manuais.forEach(function(r){KT05.push(r);});
+  tresX.filter(function(p){return p.ktv<1.2;}).sort(function(a,b){return a.ktv-b.ktv;}).forEach(function(p){
+   const ja=manuais.find(function(r){return r.p===p.sig;}); const u=urrDe(p.id);
+   if(ja){ja.v=labFmt(p.ktv);ja.u=u||ja.u||0;ja.assist=1;} else KT05.push({p:p.sig,v:labFmt(p.ktv),u:u||0,c:"",s:"",rec:["","",""],assist:1});
+  });
+ }
+ /* IND-06 · volume convectivo por SESSÃO de HDF (ficha: % das sessões ≥ 23 L) */
+ const hdf=ativos.filter(function(p){return p.prog==="HDF";});
+ R.vcSes=0;R.vcOk=0;R.vcLow=0;R.vcNA=0;R.vcSusp=0;
+ hdf.forEach(function(p){R.vcSes+=p.ses;R.vcOk+=p.vcOk;R.vcLow+=p.vcLow;R.vcNA+=p.vcNA;});
+ if(typeof VC06!=="undefined"){
+  const v0=document.getElementById("v0"), v3=document.getElementById("v3");
+  if(v0)v0.value=R.vcSes; if(v3)v3.value=R.vcOk;
+  if(typeof EXC06!=="undefined"){
+   const man=EXC06.filter(function(r){return !r.assist;}); EXC06.length=0; man.forEach(function(r){EXC06.push(r);});
+   hdf.filter(function(p){return p.vcNA>0;}).forEach(function(p){EXC06.push({p:p.sig,q:p.vcNA,m:MOT06[0],assist:1});});
+  }
+  const man=VC06.filter(function(r){return !r.assist;}); VC06.length=0; man.forEach(function(r){VC06.push(r);});
+  hdf.filter(function(p){return p.vcLow>0;}).sort(function(a,b){return b.vcLow-a.vcLow;}).forEach(function(p){
+   const ja=man.find(function(r){return r.p===p.sig;});
+   if(ja){ja.t=p.vcN;ja.a=p.vcLow;ja.assist=1;} else VC06.push({p:p.sig,t:p.vcN,a:p.vcLow,c:"",s:"",rec:["","",""],assist:1});
+  });
+ }
+ /* IND-07 · acesso vascular */
+ R.acs={}; ativos.filter(function(p){return p.prog!=="DP";}).forEach(function(p){const t=p.acesso||"não informado"; R.acs[t]=(R.acs[t]||0)+1;});
+ if(typeof ACS!=="undefined"){
+  ACS.forEach(function(x){x.pub=0;x.pri=0;});
+  ativos.filter(function(p){return p.prog!=="DP"&&p.acesso;}).forEach(function(p){const x=ACS.find(function(a){return a.t===p.acesso;}); if(x){if(p.pub)x.pub++; else x.pri++;}});
+  if(typeof CAT!=="undefined"){
+   const man=CAT.filter(function(r){return !r.assist;}); CAT.length=0; man.forEach(function(r){CAT.push(r);});
+   ativos.filter(function(p){return p.prog!=="DP"&&/Cateter/.test(p.acesso);}).forEach(function(p){const ja=man.find(function(r){return r.p===p.sig;}); if(ja)ja.assist=1; else CAT.push({p:p.sig,c:"",s:"",rec:["","",""],assist:1});});
+  }
+ }
+ const w0=document.getElementById("w0"); if(w0)w0.value=ativos.filter(function(p){return p.prog!=="DP"&&p.acesso;}).length;
+ R.acsN=ativos.filter(function(p){return p.prog!=="DP"&&p.acesso;}).length; R.acsFav=ativos.filter(function(p){return p.acesso==="Fístula"||p.acesso==="Prótese";}).length;
+ /* IND-12 · ganho interdialítico médio por paciente */
+ const comGid=ativos.filter(function(p){return p.prog!=="DP"&&p.gidN>0;});
+ R.gidN=comGid.length; R.gidFora=0;
+ if(typeof NUT!=="undefined"&&NUT["IND-12"]){
+  const o=NUT["IND-12"]; const lim=(o.alta!=null)?o.alta:4.5;
+  const man=(o.fora||[]).filter(function(r){return !r.assist;}); const novo=[];
+  comGid.forEach(function(p){const m=p.gidSum/p.gidN; if(m>lim){R.gidFora++; const ja=man.find(function(r){return r.p===p.sig;}); if(ja){ja.v=labFmt(m);ja.assist=1;novo.push(ja);} else novo.push({p:p.sig,v:labFmt(m),c:"",s:"",rec:["","",""],assist:1});}});
+  o.fora=man.filter(function(r){return !novo.includes(r);}).concat(novo); o.tot=R.gidN;
+  const campo=document.getElementById("IND-12_t"); if(campo)campo.value=R.gidN;
+ }
+ return R;
+}
+function assistMostra(R,aviso){
+ const el=document.getElementById("assistRes"); if(!el)return;
+ const pct=function(a,b){return b?String(Math.round(a/b*1000)/10).replace(".",",")+"%":"—";};
+ const lin=function(ind,rot,val,cf,meta,ok){return '<tr><td class="pac">'+rot+'</td><td class="dim">'+ind+'</td><td class="tx">'+val+'</td><td class="tx"><b>'+cf+'</b></td><td class="dim">'+meta+'</td><td style="white-space:nowrap">'+(ok==null?'<span class="ic dim">—</span>':ok?'<span class="ic i-ok">✓ dentro</span>':'<span class="ic i-nao">▲ fora</span>')+'</td></tr>';};
+ const ktvCf=R.ktvN?R.ktvOk/R.ktvN*100:null, vcCf=(R.vcOk+R.vcLow)?R.vcOk/(R.vcOk+R.vcLow)*100:null, favCf=R.acsN?R.acsFav/R.acsN*100:null;
+ el.innerHTML=
+  '<table class="dt"><thead><tr><th style="width:340px">Arquivo</th><th>Situação</th><th style="width:40px"></th></tr></thead><tbody><tr><td class="pac">'+ASSIST.arq+'</td>'+
+  '<td class="dim">'+ASSIST.n+' pacientes · '+ASSIST.ses+' sessões</td><td><button class="lix" title="apagar" onclick="assistApaga()">🗑</button></td></tr></tbody></table>'+
+  (aviso?'<div class="al" style="margin-top:8px">'+aviso+'</div>':'')+
+  '<h4>Lido da planilha</h4><table class="dt"><thead><tr><th style="width:200px">Indicador</th><th style="width:70px">Código</th><th style="width:170px">Base</th><th style="width:100px">Resultado</th><th style="width:90px">Meta</th><th style="width:100px">Situação</th></tr></thead><tbody>'+
+  lin("41–49","Pacientes ativos",R.ativos+" (HD "+R.hd+" · HDF "+R.hdf+" · DP "+R.dp+")","—","—",null)+
+  lin("IND-49","Em trânsito",R.trans+" ("+R.sesTrans+" sessões)","—","—",null)+
+  lin("45/46","Sessões no mês","HD "+R.sesHD+" · HDF "+R.sesHDF,"—","—",null)+
+  lin("IND-05","Kt/V ≥ 1,2 (3x/sem)",R.ktvOk+" de "+R.ktvN,pct(R.ktvOk,R.ktvN),"≥ 80%",ktvCf==null?null:ktvCf>=80)+
+  lin("IND-05","stdKt/V ≥ 2,1 (demais)",R.stdOk+" de "+R.stdN,pct(R.stdOk,R.stdN),"—",null)+
+  lin("IND-06","Sessões HDF ≥ 23 L",R.vcOk+" de "+(R.vcOk+R.vcLow)+(R.vcNA?" · "+R.vcNA+" sem volume":""),pct(R.vcOk,R.vcOk+R.vcLow),"≥ 80%",vcCf==null?null:vcCf>=80)+
+  lin("IND-07","Fístula ou prótese",R.acsFav+" de "+R.acsN,pct(R.acsFav,R.acsN),"≥ 80%",favCf==null?null:favCf>=80)+
+  lin("IND-12","GID médio acima do limite",R.gidFora+" de "+R.gidN,pct(R.gidN-R.gidFora,R.gidN),"a calibrar",null)+
+  '</tbody></table>'+
+  '<div class="okb" style="margin-top:10px"><b>Pronto:</b> contagens, Kt/V, volume convectivo, acesso e ganho de peso já estão nos blocos. '+
+  (R.urrCruz?'URR do laboratório cruzado com o Kt/V em '+R.urrCruz+' pacientes'+(R.urrDiverge?' · <b>'+R.urrDiverge+' divergem</b> (conferir peso e tempo)':' · sem divergência')+'. ':'')+
+  (R.semFreq?R.semFreq+' paciente(s) ativo(s) sem escala cadastrada ficaram fora da contagem por frequência. ':'')+
+  (R.semSessao?R.semSessao+' ativo(s) sem sessão no mês. ':'')+
+  'Faltas, admissões, saídas e óbitos continuam manuais — a planilha não os traz como evento.</div>';
+ document.getElementById("dzA").style.display="none";
+}
+function assistApaga(){
+ if(RO)return;
+ ASSIST.arq="";ASSIST.n=0;ASSIST.ses=0;ASSIST.pac={};
+ try{ if(typeof KT05!=="undefined"){const m=KT05.filter(function(r){return !r.assist;});KT05.length=0;m.forEach(function(r){KT05.push(r);});}
+  if(typeof VC06!=="undefined"){const m=VC06.filter(function(r){return !r.assist;});VC06.length=0;m.forEach(function(r){VC06.push(r);});}
+  if(typeof EXC06!=="undefined"){const m=EXC06.filter(function(r){return !r.assist;});EXC06.length=0;m.forEach(function(r){EXC06.push(r);});}
+  if(typeof CAT!=="undefined"){const m=CAT.filter(function(r){return !r.assist;});CAT.length=0;m.forEach(function(r){CAT.push(r);});}
+  if(typeof NUT!=="undefined"&&NUT["IND-12"])NUT["IND-12"].fora=(NUT["IND-12"].fora||[]).filter(function(r){return !r.assist;});
+ }catch(_){}
+ document.getElementById("assistRes").innerHTML=""; document.getElementById("dzA").style.display="block";
+ if(typeof recalcTudo==="function")recalcTudo(); if(typeof sbMarcaSujo==="function")sbMarcaSujo();
+}
+function assistRender(){ if(!ASSIST.n)return; const R=assistAplica(); if(R)assistMostra(R,null); }
 function lerAssist(){
  if(RO)return;
  let inp=document.getElementById("inpAssist");
  if(!inp){
   inp=document.createElement("input");
-  inp.type="file"; inp.id="inpAssist"; inp.accept=".xlsx,.xls,.csv"; inp.style.display="none";
+  inp.type="file"; inp.id="inpAssist"; inp.accept=".csv,.txt,.CSV"; inp.style.display="none";
   inp.addEventListener("change",function(){
-   var f=(inp.files||[])[0]; inp.value=""; if(!f)return;
-   document.getElementById("assistRes").innerHTML=
-    '<table class="dt"><thead><tr><th style="width:340px">Arquivo</th><th>Situação</th><th style="width:40px"></th></tr></thead><tbody><tr><td class="pac">'+f.name+'</td><td class="dim">recebido — leitura automática ainda não implementada</td><td><button class="lix" title="apagar" onclick="document.getElementById(\'assistRes\').innerHTML=\'\';document.getElementById(\'dzA\').style.display=\'block\'">🗑</button></td></tr></tbody></table><div class="al" style="margin-top:10px"><b>Nenhum valor foi extraído.</b> Lance os dados manualmente até o leitor da Planilha Assistencial entrar.</div>';
-   document.getElementById("dzA").style.display="none";
+   const f=(inp.files||[])[0]; inp.value=""; if(!f)return;
+   const fr=new FileReader();
+   fr.onload=function(){
+    let txt; const buf=fr.result;
+    try{txt=new TextDecoder("utf-8",{fatal:true}).decode(buf);}catch(_){txt=new TextDecoder("iso-8859-1").decode(buf);}
+    const parsed=asCSV(txt);
+    if(parsed.erro){document.getElementById("assistRes").innerHTML='<div class="al"><b>Não consegui ler '+f.name+'.</b> '+parsed.erro+'. Nada foi alterado.</div>';return;}
+    assistCarrega(parsed,f.name);
+    const R=assistAplica(); assistMostra(R,null);
+    if(typeof recalcTudo==="function")recalcTudo();
+    if(typeof sbMarcaSujo==="function")sbMarcaSujo();
+   };
+   fr.readAsArrayBuffer(f);
   });
   document.body.appendChild(inp);
  }
@@ -2862,6 +3146,7 @@ function zeraDemo(){
  }
  const VAZIA=["SALAS38","INTERD","AC38","iRows","r30","EXC05","KT05","EXC06","VC06","EXC07","CAT"];
  Object.keys(REG).forEach(k=>{
+  if(k==="LAB"||k==="ASSIST")return;
   let o; try{o=REG[k]();}catch(_){return;}
   if(VAZIA.includes(k)&&Array.isArray(o)){o.length=0;return;}
   limpa(o);
@@ -3647,7 +3932,7 @@ const REG={SALAS38:()=>SALAS38,INTERD:()=>INTERD,AC38:()=>AC38,EX39:()=>EX39,ESP
  MOD:()=>MOD,SES:()=>SES,FATOR:()=>FATOR,PERDAS:()=>PERDAS,MOV:()=>MOV,ADM:()=>ADM,SAI:()=>SAI,
  iRows:()=>iRows,r30:()=>r30,E30:()=>E30,E08:()=>E08,EXC05:()=>EXC05,MOD05:()=>MOD05,KT05:()=>KT05,
  EXC06:()=>EXC06,VC06:()=>VC06,EXC07:()=>EXC07,ACS:()=>ACS,CAT:()=>CAT,
- NUT:()=>NUT,TEND:()=>TEND,EVT:()=>EVT,COB:()=>COB,FAL:()=>FAL,NOTIF:()=>NOTIF,POLI:()=>POLI,NPS:()=>NPS};
+ NUT:()=>NUT,TEND:()=>TEND,EVT:()=>EVT,COB:()=>COB,FAL:()=>FAL,NOTIF:()=>NOTIF,POLI:()=>POLI,NPS:()=>NPS,LAB:()=>LAB,ASSIST:()=>ASSIST};
 function domFoto(){
  const out={};
  document.querySelectorAll("#telaLanc input,#telaLanc select,#telaLanc textarea").forEach(el=>{
@@ -3678,6 +3963,8 @@ function aplicaEstado(p){
  montaBlocos(); domAplica(p.dom); recalcTudo();
  if(p.rm&&typeof RM!=="undefined"&&RM.carrega)RM.carrega(p.rm);
  try{reuniaoAplica(p.reuniao||null);}catch(_){}
+ try{renderLotes();}catch(_){}
+ try{assistRender();}catch(_){}
 }
 function compChave(){
  const u=UN_CHAVE[document.getElementById("unidade").value]||"rl";
